@@ -1,0 +1,13 @@
+streamlit
+pandas
+openpyxl>=3.1.0
+requests>=2.31.0
+lxml>=4.9.0
+bcrypt
+altair
+plotly>=5.18.0
+supabase>=2.0.0
+postgrest>=0.10.0
+python-dotenv
+thefuzz>=0.20.0
+python-Levenshtein>=0.21.0
