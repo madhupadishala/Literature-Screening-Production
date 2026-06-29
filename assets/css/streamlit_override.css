@@ -1,1 +1,49 @@
+/* Remove Streamlit UI */
 
+[data-testid="stSidebar"]{
+    display:none !important;
+}
+
+[data-testid="stSidebarNav"]{
+    display:none !important;
+}
+
+section[data-testid="stSidebar"]{
+    display:none !important;
+}
+
+[data-testid="collapsedControl"]{
+    display:none !important;
+}
+
+#MainMenu{
+    visibility:hidden !important;
+}
+
+header{
+    visibility:hidden !important;
+}
+
+footer{
+    visibility:hidden !important;
+}
+
+/* Main Layout */
+
+.block-container{
+    padding-top:0.20rem !important;
+    padding-bottom:0.20rem !important;
+    padding-left:0.80rem !important;
+    padding-right:0.80rem !important;
+    max-width:100% !important;
+}
+
+/* Reduce gaps */
+
+div[data-testid="stHorizontalBlock"]{
+    gap:0.40rem !important;
+}
+
+div[data-testid="stVerticalBlock"]>div{
+    gap:0.30rem !important;
+}
