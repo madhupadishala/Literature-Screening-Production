@@ -1,5 +1,5 @@
 import streamlit as st
 
 def render():
-    st.markdown("## Audit")
+    st.markdown("## audit")
     st.info("Module loaded successfully.")
