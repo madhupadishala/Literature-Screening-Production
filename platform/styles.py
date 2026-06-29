@@ -10,16 +10,12 @@ CSS_FILES = [
 ]
 
 def load_styles():
-    css = ""
+    css_bundle = ""
 
     for css_file in CSS_FILES:
         path = Path(css_file)
-
         if path.exists():
-            css += path.read_text(encoding="utf-8") + "\n"
+            css_bundle += path.read_text(encoding="utf-8") + "\n"
 
-    if css:
-        st.markdown(
-            f"<style>{css}</style>",
-            unsafe_allow_html=True
-        )
+    if css_bundle:
+        st.markdown(f"<style>{css_bundle}</style>", unsafe_allow_html=True)
