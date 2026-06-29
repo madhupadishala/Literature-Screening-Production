@@ -1,28 +1,19 @@
 import streamlit as st
-from config.constants import APP_NAME, APP_TITLE, COLORS
-from core.audit import add_audit_log
+from config.constants import APP_NAME, APP_TITLE
+from platform.audit import add_audit_log
 
 def render_header():
     col1, col2, col3, col4, col5 = st.columns([1.2, 3, 1.2, 2.2, 1])
 
     with col1:
-        st.markdown(
-            f"<div class='app-logo'>{APP_NAME}</div>",
-            unsafe_allow_html=True
-        )
+        st.markdown(f"<div class='app-logo'>{APP_NAME}</div>", unsafe_allow_html=True)
 
     with col2:
-        st.markdown(
-            f"<div class='app-title'>{APP_TITLE}</div>",
-            unsafe_allow_html=True
-        )
+        st.markdown(f"<div class='app-title'>{APP_TITLE}</div>", unsafe_allow_html=True)
 
     with col3:
         env = st.session_state.get("env", "PRODUCTION")
-        st.markdown(
-            f"<div class='env-badge'>{env}</div>",
-            unsafe_allow_html=True
-        )
+        st.markdown(f"<div class='env-badge'>{env}</div>", unsafe_allow_html=True)
 
     with col4:
         st.markdown(
