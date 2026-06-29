@@ -1,6 +1,6 @@
 import streamlit as st
 from config.constants import PAGES
-from platform.audit import add_audit_log
+from nexus_platform.audit import add_audit_log
 
 def render_navigation():
     st.markdown("<div class='nav-wrap'>", unsafe_allow_html=True)
