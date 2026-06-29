@@ -1,25 +1,40 @@
+/* ==========================================================
+   ClinixAI Nexus Design System v1
+   Dense operational UI for AI-first PV workflows
+   ========================================================== */
+
+
+/* ==========================================================
+   1. Metric Cards
+   ========================================================== */
+
 .metric-card{
     background:#ffffff;
-    border:1px solid #dfe6e9;
-    border-radius:6px;
-    padding:10px;
-    text-align:center;
-    min-height:72px;
+    border:1px solid #d9e2ec;
+    border-radius:8px;
+    padding:8px 10px;
+    min-height:66px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    margin-bottom:6px;
 }
 
 .metric-label{
     font-size:10px;
-    color:#7f8c8d;
-    font-weight:700;
+    color:#7b8794;
+    font-weight:800;
     text-transform:uppercase;
-    letter-spacing:0.4px;
+    letter-spacing:0.35px;
+    line-height:1.1;
 }
 
 .metric-value{
-    font-size:24px;
-    font-weight:800;
-    line-height:1.1;
-    margin-top:4px;
+    font-size:22px;
+    font-weight:900;
+    line-height:1.05;
+    margin-top:3px;
+    color:#1a2a40;
 }
 
 .metric-blue .metric-value{ color:#2980b9; }
@@ -28,35 +43,340 @@
 .metric-red .metric-value{ color:#e74c3c; }
 .metric-purple .metric-value{ color:#8e44ad; }
 
-.status-chip{
+
+/* ==========================================================
+   2. Status Chips / Badges
+   ========================================================== */
+
+.status-chip,
+.status-badge{
     display:inline-block;
-    padding:3px 8px;
+    padding:2px 7px;
     border-radius:999px;
-    font-size:11px;
-    font-weight:700;
+    font-size:10px;
+    font-weight:800;
+    line-height:1.2;
+    letter-spacing:0.2px;
+    white-space:nowrap;
 }
 
-.status-neutral{
+.status-neutral,
+.badge-neutral{
     background:#ecf0f1;
     color:#2c3e50;
 }
 
-.status-success{
+.status-success,
+.badge-success{
     background:#eafaf1;
     color:#27ae60;
 }
 
-.status-warning{
+.status-warning,
+.badge-warning{
     background:#fff4e5;
     color:#f39c12;
 }
 
-.status-danger{
+.status-danger,
+.badge-danger{
     background:#fdecea;
     color:#e74c3c;
 }
 
-.status-info{
+.status-info,
+.badge-info{
     background:#eaf3fb;
     color:#2980b9;
+}
+
+
+/* ==========================================================
+   3. Compact Operational Cards
+   ========================================================== */
+
+.compact-card{
+    background:#ffffff;
+    border:1px solid #d9e2ec;
+    border-radius:8px;
+    padding:8px 10px;
+    min-height:72px;
+    margin-bottom:6px;
+}
+
+.compact-card:hover{
+    border-color:#b8c6d6;
+    background:#fbfdff;
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    font-size:10px;
+    font-weight:900;
+    color:#1a2a40;
+    text-transform:uppercase;
+    letter-spacing:0.35px;
+    line-height:1.1;
+}
+
+.card-value{
+    font-size:18px;
+    font-weight:900;
+    color:#1a2a40;
+    line-height:1.05;
+    margin-top:5px;
+}
+
+.card-subtitle{
+    font-size:11px;
+    color:#7b8794;
+    line-height:1.25;
+    margin-top:3px;
+}
+
+.card-status{
+    display:inline-block;
+    font-size:9px;
+    font-weight:900;
+    background:#eafaf1;
+    color:#27ae60;
+    padding:2px 7px;
+    border-radius:999px;
+    line-height:1.2;
+    white-space:nowrap;
+}
+
+
+/* ==========================================================
+   4. Workspace Panels
+   ========================================================== */
+
+.workspace-panel{
+    background:#ffffff;
+    border:1px solid #d9e2ec;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:8px;
+}
+
+.workspace-panel-tight{
+    background:#ffffff;
+    border:1px solid #d9e2ec;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:6px;
+}
+
+.workspace-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:900;
+    color:#1a2a40;
+    text-transform:uppercase;
+    letter-spacing:0.35px;
+    padding-bottom:6px;
+    border-bottom:1px solid #edf2f7;
+    margin-bottom:8px;
+}
+
+.workspace-title{
+    font-size:12px;
+    font-weight:900;
+    color:#1a2a40;
+    text-transform:uppercase;
+    letter-spacing:0.35px;
+}
+
+.workspace-subtitle{
+    font-size:11px;
+    color:#7b8794;
+    line-height:1.25;
+}
+
+
+/* ==========================================================
+   5. Operational Key-Value Rows
+   ========================================================== */
+
+.kv-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px 10px;
+    margin-top:6px;
+}
+
+.kv-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    line-height:1.25;
+    border-bottom:1px solid #f1f4f8;
+    padding:3px 0;
+}
+
+.kv-label{
+    color:#7b8794;
+    font-weight:700;
+}
+
+.kv-value{
+    color:#1a2a40;
+    font-weight:800;
+    text-align:right;
+}
+
+
+/* ==========================================================
+   6. Workflow / Job State Modules
+   ========================================================== */
+
+.job-state{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    background:#ffffff;
+    border:1px solid #d9e2ec;
+    border-radius:8px;
+    padding:8px 10px;
+    margin-bottom:6px;
+}
+
+.job-state-left{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.job-title{
+    font-size:11px;
+    font-weight:900;
+    color:#1a2a40;
+    text-transform:uppercase;
+    letter-spacing:0.35px;
+}
+
+.job-meta{
+    font-size:11px;
+    color:#7b8794;
+}
+
+.job-count{
+    font-size:22px;
+    font-weight:900;
+    color:#1a2a40;
+    line-height:1;
+}
+
+
+/* ==========================================================
+   7. Progress Strip
+   ========================================================== */
+
+.progress-strip{
+    width:100%;
+    height:6px;
+    background:#edf2f7;
+    border-radius:999px;
+    overflow:hidden;
+    margin-top:6px;
+}
+
+.progress-fill{
+    height:100%;
+    background:#27ae60;
+    border-radius:999px;
+}
+
+
+/* ==========================================================
+   8. Compact Action Bar
+   ========================================================== */
+
+.action-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    background:#ffffff;
+    border:1px solid #d9e2ec;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:8px;
+}
+
+.action-bar-left,
+.action-bar-right{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+
+/* ==========================================================
+   9. Compact Tables
+   ========================================================== */
+
+.table-caption{
+    font-size:11px;
+    color:#7b8794;
+    margin-top:2px;
+    margin-bottom:4px;
+}
+
+.queue-summary{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    font-size:11px;
+    color:#7b8794;
+    margin-bottom:5px;
+}
+
+
+/* ==========================================================
+   10. Knowledge / AI Modules
+   ========================================================== */
+
+.kb-head{
+    background:#1a2a40;
+    color:#ffffff;
+    padding:8px 10px;
+    font-weight:900;
+    font-size:12px;
+    border-radius:8px 8px 0 0;
+    text-transform:uppercase;
+    letter-spacing:0.35px;
+}
+
+.ai-state{
+    background:#ffffff;
+    border:1px solid #d9e2ec;
+    border-radius:8px;
+    padding:8px 10px;
+    margin-bottom:6px;
+}
+
+.ai-state-title{
+    font-size:11px;
+    font-weight:900;
+    color:#1a2a40;
+    text-transform:uppercase;
+    letter-spacing:0.35px;
+}
+
+.ai-state-text{
+    font-size:11px;
+    color:#7b8794;
+    margin-top:3px;
+    line-height:1.25;
 }
