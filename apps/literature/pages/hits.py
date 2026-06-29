@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from services.literature.pubmed import run_pubmed_search
-from core.audit import add_audit_log
+from nexus_platform.audit import add_audit_log
 
 def render():
     st.markdown("## Hits")
