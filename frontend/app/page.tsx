@@ -1,7 +1,13 @@
-import Module from "@/components/Module";
-import Navigation from "@/components/Navigation";
-import StatusStrip from "@/components/StatusStrip";
-import TopBar from "@/components/TopBar";
+const navItems = [
+  "Mission Control",
+  "Search",
+  "Screening",
+  "Intake",
+  "Quality",
+  "Reporting",
+  "Audit",
+  "Admin",
+];
 
 const statusTabs = [
   { label: "Search Job", value: "Ready", active: true },
@@ -13,12 +19,41 @@ const statusTabs = [
 export default function Home() {
   return (
     <main className="cx-app">
-      <TopBar />
-      <Navigation />
+      <header className="cx-topbar">
+        <div className="cx-brand-block">
+          <div className="cx-brand">ClinixAI Nexus</div>
+          <div className="cx-subbrand">Literature Screening Enterprise MVP</div>
+        </div>
 
-      <StatusStrip items={statusTabs} />
+        <div className="cx-env">PRODUCTION</div>
 
-      <Module title="Search Configuration" tone="search">
+        <div className="cx-user">
+          <div>Althaf (Super User)</div>
+          <span>Novartis Literature Review</span>
+        </div>
+      </header>
+
+      <nav className="cx-nav">
+        {navItems.map((item) => (
+          <button key={item} className={item === "Search" ? "active" : ""}>
+            {item}
+          </button>
+        ))}
+      </nav>
+
+      <section className="cx-status-strip">
+        {statusTabs.map((tab) => (
+          <div key={tab.label} className={`cx-status-tab ${tab.active ? "active" : ""}`}>
+            <span>{tab.label}</span>
+            <b>{tab.value}</b>
+          </div>
+        ))}
+      </section>
+
+      <section className="cx-module">
+        <div className="cx-ribbon cx-ribbon-search" />
+        <div className="cx-module-title">Search Configuration</div>
+
         <div className="cx-search-grid">
           <div className="cx-field-group cx-query">
             <label>Boolean Search String</label>
@@ -57,13 +92,16 @@ export default function Home() {
             <button className="cx-execute">▶ Execute</button>
           </div>
         </div>
-      </Module>
+      </section>
 
-      <Module
-        title="Pipeline Queue"
-        tone="pipeline"
-        rightText="0 article(s) in Hits queue · Next: Screening Workspace"
-      >
+      <section className="cx-module">
+        <div className="cx-ribbon cx-ribbon-pipeline" />
+
+        <div className="cx-module-title cx-spread">
+          <span>Pipeline Queue</span>
+          <small>0 article(s) in Hits queue · Next: Screening Workspace</small>
+        </div>
+
         <table className="cx-table">
           <thead>
             <tr>
@@ -82,7 +120,7 @@ export default function Home() {
             </tr>
           </tbody>
         </table>
-      </Module>
+      </section>
     </main>
   );
 }
