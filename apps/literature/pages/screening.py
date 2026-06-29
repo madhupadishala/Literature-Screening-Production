@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from services.workflow.screening_service import run_screening
-from core.audit import add_audit_log
+from nexus_platform.audit import add_audit_log
 
 def render():
     st.markdown("## Screening")
