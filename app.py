@@ -1,3 +1,3 @@
-from platform.kernel import boot
+from nexus_platform.kernel import boot
 
 boot()
