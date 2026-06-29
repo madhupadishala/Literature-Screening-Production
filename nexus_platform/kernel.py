@@ -1,8 +1,8 @@
 import streamlit as st
 
-from platform.state import init_state
-from platform.styles import load_styles
-from platform.router import render_current_page
+from nexus_platform.state import init_state
+from nexus_platform.styles import load_styles
+from nexus_platform.router import render_current_page
 
 from components.header import render_header
 from components.navigation import render_navigation
