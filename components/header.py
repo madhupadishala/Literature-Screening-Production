@@ -1,6 +1,6 @@
 import streamlit as st
 from config.constants import APP_NAME, APP_TITLE
-from platform.audit import add_audit_log
+from nexus_platform.audit import add_audit_log
 
 def render_header():
     col1, col2, col3, col4, col5 = st.columns([1.2, 3, 1.2, 2.2, 1])
