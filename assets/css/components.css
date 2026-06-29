@@ -1,1 +1,62 @@
+.metric-card{
+    background:#ffffff;
+    border:1px solid #dfe6e9;
+    border-radius:6px;
+    padding:10px;
+    text-align:center;
+    min-height:72px;
+}
 
+.metric-label{
+    font-size:10px;
+    color:#7f8c8d;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+}
+
+.metric-value{
+    font-size:24px;
+    font-weight:800;
+    line-height:1.1;
+    margin-top:4px;
+}
+
+.metric-blue .metric-value{ color:#2980b9; }
+.metric-green .metric-value{ color:#27ae60; }
+.metric-orange .metric-value{ color:#f39c12; }
+.metric-red .metric-value{ color:#e74c3c; }
+.metric-purple .metric-value{ color:#8e44ad; }
+
+.status-chip{
+    display:inline-block;
+    padding:3px 8px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.status-neutral{
+    background:#ecf0f1;
+    color:#2c3e50;
+}
+
+.status-success{
+    background:#eafaf1;
+    color:#27ae60;
+}
+
+.status-warning{
+    background:#fff4e5;
+    color:#f39c12;
+}
+
+.status-danger{
+    background:#fdecea;
+    color:#e74c3c;
+}
+
+.status-info{
+    background:#eaf3fb;
+    color:#2980b9;
+}
