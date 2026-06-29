@@ -12,10 +12,14 @@ CSS_FILES = [
 def load_styles():
     css = ""
 
-    for file in CSS_FILES:
-        path = Path(file)
+    for css_file in CSS_FILES:
+        path = Path(css_file)
+
         if path.exists():
             css += path.read_text(encoding="utf-8") + "\n"
 
     if css:
-        st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+        st.markdown(
+            f"<style>{css}</style>",
+            unsafe_allow_html=True
+        )
