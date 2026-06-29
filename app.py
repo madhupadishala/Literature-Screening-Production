@@ -1,3 +1,3 @@
-from core.styles import load_styles
+from platform.kernel import boot
 
-load_styles()
+boot()
