@@ -1,0 +1,32 @@
+[
+  {
+    "tenant_id": "demo-tenant",
+    "template_id": "PV-GENERAL",
+    "template_name": "General PV Literature",
+    "terms": [
+      "adverse event",
+      "adverse reaction",
+      "side effect",
+      "toxicity",
+      "safety",
+      "drug-induced",
+      "case report"
+    ],
+    "status": "Active"
+  },
+  {
+    "tenant_id": "demo-tenant",
+    "template_id": "PREGNANCY",
+    "template_name": "Pregnancy Surveillance",
+    "terms": [
+      "pregnancy",
+      "pregnant",
+      "maternal exposure",
+      "foetal exposure",
+      "fetal exposure",
+      "lactation",
+      "breastfeeding"
+    ],
+    "status": "Active"
+  }
+]

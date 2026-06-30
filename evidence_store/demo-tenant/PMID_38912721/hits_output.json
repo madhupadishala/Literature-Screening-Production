@@ -1,0 +1,120 @@
+{
+  "pmid": "38912721",
+  "tenant_id": "demo-tenant",
+  "source_package": "evidence_store\\demo-tenant\\PMID_38912721",
+  "flat_output": {
+    "S.No": 1,
+    "PMID": "38912721",
+    "DOI": "10.1021/acsnano.4c02509",
+    "Primary Author": "Ming Yang",
+    "Primary Author Country": "China",
+    "Authors": "Ming Yang; Kaiqi Yang; Yujing Wu; Zhixuan Wang; Tenghuan Ma; Dengxu Wu; Li Yang; Jieru Xu; Pushun Lu; Jian Peng; Zhiwen Jiang; Xiang Zhu; Qifa Gao; Fuqiang Xu; Liquan Chen; Hong Li; Fan Wu",
+    "Product": "Paracetamol",
+    "INN": "Acetaminophen",
+    "Product Variant": "Not confirmed",
+    "MAH Country": "Needs verification",
+    "PII": "Yes",
+    "Full Text / Abstract": "Abstract",
+    "Full Text Link": "",
+    "Knowledge Match": "No direct synonym match",
+    "QC Required": true
+  },
+  "field_evidence": {
+    "pmid": {
+      "value": "38912721",
+      "confidence": 100,
+      "evidence": "PubMed XML PMID",
+      "qc_status": "Auto-verified"
+    },
+    "doi": {
+      "value": "10.1021/acsnano.4c02509",
+      "confidence": 95,
+      "evidence": "PubMed XML ArticleId DOI",
+      "qc_status": "Auto-verified"
+    },
+    "title": {
+      "value": "Dendrite-Free All-Solid-State Lithium Metal Batteries by In Situ Phase Transformation of the Soft Carbon-Li3N Interface Layer.",
+      "confidence": 100,
+      "evidence": "PubMed XML ArticleTitle",
+      "qc_status": "Auto-verified"
+    },
+    "journal": {
+      "value": "ACS nano",
+      "confidence": 100,
+      "evidence": "PubMed XML Journal Title",
+      "qc_status": "Auto-verified"
+    },
+    "publication_date": {
+      "value": "2024 Jul 02",
+      "confidence": 90,
+      "evidence": "PubMed XML PubDate",
+      "qc_status": "Auto-verified"
+    },
+    "primary_author": {
+      "value": "Ming Yang",
+      "confidence": 100,
+      "evidence": "First author in PubMed XML AuthorList",
+      "qc_status": "Auto-verified"
+    },
+    "authors": {
+      "value": "Ming Yang; Kaiqi Yang; Yujing Wu; Zhixuan Wang; Tenghuan Ma; Dengxu Wu; Li Yang; Jieru Xu; Pushun Lu; Jian Peng; Zhiwen Jiang; Xiang Zhu; Qifa Gao; Fuqiang Xu; Liquan Chen; Hong Li; Fan Wu",
+      "confidence": 100,
+      "evidence": "PubMed XML AuthorList",
+      "qc_status": "Auto-verified"
+    },
+    "primary_author_country": {
+      "value": "China",
+      "confidence": 85,
+      "evidence": "Country detected from PubMed affiliation text",
+      "qc_status": "Auto-verified"
+    },
+    "product": {
+      "value": "Paracetamol",
+      "confidence": 60,
+      "evidence": "Product Master synonym match: No direct match",
+      "qc_status": "Needs QC"
+    },
+    "inn": {
+      "value": "Acetaminophen",
+      "confidence": 100,
+      "evidence": "Resolved from Product Master",
+      "qc_status": "Auto-verified"
+    },
+    "product_variant": {
+      "value": "Not confirmed",
+      "confidence": 0,
+      "evidence": "Detected from title/abstract text",
+      "qc_status": "Needs QC"
+    },
+    "mah_country": {
+      "value": "Needs verification",
+      "confidence": 0,
+      "evidence": "Compared detected country against Product Master MAH countries",
+      "qc_status": "Needs QC"
+    },
+    "knowledge_match": {
+      "value": "No direct synonym match",
+      "confidence": 0,
+      "evidence": "Product Master synonym dictionary",
+      "qc_status": "Needs QC"
+    },
+    "pii": {
+      "value": "Yes",
+      "confidence": 80,
+      "evidence": "PII indicator terms detected: man",
+      "qc_status": "Needs QC"
+    },
+    "text_availability": {
+      "value": "Abstract",
+      "confidence": 90,
+      "evidence": "No fulltext.pdf/fulltext.xml found; abstract.txt available",
+      "qc_status": "Auto-verified"
+    },
+    "full_text_link": {
+      "value": "",
+      "confidence": 0,
+      "evidence": "No fulltext.pdf/fulltext.xml found; abstract.txt available",
+      "qc_status": "Not applicable"
+    }
+  }
+}

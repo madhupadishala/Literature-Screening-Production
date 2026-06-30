@@ -1,0 +1,25 @@
+{
+  "evidence_package_id": "demo-tenant_PMID_38912721",
+  "tenant_id": "demo-tenant",
+  "pmid": "38912721",
+  "created_at_utc": "2026-06-30T07:29:21.556338+00:00",
+  "retrieval_status": "success",
+  "sources": {
+    "pubmed_xml": true,
+    "abstract": true,
+    "full_text_pdf": false,
+    "full_text_xml": false,
+    "ocr": false
+  },
+  "files": {
+    "pubmed_xml": "evidence_store\\demo-tenant\\PMID_38912721\\pubmed.xml",
+    "metadata": "evidence_store\\demo-tenant\\PMID_38912721\\metadata.json",
+    "abstract": "evidence_store\\demo-tenant\\PMID_38912721\\abstract.txt",
+    "hash": "evidence_store\\demo-tenant\\PMID_38912721\\hash.json"
+  },
+  "hashes": {
+    "pubmed.xml": "da408be556b85d94dd1c0ff29df120c80a514b37ccc686315eb0f36355fdd119",
+    "metadata.json": "323353ffac0dfc8f2ffb8886948667a505d0cb93aefa285e7697b186e2c38d08",
+    "abstract.txt": "49de263902aa11759ea6ce403bd07dcf6d3cf5362bdb8a4b3f312a01d762dfca"
+  }
+}

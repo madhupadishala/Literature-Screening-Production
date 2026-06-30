@@ -270,3 +270,21 @@ body {
   text-align: center;
   color: #9ca3af;
 }
+.cx-query-preview {
+  margin-top: 6px;
+  padding: 6px 8px;
+  border: 1px solid #d9e2ec;
+  background: #f8fafc;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #1a2a40;
+}
+.cx-query-preview {
+  margin-top: 6px;
+  padding: 6px 8px;
+  border: 1px solid #d9e2ec;
+  background: #f8fafc;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #1a2a40;
+}

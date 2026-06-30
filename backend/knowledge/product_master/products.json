@@ -1,0 +1,23 @@
+[
+  {
+    "tenant_id": "demo-tenant",
+    "product_id": "PID-001",
+    "product_name": "Paracetamol",
+    "inn": "Acetaminophen",
+    "brand_names": ["Tylenol", "Calpol", "Crocin"],
+    "synonyms": [
+      "paracetamol",
+      "acetaminophen",
+      "tylenol",
+      "apap",
+      "n-acetyl-p-aminophenol"
+    ],
+    "salt": "",
+    "strengths": ["500 mg", "650 mg", "1000 mg"],
+    "dosage_forms": ["Tablet", "Injection", "Syrup", "Oral Suspension"],
+    "routes": ["Oral", "Intravenous"],
+    "mah_countries": ["India", "Germany", "United States", "United Kingdom"],
+    "company": "Demo MAH",
+    "status": "Active"
+  }
+]
