@@ -1,486 +1,385 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import ReviewWorkspace from "../components/ReviewWorkspace";
 
-const navItems = ["Search", "Screening", "Intake", "Quality", "Reporting"];
+type QcFlag = {
+  field_name: string;
+  severity: string;
+  reason: string;
+  evidence?: string | null;
+};
 
-const productMaster = [
+type PiiFinding = {
+  pii_type: string;
+  value: string;
+  evidence: string;
+  confidence: number;
+  qc_required: boolean;
+};
+
+export type Hit = {
+  hit_id: string;
+  pmid: string;
+  doi?: string | null;
+  title?: string | null;
+  journal?: string | null;
+  publication_date?: string | null;
+  product_name?: string | null;
+  normalized_identity?: string | null;
+  matched_term?: string | null;
+  match_type?: string | null;
+  match_source?: string | null;
+  detected_strength?: string | null;
+  detected_formulation?: string | null;
+  company_product_status?: string | null;
+  country_of_interest?: string | null;
+  author_country?: string | null;
+  primary_author?: string | null;
+  all_authors?: string[];
+  mah_country_status?: string | null;
+  mah_country_match?: boolean;
+  pii_present: boolean;
+  pii_findings: PiiFinding[];
+  confidence_score: number;
+  qc_required: boolean;
+  qc_flags: QcFlag[];
+  hits_status: string;
+  screening_status: string;
+  evidence_sentence?: string | null;
+  ai_summary?: string | null;
+};
+
+const hitsData: Hit[] = [
   {
-    productId: "PID-001",
-    product: "Paracetamol",
-    inn: "Acetaminophen",
-    variants: ["Tablet", "Injection", "Syrup", "Oral Suspension"],
-    synonyms: ["paracetamol", "acetaminophen", "tylenol", "apap", "n-acetyl-p-aminophenol"],
-    mahCountries: ["India", "Germany", "United States", "United Kingdom"],
+    hit_id: "HIT-DEMO001-7d9571f0d1c2",
+    pmid: "DEMO001",
+    doi: "10.1000/clinixai.demo001",
+    title: "Acetaminophen-induced acute liver injury: a case report from Germany",
+    journal: "Journal of Clinical Pharmacovigilance",
+    publication_date: "2024 May 14",
+    product_name: "Paracetamol",
+    normalized_identity: "Acetaminophen",
+    matched_term: "Tylenol",
+    match_type: "brand",
+    match_source: "CLIENT_PRODUCT_MASTER",
+    detected_strength: "500 mg",
+    detected_formulation: "tablet",
+    company_product_status: "company_product",
+    country_of_interest: "Germany",
+    author_country: "Germany",
+    primary_author: "Rao M",
+    all_authors: ["Rao M", "Sharma K", "Miller A"],
+    mah_country_status: "mah_country_match",
+    mah_country_match: true,
+    pii_present: true,
+    pii_findings: [
+      {
+        pii_type: "age",
+        value: "45",
+        evidence: "A 45-year-old male patient in Germany...",
+        confidence: 0.85,
+        qc_required: false,
+      },
+      {
+        pii_type: "sex_male",
+        value: "male",
+        evidence: "A 45-year-old male patient in Germany...",
+        confidence: 0.75,
+        qc_required: true,
+      },
+    ],
+    confidence_score: 0.8333,
+    qc_required: true,
+    qc_flags: [
+      {
+        field_name: "pii",
+        severity: "low",
+        reason: "Some PII findings require manual verification.",
+      },
+    ],
+    hits_status: "ready_for_screening",
+    screening_status: "pending",
+    evidence_sentence:
+      "A 45-year-old male patient in Germany developed acute liver injury after receiving Tylenol 500 mg tablet for fever.",
+    ai_summary:
+      "One company product was identified. The article reports a 45-year-old male from Germany who developed acute liver injury after Tylenol 500 mg tablet. The detected country is within the MAH territory. The article is ready for Screening.",
   },
 ];
 
-const rawMockArticles = [
-  {
-    sno: 1,
-    pmid: "38912721",
-    doi: "10.1002/pds.5421",
-    primaryAuthor: "Schmidt M.",
-    primaryAuthorCountry: "Germany",
-    authors: "Schmidt M.; Weber L.",
-    title: "Severe hepatic injury following exposure to acetaminophen tablets",
-    pii: "Yes",
-    textAvailability: "Abstract",
-    fullTextLink: "",
-  },
-  {
-    sno: 2,
-    pmid: "38912722",
-    doi: "10.1111/jcp.1290",
-    primaryAuthor: "Patel S.",
-    primaryAuthorCountry: "India",
-    authors: "Patel S.; Rao V.; Kumar A.",
-    title: "Injection-related medication error with paracetamol in hospital practice",
-    pii: "No",
-    textAvailability: "Full Text",
-    fullTextLink: "https://example.com/fulltext/38912722",
-  },
-];
+function percent(value: number) {
+  return `${Math.round(value * 100)}%`;
+}
 
-function findProduct(productId: string, productName: string) {
-  const id = productId.trim().toLowerCase();
-  const name = productName.trim().toLowerCase();
+function clean(value?: string | null) {
+  if (!value) return "—";
+  return value.replaceAll("_", " ");
+}
+
+export default function HomePage() {
+  const [hits, setHits] = useState<Hit[]>(hitsData);
+  const [search, setSearch] = useState("");
+  const [selectedHit, setSelectedHit] = useState<Hit | null>(null);
+  const [activeTab, setActiveTab] = useState("Overview");
+  const [toast, setToast] = useState("");
+
+  const filteredHits = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    if (!query) return hits;
+
+    return hits.filter((hit) =>
+      [
+        hit.pmid,
+        hit.product_name,
+        hit.country_of_interest,
+        hit.primary_author,
+        hit.title,
+        hit.journal,
+        hit.hits_status,
+        hit.screening_status,
+      ]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query))
+    );
+  }, [hits, search]);
+
+  const metrics = useMemo(() => {
+    const total = hits.length;
+    const ready = hits.filter(
+      (hit) => hit.hits_status === "ready_for_screening"
+    ).length;
+    const qcPending = hits.filter((hit) => hit.qc_required).length;
+    const avgConfidence =
+      total > 0
+        ? hits.reduce((sum, hit) => sum + hit.confidence_score, 0) / total
+        : 0;
+    const mahMatches = hits.filter((hit) => hit.mah_country_match).length;
+
+    return {
+      total,
+      ready,
+      qcPending,
+      avgConfidence,
+      mahRate: total > 0 ? mahMatches / total : 0,
+    };
+  }, [hits]);
+
+  function openReview(hit: Hit) {
+    setSelectedHit(hit);
+    setActiveTab("Overview");
+  }
+
+  function approveToScreening() {
+    if (!selectedHit) return;
+
+    const updatedHit: Hit = {
+      ...selectedHit,
+      hits_status: "completed",
+      screening_status: "ready",
+    };
+
+    setHits((current) =>
+      current.map((hit) => (hit.hit_id === selectedHit.hit_id ? updatedHit : hit))
+    );
+
+    setSelectedHit(updatedHit);
+    setToast("Article successfully sent to Screening.");
+
+    window.setTimeout(() => {
+      setToast("");
+    }, 2500);
+  }
 
   return (
-    productMaster.find((p) => p.productId.toLowerCase() === id) ||
-    productMaster.find((p) => p.product.toLowerCase() === name) ||
-    productMaster.find((p) => p.inn.toLowerCase() === name) ||
-    productMaster.find((p) => p.synonyms.includes(name)) ||
-    null
-  );
-}
-
-function buildAutoQuery(
-  product: (typeof productMaster)[number] | null,
-  fallbackText: string,
-) {
-  if (!product) return fallbackText.trim();
-
-  const terms = [product.product, product.inn, ...product.synonyms]
-    .filter(Boolean)
-    .map((term) => `"${term}"`);
-
-  return `(${terms.join(" OR ")}) AND ("adverse event" OR toxicity OR safety OR injury)`;
-}
-
-function applyDateFilter(
-  query: string,
-  dateMode: string,
-  startDate: string,
-  endDate: string,
-  calendarRunId: string,
-) {
-  let finalQuery = query.trim();
-
-  if (dateMode === "Specific date" && startDate) {
-    finalQuery += ` AND "${startDate}"[Date - Publication]`;
-  }
-
-  if (dateMode === "Date range" && startDate && endDate) {
-    finalQuery += ` AND ("${startDate}"[Date - Publication] : "${endDate}"[Date - Publication])`;
-  }
-
-  if (dateMode === "Calendar run" && calendarRunId) {
-    finalQuery += ` /* Calendar Run: ${calendarRunId} */`;
-  }
-
-  return finalQuery;
-}
-
-function enrichArticle(
-  article: (typeof rawMockArticles)[number],
-  product: (typeof productMaster)[number] | null,
-) {
-  const resolvedProduct = product || productMaster[0];
-  const text = article.title.toLowerCase();
-
-  const matchedSynonym = resolvedProduct.synonyms.find((s) => text.includes(s));
-  const matchedVariant = resolvedProduct.variants.find((v) => text.includes(v.toLowerCase()));
-
-  return {
-    ...article,
-    product: resolvedProduct.product,
-    productId: resolvedProduct.productId,
-    inn: resolvedProduct.inn,
-    productVariant: matchedVariant || "Not confirmed",
-    mahCountry: resolvedProduct.mahCountries.includes(article.primaryAuthorCountry)
-      ? article.primaryAuthorCountry
-      : "Needs verification",
-    knowledgeMatch: matchedSynonym || "No direct synonym match",
-    stage: "Hits",
-    status: matchedSynonym ? "Ready for QC" : "Needs QC Review",
-    decision: "",
-  };
-}
-
-export default function Home() {
-  const [active, setActive] = useState("Search");
-  const [searchMode, setSearchMode] = useState<"Automatic" | "Manual">("Automatic");
-  const [productId, setProductId] = useState("PID-001");
-  const [productName, setProductName] = useState("");
-  const [manualQuery, setManualQuery] = useState("");
-  const [source, setSource] = useState("PubMed");
-  const [limit, setLimit] = useState("50");
-
-  const [dateMode, setDateMode] = useState("Any date");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [calendarRunId, setCalendarRunId] = useState("");
-
-  const [records, setRecords] = useState<ReturnType<typeof enrichArticle>[]>([]);
-  const [jobStatus, setJobStatus] = useState("Ready");
-  const [generatedQuery, setGeneratedQuery] = useState("");
-
-  const resolvedProduct = useMemo(
-    () => findProduct(productId, productName),
-    [productId, productName],
-  );
-
-  function executeSearch() {
-    setJobStatus("Running");
-
-    const baseQuery =
-      searchMode === "Automatic"
-        ? buildAutoQuery(resolvedProduct, manualQuery)
-        : manualQuery.trim();
-
-    const finalQuery = applyDateFilter(
-      baseQuery || "No product/query provided",
-      dateMode,
-      startDate,
-      endDate,
-      calendarRunId,
-    );
-
-    setGeneratedQuery(finalQuery);
-
-    setTimeout(() => {
-      const enriched = rawMockArticles.map((article) => enrichArticle(article, resolvedProduct));
-      setRecords(enriched);
-      setJobStatus("Completed");
-    }, 500);
-  }
-
-  function sendToScreening() {
-    setRecords((prev) =>
-      prev.map((r) => ({
-        ...r,
-        stage: "Screening",
-        status: "Pending Screening",
-      })),
-    );
-    setActive("Screening");
-  }
-
-  function runScreening() {
-    setRecords((prev) =>
-      prev.map((r) => ({
-        ...r,
-        status: "Screening Completed",
-        decision: r.pii === "Yes" ? "Include" : "Review",
-      })),
-    );
-  }
-
-  const hits = records.filter((r) => r.stage === "Hits");
-  const screening = records.filter((r) => r.stage === "Screening");
-
-  return (
-    <main className="cx-app">
-      <header className="cx-topbar">
+    <main className={`app-shell ${selectedHit ? "review-open" : ""}`}>
+      <header className="topbar">
         <div>
-          <div className="cx-brand">ClinixAI Nexus</div>
-          <div className="cx-subbrand">Literature Screening Enterprise MVP</div>
+          <div className="brand">ClinixAI</div>
+          <div className="subtitle">Literature Intelligence Workspace</div>
         </div>
 
-        <div className="cx-env">PRODUCTION</div>
-
-        <div className="cx-user">
-          <div>Althaf (Super User)</div>
-          <span>Novartis Literature Review</span>
+        <div className="topbar-meta">
+          <span>Project: Demo</span>
+          <span>User: Madhu</span>
+          <span className="prod-badge">PROD</span>
         </div>
       </header>
 
-      <nav className="cx-nav">
-        {navItems.map((item) => (
-          <button
-            key={item}
-            className={active === item ? "active" : ""}
-            onClick={() => setActive(item)}
-          >
+      <nav className="nav-tabs">
+        {[
+          "Dashboard",
+          "Hits",
+          "Screening",
+          "Intake",
+          "QC",
+          "Reports",
+          "Audit",
+          "Knowledge",
+        ].map((item, index) => (
+          <button key={item} className={`nav-item ${index === 1 ? "active" : ""}`}>
             {item}
           </button>
         ))}
       </nav>
 
-      <section className="cx-status-strip">
-        <div className="cx-status-tab active">
-          <span>Search Job</span>
-          <b>{jobStatus}</b>
-        </div>
-        <div className="cx-status-tab">
-          <span>Mode</span>
-          <b>{searchMode}</b>
-        </div>
-        <div className="cx-status-tab">
-          <span>Date</span>
-          <b>{dateMode}</b>
-        </div>
-        <div className="cx-status-tab">
-          <span>Hits</span>
-          <b>{hits.length}</b>
-        </div>
-        <div className="cx-status-tab">
-          <span>Screening</span>
-          <b>{screening.length}</b>
-        </div>
-        <div className="cx-status-tab">
-          <span>Knowledge</span>
-          <b>{resolvedProduct ? "Loaded" : "Partial"}</b>
-        </div>
+      <section className="metrics-grid">
+        <MetricCard label="Total Hits" value={String(metrics.total)} />
+        <MetricCard label="Ready for Screening" value={String(metrics.ready)} />
+        <MetricCard
+          label="QC Pending"
+          value={String(metrics.qcPending)}
+          tone="warning"
+        />
+        <MetricCard
+          label="Average Confidence"
+          value={percent(metrics.avgConfidence)}
+        />
+        <MetricCard
+          label="MAH Match Rate"
+          value={percent(metrics.mahRate)}
+          tone="success"
+        />
       </section>
 
-      {active === "Search" && (
-        <>
-          <section className="cx-module">
-            <div className="cx-ribbon cx-ribbon-search" />
-
-            <div className="cx-module-title cx-spread">
-              <span>Search Configuration</span>
-              <small>All fields optional · Source defaults to PubMed</small>
+      <section className="workspace-grid">
+        <section className="panel">
+          <div className="panel-header">
+            <div>
+              <h1>Active Hits</h1>
+              <p>{filteredHits.length} article ready for review</p>
             </div>
 
-            <div className="cx-search-grid">
-              <div className="cx-field-group cx-query">
-                <label>Search Mode</label>
-                <select
-                  value={searchMode}
-                  onChange={(e) => setSearchMode(e.target.value as "Automatic" | "Manual")}
-                >
-                  <option>Automatic</option>
-                  <option>Manual</option>
-                </select>
-
-                <label>
-                  Boolean Search String {searchMode === "Automatic" ? "(optional)" : "(manual)"}
-                </label>
-                <textarea
-                  value={manualQuery}
-                  onChange={(e) => setManualQuery(e.target.value)}
-                  placeholder='Optional: paracetamol AND ("adverse event" OR toxicity)'
-                />
-              </div>
-
-              <div className="cx-field-group">
-                <label>Product ID (optional)</label>
-                <input
-                  value={productId}
-                  onChange={(e) => setProductId(e.target.value)}
-                  placeholder="PID-001"
-                />
-
-                <label>Product Name (optional)</label>
-                <input
-                  value={productName}
-                  onChange={(e) => setProductName(e.target.value)}
-                  placeholder="Paracetamol"
-                />
-
-                <label>Source</label>
-                <select value={source} onChange={(e) => setSource(e.target.value)}>
-                  <option>PubMed</option>
-                </select>
-              </div>
-
-              <div className="cx-field-group">
-                <label>Date Mode</label>
-                <select value={dateMode} onChange={(e) => setDateMode(e.target.value)}>
-                  <option>Any date</option>
-                  <option>Specific date</option>
-                  <option>Date range</option>
-                  <option>Calendar run</option>
-                </select>
-
-                {dateMode !== "Any date" && (
-                  <>
-                    <label>{dateMode === "Specific date" ? "Search Date" : "Start Date"}</label>
-                    <input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                    />
-                  </>
-                )}
-
-                {dateMode === "Date range" && (
-                  <>
-                    <label>End Date</label>
-                    <input
-                      type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                    />
-                  </>
-                )}
-
-                {dateMode === "Calendar run" && (
-                  <>
-                    <label>Calendar Run ID</label>
-                    <input
-                      value={calendarRunId}
-                      onChange={(e) => setCalendarRunId(e.target.value)}
-                      placeholder="CAL-2026-001"
-                    />
-                  </>
-                )}
-
-                <label>Maximum PMIDs</label>
-                <select value={limit} onChange={(e) => setLimit(e.target.value)}>
-                  <option>20</option>
-                  <option>50</option>
-                  <option>100</option>
-                  <option>250</option>
-                  <option>500</option>
-                </select>
-
-                <div className="cx-kv">
-                  <div>
-                    <span>Resolved Product</span>
-                    <b>{resolvedProduct?.product || "Not resolved"}</b>
-                  </div>
-                  <div>
-                    <span>INN</span>
-                    <b>{resolvedProduct?.inn || "-"}</b>
-                  </div>
-                  <div>
-                    <span>Synonyms</span>
-                    <b>{resolvedProduct?.synonyms.length || 0}</b>
-                  </div>
-                  <div>
-                    <span>MAH Countries</span>
-                    <b>{resolvedProduct?.mahCountries.length || 0}</b>
-                  </div>
-                </div>
-
-                <button className="cx-execute" onClick={executeSearch}>
-                  {jobStatus === "Running" ? "Running..." : "▶ Execute"}
-                </button>
-              </div>
+            <div className="panel-actions">
+              <input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search PMID, product, author..."
+                className="search-input"
+              />
+              <button className="secondary-button">Refresh</button>
+              <button className="primary-button">Export</button>
             </div>
-
-            {generatedQuery && (
-              <div className="cx-query-preview">
-                <b>Generated Query:</b> {generatedQuery}
-              </div>
-            )}
-          </section>
-
-          <section className="cx-module">
-            <div className="cx-ribbon cx-ribbon-pipeline" />
-
-            <div className="cx-module-title cx-spread">
-              <span>Hits Output</span>
-              <small>{hits.length} article(s) generated · QC verifies exceptions</small>
-            </div>
-
-            <HitsTable records={hits} />
-
-            {hits.length > 0 && (
-              <button className="cx-execute" onClick={sendToScreening}>
-                Send to Screening →
-              </button>
-            )}
-          </section>
-        </>
-      )}
-
-      {active === "Screening" && (
-        <section className="cx-module">
-          <div className="cx-ribbon cx-ribbon-pipeline" />
-
-          <div className="cx-module-title cx-spread">
-            <span>Screening Workspace</span>
-            <small>{screening.length} article(s) pending</small>
           </div>
 
-          <HitsTable records={screening} showDecision />
+          <div className="filters-row">
+            <button>Product ▾</button>
+            <button>Country ▾</button>
+            <button>Status ▾</button>
+            <button>Confidence ▾</button>
+            <button>Date ▾</button>
+          </div>
 
-          {screening.length > 0 && (
-            <button className="cx-execute" onClick={runScreening}>
-              Run AI Screening
-            </button>
-          )}
+          <div className="table-wrap">
+            <table className="hits-table">
+              <thead>
+                <tr>
+                  <th>QC</th>
+                  <th>PMID</th>
+                  <th>Product</th>
+                  <th>Country</th>
+                  <th>Author</th>
+                  <th>Confidence</th>
+                  <th>Status</th>
+                  <th>Screening</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {filteredHits.map((hit) => (
+                  <tr
+                    key={hit.hit_id}
+                    className={
+                      selectedHit?.hit_id === hit.hit_id ? "selected-row" : ""
+                    }
+                  >
+                    <td>
+                      <span
+                        className={
+                          hit.qc_required ? "qc-chip warning" : "qc-chip success"
+                        }
+                      >
+                        {hit.qc_required ? "QC" : "Pass"}
+                      </span>
+                    </td>
+
+                    <td className="mono">{hit.pmid}</td>
+
+                    <td>
+                      <strong>{hit.product_name}</strong>
+                      <div className="muted-small">
+                        {clean(hit.company_product_status)}
+                      </div>
+                    </td>
+
+                    <td>{hit.country_of_interest}</td>
+                    <td>{hit.primary_author}</td>
+
+                    <td>
+                      <span className="confidence-pill">
+                        {percent(hit.confidence_score)}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span
+                        className={
+                          hit.hits_status === "completed"
+                            ? "status-pill completed"
+                            : "status-pill"
+                        }
+                      >
+                        {clean(hit.hits_status)}
+                      </span>
+                    </td>
+
+                    <td>{clean(hit.screening_status)}</td>
+
+                    <td>
+                      <button
+                        className="review-button"
+                        onClick={() => openReview(hit)}
+                      >
+                        {selectedHit?.hit_id === hit.hit_id ? "Opened" : "Review"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
-      )}
+
+        {selectedHit && (
+          <ReviewWorkspace
+            hit={selectedHit}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            onClose={() => setSelectedHit(null)}
+            onApprove={approveToScreening}
+          />
+        )}
+      </section>
+
+      {toast && <div className="toast">{toast}</div>}
     </main>
   );
 }
 
-function HitsTable({
-  records,
-  showDecision = false,
+function MetricCard({
+  label,
+  value,
+  tone,
 }: {
-  records: ReturnType<typeof enrichArticle>[];
-  showDecision?: boolean;
+  label: string;
+  value: string;
+  tone?: "success" | "warning";
 }) {
   return (
-    <table className="cx-table">
-      <thead>
-        <tr>
-          <th>S.No</th>
-          <th>PMID</th>
-          <th>DOI</th>
-          <th>Primary Author</th>
-          <th>Primary Author Country</th>
-          <th>Authors</th>
-          <th>Product</th>
-          <th>INN</th>
-          <th>Product Variant</th>
-          <th>MAH Country</th>
-          <th>PII</th>
-          <th>Full Text / Abstract</th>
-          <th>Full Text Link</th>
-          <th>Knowledge Match</th>
-          <th>Status</th>
-          {showDecision && <th>Decision</th>}
-        </tr>
-      </thead>
-
-      <tbody>
-        {records.length === 0 ? (
-          <tr>
-            <td colSpan={showDecision ? 16 : 15} className="cx-empty">
-              empty
-            </td>
-          </tr>
-        ) : (
-          records.map((row) => (
-            <tr key={row.pmid}>
-              <td>{row.sno}</td>
-              <td>{row.pmid}</td>
-              <td>{row.doi}</td>
-              <td>{row.primaryAuthor}</td>
-              <td>{row.primaryAuthorCountry}</td>
-              <td>{row.authors}</td>
-              <td>{row.product}</td>
-              <td>{row.inn}</td>
-              <td>{row.productVariant}</td>
-              <td>{row.mahCountry}</td>
-              <td>{row.pii}</td>
-              <td>{row.textAvailability}</td>
-              <td>{row.fullTextLink || "-"}</td>
-              <td>{row.knowledgeMatch}</td>
-              <td>{row.status}</td>
-              {showDecision && <td>{row.decision || "-"}</td>}
-            </tr>
-          ))
-        )}
-      </tbody>
-    </table>
+    <div className={`metric-card ${tone ?? ""}`}>
+      <div className="metric-label">{label}</div>
+      <div className="metric-value">{value}</div>
+    </div>
   );
 }
