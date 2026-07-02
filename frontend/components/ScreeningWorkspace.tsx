@@ -14,10 +14,22 @@ type Props = {
   onRerunAI: (reason: string) => void;
 };
 
-const tabs = ["Overview", "Eligibility", "Safety Assessment", "AI Assessment", "Flags", "Audit"];
+const tabs = [
+  "Overview",
+  "Product Assessment",
+  "Safety Assessment",
+  "Regulatory Assessment",
+  "AI Assessment",
+  "Flags",
+  "Audit",
+];
 
 function percent(value: number) {
   return `${Math.round(value * 100)}%`;
+}
+
+function list(value: string[]) {
+  return value.length ? value.join(", ") : "—";
 }
 
 function clean(value?: string | null) {
@@ -80,13 +92,18 @@ export default function ScreeningWorkspace({
 
       <div className="review-content">
         {activeTab === "Overview" && (
-          <Section title="Article Metadata">
+          <Section title="Hits Output Carried Forward">
+            <Row label="QC" value={article.qc_required ? "QC Required" : "Pass"} />
+            <Row label="PMID" value={article.pmid} />
             <Row label="Title" value={article.title} />
             <Row label="Journal" value={article.journal} />
             <Row label="Publication Date" value={article.publication_date} />
+            <Row label="Product" value={article.product_name} />
             <Row label="Country" value={article.country_of_interest} />
             <Row label="Primary Author" value={article.primary_author} />
-            <Row label="Screening Decision" value={article.screening_decision} />
+            <Row label="Confidence" value={percent(article.confidence_score)} />
+            <Row label="Hits Status" value={article.hits_status} />
+            <Row label="Screening Status" value={article.screening_status} />
 
             <div className="evidence-card">
               <strong>Evidence Sentence</strong>
@@ -95,39 +112,32 @@ export default function ScreeningWorkspace({
           </Section>
         )}
 
-        {activeTab === "Eligibility" && (
-          <Section title="Eligibility Assessment">
-            <div className="evidence-card">
-              <strong>Inclusion Criteria</strong>
-              <p>Human safety information, product exposure, reporter, and patient details present.</p>
-            </div>
+        {activeTab === "Product Assessment" && (
+          <Section title="Product Assessment">
+            <Row label="Company Suspect Drug(s)" value={list(article.company_suspect_drugs)} />
+            <Row label="Active MAH" value={article.active_mah} />
+            <Row label="Co-Suspect Drug(s)" value={list(article.co_suspect_drugs)} />
+            <Row label="Concomitant Medication(s)" value={list(article.concomitant_medications)} />
+            <Row label="Treatment Medication(s)" value={list(article.treatment_medications)} />
 
             <div className="evidence-card">
-              <strong>Exclusion Criteria</strong>
-              <p>No clear exclusion reason identified at Screening stage.</p>
-            </div>
-
-            <div className="evidence-card">
-              <strong>Reason</strong>
+              <strong>Reviewer Note</strong>
               <p>
-                Article requires human Screening because it contains potential safety information
-                and may require Intake review.
+                Product classification remains a screening-level assessment. Detailed dose,
+                indication, action taken, and drug chronology will be handled in Intake.
               </p>
             </div>
           </Section>
         )}
 
         {activeTab === "Safety Assessment" && (
-          <Section title="Potential Safety Information">
-            <Row label="Adverse Event / Safety Event" value={article.adverse_event} />
-            <Row label="Suspect Product" value={article.suspect_product} />
-            <Row label="Patient Information" value={article.patient} />
-            <Row label="Reporter Information" value={article.reporter} />
-            <Row label="Minimum Criteria Assessment" value={article.minimum_criteria} />
-            <Row
-              label="Validity Recommendation for Intake"
-              value={article.validity_recommendation}
-            />
+          <Section title="Safety Assessment">
+            <Row label="Clinical Event(s)" value={list(article.clinical_events)} />
+            <Row label="Special Situation(s)" value={list(article.special_situations)} />
+            <Row label="Event Severity" value={article.event_severity} />
+            <Row label="Seriousness" value={article.seriousness} />
+            <Row label="Patient Safety" value={article.patient_safety} />
+            <Row label="Patient Identification / PII" value={article.patient_identification_pii} />
 
             <div className="evidence-card">
               <strong>PV Workflow Note</strong>
@@ -135,6 +145,21 @@ export default function ScreeningWorkspace({
                 This is still a screened literature article. It becomes a PV case only after
                 Intake review and booking are completed.
               </p>
+            </div>
+          </Section>
+        )}
+
+        {activeTab === "Regulatory Assessment" && (
+          <Section title="Regulatory Assessment">
+            <Row label="Country of Interest (COI)" value={article.coi} />
+            <Row label="Active MAH" value={article.active_mah} />
+            <Row label="Patient Safety" value={article.patient_safety} />
+            <Row label="Patient Identification / PII" value={article.patient_identification_pii} />
+            <Row label="Screening Decision" value={article.screening_decision} />
+
+            <div className="evidence-card">
+              <strong>Screening Reasoning</strong>
+              <p>{article.screening_reasoning}</p>
             </div>
           </Section>
         )}
@@ -147,8 +172,8 @@ export default function ScreeningWorkspace({
             </div>
 
             <div className="evidence-card">
-              <strong>Reasoning</strong>
-              <p>{article.ai_reasoning}</p>
+              <strong>Evidence Used</strong>
+              <p>Hits output, product detection, MAH validation, PII detection, COI logic, flags.</p>
             </div>
 
             <div className="evidence-card">
@@ -163,6 +188,8 @@ export default function ScreeningWorkspace({
 
         {activeTab === "Flags" && (
           <Section title="Reviewer Attention Items">
+            {article.flags.length === 0 && <p>No flags detected.</p>}
+
             {article.flags.map((flag) => (
               <div className="flag-card" key={flag}>
                 ⚠ {flag}
@@ -236,7 +263,7 @@ export default function ScreeningWorkspace({
           className="primary-action"
           onClick={() =>
             setModal({
-              title: "Reason required to approve Screening article to Intake",
+              title: "Reason required to approve Screening output to Intake",
               action: "approve",
             })
           }
