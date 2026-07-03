@@ -9,20 +9,39 @@ Input:
 
 Output:
     Screening Output JSON
+
+Pipeline:
+    Canonical Article + Hits Output
+        ↓
+    Product / MAH / COI Assessment
+        ↓
+    Safety / Special Situation Assessment
+        ↓
+    Severity / Seriousness Assessment
+        ↓
+    Patient Safety / PII Assessment
+        ↓
+    Screening Builder
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Mapping
 
-from .rules import SPECIAL_SITUATIONS, SERIOUSNESS_TERMS, SEVERITY_TERMS, EXCLUSION_TERMS
+from backend.services.screening import ScreeningBuilder
+
+from .rules import EXCLUSION_TERMS, SERIOUSNESS_TERMS, SEVERITY_TERMS, SPECIAL_SITUATIONS
 
 
 class ScreeningOrchestrator:
+    def __init__(self) -> None:
+        self.screening_builder = ScreeningBuilder()
+
     def run(
         self,
         tenant_id: str,
@@ -52,8 +71,7 @@ class ScreeningOrchestrator:
 
         patient_safety = (
             "Yes"
-            if clinical_events != ["Not identified"]
-            or special_situations != ["None identified"]
+            if clinical_events != ["Not identified"] or special_situations != ["None identified"]
             else "No"
         )
 
@@ -86,13 +104,12 @@ class ScreeningOrchestrator:
             exclusions=exclusions,
         )
 
-        return {
+        screening_output = {
             "tenant_id": tenant_id,
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "pmid": article.get("pmid") or hits_output.get("pmid"),
             "screening_status": "ready",
             "intake_status": "pending",
-
             "company_suspect_drugs": company_suspects,
             "active_mah": active_mah,
             "co_suspect_drugs": self._as_list(
@@ -107,7 +124,6 @@ class ScreeningOrchestrator:
                 hits_output.get("treatment_medications"),
                 ["Not reported"],
             ),
-
             "clinical_events": clinical_events,
             "special_situations": special_situations,
             "event_severity": severity,
@@ -115,7 +131,6 @@ class ScreeningOrchestrator:
             "patient_safety": patient_safety,
             "patient_identification_pii": pii,
             "coi": coi,
-
             "screening_decision": decision,
             "screening_reasoning": (
                 "Screening output generated from approved Hits output using product, "
@@ -125,6 +140,14 @@ class ScreeningOrchestrator:
             "exclusion_terms_detected": exclusions,
             "flags": flags,
         }
+
+        row = self.screening_builder.build(
+            tenant_id=tenant_id,
+            article=article,
+            screening_output=screening_output,
+        )
+
+        return asdict(row)
 
     @staticmethod
     def _article_text(article: Mapping[str, Any], hits_output: Mapping[str, Any]) -> str:
@@ -143,10 +166,13 @@ class ScreeningOrchestrator:
     def _as_list(value: Any, fallback: list[str]) -> list[str]:
         if value is None:
             return fallback
+
         if isinstance(value, list):
             return value if value else fallback
+
         if isinstance(value, str):
             return [value] if value.strip() else fallback
+
         return fallback
 
     @staticmethod
@@ -163,6 +189,7 @@ class ScreeningOrchestrator:
         for severity, terms in SEVERITY_TERMS.items():
             if any(term in text for term in terms):
                 return severity
+
         return "Not mentioned"
 
     @staticmethod
