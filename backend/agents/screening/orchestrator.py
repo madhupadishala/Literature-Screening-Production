@@ -1,176 +1,258 @@
+"""
+orchestrator.py
+---------------
+ClinixAI Screening Orchestrator.
+
+Input:
+    Canonical Article
+    Hits Output
+
+Output:
+    Screening Output JSON
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Mapping
 
 from .rules import SPECIAL_SITUATIONS, SERIOUSNESS_TERMS, SEVERITY_TERMS, EXCLUSION_TERMS
 
 
-def _text(article: dict, hits_output: dict | None = None) -> str:
-    hits_output = hits_output or {}
-    return " ".join(
-        str(value or "")
-        for value in [
+class ScreeningOrchestrator:
+    def run(
+        self,
+        tenant_id: str,
+        article: Mapping[str, Any],
+        hits_output: Mapping[str, Any],
+    ) -> Dict[str, Any]:
+        text = self._article_text(article, hits_output)
+
+        company_suspects = self._as_list(
+            hits_output.get("company_suspect_drugs")
+            or hits_output.get("matched_products")
+            or hits_output.get("suspect_products"),
+            ["Not identified"],
+        )
+
+        clinical_events = self._as_list(
+            hits_output.get("clinical_events")
+            or hits_output.get("events")
+            or hits_output.get("adverse_events"),
+            ["Not identified"],
+        )
+
+        special_situations = self._detect_special_situations(text)
+        seriousness = self._detect_seriousness(text)
+        severity = self._detect_severity(text)
+        exclusions = self._detect_exclusion(text)
+
+        patient_safety = (
+            "Yes"
+            if clinical_events != ["Not identified"]
+            or special_situations != ["None identified"]
+            else "No"
+        )
+
+        pii = (
+            "Yes"
+            if hits_output.get("patient_identification")
+            or hits_output.get("pii_detected")
+            or hits_output.get("patient_identification_pii") == "Yes"
+            else "No"
+        )
+
+        active_mah = "Yes" if hits_output.get("mah_active") is True else "Unknown"
+        coi = "Yes" if hits_output.get("country_of_interest") else "Uncertain"
+
+        if exclusions and patient_safety == "No":
+            decision = "Exclude"
+        elif patient_safety == "Yes" and company_suspects != ["Not identified"]:
+            decision = "Proceed to Intake"
+        else:
+            decision = "Manual Review Required"
+
+        flags = self._build_flags(
+            company_suspects=company_suspects,
+            active_mah=active_mah,
+            coi=coi,
+            patient_safety=patient_safety,
+            pii=pii,
+            clinical_events=clinical_events,
+            special_situations=special_situations,
+            exclusions=exclusions,
+        )
+
+        return {
+            "tenant_id": tenant_id,
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "pmid": article.get("pmid") or hits_output.get("pmid"),
+            "screening_status": "ready",
+            "intake_status": "pending",
+
+            "company_suspect_drugs": company_suspects,
+            "active_mah": active_mah,
+            "co_suspect_drugs": self._as_list(
+                hits_output.get("co_suspect_drugs"),
+                ["None identified"],
+            ),
+            "concomitant_medications": self._as_list(
+                hits_output.get("concomitant_medications"),
+                ["Not reported"],
+            ),
+            "treatment_medications": self._as_list(
+                hits_output.get("treatment_medications"),
+                ["Not reported"],
+            ),
+
+            "clinical_events": clinical_events,
+            "special_situations": special_situations,
+            "event_severity": severity,
+            "seriousness": seriousness,
+            "patient_safety": patient_safety,
+            "patient_identification_pii": pii,
+            "coi": coi,
+
+            "screening_decision": decision,
+            "screening_reasoning": (
+                "Screening output generated from approved Hits output using product, "
+                "MAH, COI, patient identification, clinical event, special situation, "
+                "severity, seriousness, and exclusion rule checks."
+            ),
+            "exclusion_terms_detected": exclusions,
+            "flags": flags,
+        }
+
+    @staticmethod
+    def _article_text(article: Mapping[str, Any], hits_output: Mapping[str, Any]) -> str:
+        parts = [
             article.get("title"),
             article.get("abstract"),
-            article.get("evidence_sentence"),
             article.get("journal"),
+            article.get("evidence_sentence"),
             hits_output.get("evidence_sentence"),
             hits_output.get("ai_reasoning"),
         ]
-    ).lower()
 
+        return "\n\n".join(str(part).strip() for part in parts if part).lower()
 
-def _as_list(value, fallback):
-    if value is None:
+    @staticmethod
+    def _as_list(value: Any, fallback: list[str]) -> list[str]:
+        if value is None:
+            return fallback
+        if isinstance(value, list):
+            return value if value else fallback
+        if isinstance(value, str):
+            return [value] if value.strip() else fallback
         return fallback
-    if isinstance(value, list):
-        return value if value else fallback
-    if isinstance(value, str):
-        return [value] if value.strip() else fallback
-    return fallback
 
+    @staticmethod
+    def _detect_special_situations(text: str) -> list[str]:
+        found = [term for term in SPECIAL_SITUATIONS if term in text]
+        return found or ["None identified"]
 
-def detect_special_situations(text: str):
-    found = [term for term in SPECIAL_SITUATIONS if term in text]
-    return found or ["None identified"]
+    @staticmethod
+    def _detect_seriousness(text: str) -> str:
+        return "Serious" if any(term in text for term in SERIOUSNESS_TERMS) else "Not mentioned"
 
+    @staticmethod
+    def _detect_severity(text: str) -> str:
+        for severity, terms in SEVERITY_TERMS.items():
+            if any(term in text for term in terms):
+                return severity
+        return "Not mentioned"
 
-def detect_seriousness(text: str):
-    for term in SERIOUSNESS_TERMS:
-        if term in text:
-            return "Serious"
-    return "Not mentioned"
+    @staticmethod
+    def _detect_exclusion(text: str) -> list[str]:
+        return [term for term in EXCLUSION_TERMS if term in text]
 
+    @staticmethod
+    def _build_flags(
+        company_suspects: list[str],
+        active_mah: str,
+        coi: str,
+        patient_safety: str,
+        pii: str,
+        clinical_events: list[str],
+        special_situations: list[str],
+        exclusions: list[str],
+    ) -> list[str]:
+        flags = []
 
-def detect_severity(text: str):
-    for severity, terms in SEVERITY_TERMS.items():
-        if any(term in text for term in terms):
-            return severity
-    return "Not mentioned"
+        if company_suspects == ["Not identified"]:
+            flags.append("Company suspect product missing")
 
+        if active_mah == "Unknown":
+            flags.append("MAH verification required")
 
-def detect_exclusion(text: str):
-    return [term for term in EXCLUSION_TERMS if term in text]
+        if coi == "Uncertain":
+            flags.append("COI uncertain")
+
+        if patient_safety == "No":
+            flags.append("No patient safety information detected")
+
+        if pii == "No":
+            flags.append("Patient identification not detected")
+
+        if clinical_events == ["Not identified"] and special_situations == ["None identified"]:
+            flags.append("Clinical event or special situation missing")
+
+        if exclusions:
+            flags.append("Potential exclusion criteria detected")
+
+        return flags
 
 
 def build_screening_output(article: dict, hits_output: dict) -> dict:
-    text = _text(article, hits_output)
-
-    company_suspects = _as_list(
-        hits_output.get("company_suspect_drugs")
-        or hits_output.get("matched_products")
-        or hits_output.get("suspect_products"),
-        ["Not identified"],
+    return ScreeningOrchestrator().run(
+        tenant_id=str(hits_output.get("tenant_id", "demo-tenant")),
+        article=article,
+        hits_output=hits_output,
     )
 
-    clinical_events = _as_list(
-        hits_output.get("clinical_events")
-        or hits_output.get("events")
-        or hits_output.get("adverse_events"),
-        ["Not identified"],
+
+def _load_json(path: str | Path) -> Dict[str, Any]:
+    file_path = Path(path).expanduser().resolve()
+
+    with file_path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="ClinixAI Screening Orchestrator")
+
+    parser.add_argument("--tenant-id", required=True)
+    parser.add_argument("--article", required=True)
+    parser.add_argument("--hits-output", required=True)
+    parser.add_argument("--output", required=False)
+
+    args = parser.parse_args()
+
+    article = _load_json(args.article)
+    hits_output = _load_json(args.hits_output)
+
+    orchestrator = ScreeningOrchestrator()
+
+    screening_output = orchestrator.run(
+        tenant_id=args.tenant_id,
+        article=article,
+        hits_output=hits_output,
     )
 
-    special_situations = detect_special_situations(text)
-    seriousness = detect_seriousness(text)
-    severity = detect_severity(text)
-    exclusions = detect_exclusion(text)
+    output_json = json.dumps(screening_output, indent=2, ensure_ascii=False)
 
-    patient_safety = (
-        "Yes"
-        if clinical_events != ["Not identified"] or special_situations != ["None identified"]
-        else "No"
-    )
+    if args.output:
+        output_path = Path(args.output).expanduser().resolve()
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(output_json, encoding="utf-8")
 
-    pii = (
-        "Yes"
-        if hits_output.get("patient_identification") or hits_output.get("pii_detected")
-        else "No"
-    )
+    print(output_json)
 
-    active_mah = "Yes" if hits_output.get("mah_active") is True else "Unknown"
-    coi = "Yes" if hits_output.get("country_of_interest") else "Uncertain"
-
-    if exclusions and patient_safety == "No":
-        decision = "Exclude"
-    elif patient_safety == "Yes" and company_suspects != ["Not identified"]:
-        decision = "Proceed to Intake"
-    else:
-        decision = "Manual Review Required"
-
-    return {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "screening_status": "ready",
-        "intake_status": "pending",
-        "company_suspect_drugs": company_suspects,
-        "active_mah": active_mah,
-        "co_suspect_drugs": _as_list(
-            hits_output.get("co_suspect_drugs"),
-            ["None identified"],
-        ),
-        "concomitant_medications": _as_list(
-            hits_output.get("concomitant_medications"),
-            ["Not reported"],
-        ),
-        "treatment_medications": _as_list(
-            hits_output.get("treatment_medications"),
-            ["Not reported"],
-        ),
-        "clinical_events": clinical_events,
-        "special_situations": special_situations,
-        "event_severity": severity,
-        "seriousness": seriousness,
-        "patient_safety": patient_safety,
-        "patient_identification_pii": pii,
-        "coi": coi,
-        "screening_decision": decision,
-        "screening_reasoning": (
-            "Screening output generated using product detection, MAH/COI logic, "
-            "patient identification, safety event detection, special situation rules, "
-            "severity and seriousness checks."
-        ),
-        "exclusion_terms_detected": exclusions,
-        "flags": build_flags(
-            company_suspects,
-            active_mah,
-            coi,
-            patient_safety,
-            pii,
-            clinical_events,
-            special_situations,
-            exclusions,
-        ),
-    }
+    return 0
 
 
-def build_flags(
-    company_suspects,
-    active_mah,
-    coi,
-    patient_safety,
-    pii,
-    clinical_events,
-    special_situations,
-    exclusions,
-):
-    flags = []
-
-    if company_suspects == ["Not identified"]:
-        flags.append("Company suspect product missing")
-
-    if active_mah == "Unknown":
-        flags.append("MAH verification required")
-
-    if coi == "Uncertain":
-        flags.append("COI uncertain")
-
-    if patient_safety == "No":
-        flags.append("No patient safety information detected")
-
-    if pii == "No":
-        flags.append("Patient identification not detected")
-
-    if clinical_events == ["Not identified"] and special_situations == ["None identified"]:
-        flags.append("Clinical event or special situation missing")
-
-    if exclusions:
-        flags.append("Potential exclusion criteria detected")
-
-    return flags
+if __name__ == "__main__":
+    raise SystemExit(main())
