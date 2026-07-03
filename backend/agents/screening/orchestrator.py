@@ -4,14 +4,14 @@ orchestrator.py
 ClinixAI Screening Orchestrator.
 
 Input:
-    Canonical Article
-    Hits Output
+    Canonical Article / Evidence Package Article
+    Hits Output Row
 
 Output:
     Screening Output JSON
 
 Pipeline:
-    Canonical Article + Hits Output
+    Article + Hits Output
         ↓
     Product / MAH / COI Assessment
         ↓
@@ -38,6 +38,24 @@ from backend.services.screening import ScreeningBuilder
 from .rules import EXCLUSION_TERMS, SERIOUSNESS_TERMS, SEVERITY_TERMS, SPECIAL_SITUATIONS
 
 
+EVENT_TERMS = [
+    "acute liver injury",
+    "liver injury",
+    "hepatic injury",
+    "hepatotoxicity",
+    "toxicity",
+    "rash",
+    "death",
+    "fatal",
+    "hospitalization",
+    "hospitalisation",
+    "adverse event",
+    "adverse reaction",
+    "side effect",
+    "drug reaction",
+]
+
+
 class ScreeningOrchestrator:
     def __init__(self) -> None:
         self.screening_builder = ScreeningBuilder()
@@ -53,7 +71,9 @@ class ScreeningOrchestrator:
         company_suspects = self._as_list(
             hits_output.get("company_suspect_drugs")
             or hits_output.get("matched_products")
-            or hits_output.get("suspect_products"),
+            or hits_output.get("suspect_products")
+            or hits_output.get("product_name")
+            or hits_output.get("normalized_identity"),
             ["Not identified"],
         )
 
@@ -61,30 +81,42 @@ class ScreeningOrchestrator:
             hits_output.get("clinical_events")
             or hits_output.get("events")
             or hits_output.get("adverse_events"),
-            ["Not identified"],
+            [],
         )
+
+        if not clinical_events:
+            detected_events = [term for term in EVENT_TERMS if term in text]
+            clinical_events = detected_events or ["Not identified"]
 
         special_situations = self._detect_special_situations(text)
         seriousness = self._detect_seriousness(text)
         severity = self._detect_severity(text)
         exclusions = self._detect_exclusion(text)
 
-        patient_safety = (
+        active_mah = (
             "Yes"
-            if clinical_events != ["Not identified"] or special_situations != ["None identified"]
-            else "No"
+            if hits_output.get("mah_active") is True
+            or hits_output.get("mah_country_match") is True
+            or hits_output.get("mah_country_status") == "mah_country_match"
+            else "Unknown"
         )
+
+        coi = "Yes" if hits_output.get("country_of_interest") else "Uncertain"
 
         pii = (
             "Yes"
             if hits_output.get("patient_identification")
             or hits_output.get("pii_detected")
             or hits_output.get("patient_identification_pii") == "Yes"
+            or hits_output.get("pii_present") is True
             else "No"
         )
 
-        active_mah = "Yes" if hits_output.get("mah_active") is True else "Unknown"
-        coi = "Yes" if hits_output.get("country_of_interest") else "Uncertain"
+        patient_safety = (
+            "Yes"
+            if clinical_events != ["Not identified"] or special_situations != ["None identified"]
+            else "No"
+        )
 
         if exclusions and patient_safety == "No":
             decision = "Exclude"
@@ -133,9 +165,9 @@ class ScreeningOrchestrator:
             "coi": coi,
             "screening_decision": decision,
             "screening_reasoning": (
-                "Screening output generated from approved Hits output using product, "
-                "MAH, COI, patient identification, clinical event, special situation, "
-                "severity, seriousness, and exclusion rule checks."
+                "Screening output generated from Hits output using product, MAH, COI, "
+                "patient identification, clinical event, special situation, severity, "
+                "seriousness, and exclusion rule checks."
             ),
             "exclusion_terms_detected": exclusions,
             "flags": flags,
@@ -154,9 +186,11 @@ class ScreeningOrchestrator:
         parts = [
             article.get("title"),
             article.get("abstract"),
+            article.get("text"),
             article.get("journal"),
             article.get("evidence_sentence"),
             hits_output.get("evidence_sentence"),
+            hits_output.get("ai_summary"),
             hits_output.get("ai_reasoning"),
         ]
 
