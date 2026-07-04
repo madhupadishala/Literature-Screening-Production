@@ -1,0 +1,225 @@
+{
+  "tenant_id": "demo-tenant",
+  "pmid": "DEMO001",
+  "hits_count": 1,
+  "hits": [
+    {
+      "hit_id": "HIT-DEMO001-bc71ae9f45b9",
+      "tenant_id": "demo-tenant",
+      "pmid": "DEMO001",
+      "doi": null,
+      "title": "Acetaminophen-induced acute liver injury: a case report from Germany",
+      "journal": "Journal of Clinical Pharmacovigilance",
+      "publication_date": "2024 May 14",
+      "publication_year": "2024",
+      "article_type": null,
+      "product_id": "PID-001",
+      "product_name": "Paracetamol",
+      "normalized_identity": "Acetaminophen",
+      "matched_term": "Acetaminophen",
+      "match_type": "generic_name",
+      "match_source": "CLIENT_PRODUCT_MASTER",
+      "company_product_status": "company_product",
+      "detected_strength": null,
+      "detected_formulation": null,
+      "primary_author": null,
+      "all_authors": [],
+      "author_country": "Germany",
+      "country_of_interest": "Germany",
+      "mah_country_status": "mah_country_match",
+      "mah_country_match": true,
+      "pii_present": false,
+      "pii_findings": [],
+      "confidence_score": 0.5333,
+      "qc_required": true,
+      "qc_flags": [
+        {
+          "field_name": "author",
+          "severity": "high",
+          "reason": "author value missing.",
+          "evidence": null
+        },
+        {
+          "field_name": "pii",
+          "severity": "high",
+          "reason": "pii value missing.",
+          "evidence": null
+        },
+        {
+          "field_name": "primary_author",
+          "severity": "medium",
+          "reason": "Primary author could not be extracted.",
+          "evidence": "No author metadata found."
+        },
+        {
+          "field_name": "author_country",
+          "severity": "low",
+          "reason": "author_country extracted with supporting evidence.",
+          "evidence": null
+        },
+        {
+          "field_name": "evidence",
+          "severity": "low",
+          "reason": "evidence has value but limited evidence.",
+          "evidence": null
+        },
+        {
+          "field_name": "product",
+          "severity": "low",
+          "reason": "product extracted with supporting evidence.",
+          "evidence": null
+        }
+      ],
+      "evidence_sentence": "Acetaminophen-induced acute liver injury: a case report from Germany",
+      "ai_summary": "Company product identity detected: Paracetamol. Country of interest identified as Germany. Supporting evidence: Acetaminophen-induced acute liver injury: a case report from Germany Overall extraction confidence: 53%.",
+      "hits_status": "ready_for_screening",
+      "screening_status": "pending",
+      "intake_status": "not_started",
+      "qc_status": "not_started",
+      "raw_facts": {
+        "article": {
+          "pmid": "DEMO001",
+          "title": "Acetaminophen-induced acute liver injury: a case report from Germany",
+          "journal": "Journal of Clinical Pharmacovigilance",
+          "publication_date": "2024 May 14",
+          "abstract": "",
+          "text": ""
+        },
+        "product": {
+          "normalized_identity": "Acetaminophen",
+          "product_id": "PID-001",
+          "product_name": "Paracetamol",
+          "inn": "Acetaminophen",
+          "matched_term": "Acetaminophen",
+          "matched_dictionary_value": "Acetaminophen",
+          "match_type": "generic_name",
+          "match_source": "CLIENT_PRODUCT_MASTER",
+          "base_confidence": 0.94,
+          "evidence_sentence": "Acetaminophen-induced acute liver injury: a case report from Germany",
+          "character_start": 0,
+          "character_end": 13,
+          "detected_strength": null,
+          "detected_formulation": null,
+          "company_match_status": "company_product",
+          "qc_required": false,
+          "strength_match_status": "not_mentioned",
+          "formulation_match_status": "not_mentioned",
+          "decision_reason": "Identity matched and applicable product attributes validated.",
+          "tenant_id": "demo-tenant",
+          "source_section": "Abstract",
+          "resolver": "ClinixAI.ProductDetectionService",
+          "resolver_version": "3.0.0"
+        },
+        "author": {
+          "primary_author": null,
+          "all_authors": [],
+          "author_count": 0,
+          "evidence": "No author metadata found.",
+          "confidence": 0.0,
+          "qc_required": true,
+          "source": "metadata"
+        },
+        "author_country": {
+          "country": "Germany",
+          "source": "title",
+          "evidence": "Acetaminophen-induced acute liver injury: a case report from Germany",
+          "confidence": 0.75,
+          "qc_required": false
+        },
+        "mah_country": {
+          "product_id": "PID-001",
+          "product_name": "Paracetamol",
+          "detected_country": "Germany",
+          "mah_countries": [
+            "India",
+            "Germany",
+            "United States",
+            "United Kingdom"
+          ],
+          "mah_country_match": true,
+          "status": "mah_country_match",
+          "evidence": "Germany is configured as MAH country.",
+          "confidence": 0.95,
+          "qc_required": false
+        },
+        "pii": [],
+        "confidence": [
+          {
+            "field_name": "product",
+            "confidence": 0.75,
+            "reason": "product extracted with supporting evidence.",
+            "qc_required": true
+          },
+          {
+            "field_name": "author",
+            "confidence": 0.0,
+            "reason": "author value missing.",
+            "qc_required": true
+          },
+          {
+            "field_name": "author_country",
+            "confidence": 0.75,
+            "reason": "author_country extracted with supporting evidence.",
+            "qc_required": true
+          },
+          {
+            "field_name": "mah_country",
+            "confidence": 0.95,
+            "reason": "mah_country extracted with supporting evidence.",
+            "qc_required": false
+          },
+          {
+            "field_name": "pii",
+            "confidence": 0.0,
+            "reason": "pii value missing.",
+            "qc_required": true
+          },
+          {
+            "field_name": "evidence",
+            "confidence": 0.75,
+            "reason": "evidence has value but limited evidence.",
+            "qc_required": true
+          }
+        ],
+        "qc_flags": [
+          {
+            "field_name": "author",
+            "severity": "high",
+            "reason": "author value missing.",
+            "evidence": null
+          },
+          {
+            "field_name": "pii",
+            "severity": "high",
+            "reason": "pii value missing.",
+            "evidence": null
+          },
+          {
+            "field_name": "primary_author",
+            "severity": "medium",
+            "reason": "Primary author could not be extracted.",
+            "evidence": "No author metadata found."
+          },
+          {
+            "field_name": "author_country",
+            "severity": "low",
+            "reason": "author_country extracted with supporting evidence.",
+            "evidence": null
+          },
+          {
+            "field_name": "evidence",
+            "severity": "low",
+            "reason": "evidence has value but limited evidence.",
+            "evidence": null
+          },
+          {
+            "field_name": "product",
+            "severity": "low",
+            "reason": "product extracted with supporting evidence.",
+            "evidence": null
+          }
+        ]
+      }
+    }
+  ]
+}

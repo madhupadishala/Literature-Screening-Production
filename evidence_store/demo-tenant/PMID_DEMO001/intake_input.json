@@ -1,0 +1,35 @@
+{
+  "tenant_id": "demo-tenant",
+  "pmid": "DEMO001",
+  "intake_input_count": 1,
+  "intake_inputs": [
+    {
+      "tenant_id": "demo-tenant",
+      "source_type": "Literature",
+      "pmid": "DEMO001",
+      "title": "Acetaminophen-induced acute liver injury: a case report from Germany",
+      "journal": "Journal of Clinical Pharmacovigilance",
+      "publication_date": "2024 May 14",
+      "country": "Germany",
+      "company_suspect_drugs": [
+        "Paracetamol"
+      ],
+      "clinical_events": [
+        "acute liver injury",
+        "liver injury"
+      ],
+      "special_situations": [
+        "None identified"
+      ],
+      "patient_safety": "Yes",
+      "patient_identification_pii": "No",
+      "coi": "Yes",
+      "active_mah": "Yes",
+      "screening_decision": "Proceed to Intake",
+      "evidence_sentence": "Acetaminophen-induced acute liver injury: a case report from Germany",
+      "screening_flags": [
+        "Patient identification not detected"
+      ]
+    }
+  ]
+}

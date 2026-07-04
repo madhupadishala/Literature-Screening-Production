@@ -1,0 +1,45 @@
+{
+  "tenant_id": "demo-tenant",
+  "pmid": "DEMO001",
+  "screening_count": 1,
+  "screening": [
+    {
+      "tenant_id": "demo-tenant",
+      "pmid": "DEMO001",
+      "screening_status": "ready",
+      "intake_status": "pending",
+      "company_suspect_drugs": [
+        "Paracetamol"
+      ],
+      "active_mah": "Yes",
+      "co_suspect_drugs": [
+        "None identified"
+      ],
+      "concomitant_medications": [
+        "Not reported"
+      ],
+      "treatment_medications": [
+        "Not reported"
+      ],
+      "clinical_events": [
+        "acute liver injury",
+        "liver injury"
+      ],
+      "special_situations": [
+        "None identified"
+      ],
+      "event_severity": "Not mentioned",
+      "seriousness": "Not mentioned",
+      "patient_safety": "Yes",
+      "patient_identification_pii": "No",
+      "coi": "Yes",
+      "screening_decision": "Proceed to Intake",
+      "screening_reasoning": "Screening output generated from Hits output using product, MAH, COI, patient identification, clinical event, special situation, severity, seriousness, and exclusion rule checks.",
+      "generated_at": "2026-07-04T08:21:23.910144+00:00",
+      "exclusion_terms_detected": [],
+      "flags": [
+        "Patient identification not detected"
+      ]
+    }
+  ]
+}

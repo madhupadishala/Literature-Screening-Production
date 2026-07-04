@@ -1,0 +1,46 @@
+{
+  "status": "INTAKE_INPUT_CREATED",
+  "updated_at": "2026-07-04T08:21:23.932935+00:00",
+  "history": [
+    {
+      "timestamp": "2026-07-04T08:21:23.879056+00:00",
+      "from_status": "NEW",
+      "to_status": "HITS_RUNNING",
+      "reason": "Hits workflow started",
+      "actor": "system",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-07-04T08:21:23.898029+00:00",
+      "from_status": "HITS_RUNNING",
+      "to_status": "HITS_COMPLETE",
+      "reason": "1 hit(s) generated",
+      "actor": "system",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-07-04T08:21:23.909292+00:00",
+      "from_status": "HITS_COMPLETE",
+      "to_status": "SCREENING_RUNNING",
+      "reason": "Screening workflow started",
+      "actor": "system",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-07-04T08:21:23.922886+00:00",
+      "from_status": "SCREENING_RUNNING",
+      "to_status": "SCREENING_COMPLETE",
+      "reason": "1 screening record(s) generated",
+      "actor": "system",
+      "metadata": {}
+    },
+    {
+      "timestamp": "2026-07-04T08:21:23.932935+00:00",
+      "from_status": "SCREENING_COMPLETE",
+      "to_status": "INTAKE_INPUT_CREATED",
+      "reason": "1 intake package(s) generated",
+      "actor": "system",
+      "metadata": {}
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "pmid": "DEMO001",
+  "doi": "10.1000/clinixai.demo001",
+  "title": "Acetaminophen-induced acute liver injury: a case report from Germany",
+  "journal": "Journal of Clinical Pharmacovigilance",
+  "publication_date": "2024 May 14",
+  "primary_author": "Rao M",
+  "authors": ["Rao M", "Sharma K", "Miller A"],
+  "affiliations": [
+    "Department of Clinical Pharmacology, University Hospital Berlin, Germany."
+  ],
+  "abstract": "A 45-year-old male patient in Germany developed acute liver injury after receiving Tylenol 500 mg tablet for fever. The patient recovered after supportive care.",
+  "source": "Demo Evidence Package"
+}

@@ -8,6 +8,7 @@ from typing import Any, Dict
 from backend.agents.hits.orchestrator import HitsOrchestrator
 from backend.agents.screening import ScreeningOrchestrator
 from backend.services.intake_input import IntakeInputBuilder
+from backend.workflow.state_manager import PackageStatus, WorkflowStateManager
 
 
 class LiteratureWorkflow:
@@ -16,6 +17,7 @@ class LiteratureWorkflow:
         self.hits_orchestrator = HitsOrchestrator(self.product_master_path)
         self.screening_orchestrator = ScreeningOrchestrator()
         self.intake_input_builder = IntakeInputBuilder()
+        self.state_manager = WorkflowStateManager()
 
     def run_package(
         self,
@@ -23,6 +25,13 @@ class LiteratureWorkflow:
         package_dir: str | Path,
     ) -> Dict[str, Any]:
         package = Path(package_dir)
+
+        self.state_manager.update(
+            package,
+            PackageStatus.HITS_RUNNING,
+            "Hits workflow started",
+        )
+
         article = self._load_article(package)
 
         hits_rows = self.hits_orchestrator.run(
@@ -38,6 +47,18 @@ class LiteratureWorkflow:
         }
 
         self._write_json(package / "hits_output.json", hits_payload)
+
+        self.state_manager.update(
+            package,
+            PackageStatus.HITS_COMPLETE,
+            f"{len(hits_rows)} hit(s) generated",
+        )
+
+        self.state_manager.update(
+            package,
+            PackageStatus.SCREENING_RUNNING,
+            "Screening workflow started",
+        )
 
         screening_rows = [
             self.screening_orchestrator.run(
@@ -56,6 +77,12 @@ class LiteratureWorkflow:
         }
 
         self._write_json(package / "screening_output.json", screening_payload)
+
+        self.state_manager.update(
+            package,
+            PackageStatus.SCREENING_COMPLETE,
+            f"{len(screening_rows)} screening record(s) generated",
+        )
 
         intake_inputs = []
 
@@ -82,6 +109,12 @@ class LiteratureWorkflow:
         }
 
         self._write_json(package / "intake_input.json", intake_input_payload)
+
+        self.state_manager.update(
+            package,
+            PackageStatus.INTAKE_INPUT_CREATED,
+            f"{len(intake_inputs)} intake package(s) generated",
+        )
 
         return {
             "article": article,
