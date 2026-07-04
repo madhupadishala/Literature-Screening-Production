@@ -53,10 +53,6 @@ export type ScreeningArticle = {
   audit_trail: AuditEvent[];
 };
 
-function percent(value: number) {
-  return `${Math.round((value || 0) * 100)}%`;
-}
-
 function list(value?: string[]) {
   return value && value.length ? value.join(", ") : "—";
 }
@@ -116,11 +112,7 @@ export default function ScreeningPage() {
   async function loadScreeningArticles() {
     try {
       setLoading(true);
-
-      const response = await fetch("/api/screening/list", {
-        cache: "no-store",
-      });
-
+      const response = await fetch("/api/screening/list", { cache: "no-store" });
       const data = await response.json();
 
       if (!Array.isArray(data)) {
@@ -336,8 +328,24 @@ export default function ScreeningPage() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search PMID, product, event..."
             />
+
             <button onClick={loadScreeningArticles}>Refresh</button>
-            <button className="primary-action">Export</button>
+
+            <a
+              className="primary-action"
+              href="/api/screening/export"
+              download="clinixai-screening-report.csv"
+            >
+              Export CSV
+            </a>
+
+            <a
+              className="primary-action"
+              href="/api/screening/export-intake"
+              download="clinixai-intake-input-package.json"
+            >
+              Export Intake Package
+            </a>
           </div>
         </div>
 
