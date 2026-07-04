@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ScreeningWorkspace from "../../components/ScreeningWorkspace";
 
 type AuditEvent = {
@@ -26,7 +26,7 @@ export type ScreeningArticle = {
   primary_author: string;
   confidence_score: number;
 
-  hits_status: "completed";
+  hits_status: string;
   screening_status: "ready" | "completed" | "excluded";
   intake_status: "pending" | "ready";
 
@@ -40,8 +40,8 @@ export type ScreeningArticle = {
 
   clinical_events: string[];
   special_situations: string[];
-  event_severity: "Mild" | "Moderate" | "Severe" | "Not mentioned";
-  seriousness: "Serious" | "Non-serious" | "Not mentioned";
+  event_severity: string;
+  seriousness: string;
   patient_safety: "Yes" | "No";
   patient_identification_pii: "Yes" | "No";
   coi: "Yes" | "No" | "Uncertain";
@@ -53,62 +53,90 @@ export type ScreeningArticle = {
   audit_trail: AuditEvent[];
 };
 
-const initialArticles: ScreeningArticle[] = [
-  {
-    hit_id: "HIT-DEMO001",
-    pmid: "DEMO001",
-    title: "Acetaminophen-induced acute liver injury: a case report from Germany",
-    journal: "Journal of Clinical Pharmacovigilance",
-    publication_date: "2024 May 14",
-    product_name: "Paracetamol",
-    country_of_interest: "Germany",
-    primary_author: "Rao M",
-    confidence_score: 0.83,
-
-    hits_status: "completed",
-    screening_status: "ready",
-    intake_status: "pending",
-
-    qc_required: true,
-
-    company_suspect_drugs: ["Paracetamol", "Acetaminophen", "Tylenol"],
-    active_mah: "Yes",
-    co_suspect_drugs: ["None identified"],
-    concomitant_medications: ["Not reported"],
-    treatment_medications: ["Not reported"],
-
-    clinical_events: ["Acute liver injury"],
-    special_situations: ["None identified"],
-    event_severity: "Severe",
-    seriousness: "Serious",
-    patient_safety: "Yes",
-    patient_identification_pii: "Yes",
-    coi: "Yes",
-
-    screening_decision: "Proceed to Intake",
-    screening_reasoning:
-      "The article contains patient safety information with company suspect product, active MAH, country of interest, identifiable patient, literature reporter, and clinical event evidence.",
-    evidence_sentence:
-      "A 45-year-old male patient in Germany developed acute liver injury after receiving Tylenol 500 mg tablet for fever.",
-    flags: ["Confidence below 90%", "Patient age requires manual confirmation"],
-    audit_trail: [],
-  },
-];
-
 function percent(value: number) {
-  return `${Math.round(value * 100)}%`;
+  return `${Math.round((value || 0) * 100)}%`;
 }
 
-function list(value: string[]) {
-  return value.length ? value.join(", ") : "—";
+function list(value?: string[]) {
+  return value && value.length ? value.join(", ") : "—";
+}
+
+function normalizeArticle(raw: any): ScreeningArticle {
+  return {
+    hit_id: raw.hit_id || `SCR-${raw.pmid || Date.now()}`,
+    pmid: raw.pmid || "—",
+    title: raw.title || "—",
+    journal: raw.journal || "—",
+    publication_date: raw.publication_date || "—",
+    product_name: raw.product_name || raw.company_suspect_drugs?.[0] || "Not identified",
+    country_of_interest: raw.country_of_interest || "Uncertain",
+    primary_author: raw.primary_author || "—",
+    confidence_score: Number(raw.confidence_score || 0),
+
+    hits_status: raw.hits_status || "completed",
+    screening_status: raw.screening_status || "ready",
+    intake_status: raw.intake_status || "pending",
+
+    qc_required: Boolean(raw.qc_required || raw.flags?.length),
+
+    company_suspect_drugs: raw.company_suspect_drugs || ["Not identified"],
+    active_mah: raw.active_mah || "Unknown",
+    co_suspect_drugs: raw.co_suspect_drugs || ["None identified"],
+    concomitant_medications: raw.concomitant_medications || ["Not reported"],
+    treatment_medications: raw.treatment_medications || ["Not reported"],
+
+    clinical_events: raw.clinical_events || ["Not identified"],
+    special_situations: raw.special_situations || ["None identified"],
+    event_severity: raw.event_severity || "Not mentioned",
+    seriousness: raw.seriousness || "Not mentioned",
+    patient_safety: raw.patient_safety || "No",
+    patient_identification_pii: raw.patient_identification_pii || "No",
+    coi: raw.coi || "Uncertain",
+
+    screening_decision: raw.screening_decision || "Manual Review Required",
+    screening_reasoning: raw.screening_reasoning || "",
+    evidence_sentence: raw.evidence_sentence || "—",
+    flags: raw.flags || [],
+    audit_trail: raw.audit_trail || [],
+  };
 }
 
 export default function ScreeningPage() {
-  const [articles, setArticles] = useState(initialArticles);
+  const [articles, setArticles] = useState<ScreeningArticle[]>([]);
   const [selected, setSelected] = useState<ScreeningArticle | null>(null);
   const [activeTab, setActiveTab] = useState("Overview");
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadScreeningArticles();
+  }, []);
+
+  async function loadScreeningArticles() {
+    try {
+      setLoading(true);
+
+      const response = await fetch("/api/screening/list", {
+        cache: "no-store",
+      });
+
+      const data = await response.json();
+
+      if (!Array.isArray(data)) {
+        showToast("No screening output found.");
+        setArticles([]);
+        return;
+      }
+
+      setArticles(data.map(normalizeArticle));
+    } catch {
+      showToast("Failed to load screening output.");
+      setArticles([]);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const readyArticles = useMemo(() => {
     const q = search.toLowerCase().trim();
@@ -294,7 +322,11 @@ export default function ScreeningPage() {
         <div className="panel-header">
           <div>
             <h2>Screening Worklist</h2>
-            <p>{readyArticles.length} article ready for human screening review</p>
+            <p>
+              {loading
+                ? "Loading screening output..."
+                : `${readyArticles.length} article ready for human screening review`}
+            </p>
           </div>
 
           <div className="panel-actions">
@@ -304,7 +336,7 @@ export default function ScreeningPage() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search PMID, product, event..."
             />
-            <button>Refresh</button>
+            <button onClick={loadScreeningArticles}>Refresh</button>
             <button className="primary-action">Export</button>
           </div>
         </div>
@@ -370,6 +402,12 @@ export default function ScreeningPage() {
                   </td>
                 </tr>
               ))}
+
+              {!loading && readyArticles.length === 0 && (
+                <tr>
+                  <td colSpan={13}>No screening outputs available.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
