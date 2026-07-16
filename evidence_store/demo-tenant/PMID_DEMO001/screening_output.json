@@ -35,7 +35,7 @@
       "coi": "Yes",
       "screening_decision": "Proceed to Intake",
       "screening_reasoning": "Screening output generated from Hits output using product, MAH, COI, patient identification, clinical event, special situation, severity, seriousness, and exclusion rule checks.",
-      "generated_at": "2026-07-04T08:21:23.910144+00:00",
+      "generated_at": "2026-07-04T08:47:05.111669+00:00",
       "exclusion_terms_detected": [],
       "flags": [
         "Patient identification not detected"

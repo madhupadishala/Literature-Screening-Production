@@ -1,6 +1,39 @@
 "use client";
 
-import type { Hit } from "../app/page";
+type PiiFinding = {
+  pii_type?: string | null;
+  value?: string | null;
+  confidence?: number | null;
+};
+
+type Hit = {
+  id: string;
+  pmid: string;
+  confidence_score: number;
+  product_name?: string | null;
+  doi?: string | null;
+  title?: string | null;
+  journal?: string | null;
+  publication_date?: string | null;
+  hits_status?: string | null;
+  screening_status?: string | null;
+  ai_summary?: string | null;
+  evidence_sentence?: string | null;
+  normalized_identity?: string | null;
+  matched_term?: string | null;
+  match_type?: string | null;
+  match_source?: string | null;
+  detected_strength?: string | null;
+  detected_formulation?: string | null;
+  company_product_status?: string | null;
+  mah_country_status?: string | null;
+  primary_author?: string | null;
+  all_authors?: string[] | null;
+  author_country?: string | null;
+  country_of_interest?: string | null;
+  pii_present?: boolean | null;
+  pii_findings?: PiiFinding[] | null;
+};
 
 type ReviewWorkspaceProps = {
   hit: Hit;
@@ -10,15 +43,31 @@ type ReviewWorkspaceProps = {
   onApprove: () => void;
 };
 
-const tabs = ["Overview", "Product", "People", "Patient", "AI Assessment", "Flags"];
+const tabs = [
+  "Overview",
+  "Product",
+  "People",
+  "Patient",
+  "AI Assessment",
+  "Flags",
+];
 
-function percent(value: number) {
-  return `${Math.round(value * 100)}%`;
+function percent(value?: number | null) {
+  return `${Math.round((value ?? 0) * 100)}%`;
 }
 
 function clean(value?: string | null) {
   if (!value) return "—";
   return value.replaceAll("_", " ");
+}
+
+function text(value: unknown) {
+  if (value === null || value === undefined || value === "") return "—";
+  return String(value);
+}
+
+function list(value: unknown): string[] {
+  return Array.isArray(value) ? value.map(String) : [];
 }
 
 export default function ReviewWorkspace({
@@ -28,12 +77,14 @@ export default function ReviewWorkspace({
   onClose,
   onApprove,
 }: ReviewWorkspaceProps) {
+  const piiFindings = Array.isArray(hit.pii_findings) ? hit.pii_findings : [];
+
   return (
     <aside className="review-workspace">
       <div className="review-top">
         <div>
           <div className="review-kicker">Review Workspace</div>
-          <h2>{hit.product_name || hit.pmid}</h2>
+          <h2>{text(hit.product_name || hit.pmid)}</h2>
           <span className="status-pill">
             PMID {hit.pmid} · {percent(hit.confidence_score)} confidence
           </span>
@@ -70,11 +121,11 @@ export default function ReviewWorkspace({
             </InfoSection>
 
             <InfoSection title="AI Recommendation">
-              <p className="summary-text">{hit.ai_summary}</p>
+              <p className="summary-text">{text(hit.ai_summary)}</p>
             </InfoSection>
 
             <InfoSection title="Evidence Sentence">
-              <p className="evidence-box">{hit.evidence_sentence}</p>
+              <p className="evidence-box">{text(hit.evidence_sentence)}</p>
             </InfoSection>
           </>
         )}
@@ -96,7 +147,7 @@ export default function ReviewWorkspace({
         {activeTab === "People" && (
           <InfoSection title="Author & Country">
             <Info label="Primary Author" value={hit.primary_author} />
-            <Info label="All Authors" value={(hit.all_authors || []).join(", ")} />
+            <Info label="All Authors" value={list(hit.all_authors).join(", ")} />
             <Info label="Author Country" value={hit.author_country} />
             <Info label="Country of Interest" value={hit.country_of_interest} />
           </InfoSection>
@@ -106,15 +157,15 @@ export default function ReviewWorkspace({
           <InfoSection title="Patient / PII">
             <Info label="PII Present" value={hit.pii_present ? "Yes" : "No"} />
 
-            {hit.pii_findings.length === 0 && (
+            {piiFindings.length === 0 && (
               <p className="muted-paragraph">No patient identifiers detected.</p>
             )}
 
-            {hit.pii_findings.map((item, index) => (
+            {piiFindings.map((item, index) => (
               <Info
-                key={`${item.pii_type}-${index}`}
+                key={`${item.pii_type ?? "pii"}-${index}`}
                 label={clean(item.pii_type)}
-                value={`${item.value} (${percent(item.confidence)})`}
+                value={`${text(item.value)} (${percent(item.confidence)})`}
               />
             ))}
           </InfoSection>
@@ -123,7 +174,9 @@ export default function ReviewWorkspace({
         {activeTab === "AI Assessment" && (
           <>
             <InfoSection title="AI Recommendation">
-              <div className="assessment-banner success">✓ Ready for Screening</div>
+              <div className="assessment-banner success">
+                ✓ Ready for Screening
+              </div>
 
               <Info
                 label="Overall Confidence"
@@ -169,7 +222,9 @@ export default function ReviewWorkspace({
               <div className="flag green">✓ Company Product Verified</div>
               <div className="flag green">✓ MAH Country Matched</div>
               <div className="flag yellow">⚠ Confidence below 90%</div>
-              <div className="flag yellow">⚠ Patient age extracted from narrative</div>
+              <div className="flag yellow">
+                ⚠ Patient age extracted from narrative
+              </div>
               <div className="flag green">✓ Primary Author Identified</div>
             </InfoSection>
 
@@ -191,7 +246,9 @@ export default function ReviewWorkspace({
             </InfoSection>
 
             <InfoSection title="AI Decision">
-              <div className="assessment-banner success">✓ Ready for Screening</div>
+              <div className="assessment-banner success">
+                ✓ Ready for Screening
+              </div>
             </InfoSection>
           </>
         )}
@@ -224,17 +281,18 @@ function InfoSection({
   );
 }
 
-function Info({
-  label,
-  value,
-}: {
-  label: string;
-  value?: string | null;
-}) {
+function Info({ label, value }: { label: string; value?: unknown }) {
+  const displayValue =
+    Array.isArray(value)
+      ? value.join(", ")
+      : value === null || value === undefined || value === ""
+        ? "—"
+        : String(value);
+
   return (
     <div className="info-row">
       <span>{label}</span>
-      <strong>{clean(value)}</strong>
+      <strong>{displayValue}</strong>
     </div>
   );
 }

@@ -1,0 +1,13 @@
+.next
+node_modules
+coverage
+dist
+build
+out
+
+*.min.js
+*.map
+*.log
+
+package-lock.json
+public

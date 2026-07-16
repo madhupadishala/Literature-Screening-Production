@@ -1,0 +1,6 @@
+{
+  "tenant_id": "demo-tenant",
+  "countries_of_interest": [
+    {"country_code": "DE", "name": "Germany"}
+  ]
+}

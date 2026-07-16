@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+
+import Navigation from "@/components/Navigation";
 import ScreeningWorkspace from "../../components/ScreeningWorkspace";
 
 type AuditEvent = {
@@ -164,7 +166,7 @@ export default function ScreeningPage() {
     return {
       id: `AUD-${Date.now()}`,
       timestamp: new Date().toISOString(),
-      module: "Screening",
+      module: "Screening Review",
       action,
       oldValue,
       newValue,
@@ -178,7 +180,7 @@ export default function ScreeningPage() {
     if (!selected) return;
 
     const auditEvent = audit(
-      "APPROVE_TO_INTAKE",
+      "APPROVE_SCREENING_OUTPUT",
       "screening_status: ready | intake_status: pending",
       "screening_status: completed | intake_status: ready",
       reason
@@ -198,7 +200,7 @@ export default function ScreeningPage() {
     );
 
     setSelected(null);
-    showToast("Screening output approved to Intake.");
+    showToast("Screening output approved.");
   }
 
   function excludeArticle(reason: string) {
@@ -267,7 +269,7 @@ export default function ScreeningPage() {
       <section className="topbar">
         <div>
           <h1>ClinixAI</h1>
-          <p>Literature Intelligence Workspace</p>
+          <p>Literature Screening Review</p>
         </div>
 
         <div className="topbar-meta">
@@ -277,33 +279,29 @@ export default function ScreeningPage() {
         </div>
       </section>
 
-      <nav className="nav-tabs">
-        {["Dashboard", "Hits", "Screening", "Intake", "Reports", "Audit", "Knowledge"].map(
-          (item) => (
-            <button key={item} className={item === "Screening" ? "nav-item active" : "nav-item"}>
-              {item}
-            </button>
-          )
-        )}
-      </nav>
+      <Navigation />
 
       <section className="metrics-grid">
         <div className="metric-card">
           <span>Total Screening</span>
           <strong>{articles.length}</strong>
         </div>
+
         <div className="metric-card warning">
-          <span>Ready</span>
+          <span>Ready for Review</span>
           <strong>{readyArticles.length}</strong>
         </div>
+
         <div className="metric-card success">
           <span>Completed</span>
           <strong>{articles.filter((a) => a.screening_status === "completed").length}</strong>
         </div>
+
         <div className="metric-card">
-          <span>Ready for Intake</span>
+          <span>Intake Input Ready</span>
           <strong>{articles.filter((a) => a.intake_status === "ready").length}</strong>
         </div>
+
         <div className="metric-card warning">
           <span>Serious</span>
           <strong>{articles.filter((a) => a.seriousness === "Serious").length}</strong>
@@ -313,11 +311,11 @@ export default function ScreeningPage() {
       <section className="panel">
         <div className="panel-header">
           <div>
-            <h2>Screening Worklist</h2>
+            <h2>Screening Review Worklist</h2>
             <p>
               {loading
                 ? "Loading screening output..."
-                : `${readyArticles.length} article ready for human screening review`}
+                : `${readyArticles.length} article(s) ready for screening review`}
             </p>
           </div>
 
@@ -363,17 +361,17 @@ export default function ScreeningPage() {
               <tr>
                 <th>QC</th>
                 <th>PMID</th>
-                <th>PRODUCT</th>
-                <th>COUNTRY</th>
-                <th>AUTHOR</th>
-                <th>COMPANY SUSPECT</th>
-                <th>ACTIVE MAH</th>
-                <th>CLINICAL EVENT</th>
-                <th>SERIOUSNESS</th>
+                <th>Product</th>
+                <th>Country</th>
+                <th>Author</th>
+                <th>Company Suspect</th>
+                <th>Active MAH</th>
+                <th>Clinical Event</th>
+                <th>Seriousness</th>
                 <th>PII</th>
                 <th>COI</th>
-                <th>DECISION</th>
-                <th>ACTION</th>
+                <th>Decision</th>
+                <th>Action</th>
               </tr>
             </thead>
 
@@ -381,13 +379,18 @@ export default function ScreeningPage() {
               {readyArticles.map((article) => (
                 <tr key={article.hit_id}>
                   <td>
-                    <span className="qc-badge">{article.qc_required ? "QC" : "Pass"}</span>
+                    <span className={article.qc_required ? "qc-badge warning" : "qc-badge success"}>
+                      {article.qc_required ? "QC" : "Pass"}
+                    </span>
                   </td>
-                  <td>{article.pmid}</td>
+
+                  <td className="mono">{article.pmid}</td>
+
                   <td>
                     <strong>{article.product_name}</strong>
                     <small>{article.hits_status}</small>
                   </td>
+
                   <td>{article.country_of_interest}</td>
                   <td>{article.primary_author}</td>
                   <td>{list(article.company_suspect_drugs)}</td>
@@ -397,6 +400,7 @@ export default function ScreeningPage() {
                   <td>{article.patient_identification_pii}</td>
                   <td>{article.coi}</td>
                   <td>{article.screening_decision}</td>
+
                   <td>
                     <button
                       className="review-button"
@@ -435,6 +439,267 @@ export default function ScreeningPage() {
       )}
 
       {toast && <div className="toast">{toast}</div>}
+
+      <style jsx>{`
+        .app-shell {
+          min-height: 100vh;
+          background: #f4f7fb;
+          padding: 24px;
+          color: #0f172a;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topbar {
+          background: linear-gradient(135deg, #071b34, #123f68);
+          color: #ffffff;
+          border-radius: 20px;
+          padding: 24px 28px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+        }
+
+        .topbar h1 {
+          margin: 0;
+          font-size: 30px;
+        }
+
+        .topbar p {
+          margin: 6px 0 0;
+          color: #cfe7ff;
+        }
+
+        .topbar-meta {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          font-size: 13px;
+        }
+
+        .topbar-meta span,
+        .topbar-meta strong {
+          background: rgba(255, 255, 255, 0.12);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          padding: 8px 10px;
+          border-radius: 999px;
+        }
+
+        .metrics-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 16px;
+          margin-bottom: 18px;
+        }
+
+        .metric-card {
+          background: #ffffff;
+          border: 1px solid #dbe4ef;
+          border-radius: 18px;
+          padding: 20px;
+          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .metric-card span {
+          display: block;
+          color: #64748b;
+          font-size: 13px;
+          margin-bottom: 8px;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+
+        .metric-card strong {
+          font-size: 28px;
+          color: #0f172a;
+        }
+
+        .metric-card.success strong {
+          color: #15803d;
+        }
+
+        .metric-card.warning strong {
+          color: #b45309;
+        }
+
+        .panel {
+          background: #ffffff;
+          border: 1px solid #dbe4ef;
+          border-radius: 20px;
+          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+          overflow: hidden;
+        }
+
+        .panel-header {
+          padding: 24px;
+          display: flex;
+          justify-content: space-between;
+          gap: 18px;
+          align-items: center;
+          border-bottom: 1px solid #e2e8f0;
+        }
+
+        .panel-header h2 {
+          margin: 0 0 6px;
+        }
+
+        .panel-header p {
+          margin: 0;
+          color: #64748b;
+        }
+
+        .panel-actions {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+
+        .search-input {
+          border: 1px solid #cbd5e1;
+          background: #f8fafc;
+          border-radius: 12px;
+          padding: 11px 14px;
+          min-width: 260px;
+          outline: none;
+        }
+
+        .panel-actions button,
+        .primary-action,
+        .review-button {
+          border: none;
+          border-radius: 12px;
+          background: #185a9d;
+          color: #ffffff;
+          padding: 10px 14px;
+          cursor: pointer;
+          font-weight: 800;
+          text-decoration: none;
+          font-size: 14px;
+        }
+
+        .filters-row {
+          display: flex;
+          gap: 8px;
+          padding: 14px 24px;
+          border-bottom: 1px solid #e2e8f0;
+          overflow-x: auto;
+        }
+
+        .filters-row button {
+          border: 1px solid #cbd5e1;
+          border-radius: 999px;
+          background: #ffffff;
+          color: #334155;
+          padding: 8px 12px;
+          font-weight: 800;
+          cursor: pointer;
+          white-space: nowrap;
+        }
+
+        .table-wrap {
+          overflow-x: auto;
+        }
+
+        .hits-table {
+          width: 100%;
+          min-width: 1350px;
+          border-collapse: collapse;
+        }
+
+        .hits-table th {
+          background: #f8fafc;
+          color: #475569;
+          font-size: 12px;
+          text-transform: uppercase;
+          text-align: left;
+          padding: 14px;
+          border-bottom: 1px solid #e2e8f0;
+          white-space: nowrap;
+        }
+
+        .hits-table td {
+          padding: 14px;
+          border-bottom: 1px solid #e2e8f0;
+          vertical-align: middle;
+          font-size: 14px;
+        }
+
+        .mono {
+          font-family: Consolas, Monaco, monospace;
+          font-weight: 800;
+          color: #185a9d;
+        }
+
+        small {
+          display: block;
+          margin-top: 4px;
+          color: #64748b;
+          font-size: 12px;
+        }
+
+        .qc-badge {
+          display: inline-flex;
+          padding: 6px 10px;
+          border-radius: 999px;
+          font-size: 11px;
+          font-weight: 900;
+          text-transform: uppercase;
+        }
+
+        .qc-badge.success {
+          background: #dcfce7;
+          color: #166534;
+        }
+
+        .qc-badge.warning {
+          background: #fef3c7;
+          color: #92400e;
+        }
+
+        .toast {
+          position: fixed;
+          right: 24px;
+          bottom: 24px;
+          background: #0f172a;
+          color: #ffffff;
+          padding: 14px 18px;
+          border-radius: 14px;
+          box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);
+          font-weight: 700;
+          z-index: 50;
+        }
+
+        @media (max-width: 1100px) {
+          .topbar,
+          .panel-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .topbar-meta {
+            flex-wrap: wrap;
+          }
+
+          .metrics-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 700px) {
+          .app-shell {
+            padding: 12px;
+          }
+
+          .metrics-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .search-input {
+            min-width: 100%;
+          }
+        }
+      `}</style>
     </main>
   );
 }

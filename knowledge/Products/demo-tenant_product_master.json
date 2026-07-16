@@ -1,0 +1,11 @@
+{
+  "tenant_id": "demo-tenant",
+  "products": [
+    {
+      "product_id": "PROD-002",
+      "trade_name": "VaxGuard",
+      "active_ingredients": ["vaxguard antigen alpha"],
+      "aliases": ["vaxguard", "vg-antigen"]
+    }
+  ]
+}

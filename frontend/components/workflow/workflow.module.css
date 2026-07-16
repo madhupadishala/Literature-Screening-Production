@@ -1,0 +1,106 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  border: 1px solid #dbe4ef;
+  background: #f8fafc;
+  color: #334155;
+}
+
+.hits {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.screening {
+  background: #ecfdf5;
+  color: #047857;
+  border-color: #a7f3d0;
+}
+
+.locked {
+  background: #fff7ed;
+  color: #c2410c;
+  border-color: #fed7aa;
+}
+
+.intake {
+  background: #f5f3ff;
+  color: #6d28d9;
+  border-color: #ddd6fe;
+}
+
+.qc {
+  background: #fefce8;
+  color: #a16207;
+  border-color: #fde68a;
+}
+
+.completed {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.timelineContainer {
+  background: #ffffff;
+  border: 1px solid #dbe4ef;
+  border-radius: 18px;
+  padding: 20px;
+}
+
+.timelineContainer h2 {
+  margin: 0 0 18px;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.timelineRow {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 12px;
+}
+
+.timelineDot {
+  width: 12px;
+  height: 12px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: #185a9d;
+  box-shadow: 0 0 0 4px rgba(24, 90, 157, 0.12);
+}
+
+.timelineContent {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px;
+  background: #f8fafc;
+}
+
+.timelineContent strong {
+  display: block;
+  margin-top: 8px;
+  color: #0f172a;
+}
+
+.timelineContent small {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+}
+
+.timelineContent p {
+  margin: 10px 0 0;
+  color: #475569;
+}

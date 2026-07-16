@@ -1,303 +1,211 @@
+"""
+orchestrator.py
+---------------
+ClinixAI Hits Orchestrator.
+
+Runs reusable literature intelligence services and produces HitsRow JSON.
+
+Pipeline:
+    Canonical Article
+        ↓
+    Product Detection
+        ↓
+    Author Extraction
+        ↓
+    Country Detection
+        ↓
+    MAH Country Validation
+        ↓
+    PII Detection
+        ↓
+    Confidence Engine
+        ↓
+    QC Flag Engine
+        ↓
+    Hits Builder
+"""
+
 from __future__ import annotations
 
+import argparse
 import json
+from dataclasses import asdict, is_dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, List, Mapping, Optional
+
+from backend.services.authors import AuthorService
+from backend.services.confidence import ConfidenceEngine
+from backend.services.countries import CountryDetector, MahCountryService
+from backend.services.hits import HitsBuilder
+from backend.services.pii import PiiDetectionService
+from backend.services.products.product_service import ProductDetectionService
+from backend.services.qc import QcFlagEngine
 
 
-def load_metadata(package_dir: Path) -> dict[str, Any]:
-    metadata_path = package_dir / "metadata.json"
-    if not metadata_path.exists():
-        raise FileNotFoundError(f"metadata.json not found: {metadata_path}")
+class HitsOrchestrator:
+    def __init__(self, product_master_path: str | Path) -> None:
+        self.product_service = ProductDetectionService(product_master_path)
+        self.author_service = AuthorService()
+        self.country_detector = CountryDetector()
+        self.mah_country_service = MahCountryService()
+        self.pii_service = PiiDetectionService()
+        self.confidence_engine = ConfidenceEngine()
+        self.qc_engine = QcFlagEngine()
+        self.hits_builder = HitsBuilder()
 
-    return json.loads(metadata_path.read_text(encoding="utf-8"))
+    def run(
+        self,
+        tenant_id: str,
+        article: Mapping[str, Any],
+    ) -> List[Dict[str, Any]]:
+        article_text = self._article_text(article)
+
+        product_facts = self.product_service.detect(
+            article_text=article_text,
+            tenant_id=tenant_id,
+            source_section="Abstract",
+        )
+
+        author_fact = self.author_service.extract(article)
+        country_fact = self.country_detector.detect_from_article(article)
+        pii_facts = self.pii_service.detect(article_text)
+
+        rows = []
+
+        for product_fact in product_facts:
+            product_record = self.product_service.matcher.get_entry(product_fact.product_id)
+            product_record_dict = self._to_dict(product_record)
+
+            mah_fact = self.mah_country_service.validate(
+                product_fact=product_fact,
+                detected_country=country_fact.country,
+                product_master_record=product_record_dict,
+            )
+
+            fact_bundle = {
+                "product": product_fact,
+                "author": author_fact,
+                "author_country": country_fact,
+                "mah_country": mah_fact,
+                "pii": pii_facts,
+                "evidence": product_fact.evidence_sentence,
+            }
+
+            confidence_facts = self.confidence_engine.score_facts(fact_bundle)
+
+            qc_flags = self.qc_engine.generate(
+                facts=fact_bundle,
+                confidence_facts=confidence_facts,
+            )
+
+            row = self.hits_builder.build(
+                tenant_id=tenant_id,
+                article=article,
+                product_fact=product_fact,
+                author_fact=author_fact,
+                author_country_fact=country_fact,
+                mah_country_fact=mah_fact,
+                pii_facts=pii_facts,
+                confidence_facts=confidence_facts,
+                qc_flags=qc_flags,
+            )
+
+            rows.append(asdict(row))
+
+        return rows
+
+    @staticmethod
+    def _article_text(article: Mapping[str, Any]) -> str:
+        parts = [
+            article.get("title"),
+            article.get("abstract"),
+            article.get("full_text"),
+            article.get("text"),
+        ]
+
+        return "\n\n".join(str(part).strip() for part in parts if part)
+
+    @staticmethod
+    def _to_dict(value: Any) -> Dict[str, Any]:
+        if value is None:
+            return {}
+
+        if isinstance(value, Mapping):
+            return dict(value)
+
+        if is_dataclass(value):
+            return asdict(value)
+
+        if hasattr(value, "__dict__"):
+            return dict(value.__dict__)
+
+        return {}
 
 
-def metadata_agent(metadata: dict[str, Any]) -> dict[str, Any]:
-    return {
-        "pmid": {
-            "value": metadata.get("pmid", ""),
-            "confidence": 100,
-            "evidence": "PubMed XML PMID",
-            "qc_status": "Auto-verified",
-        },
-        "doi": {
-            "value": metadata.get("doi", ""),
-            "confidence": 95 if metadata.get("doi") else 0,
-            "evidence": "PubMed XML ArticleId DOI",
-            "qc_status": "Auto-verified" if metadata.get("doi") else "Needs QC",
-        },
-        "title": {
-            "value": metadata.get("title", ""),
-            "confidence": 100 if metadata.get("title") else 0,
-            "evidence": "PubMed XML ArticleTitle",
-            "qc_status": "Auto-verified" if metadata.get("title") else "Needs QC",
-        },
-        "journal": {
-            "value": metadata.get("journal", ""),
-            "confidence": 100 if metadata.get("journal") else 0,
-            "evidence": "PubMed XML Journal Title",
-            "qc_status": "Auto-verified" if metadata.get("journal") else "Needs QC",
-        },
-        "publication_date": {
-            "value": metadata.get("publication_date", ""),
-            "confidence": 90 if metadata.get("publication_date") else 0,
-            "evidence": "PubMed XML PubDate",
-            "qc_status": "Auto-verified" if metadata.get("publication_date") else "Needs QC",
-        },
-    }
+def _load_json(path: str | Path) -> Dict[str, Any]:
+    file_path = Path(path).expanduser().resolve()
+
+    with file_path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
 
 
-def author_agent(metadata: dict[str, Any]) -> dict[str, Any]:
-    authors = metadata.get("authors", [])
-    primary = metadata.get("primary_author", "")
+def main() -> int:
+    parser = argparse.ArgumentParser(description="ClinixAI Hits Orchestrator")
 
-    return {
-        "primary_author": {
-            "value": primary,
-            "confidence": 100 if primary else 0,
-            "evidence": "First author in PubMed XML AuthorList",
-            "qc_status": "Auto-verified" if primary else "Needs QC",
-        },
-        "authors": {
-            "value": "; ".join(authors),
-            "confidence": 100 if authors else 0,
-            "evidence": "PubMed XML AuthorList",
-            "qc_status": "Auto-verified" if authors else "Needs QC",
-        },
-    }
-
-
-def country_agent(metadata: dict[str, Any]) -> dict[str, Any]:
-    affiliations = metadata.get("affiliations", [])
-    affiliation_text = " ".join(affiliations)
-
-    known_countries = [
-        "India",
-        "Germany",
-        "United States",
-        "United Kingdom",
-        "France",
-        "Italy",
-        "Spain",
-        "China",
-        "Japan",
-        "Australia",
-        "Canada",
-    ]
-
-    country = ""
-    for item in known_countries:
-        if item.lower() in affiliation_text.lower():
-            country = item
-            break
-
-    return {
-        "primary_author_country": {
-            "value": country or "Not identified",
-            "confidence": 85 if country else 0,
-            "evidence": "Country detected from PubMed affiliation text",
-            "qc_status": "Auto-verified" if country else "Needs QC",
-        }
-    }
-
-
-def product_agent(metadata: dict[str, Any]) -> dict[str, Any]:
-    product_master = {
-        "product": "Paracetamol",
-        "inn": "Acetaminophen",
-        "variants": ["tablet", "injection", "syrup", "oral suspension"],
-        "synonyms": [
-            "paracetamol",
-            "acetaminophen",
-            "tylenol",
-            "apap",
-            "n-acetyl-p-aminophenol",
-        ],
-        "mah_countries": ["India", "Germany", "United States", "United Kingdom"],
-    }
-
-    text = f"{metadata.get('title', '')} {metadata.get('abstract', '')}".lower()
-
-    matched_synonym = ""
-    for synonym in product_master["synonyms"]:
-        if synonym in text:
-            matched_synonym = synonym
-            break
-
-    matched_variant = ""
-    for variant in product_master["variants"]:
-        if variant in text:
-            matched_variant = variant.title()
-            break
-
-    country_output = country_agent(metadata)["primary_author_country"]["value"]
-    mah_country = (
-        country_output
-        if country_output in product_master["mah_countries"]
-        else "Needs verification"
+    parser.add_argument(
+        "--tenant-id",
+        required=True,
+        help="Tenant identifier.",
     )
 
-    return {
-        "product": {
-            "value": product_master["product"],
-            "confidence": 95 if matched_synonym else 60,
-            "evidence": f"Product Master synonym match: {matched_synonym or 'No direct match'}",
-            "qc_status": "Auto-verified" if matched_synonym else "Needs QC",
-        },
-        "inn": {
-            "value": product_master["inn"],
-            "confidence": 100,
-            "evidence": "Resolved from Product Master",
-            "qc_status": "Auto-verified",
-        },
-        "product_variant": {
-            "value": matched_variant or "Not confirmed",
-            "confidence": 80 if matched_variant else 0,
-            "evidence": "Detected from title/abstract text",
-            "qc_status": "Auto-verified" if matched_variant else "Needs QC",
-        },
-        "mah_country": {
-            "value": mah_country,
-            "confidence": 90 if mah_country != "Needs verification" else 0,
-            "evidence": "Compared detected country against Product Master MAH countries",
-            "qc_status": "Auto-verified" if mah_country != "Needs verification" else "Needs QC",
-        },
-        "knowledge_match": {
-            "value": matched_synonym or "No direct synonym match",
-            "confidence": 95 if matched_synonym else 0,
-            "evidence": "Product Master synonym dictionary",
-            "qc_status": "Auto-verified" if matched_synonym else "Needs QC",
-        },
+    parser.add_argument(
+        "--product-master",
+        required=True,
+        help="Path to Product Master JSON.",
+    )
+
+    parser.add_argument(
+        "--article",
+        required=True,
+        help="Path to canonical article JSON.",
+    )
+
+    parser.add_argument(
+        "--output",
+        required=False,
+        help="Optional output JSON path.",
+    )
+
+    args = parser.parse_args()
+
+    article = _load_json(args.article)
+
+    orchestrator = HitsOrchestrator(
+        product_master_path=args.product_master,
+    )
+
+    rows = orchestrator.run(
+        tenant_id=args.tenant_id,
+        article=article,
+    )
+
+    payload = {
+        "tenant_id": args.tenant_id,
+        "hits_count": len(rows),
+        "hits": rows,
     }
 
+    output_json = json.dumps(payload, indent=2, ensure_ascii=False)
 
-def pii_agent(metadata: dict[str, Any]) -> dict[str, Any]:
-    text = f"{metadata.get('title', '')} {metadata.get('abstract', '')}".lower()
+    if args.output:
+        output_path = Path(args.output).expanduser().resolve()
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(output_json, encoding="utf-8")
 
-    pii_indicators = [
-        "patient",
-        "year-old",
-        "male",
-        "female",
-        "woman",
-        "man",
-        "pregnant",
-        "initials",
-        "date of birth",
-        "dob",
-    ]
+    print(output_json)
 
-    found = [term for term in pii_indicators if term in text]
-    pii = "Yes" if found else "No"
-
-    return {
-        "pii": {
-            "value": pii,
-            "confidence": 80 if found else 70,
-            "evidence": f"PII indicator terms detected: {', '.join(found) if found else 'None'}",
-            "qc_status": "Needs QC" if found else "Auto-verified",
-        }
-    }
-
-
-def full_text_agent(package_dir: Path) -> dict[str, Any]:
-    fulltext_pdf = package_dir / "fulltext.pdf"
-    fulltext_xml = package_dir / "fulltext.xml"
-
-    if fulltext_pdf.exists():
-        availability = "Full Text"
-        link = str(fulltext_pdf)
-        confidence = 100
-        qc_status = "Auto-verified"
-        evidence = "fulltext.pdf exists in Evidence Package"
-    elif fulltext_xml.exists():
-        availability = "Full Text"
-        link = str(fulltext_xml)
-        confidence = 100
-        qc_status = "Auto-verified"
-        evidence = "fulltext.xml exists in Evidence Package"
-    else:
-        availability = "Abstract"
-        link = ""
-        confidence = 90
-        qc_status = "Auto-verified"
-        evidence = "No fulltext.pdf/fulltext.xml found; abstract.txt available"
-
-    return {
-        "text_availability": {
-            "value": availability,
-            "confidence": confidence,
-            "evidence": evidence,
-            "qc_status": qc_status,
-        },
-        "full_text_link": {
-            "value": link,
-            "confidence": confidence if link else 0,
-            "evidence": evidence,
-            "qc_status": qc_status if link else "Not applicable",
-        },
-    }
-
-
-def build_flat_hits_output(field_results: dict[str, Any]) -> dict[str, Any]:
-    def val(field: str) -> Any:
-        return field_results.get(field, {}).get("value", "")
-
-    def qc_required() -> bool:
-        return any(v.get("qc_status") == "Needs QC" for v in field_results.values())
-
-    return {
-        "S.No": 1,
-        "PMID": val("pmid"),
-        "DOI": val("doi"),
-        "Primary Author": val("primary_author"),
-        "Primary Author Country": val("primary_author_country"),
-        "Authors": val("authors"),
-        "Product": val("product"),
-        "INN": val("inn"),
-        "Product Variant": val("product_variant"),
-        "MAH Country": val("mah_country"),
-        "PII": val("pii"),
-        "Full Text / Abstract": val("text_availability"),
-        "Full Text Link": val("full_text_link"),
-        "Knowledge Match": val("knowledge_match"),
-        "QC Required": qc_required(),
-    }
-
-
-def run_hits_pipeline(
-    pmid: str,
-    tenant_id: str = "demo-tenant",
-    base_dir: str = "evidence_store",
-) -> dict[str, Any]:
-    package_dir = Path(base_dir) / tenant_id / f"PMID_{pmid}"
-
-    metadata = load_metadata(package_dir)
-
-    field_results: dict[str, Any] = {}
-    field_results.update(metadata_agent(metadata))
-    field_results.update(author_agent(metadata))
-    field_results.update(country_agent(metadata))
-    field_results.update(product_agent(metadata))
-    field_results.update(pii_agent(metadata))
-    field_results.update(full_text_agent(package_dir))
-
-    hits_output = {
-        "pmid": pmid,
-        "tenant_id": tenant_id,
-        "source_package": str(package_dir),
-        "flat_output": build_flat_hits_output(field_results),
-        "field_evidence": field_results,
-    }
-
-    output_path = package_dir / "hits_output.json"
-    output_path.write_text(json.dumps(hits_output, indent=2), encoding="utf-8")
-
-    return hits_output
+    return 0
 
 
 if __name__ == "__main__":
-    pmid_input = input("Enter PMID: ").strip()
-    result = run_hits_pipeline(pmid_input)
-    print(json.dumps(result["flat_output"], indent=2))
+    raise SystemExit(main())

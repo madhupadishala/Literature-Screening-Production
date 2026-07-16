@@ -1,0 +1,46 @@
+# dependencies
+node_modules/
+.pnpm-store/
+.npm/
+
+# Next.js
+.next/
+out/
+dist/
+build/
+
+# environment / secrets
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# generated knowledge stores
+knowledge/chroma_db/
+knowledge/vector_index/
+knowledge/models/
+
+# generated evidence / runtime outputs
+evidence_store/
+uploads/
+tmp/
+temp/
+exports/
+reports/generated/

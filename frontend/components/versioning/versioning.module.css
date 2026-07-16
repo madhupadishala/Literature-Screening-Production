@@ -1,0 +1,171 @@
+.versionBadge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+  white-space: nowrap;
+}
+
+.compact {
+  padding: 5px 9px;
+  font-size: 10px;
+}
+
+.latest {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.archived {
+  background: #f8fafc;
+  color: #64748b;
+  border-color: #cbd5e1;
+}
+
+.locked {
+  background: #fff7ed;
+  color: #c2410c;
+  border-color: #fed7aa;
+}
+
+.versionPanel {
+  background: #ffffff;
+  border: 1px solid #dbe4ef;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.panelHeader p {
+  margin: 0 0 6px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.panelHeader h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 22px;
+}
+
+.panelHeader span {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.versionList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.versionItem {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 18px;
+  padding: 20px 22px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.versionItem:last-child {
+  border-bottom: none;
+}
+
+.versionMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.versionMeta small {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.versionBody h3 {
+  margin: 0 0 8px;
+  color: #0f172a;
+  font-size: 16px;
+}
+
+.versionBody p {
+  margin: 0 0 10px;
+  color: #475569;
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+.versionFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.versionFacts span {
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.changeList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.changeItem {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px;
+  background: #f8fafc;
+}
+
+.changeItem strong {
+  display: block;
+  color: #0f172a;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.changeItem span {
+  color: #475569;
+  font-size: 12px;
+}
+
+.emptyState {
+  padding: 32px;
+  color: #64748b;
+  text-align: center;
+  font-weight: 700;
+}

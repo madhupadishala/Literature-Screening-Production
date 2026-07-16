@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: en-US
+
+reviews:
+  profile: assertive
+
+  request_changes_workflow: true
+  high_level_summary: true
+  review_status: true
+  poem: false
+  in_progress_fortune: false
+
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+      - develop
+
+  path_filters:
+    - "!frontend/.next/**"
+    - "!frontend/node_modules/**"
+    - "!frontend/coverage/**"
+    - "!frontend/public/**"
+    - "!**/*.lock"
+    - "!**/*.min.js"
+    - "!**/*.map"
+
+  path_instructions:
+    - path: "frontend/lib/knowledge/**"
+      instructions: |
+        Treat this code as regulated knowledge infrastructure.
+        Review for tenant isolation, document version traceability,
+        effective-date enforcement, governance controls, deterministic
+        behavior, explicit error handling, citation integrity, and
+        prevention of superseded knowledge from entering AI retrieval.
+
+    - path: "frontend/lib/literature/**"
+      instructions: |
+        Review for pharmacovigilance literature correctness, tenant isolation,
+        traceable source metadata, PMID and DOI integrity, deterministic
+        duplicate handling, preservation of original evidence, and explicit
+        handling of partial or unavailable full text.
+
+    - path: "frontend/lib/platform/**"
+      instructions: |
+        Review as reusable PV Nexus platform infrastructure.
+        Flag module-specific coupling, unsafe in-memory production state,
+        missing provider abstractions, weak error handling, cross-tenant data
+        exposure, and non-auditable state transitions.
+
+    - path: "frontend/app/api/**"
+      instructions: |
+        Review API routes for input validation, authorization boundaries,
+        tenant resolution, controlled error responses, non-disclosure of
+        secrets or internal stack traces, and thin-controller design.
+
+    - path: "frontend/components/**"
+      instructions: |
+        Review client components for inaccessible controls, unhandled fetch
+        failures, race conditions, stale state, unsafe rendering, and direct
+        implementation of business logic that belongs in services.
+
+chat:
+  auto_reply: true
