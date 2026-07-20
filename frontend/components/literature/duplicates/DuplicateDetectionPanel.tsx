@@ -22,43 +22,68 @@ function MetricCard({
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <div className="text-sm text-slate-500">{title}</div>
-      <div className="mt-2 text-2xl font-bold text-slate-900">{value}</div>
+
+      <div className="mt-2 text-2xl font-bold text-slate-900">
+        {value}
+      </div>
     </div>
   );
 }
 
 export default function DuplicateDetectionPanel() {
-  const [data, setData] = useState<ApiResponse | null>(null);
+  const [data, setData] =
+    useState<ApiResponse | null>(null);
 
   async function loadHistory() {
-    const response = await fetch("/api/literature/duplicates", {
-      cache: "no-store",
-    });
+    const response = await fetch(
+      "/api/literature/duplicates",
+      {
+        cache: "no-store",
+      },
+    );
 
-    const result = (await response.json()) as ApiResponse;
+    const result =
+      (await response.json()) as ApiResponse;
 
     setData(result);
   }
 
   async function runDemoCheck() {
-    await fetch("/api/literature/duplicates", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tenantId: "demo-tenant",
-        candidate: {
-          id: `candidate-${Date.now()}`,
-          tenantId: "demo-tenant",
-          pmid: "12345678",
-          doi: "10.1000/demo",
-          title: "Paracetamol induced liver injury",
-          authors: ["Smith", "Jones"],
-          publicationDate: "2026-01-01",
+    await fetch(
+      "/api/literature/duplicates",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
         },
-      }),
-    });
+
+        body: JSON.stringify({
+          tenantId: "demo-tenant",
+
+          article: {
+            id: `candidate-${Date.now()}`,
+
+            articleId: `candidate-${Date.now()}`,
+
+            pmid: "12345678",
+
+            doi: "10.1000/demo",
+
+            title:
+              "Paracetamol induced liver injury",
+
+            productName:
+              "Paracetamol",
+
+            source: "Demo",
+          },
+
+          existingArticles: [],
+        }),
+      },
+    );
 
     await loadHistory();
   }
@@ -68,7 +93,9 @@ export default function DuplicateDetectionPanel() {
   }, []);
 
   const status = data?.status;
-  const history = data?.history ?? [];
+
+  const history =
+    data?.history ?? [];
 
   return (
     <section className="space-y-6">
@@ -79,7 +106,10 @@ export default function DuplicateDetectionPanel() {
           </h2>
 
           <p className="text-sm text-slate-500">
-            Detect duplicate literature using PMID, DOI and title similarity.
+            Detect duplicate
+            literature using PMID,
+            DOI and title
+            similarity.
           </p>
         </div>
 
@@ -95,24 +125,32 @@ export default function DuplicateDetectionPanel() {
       <div className="grid gap-4 md:grid-cols-2">
         <MetricCard
           title="Checked Records"
-          value={status?.checkedRecords ?? 0}
+          value={
+            status?.checkedRecords ??
+            0
+          }
         />
 
         <MetricCard
           title="Duplicates Found"
-          value={status?.duplicateRecords ?? 0}
+          value={
+            status?.duplicateRecords ??
+            0
+          }
         />
       </div>
 
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-200 px-4 py-3 font-semibold">
-          Duplicate Check History
+          Duplicate Check
+          History
         </div>
 
         <div className="divide-y divide-slate-100">
           {history.length === 0 ? (
             <div className="p-6 text-sm text-slate-500">
-              No duplicate checks executed.
+              No duplicate
+              checks executed.
             </div>
           ) : (
             history.map((item) => (
@@ -125,8 +163,12 @@ export default function DuplicateDetectionPanel() {
                 </div>
 
                 <div className="text-sm text-slate-500">
-                  PMID: {item.candidate.pmid ?? "—"} · DOI:{" "}
-                  {item.candidate.doi ?? "—"}
+                  PMID:{" "}
+                  {item.candidate.pmid ??
+                    "—"}{" "}
+                  · DOI:{" "}
+                  {item.candidate.doi ??
+                    "—"}
                 </div>
 
                 <div
@@ -136,16 +178,29 @@ export default function DuplicateDetectionPanel() {
                       : "bg-green-100 text-green-700"
                   }`}
                 >
-                  {item.isDuplicate ? "Duplicate" : "Unique"}
+                  {item.isDuplicate
+                    ? "Duplicate"
+                    : "Unique"}
                 </div>
 
-                {item.matches.length > 0 && (
+                {item.matches.length >
+                  0 && (
                   <div className="rounded-lg bg-slate-50 p-3 text-sm">
-                    {item.matches.map((match) => (
-                      <div key={match.matchedRecordId}>
-                        {match.reason} · Score: {match.score}
-                      </div>
-                    ))}
+                    {item.matches.map(
+                      (match) => (
+                        <div
+                          key={
+                            match.articleId
+                          }
+                        >
+                          {
+                            match.reason
+                          }{" "}
+                          · Score:{" "}
+                          {match.confidence}
+                        </div>
+                      ),
+                    )}
                   </div>
                 )}
               </div>

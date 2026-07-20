@@ -7,8 +7,8 @@ type WorkflowDashboardProps = {
   onOpenPackage: (packageId: string) => void;
 };
 
-function formatDate(value: string) {
-  if (!value) return "—";
+function formatDate(value?: string) {
+  if (!value) return "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â";
 
   try {
     const date = new Date(value);
@@ -22,8 +22,8 @@ function formatDate(value: string) {
 // Updated: Calibrated to a pure 2-step process (Hits & Screening) so 0% locks are eliminated
 function getProgress(pkg: WorkflowPackage) {
   let score = 0;
-  if (pkg.hits_count > 0) score += 1;
-  if (pkg.screening_count > 0) score += 1;
+  if (Number(pkg.hits_count ?? 0) > 0) score += 1;
+  if (Number(pkg.screening_count ?? 0) > 0) score += 1;
   return Math.round((score / 2) * 100);
 }
 
@@ -33,16 +33,16 @@ export default function WorkflowDashboard({
   onOpenPackage,
 }: WorkflowDashboardProps) {
   // Packages are marked completed if they have successfully made it past screening metrics
-  const completed = packages.filter((p) => p.screening_count > 0 && p.status !== "RUNNING");
+  const completed = packages.filter((p) => Number(p.screening_count ?? 0) > 0 && !p.status.includes("RUNNING"));
   const running = packages.filter((p) => p.status.includes("RUNNING"));
-  const pending = packages.filter((p) => p.screening_count === 0 && !p.status.includes("RUNNING"));
+  const pending = packages.filter((p) => Number(p.screening_count ?? 0) === 0 && !p.status.includes("RUNNING"));
 
   const hits = packages.reduce((sum, p) => sum + Number(p.hits_count || 0), 0);
   const screening = packages.reduce((sum, p) => sum + Number(p.screening_count || 0), 0);
 
   // Unlocked: Flags records for review without looking for old intake metrics
   const attentionNeeded = packages
-    .filter((p) => p.hits_count === 0 || p.screening_count === 0)
+    .filter((p) => Number(p.hits_count ?? 0) === 0 || Number(p.screening_count ?? 0) === 0)
     .slice(0, 5);
 
   const recentActivity = [...packages]
@@ -153,7 +153,7 @@ export default function WorkflowDashboard({
                 >
                   <div>
                     <strong>{pkg.package_id}</strong>
-                    <span>{pkg.pmid || "—"} · {pkg.title || "Untitled evidence package"}</span>
+                    <span>{pkg.pmid || "ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â"} Ãƒâ€šÃ‚Â· {pkg.title || "Untitled evidence package"}</span>
                   </div>
 
                   <small>{formatDate(pkg.updated_at)}</small>

@@ -4,41 +4,33 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-type WorkflowHistoryItem = {
-  timestamp?: string;
-  from_status?: string;
-  to_status?: string;
-  reason?: string;
-  actor?: string;
-  metadata?: Record<string, unknown>;
-};
+import InvestorDemoHeader from "@/components/InvestorDemoHeader";
+import Navigation from "@/components/Navigation";
 
 type WorkflowState = {
-  status?: string;
   state?: string;
   updated_at?: string;
   updatedAt?: string;
-  history?: WorkflowHistoryItem[];
+  package_id?: string;
+  packageId?: string;
 };
 
-type PackageApiResponse = {
-  success: boolean;
-  error?: string;
-  tenant_id?: string;
+type WorkflowPackage = {
+  packageId?: string;
   package_id?: string;
-  metadata?: any;
-  workflow_state?: WorkflowState | null;
+  id?: string;
+  pmid?: string;
+  title?: string;
+  metadata?: Record<string, any>;
+  workflowState?: WorkflowState;
+  workflow_state?: WorkflowState;
+  hitsOutput?: any;
   hits_output?: any;
+  screeningOutput?: any;
   screening_output?: any;
+  intakeInput?: any;
   intake_input?: any;
 };
-
-type DownloadFileType =
-  | "metadata"
-  | "workflow_state"
-  | "hits_output"
-  | "screening_output"
-  | "intake_input";
 
 const STATUS_LABELS: Record<string, string> = {
   NEW: "New",
@@ -46,28 +38,24 @@ const STATUS_LABELS: Record<string, string> = {
   HITS_COMPLETE: "Hits Complete",
   SCREENING_RUNNING: "Screening Running",
   SCREENING_COMPLETE: "Screening Complete",
-  INTAKE_INPUT_CREATED: "Intake Input Created",
+  INTAKE_INPUT_CREATED: "Downstream Output Ready",
 };
 
-const tabs = ["Overview", "Evidence", "Hits", "Screening", "Intake", "Audit", "Download"];
+const tabs = [
+  "Overview",
+  "Evidence",
+  "Hits",
+  "Screening",
+  "Downstream Output",
+  "Audit",
+  "Download",
+];
 
-function text(value: any, fallback = "—") {
+function text(value: any, fallback = "â€”") {
   if (value === null || value === undefined || value === "") return fallback;
   if (Array.isArray(value)) return value.length ? value.join(", ") : fallback;
-  if (typeof value === "object") return fallback;
+  if (typeof value === "object") return JSON.stringify(value);
   return String(value);
-}
-
-function formatDate(value: any) {
-  if (!value) return "—";
-
-  try {
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return String(value);
-    return date.toLocaleString();
-  } catch {
-    return String(value);
-  }
 }
 
 function findValue(obj: any, keys: string[]): any {
@@ -89,201 +77,85 @@ function findValue(obj: any, keys: string[]): any {
   return undefined;
 }
 
-function getArray(value: any): any[] {
-  if (!value) return [];
-  if (Array.isArray(value)) return value;
-  return [value];
+function countItems(value: any) {
+  if (!value) return 0;
+  if (Array.isArray(value)) return value.length;
+  if (typeof value === "object") return Object.keys(value).length;
+  return 1;
 }
 
-function StatusBadge({ status }: { status: string }) {
-  return (
-    <span className={`status-badge ${status.toLowerCase()}`}>
-      {STATUS_LABELS[status] || status.replaceAll("_", " ")}
-    </span>
-  );
+function getPackageId(pkg: WorkflowPackage) {
+  return pkg.packageId || pkg.package_id || pkg.id || "";
 }
 
-function Field({ label, value }: { label: string; value: any }) {
-  return (
-    <div className="field-card">
-      <span>{label}</span>
-      <strong>{text(value)}</strong>
-    </div>
-  );
+function getState(pkg: WorkflowPackage) {
+  return pkg.workflowState || pkg.workflow_state || {};
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="section-card">
-      <h2>{title}</h2>
-      {children}
-    </section>
-  );
+function getHits(pkg: WorkflowPackage) {
+  return pkg.hitsOutput || pkg.hits_output || {};
+}
+
+function getScreening(pkg: WorkflowPackage) {
+  return pkg.screeningOutput || pkg.screening_output || {};
+}
+
+function getDownstreamOutput(pkg: WorkflowPackage) {
+  return pkg.intakeInput || pkg.intake_input || {};
 }
 
 export default function WorkflowDetailsPage() {
-  const params = useParams<{ packageId: string }>();
-  const packageId = decodeURIComponent(params.packageId || "");
+  const params = useParams<{ packageId: string | string[] }>();
 
+  const rawPackageId = Array.isArray(params.packageId)
+    ? params.packageId[0]
+    : params.packageId;
+
+  const packageId = decodeURIComponent(rawPackageId || "");
   const [activeTab, setActiveTab] = useState("Overview");
-  const [pkg, setPkg] = useState<PackageApiResponse | null>(null);
+  const [packages, setPackages] = useState<WorkflowPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [toast, setToast] = useState("");
-  const [downloading, setDownloading] = useState<DownloadFileType | null>(null);
 
-  async function loadPackage() {
+  useEffect(() => {
+    void loadPackages();
+  }, []);
+
+  async function loadPackages() {
     try {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`/api/workflow/package/${encodeURIComponent(packageId)}`, {
+      const response = await fetch("/api/workflow/list", {
         cache: "no-store",
       });
 
-      const data: PackageApiResponse = await response.json();
-
-      if (!response.ok || !data.success) {
-        throw new Error(data.error || "Unable to load workflow package.");
+      if (!response.ok) {
+        throw new Error("Unable to load the evidence package.");
       }
 
-      setPkg(data);
-    } catch (err: any) {
-      setError(err?.message || "Unable to load workflow package.");
-      setPkg(null);
+      const data = await response.json();
+      setPackages(Array.isArray(data) ? data : data.packages || data.items || []);
+    } catch (caught) {
+      setError(
+        caught instanceof Error
+          ? caught.message
+          : "Unable to load the evidence package.",
+      );
     } finally {
       setLoading(false);
     }
   }
 
-  function showToast(message: string) {
-    setToast(message);
-    setTimeout(() => setToast(""), 3000);
-  }
-
-  async function downloadFile(fileType: DownloadFileType, label: string) {
-    try {
-      setDownloading(fileType);
-
-      const response = await fetch(
-        `/api/workflow/download/${encodeURIComponent(packageId)}/${fileType}`,
-        { cache: "no-store" }
-      );
-
-      if (!response.ok) {
-        let message = `Failed to download ${label}.`;
-        try {
-          const data = await response.json();
-          message = data.error || message;
-        } catch {
-          // Keep default message if response is not JSON.
-        }
-        throw new Error(message);
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `${packageId}_${fileType}.json`;
-      document.body.appendChild(anchor);
-      anchor.click();
-      anchor.remove();
-      window.URL.revokeObjectURL(url);
-
-      showToast(`${label} downloaded successfully.`);
-    } catch (err: any) {
-      showToast(err?.message || `Failed to download ${label}.`);
-    } finally {
-      setDownloading(null);
-    }
-  }
-
-  useEffect(() => {
-    if (packageId) {
-      loadPackage();
-    }
-  }, [packageId]);
-
-  const metadata = pkg?.metadata || {};
-  const workflowState = pkg?.workflow_state || {};
-  const hitsOutput = pkg?.hits_output || {};
-  const screeningOutput = pkg?.screening_output || {};
-  const intakeInput = pkg?.intake_input || {};
-
-  const hits = getArray(hitsOutput.hits);
-  const screening = getArray(screeningOutput.screening);
-  const intakeInputs = getArray(intakeInput.intake_inputs);
-  const latestHit = hits[0] || {};
-  const latestScreening = screening[0] || {};
-  const latestIntake = intakeInputs[0] || {};
-
-  const currentStatus = text(workflowState.status || workflowState.state, "NEW");
-  const history = workflowState.history || [];
-
-  const title = text(metadata.title || latestIntake.title || latestHit.title);
-  const pmid = text(metadata.pmid || hitsOutput.pmid || screeningOutput.pmid || intakeInput.pmid);
-  const journal = metadata.journal || latestIntake.journal || latestHit.journal;
-  const publicationDate =
-    metadata.publication_date || latestIntake.publication_date || latestHit.publication_date;
-  const authors = metadata.authors || metadata.primary_author || latestHit.primary_author;
-  const country =
-    latestIntake.country ||
-    latestScreening.country ||
-    latestHit.country_of_interest ||
-    metadata.country ||
-    findValue(metadata, ["patient_country", "coi_country"]);
-  const abstract = metadata.abstract;
-  const source = metadata.source;
-  const doi = metadata.doi;
-
-  const companySuspects =
-    latestScreening.company_suspect_drugs ||
-    latestIntake.company_suspect_drugs ||
-    findValue(hitsOutput, ["company_suspect_drugs", "suspect_products"]);
-  const coSuspects = latestScreening.co_suspect_drugs;
-  const concomitantMedications = latestScreening.concomitant_medications;
-  const treatmentMedications = latestScreening.treatment_medications;
-  const clinicalEvents = latestScreening.clinical_events || latestIntake.clinical_events;
-  const specialSituations = latestScreening.special_situations || latestIntake.special_situations;
-  const seriousness = latestScreening.seriousness || latestScreening.event_severity;
-  const patientSafety = latestScreening.patient_safety || latestIntake.patient_safety;
-  const patientIdentification =
-    latestScreening.patient_identification_pii || latestIntake.patient_identification_pii;
-  const coi = latestScreening.coi || latestIntake.coi;
-  const activeMah = latestScreening.active_mah || latestIntake.active_mah;
-  const screeningDecision = latestScreening.screening_decision || latestIntake.screening_decision;
-  const screeningReasoning = latestScreening.screening_reasoning;
-  const screeningFlags = latestScreening.flags || latestIntake.screening_flags;
-
-  const progress = useMemo(
-    () => [
-      {
-        label: "Hits",
-        done:
-          Number(hitsOutput.hits_count || 0) > 0 ||
-          ["HITS_COMPLETE", "SCREENING_COMPLETE", "INTAKE_INPUT_CREATED"].includes(currentStatus),
-      },
-      {
-        label: "Screening",
-        done:
-          Number(screeningOutput.screening_count || 0) > 0 ||
-          ["SCREENING_COMPLETE", "INTAKE_INPUT_CREATED"].includes(currentStatus),
-      },
-      {
-        label: "Intake",
-        done:
-          Number(intakeInput.intake_input_count || 0) > 0 ||
-          currentStatus === "INTAKE_INPUT_CREATED",
-      },
-    ],
-    [hitsOutput, screeningOutput, intakeInput, currentStatus]
+  const pkg = useMemo(
+    () => packages.find((item) => getPackageId(item) === packageId),
+    [packages, packageId],
   );
 
   if (loading) {
     return (
       <main className="details-shell">
-        <div className="panel">Loading package...</div>
+        <div className="loading-card">Loading governed evidence packageâ€¦</div>
       </main>
     );
   }
@@ -291,68 +163,168 @@ export default function WorkflowDetailsPage() {
   if (error || !pkg) {
     return (
       <main className="details-shell">
-        <div className="panel">
+        <div className="loading-card">
           <Link href="/workflow" className="back-link">
-            ← Back to Workflow
+            â† Back to Workflow
           </Link>
-          <h1>Package not found</h1>
-          <p>{error || `No package found for ${packageId}.`}</p>
+          <h1>Evidence package not found</h1>
+          <p>{error || `No package was found for ${packageId}.`}</p>
         </div>
       </main>
     );
   }
 
+  const state = getState(pkg);
+  const hits = getHits(pkg);
+  const screening = getScreening(pkg);
+  const downstreamOutput = getDownstreamOutput(pkg);
+  const metadata = pkg.metadata || {};
+
+  const currentState = text(state.state, "NEW");
+  const title = text(
+    pkg.title || findValue(metadata, ["title", "article_title"]),
+  );
+  const pmid = text(pkg.pmid || findValue(metadata, ["pmid", "PMID"]));
+  const journal = findValue(metadata, ["journal", "journal_title"]);
+  const authors = findValue(metadata, ["authors", "author", "primary_author"]);
+  const country = findValue(metadata, [
+    "country",
+    "patient_country",
+    "coi_country",
+  ]);
+  const abstract = findValue(metadata, ["abstract", "article_abstract"]);
+  const fullText = findValue(metadata, [
+    "full_text_available",
+    "fullTextAvailable",
+    "full_text",
+  ]);
+
+  const products = findValue(hits, [
+    "products",
+    "detected_products",
+    "product_hits",
+    "suspect_products",
+  ]);
+  const validity = findValue(screening, [
+    "validity",
+    "case_validity",
+    "is_valid",
+  ]);
+  const seriousness = findValue(screening, [
+    "seriousness",
+    "serious",
+    "seriousness_assessment",
+  ]);
+  const patient = findValue(screening, [
+    "patient",
+    "patient_identifier",
+    "patient_details",
+  ]);
+  const reporter = findValue(screening, [
+    "reporter",
+    "primary_reporter",
+    "primary_author",
+    "author",
+  ]);
+  const adverseEvent = findValue(screening, [
+    "adverse_event",
+    "ae",
+    "event",
+    "events",
+    "clinical_events",
+  ]);
+  const narrative = findValue(screening, [
+    "narrative",
+    "case_narrative",
+    "summary",
+    "screening_reasoning",
+  ]);
+
+  const downstreamCount =
+    Number(downstreamOutput.intake_input_count || 0) ||
+    countItems(downstreamOutput.intake_inputs);
+
+  const progress = [
+    {
+      label: "Hits",
+      done:
+        countItems(hits) > 0 ||
+        ["HITS_COMPLETE", "SCREENING_COMPLETE", "INTAKE_INPUT_CREATED"].includes(
+          currentState,
+        ),
+    },
+    {
+      label: "Screening",
+      done:
+        countItems(screening) > 0 ||
+        ["SCREENING_COMPLETE", "INTAKE_INPUT_CREATED"].includes(currentState),
+    },
+    {
+      label: "Downstream Output",
+      done: downstreamCount > 0 || currentState === "INTAKE_INPUT_CREATED",
+    },
+  ];
+
   return (
     <main className="details-shell">
-      <div className="hero-card">
-        <div>
-          <Link href="/workflow" className="back-link">
-            ← Back to Workflow
-          </Link>
-          <h1>{packageId}</h1>
-          <p>{title}</p>
-        </div>
+      <InvestorDemoHeader
+        eyebrow="GOVERNED EVIDENCE PACKAGE"
+        title={title}
+        subtitle={`Package ${packageId} Â· PMID ${pmid} Â· Every output remains connected to source evidence and workflow state.`}
+      />
 
-        <div className="hero-meta">
-          <StatusBadge status={currentStatus} />
-          <span>Tenant: {text(pkg.tenant_id)}</span>
-          <span>PMID: {pmid}</span>
-        </div>
+      <Navigation />
+
+      <div className="package-toolbar">
+        <Link href="/workflow" className="back-link">
+          â† Back to Workflow
+        </Link>
+        <StatusBadge state={currentState} />
       </div>
 
-      <div className="tabs">
+      <nav className="tabs" aria-label="Evidence package sections">
         {tabs.map((tab) => (
           <button
             key={tab}
+            type="button"
             className={activeTab === tab ? "active" : ""}
             onClick={() => setActiveTab(tab)}
           >
             {tab}
           </button>
         ))}
-      </div>
+      </nav>
 
       {activeTab === "Overview" && (
         <>
           <Section title="Workflow Progress">
             <div className="progress-row">
               {progress.map((step) => (
-                <div key={step.label} className={`progress-step ${step.done ? "done" : ""}`}>
-                  <span>{step.done ? "✓" : "○"}</span>
+                <div
+                  key={step.label}
+                  className={`progress-step ${step.done ? "done" : ""}`}
+                >
+                  <span>{step.done ? "âœ“" : "â—‹"}</span>
                   <strong>{step.label}</strong>
                 </div>
               ))}
             </div>
           </Section>
 
-          <div className="grid section-gap">
+          <div className="grid overview-grid">
             <Field label="Package ID" value={packageId} />
             <Field label="PMID" value={pmid} />
-            <Field label="Current Status" value={STATUS_LABELS[currentStatus] || currentStatus} />
-            <Field label="Last Updated" value={formatDate(workflowState.updated_at || workflowState.updatedAt)} />
-            <Field label="Hits Generated" value={hitsOutput.hits_count || hits.length} />
-            <Field label="Screening Records" value={screeningOutput.screening_count || screening.length} />
-            <Field label="Intake Inputs" value={intakeInput.intake_input_count || intakeInputs.length} />
+            <Field
+              label="Current State"
+              value={STATUS_LABELS[currentState] || currentState}
+            />
+            <Field
+              label="Last Updated"
+              value={state.updated_at || state.updatedAt}
+            />
+            <Field label="Hits Objects" value={countItems(hits)} />
+            <Field label="Screening Objects" value={countItems(screening)} />
+            <Field label="Downstream Outputs" value={downstreamCount} />
             <Field label="Country of Interest" value={country} />
           </div>
         </>
@@ -363,583 +335,400 @@ export default function WorkflowDetailsPage() {
           <div className="grid">
             <Field label="Article Title" value={title} />
             <Field label="Journal" value={journal} />
-            <Field label="Publication Date" value={publicationDate} />
-            <Field label="DOI" value={doi} />
-            <Field label="Authors" value={authors} />
-            <Field label="Source" value={source} />
+            <Field label="Authors / Reporters" value={authors} />
             <Field label="Country" value={country} />
-            <Field label="Full Text Availability" value={findValue(metadata, ["full_text_available", "fullTextAvailable", "full_text"]) || "Not assessed"} />
+            <Field label="Full Text Availability" value={fullText} />
           </div>
 
           <div className="text-panel">
-            <h3>Abstract</h3>
-            <p>{text(abstract, "No abstract available in this evidence package.")}</p>
+            <span>Source abstract</span>
+            <p>{text(abstract, "No abstract is available in this package.")}</p>
           </div>
         </Section>
       )}
 
       {activeTab === "Hits" && (
-        <Section title="Hits Output">
+        <Section title="Hits Intelligence">
           <div className="grid">
-            <Field label="Hits Count" value={hitsOutput.hits_count || hits.length} />
-            <Field label="Product Name" value={latestHit.product_name} />
-            <Field label="Normalized Identity" value={latestHit.normalized_identity} />
-            <Field label="Matched Term" value={latestHit.matched_term} />
-            <Field label="Match Type" value={latestHit.match_type} />
-            <Field label="Match Source" value={latestHit.match_source} />
-            <Field label="MAH Country Match" value={latestHit.mah_country_match === true ? "Yes" : latestHit.mah_country_match === false ? "No" : "—"} />
-            <Field label="Confidence" value={latestHit.confidence_score ? `${Math.round(latestHit.confidence_score * 100)}%` : "—"} />
+            <Field label="Product Detections" value={countItems(products)} />
+            <Field label="Total Hits Objects" value={countItems(hits)} />
+            <Field
+              label="Company Suspect Products"
+              value={findValue(hits, [
+                "suspect_products",
+                "company_suspects",
+                "company_suspect_drugs",
+              ])}
+            />
+            <Field
+              label="AI Confidence"
+              value={findValue(hits, ["confidence", "ai_confidence"])}
+            />
+            <Field
+              label="Primary Reporter"
+              value={findValue(hits, ["primary_author", "reporter"])}
+            />
+            <Field
+              label="Active MAH"
+              value={findValue(hits, ["active_mah", "mah_active"])}
+            />
           </div>
 
           <div className="text-panel">
-            <h3>Evidence Sentence</h3>
-            <p>{text(latestHit.evidence_sentence, "No evidence sentence available.")}</p>
-          </div>
-
-          <div className="text-panel">
-            <h3>AI Summary</h3>
-            <p>{text(latestHit.ai_summary, "No AI summary available.")}</p>
-          </div>
-
-          <div className="text-panel">
-            <h3>QC Flags</h3>
-            {getArray(latestHit.qc_flags).length > 0 ? (
-              <div className="flag-list">
-                {getArray(latestHit.qc_flags).map((flag, index) => (
-                  <div key={index} className="flag-card">
-                    <strong>{text(flag.field_name, "Flag")}</strong>
-                    <span>{text(flag.severity)}</span>
-                    <p>{text(flag.reason)}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No QC flags available.</p>
-            )}
+            <span>Detected products and signals</span>
+            <p>{text(products, "No product hits have been detected.")}</p>
           </div>
         </Section>
       )}
 
       {activeTab === "Screening" && (
-        <Section title="Screening Output">
+        <Section title="Screening Intelligence">
           <div className="grid">
-            <Field label="Screening Status" value={latestScreening.screening_status} />
-            <Field label="Decision" value={screeningDecision} />
-            <Field label="Company Suspect Drugs" value={companySuspects} />
-            <Field label="Active MAH" value={activeMah} />
-            <Field label="COI" value={coi} />
-            <Field label="Patient Safety" value={patientSafety} />
-            <Field label="Patient Identification / PII" value={patientIdentification} />
+            <Field label="Validity" value={validity} />
             <Field label="Seriousness" value={seriousness} />
-            <Field label="Clinical Events" value={clinicalEvents} />
-            <Field label="Special Situations" value={specialSituations} />
-            <Field label="Co-Suspect Drugs" value={coSuspects} />
-            <Field label="Concomitant Medications" value={concomitantMedications} />
-            <Field label="Treatment Medications" value={treatmentMedications} />
-            <Field label="Generated At" value={formatDate(latestScreening.generated_at)} />
-            <Field label="Intake Status" value={latestScreening.intake_status} />
-            <Field label="Flags" value={screeningFlags} />
+            <Field label="Patient" value={patient} />
+            <Field label="Primary Reporter" value={reporter} />
+            <Field label="Clinical Event" value={adverseEvent} />
+            <Field label="Country of Interest" value={country} />
+            <Field
+              label="Active MAH"
+              value={findValue(screening, ["active_mah", "mah_active"])}
+            />
+            <Field
+              label="PII"
+              value={findValue(screening, [
+                "patient_identification_pii",
+                "pii_detected",
+              ])}
+            />
+            <Field
+              label="Screening Decision"
+              value={findValue(screening, [
+                "screening_decision",
+                "decision",
+              ])}
+            />
           </div>
 
           <div className="text-panel">
-            <h3>Screening Reasoning</h3>
-            <p>{text(screeningReasoning, "No screening reasoning available.")}</p>
+            <span>Screening reasoning</span>
+            <p>{text(narrative, "No screening reasoning is available.")}</p>
           </div>
         </Section>
       )}
 
-      {activeTab === "Intake" && (
-        <Section title="Intake Package">
-          <div className="grid">
-            <Field label="Intake Created" value={Number(intakeInput.intake_input_count || 0) > 0 ? "Yes" : "No"} />
-            <Field label="Source Type" value={latestIntake.source_type || "Literature"} />
-            <Field label="Export Boundary" value="intake_input.json" />
-            <Field label="Module Boundary" value="STOP" />
-            <Field label="Title" value={latestIntake.title || title} />
-            <Field label="Country" value={latestIntake.country || country} />
-            <Field label="Company Suspect Drugs" value={latestIntake.company_suspect_drugs} />
-            <Field label="Clinical Events" value={latestIntake.clinical_events} />
-            <Field label="Special Situations" value={latestIntake.special_situations} />
-            <Field label="Patient Safety" value={latestIntake.patient_safety} />
-            <Field label="COI" value={latestIntake.coi} />
-            <Field label="Active MAH" value={latestIntake.active_mah} />
-            <Field label="Screening Decision" value={latestIntake.screening_decision} />
-            <Field label="Screening Flags" value={latestIntake.screening_flags} />
-          </div>
-
-          <div className="text-panel">
-            <h3>Human-Readable Intake Summary</h3>
+      {activeTab === "Downstream Output" && (
+        <Section title="Governed Downstream Output">
+          <div className="boundary-panel">
+            <div>
+              <span>Literature product boundary</span>
+              <strong>intake_input.json</strong>
+            </div>
             <p>
-              {Number(intakeInput.intake_input_count || 0) > 0
-                ? "The intake input package has been created successfully. This is the final output of ClinixAI Literature Screening V1."
-                : "Intake input has not been created yet."}
+              This file is the final governed output of Literature Intelligence.
+              Case booking, case processing, QC and submission are handled by
+              separate Nexus workspaces.
             </p>
           </div>
 
-          <div className="boundary-card">
-            Literature Screening V1 ends here. Common Intake, Case Processing, QC Engine, and
-            Submission are not part of this module.
+          <div className="grid">
+            <Field
+              label="Output Generated"
+              value={downstreamCount > 0 ? "Yes" : "No"}
+            />
+            <Field label="Output Records" value={downstreamCount} />
+            <Field label="Source Workspace" value="Literature Intelligence" />
+            <Field label="Module Boundary" value="STOP" />
+            <Field
+              label="Company Suspect Drugs"
+              value={findValue(downstreamOutput, [
+                "company_suspect_drugs",
+                "suspect_product",
+              ])}
+            />
+            <Field
+              label="Clinical Events"
+              value={findValue(downstreamOutput, [
+                "clinical_events",
+                "events",
+              ])}
+            />
+            <Field
+              label="Special Situations"
+              value={findValue(downstreamOutput, ["special_situations"])}
+            />
+            <Field
+              label="Active MAH"
+              value={findValue(downstreamOutput, ["active_mah"])}
+            />
           </div>
         </Section>
       )}
 
       {activeTab === "Audit" && (
-        <Section title="Audit Trail">
-          {history.length > 0 ? (
-            <div className="timeline">
-              {history.map((item, index) => (
-                <div key={`${item.timestamp}-${index}`} className="timeline-item done">
-                  <span />
-                  <div>
-                    <strong>
-                      {text(item.from_status)} → {text(item.to_status)}
-                    </strong>
-                    <p>{text(item.reason)}</p>
-                    <small>
-                      {formatDate(item.timestamp)} · Actor: {text(item.actor, "system")}
-                    </small>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="timeline">
-              <div className="timeline-item done">
-                <span />
-                <div>
-                  <strong>Evidence package identified</strong>
-                  <p>Package loaded into Literature Workflow Manager.</p>
-                </div>
-              </div>
-
-              <div className={`timeline-item ${progress[0].done ? "done" : ""}`}>
-                <span />
-                <div>
-                  <strong>Hits workflow</strong>
-                  <p>{progress[0].done ? "Hits output available." : "Hits not completed yet."}</p>
-                </div>
-              </div>
-
-              <div className={`timeline-item ${progress[1].done ? "done" : ""}`}>
-                <span />
-                <div>
-                  <strong>Screening workflow</strong>
-                  <p>{progress[1].done ? "Screening output available." : "Screening not completed yet."}</p>
-                </div>
-              </div>
-
-              <div className={`timeline-item ${progress[2].done ? "done" : ""}`}>
-                <span />
-                <div>
-                  <strong>Intake input builder</strong>
-                  <p>
-                    {progress[2].done
-                      ? "intake_input.json created. Literature module stops here."
-                      : "Intake input not created yet."}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+        <Section title="Decision Audit Trail">
+          <div className="timeline">
+            <TimelineItem
+              done
+              title="Evidence package created"
+              detail="Source metadata and evidence were placed in a governed package."
+            />
+            <TimelineItem
+              done={progress[0].done}
+              title="Hits intelligence"
+              detail={
+                progress[0].done
+                  ? "Product-aware Hits output is available."
+                  : "Hits processing is pending."
+              }
+            />
+            <TimelineItem
+              done={progress[1].done}
+              title="Screening intelligence"
+              detail={
+                progress[1].done
+                  ? "Medical screening output is available."
+                  : "Screening processing is pending."
+              }
+            />
+            <TimelineItem
+              done={progress[2].done}
+              title="Downstream output builder"
+              detail={
+                progress[2].done
+                  ? "intake_input.json is available. Literature processing stops here."
+                  : "The downstream output has not been generated."
+              }
+            />
+          </div>
         </Section>
       )}
 
       {activeTab === "Download" && (
-        <Section title="Download Package Outputs">
+        <Section title="Download Governed Outputs">
           <div className="download-grid">
-            <button
-              disabled={!metadata || downloading !== null}
-              onClick={() => downloadFile("metadata", "Evidence metadata")}
-            >
-              {downloading === "metadata" ? "Downloading..." : "⬇ Download Evidence Metadata"}
-            </button>
-
-            <button
-              disabled={!workflowState || downloading !== null}
-              onClick={() => downloadFile("workflow_state", "Workflow state")}
-            >
-              {downloading === "workflow_state" ? "Downloading..." : "⬇ Download Workflow State"}
-            </button>
-
-            <button
-              disabled={hits.length === 0 || downloading !== null}
-              onClick={() => downloadFile("hits_output", "Hits output")}
-            >
-              {downloading === "hits_output" ? "Downloading..." : "⬇ Download Hits Output"}
-            </button>
-
-            <button
-              disabled={screening.length === 0 || downloading !== null}
-              onClick={() => downloadFile("screening_output", "Screening output")}
-            >
-              {downloading === "screening_output" ? "Downloading..." : "⬇ Download Screening Output"}
-            </button>
-
-            <button
-              disabled={intakeInputs.length === 0 || downloading !== null}
-              onClick={() => downloadFile("intake_input", "Intake input")}
-            >
-              {downloading === "intake_input" ? "Downloading..." : "⬇ Download Intake Input"}
-            </button>
+            <DownloadLink
+              href={`/api/workflow/download/${encodeURIComponent(
+                packageId,
+              )}/hits_output`}
+              enabled={countItems(hits) > 0}
+              label="Hits Output"
+            />
+            <DownloadLink
+              href={`/api/workflow/download/${encodeURIComponent(
+                packageId,
+              )}/screening_output`}
+              enabled={countItems(screening) > 0}
+              label="Screening Output"
+            />
+            <DownloadLink
+              href={`/api/workflow/download/${encodeURIComponent(
+                packageId,
+              )}/intake_input`}
+              enabled={downstreamCount > 0}
+              label="Downstream Output"
+            />
           </div>
 
           <p className="note">
-            Downloads are generated directly from the evidence package files. Literature Screening V1 exports intake_input.json and stops.
+            Downloads are generated from the governed evidence package. The
+            internal downstream filename remains <strong>intake_input.json</strong>.
           </p>
         </Section>
       )}
 
-      {toast && <div className="toast">{toast}</div>}
-
       <style jsx>{`
         .details-shell {
           min-height: 100vh;
-          background: #f4f7fb;
           padding: 24px;
           color: #0f172a;
-          font-family: Arial, Helvetica, sans-serif;
+          background:
+            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%),
+            #f4f7fb;
+          font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 
-        .hero-card,
-        .section-card,
-        .panel {
-          background: #ffffff;
+        .loading-card,
+        .section-card {
+          padding: 26px;
           border: 1px solid #dbe4ef;
-          border-radius: 18px;
+          border-radius: 20px;
+          background: #ffffff;
           box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
         }
 
-        .hero-card {
-          padding: 28px;
+        .package-toolbar {
           display: flex;
           justify-content: space-between;
-          gap: 24px;
-          align-items: flex-start;
+          align-items: center;
+          margin: 0 0 14px;
+          padding: 0 4px;
         }
 
         .back-link {
-          display: inline-block;
-          margin-bottom: 16px;
-          color: #185a9d;
+          color: #1d4ed8;
+          font-size: 11px;
+          font-weight: 900;
           text-decoration: none;
-          font-weight: 700;
-        }
-
-        h1 {
-          margin: 0 0 10px;
-          font-size: 30px;
-        }
-
-        h2 {
-          margin: 0 0 20px;
-          font-size: 22px;
-        }
-
-        h3 {
-          margin: 0 0 12px;
-          font-size: 16px;
-        }
-
-        p {
-          margin: 0;
-          line-height: 1.6;
-          color: #334155;
-        }
-
-        small {
-          display: block;
-          margin-top: 8px;
-          color: #64748b;
-          font-size: 12px;
-        }
-
-        .hero-meta {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 12px;
-          font-size: 14px;
-        }
-
-        .status-badge {
-          padding: 8px 12px;
-          border-radius: 999px;
-          font-size: 12px;
-          font-weight: 800;
-          background: #e8f5e9;
-          color: #137333;
-          text-transform: uppercase;
-        }
-
-        .status-badge.new {
-          background: #eef2f7;
-          color: #475569;
-        }
-
-        .status-badge.hits_running,
-        .status-badge.screening_running {
-          background: #e0f2fe;
-          color: #075985;
-        }
-
-        .status-badge.hits_complete {
-          background: #ecfeff;
-          color: #0e7490;
-        }
-
-        .status-badge.screening_complete {
-          background: #f3e8ff;
-          color: #7e22ce;
-        }
-
-        .status-badge.intake_input_created {
-          background: #dcfce7;
-          color: #166534;
         }
 
         .tabs {
-          margin: 18px 0;
-          background: #ffffff;
+          display: flex;
+          gap: 7px;
+          margin: 0 0 18px;
+          padding: 8px;
+          overflow-x: auto;
           border: 1px solid #dbe4ef;
           border-radius: 16px;
-          padding: 8px;
-          display: flex;
-          gap: 8px;
-          overflow-x: auto;
+          background: #ffffff;
         }
 
         .tabs button {
-          border: none;
+          border: 0;
+          border-radius: 10px;
+          padding: 10px 13px;
+          color: #475569;
           background: transparent;
-          padding: 12px 18px;
-          border-radius: 12px;
+          font: inherit;
+          font-size: 10px;
+          font-weight: 900;
           cursor: pointer;
-          font-weight: 700;
-          color: #334155;
           white-space: nowrap;
         }
 
         .tabs button.active {
-          background: #185a9d;
           color: #ffffff;
-        }
-
-        .section-card,
-        .panel {
-          padding: 28px;
-        }
-
-        .section-gap {
-          margin-top: 18px;
+          background: #1d4ed8;
         }
 
         .grid {
           display: grid;
-          grid-template-columns: repeat(4, minmax(180px, 1fr));
-          gap: 16px;
+          grid-template-columns: repeat(4, minmax(170px, 1fr));
+          gap: 12px;
         }
 
-        .field-card {
-          border: 1px solid #e2e8f0;
-          border-radius: 14px;
-          padding: 16px;
-          background: #fbfdff;
-          min-height: 86px;
-        }
-
-        .field-card span {
-          display: block;
-          font-size: 12px;
-          color: #64748b;
-          margin-bottom: 8px;
-          font-weight: 700;
-          text-transform: uppercase;
-        }
-
-        .field-card strong {
-          display: block;
-          font-size: 14px;
-          color: #0f172a;
-          line-height: 1.5;
-          word-break: break-word;
-        }
-
-        .text-panel {
-          margin-top: 18px;
-          padding: 20px;
-          border-radius: 14px;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
+        .overview-grid {
+          margin-top: 16px;
         }
 
         .progress-row {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
+          gap: 12px;
         }
 
         .progress-step {
-          border: 1px solid #e2e8f0;
-          border-radius: 16px;
-          padding: 18px;
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
+          padding: 15px;
+          border: 1px solid #e2e8f0;
+          border-radius: 14px;
+          color: #475569;
           background: #f8fafc;
         }
 
         .progress-step span {
-          width: 30px;
-          height: 30px;
-          border-radius: 999px;
           display: grid;
+          width: 28px;
+          height: 28px;
           place-items: center;
+          border-radius: 999px;
           background: #e2e8f0;
-          color: #475569;
           font-weight: 900;
         }
 
-        .progress-step.done span {
-          background: #16a34a;
-          color: #ffffff;
+        .progress-step strong {
+          font-size: 11px;
         }
 
         .progress-step.done {
           border-color: #bbf7d0;
+          color: #166534;
           background: #f0fdf4;
         }
 
-        .flag-list {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
-        }
-
-        .flag-card {
-          border: 1px solid #e2e8f0;
-          border-radius: 12px;
-          padding: 14px;
-          background: #ffffff;
-        }
-
-        .flag-card strong {
-          display: block;
-          margin-bottom: 6px;
-        }
-
-        .flag-card span {
-          display: inline-block;
-          margin-bottom: 8px;
-          padding: 4px 8px;
-          border-radius: 999px;
-          background: #fef3c7;
-          color: #92400e;
-          font-size: 11px;
-          font-weight: 800;
-          text-transform: uppercase;
-        }
-
-        .timeline {
-          display: flex;
-          flex-direction: column;
-          gap: 18px;
-        }
-
-        .timeline-item {
-          display: flex;
-          gap: 14px;
-          padding: 16px;
-          border-radius: 14px;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
-        }
-
-        .timeline-item > span {
-          width: 14px;
-          height: 14px;
-          margin-top: 4px;
-          border-radius: 999px;
-          background: #cbd5e1;
-          flex: 0 0 auto;
-        }
-
-        .timeline-item.done > span {
+        .progress-step.done span {
+          color: #ffffff;
           background: #16a34a;
         }
 
-        .timeline-item strong {
+        .text-panel,
+        .boundary-panel {
+          margin-top: 15px;
+          padding: 16px;
+          border-radius: 14px;
+        }
+
+        .text-panel {
+          border: 1px solid #dbeafe;
+          background: #f8fbff;
+        }
+
+        .text-panel span,
+        .boundary-panel span {
           display: block;
           margin-bottom: 6px;
+          color: #1d4ed8;
+          font-size: 9px;
+          font-weight: 900;
+          letter-spacing: 0.055em;
+          text-transform: uppercase;
+        }
+
+        .text-panel p,
+        .boundary-panel p {
+          margin: 0;
+          color: #475569;
+          font-size: 12px;
+          line-height: 1.7;
+        }
+
+        .boundary-panel {
+          display: flex;
+          align-items: center;
+          gap: 24px;
+          margin: 0 0 16px;
+          border: 1px solid #bae6fd;
+          background: #f0f9ff;
+        }
+
+        .boundary-panel div {
+          min-width: 190px;
+        }
+
+        .boundary-panel strong {
+          color: #0c4a6e;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+          font-size: 14px;
+        }
+
+        .timeline {
+          display: grid;
+          gap: 10px;
         }
 
         .download-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 16px;
-        }
-
-        .download-grid button {
-          border: none;
-          border-radius: 14px;
-          padding: 16px;
-          background: #185a9d;
-          color: #ffffff;
-          cursor: pointer;
-          font-weight: 800;
-          text-align: left;
-        }
-
-        .download-grid button:hover:not(:disabled) {
-          background: #124778;
-        }
-
-        .download-grid button:disabled {
-          background: #cbd5e1;
-          cursor: not-allowed;
-        }
-
-        .boundary-card {
-          margin-top: 18px;
-          border: 1px solid #fed7aa;
-          background: #fff7ed;
-          color: #9a3412;
-          border-radius: 14px;
-          padding: 16px;
-          font-weight: 800;
-          line-height: 1.5;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
         }
 
         .note {
-          margin-top: 16px;
-          font-size: 13px;
-        }
-
-        .toast {
-          position: fixed;
-          right: 24px;
-          bottom: 24px;
-          background: #0f172a;
-          color: #ffffff;
-          padding: 14px 18px;
-          border-radius: 14px;
-          box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);
-          font-weight: 700;
-          z-index: 50;
+          margin: 14px 0 0;
+          color: #64748b;
+          font-size: 11px;
+          line-height: 1.6;
         }
 
         @media (max-width: 1100px) {
-          .grid,
-          .download-grid,
-          .flag-list {
+          .grid {
             grid-template-columns: repeat(2, 1fr);
           }
 
-          .hero-card {
-            flex-direction: column;
-          }
-
-          .hero-meta {
+          .boundary-panel {
             align-items: flex-start;
+            flex-direction: column;
           }
         }
 
@@ -949,13 +738,221 @@ export default function WorkflowDetailsPage() {
           }
 
           .grid,
-          .download-grid,
           .progress-row,
-          .flag-list {
+          .download-grid {
             grid-template-columns: 1fr;
           }
         }
       `}</style>
     </main>
+  );
+}
+
+function StatusBadge({ state }: { state: string }) {
+  return (
+    <span className={`status-badge ${state.toLowerCase()}`}>
+      {STATUS_LABELS[state] || state}
+
+      <style jsx>{`
+        .status-badge {
+          display: inline-flex;
+          padding: 7px 10px;
+          border-radius: 999px;
+          color: #475569;
+          background: #eef2f7;
+          font-size: 9px;
+          font-weight: 900;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+
+        .hits_running,
+        .screening_running {
+          color: #075985;
+          background: #e0f2fe;
+        }
+
+        .hits_complete {
+          color: #155e75;
+          background: #cffafe;
+        }
+
+        .screening_complete {
+          color: #6b21a8;
+          background: #f3e8ff;
+        }
+
+        .intake_input_created {
+          color: #166534;
+          background: #dcfce7;
+        }
+      `}</style>
+    </span>
+  );
+}
+
+function Field({ label, value }: { label: string; value: any }) {
+  return (
+    <div className="field-card">
+      <span>{label}</span>
+      <strong>{text(value)}</strong>
+
+      <style jsx>{`
+        .field-card {
+          min-height: 82px;
+          padding: 14px;
+          border: 1px solid #e2e8f0;
+          border-radius: 13px;
+          background: #fbfdff;
+        }
+
+        span {
+          display: block;
+          margin-bottom: 7px;
+          color: #64748b;
+          font-size: 9px;
+          font-weight: 900;
+          letter-spacing: 0.045em;
+          text-transform: uppercase;
+        }
+
+        strong {
+          display: block;
+          color: #0f172a;
+          font-size: 11px;
+          line-height: 1.55;
+          word-break: break-word;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="section-card">
+      <h2>{title}</h2>
+      {children}
+
+      <style jsx>{`
+        .section-card {
+          padding: 24px;
+          border: 1px solid #dbe4ef;
+          border-radius: 20px;
+          background: #ffffff;
+          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        h2 {
+          margin: 0 0 18px;
+          font-size: 20px;
+          letter-spacing: -0.02em;
+        }
+      `}</style>
+    </section>
+  );
+}
+
+function TimelineItem({
+  done,
+  title,
+  detail,
+}: {
+  done: boolean;
+  title: string;
+  detail: string;
+}) {
+  return (
+    <article className={done ? "done" : ""}>
+      <span />
+      <div>
+        <strong>{title}</strong>
+        <p>{detail}</p>
+      </div>
+
+      <style jsx>{`
+        article {
+          display: flex;
+          gap: 12px;
+          padding: 14px;
+          border: 1px solid #e2e8f0;
+          border-radius: 13px;
+          background: #f8fafc;
+        }
+
+        article > span {
+          width: 12px;
+          height: 12px;
+          margin-top: 3px;
+          border-radius: 999px;
+          background: #cbd5e1;
+          flex: 0 0 auto;
+        }
+
+        article.done {
+          border-color: #bbf7d0;
+          background: #f7fff9;
+        }
+
+        article.done > span {
+          background: #16a34a;
+        }
+
+        strong {
+          display: block;
+          margin-bottom: 4px;
+          font-size: 11px;
+        }
+
+        p {
+          margin: 0;
+          color: #64748b;
+          font-size: 10px;
+          line-height: 1.55;
+        }
+      `}</style>
+    </article>
+  );
+}
+
+function DownloadLink({
+  href,
+  enabled,
+  label,
+}: {
+  href: string;
+  enabled: boolean;
+  label: string;
+}) {
+  if (!enabled) {
+    return <span className="download disabled">{label} unavailable</span>;
+  }
+
+  return (
+    <a className="download" href={href}>
+      Download {label}
+
+      <style jsx>{`
+        .download {
+          display: grid;
+          min-height: 66px;
+          place-items: center;
+          padding: 12px;
+          border-radius: 13px;
+          color: #ffffff;
+          background: #1d4ed8;
+          font-size: 10px;
+          font-weight: 900;
+          text-align: center;
+          text-decoration: none;
+        }
+      `}</style>
+    </a>
   );
 }

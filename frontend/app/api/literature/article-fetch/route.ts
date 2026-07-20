@@ -4,34 +4,85 @@ import { articleFetchService } from "@/lib/literature/article-fetch/article-fetc
 import type { ArticleFetchRequest } from "@/lib/literature/article-fetch/article-fetch-types";
 
 export async function GET() {
-  return NextResponse.json({
-    status: articleFetchService.getStatus(),
-    articles: articleFetchService.list(),
-  });
-}
-
-export async function POST(request: Request) {
-  const body = (await request.json()) as ArticleFetchRequest;
-
-  if (!body.tenantId || !body.pmid) {
+  try {
     return NextResponse.json(
       {
-        error: "tenantId and pmid are required.",
+        success: true,
+        status: articleFetchService.getStatus(),
+        articles: articleFetchService.list(),
       },
       {
-        status: 400,
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error("Article Fetch GET Error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Unable to retrieve fetched articles.",
+      },
+      {
+        status: 500,
       },
     );
   }
+}
 
-  const article = await articleFetchService.fetch(body);
+export async function POST(request: Request) {
+  try {
+    const body = (await request.json()) as ArticleFetchRequest;
 
-  return NextResponse.json(
-    {
-      article,
-    },
-    {
-      status: 201,
-    },
-  );
+    if (
+      !body.tenantId ||
+      typeof body.tenantId !== "string" ||
+      !body.pmid ||
+      typeof body.pmid !== "string"
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "tenantId and pmid are required.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const article = await articleFetchService.fetch({
+      ...body,
+      tenantId: body.tenantId.trim(),
+      pmid: body.pmid.trim(),
+    });
+
+    return NextResponse.json(
+      {
+        success: true,
+        tenantId: body.tenantId,
+        pmid: body.pmid,
+        article,
+        next: {
+          endpoint: "/api/evidence/package",
+          method: "POST",
+        },
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error("Article Fetch Error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to fetch article.",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
 }

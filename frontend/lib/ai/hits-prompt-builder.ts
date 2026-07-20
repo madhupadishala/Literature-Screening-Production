@@ -2,6 +2,7 @@ import type { RAGMergedContext } from "@/lib/rag/rag-types";
 
 export interface HitsPromptInput {
   tenantId: string;
+  articleId?: string;
   articleTitle?: string;
   abstractText?: string;
   fullTextSnippet?: string;
@@ -10,59 +11,143 @@ export interface HitsPromptInput {
   ragContext?: RAGMergedContext;
 }
 
-export function buildHitsPrompt(input: HitsPromptInput): string {
-  const contextChunks =
-    input.ragContext?.chunks
-      .map(
-        (chunk, index) =>
-          `Context ${index + 1} [${chunk.source} | ${chunk.priority}]: ${chunk.content}`,
-      )
-      .join("\n\n") || "No enterprise RAG context available.";
+function buildEnterpriseContext(
+  ragContext?: RAGMergedContext,
+): string {
+  if (
+    !ragContext ||
+    ragContext.chunks.length === 0
+  ) {
+    return "No enterprise knowledge retrieved.";
+  }
 
+  return ragContext.chunks
+    .map(
+      (chunk, index) => `
+Knowledge ${index + 1}
+Source: ${chunk.source}
+Priority: ${chunk.priority}
+Score: ${chunk.score}
+Content:
+${chunk.content}`,
+    )
+    .join("\n\n----------------------------------------\n\n");
+}
+
+export function buildHitsPrompt(
+  input: HitsPromptInput,
+): string {
   return `
-You are the ClinixAI Literature Hits Agent.
+SYSTEM
 
-Your task is to determine whether this literature article is a potential pharmacovigilance hit.
+You are ClinixAI Literature Hits Agent.
 
-Evaluate:
-- Human safety relevance
-- Company suspect product relevance
-- Adverse event / special situation presence
-- Literature case validity signals
-- Country / COI relevance if available
-- Whether the article should move to Screening
+Your responsibility is ONLY to determine whether the article is a potential Pharmacovigilance Literature Hit.
 
-Tenant ID:
+Do NOT perform screening.
+
+Do NOT perform intake.
+
+Do NOT invent facts.
+
+Use ONLY:
+1. Article information.
+2. Enterprise knowledge supplied below.
+3. International Pharmacovigilance principles.
+
+--------------------------------------------------
+
+OBJECTIVE
+
+Determine whether the publication should proceed to Literature Screening.
+
+--------------------------------------------------
+
+EVALUATION CHECKLIST
+
+Evaluate all of the following:
+
+• Company suspect product
+• Generic product
+• Brand name
+• Active ingredient
+• Adverse event
+• Serious adverse event
+• Special situation
+• Human patient
+• Literature case report
+• Safety relevance
+• Country of Interest (COI)
+• Duplicate indication
+• Signal relevance
+• Medical relevance
+
+--------------------------------------------------
+
+ARTICLE
+
+Tenant:
 ${input.tenantId}
 
+Article ID:
+${input.articleId ?? "Not Available"}
+
 Product:
-${input.productName || "Not specified"}
+${input.productName ?? "Not Available"}
 
 Country:
-${input.country || "Not specified"}
+${input.country ?? "Not Available"}
 
-Article Title:
-${input.articleTitle || "Not available"}
+Title:
+${input.articleTitle ?? "Not Available"}
 
 Abstract:
-${input.abstractText || "Not available"}
+${input.abstractText ?? "Not Available"}
 
 Full Text Snippet:
-${input.fullTextSnippet || "Not available"}
+${input.fullTextSnippet ?? "Not Available"}
 
-Enterprise Context:
-${contextChunks}
+--------------------------------------------------
 
-Return ONLY valid JSON with this structure:
+ENTERPRISE KNOWLEDGE
+
+${buildEnterpriseContext(
+  input.ragContext,
+)}
+
+--------------------------------------------------
+
+OUTPUT RULES
+
+Return STRICT JSON ONLY.
+
+No markdown.
+
+No explanation.
+
+No extra text.
+
 {
   "isHit": true,
-  "confidence": 0.0,
-  "classification": "hit | no_hit | needs_manual_review",
-  "reasons": ["reason 1"],
-  "detectedProducts": ["product"],
-  "detectedEvents": ["event"],
-  "detectedSpecialSituations": ["situation"],
-  "recommendedNextStep": "send_to_screening | reject | manual_review"
+  "confidence": 0.95,
+  "classification": "hit",
+  "reasons": [],
+  "detectedProducts": [],
+  "detectedEvents": [],
+  "detectedSpecialSituations": [],
+  "recommendedNextStep": "send_to_screening"
 }
+
+Classification must be one of:
+
+- hit
+- no_hit
+- needs_manual_review
+
+RecommendedNextStep must be one of:
+
+- send_to_screening
+- reject
+- manual_review
 `.trim();
 }

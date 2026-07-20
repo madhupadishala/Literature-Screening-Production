@@ -2,402 +2,179 @@
 
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/Navigation";
+import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 
-type AdminModule = {
-  title: string;
-  group: string;
-  description: string;
-  path: string;
-  status: "Active" | "Configured" | "Needs Review" | "Planned";
-  items: string[];
-};
-
-const ADMIN_MODULES: AdminModule[] = [
+const modules = [
   {
-    title: "Users & Roles",
-    group: "Access Management",
-    description: "Manage users, roles, permissions, tenant access and login controls.",
-    path: "/admin/users-roles",
-    status: "Active",
-    items: ["Users", "Roles", "Permissions", "Access status"],
-  },
-  {
-    title: "Products",
-    group: "Business Configuration",
-    description: "Maintain product master, synonyms, MAH countries and product rules.",
-    path: "/admin/products",
-    status: "Configured",
-    items: ["Product master", "Synonyms", "MAH countries", "Upload list"],
+    title: "Product Master",
+    description:
+      "Upload and version product identities, synonyms, salts, lifecycle, MAH, and WHODrug mappings.",
+    action: "/admin/configuration",
   },
   {
     title: "Literature Calendar",
-    group: "Business Configuration",
-    description: "Configure product-wise literature schedules, frequency and next run date.",
-    path: "/admin/literature-calendar",
-    status: "Needs Review",
-    items: ["Search schedule", "Frequency", "Owner", "Next run"],
+    description:
+      "Maintain daily, weekly, monthly, and custom surveillance schedules with missed-search controls.",
+    action: "/admin/configuration",
   },
   {
-    title: "Knowledge Base",
-    group: "AI Operations",
-    description: "Manage General PV rules, client SOP/WI, tenant overrides and vector index.",
-    path: "/admin/knowledge-base",
-    status: "Active",
-    items: ["General PV", "Client SOP/WI", "Tenant rules", "Vector DB"],
+    title: "Client Guidelines",
+    description:
+      "Upload governed SOPs, work instructions, screening rules, and country-specific guidance.",
+    action: "/admin/configuration",
   },
   {
-    title: "Client Configuration",
-    group: "Tenant Configuration",
-    description: "Configure tenant settings, screening rules, COI rules and export behavior.",
-    path: "/admin/client-configuration",
-    status: "Configured",
-    items: ["Tenant profile", "Screening rules", "COI rules", "Exports"],
+    title: "Outcome Templates",
+    description:
+      "Control client output mappings, mandatory fields, validation rules, and effective versions.",
+    action: "/admin/configuration",
   },
   {
-    title: "System Settings",
-    group: "System Configuration",
-    description: "Manage time zone, email, notifications, environment and storage settings.",
-    path: "/admin/system-settings",
-    status: "Needs Review",
-    items: ["Time zone", "Emails", "Notifications", "Environment"],
+    title: "Literature Sources",
+    description:
+      "Enable databases, configure tenant result limits, and view connector availability.",
+    action: "/admin/configuration",
+  },
+  {
+    title: "Users & Roles",
+    description:
+      "Manage tenant membership and role-based access for owners, IT, PV, Quality, reviewers, and auditors.",
+    action: "/admin/users-roles",
   },
   {
     title: "Audit Logs",
-    group: "Compliance",
-    description: "Search user actions, workflow changes, overrides, downloads and configuration changes.",
-    path: "/admin/audit-logs",
-    status: "Active",
-    items: ["User actions", "Workflow logs", "Overrides", "Downloads"],
+    description:
+      "Review security, workflow, search, and configuration events.",
+    action: "/admin/audit-logs",
   },
   {
-    title: "Reports",
-    group: "Compliance",
-    description: "Generate admin exports, validation summaries, workflow and audit reports.",
-    path: "/admin/reports",
-    status: "Planned",
-    items: ["Workflow report", "Hits export", "Screening export", "Audit export"],
-  },
-  {
-    title: "Super User Console",
-    group: "Operations",
-    description: "Operational control room for search, override, route back, QC and comments.",
-    path: "/admin/super-user-console",
-    status: "Planned",
-    items: ["Search article", "Override", "QC action", "Route back"],
+    title: "System Reliability",
+    description:
+      "View database, AI provider, evidence storage, monitoring, and release health.",
+    action: "/admin/reliability",
   },
 ];
-
-function statusClass(status: AdminModule["status"]) {
-  if (status === "Active") return "active";
-  if (status === "Configured") return "configured";
-  if (status === "Needs Review") return "review";
-  return "planned";
-}
 
 export default function AdminPage() {
   const router = useRouter();
 
   return (
     <main className="app-shell">
-      <section className="topbar">
-        <div>
-          <h1>ClinixAI</h1>
-          <p>Administration Console</p>
-        </div>
-
-        <div className="topbar-meta">
-          <span>Project: Demo</span>
-          <span>User: Madhu</span>
-          <strong>PROD</strong>
-        </div>
-      </section>
-
       <Navigation />
+      <InvestorDemoHeader
+        eyebrow="ADMINISTRATION"
+        title="Tenant Administration Console"
+        subtitle="Operational configuration is visible, tenant-controlled, versioned, permission-checked, and auditable. Secrets remain server-side and are never displayed in the browser."
+        status="Controlled Administration"
+      />
 
-      <section className="admin-hero">
-        <div>
-          <span>Administration</span>
-          <h2>ClinixAI Literature Screening Admin Panel</h2>
-          <p>
-            Central administration for access, products, literature calendar, knowledge governance,
-            client configuration, system settings, audit logs and operational supervision.
-          </p>
-        </div>
-
-        <div className="admin-score">
-          <strong>{ADMIN_MODULES.length}</strong>
-          <span>Admin Modules</span>
-        </div>
-      </section>
-
-      <section className="console-grid">
-        {ADMIN_MODULES.map((module) => (
+      <section className="module-grid">
+        {modules.map((module) => (
           <button
-            key={module.path}
-            className="module-card"
-            onClick={() => router.push(module.path)}
+            key={module.title}
+            type="button"
+            onClick={() => router.push(module.action)}
           >
-            <div className="module-top">
-              <span>{module.group}</span>
-              <em className={statusClass(module.status)}>{module.status}</em>
-            </div>
-
-            <h3>{module.title}</h3>
+            <span>Operational module</span>
+            <h2>{module.title}</h2>
             <p>{module.description}</p>
-
-            <div className="module-items">
-              {module.items.map((item) => (
-                <small key={item}>{item}</small>
-              ))}
-            </div>
+            <strong>Open →</strong>
           </button>
         ))}
       </section>
 
-      <section className="admin-footer-grid">
-        <div className="footer-panel">
-          <h3>RBAC Model</h3>
-          <p>ClinixAI Super Admin → Client Admin → Super User → QC Reviewer → Read Only / Auditor / Training</p>
-        </div>
-
-        <div className="footer-panel">
-          <h3>System Health</h3>
-          <p>Workflow API: Online · Knowledge Router: Online · Vector DB: Local · LLM Provider: Connected</p>
-        </div>
-
-        <div className="footer-panel">
-          <h3>Boundary</h3>
-          <p>Literature Screening V1 ends at intake_input.json. Case processing and submission are not part of this module.</p>
-        </div>
+      <section className="boundary">
+        <strong>Literature product boundary</strong>
+        <p>
+          Administration supports Search, Evidence Package, Hits, Screening,
+          and governed downstream output. No additional Literature workspace
+          is introduced after governed output.
+        </p>
       </section>
 
       <style jsx>{`
         .app-shell {
           min-height: 100vh;
-          background: #f4f7fb;
           padding: 24px;
           color: #0f172a;
-          font-family: Arial, Helvetica, sans-serif;
+          background: #eef2f7;
+          font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 
-        .topbar {
-          background: linear-gradient(135deg, #071b34, #123f68);
-          color: #ffffff;
-          border-radius: 20px;
-          padding: 24px 28px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
-        }
-
-        .topbar h1 {
-          margin: 0;
-          font-size: 30px;
-        }
-
-        .topbar p {
-          margin: 6px 0 0;
-          color: #cfe7ff;
-        }
-
-        .topbar-meta {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-          font-size: 13px;
-        }
-
-        .topbar-meta span,
-        .topbar-meta strong {
-          background: rgba(255, 255, 255, 0.12);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          padding: 8px 10px;
-          border-radius: 999px;
-        }
-
-        .admin-hero {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
-          border-radius: 20px;
-          padding: 24px;
-          margin-bottom: 18px;
-          display: flex;
-          justify-content: space-between;
-          gap: 24px;
-          align-items: center;
-          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-        }
-
-        .admin-hero span {
-          color: #185a9d;
-          font-weight: 900;
-          text-transform: uppercase;
-          font-size: 12px;
-          letter-spacing: 0.5px;
-        }
-
-        .admin-hero h2 {
-          margin: 8px 0;
-          font-size: 28px;
-        }
-
-        .admin-hero p {
-          margin: 0;
-          color: #475569;
-          line-height: 1.6;
-          max-width: 900px;
-        }
-
-        .admin-score {
-          min-width: 140px;
-          min-height: 115px;
-          border-radius: 18px;
-          background: #e0f2fe;
-          color: #075985;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .admin-score strong {
-          font-size: 42px;
-        }
-
-        .admin-score span {
-          color: #075985;
-        }
-
-        .console-grid {
+        .module-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 18px;
-        }
-
-        .module-card {
-          text-align: left;
-          border: 1px solid #dbe4ef;
-          background: #ffffff;
-          border-radius: 20px;
-          padding: 20px;
-          cursor: pointer;
-          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-          transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .module-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
-        }
-
-        .module-top {
-          display: flex;
-          justify-content: space-between;
+          grid-template-columns: repeat(4, 1fr);
           gap: 12px;
-          align-items: center;
-          margin-bottom: 12px;
         }
 
-        .module-top span {
-          color: #185a9d;
-          font-size: 11px;
-          font-weight: 900;
-          text-transform: uppercase;
-          letter-spacing: 0.4px;
-        }
-
-        em {
-          font-style: normal;
-          padding: 6px 9px;
-          border-radius: 999px;
-          font-size: 10px;
-          font-weight: 900;
-          text-transform: uppercase;
-        }
-
-        em.active,
-        em.configured {
-          background: #dcfce7;
-          color: #166534;
-        }
-
-        em.review {
-          background: #fef3c7;
-          color: #92400e;
-        }
-
-        em.planned {
-          background: #e2e8f0;
-          color: #475569;
-        }
-
-        .module-card h3 {
-          margin: 0 0 10px;
-          font-size: 20px;
+        .module-grid button {
+          display: grid;
+          min-height: 178px;
+          align-content: start;
+          padding: 16px;
+          border: 1px solid #b8c4d3;
+          border-radius: 4px;
           color: #0f172a;
+          background: #ffffff;
+          text-align: left;
+          cursor: pointer;
+          box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
         }
 
-        .module-card p {
-          margin: 0 0 16px;
-          color: #475569;
+        .module-grid button:hover {
+          border-color: #185abd;
+          box-shadow: 0 5px 18px rgba(24, 90, 189, 0.12);
+        }
+
+        .module-grid span {
+          color: #185abd;
+          font-size: 7px;
+          font-weight: 900;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+
+        h2 {
+          margin: 8px 0 6px;
+          font-size: 15px;
+        }
+
+        p {
+          margin: 0;
+          color: #64748b;
+          font-size: 9px;
           line-height: 1.55;
         }
 
-        .module-items {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
-
-        .module-items small {
-          background: #f1f5f9;
-          color: #334155;
-          border-radius: 999px;
-          padding: 6px 9px;
-          font-weight: 800;
-          font-size: 11px;
-        }
-
-        .admin-footer-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 18px;
+        .module-grid strong {
+          align-self: end;
           margin-top: 18px;
+          color: #185abd;
+          font-size: 9px;
         }
 
-        .footer-panel {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
-          border-radius: 18px;
-          padding: 18px;
-          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        .boundary {
+          margin-top: 14px;
+          padding: 13px 16px;
+          border: 1px solid #93c5fd;
+          border-radius: 4px;
+          color: #1e3a8a;
+          background: #eff6ff;
         }
 
-        .footer-panel h3 {
-          margin: 0 0 10px;
+        .boundary strong {
+          font-size: 9px;
+          text-transform: uppercase;
         }
 
-        .footer-panel p {
-          margin: 0;
-          color: #475569;
-          line-height: 1.6;
+        .boundary p {
+          margin-top: 4px;
+          color: #1e3a8a;
         }
 
         @media (max-width: 1100px) {
-          .console-grid,
-          .admin-footer-grid {
+          .module-grid {
             grid-template-columns: repeat(2, 1fr);
-          }
-
-          .topbar,
-          .admin-hero {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-
-          .topbar-meta {
-            flex-wrap: wrap;
           }
         }
 
@@ -406,13 +183,8 @@ export default function AdminPage() {
             padding: 12px;
           }
 
-          .console-grid,
-          .admin-footer-grid {
+          .module-grid {
             grid-template-columns: 1fr;
-          }
-
-          .admin-score {
-            width: 100%;
           }
         }
       `}</style>

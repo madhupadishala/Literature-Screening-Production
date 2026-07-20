@@ -4,36 +4,85 @@ import { literatureSourceRouter } from "@/lib/literature/global/literature-sourc
 import type { LiteratureRoutingRequest } from "@/lib/literature/global/literature-source-types";
 
 export async function GET() {
-  return NextResponse.json({
-    status: literatureSourceRouter.getStatus(),
-    result: literatureSourceRouter.route({
+  try {
+    const result = literatureSourceRouter.route({
       tenantId: "demo-tenant",
-    }),
-  });
-}
+    });
 
-export async function POST(request: Request) {
-  const body = (await request.json()) as LiteratureRoutingRequest;
-
-  if (!body.tenantId) {
     return NextResponse.json(
       {
-        error: "tenantId is required.",
+        success: true,
+        status: literatureSourceRouter.getStatus(),
+        result,
       },
       {
-        status: 400,
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error("Global Source Router Error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Unable to retrieve literature source configuration.",
+      },
+      {
+        status: 500,
       },
     );
   }
+}
 
-  const result = literatureSourceRouter.route(body);
+export async function POST(request: Request) {
+  try {
+    const body = (await request.json()) as LiteratureRoutingRequest;
 
-  return NextResponse.json(
-    {
-      result,
-    },
-    {
-      status: 201,
-    },
-  );
+    if (
+      !body.tenantId ||
+      typeof body.tenantId !== "string"
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "tenantId is required.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const routingResult = literatureSourceRouter.route({
+      ...body,
+      tenantId: body.tenantId.trim(),
+    });
+
+    return NextResponse.json(
+      {
+        success: true,
+        tenantId: body.tenantId,
+        routing: routingResult,
+        next: {
+          endpoint: "/api/literature/article-fetch",
+          method: "POST",
+        },
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error("Global Literature Routing Error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to route literature search.",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
 }

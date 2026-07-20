@@ -1,0 +1,25 @@
+{
+  "records": [
+    {
+      "sourceKey": "PUBMED",
+      "displayName": "PubMed / MEDLINE",
+      "connectorType": "PUBMED_EUTILITIES",
+      "enabled": true,
+      "maxResults": 200
+    },
+    {
+      "sourceKey": "EUROPE_PMC",
+      "displayName": "Europe PMC",
+      "connectorType": "EUROPE_PMC_REST",
+      "enabled": true,
+      "maxResults": 200
+    },
+    {
+      "sourceKey": "CROSSREF",
+      "displayName": "Crossref",
+      "connectorType": "CROSSREF_REST",
+      "enabled": true,
+      "maxResults": 200
+    }
+  ]
+}

@@ -1,0 +1,2747 @@
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\ai-provider.ts
+============================================================
+import type {
+  AICompletionRequest,
+  AICompletionResponse,
+  AIProvider,
+} from "./ai-types";
+
+export abstract class BaseAIProvider
+  implements AIProvider
+{
+  abstract readonly provider:
+    | "openai"
+    | "azure-openai"
+    | "ollama"
+    | "claude"
+    | "gemini";
+
+  abstract complete(
+    request: AICompletionRequest,
+  ): Promise<AICompletionResponse>;
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\ai-settings.ts
+============================================================
+import type { AIProviderType } from "./ai-types";
+
+export interface AISettings {
+  provider: AIProviderType;
+
+  model: string;
+
+  temperature: number;
+
+  maxTokens: number;
+}
+
+export const defaultAISettings: AISettings = {
+  provider: "openai",
+
+  model: "gpt-5.5",
+
+  temperature: 0,
+
+  maxTokens: 4000,
+};
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\ai-types.ts
+============================================================
+export type AIProviderType =
+  | "openai"
+  | "azure-openai"
+  | "ollama"
+  | "claude"
+  | "gemini";
+
+export interface AICompletionRequest {
+  systemPrompt?: string;
+
+  userPrompt: string;
+
+  temperature?: number;
+
+  maxTokens?: number;
+
+  responseFormat?: "json" | "text";
+}
+
+export interface AICompletionResponse {
+  provider: AIProviderType;
+
+  model: string;
+
+  content: string;
+
+  promptTokens?: number;
+
+  completionTokens?: number;
+
+  totalTokens?: number;
+
+  finishReason?: string;
+
+  latencyMs: number;
+
+  generatedAt: string;
+}
+
+export interface AIProvider {
+  readonly provider: AIProviderType;
+
+  complete(
+    request: AICompletionRequest,
+  ): Promise<AICompletionResponse>;
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\evidence-context-builder.ts
+============================================================
+import { getActiveTenant } from "@/lib/tenant/tenant-store";
+import type {
+  TenantCalendarEntry,
+  TenantConfiguration,
+  TenantKnowledgeSource,
+  TenantProduct,
+  TenantPromptConfiguration,
+} from "@/lib/tenant/tenant-types";
+
+import { searchKnowledge } from "@/lib/knowledge/knowledge-router";
+import type { KnowledgeSearchResult } from "@/lib/knowledge/knowledge-types";
+
+export type EvidenceContextPurpose =
+  | "hit_generation"
+  | "screening"
+  | "intake"
+  | "qc"
+  | "narrative"
+  | "assessment";
+
+export interface EvidenceContextInput {
+  tenantId?: string;
+  purpose: EvidenceContextPurpose;
+  query?: string;
+  sourceId?: string;
+  sourceTitle?: string;
+  sourceAbstract?: string;
+  sourceFullText?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface EvidenceContext {
+  contextId: string;
+  createdAt: string;
+  purpose: EvidenceContextPurpose;
+  tenant: Pick<
+    TenantConfiguration,
+    "id" | "tenantName" | "displayName" | "environment" | "status"
+  > | null;
+  productMaster: TenantProduct[];
+  literatureCalendar: TenantCalendarEntry[];
+  knowledgeSources: TenantKnowledgeSource[];
+  promptConfigurations: TenantPromptConfiguration[];
+  retrievedKnowledge: KnowledgeSearchResult[];
+  source: {
+    sourceId?: string;
+    title?: string;
+    abstract?: string;
+    fullText?: string;
+  };
+  metadata: Record<string, unknown>;
+}
+
+function createContextId() {
+  return `evidence-context-${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}`;
+}
+
+function resolvePromptConfigurations(
+  tenant: TenantConfiguration | null,
+  purpose: EvidenceContextPurpose
+): TenantPromptConfiguration[] {
+  if (!tenant) return [];
+
+  return tenant.promptConfigurations.filter(
+    (prompt) => prompt.active && prompt.area === purpose
+  );
+}
+
+export function buildEvidenceContext(
+  input: EvidenceContextInput
+): EvidenceContext {
+  const tenant = getActiveTenant();
+
+  const query =
+    input.query ||
+    input.sourceTitle ||
+    input.sourceAbstract ||
+    input.sourceFullText ||
+    "";
+
+  const retrievedKnowledge =
+    tenant && query.trim()
+      ? searchKnowledge({
+          tenantId: input.tenantId ?? tenant.id,
+          query,
+          topK: 10,
+        })
+      : [];
+
+  return {
+    contextId: createContextId(),
+    createdAt: new Date().toISOString(),
+    purpose: input.purpose,
+    tenant: tenant
+      ? {
+          id: tenant.id,
+          tenantName: tenant.tenantName,
+          displayName: tenant.displayName,
+          environment: tenant.environment,
+          status: tenant.status,
+        }
+      : null,
+    productMaster: tenant?.productMaster ?? [],
+    literatureCalendar: tenant?.literatureCalendar ?? [],
+    knowledgeSources: tenant?.knowledgeSources ?? [],
+    promptConfigurations: resolvePromptConfigurations(tenant, input.purpose),
+    retrievedKnowledge,
+    source: {
+      sourceId: input.sourceId,
+      title: input.sourceTitle,
+      abstract: input.sourceAbstract,
+      fullText: input.sourceFullText,
+    },
+    metadata: input.metadata ?? {},
+  };
+}
+
+export function buildScreeningEvidenceContext(
+  input: Omit<EvidenceContextInput, "purpose">
+): EvidenceContext {
+  return buildEvidenceContext({
+    ...input,
+    purpose: "screening",
+  });
+}
+
+export function buildHitGenerationEvidenceContext(
+  input: Omit<EvidenceContextInput, "purpose">
+): EvidenceContext {
+  return buildEvidenceContext({
+    ...input,
+    purpose: "hit_generation",
+  });
+}
+
+export function buildIntakeEvidenceContext(
+  input: Omit<EvidenceContextInput, "purpose">
+): EvidenceContext {
+  return buildEvidenceContext({
+    ...input,
+    purpose: "intake",
+  });
+}
+
+export function buildQcEvidenceContext(
+  input: Omit<EvidenceContextInput, "purpose">
+): EvidenceContext {
+  return buildEvidenceContext({
+    ...input,
+    purpose: "qc",
+  });
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\hits-agent.ts
+============================================================
+import { ragEngine } from "@/lib/rag/rag-engine";
+import type { RAGMergedContext } from "@/lib/rag/rag-types";
+
+import { buildHitsPrompt } from "./hits-prompt-builder";
+
+import {
+  parseHitsAIResult,
+  type HitsAIResult,
+} from "./hits-result-parser";
+
+import { aiProviderFactory } from "./provider-factory";
+
+export interface HitsAgentRequest {
+  tenantId: string;
+  articleId?: string;
+  articleTitle?: string;
+  abstractText?: string;
+  fullTextSnippet?: string;
+  productName?: string;
+  country?: string;
+  processArea?: string;
+}
+
+export interface HitsAgentResponse {
+  tenantId: string;
+  articleId?: string;
+  prompt: string;
+  ragContext: RAGMergedContext;
+  result: HitsAIResult;
+  generatedAt: string;
+}
+
+function buildRAGQuery(
+  request: HitsAgentRequest,
+): string {
+  return [
+    "literature hit identification",
+    request.articleTitle,
+    request.abstractText,
+    request.productName,
+    request.country,
+    "adverse event special situation suspect product validity",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+export class HitsAgent {
+  async evaluate(
+    request: HitsAgentRequest,
+  ): Promise<HitsAgentResponse> {
+    if (!request.tenantId) {
+      throw new Error(
+        "tenantId is required.",
+      );
+    }
+
+    const ragResponse =
+      await ragEngine.buildContext({
+        tenantId: request.tenantId,
+        query: buildRAGQuery(request),
+        productName: request.productName,
+        country: request.country,
+        processArea:
+          request.processArea ??
+          "literature_screening",
+        searchMode: "hybrid",
+        topK: 8,
+        minScore: 0,
+      });
+
+    const prompt =
+      buildHitsPrompt({
+        tenantId: request.tenantId,
+        articleId: request.articleId,
+        articleTitle:
+          request.articleTitle,
+        abstractText:
+          request.abstractText,
+        fullTextSnippet:
+          request.fullTextSnippet,
+        productName:
+          request.productName,
+        country: request.country,
+        ragContext:
+          ragResponse.context,
+      });
+
+    const provider =
+      aiProviderFactory.getProvider();
+
+    const aiResponse =
+      await provider.complete({
+        userPrompt: prompt,
+        responseFormat: "json",
+      });
+
+    const result =
+      parseHitsAIResult(
+        aiResponse.content,
+      );
+
+    return {
+      tenantId: request.tenantId,
+      articleId:
+        request.articleId,
+      prompt,
+      ragContext:
+        ragResponse.context,
+      result,
+      generatedAt:
+        new Date().toISOString(),
+    };
+  }
+}
+
+export const hitsAgent =
+  new HitsAgent();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\hits-prompt-builder.ts
+============================================================
+import type { RAGMergedContext } from "@/lib/rag/rag-types";
+
+export interface HitsPromptInput {
+  tenantId: string;
+  articleId?: string;
+  articleTitle?: string;
+  abstractText?: string;
+  fullTextSnippet?: string;
+  productName?: string;
+  country?: string;
+  ragContext?: RAGMergedContext;
+}
+
+function buildEnterpriseContext(
+  ragContext?: RAGMergedContext,
+): string {
+  if (
+    !ragContext ||
+    ragContext.chunks.length === 0
+  ) {
+    return "No enterprise knowledge retrieved.";
+  }
+
+  return ragContext.chunks
+    .map(
+      (chunk, index) => `
+Knowledge ${index + 1}
+Source: ${chunk.source}
+Priority: ${chunk.priority}
+Score: ${chunk.score}
+Content:
+${chunk.content}`,
+    )
+    .join("\n\n----------------------------------------\n\n");
+}
+
+export function buildHitsPrompt(
+  input: HitsPromptInput,
+): string {
+  return `
+SYSTEM
+
+You are ClinixAI Literature Hits Agent.
+
+Your responsibility is ONLY to determine whether the article is a potential Pharmacovigilance Literature Hit.
+
+Do NOT perform screening.
+
+Do NOT perform intake.
+
+Do NOT invent facts.
+
+Use ONLY:
+1. Article information.
+2. Enterprise knowledge supplied below.
+3. International Pharmacovigilance principles.
+
+--------------------------------------------------
+
+OBJECTIVE
+
+Determine whether the publication should proceed to Literature Screening.
+
+--------------------------------------------------
+
+EVALUATION CHECKLIST
+
+Evaluate all of the following:
+
+• Company suspect product
+• Generic product
+• Brand name
+• Active ingredient
+• Adverse event
+• Serious adverse event
+• Special situation
+• Human patient
+• Literature case report
+• Safety relevance
+• Country of Interest (COI)
+• Duplicate indication
+• Signal relevance
+• Medical relevance
+
+--------------------------------------------------
+
+ARTICLE
+
+Tenant:
+${input.tenantId}
+
+Article ID:
+${input.articleId ?? "Not Available"}
+
+Product:
+${input.productName ?? "Not Available"}
+
+Country:
+${input.country ?? "Not Available"}
+
+Title:
+${input.articleTitle ?? "Not Available"}
+
+Abstract:
+${input.abstractText ?? "Not Available"}
+
+Full Text Snippet:
+${input.fullTextSnippet ?? "Not Available"}
+
+--------------------------------------------------
+
+ENTERPRISE KNOWLEDGE
+
+${buildEnterpriseContext(
+  input.ragContext,
+)}
+
+--------------------------------------------------
+
+OUTPUT RULES
+
+Return STRICT JSON ONLY.
+
+No markdown.
+
+No explanation.
+
+No extra text.
+
+{
+  "isHit": true,
+  "confidence": 0.95,
+  "classification": "hit",
+  "reasons": [],
+  "detectedProducts": [],
+  "detectedEvents": [],
+  "detectedSpecialSituations": [],
+  "recommendedNextStep": "send_to_screening"
+}
+
+Classification must be one of:
+
+- hit
+- no_hit
+- needs_manual_review
+
+RecommendedNextStep must be one of:
+
+- send_to_screening
+- reject
+- manual_review
+`.trim();
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\hits-result-parser.ts
+============================================================
+export type HitsClassification =
+  | "hit"
+  | "no_hit"
+  | "needs_manual_review";
+
+export type HitsRecommendedNextStep =
+  | "send_to_screening"
+  | "reject"
+  | "manual_review";
+
+export interface HitsAIResult {
+  isHit: boolean;
+
+  confidence: number;
+
+  classification: HitsClassification;
+
+  reasons: string[];
+
+  detectedProducts: string[];
+
+  detectedEvents: string[];
+
+  detectedSpecialSituations: string[];
+
+  recommendedNextStep: HitsRecommendedNextStep;
+
+  qcRequired: boolean;
+
+  duplicateSuspected: boolean;
+
+  workflowStage: "HITS_COMPLETED";
+}
+
+const fallbackResult: HitsAIResult = {
+  isHit: false,
+
+  confidence: 0,
+
+  classification:
+    "needs_manual_review",
+
+  reasons: [
+    "Unable to parse AI response.",
+  ],
+
+  detectedProducts: [],
+
+  detectedEvents: [],
+
+  detectedSpecialSituations: [],
+
+  recommendedNextStep:
+    "manual_review",
+
+  qcRequired: true,
+
+  duplicateSuspected: false,
+
+  workflowStage:
+    "HITS_COMPLETED",
+};
+
+function normalizeConfidence(
+  value: unknown,
+): number {
+  if (
+    typeof value !== "number" ||
+    Number.isNaN(value)
+  ) {
+    return 0;
+  }
+
+  if (value > 1) {
+    return Math.min(value / 100, 1);
+  }
+
+  return Math.max(
+    0,
+    Math.min(value, 1),
+  );
+}
+
+function normalizeStringArray(
+  value: unknown,
+): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.filter(
+    (item): item is string =>
+      typeof item === "string",
+  );
+}
+
+function normalizeClassification(
+  value: unknown,
+): HitsClassification {
+  switch (value) {
+    case "hit":
+    case "no_hit":
+    case "needs_manual_review":
+      return value;
+
+    default:
+      return "needs_manual_review";
+  }
+}
+
+function normalizeNextStep(
+  value: unknown,
+): HitsRecommendedNextStep {
+  switch (value) {
+    case "send_to_screening":
+    case "reject":
+    case "manual_review":
+      return value;
+
+    default:
+      return "manual_review";
+  }
+}
+
+export function parseHitsAIResult(
+  rawResponse: string,
+): HitsAIResult {
+  try {
+    const parsed =
+      JSON.parse(rawResponse) as Partial<HitsAIResult>;
+
+    const confidence =
+      normalizeConfidence(
+        parsed.confidence,
+      );
+
+    return {
+      isHit:
+        Boolean(parsed.isHit),
+
+      confidence,
+
+      classification:
+        normalizeClassification(
+          parsed.classification,
+        ),
+
+      reasons:
+        normalizeStringArray(
+          parsed.reasons,
+        ),
+
+      detectedProducts:
+        normalizeStringArray(
+          parsed.detectedProducts,
+        ),
+
+      detectedEvents:
+        normalizeStringArray(
+          parsed.detectedEvents,
+        ),
+
+      detectedSpecialSituations:
+        normalizeStringArray(
+          parsed.detectedSpecialSituations,
+        ),
+
+      recommendedNextStep:
+        normalizeNextStep(
+          parsed.recommendedNextStep,
+        ),
+
+      qcRequired:
+        confidence < 0.80,
+
+      duplicateSuspected:
+        Boolean(
+          parsed.duplicateSuspected,
+        ),
+
+      workflowStage:
+        "HITS_COMPLETED",
+    };
+  } catch {
+    return fallbackResult;
+  }
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\prompt-config-store.ts
+============================================================
+import type {
+  PromptArea,
+  TenantPromptConfiguration,
+} from "@/lib/tenant/tenant-types";
+
+import {
+  getActiveTenant,
+} from "@/lib/tenant/tenant-store";
+
+export interface PromptConfigurationResponse {
+  tenantId: string | null;
+  prompts: TenantPromptConfiguration[];
+}
+
+export function getPromptConfigurations(): PromptConfigurationResponse {
+  const tenant = getActiveTenant();
+
+  return {
+    tenantId: tenant?.id ?? null,
+    prompts: tenant?.promptConfigurations ?? [],
+  };
+}
+
+export function getPromptConfiguration(
+  area: PromptArea,
+): TenantPromptConfiguration | undefined {
+  const tenant = getActiveTenant();
+
+  return tenant?.promptConfigurations.find(
+    (configuration) =>
+      configuration.area === area &&
+      configuration.active,
+  );
+}
+
+export function getPromptInstruction(
+  area: PromptArea,
+): string {
+  const configuration =
+    getPromptConfiguration(area);
+
+  if (!configuration) {
+    return "";
+  }
+
+  return configuration.instruction;
+}
+
+export function hasActivePrompt(
+  area: PromptArea,
+): boolean {
+  return (
+    getPromptConfiguration(area) !==
+    undefined
+  );
+}
+
+export function updatePromptConfiguration(
+  updated: TenantPromptConfiguration,
+): TenantPromptConfiguration {
+  const tenant = getActiveTenant();
+
+  if (!tenant) {
+    throw new Error(
+      "No active tenant.",
+    );
+  }
+
+  const index =
+    tenant.promptConfigurations.findIndex(
+      (configuration) =>
+        configuration.id ===
+        updated.id,
+    );
+
+  if (index >= 0) {
+    tenant.promptConfigurations[
+      index
+    ] = updated;
+  } else {
+    tenant.promptConfigurations.push(
+      updated,
+    );
+  }
+
+  return updated;
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\provider-factory.ts
+============================================================
+import { defaultAISettings } from "./ai-settings";
+import type { AIProvider } from "./ai-types";
+
+import { openAIProvider } from "./providers/openai-provider";
+
+export class AIProviderFactory {
+  getProvider(): AIProvider {
+    switch (defaultAISettings.provider) {
+      case "openai":
+        return openAIProvider;
+
+      default:
+        throw new Error(
+          `Unsupported AI provider: ${defaultAISettings.provider}`,
+        );
+    }
+  }
+}
+
+export const aiProviderFactory =
+  new AIProviderFactory();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\screening-agent.ts
+============================================================
+import { aiProviderFactory } from "./provider-factory";
+import { screeningPromptBuilder } from "./screening-prompt-builder";
+
+import type {
+  ScreeningFinding,
+  ScreeningRequest,
+  ScreeningResponse,
+  ScreeningDecision,
+  ScreeningReason,
+} from "@/lib/literature/screening/screening-types";
+
+export class ScreeningAgent {
+  async screen(
+    request: ScreeningRequest,
+  ): Promise<ScreeningResponse> {
+    const provider =
+      aiProviderFactory.getProvider();
+
+    const prompt =
+      screeningPromptBuilder.build(request);
+
+    const completion =
+      await provider.complete({
+        systemPrompt:
+          "You are a Pharmacovigilance Literature Screening expert. Always return valid JSON only.",
+
+        userPrompt: prompt,
+
+        responseFormat: "json",
+      });
+
+    const parsed =
+      JSON.parse(
+        completion.content,
+      ) as {
+        decision: ScreeningDecision;
+        confidence: number;
+        reason: string;
+        findings: ScreeningFinding[];
+      };
+
+    return {
+      tenantId: request.tenantId,
+
+      pmid: request.article.pmid,
+
+      decision:
+        parsed.decision,
+
+      confidence:
+        parsed.confidence,
+
+      reason:
+        parsed.reason as ScreeningReason,
+
+      findings:
+        parsed.findings ?? [],
+
+      screenedAt:
+        new Date().toISOString(),
+
+      workflowStage:
+        "SCREENING_COMPLETED",
+    };
+  }
+}
+
+export const screeningAgent =
+  new ScreeningAgent();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\screening-prompt-builder.ts
+============================================================
+import type {
+  ScreeningRequest,
+} from "@/lib/literature/screening/screening-types";
+
+export class ScreeningPromptBuilder {
+  build(
+    request: ScreeningRequest,
+  ): string {
+    return `
+You are an expert Pharmacovigilance Literature Screening specialist.
+
+Your responsibility is to determine whether the article should be:
+
+- INCLUDE
+- EXCLUDE
+- REVIEW
+
+using ICH GVP Module VI, FDA Pharmacovigilance guidance,
+EMA Literature Monitoring guidance,
+and standard global pharmacovigilance practice.
+
+Evaluate:
+
+• Human subject
+• Suspect medicinal product
+• Adverse event
+• Case report
+• Seriousness
+• Literature type
+• Scientific value
+• Duplicate possibility
+• Medical relevance
+
+Return ONLY valid JSON.
+
+Schema:
+
+{
+  "decision":"INCLUDE | EXCLUDE | REVIEW",
+  "confidence":0-100,
+  "reason":"short explanation",
+  "findings":[
+      {
+          "rule":"...",
+          "passed":true,
+          "score":20,
+          "comment":"..."
+      }
+  ]
+}
+
+----------------------------------------
+
+PMID
+
+${request.article.pmid}
+
+----------------------------------------
+
+TITLE
+
+${request.article.title}
+
+----------------------------------------
+
+ABSTRACT
+
+${request.article.abstract ?? ""}
+
+----------------------------------------
+
+AUTHORS
+
+${request.article.authors.join(", ")}
+
+----------------------------------------
+
+DOI
+
+${request.article.doi ?? ""}
+
+----------------------------------------
+
+JOURNAL
+
+${request.article.journal ?? ""}
+
+`;
+  }
+}
+
+export const screeningPromptBuilder =
+  new ScreeningPromptBuilder();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\screening-validator.ts
+============================================================
+import type {
+  ScreeningDecision,
+  ScreeningFinding,
+  ScreeningReason,
+  ScreeningResponse,
+} from "@/lib/literature/screening/screening-types";
+
+export class ScreeningValidator {
+  validate(
+    response: ScreeningResponse,
+  ): ScreeningResponse {
+    return {
+      ...response,
+
+      decision:
+        this.validateDecision(
+          response.decision,
+        ),
+
+      confidence:
+        this.validateConfidence(
+          response.confidence,
+        ),
+
+      reason:
+        this.validateReason(
+          response.reason,
+        ),
+
+      findings:
+        this.validateFindings(
+          response.findings,
+        ),
+
+      workflowStage:
+        "SCREENING_COMPLETED",
+    };
+  }
+
+  private validateDecision(
+    decision: ScreeningDecision,
+  ): ScreeningDecision {
+    if (
+      decision === "INCLUDE" ||
+      decision === "EXCLUDE" ||
+      decision === "REVIEW"
+    ) {
+      return decision;
+    }
+
+    return "REVIEW";
+  }
+
+  private validateConfidence(
+    confidence: number,
+  ): number {
+    if (
+      Number.isNaN(confidence)
+    ) {
+      return 0;
+    }
+
+    if (confidence < 0) {
+      return 0;
+    }
+
+    if (confidence > 100) {
+      return 100;
+    }
+
+    return confidence;
+  }
+
+  private validateReason(
+    reason: ScreeningReason,
+  ): ScreeningReason {
+    const allowed: ScreeningReason[] = [
+      "CASE_REPORT",
+      "ADVERSE_EVENT",
+      "PRODUCT_MENTION",
+      "HUMAN_STUDY",
+      "ANIMAL_STUDY",
+      "REVIEW_ARTICLE",
+      "NO_ADVERSE_EVENT",
+      "NON_MEDICAL",
+      "INSUFFICIENT_INFORMATION",
+      "NON_ENGLISH",
+      "DUPLICATE",
+      "UNKNOWN",
+    ];
+
+    return allowed.includes(reason)
+      ? reason
+      : "UNKNOWN";
+  }
+
+  private validateFindings(
+    findings: ScreeningFinding[],
+  ): ScreeningFinding[] {
+    if (
+      !Array.isArray(findings)
+    ) {
+      return [];
+    }
+
+    return findings.map(
+      (finding) => ({
+        rule:
+          finding.rule ??
+          "Unknown Rule",
+
+        passed:
+          Boolean(
+            finding.passed,
+          ),
+
+        score:
+          Number.isFinite(
+            finding.score,
+          )
+            ? Math.max(
+                0,
+                Math.min(
+                  100,
+                  finding.score,
+                ),
+              )
+            : 0,
+
+        comment:
+          finding.comment ??
+          "",
+      }),
+    );
+  }
+}
+
+export const screeningValidator =
+  new ScreeningValidator();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\ai\providers\openai-provider.ts
+============================================================
+import OpenAI from "openai";
+
+import { BaseAIProvider } from "../ai-provider";
+import type {
+  AICompletionRequest,
+  AICompletionResponse,
+} from "../ai-types";
+import { defaultAISettings } from "../ai-settings";
+
+export class OpenAIProvider extends BaseAIProvider {
+  readonly provider = "openai" as const;
+
+  private client: OpenAI | null = null;
+
+  constructor() {
+    super();
+  }
+
+  private getClient(): OpenAI {
+    if (this.client) {
+      return this.client;
+    }
+
+    const apiKey = process.env.OPENAI_API_KEY;
+
+    if (!apiKey) {
+      throw new Error(
+        "OPENAI_API_KEY environment variable is missing.",
+      );
+    }
+
+    this.client = new OpenAI({
+      apiKey,
+    });
+
+    return this.client;
+  }
+
+  async complete(
+    request: AICompletionRequest,
+  ): Promise<AICompletionResponse> {
+    const startedAt = Date.now();
+
+    const client = this.getClient();
+
+    const response =
+      await client.responses.create({
+        model: defaultAISettings.model,
+
+        temperature:
+          request.temperature ??
+          defaultAISettings.temperature,
+
+        max_output_tokens:
+          request.maxTokens ??
+          defaultAISettings.maxTokens,
+
+        input: [
+          ...(request.systemPrompt
+            ? [
+                {
+                  role: "system" as const,
+                  content: request.systemPrompt,
+                },
+              ]
+            : []),
+
+          {
+            role: "user" as const,
+            content: request.userPrompt,
+          },
+        ],
+
+        text:
+          request.responseFormat === "json"
+            ? {
+                format: {
+                  type: "json_object",
+                },
+              }
+            : undefined,
+      });
+
+    return {
+      provider: this.provider,
+
+      model: response.model,
+
+      content: response.output_text,
+
+      promptTokens:
+        response.usage?.input_tokens,
+
+      completionTokens:
+        response.usage?.output_tokens,
+
+      totalTokens:
+        response.usage?.total_tokens,
+
+      finishReason:
+        response.status,
+
+      latencyMs:
+        Date.now() - startedAt,
+
+      generatedAt:
+        new Date().toISOString(),
+    };
+  }
+}
+
+export const openAIProvider =
+  new OpenAIProvider();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\literature\screening\screening-engine.ts
+============================================================
+import type {
+  ScreeningRequest,
+  ScreeningResponse,
+  ScreeningFinding,
+  ScreeningDecision,
+  ScreeningReason,
+} from "./screening-types";
+
+class ScreeningEngine {
+  screen(
+    request: ScreeningRequest,
+  ): ScreeningResponse {
+    const findings: ScreeningFinding[] = [];
+
+    const text = (
+      request.article.title +
+      " " +
+      (request.article.abstract ?? "")
+    ).toLowerCase();
+
+    let score = 0;
+
+    //----------------------------------------
+    // Rule 1
+    //----------------------------------------
+
+    const hasCaseReport =
+      text.includes("case report") ||
+      text.includes("case series");
+
+    findings.push({
+      rule: "Case Report",
+      passed: hasCaseReport,
+      score: hasCaseReport ? 20 : 0,
+      comment: hasCaseReport
+        ? "Case report detected."
+        : "No case report identified.",
+    });
+
+    if (hasCaseReport) score += 20;
+
+    //----------------------------------------
+    // Rule 2
+    //----------------------------------------
+
+    const hasAdverseEvent =
+      text.includes("adverse") ||
+      text.includes("side effect") ||
+      text.includes("toxicity") ||
+      text.includes("reaction");
+
+    findings.push({
+      rule: "Adverse Event",
+      passed: hasAdverseEvent,
+      score: hasAdverseEvent ? 25 : 0,
+      comment: hasAdverseEvent
+        ? "Adverse event identified."
+        : "No adverse event found.",
+    });
+
+    if (hasAdverseEvent) score += 25;
+
+    //----------------------------------------
+    // Rule 3
+    //----------------------------------------
+
+    const hasProduct =
+      text.includes("drug") ||
+      text.includes("tablet") ||
+      text.includes("capsule") ||
+      text.includes("vaccine") ||
+      text.includes("medicine");
+
+    findings.push({
+      rule: "Product Mention",
+      passed: hasProduct,
+      score: hasProduct ? 20 : 0,
+      comment: hasProduct
+        ? "Medicinal product detected."
+        : "No medicinal product identified.",
+    });
+
+    if (hasProduct) score += 20;
+
+    //----------------------------------------
+    // Rule 4
+    //----------------------------------------
+
+    const humanStudy =
+      !text.includes("rat") &&
+      !text.includes("mouse") &&
+      !text.includes("animal");
+
+    findings.push({
+      rule: "Human Study",
+      passed: humanStudy,
+      score: humanStudy ? 15 : 0,
+      comment: humanStudy
+        ? "Appears to be a human study."
+        : "Animal study detected.",
+    });
+
+    if (humanStudy) score += 15;
+
+    //----------------------------------------
+    // Rule 5
+    //----------------------------------------
+
+    const reviewArticle =
+      text.includes("systematic review") ||
+      text.includes("meta analysis") ||
+      text.includes("meta-analysis");
+
+    findings.push({
+      rule: "Review Article",
+      passed: !reviewArticle,
+      score: reviewArticle ? -20 : 10,
+      comment: reviewArticle
+        ? "Review article detected."
+        : "Primary publication.",
+    });
+
+    if (!reviewArticle)
+      score += 10;
+    else
+      score -= 20;
+
+    //----------------------------------------
+    // Final Decision
+    //----------------------------------------
+
+    let decision: ScreeningDecision;
+    let reason: ScreeningReason;
+
+    if (score >= 60) {
+      decision = "INCLUDE";
+      reason = "CASE_REPORT";
+    } else if (score >= 35) {
+      decision = "REVIEW";
+      reason = "INSUFFICIENT_INFORMATION";
+    } else {
+      decision = "EXCLUDE";
+      reason = "NO_ADVERSE_EVENT";
+    }
+
+    return {
+      tenantId: request.tenantId,
+
+      pmid: request.article.pmid,
+
+      decision,
+
+      confidence: Math.min(score, 100),
+
+      reason,
+
+      findings,
+
+      screenedAt: new Date().toISOString(),
+
+      workflowStage: "SCREENING_COMPLETED",
+    };
+  }
+}
+
+export const screeningEngine =
+  new ScreeningEngine();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\literature\screening\screening-service.ts
+============================================================
+import { screeningEngine } from "./screening-engine";
+
+import type {
+  ScreeningRequest,
+  ScreeningResponse,
+  ScreeningStatus,
+} from "./screening-types";
+
+import { screeningAgent } from "@/lib/ai/screening-agent";
+import { screeningValidator } from "@/lib/ai/screening-validator";
+
+class ScreeningService {
+  private history: ScreeningResponse[] = [];
+
+  async screenArticle(
+    request: ScreeningRequest,
+  ): Promise<ScreeningResponse> {
+
+    //-----------------------------------------
+    // 1. Rule Engine
+    //-----------------------------------------
+
+    const ruleDecision =
+      screeningEngine.screen(request);
+
+    //-----------------------------------------
+    // 2. AI Decision
+    //-----------------------------------------
+
+    let finalDecision =
+      ruleDecision;
+
+    try {
+
+      const aiDecision =
+        await screeningAgent.screen(
+          request,
+        );
+
+      finalDecision =
+        screeningValidator.validate(
+          aiDecision,
+        );
+
+    } catch (error) {
+
+      console.warn(
+        "AI Screening unavailable. Falling back to rule engine.",
+        error,
+      );
+
+      finalDecision =
+        screeningValidator.validate(
+          ruleDecision,
+        );
+    }
+
+    //-----------------------------------------
+    // 3. History
+    //-----------------------------------------
+
+    this.history.unshift(
+      finalDecision,
+    );
+
+    return finalDecision;
+  }
+
+  list(
+    limit = 50,
+  ): ScreeningResponse[] {
+
+    return this.history.slice(
+      0,
+      limit,
+    );
+  }
+
+  getByPmid(
+    pmid: string,
+  ) {
+
+    return this.history.find(
+      x => x.pmid === pmid,
+    );
+  }
+
+  clear(): void {
+
+    this.history = [];
+  }
+
+  getStatus(): ScreeningStatus {
+
+    const included =
+      this.history.filter(
+        x => x.decision === "INCLUDE",
+      ).length;
+
+    const excluded =
+      this.history.filter(
+        x => x.decision === "EXCLUDE",
+      ).length;
+
+    const review =
+      this.history.filter(
+        x => x.decision === "REVIEW",
+      ).length;
+
+    return {
+
+      totalScreened:
+        this.history.length,
+
+      included,
+
+      excluded,
+
+      reviewRequired:
+        review,
+
+      lastScreenedAt:
+        this.history[0]?.screenedAt,
+    };
+  }
+}
+
+export const screeningService =
+  new ScreeningService();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\literature\screening\screening-types.ts
+============================================================
+export type ScreeningDecision =
+  | "INCLUDE"
+  | "EXCLUDE"
+  | "REVIEW";
+
+export type ScreeningReason =
+  | "CASE_REPORT"
+  | "ADVERSE_EVENT"
+  | "PRODUCT_MENTION"
+  | "HUMAN_STUDY"
+  | "ANIMAL_STUDY"
+  | "REVIEW_ARTICLE"
+  | "NO_ADVERSE_EVENT"
+  | "NON_MEDICAL"
+  | "INSUFFICIENT_INFORMATION"
+  | "NON_ENGLISH"
+  | "DUPLICATE"
+  | "UNKNOWN";
+
+export interface ScreeningRequest {
+  tenantId: string;
+
+  article: {
+    pmid: string;
+    title: string;
+    abstract?: string;
+    authors: string[];
+    journal?: string;
+    publicationDate?: string;
+    doi?: string;
+    language?: string;
+    country?: string;
+    keywords?: string[];
+    meshTerms?: string[];
+    fullTextAvailable?: boolean;
+  };
+}
+
+export interface ScreeningFinding {
+  rule: string;
+  passed: boolean;
+  score: number;
+  comment: string;
+}
+
+export interface ScreeningResponse {
+  tenantId: string;
+
+  pmid: string;
+
+  decision: ScreeningDecision;
+
+  confidence: number;
+
+  reason: ScreeningReason;
+
+  findings: ScreeningFinding[];
+
+  screenedAt: string;
+
+  workflowStage: "SCREENING_COMPLETED";
+}
+
+export interface ScreeningStatus {
+  totalScreened: number;
+
+  included: number;
+
+  excluded: number;
+
+  reviewRequired: number;
+
+  lastScreenedAt?: string;
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\literature\workflow\literature-workflow-service.ts
+============================================================
+import { duplicateService } from "@/lib/literature/duplicates/duplicate-service";
+import { pubMedService } from "@/lib/literature/pubmed/pubmed-service";
+import { screeningService } from "@/lib/literature/screening/screening-service";
+
+import type { ArticleFetchWorkflowResponse } from "@/lib/literature/article-fetch/article-fetch-service";
+
+import type {
+  LiteratureWorkflowArticle,
+  LiteratureWorkflowRequest,
+  LiteratureWorkflowResponse,
+  LiteratureWorkflowStatus,
+} from "./literature-workflow-types";
+
+function isRecord(
+  value: unknown,
+): value is Record<string, unknown> {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    !Array.isArray(value)
+  );
+}
+
+function isArticleFetchWorkflowResponse(
+  value: unknown,
+): value is ArticleFetchWorkflowResponse {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  const metadata = value.metadata;
+
+  if (!isRecord(metadata)) {
+    return false;
+  }
+
+  return (
+    typeof metadata.pmid === "string" &&
+    metadata.pmid.trim().length > 0
+  );
+}
+
+function normalizeStringArray(
+  value: unknown,
+): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .filter(
+      (item): item is string =>
+        typeof item === "string",
+    )
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0);
+}
+
+function findFetchedArticle(
+  fetchedArticles: unknown,
+  pmid: string,
+): ArticleFetchWorkflowResponse | undefined {
+  if (!Array.isArray(fetchedArticles)) {
+    return undefined;
+  }
+
+  return fetchedArticles.find(
+    (
+      item: unknown,
+    ): item is ArticleFetchWorkflowResponse =>
+      isArticleFetchWorkflowResponse(item) &&
+      item.metadata.pmid === pmid,
+  );
+}
+
+class LiteratureWorkflowService {
+  private history: LiteratureWorkflowResponse[] = [];
+
+  async execute(
+    request: LiteratureWorkflowRequest,
+  ): Promise<LiteratureWorkflowResponse> {
+    const startedAt = new Date().toISOString();
+
+    const search = await pubMedService.search({
+      tenantId: request.tenantId,
+      query: request.query,
+      maxResults: request.maxResults,
+    });
+
+    const articles: LiteratureWorkflowArticle[] = [];
+
+    for (const article of search.articles) {
+      const articleId = article.pmid;
+
+      const duplicateResult =
+        await duplicateService.check({
+          tenantId: request.tenantId,
+
+          article: {
+            id: articleId,
+            articleId,
+            pmid: article.pmid,
+            doi: article.doi,
+            title: article.title,
+            source: "PubMed",
+          },
+
+          existingArticles: [],
+        });
+
+      const screeningResult =
+        await screeningService.screenArticle({
+          tenantId: request.tenantId,
+
+          article: {
+            pmid: article.pmid,
+            title: article.title,
+            abstract: article.abstract ?? "",
+            authors: normalizeStringArray(
+              article.authors,
+            ),
+            doi: article.doi,
+            journal: article.journal,
+          },
+        });
+
+      const fetchResult = findFetchedArticle(
+        search.fetchedArticles,
+        article.pmid,
+      );
+
+      articles.push({
+        searchResult: article,
+        fetchResult,
+        duplicateResult,
+        screeningResult,
+      });
+    }
+
+    const completedAt = new Date().toISOString();
+
+    const workflow: LiteratureWorkflowResponse = {
+      tenantId: request.tenantId,
+      query: request.query,
+      search,
+      articles,
+      workflowStage: "WORKFLOW_COMPLETED",
+      startedAt,
+      completedAt,
+    };
+
+    this.history.unshift(workflow);
+
+    return workflow;
+  }
+
+  list(
+    limit = 20,
+  ): LiteratureWorkflowResponse[] {
+    const safeLimit =
+      Number.isFinite(limit) && limit > 0
+        ? Math.floor(limit)
+        : 20;
+
+    return this.history.slice(0, safeLimit);
+  }
+
+  clear(): void {
+    this.history = [];
+  }
+
+  getStatus(): LiteratureWorkflowStatus {
+    return {
+      totalRuns: this.history.length,
+      completedRuns: this.history.length,
+      failedRuns: 0,
+      lastRunAt:
+        this.history[0]?.completedAt,
+    };
+  }
+}
+
+export const literatureWorkflowService =
+  new LiteratureWorkflowService();
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\lib\literature\workflow\literature-workflow-types.ts
+============================================================
+import type {
+  PubMedWorkflowResult,
+} from "@/lib/literature/pubmed/pubmed-service";
+
+import type {
+  DuplicateCheckResponse,
+} from "@/lib/literature/duplicates/duplicate-types";
+
+import type {
+  ScreeningResponse,
+} from "@/lib/literature/screening/screening-types";
+
+import type {
+  ArticleFetchWorkflowResponse,
+} from "@/lib/literature/article-fetch/article-fetch-service";
+
+export interface LiteratureWorkflowRequest {
+  tenantId: string;
+
+  query: string;
+
+  maxResults?: number;
+}
+
+export interface LiteratureWorkflowArticle {
+  searchResult: unknown;
+
+  fetchResult?: ArticleFetchWorkflowResponse;
+
+  duplicateResult?: DuplicateCheckResponse;
+
+  screeningResult?: ScreeningResponse;
+}
+
+export interface LiteratureWorkflowResponse {
+  tenantId: string;
+
+  query: string;
+
+  search: PubMedWorkflowResult;
+
+  articles: LiteratureWorkflowArticle[];
+
+  workflowStage: "WORKFLOW_COMPLETED";
+
+  startedAt: string;
+
+  completedAt: string;
+}
+
+export interface LiteratureWorkflowStatus {
+  totalRuns: number;
+
+  completedRuns: number;
+
+  failedRuns: number;
+
+  lastRunAt?: string;
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\app\api\ai\hits\route.ts
+============================================================
+import { NextRequest, NextResponse } from "next/server";
+
+import {
+  hitsAgent,
+  type HitsAgentRequest,
+} from "@/lib/ai/hits-agent";
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = (await request.json()) as HitsAgentRequest;
+
+    if (
+      !body ||
+      typeof body !== "object"
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid request.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const result = await hitsAgent.evaluate(body);
+
+    return NextResponse.json(
+      {
+        success: true,
+        stage: "HITS",
+        processedAt: new Date().toISOString(),
+        data: result,
+        next: {
+          endpoint: "/api/workflow/run",
+          method: "POST",
+        },
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error("Hits AI Error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unknown Hits AI error.",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\app\api\ai\package-context\route.ts
+============================================================
+import { NextRequest, NextResponse } from "next/server";
+
+import {
+  buildEvidenceContext,
+  type EvidenceContextPurpose,
+} from "@/lib/ai/evidence-context-builder";
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+
+    const context = buildEvidenceContext({
+      tenantId: body.tenantId,
+      purpose: (body.purpose ?? "screening") as EvidenceContextPurpose,
+      query: body.query,
+      sourceId: body.sourceId,
+      sourceTitle: body.sourceTitle,
+      sourceAbstract: body.sourceAbstract,
+      sourceFullText: body.sourceFullText,
+      metadata: body.metadata,
+    });
+
+    return NextResponse.json({
+      success: true,
+      context,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Unable to build evidence context.",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\app\api\ai\screening\route.ts
+============================================================
+import { NextRequest, NextResponse } from "next/server";
+
+import { screeningService } from "@/lib/literature/screening/screening-service";
+
+import type {
+  ScreeningRequest,
+} from "@/lib/literature/screening/screening-types";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+function isNonEmptyString(
+  value: unknown,
+): value is string {
+  return (
+    typeof value === "string" &&
+    value.trim().length > 0
+  );
+}
+
+function isScreeningRequest(
+  value: unknown,
+): value is ScreeningRequest {
+  if (
+    typeof value !== "object" ||
+    value === null
+  ) {
+    return false;
+  }
+
+  const candidate =
+    value as Partial<ScreeningRequest>;
+
+  if (
+    !isNonEmptyString(
+      candidate.tenantId,
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    typeof candidate.article !==
+      "object" ||
+    candidate.article === null
+  ) {
+    return false;
+  }
+
+  const article =
+    candidate.article as {
+      pmid?: unknown;
+      title?: unknown;
+      abstract?: unknown;
+      authors?: unknown;
+      doi?: unknown;
+      journal?: unknown;
+    };
+
+  if (
+    !isNonEmptyString(
+      article.pmid,
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    !isNonEmptyString(
+      article.title,
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    article.abstract !== undefined &&
+    article.abstract !== null &&
+    typeof article.abstract !== "string"
+  ) {
+    return false;
+  }
+
+  if (
+    article.authors !== undefined &&
+    !Array.isArray(article.authors)
+  ) {
+    return false;
+  }
+
+  if (
+    article.doi !== undefined &&
+    article.doi !== null &&
+    typeof article.doi !== "string"
+  ) {
+    return false;
+  }
+
+  if (
+    article.journal !== undefined &&
+    article.journal !== null &&
+    typeof article.journal !== "string"
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+export async function POST(
+  request: NextRequest,
+): Promise<NextResponse> {
+  try {
+    const body: unknown =
+      await request.json();
+
+    if (!isScreeningRequest(body)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Invalid screening request.",
+          requiredFields: [
+            "tenantId",
+            "article.pmid",
+            "article.title",
+          ],
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const normalizedRequest: ScreeningRequest =
+      {
+        ...body,
+
+        tenantId:
+          body.tenantId.trim(),
+
+        article: {
+          ...body.article,
+
+          pmid:
+            body.article.pmid.trim(),
+
+          title:
+            body.article.title.trim(),
+
+          abstract:
+            body.article.abstract ??
+            "",
+
+          authors:
+            Array.isArray(
+              body.article.authors,
+            )
+              ? body.article.authors.filter(
+                  (
+                    author,
+                  ): author is string =>
+                    typeof author ===
+                      "string" &&
+                    author.trim().length >
+                      0,
+                )
+              : [],
+
+          doi:
+            body.article.doi ??
+            undefined,
+
+          journal:
+            body.article.journal ??
+            undefined,
+        },
+      };
+
+    const result =
+      await screeningService.screenArticle(
+        normalizedRequest,
+      );
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: result,
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error(
+      "[POST /api/ai/screening] Screening failed:",
+      error,
+    );
+
+    return NextResponse.json(
+      {
+        success: false,
+        error:
+          "Screening execution failed.",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unknown screening error.",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
+
+export async function GET(): Promise<NextResponse> {
+  try {
+    return NextResponse.json(
+      {
+        success: true,
+        status:
+          screeningService.getStatus(),
+        history:
+          screeningService.list(50),
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error(
+      "[GET /api/ai/screening] Unable to retrieve screening status:",
+      error,
+    );
+
+    return NextResponse.json(
+      {
+        success: false,
+        error:
+          "Unable to retrieve screening status.",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\app\api\workflow\list\route.ts
+============================================================
+import { readdir, readFile } from "fs/promises";
+import path from "path";
+import { NextResponse } from "next/server";
+import { buildWorkflowSummary } from "@/lib/literature/mockWorkflows";
+import type {
+  SeriousnessCategory,
+  WorkflowItem,
+  WorkflowPriority,
+  WorkflowStage,
+  WorkflowStatus,
+} from "@/lib/literature/types";
+
+export const runtime = "nodejs";
+
+const TENANT_ID = "demo-tenant";
+
+type JsonObject = Record<string, unknown>;
+
+function isJsonObject(value: unknown): value is JsonObject {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+async function readJson(filePath: string): Promise<JsonObject> {
+  try {
+    const value: unknown = JSON.parse(await readFile(filePath, "utf8"));
+    return isJsonObject(value) ? value : {};
+  } catch {
+    return {};
+  }
+}
+
+function asText(value: unknown, fallback: string): string {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+function firstRecord(value: unknown): JsonObject {
+  return Array.isArray(value) && isJsonObject(value[0]) ? value[0] : {};
+}
+
+function stageFor(status: string): WorkflowStage {
+  if (status.startsWith("HITS_")) return "HITS";
+  if (status.startsWith("SCREENING_")) return "SCREENING";
+  if (status === "INTAKE_INPUT_CREATED") return "INTAKE";
+  return "HITS";
+}
+
+function statusFor(status: string): WorkflowStatus {
+  if (status.endsWith("_RUNNING")) return "IN_PROGRESS";
+  if (status === "INTAKE_INPUT_CREATED") return "COMPLETED";
+  return "NOT_STARTED";
+}
+
+function seriousnessFor(value: unknown): SeriousnessCategory[] {
+  if (value === "Death") return ["Death"];
+  if (value === "Life-threatening") return ["Life-threatening"];
+  if (value === "Serious") return ["Other medically important condition"];
+  return ["Non-serious"];
+}
+
+function priorityFor(seriousness: SeriousnessCategory[]): WorkflowPriority {
+  if (seriousness.includes("Death") || seriousness.includes("Life-threatening")) {
+    return "CRITICAL";
+  }
+
+  if (!seriousness.includes("Non-serious")) return "HIGH";
+  return "MEDIUM";
+}
+
+async function buildWorkflowItem(
+  evidenceRoot: string,
+  packageId: string,
+): Promise<WorkflowItem | null> {
+  const packageRoot = path.join(evidenceRoot, packageId);
+  const metadata = await readJson(path.join(packageRoot, "metadata.json"));
+
+  if (Object.keys(metadata).length === 0) return null;
+
+  const workflowState = await readJson(path.join(packageRoot, "workflow_state.json"));
+  const hitsOutput = await readJson(path.join(packageRoot, "hits_output.json"));
+  const screeningOutput = await readJson(
+    path.join(packageRoot, "screening_output.json"),
+  );
+  const latestHit = firstRecord(hitsOutput.hits);
+  const latestScreening = firstRecord(screeningOutput.screening);
+  const status = asText(workflowState.status, "NEW");
+  const history = Array.isArray(workflowState.history)
+    ? workflowState.history
+    : [];
+  const firstEvent = isJsonObject(history[0]) ? history[0] : {};
+  const seriousness = seriousnessFor(latestScreening.seriousness);
+  const updatedAt = asText(
+    workflowState.updated_at,
+    asText(metadata.retrieved_at_utc, new Date(0).toISOString()),
+  );
+
+  return {
+    id: packageId,
+    articleTitle: asText(metadata.title, packageId),
+    source: asText(metadata.source, "Evidence package"),
+    product: asText(
+      latestHit.product_name,
+      asText(latestScreening.company_suspect_drugs, "Not identified"),
+    ),
+    country: asText(
+      latestHit.country_of_interest,
+      asText(metadata.country, "Not identified"),
+    ),
+    stage: stageFor(status),
+    status: statusFor(status),
+    priority: priorityFor(seriousness),
+    seriousness,
+    assignedTo: "Unassigned",
+    dueDate: updatedAt,
+    createdAt: asText(firstEvent.timestamp, updatedAt),
+    updatedAt,
+    hasOverride: false,
+    isExpedited: seriousness.some((item) => item !== "Non-serious"),
+  };
+}
+
+export async function GET() {
+  const projectRoot = path.resolve(process.cwd(), "..");
+  const evidenceRoot = path.join(projectRoot, "evidence_store", TENANT_ID);
+  let packageIds: string[] = [];
+
+  try {
+    const entries = await readdir(evidenceRoot, { withFileTypes: true });
+    packageIds = entries
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort();
+  } catch {
+    packageIds = [];
+  }
+
+  const items = (
+    await Promise.all(
+      packageIds.map((packageId) => buildWorkflowItem(evidenceRoot, packageId)),
+    )
+  ).filter((item): item is WorkflowItem => item !== null);
+  const summary = buildWorkflowSummary(items);
+
+  return NextResponse.json({
+    ok: true,
+    module: "literature-screening",
+    generatedAt: new Date().toISOString(),
+    summary,
+    items,
+  });
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\app\api\workflow\package\[packageId]\route.ts
+============================================================
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\app\api\workflow\run\route.ts
+============================================================
+import { NextResponse } from "next/server";
+import { execFile } from "child_process";
+import { access } from "fs/promises";
+import path from "path";
+
+const TENANT_ID_PATTERN =
+  /^[a-z0-9][a-z0-9-]{0,63}$/;
+
+const PACKAGE_ID_PATTERN =
+  /^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/;
+
+function runPython(
+  args: string[],
+  cwd: string,
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    execFile(
+      "python",
+      args,
+      {
+        cwd,
+        windowsHide: true,
+        maxBuffer: 1024 * 1024 * 20,
+      },
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(
+            new Error(stderr || error.message),
+          );
+          return;
+        }
+
+        resolve(stdout);
+      },
+    );
+  });
+}
+
+export async function POST(
+  request: Request,
+) {
+  try {
+    const body =
+      (await request.json()) as Record<
+        string,
+        unknown
+      >;
+
+    const tenantId =
+      typeof body.tenant_id === "string"
+        ? body.tenant_id
+        : "demo-tenant";
+
+    const packageId =
+      typeof body.package_id === "string"
+        ? body.package_id
+        : "";
+
+    if (!TENANT_ID_PATTERN.test(tenantId)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid tenant_id",
+        },
+        { status: 400 },
+      );
+    }
+
+    if (!PACKAGE_ID_PATTERN.test(packageId)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid package_id",
+        },
+        { status: 400 },
+      );
+    }
+
+    const frontendRoot =
+      process.cwd();
+
+    const projectRoot =
+      path.resolve(frontendRoot, "..");
+
+    const packagePath =
+      path.join(
+        projectRoot,
+        "evidence_store",
+        tenantId,
+        packageId,
+      );
+
+    const productMasterPath =
+      path.join(
+        projectRoot,
+        "backend",
+        "knowledge",
+        "product_master",
+        "products.json",
+      );
+
+    try {
+      await access(packagePath);
+    } catch {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Evidence package not found",
+        },
+        { status: 404 },
+      );
+    }
+
+    const pythonCommand = `
+from backend.workflow import LiteratureWorkflow
+import json
+import sys
+
+product_master_path, tenant_id, package_path = sys.argv[1:]
+
+workflow = LiteratureWorkflow(product_master_path)
+
+result = workflow.run_package(
+    tenant_id,
+    package_path
+)
+
+response = {
+    "success": True,
+    "workflow_stage": "SCREENING_COMPLETED",
+
+    "tenant_id": tenant_id,
+
+    "package_id": package_path.replace("\\\\","/").split("/")[-1],
+
+    "hits": result.get("hits_output", {}),
+
+    "screening": result.get("screening_output", {}),
+
+    "intake": result.get("intake_input", {}),
+
+    "workflow": result,
+
+    "statistics": {
+        "hits_count":
+            result.get(
+                "hits_output",
+                {}
+            ).get(
+                "hits_count",
+                0
+            ),
+
+        "screening_count":
+            result.get(
+                "screening_output",
+                {}
+            ).get(
+                "screening_count",
+                0
+            ),
+
+        "intake_input_count":
+            result.get(
+                "intake_input",
+                {}
+            ).get(
+                "intake_input_count",
+                0
+            )
+    }
+}
+
+print(json.dumps(response))
+`;
+
+    const output =
+      await runPython(
+        [
+          "-c",
+          pythonCommand,
+          productMasterPath,
+          tenantId,
+          packagePath,
+        ],
+        projectRoot,
+      );
+
+    return NextResponse.json(
+      JSON.parse(output),
+    );
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Workflow execution failed",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
+
+============================================================
+FILE: C:\Users\Hp\Literature-Screening-Production\frontend\app\api\workflow\timeline\route.ts
+============================================================
+import { NextRequest, NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
+
+/**
+ * ClinixAI Nexus Platform - Package Workflow Timeline History Endpoint
+ * 
+ * Compiles the historical audit trail and execution steps for a literature package.
+ * Compliant with static route configurations by pulling targets via URL search query strings.
+ */
+
+export async function GET(request: NextRequest): Promise<Response> {
+  try {
+    // 1. Extract the required packageId token out of the URL search query parameters
+    const { searchParams } = request.nextUrl;
+    const packageId = searchParams.get("packageId");
+
+    // 2. Validate input constraints defensively
+    if (!packageId) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: "Bad Request: Missing required 'packageId' query parameter string." 
+        },
+        { status: 400 }
+      );
+    }
+
+    // 3. Extract the multi-tenant context securely out of the compound package token
+    // Expected structure pattern: "demo-tenant_PMID_12345678"
+    const splitIndex = packageId.indexOf("_PMID_");
+    let tenantId = "demo-tenant";
+    let pmidValue = packageId;
+
+    if (splitIndex !== -1) {
+      tenantId = packageId.substring(0, splitIndex);
+      pmidValue = packageId.substring(splitIndex + 1); // Isolates "PMID_12345678"
+    } else {
+      pmidValue = packageId.startsWith("PMID_") ? packageId : `PMID_${packageId}`;
+    }
+
+    // 4. Isolate target system file paths within the centralized backend store
+    const projectRoot = process.cwd();
+    const evidenceStoreRoot = path.resolve(projectRoot, "..", "evidence_store");
+    const manifestPath = path.join(evidenceStoreRoot, tenantId, pmidValue, "evidence_manifest.json");
+
+    // 5. Hardened Security Layer: Prevent Directory Traversal Injections
+    if (!manifestPath.startsWith(evidenceStoreRoot)) {
+      return NextResponse.json(
+        { success: false, error: "Security Violation: Illegal path operation blocked." },
+        { status: 403 }
+      );
+    }
+
+    // 6. Fallback structural block if no processing manifest has been generated yet
+    if (!fs.existsSync(manifestPath)) {
+      return NextResponse.json({
+        success: true,
+        package_id: packageId,
+        status: "UNINITIALIZED",
+        history: [
+          {
+            phase: "SYSTEM_INITIALIZATION",
+            status: "PENDING",
+            message: "Evidence container created. Awaiting extraction pipeline execution.",
+            timestamp: new Date().toISOString()
+          }
+        ]
+      }, { status: 200 });
+    }
+
+    // 7. Read and deserialize the active tracking manifest mapping file
+    const rawData = fs.readFileSync(manifestPath, "utf-8");
+    const manifest = JSON.parse(rawData);
+
+    // 8. Output full execution arrays satisfying the compiler target constraints
+    return NextResponse.json({
+      success: true,
+      package_id: packageId,
+      status: manifest.status || "PROCESSING",
+      history: manifest.history || [
+        {
+          phase: "SCREENING",
+          status: manifest.status || "COMPLETED",
+          message: "Literature parsing completed. Capped at screening boundary constraints.",
+          timestamp: manifest.timestamp || new Date().toISOString()
+        }
+      ]
+    }, {
+      status: 200,
+      headers: {
+        "Cache-Control": "no-store, max-age=0"
+      }
+    });
+
+  } catch (error: any) {
+    console.error("[Nexus Timeline API Exception]:", error);
+    return NextResponse.json(
+      { 
+        success: false, 
+        error: "Internal Server Error: Failed to safely compile package audit history timelines." 
+      },
+      { status: 500 }
+    );
+  }
+}

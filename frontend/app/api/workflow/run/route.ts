@@ -1,124 +1,204 @@
 import { NextResponse } from "next/server";
-import { execFile } from "child_process";
-import { access } from "fs/promises";
-import path from "path";
+
+import { literatureWorkflowService } from "@/lib/literature/workflow/literature-workflow-service";
 
 const TENANT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
-const PACKAGE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/;
 
-function runPython(args: string[], cwd: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    execFile(
-      "python",
-      args,
-      {
-        cwd,
-        windowsHide: true,
-        maxBuffer: 1024 * 1024 * 10,
-      },
-      (error, stdout, stderr) => {
-        if (error) {
-          reject(new Error(stderr || error.message));
-          return;
-        }
+const DEFAULT_MAX_RESULTS = 20;
+const MAX_MAX_RESULTS = 100;
 
-        resolve(stdout);
-      }
-    );
-  });
+interface WorkflowRunBody {
+  tenantId?: unknown;
+  tenant_id?: unknown;
+  query?: unknown;
+  maxResults?: unknown;
+  max_results?: unknown;
 }
 
-export async function POST(request: Request) {
-  try {
-    const body = (await request.json()) as Record<string, unknown>;
+function readRequiredString(
+  value: unknown,
+  fieldName: string,
+): string {
+  if (
+    typeof value !== "string" ||
+    value.trim().length === 0
+  ) {
+    throw new Error(`${fieldName} is required.`);
+  }
 
-    const tenantId =
-      typeof body.tenant_id === "string" ? body.tenant_id : "demo-tenant";
-    const packageId =
-      typeof body.package_id === "string" ? body.package_id : "";
+  return value.trim();
+}
+
+function readMaxResults(value: unknown): number {
+  if (
+    value === undefined ||
+    value === null ||
+    value === ""
+  ) {
+    return DEFAULT_MAX_RESULTS;
+  }
+
+  const numericValue =
+    typeof value === "number"
+      ? value
+      : typeof value === "string"
+        ? Number(value)
+        : Number.NaN;
+
+  if (
+    !Number.isFinite(numericValue) ||
+    numericValue < 1
+  ) {
+    throw new Error(
+      "maxResults must be a positive number.",
+    );
+  }
+
+  return Math.min(
+    Math.floor(numericValue),
+    MAX_MAX_RESULTS,
+  );
+}
+
+function toErrorResponse(error: unknown): NextResponse {
+  const message =
+    error instanceof Error
+      ? error.message
+      : "Literature workflow execution failed.";
+
+  const isValidationError =
+    message.endsWith("is required.") ||
+    message.includes("must be") ||
+    message === "Invalid tenantId.";
+
+  return NextResponse.json(
+    {
+      success: false,
+      error: message,
+    },
+    {
+      status: isValidationError ? 400 : 500,
+    },
+  );
+}
+
+export async function POST(
+  request: Request,
+): Promise<NextResponse> {
+  try {
+    const body =
+      (await request.json()) as WorkflowRunBody;
+
+    const tenantId = readRequiredString(
+      body.tenantId ?? body.tenant_id,
+      "tenantId",
+    );
 
     if (!TENANT_ID_PATTERN.test(tenantId)) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "tenant_id must contain only lowercase letters, numbers, and hyphens.",
-        },
-        { status: 400 }
-      );
+      throw new Error("Invalid tenantId.");
     }
 
-    if (!PACKAGE_ID_PATTERN.test(packageId)) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "package_id must contain only letters, numbers, underscores, and hyphens.",
-        },
-        { status: 400 }
-      );
-    }
-
-    const frontendRoot = process.cwd();
-    const projectRoot = path.resolve(frontendRoot, "..");
-
-    const packagePath = path.join(
-      projectRoot,
-      "evidence_store",
-      tenantId,
-      packageId,
-    );
-    const productMasterPath = path.join(
-      projectRoot,
-      "backend",
-      "knowledge",
-      "product_master",
-      "products.json",
+    const query = readRequiredString(
+      body.query,
+      "query",
     );
 
-    try {
-      await access(packagePath);
-    } catch {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Evidence package not found.",
-        },
-        { status: 404 },
-      );
-    }
-
-    const pythonCommand = `
-from backend.workflow import LiteratureWorkflow
-import json
-import sys
-
-product_master_path, tenant_id, package_path = sys.argv[1:]
-wf = LiteratureWorkflow(product_master_path)
-result = wf.run_package(tenant_id, package_path)
-
-print(json.dumps({
-    "success": True,
-    "tenant_id": tenant_id,
-    "package_id": package_path.rsplit("/", 1)[-1].rsplit("\\\\", 1)[-1],
-    "hits_count": result["hits_output"]["hits_count"],
-    "screening_count": result["screening_output"]["screening_count"],
-    "intake_input_count": result["intake_input"]["intake_input_count"]
-}))
-`;
-
-    const output = await runPython(
-      ["-c", pythonCommand, productMasterPath, tenantId, packagePath],
-      projectRoot,
+    const maxResults = readMaxResults(
+      body.maxResults ?? body.max_results,
     );
-    const parsed = JSON.parse(output.trim());
 
-    return NextResponse.json(parsed);
-  } catch (error) {
+    const workflow =
+      await literatureWorkflowService.execute({
+        tenantId,
+        query,
+        maxResults,
+      });
+
+    const searchResults =
+      workflow.search?.articles?.length ?? 0;
+
+    const processedArticles =
+      workflow.articles?.length ?? 0;
+
+    const duplicateArticles =
+      workflow.articles?.filter(
+        (article) =>
+          article.duplicateResult?.isDuplicate === true,
+      ).length ?? 0;
+
+    const includedArticles =
+      workflow.articles?.filter(
+        (article) =>
+          article.screeningResult?.decision ===
+          "INCLUDE",
+      ).length ?? 0;
+
+    const excludedArticles =
+      workflow.articles?.filter(
+        (article) =>
+          article.screeningResult?.decision ===
+          "EXCLUDE",
+      ).length ?? 0;
+
+    const reviewArticles =
+      workflow.articles?.filter(
+        (article) =>
+          article.screeningResult?.decision ===
+          "REVIEW",
+      ).length ?? 0;
+
     return NextResponse.json(
       {
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown workflow error",
+        success: true,
+        workflowStage: workflow.workflowStage,
+        tenantId: workflow.tenantId,
+        query: workflow.query,
+        startedAt: workflow.startedAt,
+        completedAt: workflow.completedAt,
+        statistics: {
+          searchResults,
+          processedArticles,
+          duplicateArticles,
+          includedArticles,
+          excludedArticles,
+          reviewArticles,
+        },
+        workflow,
       },
-      { status: 500 }
+      {
+        status: 200,
+      },
     );
+  } catch (error) {
+    console.error(
+      "[api/workflow/run] Literature workflow failed:",
+      error,
+    );
+
+    return toErrorResponse(error);
+  }
+}
+
+export async function GET(): Promise<NextResponse> {
+  try {
+    return NextResponse.json(
+      {
+        success: true,
+        status:
+          literatureWorkflowService.getStatus(),
+        performance:
+          literatureWorkflowService.getPerformanceStatus(),
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error(
+      "[api/workflow/run] Status retrieval failed:",
+      error,
+    );
+
+    return toErrorResponse(error);
   }
 }

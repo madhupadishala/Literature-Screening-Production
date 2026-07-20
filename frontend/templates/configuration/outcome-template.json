@@ -1,0 +1,20 @@
+{
+  "outputFormat": "JSON",
+  "templateId": "OUT-TEMPLATE-001",
+  "name": "Client Literature Downstream Output",
+  "fieldMappings": {
+    "articleId": "article_identity.clinixai_article_id",
+    "pmid": "source_identifiers.pmid",
+    "doi": "source_identifiers.doi",
+    "companySuspectDrugs": "company_suspect_drugs",
+    "clinicalEvents": "clinical_events",
+    "specialSituations": "special_situations",
+    "activeMah": "active_mah",
+    "countryOfIncidence": "coi",
+    "screeningDecision": "screening_decision"
+  },
+  "validation": {
+    "articleId": "required",
+    "screeningDecision": "required"
+  }
+}

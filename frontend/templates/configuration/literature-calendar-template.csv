@@ -1,0 +1,2 @@
+calendarId,productId,productGroup,country,sourceKeys,frequency,executionDay,executionTime,timezone,missedSearchDetection,gracePeriodHours,ownerEmail,backupOwnerEmail,effectiveFrom,effectiveTo,status
+CAL-001,PRODUCT-001,Example Group,India,"PUBMED|EUROPE_PMC",WEEKLY,MONDAY,09:00,Asia/Kolkata,true,24,pv.admin@example.com,backup@example.com,2026-07-18,,ACTIVE

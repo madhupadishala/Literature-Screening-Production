@@ -8,10 +8,17 @@ export async function POST(request: NextRequest) {
 
     const evidencePackage = evidencePackageGenerator.build(body);
 
-    return NextResponse.json({
-      success: true,
-      data: evidencePackage,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        packageId: evidencePackage.metadata.packageId,
+        workflowStage: "HITS",
+        data: evidencePackage,
+      },
+      {
+        status: 201,
+      },
+    );
   } catch (error) {
     console.error("Evidence Package Error", error);
 
@@ -23,7 +30,9 @@ export async function POST(request: NextRequest) {
             ? error.message
             : "Unknown evidence package error",
       },
-      { status: 500 },
+      {
+        status: 500,
+      },
     );
   }
 }

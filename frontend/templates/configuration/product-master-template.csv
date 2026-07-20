@@ -1,0 +1,2 @@
+clientProductId,brandName,genericName,inn,api,synonyms,saltForms,strength,dosageForm,route,country,lifecycleStatus,investigationalOrMarketed,mah,mahEffectiveFrom,mahEffectiveTo,whodrugId,active
+PRODUCT-001,Example Brand,Example Generic,Example INN,Example API,"Synonym One|Synonym Two","Salt One|Salt Two",100 mg,Tablet,Oral,India,MARKETED,Marketed,Example MAH,2026-01-01,,WHO-000001,true

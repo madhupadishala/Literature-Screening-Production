@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import Navigation from "@/components/Navigation";
-import ScreeningWorkspace from "../../components/ScreeningWorkspace";
+import ScreeningWorkspace from "@/components/ScreeningWorkspace";
 
 type AuditEvent = {
   id: string;
@@ -27,19 +28,15 @@ export type ScreeningArticle = {
   country_of_interest: string;
   primary_author: string;
   confidence_score: number;
-
   hits_status: string;
   screening_status: "ready" | "completed" | "excluded";
   intake_status: "pending" | "ready";
-
   qc_required: boolean;
-
   company_suspect_drugs: string[];
   active_mah: "Yes" | "No" | "Unknown";
   co_suspect_drugs: string[];
   concomitant_medications: string[];
   treatment_medications: string[];
-
   clinical_events: string[];
   special_situations: string[];
   event_severity: string;
@@ -47,7 +44,6 @@ export type ScreeningArticle = {
   patient_safety: "Yes" | "No";
   patient_identification_pii: "Yes" | "No";
   coi: "Yes" | "No" | "Uncertain";
-
   screening_decision: string;
   screening_reasoning: string;
   evidence_sentence: string;
@@ -56,7 +52,7 @@ export type ScreeningArticle = {
 };
 
 function list(value?: string[]) {
-  return value && value.length ? value.join(", ") : "—";
+  return value?.length ? value.join(", ") : "—";
 }
 
 function normalizeArticle(raw: any): ScreeningArticle {
@@ -66,23 +62,20 @@ function normalizeArticle(raw: any): ScreeningArticle {
     title: raw.title || "—",
     journal: raw.journal || "—",
     publication_date: raw.publication_date || "—",
-    product_name: raw.product_name || raw.company_suspect_drugs?.[0] || "Not identified",
+    product_name:
+      raw.product_name || raw.company_suspect_drugs?.[0] || "Not identified",
     country_of_interest: raw.country_of_interest || "Uncertain",
     primary_author: raw.primary_author || "—",
     confidence_score: Number(raw.confidence_score || 0),
-
     hits_status: raw.hits_status || "completed",
     screening_status: raw.screening_status || "ready",
     intake_status: raw.intake_status || "pending",
-
     qc_required: Boolean(raw.qc_required || raw.flags?.length),
-
     company_suspect_drugs: raw.company_suspect_drugs || ["Not identified"],
     active_mah: raw.active_mah || "Unknown",
     co_suspect_drugs: raw.co_suspect_drugs || ["None identified"],
     concomitant_medications: raw.concomitant_medications || ["Not reported"],
     treatment_medications: raw.treatment_medications || ["Not reported"],
-
     clinical_events: raw.clinical_events || ["Not identified"],
     special_situations: raw.special_situations || ["None identified"],
     event_severity: raw.event_severity || "Not mentioned",
@@ -90,7 +83,6 @@ function normalizeArticle(raw: any): ScreeningArticle {
     patient_safety: raw.patient_safety || "No",
     patient_identification_pii: raw.patient_identification_pii || "No",
     coi: raw.coi || "Uncertain",
-
     screening_decision: raw.screening_decision || "Manual Review Required",
     screening_reasoning: raw.screening_reasoning || "",
     evidence_sentence: raw.evidence_sentence || "—",
@@ -108,13 +100,21 @@ export default function ScreeningPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadScreeningArticles();
+    void loadScreeningArticles();
   }, []);
 
   async function loadScreeningArticles() {
     try {
       setLoading(true);
-      const response = await fetch("/api/screening/list", { cache: "no-store" });
+
+      const response = await fetch("/api/screening/list", {
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Screening API returned HTTP ${response.status}.`);
+      }
+
       const data = await response.json();
 
       if (!Array.isArray(data)) {
@@ -125,7 +125,7 @@ export default function ScreeningPage() {
 
       setArticles(data.map(normalizeArticle));
     } catch {
-      showToast("Failed to load screening output.");
+      showToast("Unable to load screening output.");
       setArticles([]);
     } finally {
       setLoading(false);
@@ -133,74 +133,79 @@ export default function ScreeningPage() {
   }
 
   const readyArticles = useMemo(() => {
-    const q = search.toLowerCase().trim();
+    const query = search.toLowerCase().trim();
 
     return articles
-      .filter((a) => a.screening_status === "ready")
-      .filter((a) => {
-        if (!q) return true;
+      .filter((article) => article.screening_status === "ready")
+      .filter((article) => {
+        if (!query) return true;
 
         return [
-          a.pmid,
-          a.title,
-          a.product_name,
-          a.country_of_interest,
-          a.primary_author,
-          a.screening_decision,
-          ...a.company_suspect_drugs,
-          ...a.clinical_events,
-          ...a.special_situations,
+          article.pmid,
+          article.title,
+          article.product_name,
+          article.country_of_interest,
+          article.primary_author,
+          article.screening_decision,
+          ...article.company_suspect_drugs,
+          ...article.clinical_events,
+          ...article.special_situations,
         ]
           .join(" ")
           .toLowerCase()
-          .includes(q);
+          .includes(query);
       });
   }, [articles, search]);
 
   function showToast(message: string) {
     setToast(message);
-    setTimeout(() => setToast(""), 2500);
+    window.setTimeout(() => setToast(""), 2500);
   }
 
-  function audit(action: string, oldValue: string, newValue: string, reason: string): AuditEvent {
+  function audit(
+    action: string,
+    oldValue: string,
+    newValue: string,
+    reason: string,
+  ): AuditEvent {
     return {
       id: `AUD-${Date.now()}`,
       timestamp: new Date().toISOString(),
-      module: "Screening Review",
+      module: "Screening",
       action,
       oldValue,
       newValue,
       reason,
-      performedBy: "Madhu",
-      role: "Super User",
+      performedBy: "Product Administrator",
+      role: "Authorized Reviewer",
     };
   }
 
-  function approveToIntake(reason: string) {
+  function generateDownstreamOutput(reason: string) {
     if (!selected) return;
 
     const auditEvent = audit(
-      "APPROVE_SCREENING_OUTPUT",
-      "screening_status: ready | intake_status: pending",
-      "screening_status: completed | intake_status: ready",
-      reason
+      "GENERATE_DOWNSTREAM_OUTPUT",
+      "screening_status: ready | downstream_output: pending",
+      "screening_status: completed | downstream_output: ready",
+      reason,
     );
 
-    setArticles((prev) =>
-      prev.map((a) =>
-        a.hit_id === selected.hit_id
+    setArticles((previous) =>
+      previous.map((article) =>
+        article.hit_id === selected.hit_id
           ? {
-              ...a,
+              ...article,
               screening_status: "completed",
               intake_status: "ready",
-              audit_trail: [...a.audit_trail, auditEvent],
+              audit_trail: [...article.audit_trail, auditEvent],
             }
-          : a
-      )
+          : article,
+      ),
     );
 
     setSelected(null);
-    showToast("Screening output approved.");
+    showToast("Governed downstream output marked ready.");
   }
 
   function excludeArticle(reason: string) {
@@ -210,19 +215,19 @@ export default function ScreeningPage() {
       "EXCLUDE_SCREENING_ARTICLE",
       "screening_status: ready",
       "screening_status: excluded",
-      reason
+      reason,
     );
 
-    setArticles((prev) =>
-      prev.map((a) =>
-        a.hit_id === selected.hit_id
+    setArticles((previous) =>
+      previous.map((article) =>
+        article.hit_id === selected.hit_id
           ? {
-              ...a,
+              ...article,
               screening_status: "excluded",
-              audit_trail: [...a.audit_trail, auditEvent],
+              audit_trail: [...article.audit_trail, auditEvent],
             }
-          : a
-      )
+          : article,
+      ),
     );
 
     setSelected(null);
@@ -232,14 +237,23 @@ export default function ScreeningPage() {
   function saveReview(reason: string) {
     if (!selected) return;
 
-    const auditEvent = audit("SAVE_SCREENING_REVIEW", "draft", "saved", reason);
+    const auditEvent = audit(
+      "SAVE_SCREENING_REVIEW",
+      "draft",
+      "saved",
+      reason,
+    );
 
     const updated = {
       ...selected,
       audit_trail: [...selected.audit_trail, auditEvent],
     };
 
-    setArticles((prev) => prev.map((a) => (a.hit_id === selected.hit_id ? updated : a)));
+    setArticles((previous) =>
+      previous.map((article) =>
+        article.hit_id === selected.hit_id ? updated : article,
+      ),
+    );
     setSelected(updated);
     showToast("Screening review saved.");
   }
@@ -251,7 +265,7 @@ export default function ScreeningPage() {
       "RERUN_AI_SCREENING",
       "previous_screening_output",
       "new_screening_output_requested",
-      reason
+      reason,
     );
 
     const updated = {
@@ -259,111 +273,102 @@ export default function ScreeningPage() {
       audit_trail: [...selected.audit_trail, auditEvent],
     };
 
-    setArticles((prev) => prev.map((a) => (a.hit_id === selected.hit_id ? updated : a)));
+    setArticles((previous) =>
+      previous.map((article) =>
+        article.hit_id === selected.hit_id ? updated : article,
+      ),
+    );
     setSelected(updated);
-    showToast("AI re-run requested.");
+    showToast("Screening AI re-run requested.");
   }
+
+  const completedCount = articles.filter(
+    (article) => article.screening_status === "completed",
+  ).length;
+
+  const outputCount = articles.filter(
+    (article) => article.intake_status === "ready",
+  ).length;
 
   return (
     <main className="app-shell">
-      <section className="topbar">
-        <div>
-          <h1>ClinixAI</h1>
-          <p>Literature Screening Review</p>
-        </div>
-
-        <div className="topbar-meta">
-          <span>Project: Demo</span>
-          <span>User: Madhu</span>
-          <strong>PROD</strong>
-        </div>
-      </section>
+      <InvestorDemoHeader
+        title="Human-Governed Screening Intelligence"
+        subtitle="Review medically meaningful evidence, verify regulated decision factors and generate a traceable downstream output without hiding the human decision."
+      />
 
       <Navigation />
 
       <section className="metrics-grid">
-        <div className="metric-card">
-          <span>Total Screening</span>
-          <strong>{articles.length}</strong>
-        </div>
-
-        <div className="metric-card warning">
-          <span>Ready for Review</span>
-          <strong>{readyArticles.length}</strong>
-        </div>
-
-        <div className="metric-card success">
-          <span>Completed</span>
-          <strong>{articles.filter((a) => a.screening_status === "completed").length}</strong>
-        </div>
-
-        <div className="metric-card">
-          <span>Intake Input Ready</span>
-          <strong>{articles.filter((a) => a.intake_status === "ready").length}</strong>
-        </div>
-
-        <div className="metric-card warning">
-          <span>Serious</span>
-          <strong>{articles.filter((a) => a.seriousness === "Serious").length}</strong>
-        </div>
+        <Metric label="Total Screening Results" value={articles.length} />
+        <Metric label="Awaiting Human Review" value={readyArticles.length} tone="warning" />
+        <Metric label="Completed Reviews" value={completedCount} tone="success" />
+        <Metric label="Downstream Outputs" value={outputCount} tone="primary" />
+        <Metric
+          label="Serious Findings"
+          value={articles.filter((article) => article.seriousness === "Serious").length}
+          tone="critical"
+        />
       </section>
 
       <section className="panel">
         <div className="panel-header">
           <div>
-            <h2>Screening Review Worklist</h2>
+            <span className="section-kicker">Medical review worklist</span>
+            <h2>Screening Decisions</h2>
             <p>
               {loading
-                ? "Loading screening output..."
-                : `${readyArticles.length} article(s) ready for screening review`}
+                ? "Loading governed screening results…"
+                : `${readyArticles.length} article(s) ready for human screening review`}
             </p>
           </div>
 
           <div className="panel-actions">
             <input
-              className="search-input"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search PMID, product, event..."
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Search PMID, product, event…"
+              aria-label="Search screening worklist"
             />
 
-            <button onClick={loadScreeningArticles}>Refresh</button>
+            <button type="button" onClick={() => void loadScreeningArticles()}>
+              Refresh
+            </button>
 
             <a
-              className="primary-action"
               href="/api/screening/export"
               download="clinixai-screening-report.csv"
             >
-              Export CSV
+              Export Screening CSV
             </a>
 
             <a
               className="primary-action"
               href="/api/screening/export-intake"
-              download="clinixai-intake-input-package.json"
+              download="clinixai-downstream-output.json"
             >
-              Export Intake Package
+              Export Downstream Output
             </a>
           </div>
         </div>
 
-        <div className="filters-row">
-          <button>Product ▾</button>
-          <button>MAH ▾</button>
-          <button>COI ▾</button>
-          <button>Seriousness ▾</button>
-          <button>Special Situation ▾</button>
+        <div className="filters-row" aria-label="Screening filters">
+          <button type="button">Product</button>
+          <button type="button">Active MAH</button>
+          <button type="button">COI</button>
+          <button type="button">Seriousness</button>
+          <button type="button">Special Situation</button>
         </div>
 
         <div className="table-wrap">
-          <table className="hits-table">
+          <table>
             <thead>
               <tr>
                 <th>QC</th>
                 <th>PMID</th>
                 <th>Product</th>
                 <th>Country</th>
-                <th>Author</th>
+                <th>Reporter</th>
                 <th>Company Suspect</th>
                 <th>Active MAH</th>
                 <th>Clinical Event</th>
@@ -379,18 +384,15 @@ export default function ScreeningPage() {
               {readyArticles.map((article) => (
                 <tr key={article.hit_id}>
                   <td>
-                    <span className={article.qc_required ? "qc-badge warning" : "qc-badge success"}>
+                    <span className={`qc-badge ${article.qc_required ? "required" : ""}`}>
                       {article.qc_required ? "QC" : "Pass"}
                     </span>
                   </td>
-
                   <td className="mono">{article.pmid}</td>
-
                   <td>
                     <strong>{article.product_name}</strong>
                     <small>{article.hits_status}</small>
                   </td>
-
                   <td>{article.country_of_interest}</td>
                   <td>{article.primary_author}</td>
                   <td>{list(article.company_suspect_drugs)}</td>
@@ -399,10 +401,12 @@ export default function ScreeningPage() {
                   <td>{article.seriousness}</td>
                   <td>{article.patient_identification_pii}</td>
                   <td>{article.coi}</td>
-                  <td>{article.screening_decision}</td>
-
+                  <td>
+                    <span className="decision">{article.screening_decision}</span>
+                  </td>
                   <td>
                     <button
+                      type="button"
                       className="review-button"
                       onClick={() => {
                         setSelected(article);
@@ -417,7 +421,9 @@ export default function ScreeningPage() {
 
               {!loading && readyArticles.length === 0 && (
                 <tr>
-                  <td colSpan={13}>No screening outputs available.</td>
+                  <td colSpan={13} className="empty">
+                    No screening results match the current search.
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -431,7 +437,7 @@ export default function ScreeningPage() {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onClose={() => setSelected(null)}
-          onApprove={approveToIntake}
+          onApprove={generateDownstreamOutput}
           onExclude={excludeArticle}
           onSave={saveReview}
           onRerunAI={rerunAI}
@@ -443,155 +449,121 @@ export default function ScreeningPage() {
       <style jsx>{`
         .app-shell {
           min-height: 100vh;
-          background: #f4f7fb;
           padding: 24px;
           color: #0f172a;
-          font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .topbar {
-          background: linear-gradient(135deg, #071b34, #123f68);
-          color: #ffffff;
-          border-radius: 20px;
-          padding: 24px 28px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
-        }
-
-        .topbar h1 {
-          margin: 0;
-          font-size: 30px;
-        }
-
-        .topbar p {
-          margin: 6px 0 0;
-          color: #cfe7ff;
-        }
-
-        .topbar-meta {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-          font-size: 13px;
-        }
-
-        .topbar-meta span,
-        .topbar-meta strong {
-          background: rgba(255, 255, 255, 0.12);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          padding: 8px 10px;
-          border-radius: 999px;
+          background:
+            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%),
+            #f4f7fb;
+          font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 
         .metrics-grid {
           display: grid;
           grid-template-columns: repeat(5, 1fr);
-          gap: 16px;
+          gap: 12px;
           margin-bottom: 18px;
         }
 
-        .metric-card {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
-          border-radius: 18px;
-          padding: 20px;
-          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-        }
-
-        .metric-card span {
-          display: block;
-          color: #64748b;
-          font-size: 13px;
-          margin-bottom: 8px;
-          font-weight: 700;
-          text-transform: uppercase;
-        }
-
-        .metric-card strong {
-          font-size: 28px;
-          color: #0f172a;
-        }
-
-        .metric-card.success strong {
-          color: #15803d;
-        }
-
-        .metric-card.warning strong {
-          color: #b45309;
-        }
-
         .panel {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
-          border-radius: 20px;
-          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
           overflow: hidden;
+          border: 1px solid #dbe4ef;
+          border-radius: 21px;
+          background: #ffffff;
+          box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
         }
 
         .panel-header {
-          padding: 24px;
           display: flex;
           justify-content: space-between;
-          gap: 18px;
           align-items: center;
+          gap: 24px;
+          padding: 23px 24px;
           border-bottom: 1px solid #e2e8f0;
         }
 
+        .section-kicker {
+          color: #1d4ed8;
+          font-size: 10px;
+          font-weight: 900;
+          letter-spacing: 0.07em;
+          text-transform: uppercase;
+        }
+
         .panel-header h2 {
-          margin: 0 0 6px;
+          margin: 5px 0;
+          font-size: 22px;
+          letter-spacing: -0.02em;
         }
 
         .panel-header p {
           margin: 0;
           color: #64748b;
+          font-size: 12px;
         }
 
         .panel-actions {
           display: flex;
-          gap: 10px;
+          justify-content: flex-end;
           align-items: center;
+          gap: 8px;
           flex-wrap: wrap;
         }
 
-        .search-input {
+        .panel-actions input {
+          min-width: 230px;
+          padding: 10px 12px;
           border: 1px solid #cbd5e1;
-          background: #f8fafc;
-          border-radius: 12px;
-          padding: 11px 14px;
-          min-width: 260px;
+          border-radius: 10px;
           outline: none;
+          font: inherit;
+          font-size: 11px;
+        }
+
+        .panel-actions input:focus {
+          border-color: #1d4ed8;
+          box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
         }
 
         .panel-actions button,
-        .primary-action,
-        .review-button {
-          border: none;
-          border-radius: 12px;
-          background: #185a9d;
-          color: #ffffff;
-          padding: 10px 14px;
-          cursor: pointer;
-          font-weight: 800;
+        .panel-actions a {
+          display: inline-flex;
+          align-items: center;
+          min-height: 36px;
+          padding: 8px 11px;
+          border: 1px solid #cbd5e1;
+          border-radius: 10px;
+          color: #334155;
+          background: #ffffff;
+          font: inherit;
+          font-size: 10px;
+          font-weight: 900;
           text-decoration: none;
-          font-size: 14px;
+          cursor: pointer;
+        }
+
+        .panel-actions .primary-action {
+          border-color: #1d4ed8;
+          color: #ffffff;
+          background: #1d4ed8;
         }
 
         .filters-row {
           display: flex;
           gap: 8px;
-          padding: 14px 24px;
-          border-bottom: 1px solid #e2e8f0;
+          padding: 12px 18px;
           overflow-x: auto;
+          border-bottom: 1px solid #e2e8f0;
+          background: #f8fafc;
         }
 
         .filters-row button {
-          border: 1px solid #cbd5e1;
+          border: 1px solid #dbe4ef;
           border-radius: 999px;
+          padding: 7px 10px;
+          color: #475569;
           background: #ffffff;
-          color: #334155;
-          padding: 8px 12px;
+          font: inherit;
+          font-size: 9px;
           font-weight: 800;
           cursor: pointer;
           white-space: nowrap;
@@ -601,88 +573,119 @@ export default function ScreeningPage() {
           overflow-x: auto;
         }
 
-        .hits-table {
+        table {
           width: 100%;
-          min-width: 1350px;
+          min-width: 1480px;
           border-collapse: collapse;
         }
 
-        .hits-table th {
-          background: #f8fafc;
-          color: #475569;
-          font-size: 12px;
-          text-transform: uppercase;
+        th,
+        td {
+          padding: 13px 14px;
+          border-bottom: 1px solid #e8eef5;
           text-align: left;
-          padding: 14px;
-          border-bottom: 1px solid #e2e8f0;
-          white-space: nowrap;
+          vertical-align: middle;
+          font-size: 11px;
         }
 
-        .hits-table td {
-          padding: 14px;
-          border-bottom: 1px solid #e2e8f0;
-          vertical-align: middle;
-          font-size: 14px;
+        th {
+          color: #64748b;
+          background: #ffffff;
+          font-size: 9px;
+          font-weight: 900;
+          letter-spacing: 0.055em;
+          text-transform: uppercase;
+        }
+
+        tbody tr:hover {
+          background: #f8fbff;
+        }
+
+        td strong,
+        td small {
+          display: block;
+        }
+
+        td small {
+          margin-top: 3px;
+          color: #94a3b8;
+          font-size: 9px;
         }
 
         .mono {
-          font-family: Consolas, Monaco, monospace;
+          color: #1e3a8a;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
           font-weight: 800;
-          color: #185a9d;
         }
 
-        small {
-          display: block;
-          margin-top: 4px;
-          color: #64748b;
-          font-size: 12px;
-        }
-
-        .qc-badge {
+        .qc-badge,
+        .decision {
           display: inline-flex;
-          padding: 6px 10px;
+          padding: 6px 8px;
           border-radius: 999px;
-          font-size: 11px;
+          color: #166534;
+          background: #dcfce7;
+          font-size: 8px;
           font-weight: 900;
           text-transform: uppercase;
+          white-space: nowrap;
         }
 
-        .qc-badge.success {
-          background: #dcfce7;
-          color: #166534;
-        }
-
-        .qc-badge.warning {
-          background: #fef3c7;
+        .qc-badge.required {
           color: #92400e;
+          background: #fef3c7;
+        }
+
+        .decision {
+          color: #1e40af;
+          background: #dbeafe;
+        }
+
+        .review-button {
+          border: 0;
+          border-radius: 9px;
+          padding: 8px 10px;
+          color: #ffffff;
+          background: #1d4ed8;
+          font: inherit;
+          font-size: 9px;
+          font-weight: 900;
+          cursor: pointer;
+        }
+
+        .empty {
+          padding: 38px;
+          color: #64748b;
+          text-align: center;
         }
 
         .toast {
           position: fixed;
           right: 24px;
           bottom: 24px;
-          background: #0f172a;
-          color: #ffffff;
+          z-index: 70;
+          max-width: 460px;
           padding: 14px 18px;
           border-radius: 14px;
-          box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);
+          color: #ffffff;
+          background: #0f172a;
+          box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
+          font-size: 12px;
           font-weight: 700;
-          z-index: 50;
         }
 
-        @media (max-width: 1100px) {
-          .topbar,
-          .panel-header {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-
-          .topbar-meta {
-            flex-wrap: wrap;
-          }
-
+        @media (max-width: 1200px) {
           .metrics-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+          }
+
+          .panel-header {
+            align-items: flex-start;
+            flex-direction: column;
+          }
+
+          .panel-actions {
+            justify-content: flex-start;
           }
         }
 
@@ -692,14 +695,87 @@ export default function ScreeningPage() {
           }
 
           .metrics-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
           }
 
-          .search-input {
-            min-width: 100%;
+          .panel-actions input {
+            width: 100%;
+            min-width: 0;
+          }
+        }
+
+        @media (max-width: 440px) {
+          .metrics-grid {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>
     </main>
+  );
+}
+
+function Metric({
+  label,
+  value,
+  tone = "neutral",
+}: {
+  label: string;
+  value: number;
+  tone?: "neutral" | "warning" | "success" | "primary" | "critical";
+}) {
+  return (
+    <article className={`metric ${tone}`}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+
+      <style jsx>{`
+        .metric {
+          min-height: 102px;
+          padding: 16px;
+          border: 1px solid #e2e8f0;
+          border-radius: 17px;
+          background: #ffffff;
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
+        }
+
+        span {
+          display: block;
+          min-height: 31px;
+          color: #64748b;
+          font-size: 10px;
+          line-height: 1.35;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.045em;
+        }
+
+        strong {
+          display: block;
+          margin-top: 8px;
+          color: #0f172a;
+          font-size: 27px;
+        }
+
+        .warning {
+          border-color: #fde68a;
+          background: #fffdf5;
+        }
+
+        .success {
+          border-color: #bbf7d0;
+          background: #f7fff9;
+        }
+
+        .primary {
+          border-color: #bfdbfe;
+          background: #f8fbff;
+        }
+
+        .critical {
+          border-color: #fecaca;
+          background: #fff8f8;
+        }
+      `}</style>
+    </article>
   );
 }

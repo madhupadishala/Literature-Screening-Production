@@ -1,0 +1,1522 @@
+{
+  "version": 1,
+  "updatedAt": "2026-07-18T05:30:17.038Z",
+  "checklist": {},
+  "uatEvidence": [
+    {
+      "id": "uat_ea013423-08d9-4b0f-8460-5c974298476f",
+      "scenarioId": "UAT-AUTO-001",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:30:16.479Z",
+      "executedBy": "Madhu",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-001",
+        "title": "Application liveness",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 32,
+        "checkedAt": "2026-07-18T05:30:16.479Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "ok": true,
+          "data": {
+            "status": "alive",
+            "service": "ClinixAI Literature Screening",
+            "version": "5.0.0",
+            "timestamp": "2026-07-18T05:30:16.458Z",
+            "uptimeSeconds": 755
+          }
+        }
+      },
+      "manifestHash": "4674a34aeb2431db34fb7305c82a7c55b423e98b6e2d05dff5a294c3cfcde8e8"
+    },
+    {
+      "id": "uat_ed898463-c9c9-49ba-bfa4-b1edb6ff715f",
+      "scenarioId": "UAT-AUTO-002",
+      "mode": "automated",
+      "outcome": "failed",
+      "executedAt": "2026-07-18T05:30:16.480Z",
+      "executedBy": "Madhu",
+      "notes": "Expected 200, received HTTP 503.",
+      "result": {
+        "id": "UAT-AUTO-002",
+        "title": "Critical dependency readiness",
+        "passed": false,
+        "statusCode": 503,
+        "latencyMs": 32,
+        "checkedAt": "2026-07-18T05:30:16.480Z",
+        "message": "Expected 200, received HTTP 503.",
+        "responseSample": {
+          "ok": true,
+          "data": {
+            "service": "ClinixAI Literature Screening",
+            "version": "5.0.0",
+            "environment": "production",
+            "status": "unhealthy",
+            "checkedAt": "2026-07-18T05:30:16.463Z",
+            "uptimeSeconds": 755,
+            "checks": [
+              {
+                "status": "healthy",
+                "message": "Application runtime is responsive.",
+                "details": {
+                  "nodeVersion": "v24.18.0",
+                  "uptimeSeconds": 755
+                },
+                "name": "runtime",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:30:16.462Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "AI provider is not configured.",
+                "name": "ai-provider",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:30:16.462Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Knowledge service is not configured.",
+                "name": "knowledge-service",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:30:16.462Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Vector service is not configured.",
+                "name": "vector-service",
+                "critical": false,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:30:16.462Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Evidence store is not configured.",
+                "name": "evidence-store",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:30:16.462Z"
+              }
+            ]
+          },
+          "requestId": "req_4ff250b3-f44c-4803-a460-45142eb7e168"
+        }
+      },
+      "manifestHash": "4674a34aeb2431db34fb7305c82a7c55b423e98b6e2d05dff5a294c3cfcde8e8"
+    },
+    {
+      "id": "uat_ece2ac32-2189-49c4-916f-7fc7801311d4",
+      "scenarioId": "UAT-AUTO-003",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:30:16.480Z",
+      "executedBy": "Madhu",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-003",
+        "title": "Monitoring summary",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 32,
+        "checkedAt": "2026-07-18T05:30:16.480Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": "{\"ok\":true,\"data\":{\"service\":{\"name\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"region\":\"local\",\"buildSha\":\"development\"},\"health\":{\"service\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"status\":\"unhealthy\",\"checkedAt\":\"2026-07-18T05:30:16.466Z\",\"uptimeSeconds\":755,\"checks\":[{\"status\":\"healthy\",\"message\":\"Application runtime is responsive.\",\"details\":{\"nodeVersion\":\"v24.18.0\",\"uptimeSeconds\":755},\"name\":\"runtime\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:16.466Z\"},{\"status\":\"unhealthy\",\"message\":\"AI provider is not configured.\",\"name\":\"ai-provider\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:16.466Z\"},{\"status\":\"unhealthy\",\"message\":\"Knowledge service is not configured.\",\"name\":\"knowledge-service\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:16.466Z\"},{\"status\":\"unhealthy\",\"message\":\"Vector service is not configured.\",\"name\":\"vector-service\",\"critical\":false,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:16.466Z\"},{\"status\":\"unhealthy\",\"message\":\"Evidence store is not configured.\",\"name\":\"evidence-store\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:16.466Z\"}]},\"process\":{\"uptimeSeconds\":755,\"nodeVersion\":\"v24.18.0\",\"memoryBytes\":{\"rss\":108756992,\"heapTotal\":43823104,\"heapUsed\":39527912,\"external\":4617288}},\"circuits\":[],\"metrics\":{\"generatedAt\":\"2026-07-18T05:30:16.467Z\",\"counters\":{\"clinixai_api_requests_total\":18,\"clinixai_api_responses_5xx_total\":5,\"clinixai_api_responses_success_total\":9,\"clinixai_api_responses_4xx_total\":2},\"gauges\":{\"clinixai_health_status\":0,\"clinixai_health_checks_total\":5,\"clinixai_health_checks_failed\":4,\"clinixai_process_heap_used_bytes\":39527912,\"clinixai_process_heap_total_bytes\":43823104,\"clinixai_process_rss_bytes\":108756992,\"clinixai_process_uptime_seconds\":755.3850222,\"clinixai_security_events_retained\":0},\"histograms\":{\"clinixai_api_request_duration_ms\":{\"count\":16,\"sum\":395.42039999995177,\"min\":0.2704999"
+      },
+      "manifestHash": "4674a34aeb2431db34fb7305c82a7c55b423e98b6e2d05dff5a294c3cfcde8e8"
+    },
+    {
+      "id": "uat_b7519a24-b39a-4f5a-9abc-808606d23b62",
+      "scenarioId": "UAT-AUTO-004",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:30:16.481Z",
+      "executedBy": "Madhu",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-004",
+        "title": "Performance self-test",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 32,
+        "checkedAt": "2026-07-18T05:30:16.481Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "success": true,
+          "data": {
+            "passed": true,
+            "checkedAt": "2026-07-18T05:30:16.472Z",
+            "checks": [
+              {
+                "name": "concurrency_limiter",
+                "passed": true,
+                "details": {
+                  "results": [
+                    "one",
+                    "two",
+                    "three"
+                  ],
+                  "status": {
+                    "concurrency": 2,
+                    "activeCount": 0,
+                    "queuedCount": 0
+                  }
+                }
+              },
+              {
+                "name": "async_batch_runner",
+                "passed": true,
+                "details": {
+                  "total": 4,
+                  "succeeded": 4,
+                  "failed": 0,
+                  "durationMs": 0
+                }
+              },
+              {
+                "name": "ttl_cache",
+                "passed": true,
+                "details": {
+                  "size": 1,
+                  "maxEntries": 2,
+                  "defaultTtlMs": 60000,
+                  "hits": 1,
+                  "misses": 0,
+                  "hitRate": 1,
+                  "evictions": 0
+                }
+              }
+            ]
+          }
+        }
+      },
+      "manifestHash": "4674a34aeb2431db34fb7305c82a7c55b423e98b6e2d05dff5a294c3cfcde8e8"
+    },
+    {
+      "id": "uat_79837e50-aa3e-4230-914f-46eac7b6de73",
+      "scenarioId": "UAT-AUTO-005",
+      "mode": "automated",
+      "outcome": "failed",
+      "executedAt": "2026-07-18T05:30:16.481Z",
+      "executedBy": "Madhu",
+      "notes": "Expected 200, received HTTP 503.",
+      "result": {
+        "id": "UAT-AUTO-005",
+        "title": "AI self-test",
+        "passed": false,
+        "statusCode": 503,
+        "latencyMs": 33,
+        "checkedAt": "2026-07-18T05:30:16.481Z",
+        "message": "Expected 200, received HTTP 503.",
+        "responseSample": {
+          "success": false,
+          "data": {
+            "passed": false,
+            "provider": "openai",
+            "model": "gpt-4.1-mini",
+            "checks": [
+              {
+                "name": "runtime_configuration",
+                "passed": false,
+                "message": "AI runtime configuration contains failures."
+              },
+              {
+                "name": "hits_parser",
+                "passed": true,
+                "message": "Hits parser produced a normalized result."
+              },
+              {
+                "name": "screening_parser",
+                "passed": true,
+                "message": "Screening parser produced a normalized result."
+              }
+            ],
+            "executedAt": "2026-07-18T05:30:16.476Z"
+          }
+        }
+      },
+      "manifestHash": "4674a34aeb2431db34fb7305c82a7c55b423e98b6e2d05dff5a294c3cfcde8e8"
+    },
+    {
+      "id": "uat_9959da67-1844-4b71-8a58-ec45af6bfc3c",
+      "scenarioId": "UAT-AUTO-006",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:30:16.487Z",
+      "executedBy": "Madhu",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-006",
+        "title": "Workflow list availability",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 38,
+        "checkedAt": "2026-07-18T05:30:16.487Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "ok": true,
+          "module": "literature-screening",
+          "generatedAt": "2026-07-18T05:30:16.486Z",
+          "summary": {
+            "total": 2,
+            "hits": 0,
+            "screening": 0,
+            "intake": 2,
+            "qc": 0,
+            "completed": 0,
+            "escalated": 0,
+            "overrides": 0,
+            "expedited": 0
+          },
+          "items": [
+            {
+              "id": "PMID_38912721",
+              "articleTitle": "Dendrite-Free All-Solid-State Lithium Metal Batteries by In Situ Phase Transformation of the Soft Carbon-Li3N Interface Layer.",
+              "source": "PubMed",
+              "product": "Not identified",
+              "country": "Not identified",
+              "stage": "INTAKE",
+              "status": "COMPLETED",
+              "priority": "MEDIUM",
+              "seriousness": [
+                "Non-serious"
+              ],
+              "assignedTo": "Unassigned",
+              "dueDate": "2026-07-05T04:22:39.134230+00:00",
+              "createdAt": "2026-07-05T04:22:39.088308+00:00",
+              "updatedAt": "2026-07-05T04:22:39.134230+00:00",
+              "hasOverride": false,
+              "isExpedited": false
+            },
+            {
+              "id": "PMID_DEMO001",
+              "articleTitle": "Acetaminophen-induced acute liver injury: a case report from Germany",
+              "source": "Demo Evidence Package",
+              "product": "Paracetamol",
+              "country": "Germany",
+              "stage": "INTAKE",
+              "status": "COMPLETED",
+              "priority": "MEDIUM",
+              "seriousness": [
+                "Non-serious"
+              ],
+              "assignedTo": "Unassigned",
+              "dueDate": "2026-07-04T08:47:05.133407+00:00",
+              "createdAt": "2026-07-04T08:21:23.879056+00:00",
+              "updatedAt": "2026-07-04T08:47:05.133407+00:00",
+              "hasOverride": false,
+              "isExpedited": false
+            }
+          ]
+        }
+      },
+      "manifestHash": "4674a34aeb2431db34fb7305c82a7c55b423e98b6e2d05dff5a294c3cfcde8e8"
+    },
+    {
+      "id": "uat_e10cd781-6ec3-4239-b535-134c052839ec",
+      "scenarioId": "UAT-AUTO-001",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:25:16.449Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-001",
+        "title": "Application liveness",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 30,
+        "checkedAt": "2026-07-18T05:25:16.449Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "ok": true,
+          "data": {
+            "status": "alive",
+            "service": "ClinixAI Literature Screening",
+            "version": "5.0.0",
+            "timestamp": "2026-07-18T05:25:16.428Z",
+            "uptimeSeconds": 455
+          }
+        }
+      },
+      "manifestHash": "945e2f6ce974de7e7b7c80ae19383a2e7b3c7d8640852ad1abfe486e99b51384"
+    },
+    {
+      "id": "uat_50f5fb10-4ab6-4293-af24-bc3e6869f00a",
+      "scenarioId": "UAT-AUTO-002",
+      "mode": "automated",
+      "outcome": "failed",
+      "executedAt": "2026-07-18T05:25:16.449Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Expected 200, received HTTP 503.",
+      "result": {
+        "id": "UAT-AUTO-002",
+        "title": "Critical dependency readiness",
+        "passed": false,
+        "statusCode": 503,
+        "latencyMs": 30,
+        "checkedAt": "2026-07-18T05:25:16.449Z",
+        "message": "Expected 200, received HTTP 503.",
+        "responseSample": {
+          "ok": true,
+          "data": {
+            "service": "ClinixAI Literature Screening",
+            "version": "5.0.0",
+            "environment": "production",
+            "status": "unhealthy",
+            "checkedAt": "2026-07-18T05:25:16.431Z",
+            "uptimeSeconds": 455,
+            "checks": [
+              {
+                "status": "healthy",
+                "message": "Application runtime is responsive.",
+                "details": {
+                  "nodeVersion": "v24.18.0",
+                  "uptimeSeconds": 455
+                },
+                "name": "runtime",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:25:16.431Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "AI provider is not configured.",
+                "name": "ai-provider",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:25:16.431Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Knowledge service is not configured.",
+                "name": "knowledge-service",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:25:16.431Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Vector service is not configured.",
+                "name": "vector-service",
+                "critical": false,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:25:16.431Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Evidence store is not configured.",
+                "name": "evidence-store",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:25:16.431Z"
+              }
+            ]
+          },
+          "requestId": "req_45aa3965-fa07-48ed-a7a6-b41e300089e2"
+        }
+      },
+      "manifestHash": "945e2f6ce974de7e7b7c80ae19383a2e7b3c7d8640852ad1abfe486e99b51384"
+    },
+    {
+      "id": "uat_592b5cb1-87ac-4005-8c75-d07533df36cc",
+      "scenarioId": "UAT-AUTO-003",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:25:16.451Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-003",
+        "title": "Monitoring summary",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 31,
+        "checkedAt": "2026-07-18T05:25:16.451Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": "{\"ok\":true,\"data\":{\"service\":{\"name\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"region\":\"local\",\"buildSha\":\"development\"},\"health\":{\"service\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"status\":\"unhealthy\",\"checkedAt\":\"2026-07-18T05:25:16.436Z\",\"uptimeSeconds\":455,\"checks\":[{\"status\":\"healthy\",\"message\":\"Application runtime is responsive.\",\"details\":{\"nodeVersion\":\"v24.18.0\",\"uptimeSeconds\":455},\"name\":\"runtime\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.436Z\"},{\"status\":\"unhealthy\",\"message\":\"AI provider is not configured.\",\"name\":\"ai-provider\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.436Z\"},{\"status\":\"unhealthy\",\"message\":\"Knowledge service is not configured.\",\"name\":\"knowledge-service\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.436Z\"},{\"status\":\"unhealthy\",\"message\":\"Vector service is not configured.\",\"name\":\"vector-service\",\"critical\":false,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.436Z\"},{\"status\":\"unhealthy\",\"message\":\"Evidence store is not configured.\",\"name\":\"evidence-store\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.436Z\"}]},\"process\":{\"uptimeSeconds\":455,\"nodeVersion\":\"v24.18.0\",\"memoryBytes\":{\"rss\":113328128,\"heapTotal\":46997504,\"heapUsed\":43131040,\"external\":4668747}},\"circuits\":[],\"metrics\":{\"generatedAt\":\"2026-07-18T05:25:16.436Z\",\"counters\":{\"clinixai_api_requests_total\":11,\"clinixai_api_responses_5xx_total\":3,\"clinixai_api_responses_success_total\":5,\"clinixai_api_responses_4xx_total\":1},\"gauges\":{\"clinixai_health_status\":0,\"clinixai_health_checks_total\":5,\"clinixai_health_checks_failed\":4,\"clinixai_process_heap_used_bytes\":43131040,\"clinixai_process_heap_total_bytes\":46997504,\"clinixai_process_rss_bytes\":113328128,\"clinixai_process_uptime_seconds\":455.361426,\"clinixai_security_events_retained\":0},\"histograms\":{\"clinixai_api_request_duration_ms\":{\"count\":9,\"sum\":288.1519000000044,\"min\":0.2799000000"
+      },
+      "manifestHash": "945e2f6ce974de7e7b7c80ae19383a2e7b3c7d8640852ad1abfe486e99b51384"
+    },
+    {
+      "id": "uat_dfa7b7de-5753-47fc-97c5-25ca8f61cafc",
+      "scenarioId": "UAT-AUTO-004",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:25:16.452Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-004",
+        "title": "Performance self-test",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 31,
+        "checkedAt": "2026-07-18T05:25:16.452Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "success": true,
+          "data": {
+            "passed": true,
+            "checkedAt": "2026-07-18T05:25:16.440Z",
+            "checks": [
+              {
+                "name": "concurrency_limiter",
+                "passed": true,
+                "details": {
+                  "results": [
+                    "one",
+                    "two",
+                    "three"
+                  ],
+                  "status": {
+                    "concurrency": 2,
+                    "activeCount": 0,
+                    "queuedCount": 0
+                  }
+                }
+              },
+              {
+                "name": "async_batch_runner",
+                "passed": true,
+                "details": {
+                  "total": 4,
+                  "succeeded": 4,
+                  "failed": 0,
+                  "durationMs": 0
+                }
+              },
+              {
+                "name": "ttl_cache",
+                "passed": true,
+                "details": {
+                  "size": 1,
+                  "maxEntries": 2,
+                  "defaultTtlMs": 60000,
+                  "hits": 1,
+                  "misses": 0,
+                  "hitRate": 1,
+                  "evictions": 0
+                }
+              }
+            ]
+          }
+        }
+      },
+      "manifestHash": "945e2f6ce974de7e7b7c80ae19383a2e7b3c7d8640852ad1abfe486e99b51384"
+    },
+    {
+      "id": "uat_18ab987d-515a-49b8-a352-12aa30c1cf3b",
+      "scenarioId": "UAT-AUTO-005",
+      "mode": "automated",
+      "outcome": "failed",
+      "executedAt": "2026-07-18T05:25:16.453Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Expected 200, received HTTP 503.",
+      "result": {
+        "id": "UAT-AUTO-005",
+        "title": "AI self-test",
+        "passed": false,
+        "statusCode": 503,
+        "latencyMs": 32,
+        "checkedAt": "2026-07-18T05:25:16.453Z",
+        "message": "Expected 200, received HTTP 503.",
+        "responseSample": {
+          "success": false,
+          "data": {
+            "passed": false,
+            "provider": "openai",
+            "model": "gpt-4.1-mini",
+            "checks": [
+              {
+                "name": "runtime_configuration",
+                "passed": false,
+                "message": "AI runtime configuration contains failures."
+              },
+              {
+                "name": "hits_parser",
+                "passed": true,
+                "message": "Hits parser produced a normalized result."
+              },
+              {
+                "name": "screening_parser",
+                "passed": true,
+                "message": "Screening parser produced a normalized result."
+              }
+            ],
+            "executedAt": "2026-07-18T05:25:16.444Z"
+          }
+        }
+      },
+      "manifestHash": "945e2f6ce974de7e7b7c80ae19383a2e7b3c7d8640852ad1abfe486e99b51384"
+    },
+    {
+      "id": "uat_c52d0733-5f34-414b-a79f-192fc4b303b2",
+      "scenarioId": "UAT-AUTO-006",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:25:16.459Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-006",
+        "title": "Workflow list availability",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 38,
+        "checkedAt": "2026-07-18T05:25:16.459Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "ok": true,
+          "module": "literature-screening",
+          "generatedAt": "2026-07-18T05:25:16.458Z",
+          "summary": {
+            "total": 2,
+            "hits": 0,
+            "screening": 0,
+            "intake": 2,
+            "qc": 0,
+            "completed": 0,
+            "escalated": 0,
+            "overrides": 0,
+            "expedited": 0
+          },
+          "items": [
+            {
+              "id": "PMID_38912721",
+              "articleTitle": "Dendrite-Free All-Solid-State Lithium Metal Batteries by In Situ Phase Transformation of the Soft Carbon-Li3N Interface Layer.",
+              "source": "PubMed",
+              "product": "Not identified",
+              "country": "Not identified",
+              "stage": "INTAKE",
+              "status": "COMPLETED",
+              "priority": "MEDIUM",
+              "seriousness": [
+                "Non-serious"
+              ],
+              "assignedTo": "Unassigned",
+              "dueDate": "2026-07-05T04:22:39.134230+00:00",
+              "createdAt": "2026-07-05T04:22:39.088308+00:00",
+              "updatedAt": "2026-07-05T04:22:39.134230+00:00",
+              "hasOverride": false,
+              "isExpedited": false
+            },
+            {
+              "id": "PMID_DEMO001",
+              "articleTitle": "Acetaminophen-induced acute liver injury: a case report from Germany",
+              "source": "Demo Evidence Package",
+              "product": "Paracetamol",
+              "country": "Germany",
+              "stage": "INTAKE",
+              "status": "COMPLETED",
+              "priority": "MEDIUM",
+              "seriousness": [
+                "Non-serious"
+              ],
+              "assignedTo": "Unassigned",
+              "dueDate": "2026-07-04T08:47:05.133407+00:00",
+              "createdAt": "2026-07-04T08:21:23.879056+00:00",
+              "updatedAt": "2026-07-04T08:47:05.133407+00:00",
+              "hasOverride": false,
+              "isExpedited": false
+            }
+          ]
+        }
+      },
+      "manifestHash": "945e2f6ce974de7e7b7c80ae19383a2e7b3c7d8640852ad1abfe486e99b51384"
+    },
+    {
+      "id": "uat_0a51e417-05b4-41eb-afdb-9dcc73fd9383",
+      "scenarioId": "UAT-AUTO-001",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:18:16.748Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-001",
+        "title": "Application liveness",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 87,
+        "checkedAt": "2026-07-18T05:18:16.748Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "ok": true,
+          "data": {
+            "status": "alive",
+            "service": "ClinixAI Literature Screening",
+            "version": "5.0.0",
+            "timestamp": "2026-07-18T05:18:16.704Z",
+            "uptimeSeconds": 36
+          }
+        }
+      },
+      "manifestHash": "caafc230f486915e24b2a12948ac92818c96f49c3c42a37dc744c882e7a0cd20"
+    },
+    {
+      "id": "uat_789fec8f-8686-4e82-8e53-d82e7a6b6d1b",
+      "scenarioId": "UAT-AUTO-002",
+      "mode": "automated",
+      "outcome": "failed",
+      "executedAt": "2026-07-18T05:18:16.746Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Expected 200, received HTTP 503.",
+      "result": {
+        "id": "UAT-AUTO-002",
+        "title": "Critical dependency readiness",
+        "passed": false,
+        "statusCode": 503,
+        "latencyMs": 69,
+        "checkedAt": "2026-07-18T05:18:16.746Z",
+        "message": "Expected 200, received HTTP 503.",
+        "responseSample": {
+          "ok": true,
+          "data": {
+            "service": "ClinixAI Literature Screening",
+            "version": "5.0.0",
+            "environment": "production",
+            "status": "unhealthy",
+            "checkedAt": "2026-07-18T05:18:16.698Z",
+            "uptimeSeconds": 36,
+            "checks": [
+              {
+                "status": "healthy",
+                "message": "Application runtime is responsive.",
+                "details": {
+                  "nodeVersion": "v24.18.0",
+                  "uptimeSeconds": 36
+                },
+                "name": "runtime",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:18:16.698Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "AI provider is not configured.",
+                "name": "ai-provider",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:18:16.698Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Knowledge service is not configured.",
+                "name": "knowledge-service",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:18:16.698Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Vector service is not configured.",
+                "name": "vector-service",
+                "critical": false,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:18:16.698Z"
+              },
+              {
+                "status": "unhealthy",
+                "message": "Evidence store is not configured.",
+                "name": "evidence-store",
+                "critical": true,
+                "latencyMs": 0,
+                "checkedAt": "2026-07-18T05:18:16.698Z"
+              }
+            ]
+          },
+          "requestId": "req_544d1fe7-9eec-4c95-b583-7e3dc197a34e"
+        }
+      },
+      "manifestHash": "caafc230f486915e24b2a12948ac92818c96f49c3c42a37dc744c882e7a0cd20"
+    },
+    {
+      "id": "uat_61c17353-67b2-4e0c-9b2b-36d70746181a",
+      "scenarioId": "UAT-AUTO-003",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:18:16.750Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-003",
+        "title": "Monitoring summary",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 71,
+        "checkedAt": "2026-07-18T05:18:16.750Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": "{\"ok\":true,\"data\":{\"service\":{\"name\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"region\":\"local\",\"buildSha\":\"development\"},\"health\":{\"service\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"status\":\"unhealthy\",\"checkedAt\":\"2026-07-18T05:18:16.712Z\",\"uptimeSeconds\":36,\"checks\":[{\"status\":\"healthy\",\"message\":\"Application runtime is responsive.\",\"details\":{\"nodeVersion\":\"v24.18.0\",\"uptimeSeconds\":36},\"name\":\"runtime\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:16.712Z\"},{\"status\":\"unhealthy\",\"message\":\"AI provider is not configured.\",\"name\":\"ai-provider\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:16.712Z\"},{\"status\":\"unhealthy\",\"message\":\"Knowledge service is not configured.\",\"name\":\"knowledge-service\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:16.712Z\"},{\"status\":\"unhealthy\",\"message\":\"Vector service is not configured.\",\"name\":\"vector-service\",\"critical\":false,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:16.712Z\"},{\"status\":\"unhealthy\",\"message\":\"Evidence store is not configured.\",\"name\":\"evidence-store\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:16.712Z\"}]},\"process\":{\"uptimeSeconds\":36,\"nodeVersion\":\"v24.18.0\",\"memoryBytes\":{\"rss\":100618240,\"heapTotal\":41349120,\"heapUsed\":37269984,\"external\":4381058}},\"circuits\":[],\"metrics\":{\"generatedAt\":\"2026-07-18T05:18:16.712Z\",\"counters\":{\"clinixai_api_requests_total\":3,\"clinixai_api_responses_5xx_total\":1},\"gauges\":{\"clinixai_health_status\":0,\"clinixai_health_checks_total\":5,\"clinixai_health_checks_failed\":4,\"clinixai_process_heap_used_bytes\":37269984,\"clinixai_process_heap_total_bytes\":41349120,\"clinixai_process_rss_bytes\":100618240,\"clinixai_process_uptime_seconds\":35.6481004,\"clinixai_security_events_retained\":0},\"histograms\":{\"clinixai_api_request_duration_ms\":{\"count\":1,\"sum\":0.9134999999951106,\"min\":0.9134999999951106,\"max\":0.9134999999951106,\"average\":0.9134999999951106}}},\"security\":{\"reta"
+      },
+      "manifestHash": "caafc230f486915e24b2a12948ac92818c96f49c3c42a37dc744c882e7a0cd20"
+    },
+    {
+      "id": "uat_a89220b6-a9f4-4079-9671-d7d3319f460e",
+      "scenarioId": "UAT-AUTO-004",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:18:16.750Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-004",
+        "title": "Performance self-test",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 71,
+        "checkedAt": "2026-07-18T05:18:16.750Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "success": true,
+          "data": {
+            "passed": true,
+            "checkedAt": "2026-07-18T05:18:16.721Z",
+            "checks": [
+              {
+                "name": "concurrency_limiter",
+                "passed": true,
+                "details": {
+                  "results": [
+                    "one",
+                    "two",
+                    "three"
+                  ],
+                  "status": {
+                    "concurrency": 2,
+                    "activeCount": 0,
+                    "queuedCount": 0
+                  }
+                }
+              },
+              {
+                "name": "async_batch_runner",
+                "passed": true,
+                "details": {
+                  "total": 4,
+                  "succeeded": 4,
+                  "failed": 0,
+                  "durationMs": 0
+                }
+              },
+              {
+                "name": "ttl_cache",
+                "passed": true,
+                "details": {
+                  "size": 1,
+                  "maxEntries": 2,
+                  "defaultTtlMs": 60000,
+                  "hits": 1,
+                  "misses": 0,
+                  "hitRate": 1,
+                  "evictions": 0
+                }
+              }
+            ]
+          }
+        }
+      },
+      "manifestHash": "caafc230f486915e24b2a12948ac92818c96f49c3c42a37dc744c882e7a0cd20"
+    },
+    {
+      "id": "uat_e2121241-23df-43a3-bdba-8b50dc74f3f5",
+      "scenarioId": "UAT-AUTO-005",
+      "mode": "automated",
+      "outcome": "failed",
+      "executedAt": "2026-07-18T05:18:16.751Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Expected 200, received HTTP 503.",
+      "result": {
+        "id": "UAT-AUTO-005",
+        "title": "AI self-test",
+        "passed": false,
+        "statusCode": 503,
+        "latencyMs": 71,
+        "checkedAt": "2026-07-18T05:18:16.751Z",
+        "message": "Expected 200, received HTTP 503.",
+        "responseSample": {
+          "success": false,
+          "data": {
+            "passed": false,
+            "provider": "openai",
+            "model": "gpt-4.1-mini",
+            "checks": [
+              {
+                "name": "runtime_configuration",
+                "passed": false,
+                "message": "AI runtime configuration contains failures."
+              },
+              {
+                "name": "hits_parser",
+                "passed": true,
+                "message": "Hits parser produced a normalized result."
+              },
+              {
+                "name": "screening_parser",
+                "passed": true,
+                "message": "Screening parser produced a normalized result."
+              }
+            ],
+            "executedAt": "2026-07-18T05:18:16.733Z"
+          }
+        }
+      },
+      "manifestHash": "caafc230f486915e24b2a12948ac92818c96f49c3c42a37dc744c882e7a0cd20"
+    },
+    {
+      "id": "uat_eb95cd98-c21f-494b-8296-d7a892a8bda0",
+      "scenarioId": "UAT-AUTO-006",
+      "mode": "automated",
+      "outcome": "passed",
+      "executedAt": "2026-07-18T05:18:16.761Z",
+      "executedBy": "command-line-release-operator",
+      "notes": "Received expected HTTP 200.",
+      "result": {
+        "id": "UAT-AUTO-006",
+        "title": "Workflow list availability",
+        "passed": true,
+        "statusCode": 200,
+        "latencyMs": 80,
+        "checkedAt": "2026-07-18T05:18:16.761Z",
+        "message": "Received expected HTTP 200.",
+        "responseSample": {
+          "ok": true,
+          "module": "literature-screening",
+          "generatedAt": "2026-07-18T05:18:16.759Z",
+          "summary": {
+            "total": 2,
+            "hits": 0,
+            "screening": 0,
+            "intake": 2,
+            "qc": 0,
+            "completed": 0,
+            "escalated": 0,
+            "overrides": 0,
+            "expedited": 0
+          },
+          "items": [
+            {
+              "id": "PMID_38912721",
+              "articleTitle": "Dendrite-Free All-Solid-State Lithium Metal Batteries by In Situ Phase Transformation of the Soft Carbon-Li3N Interface Layer.",
+              "source": "PubMed",
+              "product": "Not identified",
+              "country": "Not identified",
+              "stage": "INTAKE",
+              "status": "COMPLETED",
+              "priority": "MEDIUM",
+              "seriousness": [
+                "Non-serious"
+              ],
+              "assignedTo": "Unassigned",
+              "dueDate": "2026-07-05T04:22:39.134230+00:00",
+              "createdAt": "2026-07-05T04:22:39.088308+00:00",
+              "updatedAt": "2026-07-05T04:22:39.134230+00:00",
+              "hasOverride": false,
+              "isExpedited": false
+            },
+            {
+              "id": "PMID_DEMO001",
+              "articleTitle": "Acetaminophen-induced acute liver injury: a case report from Germany",
+              "source": "Demo Evidence Package",
+              "product": "Paracetamol",
+              "country": "Germany",
+              "stage": "INTAKE",
+              "status": "COMPLETED",
+              "priority": "MEDIUM",
+              "seriousness": [
+                "Non-serious"
+              ],
+              "assignedTo": "Unassigned",
+              "dueDate": "2026-07-04T08:47:05.133407+00:00",
+              "createdAt": "2026-07-04T08:21:23.879056+00:00",
+              "updatedAt": "2026-07-04T08:47:05.133407+00:00",
+              "hasOverride": false,
+              "isExpedited": false
+            }
+          ]
+        }
+      },
+      "manifestHash": "caafc230f486915e24b2a12948ac92818c96f49c3c42a37dc744c882e7a0cd20"
+    }
+  ],
+  "smokeRuns": [
+    {
+      "id": "smoke_fe43a99d-21c9-4ba5-967f-73eae7f4ba71",
+      "startedAt": "2026-07-18T05:30:16.989Z",
+      "completedAt": "2026-07-18T05:30:17.036Z",
+      "executedBy": "Madhu",
+      "passed": false,
+      "manifestHash": "2c4d4ef0d43f4809a0b8565670af8a0b3bbc0cc9faa8862b3679c54d1246f32f",
+      "results": [
+        {
+          "id": "SMOKE-001",
+          "title": "Liveness",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 14,
+          "checkedAt": "2026-07-18T05:30:17.004Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": {
+            "ok": true,
+            "data": {
+              "status": "alive",
+              "service": "ClinixAI Literature Screening",
+              "version": "5.0.0",
+              "timestamp": "2026-07-18T05:30:16.994Z",
+              "uptimeSeconds": 756
+            }
+          }
+        },
+        {
+          "id": "SMOKE-002",
+          "title": "Readiness",
+          "passed": false,
+          "statusCode": 503,
+          "latencyMs": 15,
+          "checkedAt": "2026-07-18T05:30:17.005Z",
+          "message": "Expected 200, received HTTP 503.",
+          "responseSample": {
+            "ok": true,
+            "data": {
+              "service": "ClinixAI Literature Screening",
+              "version": "5.0.0",
+              "environment": "production",
+              "status": "unhealthy",
+              "checkedAt": "2026-07-18T05:30:16.997Z",
+              "uptimeSeconds": 756,
+              "checks": [
+                {
+                  "status": "healthy",
+                  "message": "Application runtime is responsive.",
+                  "details": {
+                    "nodeVersion": "v24.18.0",
+                    "uptimeSeconds": 756
+                  },
+                  "name": "runtime",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:30:16.997Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "AI provider is not configured.",
+                  "name": "ai-provider",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:30:16.997Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Knowledge service is not configured.",
+                  "name": "knowledge-service",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:30:16.997Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Vector service is not configured.",
+                  "name": "vector-service",
+                  "critical": false,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:30:16.997Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Evidence store is not configured.",
+                  "name": "evidence-store",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:30:16.997Z"
+                }
+              ]
+            },
+            "requestId": "req_ccd433e7-425b-4a42-a7dd-fd5ac88b8967"
+          }
+        },
+        {
+          "id": "SMOKE-003",
+          "title": "Monitoring",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 15,
+          "checkedAt": "2026-07-18T05:30:17.006Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "{\"ok\":true,\"data\":{\"service\":{\"name\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"region\":\"local\",\"buildSha\":\"development\"},\"health\":{\"service\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"status\":\"unhealthy\",\"checkedAt\":\"2026-07-18T05:30:17.001Z\",\"uptimeSeconds\":756,\"checks\":[{\"status\":\"healthy\",\"message\":\"Application runtime is responsive.\",\"details\":{\"nodeVersion\":\"v24.18.0\",\"uptimeSeconds\":756},\"name\":\"runtime\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:17.001Z\"},{\"status\":\"unhealthy\",\"message\":\"AI provider is not configured.\",\"name\":\"ai-provider\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:17.001Z\"},{\"status\":\"unhealthy\",\"message\":\"Knowledge service is not configured.\",\"name\":\"knowledge-service\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:17.001Z\"},{\"status\":\"unhealthy\",\"message\":\"Vector service is not configured.\",\"name\":\"vector-service\",\"critical\":false,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:17.001Z\"},{\"status\":\"unhealthy\",\"message\":\"Evidence store is not configured.\",\"name\":\"evidence-store\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:30:17.001Z\"}]},\"process\":{\"uptimeSeconds\":756,\"nodeVersion\":\"v24.18.0\",\"memoryBytes\":{\"rss\":110067712,\"heapTotal\":46444544,\"heapUsed\":40900080,\"external\":4637445}},\"circuits\":[],\"metrics\":{\"generatedAt\":\"2026-07-18T05:30:17.001Z\",\"counters\":{\"clinixai_api_requests_total\":21,\"clinixai_api_responses_5xx_total\":6,\"clinixai_api_responses_success_total\":11,\"clinixai_api_responses_4xx_total\":2},\"gauges\":{\"clinixai_health_status\":0,\"clinixai_health_checks_total\":5,\"clinixai_health_checks_failed\":4,\"clinixai_process_heap_used_bytes\":40900080,\"clinixai_process_heap_total_bytes\":46444544,\"clinixai_process_rss_bytes\":110067712,\"clinixai_process_uptime_seconds\":755.9194943,\"clinixai_security_events_retained\":0},\"histograms\":{\"clinixai_api_request_duration_ms\":{\"count\":19,\"sum\":441.18989999988844,\"min\":0.227799"
+        },
+        {
+          "id": "SMOKE-004",
+          "title": "Workflow service",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 45,
+          "checkedAt": "2026-07-18T05:30:17.036Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": {
+            "ok": true,
+            "module": "literature-screening",
+            "generatedAt": "2026-07-18T05:30:17.035Z",
+            "summary": {
+              "total": 2,
+              "hits": 0,
+              "screening": 0,
+              "intake": 2,
+              "qc": 0,
+              "completed": 0,
+              "escalated": 0,
+              "overrides": 0,
+              "expedited": 0
+            },
+            "items": [
+              {
+                "id": "PMID_38912721",
+                "articleTitle": "Dendrite-Free All-Solid-State Lithium Metal Batteries by In Situ Phase Transformation of the Soft Carbon-Li3N Interface Layer.",
+                "source": "PubMed",
+                "product": "Not identified",
+                "country": "Not identified",
+                "stage": "INTAKE",
+                "status": "COMPLETED",
+                "priority": "MEDIUM",
+                "seriousness": [
+                  "Non-serious"
+                ],
+                "assignedTo": "Unassigned",
+                "dueDate": "2026-07-05T04:22:39.134230+00:00",
+                "createdAt": "2026-07-05T04:22:39.088308+00:00",
+                "updatedAt": "2026-07-05T04:22:39.134230+00:00",
+                "hasOverride": false,
+                "isExpedited": false
+              },
+              {
+                "id": "PMID_DEMO001",
+                "articleTitle": "Acetaminophen-induced acute liver injury: a case report from Germany",
+                "source": "Demo Evidence Package",
+                "product": "Paracetamol",
+                "country": "Germany",
+                "stage": "INTAKE",
+                "status": "COMPLETED",
+                "priority": "MEDIUM",
+                "seriousness": [
+                  "Non-serious"
+                ],
+                "assignedTo": "Unassigned",
+                "dueDate": "2026-07-04T08:47:05.133407+00:00",
+                "createdAt": "2026-07-04T08:21:23.879056+00:00",
+                "updatedAt": "2026-07-04T08:47:05.133407+00:00",
+                "hasOverride": false,
+                "isExpedited": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "SMOKE-005",
+          "title": "Reliability dashboard",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 43,
+          "checkedAt": "2026-07-18T05:30:17.034Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/1k5eps4nwj7qt.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/3yiddnbtmgj46.js\"/><script src=\"/_next/static/chunks/324kw0bgsngpg.js\" async=\"\"></script><script src=\"/_next/static/chunks/2nykiepra7i1k.js\" async=\"\"></script><script src=\"/_next/static/chunks/11oof8"
+        },
+        {
+          "id": "SMOKE-006",
+          "title": "Release-readiness dashboard",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 43,
+          "checkedAt": "2026-07-18T05:30:17.034Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/1k5eps4nwj7qt.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/3yiddnbtmgj46.js\"/><script src=\"/_next/static/chunks/324kw0bgsngpg.js\" async=\"\"></script><script src=\"/_next/static/chunks/2nykiepra7i1k.js\" async=\"\"></script><script src=\"/_next/static/chunks/11oof8"
+        }
+      ]
+    },
+    {
+      "id": "smoke_3d135d96-e13f-42bb-9522-a45d50635b69",
+      "startedAt": "2026-07-18T05:25:16.947Z",
+      "completedAt": "2026-07-18T05:25:17.001Z",
+      "executedBy": "command-line-release-operator",
+      "passed": false,
+      "manifestHash": "6ccccda9d117eba8231515d91b3b0eca663138cfa8343e5d1f32f90cefcf196c",
+      "results": [
+        {
+          "id": "SMOKE-001",
+          "title": "Liveness",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 23,
+          "checkedAt": "2026-07-18T05:25:16.971Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": {
+            "ok": true,
+            "data": {
+              "status": "alive",
+              "service": "ClinixAI Literature Screening",
+              "version": "5.0.0",
+              "timestamp": "2026-07-18T05:25:16.952Z",
+              "uptimeSeconds": 456
+            }
+          }
+        },
+        {
+          "id": "SMOKE-002",
+          "title": "Readiness",
+          "passed": false,
+          "statusCode": 503,
+          "latencyMs": 24,
+          "checkedAt": "2026-07-18T05:25:16.971Z",
+          "message": "Expected 200, received HTTP 503.",
+          "responseSample": {
+            "ok": true,
+            "data": {
+              "service": "ClinixAI Literature Screening",
+              "version": "5.0.0",
+              "environment": "production",
+              "status": "unhealthy",
+              "checkedAt": "2026-07-18T05:25:16.955Z",
+              "uptimeSeconds": 456,
+              "checks": [
+                {
+                  "status": "healthy",
+                  "message": "Application runtime is responsive.",
+                  "details": {
+                    "nodeVersion": "v24.18.0",
+                    "uptimeSeconds": 456
+                  },
+                  "name": "runtime",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:25:16.955Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "AI provider is not configured.",
+                  "name": "ai-provider",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:25:16.955Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Knowledge service is not configured.",
+                  "name": "knowledge-service",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:25:16.955Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Vector service is not configured.",
+                  "name": "vector-service",
+                  "critical": false,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:25:16.955Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Evidence store is not configured.",
+                  "name": "evidence-store",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:25:16.955Z"
+                }
+              ]
+            },
+            "requestId": "req_e38226c6-b2b0-4696-996d-ebed962c6ac7"
+          }
+        },
+        {
+          "id": "SMOKE-003",
+          "title": "Monitoring",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 24,
+          "checkedAt": "2026-07-18T05:25:16.972Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "{\"ok\":true,\"data\":{\"service\":{\"name\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"region\":\"local\",\"buildSha\":\"development\"},\"health\":{\"service\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"status\":\"unhealthy\",\"checkedAt\":\"2026-07-18T05:25:16.958Z\",\"uptimeSeconds\":456,\"checks\":[{\"status\":\"healthy\",\"message\":\"Application runtime is responsive.\",\"details\":{\"nodeVersion\":\"v24.18.0\",\"uptimeSeconds\":456},\"name\":\"runtime\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.958Z\"},{\"status\":\"unhealthy\",\"message\":\"AI provider is not configured.\",\"name\":\"ai-provider\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.958Z\"},{\"status\":\"unhealthy\",\"message\":\"Knowledge service is not configured.\",\"name\":\"knowledge-service\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.958Z\"},{\"status\":\"unhealthy\",\"message\":\"Vector service is not configured.\",\"name\":\"vector-service\",\"critical\":false,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.958Z\"},{\"status\":\"unhealthy\",\"message\":\"Evidence store is not configured.\",\"name\":\"evidence-store\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:25:16.958Z\"}]},\"process\":{\"uptimeSeconds\":456,\"nodeVersion\":\"v24.18.0\",\"memoryBytes\":{\"rss\":113664000,\"heapTotal\":49356800,\"heapUsed\":44860824,\"external\":4688591}},\"circuits\":[],\"metrics\":{\"generatedAt\":\"2026-07-18T05:25:16.958Z\",\"counters\":{\"clinixai_api_requests_total\":14,\"clinixai_api_responses_5xx_total\":4,\"clinixai_api_responses_success_total\":7,\"clinixai_api_responses_4xx_total\":1},\"gauges\":{\"clinixai_health_status\":0,\"clinixai_health_checks_total\":5,\"clinixai_health_checks_failed\":4,\"clinixai_process_heap_used_bytes\":44860824,\"clinixai_process_heap_total_bytes\":49356800,\"clinixai_process_rss_bytes\":113664000,\"clinixai_process_uptime_seconds\":455.8832529,\"clinixai_security_events_retained\":0},\"histograms\":{\"clinixai_api_request_duration_ms\":{\"count\":12,\"sum\":334.7066999999879,\"min\":0.27990000"
+        },
+        {
+          "id": "SMOKE-004",
+          "title": "Workflow service",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 53,
+          "checkedAt": "2026-07-18T05:25:17.001Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": {
+            "ok": true,
+            "module": "literature-screening",
+            "generatedAt": "2026-07-18T05:25:16.999Z",
+            "summary": {
+              "total": 2,
+              "hits": 0,
+              "screening": 0,
+              "intake": 2,
+              "qc": 0,
+              "completed": 0,
+              "escalated": 0,
+              "overrides": 0,
+              "expedited": 0
+            },
+            "items": [
+              {
+                "id": "PMID_38912721",
+                "articleTitle": "Dendrite-Free All-Solid-State Lithium Metal Batteries by In Situ Phase Transformation of the Soft Carbon-Li3N Interface Layer.",
+                "source": "PubMed",
+                "product": "Not identified",
+                "country": "Not identified",
+                "stage": "INTAKE",
+                "status": "COMPLETED",
+                "priority": "MEDIUM",
+                "seriousness": [
+                  "Non-serious"
+                ],
+                "assignedTo": "Unassigned",
+                "dueDate": "2026-07-05T04:22:39.134230+00:00",
+                "createdAt": "2026-07-05T04:22:39.088308+00:00",
+                "updatedAt": "2026-07-05T04:22:39.134230+00:00",
+                "hasOverride": false,
+                "isExpedited": false
+              },
+              {
+                "id": "PMID_DEMO001",
+                "articleTitle": "Acetaminophen-induced acute liver injury: a case report from Germany",
+                "source": "Demo Evidence Package",
+                "product": "Paracetamol",
+                "country": "Germany",
+                "stage": "INTAKE",
+                "status": "COMPLETED",
+                "priority": "MEDIUM",
+                "seriousness": [
+                  "Non-serious"
+                ],
+                "assignedTo": "Unassigned",
+                "dueDate": "2026-07-04T08:47:05.133407+00:00",
+                "createdAt": "2026-07-04T08:21:23.879056+00:00",
+                "updatedAt": "2026-07-04T08:47:05.133407+00:00",
+                "hasOverride": false,
+                "isExpedited": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "SMOKE-005",
+          "title": "Reliability dashboard",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 46,
+          "checkedAt": "2026-07-18T05:25:16.994Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/1k5eps4nwj7qt.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/3yiddnbtmgj46.js\"/><script src=\"/_next/static/chunks/324kw0bgsngpg.js\" async=\"\"></script><script src=\"/_next/static/chunks/2nykiepra7i1k.js\" async=\"\"></script><script src=\"/_next/static/chunks/11oof8"
+        },
+        {
+          "id": "SMOKE-006",
+          "title": "Release-readiness dashboard",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 47,
+          "checkedAt": "2026-07-18T05:25:16.995Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/1k5eps4nwj7qt.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/3yiddnbtmgj46.js\"/><script src=\"/_next/static/chunks/324kw0bgsngpg.js\" async=\"\"></script><script src=\"/_next/static/chunks/2nykiepra7i1k.js\" async=\"\"></script><script src=\"/_next/static/chunks/11oof8"
+        }
+      ]
+    },
+    {
+      "id": "smoke_fe1baf09-07a2-4512-b806-67c3c017149c",
+      "startedAt": "2026-07-18T05:18:17.013Z",
+      "completedAt": "2026-07-18T05:18:17.135Z",
+      "executedBy": "command-line-release-operator",
+      "passed": false,
+      "manifestHash": "b2c5633431250522753b25167b5e27481830cf69caa2906efcababf02c64621e",
+      "results": [
+        {
+          "id": "SMOKE-001",
+          "title": "Liveness",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 20,
+          "checkedAt": "2026-07-18T05:18:17.033Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": {
+            "ok": true,
+            "data": {
+              "status": "alive",
+              "service": "ClinixAI Literature Screening",
+              "version": "5.0.0",
+              "timestamp": "2026-07-18T05:18:17.020Z",
+              "uptimeSeconds": 36
+            }
+          }
+        },
+        {
+          "id": "SMOKE-002",
+          "title": "Readiness",
+          "passed": false,
+          "statusCode": 503,
+          "latencyMs": 20,
+          "checkedAt": "2026-07-18T05:18:17.034Z",
+          "message": "Expected 200, received HTTP 503.",
+          "responseSample": {
+            "ok": true,
+            "data": {
+              "service": "ClinixAI Literature Screening",
+              "version": "5.0.0",
+              "environment": "production",
+              "status": "unhealthy",
+              "checkedAt": "2026-07-18T05:18:17.024Z",
+              "uptimeSeconds": 36,
+              "checks": [
+                {
+                  "status": "healthy",
+                  "message": "Application runtime is responsive.",
+                  "details": {
+                    "nodeVersion": "v24.18.0",
+                    "uptimeSeconds": 36
+                  },
+                  "name": "runtime",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:18:17.024Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "AI provider is not configured.",
+                  "name": "ai-provider",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:18:17.024Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Knowledge service is not configured.",
+                  "name": "knowledge-service",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:18:17.024Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Vector service is not configured.",
+                  "name": "vector-service",
+                  "critical": false,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:18:17.024Z"
+                },
+                {
+                  "status": "unhealthy",
+                  "message": "Evidence store is not configured.",
+                  "name": "evidence-store",
+                  "critical": true,
+                  "latencyMs": 0,
+                  "checkedAt": "2026-07-18T05:18:17.024Z"
+                }
+              ]
+            },
+            "requestId": "req_344e3c05-5d48-49a5-babd-082e75db46be"
+          }
+        },
+        {
+          "id": "SMOKE-003",
+          "title": "Monitoring",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 20,
+          "checkedAt": "2026-07-18T05:18:17.034Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "{\"ok\":true,\"data\":{\"service\":{\"name\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"region\":\"local\",\"buildSha\":\"development\"},\"health\":{\"service\":\"ClinixAI Literature Screening\",\"version\":\"5.0.0\",\"environment\":\"production\",\"status\":\"unhealthy\",\"checkedAt\":\"2026-07-18T05:18:17.029Z\",\"uptimeSeconds\":36,\"checks\":[{\"status\":\"healthy\",\"message\":\"Application runtime is responsive.\",\"details\":{\"nodeVersion\":\"v24.18.0\",\"uptimeSeconds\":36},\"name\":\"runtime\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:17.029Z\"},{\"status\":\"unhealthy\",\"message\":\"AI provider is not configured.\",\"name\":\"ai-provider\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:17.029Z\"},{\"status\":\"unhealthy\",\"message\":\"Knowledge service is not configured.\",\"name\":\"knowledge-service\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:17.029Z\"},{\"status\":\"unhealthy\",\"message\":\"Vector service is not configured.\",\"name\":\"vector-service\",\"critical\":false,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:17.029Z\"},{\"status\":\"unhealthy\",\"message\":\"Evidence store is not configured.\",\"name\":\"evidence-store\",\"critical\":true,\"latencyMs\":0,\"checkedAt\":\"2026-07-18T05:18:17.029Z\"}]},\"process\":{\"uptimeSeconds\":36,\"nodeVersion\":\"v24.18.0\",\"memoryBytes\":{\"rss\":106459136,\"heapTotal\":43708416,\"heapUsed\":38423448,\"external\":4452337}},\"circuits\":[],\"metrics\":{\"generatedAt\":\"2026-07-18T05:18:17.029Z\",\"counters\":{\"clinixai_api_requests_total\":6,\"clinixai_api_responses_5xx_total\":2,\"clinixai_api_responses_success_total\":2},\"gauges\":{\"clinixai_health_status\":0,\"clinixai_health_checks_total\":5,\"clinixai_health_checks_failed\":4,\"clinixai_process_heap_used_bytes\":38423448,\"clinixai_process_heap_total_bytes\":43708416,\"clinixai_process_rss_bytes\":106459136,\"clinixai_process_uptime_seconds\":35.9658124,\"clinixai_security_events_retained\":0},\"histograms\":{\"clinixai_api_request_duration_ms\":{\"count\":4,\"sum\":154.13699999999517,\"min\":0.46459999999933643,\"max\":152.0527000000002,\"average"
+        },
+        {
+          "id": "SMOKE-004",
+          "title": "Workflow service",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 120,
+          "checkedAt": "2026-07-18T05:18:17.135Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": {
+            "ok": true,
+            "module": "literature-screening",
+            "generatedAt": "2026-07-18T05:18:17.133Z",
+            "summary": {
+              "total": 2,
+              "hits": 0,
+              "screening": 0,
+              "intake": 2,
+              "qc": 0,
+              "completed": 0,
+              "escalated": 0,
+              "overrides": 0,
+              "expedited": 0
+            },
+            "items": [
+              {
+                "id": "PMID_38912721",
+                "articleTitle": "Dendrite-Free All-Solid-State Lithium Metal Batteries by In Situ Phase Transformation of the Soft Carbon-Li3N Interface Layer.",
+                "source": "PubMed",
+                "product": "Not identified",
+                "country": "Not identified",
+                "stage": "INTAKE",
+                "status": "COMPLETED",
+                "priority": "MEDIUM",
+                "seriousness": [
+                  "Non-serious"
+                ],
+                "assignedTo": "Unassigned",
+                "dueDate": "2026-07-05T04:22:39.134230+00:00",
+                "createdAt": "2026-07-05T04:22:39.088308+00:00",
+                "updatedAt": "2026-07-05T04:22:39.134230+00:00",
+                "hasOverride": false,
+                "isExpedited": false
+              },
+              {
+                "id": "PMID_DEMO001",
+                "articleTitle": "Acetaminophen-induced acute liver injury: a case report from Germany",
+                "source": "Demo Evidence Package",
+                "product": "Paracetamol",
+                "country": "Germany",
+                "stage": "INTAKE",
+                "status": "COMPLETED",
+                "priority": "MEDIUM",
+                "seriousness": [
+                  "Non-serious"
+                ],
+                "assignedTo": "Unassigned",
+                "dueDate": "2026-07-04T08:47:05.133407+00:00",
+                "createdAt": "2026-07-04T08:21:23.879056+00:00",
+                "updatedAt": "2026-07-04T08:47:05.133407+00:00",
+                "hasOverride": false,
+                "isExpedited": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "SMOKE-005",
+          "title": "Reliability dashboard",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 117,
+          "checkedAt": "2026-07-18T05:18:17.132Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/1k5eps4nwj7qt.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/3yiddnbtmgj46.js\"/><script src=\"/_next/static/chunks/324kw0bgsngpg.js\" async=\"\"></script><script src=\"/_next/static/chunks/2nykiepra7i1k.js\" async=\"\"></script><script src=\"/_next/static/chunks/11oof8"
+        },
+        {
+          "id": "SMOKE-006",
+          "title": "Release-readiness dashboard",
+          "passed": true,
+          "statusCode": 200,
+          "latencyMs": 117,
+          "checkedAt": "2026-07-18T05:18:17.133Z",
+          "message": "Received expected HTTP 200.",
+          "responseSample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/1k5eps4nwj7qt.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/3yiddnbtmgj46.js\"/><script src=\"/_next/static/chunks/324kw0bgsngpg.js\" async=\"\"></script><script src=\"/_next/static/chunks/2nykiepra7i1k.js\" async=\"\"></script><script src=\"/_next/static/chunks/11oof8"
+        }
+      ]
+    }
+  ],
+  "candidates": []
+}

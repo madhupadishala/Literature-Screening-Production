@@ -1,5 +1,11 @@
-import type { PromptArea, TenantPromptConfiguration } from "@/lib/tenant/tenant-types";
-import { getActiveTenant } from "@/lib/tenant/tenant-store";
+import type {
+  PromptArea,
+  TenantPromptConfiguration,
+} from "@/lib/tenant/tenant-types";
+
+import {
+  getActiveTenant,
+} from "@/lib/tenant/tenant-store";
 
 export interface PromptConfigurationResponse {
   tenantId: string | null;
@@ -16,32 +22,65 @@ export function getPromptConfigurations(): PromptConfigurationResponse {
 }
 
 export function getPromptConfiguration(
-  area: PromptArea
+  area: PromptArea,
 ): TenantPromptConfiguration | undefined {
   const tenant = getActiveTenant();
 
   return tenant?.promptConfigurations.find(
-    (p) => p.area === area && p.active
+    (configuration) =>
+      configuration.area === area &&
+      configuration.active,
+  );
+}
+
+export function getPromptInstruction(
+  area: PromptArea,
+): string {
+  const configuration =
+    getPromptConfiguration(area);
+
+  if (!configuration) {
+    return "";
+  }
+
+  return configuration.instruction;
+}
+
+export function hasActivePrompt(
+  area: PromptArea,
+): boolean {
+  return (
+    getPromptConfiguration(area) !==
+    undefined
   );
 }
 
 export function updatePromptConfiguration(
-  updated: TenantPromptConfiguration
+  updated: TenantPromptConfiguration,
 ): TenantPromptConfiguration {
   const tenant = getActiveTenant();
 
   if (!tenant) {
-    throw new Error("No active tenant.");
+    throw new Error(
+      "No active tenant.",
+    );
   }
 
-  const index = tenant.promptConfigurations.findIndex(
-    (p) => p.id === updated.id
-  );
+  const index =
+    tenant.promptConfigurations.findIndex(
+      (configuration) =>
+        configuration.id ===
+        updated.id,
+    );
 
   if (index >= 0) {
-    tenant.promptConfigurations[index] = updated;
+    tenant.promptConfigurations[
+      index
+    ] = updated;
   } else {
-    tenant.promptConfigurations.push(updated);
+    tenant.promptConfigurations.push(
+      updated,
+    );
   }
 
   return updated;

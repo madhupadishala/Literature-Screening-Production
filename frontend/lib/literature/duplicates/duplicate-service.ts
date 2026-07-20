@@ -1,48 +1,64 @@
-import { duplicateMatcher } from "./duplicate-matcher";
+import { duplicateEngine } from "./duplicate-engine";
+
 import type {
-  DuplicateCandidate,
   DuplicateCheckRequest,
-  DuplicateCheckResult,
+  DuplicateCheckResponse,
   DuplicateStatus,
 } from "./duplicate-types";
 
 class DuplicateService {
-  private records: DuplicateCandidate[] = [];
-  private history: DuplicateCheckResult[] = [];
+  private history: DuplicateCheckResponse[] = [];
 
-  check(request: DuplicateCheckRequest): DuplicateCheckResult {
-    const existing = this.records.filter(
-      (record) => record.tenantId === request.tenantId,
-    );
+  async check(
+    request: DuplicateCheckRequest,
+  ): Promise<DuplicateCheckResponse> {
+    const response =
+      duplicateEngine.check(request);
 
-    const matches = duplicateMatcher.match(request.candidate, existing);
+    this.history.unshift(response);
 
-    const result: DuplicateCheckResult = {
-      candidate: request.candidate,
-      isDuplicate: matches.length > 0,
-      matches,
-      checkedAt: new Date().toISOString(),
-    };
-
-    this.history.unshift(result);
-
-    if (!result.isDuplicate) {
-      this.records.push(request.candidate);
-    }
-
-    return result;
+    return response;
   }
 
-  list(limit = 20) {
+  list(
+    limit = 20,
+  ): DuplicateCheckResponse[] {
     return this.history.slice(0, limit);
   }
 
+  clear(): void {
+    this.history = [];
+  }
+
   getStatus(): DuplicateStatus {
+    const duplicateCount =
+      this.history.filter(
+        (item) => item.isDuplicate,
+      ).length;
+
+    const checkedRecords =
+      this.history.reduce(
+        (total, item) =>
+          total + item.checkedArticles,
+        0,
+      );
+
     return {
-      checkedRecords: this.history.length,
-      duplicateRecords: this.history.filter((item) => item.isDuplicate).length,
+      totalChecks: this.history.length,
+
+      checkedRecords,
+
+      duplicateRecords: duplicateCount,
+
+      duplicatesDetected: duplicateCount,
+
+      lastCheckAt:
+        this.history.length > 0
+          ? this.history[0].checkedAt
+          : undefined,
     };
   }
 }
 
-export const duplicateService = new DuplicateService();
+export const duplicateService =
+  new DuplicateService();

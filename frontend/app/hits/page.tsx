@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-
+import { useEffect, useMemo, useState, useRef } from "react";
 import Navigation from "@/components/Navigation";
+import AdHocSearchWorkspace from "@/components/literature/AdHocSearchWorkspace";
 
+// Enhanced type definition to track review workflow outcomes
 type HitRecord = {
   hit_id: string;
   package_id: string;
@@ -25,6 +26,12 @@ type HitRecord = {
   qc_required: boolean;
   evidence_sentence: string;
   ai_summary: string;
+  review_status: "pending" | "approved" | "dismissed" | "flagged"; // Added workflow state tracking
+};
+
+type SortConfig = {
+  key: keyof HitRecord;
+  direction: "asc" | "desc";
 };
 
 function text(value: unknown, fallback = "—") {
@@ -41,7 +48,7 @@ function percent(value: number) {
 
 function normalizeHit(raw: any, packageId: string): HitRecord {
   return {
-    hit_id: raw.hit_id || `${packageId}-${raw.pmid || Date.now()}`,
+    hit_id: raw.hit_id || `${packageId}-${raw.pmid || Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
     package_id: packageId,
     pmid: raw.pmid || "—",
     title: raw.title || "—",
@@ -61,6 +68,7 @@ function normalizeHit(raw: any, packageId: string): HitRecord {
     qc_required: Boolean(raw.qc_required || raw.qc_flags?.length),
     evidence_sentence: raw.evidence_sentence || "—",
     ai_summary: raw.ai_summary || "—",
+    review_status: raw.review_status || "pending", // Set sensible operational default
   };
 }
 
@@ -70,40 +78,57 @@ export default function HitsReviewPage() {
   const [search, setSearch] = useState("");
   const [selectedHit, setSelectedHit] = useState<HitRecord | null>(null);
   const [toast, setToast] = useState("");
+  
+  // Worklist Quick Filters state
+  const [activeTab, setActiveTab] = useState<"all" | "pending_qc" | "approved" | "dismissed" | "flagged">("all");
+  
+  // Interactive sorting state configuration (Defaulting to descending confidence)
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>({
+    key: "confidence_score",
+    direction: "desc",
+  });
+
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     loadHits();
+    return () => {
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    };
   }, []);
 
   async function loadHits() {
     try {
       setLoading(true);
-
       const response = await fetch("/api/workflow/list", { cache: "no-store" });
+      if (!response.ok) throw new Error("Failed to fetch packages list");
+      
       const packages = await response.json();
       const items = Array.isArray(packages) ? packages : packages.packages || [];
+      const validItems = items.filter((item: any) => item && item.package_id);
 
-      const allHits: HitRecord[] = [];
+      const packagePromises = validItems.map(async (item: any) => {
+        try {
+          const packageResponse = await fetch(
+            `/api/workflow/package/${encodeURIComponent(item.package_id)}`,
+            { cache: "no-store" }
+          );
+          if (!packageResponse.ok) return [];
 
-      for (const item of items) {
-        if (!item.package_id) continue;
+          const packageData = await packageResponse.json();
+          const packageHits = packageData?.hits_output?.hits || [];
 
-        const packageResponse = await fetch(
-          `/api/workflow/package/${encodeURIComponent(item.package_id)}`,
-          { cache: "no-store" }
-        );
-
-        const packageData = await packageResponse.json();
-
-        const packageHits = packageData?.hits_output?.hits || [];
-
-        for (const hit of packageHits) {
-          allHits.push(normalizeHit(hit, item.package_id));
+          return packageHits.map((hit: any) => normalizeHit(hit, item.package_id));
+        } catch (err) {
+          console.error(`Isolating failure for package: ${item.package_id}`, err);
+          return [];
         }
-      }
+      });
 
-      setHits(allHits);
-    } catch {
+      const resolvedHitsArrays = await Promise.all(packagePromises);
+      setHits(resolvedHitsArrays.flat());
+    } catch (error) {
+      console.error(error);
       showToast("Failed to load hits review records.");
       setHits([]);
     } finally {
@@ -111,35 +136,96 @@ export default function HitsReviewPage() {
     }
   }
 
-  const filteredHits = useMemo(() => {
-    const q = search.trim().toLowerCase();
-
-    if (!q) return hits;
-
-    return hits.filter((hit) =>
-      [
-        hit.package_id,
-        hit.pmid,
-        hit.title,
-        hit.product_name,
-        hit.normalized_identity,
-        hit.matched_term,
-        hit.country_of_interest,
-        hit.author_country,
-        hit.journal,
-        hit.ai_summary,
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(q)
+  // Updates item status locally and hooks into mock/real backend mutations
+  async function updateHitStatus(hitId: string, newStatus: HitRecord["review_status"]) {
+    // 1. Instantly update UI locally for fluid responsiveness
+    setHits((prevHits) =>
+      prevHits.map((h) => (h.hit_id === hitId ? { ...h, review_status: newStatus } : h))
     );
-  }, [hits, search]);
+    
+    // Sync active sidebar item text details synchronously
+    if (selectedHit && selectedHit.hit_id === hitId) {
+      setSelectedHit((prev) => prev ? { ...prev, review_status: newStatus } : null);
+    }
 
+    showToast(`Hit item successfully updated to ${newStatus.toUpperCase()}`);
+
+    // 2. Network Sync Hook: (Uncomment and structure path variables when endpoint is activated)
+    /*
+    try {
+      await fetch(`/api/workflow/hit/${hitId}/status`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus })
+      });
+    } catch (e) {
+      console.error("Backend failed to retain workflow action mutation state", e);
+    }
+    */
+  }
+
+  // Sorting controller logic triggered via table column interactions
+  function handleRequestSort(key: keyof HitRecord) {
+    let direction: "asc" | "desc" = "asc";
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  }
+
+  // Dynamic Multi-layered filtering and sorting processor pipeline
+  const processedHits = useMemo(() => {
+    let output = [...hits];
+
+    // Layer 1: Operational Status Tabs Filter logic
+    if (activeTab === "pending_qc") {
+      output = output.filter((h) => h.review_status === "pending" && h.qc_required);
+    } else if (activeTab !== "all") {
+      output = output.filter((h) => h.review_status === activeTab);
+    }
+
+    // Layer 2: Text Search Filtering Matching
+    const q = search.trim().toLowerCase();
+    if (q) {
+      output = output.filter((hit) =>
+        [
+          hit.package_id, hit.pmid, hit.title, hit.product_name,
+          hit.normalized_identity, hit.matched_term, hit.country_of_interest,
+          hit.author_country, hit.journal, hit.ai_summary,
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(q)
+      );
+    }
+
+    // Layer 3: Interactive Sorting Resolution Execution
+    if (sortConfig) {
+      output.sort((a, b) => {
+        const valueA = a[sortConfig.key];
+        const valueB = b[sortConfig.key];
+
+        if (valueA === valueB) return 0;
+        
+        // Ensure string safety or type fallback handling
+        const cleanA = typeof valueA === "string" ? valueA.toLowerCase() : valueA;
+        const cleanB = typeof valueB === "string" ? valueB.toLowerCase() : valueB;
+
+        if (cleanA < cleanB) return sortConfig.direction === "asc" ? -1 : 1;
+        if (cleanA > cleanB) return sortConfig.direction === "asc" ? 1 : -1;
+        return 0;
+      });
+    }
+
+    return output;
+  }, [hits, search, activeTab, sortConfig]);
+
+  // Dynamically reactive KPIs driven by live dashboard status mutations
   const metrics = useMemo(() => {
     return {
       total: hits.length,
-      qcRequired: hits.filter((h) => h.qc_required).length,
-      mahMatch: hits.filter((h) => h.mah_country_match).length,
+      qcRequired: hits.filter((h) => h.qc_required && h.review_status === "pending").length,
+      processed: hits.filter((h) => h.review_status !== "pending").length,
       piiPresent: hits.filter((h) => h.pii_present).length,
       avgConfidence:
         hits.length > 0
@@ -149,16 +235,23 @@ export default function HitsReviewPage() {
   }, [hits]);
 
   function showToast(message: string) {
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
     setToast(message);
-    setTimeout(() => setToast(""), 3000);
+    toastTimeoutRef.current = setTimeout(() => setToast(""), 3000);
   }
+
+  // Helper template renderer providing intuitive down/up chevron cues for text headers
+  const getSortIcon = (columnKey: keyof HitRecord) => {
+    if (!sortConfig || sortConfig.key !== columnKey) return " ↕";
+    return sortConfig.direction === "asc" ? " ▲" : " ▼";
+  };
 
   return (
     <main className="app-shell">
       <section className="topbar">
         <div>
           <h1>ClinixAI</h1>
-          <p>Literature Hits Review</p>
+          <p>Literature Hits Review Processor</p>
         </div>
 
         <div className="topbar-meta">
@@ -170,41 +263,74 @@ export default function HitsReviewPage() {
 
       <Navigation />
 
+      <details className="enterprise-search-shell" open>
+        <summary>
+          <div>
+            <span>SEARCH &amp; ARTICLE INTAKE</span>
+            <strong>Enterprise Literature Search</strong>
+            <small>PMID · DOI · Product identity · Company Product ID · Date range · Multi-database selection</small>
+          </div>
+          <em>Open / Collapse</em>
+        </summary>
+        <div className="enterprise-search-body">
+          <AdHocSearchWorkspace />
+        </div>
+      </details>
+
       <section className="metrics-grid">
         <div className="metric-card">
-          <span>Total Hits</span>
+          <span>Total Hits Ingested</span>
           <strong>{metrics.total}</strong>
         </div>
 
         <div className="metric-card warning">
-          <span>QC Required</span>
+          <span>Remaining Active QC</span>
           <strong>{metrics.qcRequired}</strong>
         </div>
 
         <div className="metric-card success">
-          <span>MAH Match</span>
-          <strong>{metrics.mahMatch}</strong>
+          <span>Actioned Records</span>
+          <strong>{metrics.processed}</strong>
         </div>
 
         <div className="metric-card">
-          <span>PII Present</span>
+          <span>PII Flagged</span>
           <strong>{metrics.piiPresent}</strong>
         </div>
 
         <div className="metric-card">
-          <span>Avg Confidence</span>
+          <span>Mean Confidence</span>
           <strong>{percent(metrics.avgConfidence)}</strong>
         </div>
       </section>
 
+      {/* Modern Workflow segment selection header tab controls */}
+      <div className="tab-navigation">
+        <button className={activeTab === "all" ? "active" : ""} onClick={() => setActiveTab("all")}>
+          All Items ({hits.length})
+        </button>
+        <button className={activeTab === "pending_qc" ? "active" : ""} onClick={() => setActiveTab("pending_qc")}>
+          Unresolved QC ({hits.filter(h => h.qc_required && h.review_status === "pending").length})
+        </button>
+        <button className={activeTab === "approved" ? "active" : ""} onClick={() => setActiveTab("approved")}>
+          Approved ({hits.filter(h => h.review_status === "approved").length})
+        </button>
+        <button className={activeTab === "flagged" ? "active" : ""} onClick={() => setActiveTab("flagged")}>
+          Escalated ({hits.filter(h => h.review_status === "flagged").length})
+        </button>
+        <button className={activeTab === "dismissed" ? "active" : ""} onClick={() => setActiveTab("dismissed")}>
+          Dismissed ({hits.filter(h => h.review_status === "dismissed").length})
+        </button>
+      </div>
+
       <section className="panel">
         <div className="panel-header">
           <div>
-            <h2>Hits Review Worklist</h2>
+            <h2>Review Execution Queue</h2>
             <p>
               {loading
-                ? "Loading hits output..."
-                : `${filteredHits.length} hit(s) available for review`}
+                ? "Streaming package data pipelines..."
+                : `${processedHits.length} element(s) localized match filters`}
             </p>
           </div>
 
@@ -213,10 +339,13 @@ export default function HitsReviewPage() {
               className="search-input"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search PMID, product, country, title..."
+              placeholder="Filter list values interactively..."
+              disabled={loading}
             />
 
-            <button onClick={loadHits}>Refresh</button>
+            <button onClick={loadHits} disabled={loading}>
+              {loading ? "Syncing..." : "Refresh Queue"}
+            </button>
           </div>
         </div>
 
@@ -224,22 +353,21 @@ export default function HitsReviewPage() {
           <table className="hits-table">
             <thead>
               <tr>
-                <th>QC</th>
-                <th>Package</th>
-                <th>PMID</th>
-                <th>Product</th>
-                <th>Matched Term</th>
-                <th>Country</th>
-                <th>MAH</th>
-                <th>PII</th>
-                <th>Confidence</th>
+                <th onClick={() => handleRequestSort("qc_required")} className="sortable">QC {getSortIcon("qc_required")}</th>
+                <th onClick={() => handleRequestSort("package_id")} className="sortable">Package {getSortIcon("package_id")}</th>
+                <th onClick={() => handleRequestSort("pmid")} className="sortable">PMID {getSortIcon("pmid")}</th>
+                <th onClick={() => handleRequestSort("product_name")} className="sortable">Product {getSortIcon("product_name")}</th>
+                <th onClick={() => handleRequestSort("matched_term")} className="sortable">Term Match {getSortIcon("matched_term")}</th>
+                <th onClick={() => handleRequestSort("country_of_interest")} className="sortable">Country {getSortIcon("country_of_interest")}</th>
+                <th>Status</th>
+                <th onClick={() => handleRequestSort("confidence_score")} className="sortable">Confidence {getSortIcon("confidence_score")}</th>
                 <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
-              {filteredHits.map((hit) => (
-                <tr key={hit.hit_id}>
+              {processedHits.map((hit) => (
+                <tr key={hit.hit_id} className={selectedHit?.hit_id === hit.hit_id ? "row-selected" : ""}>
                   <td>
                     <span className={hit.qc_required ? "qc-badge warning" : "qc-badge success"}>
                       {hit.qc_required ? "QC" : "Pass"}
@@ -260,23 +388,28 @@ export default function HitsReviewPage() {
                   </td>
 
                   <td>{hit.country_of_interest}</td>
-                  <td>{hit.mah_country_match ? "Yes" : "No"}</td>
-                  <td>{hit.pii_present ? "Yes" : "No"}</td>
+                  <td>
+                    <span className={`status-pill ${hit.review_status}`}>
+                      {hit.review_status}
+                    </span>
+                  </td>
                   <td>
                     <span className="confidence-pill">{percent(hit.confidence_score)}</span>
                   </td>
 
                   <td>
                     <button className="review-button" onClick={() => setSelectedHit(hit)}>
-                      Review
+                      Analyze
                     </button>
                   </td>
                 </tr>
               ))}
 
-              {!loading && filteredHits.length === 0 && (
+              {!loading && processedHits.length === 0 && (
                 <tr>
-                  <td colSpan={10}>No hits output available.</td>
+                  <td colSpan={9} style={{ textAlign: "center", color: "#64748b", padding: "40px 14px" }}>
+                    No pending items match this operational queue filter condition.
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -288,41 +421,68 @@ export default function HitsReviewPage() {
         <aside className="review-panel">
           <div className="review-header">
             <div>
-              <h2>Hit Review</h2>
-              <p>{selectedHit.package_id}</p>
+              <h2>Interactive Workflow Decision</h2>
+              <p>ID Context mapping: {selectedHit.package_id}</p>
             </div>
+            <button className="close-panel-btn" onClick={() => setSelectedHit(null)}>Close View</button>
+          </div>
 
-            <button onClick={() => setSelectedHit(null)}>Close</button>
+          {/* New Active Workflow Action Row Bar components */}
+          <div className="workflow-action-bar">
+            <span>Commit Decision Audit:</span>
+            <div className="action-buttons-group">
+              <button 
+                className="btn-action approve"
+                disabled={selectedHit.review_status === "approved"}
+                onClick={() => updateHitStatus(selectedHit.hit_id, "approved")}
+              >
+                Approve Entry
+              </button>
+              <button 
+                className="btn-action flag"
+                disabled={selectedHit.review_status === "flagged"}
+                onClick={() => updateHitStatus(selectedHit.hit_id, "flagged")}
+              >
+                Escalate / Flag
+              </button>
+              <button 
+                className="btn-action dismiss"
+                disabled={selectedHit.review_status === "dismissed"}
+                onClick={() => updateHitStatus(selectedHit.hit_id, "dismissed")}
+              >
+                Dismiss / Exclude
+              </button>
+            </div>
           </div>
 
           <div className="review-grid">
             <div>
-              <span>PMID</span>
+              <span>PMID Reference</span>
               <strong>{text(selectedHit.pmid)}</strong>
             </div>
 
             <div>
-              <span>Product</span>
+              <span>Identified Target Product</span>
               <strong>{text(selectedHit.product_name)}</strong>
             </div>
 
             <div>
-              <span>Matched Term</span>
+              <span>Captured Matched Term</span>
               <strong>{text(selectedHit.matched_term)}</strong>
             </div>
 
             <div>
-              <span>Country of Interest</span>
+              <span>Target Geo Region</span>
               <strong>{text(selectedHit.country_of_interest)}</strong>
             </div>
 
             <div>
-              <span>MAH Match</span>
+              <span>MAH Status Match</span>
               <strong>{selectedHit.mah_country_match ? "Yes" : "No"}</strong>
             </div>
 
             <div>
-              <span>Confidence</span>
+              <span>Verification Confidence</span>
               <strong>{percent(selectedHit.confidence_score)}</strong>
             </div>
           </div>
@@ -333,12 +493,12 @@ export default function HitsReviewPage() {
           </div>
 
           <div className="text-block">
-            <h3>Evidence Sentence</h3>
+            <h3>Evidence Sentence Context</h3>
             <p>{text(selectedHit.evidence_sentence)}</p>
           </div>
 
           <div className="text-block">
-            <h3>AI Summary</h3>
+            <h3>AI Summary Overview Extraction</h3>
             <p>{text(selectedHit.ai_summary)}</p>
           </div>
         </aside>
@@ -347,6 +507,35 @@ export default function HitsReviewPage() {
       {toast && <div className="toast">{toast}</div>}
 
       <style jsx>{`
+
+        .enterprise-search-shell {
+          margin: 18px 0;
+          border: 1px solid #cbd5e1;
+          border-radius: 10px;
+          background: #ffffff;
+          overflow: hidden;
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        }
+
+        .enterprise-search-shell > summary {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 18px;
+          padding: 18px 20px;
+          cursor: pointer;
+          list-style: none;
+          background: linear-gradient(135deg, #0f172a, #1d4ed8);
+          color: #ffffff;
+        }
+
+        .enterprise-search-shell > summary::-webkit-details-marker { display: none; }
+        .enterprise-search-shell > summary div { display: grid; gap: 3px; }
+        .enterprise-search-shell > summary span { font-size: 11px; letter-spacing: 0.14em; opacity: 0.75; }
+        .enterprise-search-shell > summary strong { font-size: 20px; }
+        .enterprise-search-shell > summary small { opacity: 0.84; }
+        .enterprise-search-shell > summary em { font-style: normal; font-size: 12px; opacity: 0.8; white-space: nowrap; }
+        .enterprise-search-body { padding: 16px; background: #f8fafc; }
         .app-shell {
           min-height: 100vh;
           background: #f4f7fb;
@@ -395,7 +584,8 @@ export default function HitsReviewPage() {
           display: grid;
           grid-template-columns: repeat(5, 1fr);
           gap: 16px;
-          margin-bottom: 18px;
+          margin-bottom: 24px;
+          margin-top: 18px;
         }
 
         .metric-card {
@@ -425,6 +615,37 @@ export default function HitsReviewPage() {
 
         .metric-card.warning strong {
           color: #b45309;
+        }
+
+        .tab-navigation {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 16px;
+          overflow-x: auto;
+          padding-bottom: 4px;
+        }
+
+        .tab-navigation button {
+          border: 1px solid #cbd5e1;
+          background: #ffffff;
+          padding: 10px 18px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-weight: 600;
+          color: #475569;
+          white-space: nowrap;
+          transition: all 0.2s ease;
+        }
+
+        .tab-navigation button:hover {
+          background: #f8fafc;
+          border-color: #94a3b8;
+        }
+
+        .tab-navigation button.active {
+          background: #1e293b;
+          color: #ffffff;
+          border-color: #1e293b;
         }
 
         .panel,
@@ -475,7 +696,7 @@ export default function HitsReviewPage() {
 
         .panel-actions button,
         .review-button,
-        .review-header button {
+        .close-panel-btn {
           border: none;
           border-radius: 12px;
           background: #185a9d;
@@ -483,6 +704,11 @@ export default function HitsReviewPage() {
           padding: 10px 14px;
           cursor: pointer;
           font-weight: 800;
+        }
+
+        .panel-actions button:disabled {
+          background: #94a3b8;
+          cursor: not-allowed;
         }
 
         .table-wrap {
@@ -506,11 +732,25 @@ export default function HitsReviewPage() {
           white-space: nowrap;
         }
 
+        .hits-table th.sortable {
+          cursor: pointer;
+          user-select: none;
+        }
+
+        .hits-table th.sortable:hover {
+          background: #f1f5f9;
+          color: #0f172a;
+        }
+
         .hits-table td {
           padding: 14px;
           border-bottom: 1px solid #e2e8f0;
           vertical-align: middle;
           font-size: 14px;
+        }
+
+        .hits-table tr.row-selected {
+          background: #f0f7ff;
         }
 
         .mono {
@@ -527,7 +767,8 @@ export default function HitsReviewPage() {
         }
 
         .qc-badge,
-        .confidence-pill {
+        .confidence-pill,
+        .status-pill {
           display: inline-flex;
           padding: 6px 10px;
           border-radius: 999px;
@@ -551,9 +792,62 @@ export default function HitsReviewPage() {
           color: #075985;
         }
 
+        .status-pill.pending { background: #f1f5f9; color: #475569; }
+        .status-pill.approved { background: #dcfce7; color: #166534; }
+        .status-pill.dismissed { background: #fee2e2; color: #991b1b; }
+        .status-pill.flagged { background: #ffedd5; color: #9a3412; }
+
         .review-panel {
-          margin-top: 18px;
+          margin-top: 24px;
+          border-top: 3px solid #185a9d;
         }
+
+        .workflow-action-bar {
+          background: #f8fafc;
+          padding: 16px 24px;
+          border-bottom: 1px solid #e2e8f0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+
+        .workflow-action-bar span {
+          font-weight: 700;
+          font-size: 14px;
+          color: #334155;
+        }
+
+        .action-buttons-group {
+          display: flex;
+          gap: 8px;
+        }
+
+        .btn-action {
+          border: 1px solid transparent;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-weight: 700;
+          font-size: 13px;
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+
+        .btn-action:disabled {
+          opacity: 0.35;
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+
+        .btn-action.approve { background: #22c55e; color: white; }
+        .btn-action.approve:hover { background: #16a34a; }
+        
+        .btn-action.flag { background: #f97316; color: white; }
+        .btn-action.flag:hover { background: #ea580c; }
+
+        .btn-action.dismiss { background: #ef4444; color: white; }
+        .btn-action.dismiss:hover { background: #dc2626; }
 
         .review-grid {
           display: grid;
@@ -592,12 +886,15 @@ export default function HitsReviewPage() {
 
         .text-block h3 {
           margin: 0 0 10px;
+          color: #1e293b;
+          font-size: 15px;
         }
 
         .text-block p {
           margin: 0;
           line-height: 1.6;
           color: #334155;
+          white-space: pre-wrap;
         }
 
         .toast {
@@ -621,6 +918,7 @@ export default function HitsReviewPage() {
           }
 
           .topbar-meta {
+            margin-top: 12px;
             flex-wrap: wrap;
           }
 
@@ -642,6 +940,11 @@ export default function HitsReviewPage() {
 
           .search-input {
             min-width: 100%;
+          }
+          
+          .workflow-action-bar {
+            flex-direction: column;
+            align-items: flex-start;
           }
         }
       `}</style>
