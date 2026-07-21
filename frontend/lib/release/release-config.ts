@@ -1,4 +1,3 @@
-import path from "node:path";
 import { getRuntimeConfig } from "../enterprise/environment";
 
 export interface ReleaseConfig {
@@ -7,7 +6,6 @@ export interface ReleaseConfig {
   baseUrl?: string;
   operator: string;
   requestTimeoutMs: number;
-  stateDirectory: string;
 }
 
 let cached: ReleaseConfig | undefined;
@@ -26,7 +24,6 @@ export function getReleaseConfig(): ReleaseConfig {
     requestTimeoutMs: Number.isFinite(timeout)
       ? Math.min(60_000, Math.max(1_000, timeout))
       : 15_000,
-    stateDirectory: path.join(process.cwd(), "data", "release"),
   });
 
   return cached;

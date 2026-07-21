@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import Navigation from "@/components/Navigation";
@@ -20,6 +20,11 @@ type AuditEvent = {
 
 export type ScreeningArticle = {
   hit_id: string;
+  database_package_id: string;
+  screening_result_id?: string;
+  intake_export_id?: string;
+  review_version: number;
+  execution_status: "ready" | "completed" | "failed";
   pmid: string;
   title: string;
   journal: string;
@@ -55,39 +60,83 @@ function list(value?: string[]) {
   return value?.length ? value.join(", ") : "—";
 }
 
-function normalizeArticle(raw: any): ScreeningArticle {
+type IncomingScreeningArticle = Record<string, unknown> & {
+  findings?: Array<{ rule?: unknown; passed?: unknown; comment?: unknown }>;
+  authors?: unknown[];
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function stringValue(value: unknown, fallback = ""): string {
+  return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
+
+function normalizeArticle(input: unknown): ScreeningArticle {
+  const raw = (isRecord(input) ? input : {}) as IncomingScreeningArticle;
+  const findings = Array.isArray(raw.findings) ? raw.findings : [];
+  const decision = stringValue(raw.decision, "REVIEW");
+  const reviewStatus = stringValue(raw.reviewStatus, "pending");
+  const executionStatus = stringValue(raw.executionStatus, "ready") as
+    "ready" | "completed" | "failed";
+  const product = stringValue(raw.productName, "Not identified");
+  const passedFindings = findings
+    .filter((finding) => finding.passed === true)
+    .map((finding) => stringValue(finding.rule))
+    .filter(Boolean);
+
   return {
-    hit_id: raw.hit_id || `SCR-${raw.pmid || Date.now()}`,
-    pmid: raw.pmid || "—",
-    title: raw.title || "—",
-    journal: raw.journal || "—",
-    publication_date: raw.publication_date || "—",
-    product_name:
-      raw.product_name || raw.company_suspect_drugs?.[0] || "Not identified",
-    country_of_interest: raw.country_of_interest || "Uncertain",
-    primary_author: raw.primary_author || "—",
-    confidence_score: Number(raw.confidence_score || 0),
-    hits_status: raw.hits_status || "completed",
-    screening_status: raw.screening_status || "ready",
-    intake_status: raw.intake_status || "pending",
-    qc_required: Boolean(raw.qc_required || raw.flags?.length),
-    company_suspect_drugs: raw.company_suspect_drugs || ["Not identified"],
-    active_mah: raw.active_mah || "Unknown",
-    co_suspect_drugs: raw.co_suspect_drugs || ["None identified"],
-    concomitant_medications: raw.concomitant_medications || ["Not reported"],
-    treatment_medications: raw.treatment_medications || ["Not reported"],
-    clinical_events: raw.clinical_events || ["Not identified"],
-    special_situations: raw.special_situations || ["None identified"],
-    event_severity: raw.event_severity || "Not mentioned",
-    seriousness: raw.seriousness || "Not mentioned",
-    patient_safety: raw.patient_safety || "No",
-    patient_identification_pii: raw.patient_identification_pii || "No",
-    coi: raw.coi || "Uncertain",
-    screening_decision: raw.screening_decision || "Manual Review Required",
-    screening_reasoning: raw.screening_reasoning || "",
-    evidence_sentence: raw.evidence_sentence || "—",
-    flags: raw.flags || [],
-    audit_trail: raw.audit_trail || [],
+    hit_id: stringValue(raw.screeningResultId) || `SCR-${stringValue(raw.packageId)}`,
+    database_package_id: stringValue(raw.packageId),
+    screening_result_id: stringValue(raw.screeningResultId) || undefined,
+    intake_export_id: stringValue(raw.intakeExportId) || undefined,
+    review_version: Number(raw.reviewVersion || 0),
+    execution_status: executionStatus,
+    pmid: stringValue(raw.pmid, "—"),
+    title: stringValue(raw.title, "—"),
+    journal: stringValue(raw.journal, "—"),
+    publication_date: stringValue(raw.publicationDate, "—"),
+    product_name: product,
+    country_of_interest: stringValue(raw.countryOfInterest, "Uncertain"),
+    primary_author:
+      Array.isArray(raw.authors) && raw.authors.length > 0 ? stringValue(raw.authors[0], "—") : "—",
+    confidence_score: Number(raw.confidence || 0) / 100,
+    hits_status: "completed",
+    screening_status:
+      reviewStatus === "approved"
+        ? "completed"
+        : reviewStatus === "excluded"
+          ? "excluded"
+          : "ready",
+    intake_status: stringValue(raw.intakeExportId) ? "ready" : "pending",
+    qc_required: Boolean(raw.qcRequired) || executionStatus === "failed",
+    company_suspect_drugs: [product],
+    active_mah: "Unknown",
+    co_suspect_drugs: ["None identified"],
+    concomitant_medications: ["Not reported"],
+    treatment_medications: ["Not reported"],
+    clinical_events: passedFindings.length ? passedFindings : ["Not identified"],
+    special_situations: ["None identified"],
+    event_severity: "Not mentioned",
+    seriousness: "Not mentioned",
+    patient_safety: decision === "INCLUDE" ? "Yes" : "No",
+    patient_identification_pii: "No",
+    coi: "Uncertain",
+    screening_decision: decision,
+    screening_reasoning: stringValue(raw.reason, "Manual review required."),
+    evidence_sentence:
+      findings
+        .map((finding) => stringValue(finding.comment))
+        .filter(Boolean)
+        .join(" ") || "—",
+    flags: [
+      ...(Boolean(raw.qcRequired) ? ["QC required"] : []),
+      ...(executionStatus === "failed"
+        ? [stringValue(raw.error, "Screening execution failed")]
+        : []),
+    ],
+    audit_trail: [],
   };
 }
 
@@ -99,15 +148,16 @@ export default function ScreeningPage() {
   const [toast, setToast] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    void loadScreeningArticles();
+  const showToast = useCallback((message: string) => {
+    setToast(message);
+    window.setTimeout(() => setToast(""), 2500);
   }, []);
 
-  async function loadScreeningArticles() {
+  const loadScreeningArticles = useCallback(async () => {
     try {
       setLoading(true);
 
-      const response = await fetch("/api/screening/list", {
+      const response = await fetch("/api/literature/screening?limit=500", {
         cache: "no-store",
       });
 
@@ -117,191 +167,176 @@ export default function ScreeningPage() {
 
       const data = await response.json();
 
-      if (!Array.isArray(data)) {
+      if (!Array.isArray(data?.data?.records)) {
         showToast("No screening output found.");
         setArticles([]);
         return;
       }
 
-      setArticles(data.map(normalizeArticle));
+      setArticles(data.data.records.map(normalizeArticle));
     } catch {
       showToast("Unable to load screening output.");
       setArticles([]);
     } finally {
       setLoading(false);
     }
-  }
+  }, [showToast]);
 
-  const readyArticles = useMemo(() => {
+  useEffect(() => {
+    const initialLoad = window.setTimeout(() => void loadScreeningArticles(), 0);
+    return () => window.clearTimeout(initialLoad);
+  }, [loadScreeningArticles]);
+
+  const visibleArticles = useMemo(() => {
     const query = search.toLowerCase().trim();
 
-    return articles
-      .filter((article) => article.screening_status === "ready")
-      .filter((article) => {
-        if (!query) return true;
+    return articles.filter((article) => {
+      if (!query) return true;
 
-        return [
-          article.pmid,
-          article.title,
-          article.product_name,
-          article.country_of_interest,
-          article.primary_author,
-          article.screening_decision,
-          ...article.company_suspect_drugs,
-          ...article.clinical_events,
-          ...article.special_situations,
-        ]
-          .join(" ")
-          .toLowerCase()
-          .includes(query);
-      });
+      return [
+        article.pmid,
+        article.title,
+        article.product_name,
+        article.country_of_interest,
+        article.primary_author,
+        article.screening_decision,
+        ...article.company_suspect_drugs,
+        ...article.clinical_events,
+        ...article.special_situations,
+      ]
+        .join(" ")
+        .toLowerCase()
+        .includes(query);
+    });
   }, [articles, search]);
 
-  function showToast(message: string) {
-    setToast(message);
-    window.setTimeout(() => setToast(""), 2500);
-  }
+  const awaitingReviewCount = articles.filter(
+    (article) => article.screening_status === "ready",
+  ).length;
 
-  function audit(
-    action: string,
-    oldValue: string,
-    newValue: string,
-    reason: string,
-  ): AuditEvent {
-    return {
-      id: `AUD-${Date.now()}`,
-      timestamp: new Date().toISOString(),
-      module: "Screening",
-      action,
-      oldValue,
-      newValue,
-      reason,
-      performedBy: "Product Administrator",
-      role: "Authorized Reviewer",
-    };
-  }
-
-  function generateDownstreamOutput(reason: string) {
+  async function generateDownstreamOutput(reason: string) {
     if (!selected) return;
+    if (!selected.screening_result_id) {
+      showToast("Run Screening AI before approving this article.");
+      return;
+    }
+    if (await saveReviewMutation("approved", selected.screening_decision, reason)) {
+      showToast("Screening decision approved. Intake input remains a separate next-stage action.");
+    }
+  }
 
-    const auditEvent = audit(
-      "GENERATE_DOWNSTREAM_OUTPUT",
-      "screening_status: ready | downstream_output: pending",
-      "screening_status: completed | downstream_output: ready",
-      reason,
-    );
+  async function excludeArticle(reason: string) {
+    if (!selected) return;
+    if (!selected.screening_result_id) {
+      showToast("Run Screening AI before excluding this article.");
+      return;
+    }
+    if (await saveReviewMutation("excluded", "EXCLUDE", reason)) {
+      showToast("Screening article excluded.");
+    }
+  }
 
-    setArticles((previous) =>
-      previous.map((article) =>
-        article.hit_id === selected.hit_id
-          ? {
-              ...article,
-              screening_status: "completed",
-              intake_status: "ready",
-              audit_trail: [...article.audit_trail, auditEvent],
-            }
-          : article,
-      ),
-    );
+  async function saveReview(reason: string) {
+    if (!selected) return;
+    if (!selected.screening_result_id) {
+      showToast("Run Screening AI before saving a review.");
+      return;
+    }
+    if (await saveReviewMutation("flagged", "REVIEW", reason)) {
+      showToast("Screening review saved.");
+    }
+  }
 
+  async function rerunAI(reason: string) {
+    if (!selected) return;
+    const response = await fetch("/api/literature/screening", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "execute",
+        input: { packageId: selected.database_package_id, reason },
+      }),
+    });
+    const payload = await response.json();
+    if (!response.ok || !payload?.success) {
+      showToast(payload?.error || "Screening AI execution failed.");
+      return;
+    }
+    await loadScreeningArticles();
+    setSelected(normalizeArticle(payload.data));
+    showToast("Screening AI execution completed and routed to human review.");
+  }
+
+  async function generateIntakeInput(reason: string) {
+    if (!selected) return;
+    const response = await fetch("/api/literature/intake-input", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ packageId: selected.database_package_id, reason }),
+    });
+    const payload = await response.json();
+    if (!response.ok || !payload?.success) {
+      showToast(payload?.error || "intake_input.json could not be generated.");
+      return;
+    }
+    await loadScreeningArticles();
     setSelected(null);
-    showToast("Governed downstream output marked ready.");
+    window.location.assign(`/api/literature/intake-input/${payload.data.exportId}`);
+    showToast(
+      payload.data.reused
+        ? "Existing governed intake_input.json downloaded."
+        : "Governed intake_input.json generated and downloaded.",
+    );
   }
 
-  function excludeArticle(reason: string) {
-    if (!selected) return;
-
-    const auditEvent = audit(
-      "EXCLUDE_SCREENING_ARTICLE",
-      "screening_status: ready",
-      "screening_status: excluded",
-      reason,
-    );
-
-    setArticles((previous) =>
-      previous.map((article) =>
-        article.hit_id === selected.hit_id
-          ? {
-              ...article,
-              screening_status: "excluded",
-              audit_trail: [...article.audit_trail, auditEvent],
-            }
-          : article,
-      ),
-    );
-
+  async function saveReviewMutation(
+    status: "approved" | "excluded" | "flagged",
+    finalDecision: string,
+    comments: string,
+  ): Promise<boolean> {
+    if (!selected?.screening_result_id) return false;
+    const response = await fetch("/api/literature/screening", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "review",
+        input: {
+          packageId: selected.database_package_id,
+          screeningResultId: selected.screening_result_id,
+          status,
+          finalDecision,
+          comments,
+          expectedVersion: selected.review_version,
+        },
+      }),
+    });
+    const payload = await response.json();
+    if (!response.ok || !payload?.success) {
+      showToast(payload?.error || "Screening review could not be saved.");
+      return false;
+    }
+    await loadScreeningArticles();
     setSelected(null);
-    showToast("Screening article excluded.");
-  }
-
-  function saveReview(reason: string) {
-    if (!selected) return;
-
-    const auditEvent = audit(
-      "SAVE_SCREENING_REVIEW",
-      "draft",
-      "saved",
-      reason,
-    );
-
-    const updated = {
-      ...selected,
-      audit_trail: [...selected.audit_trail, auditEvent],
-    };
-
-    setArticles((previous) =>
-      previous.map((article) =>
-        article.hit_id === selected.hit_id ? updated : article,
-      ),
-    );
-    setSelected(updated);
-    showToast("Screening review saved.");
-  }
-
-  function rerunAI(reason: string) {
-    if (!selected) return;
-
-    const auditEvent = audit(
-      "RERUN_AI_SCREENING",
-      "previous_screening_output",
-      "new_screening_output_requested",
-      reason,
-    );
-
-    const updated = {
-      ...selected,
-      audit_trail: [...selected.audit_trail, auditEvent],
-    };
-
-    setArticles((previous) =>
-      previous.map((article) =>
-        article.hit_id === selected.hit_id ? updated : article,
-      ),
-    );
-    setSelected(updated);
-    showToast("Screening AI re-run requested.");
+    return true;
   }
 
   const completedCount = articles.filter(
     (article) => article.screening_status === "completed",
   ).length;
 
-  const outputCount = articles.filter(
-    (article) => article.intake_status === "ready",
-  ).length;
+  const outputCount = articles.filter((article) => article.intake_status === "ready").length;
 
   return (
     <main className="app-shell">
+      <Navigation />
       <InvestorDemoHeader
         title="Human-Governed Screening Intelligence"
         subtitle="Review medically meaningful evidence, verify regulated decision factors and generate a traceable downstream output without hiding the human decision."
       />
 
-      <Navigation />
-
       <section className="metrics-grid">
         <Metric label="Total Screening Results" value={articles.length} />
-        <Metric label="Awaiting Human Review" value={readyArticles.length} tone="warning" />
+        <Metric label="Awaiting Human Review" value={awaitingReviewCount} tone="warning" />
         <Metric label="Completed Reviews" value={completedCount} tone="success" />
         <Metric label="Downstream Outputs" value={outputCount} tone="primary" />
         <Metric
@@ -319,7 +354,7 @@ export default function ScreeningPage() {
             <p>
               {loading
                 ? "Loading governed screening results…"
-                : `${readyArticles.length} article(s) ready for human screening review`}
+                : `${awaitingReviewCount} article(s) awaiting review; ${outputCount} downstream output(s) ready`}
             </p>
           </div>
 
@@ -335,19 +370,8 @@ export default function ScreeningPage() {
               Refresh
             </button>
 
-            <a
-              href="/api/screening/export"
-              download="clinixai-screening-report.csv"
-            >
+            <a href="/api/screening/export" download="clinixai-screening-report.csv">
               Export Screening CSV
-            </a>
-
-            <a
-              className="primary-action"
-              href="/api/screening/export-intake"
-              download="clinixai-downstream-output.json"
-            >
-              Export Downstream Output
             </a>
           </div>
         </div>
@@ -381,7 +405,7 @@ export default function ScreeningPage() {
             </thead>
 
             <tbody>
-              {readyArticles.map((article) => (
+              {visibleArticles.map((article) => (
                 <tr key={article.hit_id}>
                   <td>
                     <span className={`qc-badge ${article.qc_required ? "required" : ""}`}>
@@ -413,13 +437,17 @@ export default function ScreeningPage() {
                         setActiveTab("Overview");
                       }}
                     >
-                      Review
+                      {article.intake_status === "ready"
+                        ? "Download"
+                        : article.screening_status === "completed"
+                          ? "Generate"
+                          : "Review"}
                     </button>
                   </td>
                 </tr>
               ))}
 
-              {!loading && readyArticles.length === 0 && (
+              {!loading && visibleArticles.length === 0 && (
                 <tr>
                   <td colSpan={13} className="empty">
                     No screening results match the current search.
@@ -441,6 +469,7 @@ export default function ScreeningPage() {
           onExclude={excludeArticle}
           onSave={saveReview}
           onRerunAI={rerunAI}
+          onGenerateIntakeInput={generateIntakeInput}
         />
       )}
 
@@ -452,8 +481,7 @@ export default function ScreeningPage() {
           padding: 24px;
           color: #0f172a;
           background:
-            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%),
-            #f4f7fb;
+            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%), #f4f7fb;
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 

@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 
 const modules = [
   { label: "Dashboard", path: "/" },
-  { label: "Ad Hoc Search", path: "/literature-search" },
+  { label: "Search", path: "/literature-search" },
   { label: "Workflow", path: "/workflow" },
   { label: "Hits", path: "/hits" },
   { label: "Screening", path: "/screening" },
@@ -14,166 +15,149 @@ const modules = [
 ];
 
 export default function Navigation() {
-  const router = useRouter();
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
   const [context, setContext] = useState({
-    tenantKey: "Active Tenant",
-    displayName: "Authenticated User",
-    roleKey: "RBAC",
+    tenantKey: "Active tenant",
+    displayName: "Authenticated user",
+    roleKey: "Loading role",
   });
 
   useEffect(() => {
     let active = true;
-
     void fetch("/api/context/current", { cache: "no-store" })
       .then(async (response) => {
         const payload = await response.json();
-        if (active && response.ok && payload.success) {
-          setContext(payload.data);
-        }
+        if (active && response.ok && payload.success) setContext(payload.data);
       })
       .catch(() => undefined);
-
     return () => {
       active = false;
     };
   }, []);
 
-  function isActive(path: string) {
-    if (path === "/") return pathname === "/";
-    return pathname === path || pathname.startsWith(`${path}/`);
+  function isActive(path: string): boolean {
+    return path === "/" ? pathname === "/" : pathname === path || pathname.startsWith(`${path}/`);
   }
 
   return (
-    <div className="enterprise-shell-header">
-      <header className="application-ribbon">
-        <button
-          type="button"
-          className="brand"
-          onClick={() => router.push("/")}
-          aria-label="Open ClinixAI dashboard"
-        >
-          <span className="brand-mark">C</span>
+    <div className="shell-header">
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+      <header className="application-bar">
+        <Link className="brand" href="/" aria-label="ClinixAI Literature Intelligence dashboard">
+          <span className="brand-mark" aria-hidden="true">
+            C
+          </span>
           <span className="brand-copy">
             <strong>ClinixAI</strong>
             <small>Literature Intelligence</small>
           </span>
-        </button>
-
+        </Link>
         <div className="application-title">
           <span>Safety Operations</span>
           <strong>Literature Review Console</strong>
         </div>
-
-        <div className="application-controls">
-          <button
-            type="button"
-            className="context-control"
-            onClick={() => router.push("/tenant-management")}
-          >
+        <div className="identity">
+          <div>
             <span>Tenant</span>
             <strong>{context.tenantKey}</strong>
-          </button>
-
-          <button
-            type="button"
-            className="context-control"
-            onClick={() => router.push("/admin/users-roles")}
-          >
+          </div>
+          <div>
             <span>User</span>
             <strong>{context.displayName}</strong>
-          </button>
-
-          <span className="environment-badge" title={context.roleKey}>
-            {(process.env.NEXT_PUBLIC_APP_ENVIRONMENT || "DEMO").toUpperCase()}
-          </span>
-
-          <button
-            type="button"
-            className="icon-action"
-            onClick={() => window.location.reload()}
-            title="Refresh current page"
-            aria-label="Refresh current page"
-          >
-            ↻
-          </button>
-
-          <button
-            type="button"
-            className="health-action"
-            onClick={() => router.push("/admin/reliability")}
-          >
+          </div>
+          <div>
+            <span>Role</span>
+            <strong>{context.roleKey}</strong>
+          </div>
+          <Link className="health" href="/admin/reliability">
             System Health
-          </button>
+          </Link>
         </div>
+        <button
+          type="button"
+          className="menu"
+          aria-expanded={open}
+          aria-controls="primary-navigation"
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span aria-hidden="true">{open ? "×" : "☰"}</span>
+          <span className="menu-label">Menu</span>
+        </button>
       </header>
-
-      <nav className="module-ribbon" aria-label="ClinixAI modules">
-        <div className="module-tabs">
+      <nav
+        id="primary-navigation"
+        className={open ? "module-bar open" : "module-bar"}
+        aria-label="Primary navigation"
+      >
+        <div className="module-links">
           {modules.map((module) => (
-            <button
+            <Link
               key={module.path}
-              type="button"
+              href={module.path}
+              onClick={() => setOpen(false)}
               className={isActive(module.path) ? "active" : ""}
               aria-current={isActive(module.path) ? "page" : undefined}
-              onClick={() => router.push(module.path)}
             >
               {module.label}
-            </button>
+            </Link>
           ))}
         </div>
-
-        <div className="boundary-control">
-          <span>Literature boundary</span>
+        <div className="boundary">
+          <span>Validated boundary</span>
           <strong>Search → Hits → Screening → Output</strong>
         </div>
       </nav>
-
-      <div className="validation-ribbon">
-        <span className="validation-dot" />
-        Validated demonstration dataset · No real patient data
+      <div className="validation">
+        <span aria-hidden="true" />
+        Demonstration environment · Synthetic data only · Tenant and RBAC controls active
       </div>
-
       <style jsx>{`
-        .enterprise-shell-header {
+        .shell-header {
           position: sticky;
           top: 0;
           z-index: 60;
           margin: -24px -24px 18px;
-          font-family: "Poppins", Arial, Helvetica, sans-serif;
+          font-family: "Poppins", Arial, sans-serif;
           box-shadow: 0 5px 18px rgba(15, 23, 42, 0.18);
         }
-
-        .application-ribbon {
+        .skip-link {
+          position: fixed;
+          top: 8px;
+          left: 8px;
+          z-index: 200;
+          transform: translateY(-150%);
+          padding: 9px 12px;
+          border-radius: 5px;
+          color: #fff;
+          background: #1d4ed8;
+          font-size: 11px;
+          font-weight: 800;
+        }
+        .skip-link:focus {
+          transform: translateY(0);
+        }
+        .application-bar {
           display: flex;
-          min-height: 58px;
+          min-height: 60px;
           align-items: stretch;
-          color: #ffffff;
+          color: #fff;
           background: #0f172a;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        button {
-          font: inherit;
-        }
-
         .brand {
           display: flex;
-          min-width: 250px;
+          min-width: 244px;
           align-items: center;
           gap: 10px;
           padding: 8px 18px;
-          border: 0;
-          color: #ffffff;
-          background: transparent;
-          cursor: pointer;
-          text-align: left;
+          color: #fff;
+          text-decoration: none;
         }
-
         .brand:hover {
-          background: rgba(255, 255, 255, 0.045);
+          background: rgba(255, 255, 255, 0.05);
         }
-
         .brand-mark {
           display: grid;
           width: 38px;
@@ -181,183 +165,146 @@ export default function Navigation() {
           place-items: center;
           border: 1px solid rgba(255, 255, 255, 0.24);
           border-radius: 7px;
-          color: #ffffff;
           background: linear-gradient(135deg, #1d4ed8, #38bdf8);
           font-size: 21px;
           font-weight: 900;
         }
-
         .brand-copy {
           display: grid;
-          gap: 1px;
         }
-
         .brand-copy strong {
           font-size: 15px;
         }
-
         .brand-copy small {
-          color: #94a3b8;
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: 0.055em;
-          text-transform: uppercase;
-        }
-
-        .application-title {
-          display: grid;
-          min-width: 240px;
-          align-content: center;
-          padding: 8px 18px;
-          border-left: 1px solid rgba(255, 255, 255, 0.08);
-          border-right: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .application-title span {
-          color: #7dd3fc;
-          font-size: 9px;
-          font-weight: 800;
-          letter-spacing: 0.07em;
-          text-transform: uppercase;
-        }
-
-        .application-title strong {
-          margin-top: 2px;
-          font-size: 13px;
-        }
-
-        .application-controls {
-          display: flex;
-          flex: 1;
-          justify-content: flex-end;
-          align-items: stretch;
-          overflow-x: auto;
-        }
-
-        .context-control,
-        .icon-action,
-        .health-action {
-          border: 0;
-          border-left: 1px solid rgba(255, 255, 255, 0.08);
-          color: #ffffff;
-          background: transparent;
-          cursor: pointer;
-        }
-
-        .context-control {
-          display: grid;
-          min-width: 145px;
-          align-content: center;
-          padding: 7px 14px;
-          text-align: left;
-        }
-
-        .context-control span {
           color: #94a3b8;
           font-size: 8px;
           font-weight: 800;
           letter-spacing: 0.06em;
           text-transform: uppercase;
         }
-
-        .context-control strong {
+        .application-title {
+          display: grid;
+          min-width: 235px;
+          align-content: center;
+          padding: 8px 18px;
+          border-inline: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .application-title span,
+        .identity span {
+          color: #7dd3fc;
+          font-size: 8px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+        .application-title strong {
           margin-top: 2px;
-          font-size: 10px;
+          font-size: 12px;
+        }
+        .identity {
+          display: flex;
+          flex: 1;
+          justify-content: flex-end;
+          align-items: stretch;
+          overflow: hidden;
+        }
+        .identity > div {
+          display: grid;
+          min-width: 120px;
+          max-width: 190px;
+          align-content: center;
+          padding: 7px 12px;
+          border-left: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .identity strong {
+          margin-top: 2px;
+          overflow: hidden;
+          font-size: 9px;
+          text-overflow: ellipsis;
           white-space: nowrap;
         }
-
-        .environment-badge {
-          align-self: center;
-          margin: 0 12px;
-          padding: 6px 9px;
-          border: 1px solid #22d3ee;
-          border-radius: 4px;
-          color: #cffafe;
-          background: rgba(8, 145, 178, 0.18);
+        .health {
+          display: grid;
+          place-items: center;
+          padding: 0 15px;
+          border-left: 1px solid rgba(255, 255, 255, 0.08);
+          color: #bae6fd;
           font-size: 9px;
           font-weight: 900;
-        }
-
-        .icon-action {
-          width: 48px;
-          font-size: 20px;
-        }
-
-        .health-action {
-          padding: 0 16px;
-          color: #bae6fd;
-          font-size: 10px;
-          font-weight: 800;
+          text-decoration: none;
           white-space: nowrap;
         }
-
-        .context-control:hover,
-        .icon-action:hover,
-        .health-action:hover {
+        .health:hover {
           background: rgba(255, 255, 255, 0.06);
         }
-
-        .module-ribbon {
+        .menu {
+          display: none;
+          border: 0;
+          padding: 0 16px;
+          color: #fff;
+          background: transparent;
+          font: inherit;
+          cursor: pointer;
+        }
+        .menu span:first-child {
+          font-size: 21px;
+        }
+        .menu-label {
+          font-size: 9px;
+          font-weight: 800;
+        }
+        .module-bar {
           display: flex;
-          min-height: 43px;
-          align-items: stretch;
+          min-height: 44px;
           justify-content: space-between;
-          color: #ffffff;
+          color: #fff;
           background: #185abd;
         }
-
-        .module-tabs {
+        .module-links {
           display: flex;
           overflow-x: auto;
         }
-
-        .module-tabs button {
-          min-width: 104px;
-          padding: 0 18px;
-          border: 0;
+        .module-links :global(a) {
+          display: grid;
+          min-width: 100px;
+          place-items: center;
+          padding: 0 15px;
           border-right: 1px solid rgba(255, 255, 255, 0.13);
           color: #dbeafe;
-          background: transparent;
-          font-size: 10px;
+          font-size: 9px;
           font-weight: 800;
-          cursor: pointer;
+          text-decoration: none;
           white-space: nowrap;
         }
-
-        .module-tabs button:hover {
-          color: #ffffff;
+        .module-links :global(a:hover) {
+          color: #fff;
           background: rgba(15, 23, 42, 0.12);
         }
-
-        .module-tabs button.active {
+        .module-links :global(a.active) {
           color: #0f172a;
-          background: #ffffff;
+          background: #fff;
         }
-
-        .boundary-control {
+        .boundary {
           display: grid;
-          min-width: 225px;
+          min-width: 224px;
           align-content: center;
-          padding: 5px 16px;
+          padding: 5px 15px;
           border-left: 1px solid rgba(255, 255, 255, 0.18);
           background: rgba(15, 23, 42, 0.14);
         }
-
-        .boundary-control span {
+        .boundary span {
           color: #bfdbfe;
           font-size: 7px;
           font-weight: 900;
           text-transform: uppercase;
         }
-
-        .boundary-control strong {
+        .boundary strong {
           margin-top: 2px;
-          font-size: 9px;
+          font-size: 8px;
         }
-
-        .validation-ribbon {
+        .validation {
           display: flex;
-          min-height: 25px;
+          min-height: 26px;
           align-items: center;
           gap: 7px;
           padding: 0 18px;
@@ -367,32 +314,49 @@ export default function Navigation() {
           font-size: 8px;
           font-weight: 800;
         }
-
-        .validation-dot {
+        .validation span {
           width: 7px;
           height: 7px;
-          border-radius: 999px;
+          border-radius: 50%;
           background: #22c55e;
         }
-
-        @media (max-width: 1050px) {
+        @media (max-width: 1100px) {
           .application-title,
-          .boundary-control {
+          .boundary,
+          .identity > div:first-child {
             display: none;
           }
         }
-
-        @media (max-width: 700px) {
-          .enterprise-shell-header {
+        @media (max-width: 760px) {
+          .shell-header {
             margin: -12px -12px 14px;
           }
-
           .brand {
-            min-width: 190px;
+            min-width: 0;
+            flex: 1;
           }
-
-          .context-control {
+          .identity {
             display: none;
+          }
+          .menu {
+            display: grid;
+            place-items: center;
+          }
+          .module-bar {
+            display: none;
+          }
+          .module-bar.open {
+            display: block;
+          }
+          .module-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 6px;
+          }
+          .module-links :global(a) {
+            min-height: 42px;
+            border: 0;
+            border-radius: 4px;
           }
         }
       `}</style>

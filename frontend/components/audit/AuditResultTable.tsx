@@ -1,71 +1,68 @@
 "use client";
 
-import styles from "./audit.module.css";
 import type { AuditRecord } from "@/lib/audit/audit-types";
 
-type AuditResultTableProps = {
-  records: AuditRecord[];
-  total: number;
-  page: number;
-  pageSize: number;
-  onPageChange: (page: number) => void;
-};
+import styles from "./audit.module.css";
 
 export default function AuditResultTable({
   records,
   total,
   page,
   pageSize,
+  loading,
+  onExport,
   onPageChange,
-}: AuditResultTableProps) {
+}: {
+  records: AuditRecord[];
+  total: number;
+  page: number;
+  pageSize: number;
+  loading: boolean;
+  onExport: () => void;
+  onPageChange: (page: number) => void;
+}) {
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
-
   return (
     <section className={styles.resultPanel}>
       <div className={styles.resultHeader}>
         <div>
-          <p>Audit Results</p>
-          <h2>{total} record(s)</h2>
+          <p>Tenant-scoped results</p>
+          <h2>{total} event(s)</h2>
         </div>
-
-        <button>Export Ready</button>
+        <button type="button" disabled={loading || total === 0} onClick={onExport}>
+          Export Filtered CSV
+        </button>
       </div>
-
       <div className={styles.tableWrap}>
         <table className={styles.auditTable}>
           <thead>
             <tr>
               <th>Time</th>
-              <th>Module</th>
-              <th>Entity</th>
+              <th>Category / Event</th>
+              <th>Outcome</th>
               <th>Package</th>
-              <th>Action</th>
-              <th>Severity</th>
-              <th>User</th>
-              <th>Description</th>
-              <th>Change</th>
+              <th>Actor</th>
+              <th>Trace</th>
+              <th>Details</th>
             </tr>
           </thead>
-
           <tbody>
             {records.length === 0 ? (
               <tr>
-                <td colSpan={9} className={styles.emptyCell}>
-                  No audit records found.
+                <td colSpan={7} className={styles.emptyCell}>
+                  {loading ? "Loading audit ledger…" : "No audit events match the filters."}
                 </td>
               </tr>
             ) : (
               records.map((record) => (
                 <tr key={record.id}>
-                  <td>{formatDate(record.performedAt)}</td>
-                  <td>{record.module}</td>
                   <td>
-                    <strong>{record.entityType}</strong>
-                    <span>{record.entityId}</span>
+                    <strong>{formatDate(record.performedAt)}</strong>
+                    <span>{record.id}</span>
                   </td>
-                  <td>{record.packageId ?? "—"}</td>
                   <td>
-                    <span className={styles.actionBadge}>{record.action}</span>
+                    <strong>{record.eventCategory}</strong>
+                    <span>{record.eventType}</span>
                   </td>
                   <td>
                     <span
@@ -77,25 +74,23 @@ export default function AuditResultTable({
                             : styles.severityInfo
                       }
                     >
-                      {record.severity}
+                      {record.outcome}
                     </span>
+                  </td>
+                  <td>
+                    <strong>{record.packageKey || "—"}</strong>
+                    <span>{record.packageId || "No package"}</span>
                   </td>
                   <td>
                     <strong>{record.performedBy.name}</strong>
                     <span>{record.performedBy.role}</span>
                   </td>
                   <td>
-                    <strong>{record.title}</strong>
-                    <span>{record.description}</span>
+                    <strong>{record.correlationId || "—"}</strong>
+                    <span>{record.requestId || record.ipAddress || "No request trace"}</span>
                   </td>
                   <td>
-                    {record.previousValue || record.newValue ? (
-                      <span>
-                        {record.previousValue ?? "—"} → {record.newValue ?? "—"}
-                      </span>
-                    ) : (
-                      "—"
-                    )}
+                    <span>{detailSummary(record.details)}</span>
                   </td>
                 </tr>
               ))
@@ -103,22 +98,21 @@ export default function AuditResultTable({
           </tbody>
         </table>
       </div>
-
       <div className={styles.pagination}>
         <button
-          disabled={page <= 1}
-          onClick={() => onPageChange(Math.max(1, page - 1))}
+          type="button"
+          disabled={loading || page <= 1}
+          onClick={() => onPageChange(page - 1)}
         >
           Previous
         </button>
-
         <span>
           Page {page} of {totalPages}
         </span>
-
         <button
-          disabled={page >= totalPages}
-          onClick={() => onPageChange(Math.min(totalPages, page + 1))}
+          type="button"
+          disabled={loading || page >= totalPages}
+          onClick={() => onPageChange(page + 1)}
         >
           Next
         </button>
@@ -127,9 +121,16 @@ export default function AuditResultTable({
   );
 }
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat("en-IN", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(new Date(value));
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "medium" }).format(
+    new Date(value),
+  );
+}
+
+function detailSummary(details: Record<string, unknown>): string {
+  const entries = Object.entries(details).slice(0, 4);
+  if (!entries.length) return "No additional details";
+  return entries
+    .map(([key, value]) => `${key}: ${typeof value === "string" ? value : JSON.stringify(value)}`)
+    .join(" · ");
 }

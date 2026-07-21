@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   getPromptConfigurations,
@@ -10,11 +10,9 @@ import {
 import type { TenantPromptConfiguration } from "@/lib/tenant/tenant-types";
 
 export default function PromptConfigPanel() {
-  const [prompts, setPrompts] = useState<TenantPromptConfiguration[]>([]);
-
-  useEffect(() => {
-    setPrompts(getPromptConfigurations().prompts);
-  }, []);
+  const [prompts, setPrompts] = useState<TenantPromptConfiguration[]>(
+    () => getPromptConfigurations().prompts,
+  );
 
   function updatePrompt(
     id: string,

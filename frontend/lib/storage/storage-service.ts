@@ -71,7 +71,16 @@ export class StorageService {
   async listObjects(prefix?: string): Promise<StorageObject[]> {
     return Array.from(memoryStorage.values())
       .filter((item) => !prefix || item.key.startsWith(prefix))
-      .map(({ content: _content, ...object }) => object);
+      .map((item) => ({
+        key: item.key,
+        bucket: item.bucket,
+        provider: item.provider,
+        contentType: item.contentType,
+        sizeBytes: item.sizeBytes,
+        checksum: item.checksum,
+        createdAt: item.createdAt,
+        metadata: item.metadata,
+      }));
   }
 
   async deleteObject(key: string): Promise<boolean> {

@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   ScheduleDefinition,
   SchedulerStatusResponse,
@@ -50,9 +52,7 @@ export default function SchedulerDashboard() {
     await loadSchedules();
   }
 
-  useEffect(() => {
-    void loadSchedules();
-  }, []);
+  useDeferredLoad(loadSchedules);
 
   const schedules = data?.schedules ?? [];
 

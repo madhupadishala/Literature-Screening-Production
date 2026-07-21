@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   KnowledgeDocument,
   KnowledgeRepositoryStatus,
@@ -64,9 +65,7 @@ export default function KnowledgeRepositoryDashboard() {
     await loadDocuments();
   }
 
-  useEffect(() => {
-    void loadDocuments();
-  }, []);
+  useDeferredLoad(loadDocuments);
 
   const status = data?.status;
   const documents = data?.documents ?? [];

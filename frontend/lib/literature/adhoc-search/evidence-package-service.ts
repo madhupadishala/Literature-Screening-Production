@@ -30,9 +30,30 @@ type SearchResultRow = {
   dedupe_key: string;
 };
 
+export interface EvidencePackageCreationResult {
+  packageId: string;
+  packageKey: string;
+  title: string;
+  mergedSources: string[];
+  duplicateMerged: boolean;
+  duplicateSignals: string[];
+}
+
+type CanonicalPackageRow = {
+  id: string;
+  package_key: string;
+  match_signal: "EXACT_PMID" | "EXACT_DOI" | "DEDUPE_KEY";
+};
+
 function evidenceRoot(): string {
   const configured = process.env.EVIDENCE_STORE_ROOT?.trim();
-  if (configured) return path.resolve(configured);
+  if (configured) {
+    if (!path.isAbsolute(configured)) {
+      throw new Error("EVIDENCE_STORE_ROOT must be an absolute path.");
+    }
+
+    return path.normalize(configured);
+  }
 
   const environment =
     process.env.APP_ENVIRONMENT?.trim().toLowerCase() ||
@@ -44,7 +65,11 @@ function evidenceRoot(): string {
     );
   }
 
-  return path.resolve(process.cwd(), "..", "evidence_store");
+  return path.resolve(
+    /* turbopackIgnore: true */ process.cwd(),
+    "..",
+    "evidence_store",
+  );
 }
 
 function safeSegment(value: string): string {
@@ -52,6 +77,13 @@ function safeSegment(value: string): string {
     .replace(/[^a-zA-Z0-9._-]+/g, "_")
     .replace(/^_+|_+$/g, "")
     .slice(0, 100);
+}
+
+function evidenceFilePath(packageFolder: string, filename: string): string {
+  return path.join(
+    /* turbopackIgnore: true */ packageFolder,
+    filename,
+  );
 }
 
 function packageKeyFor(row: SearchResultRow): string {
@@ -80,12 +112,7 @@ async function writeJson(
 export async function createEvidencePackagesFromSearch(input: {
   principal: RequestPrincipal;
   resultIds: string[];
-}): Promise<Array<{
-  packageId: string;
-  packageKey: string;
-  title: string;
-  mergedSources: string[];
-}>> {
+}): Promise<EvidencePackageCreationResult[]> {
   const uniqueIds = [...new Set(input.resultIds.filter(Boolean))];
   if (uniqueIds.length === 0) {
     throw new Error("Select at least one literature result.");
@@ -123,18 +150,177 @@ export async function createEvidencePackagesFromSearch(input: {
 
   const active = await resolveActiveConfigurations(input.principal.tenantId);
   const snapshotPayload = configurationSnapshotPayload(active);
-  const created: Array<{
-    packageId: string;
-    packageKey: string;
-    title: string;
-    mergedSources: string[];
-  }> = [];
+  const created: EvidencePackageCreationResult[] = [];
 
   for (const rows of grouped.values()) {
     const primary = rows[0];
+    const selectedRowIds = rows.map((row) => row.id);
+    const canonical = await pool.query<CanonicalPackageRow>(
+      `
+        SELECT
+          package.id,
+          package.package_key,
+          CASE
+            WHEN $3::text IS NOT NULL AND prior.pmid = $3 THEN 'EXACT_PMID'
+            WHEN $4::text IS NOT NULL AND lower(prior.doi) = lower($4)
+              THEN 'EXACT_DOI'
+            ELSE 'DEDUPE_KEY'
+          END AS match_signal
+        FROM ad_hoc_literature_results prior
+        JOIN literature_packages package
+          ON package.id = prior.evidence_package_id
+         AND package.tenant_id = prior.tenant_id
+        WHERE prior.tenant_id = $1
+          AND prior.evidence_package_id IS NOT NULL
+          AND NOT (prior.id = ANY($2::uuid[]))
+          AND (
+            ($3::text IS NOT NULL AND prior.pmid = $3)
+            OR ($4::text IS NOT NULL AND lower(prior.doi) = lower($4))
+            OR prior.dedupe_key = $5
+          )
+        ORDER BY
+          CASE
+            WHEN $3::text IS NOT NULL AND prior.pmid = $3 THEN 0
+            WHEN $4::text IS NOT NULL AND lower(prior.doi) = lower($4) THEN 1
+            ELSE 2
+          END,
+          prior.created_at
+        LIMIT 1
+      `,
+      [
+        input.principal.tenantId,
+        selectedRowIds,
+        primary.pmid || null,
+        primary.doi || null,
+        primary.dedupe_key,
+      ],
+    );
+    const canonicalPackage = canonical.rows[0];
+
+    if (canonicalPackage) {
+      const duplicateSignals = [canonicalPackage.match_signal];
+      const client = await pool.connect();
+
+      try {
+        await client.query("BEGIN");
+        await client.query(
+          `
+            UPDATE ad_hoc_literature_results
+            SET selected = true, evidence_package_id = $3
+            WHERE tenant_id = $1 AND id = ANY($2::uuid[])
+          `,
+          [input.principal.tenantId, selectedRowIds, canonicalPackage.id],
+        );
+
+        for (const row of rows) {
+          await client.query(
+            `
+              INSERT INTO literature_package_sources (
+                tenant_id, package_id, search_result_id, source_key,
+                source_record_id, pmid, doi, landing_url
+              )
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+              ON CONFLICT (tenant_id, package_id, source_key, source_record_id)
+              DO UPDATE SET
+                search_result_id = EXCLUDED.search_result_id,
+                pmid = COALESCE(EXCLUDED.pmid, literature_package_sources.pmid),
+                doi = COALESCE(EXCLUDED.doi, literature_package_sources.doi),
+                landing_url = COALESCE(
+                  EXCLUDED.landing_url,
+                  literature_package_sources.landing_url
+                )
+            `,
+            [
+              input.principal.tenantId,
+              canonicalPackage.id,
+              row.id,
+              row.source_key,
+              row.source_record_id,
+              row.pmid,
+              row.doi,
+              row.landing_url,
+            ],
+          );
+          await client.query(
+            `
+              INSERT INTO duplicate_assessments (
+                tenant_id, candidate_result_id, canonical_package_id,
+                classification, confidence, match_signals
+              )
+              VALUES ($1, $2, $3, 'duplicate', 1, $4::jsonb)
+              ON CONFLICT (tenant_id, candidate_result_id)
+              DO UPDATE SET
+                canonical_package_id = EXCLUDED.canonical_package_id,
+                classification = EXCLUDED.classification,
+                confidence = EXCLUDED.confidence,
+                match_signals = EXCLUDED.match_signals,
+                assessed_at = now()
+            `,
+            [
+              input.principal.tenantId,
+              row.id,
+              canonicalPackage.id,
+              JSON.stringify(duplicateSignals),
+            ],
+          );
+        }
+
+        await client.query(
+          `
+            UPDATE ad_hoc_literature_searches
+            SET selected_count = (
+              SELECT count(*)
+              FROM ad_hoc_literature_results
+              WHERE search_id = $1 AND selected = true
+            )
+            WHERE id = $1
+          `,
+          [primary.search_id],
+        );
+        await client.query(
+          `
+            INSERT INTO audit_events (
+              tenant_id, package_id, actor_id, event_type,
+              event_category, outcome, details
+            )
+            VALUES ($1, $2, $3, 'DUPLICATE_SOURCES_MERGED',
+              'LITERATURE_DUPLICATES', 'success', $4::jsonb)
+          `,
+          [
+            input.principal.tenantId,
+            canonicalPackage.id,
+            input.principal.userId,
+            JSON.stringify({
+              searchId: primary.search_id,
+              sourceResultIds: selectedRowIds,
+              sources: rows.map((row) => row.source_key),
+              matchSignals: duplicateSignals,
+              canonicalPackageKey: canonicalPackage.package_key,
+            }),
+          ],
+        );
+        await client.query("COMMIT");
+
+        created.push({
+          packageId: canonicalPackage.id,
+          packageKey: canonicalPackage.package_key,
+          title: primary.title,
+          mergedSources: [...new Set(rows.map((row) => row.source_key))],
+          duplicateMerged: true,
+          duplicateSignals,
+        });
+        continue;
+      } catch (error) {
+        await client.query("ROLLBACK");
+        throw error;
+      } finally {
+        client.release();
+      }
+    }
+
     const packageKey = packageKeyFor(primary);
     const packageFolder = path.join(
-      evidenceRoot(),
+      /* turbopackIgnore: true */ evidenceRoot(),
       safeSegment(input.principal.tenantKey),
       packageKey,
     );
@@ -189,6 +375,42 @@ export async function createEvidencePackagesFromSearch(input: {
       );
 
       const packageId = packageResult.rows[0].id;
+
+      for (const row of rows) {
+        await client.query(
+          `
+            INSERT INTO literature_package_sources (
+              tenant_id, package_id, search_result_id, source_key,
+              source_record_id, pmid, doi, landing_url
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            ON CONFLICT (tenant_id, package_id, source_key, source_record_id)
+            DO NOTHING
+          `,
+          [
+            input.principal.tenantId,
+            packageId,
+            row.id,
+            row.source_key,
+            row.source_record_id,
+            row.pmid,
+            row.doi,
+            row.landing_url,
+          ],
+        );
+        await client.query(
+          `
+            INSERT INTO duplicate_assessments (
+              tenant_id, candidate_result_id, canonical_package_id,
+              classification, confidence, match_signals
+            )
+            VALUES ($1, $2, $3, 'unique', 0, '[]'::jsonb)
+            ON CONFLICT (tenant_id, candidate_result_id)
+            DO NOTHING
+          `,
+          [input.principal.tenantId, row.id, packageId],
+        );
+      }
 
       await client.query(
         `
@@ -306,11 +528,14 @@ export async function createEvidencePackagesFromSearch(input: {
         created_by: input.principal.email,
       };
 
-      await writeJson(path.join(packageFolder, "metadata.json"), metadata);
+      await writeJson(
+        evidenceFilePath(packageFolder, "metadata.json"),
+        metadata,
+      );
       const resolvedProduct =
         primary.match_metadata?.resolvedProduct || {};
 
-      await writeJson(path.join(packageFolder, "products.json"), {
+      await writeJson(evidenceFilePath(packageFolder, "products.json"), {
         products:
           resolvedProduct &&
           typeof resolvedProduct === "object" &&
@@ -324,7 +549,7 @@ export async function createEvidencePackagesFromSearch(input: {
       });
 
       await writeJson(
-        path.join(packageFolder, "active_configuration.json"),
+        evidenceFilePath(packageFolder, "active_configuration.json"),
         {
           snapshot: snapshotPayload,
           product_master: active.productMaster?.payload || null,
@@ -338,22 +563,25 @@ export async function createEvidencePackagesFromSearch(input: {
           outcome_template: active.outcomeTemplate?.payload || null,
         },
       );
-      await writeJson(path.join(packageFolder, "workflow_state.json"), {
-        status: "NEW",
-        package_id: packageKey,
-        origin: "AD_HOC_GLOBAL_SEARCH",
-        updated_at: new Date().toISOString(),
-        history: [
-          {
-            timestamp: new Date().toISOString(),
-            from_status: null,
-            to_status: "NEW",
-            reason:
-              "Evidence Package created from RBAC-controlled Ad Hoc Global Search.",
-            actor: input.principal.email,
-          },
-        ],
-      });
+      await writeJson(
+        evidenceFilePath(packageFolder, "workflow_state.json"),
+        {
+          status: "NEW",
+          package_id: packageKey,
+          origin: "AD_HOC_GLOBAL_SEARCH",
+          updated_at: new Date().toISOString(),
+          history: [
+            {
+              timestamp: new Date().toISOString(),
+              from_status: null,
+              to_status: "NEW",
+              reason:
+                "Evidence Package created from RBAC-controlled Ad Hoc Global Search.",
+              actor: input.principal.email,
+            },
+          ],
+        },
+      );
 
       await client.query(
         `
@@ -397,6 +625,8 @@ export async function createEvidencePackagesFromSearch(input: {
         packageKey,
         title: primary.title,
         mergedSources: [...new Set(rows.map((row) => row.source_key))],
+        duplicateMerged: false,
+        duplicateSignals: [],
       });
     } catch (error) {
       await client.query("ROLLBACK");

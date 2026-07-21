@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   PromptStatus,
   PromptTemplate,
@@ -64,9 +65,7 @@ export default function PromptDashboard() {
     await loadPrompts();
   }
 
-  useEffect(() => {
-    void loadPrompts();
-  }, []);
+  useDeferredLoad(loadPrompts);
 
   const status = data?.status;
   const prompts = data?.prompts ?? [];

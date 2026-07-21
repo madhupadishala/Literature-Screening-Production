@@ -1,12 +1,15 @@
-import { NextResponse } from "next/server";
-import { runRoute } from "@/lib/enterprise/api-response";
+import { type NextRequest, NextResponse } from "next/server";
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { getDatabaseReadiness } from "@/lib/enterprise/database-readiness";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export async function GET(request: Request): Promise<Response> {
-  return runRoute(request, async () => {
+export async function GET(request: NextRequest): Promise<Response> {
+  try {
+    await requirePermission(request, PERMISSIONS.RELIABILITY_VIEW);
     const report = await getDatabaseReadiness();
     const connected = report.connectivityVerified;
     const releaseReady = report.status === "healthy";
@@ -32,5 +35,7 @@ export async function GET(request: Request): Promise<Response> {
         headers: { "cache-control": "no-store, max-age=0" },
       },
     );
-  });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }

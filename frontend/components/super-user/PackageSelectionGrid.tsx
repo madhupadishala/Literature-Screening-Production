@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import BulkActionBar from "./BulkActionBar";
 import BulkCommentModal from "./BulkCommentModal";
 import styles from "./super-user.module.css";
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   BulkPackage,
   BulkPackageAction,
@@ -45,9 +46,7 @@ export default function PackageSelectionGrid({
     }
   }
 
-  useEffect(() => {
-    loadPackages();
-  }, [tenantId]);
+  useDeferredLoad(loadPackages, tenantId);
 
   const filteredPackages = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();

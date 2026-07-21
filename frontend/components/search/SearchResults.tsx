@@ -19,7 +19,7 @@ export default function SearchResults({
         <div>
           <h2 className="text-xl font-semibold">Search Results</h2>
           <p className="mt-1 text-sm text-gray-500">
-            {response.totalResults} result(s) for "{response.query}"
+            {response.totalResults} result(s) for &ldquo;{response.query}&rdquo;
           </p>
         </div>
 

@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
 // Adjust this base path to point to your data packages directory
 const PACKAGES_DIR = path.join(process.cwd(), "..", "data", "packages");
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     try {
       await fs.access(PACKAGES_DIR);
@@ -63,9 +63,14 @@ export async function GET(request: NextRequest) {
       success: true,
       packages: packagesSummaryList,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Failed to compile package inventory.";
+
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to compile package inventory." },
+      { success: false, error: message },
       { status: 500 }
     );
   }

@@ -93,7 +93,7 @@ export async function GET(request: NextRequest): Promise<Response> {
       }
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Nexus Timeline API Exception]:", error);
     return NextResponse.json(
       { 

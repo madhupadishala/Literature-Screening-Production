@@ -25,7 +25,13 @@ function safeSegment(value: string): string {
 
 function getStorageRoot(): string {
   const configured = process.env.CONFIG_UPLOAD_ROOT?.trim();
-  if (configured) return path.resolve(configured);
+  if (configured) {
+    if (!path.isAbsolute(configured)) {
+      throw new Error("CONFIG_UPLOAD_ROOT must be an absolute path.");
+    }
+
+    return path.normalize(configured);
+  }
 
   const environment =
     process.env.APP_ENVIRONMENT?.trim().toLowerCase() ||
@@ -63,7 +69,10 @@ export async function storeConfigurationUpload(input: {
     `${sha256.slice(0, 16)}-${filename}`,
   );
 
-  const absolutePath = path.join(getStorageRoot(), relativePath);
+  const absolutePath = path.join(
+    /* turbopackIgnore: true */ getStorageRoot(),
+    relativePath,
+  );
   await mkdir(path.dirname(absolutePath), { recursive: true });
   await writeFile(absolutePath, buffer);
 
@@ -89,7 +98,10 @@ export async function quarantineConfigurationUpload(input: {
     path.basename(input.stored.absolutePath),
   );
 
-  const quarantinePath = path.join(getStorageRoot(), quarantineRelative);
+  const quarantinePath = path.join(
+    /* turbopackIgnore: true */ getStorageRoot(),
+    quarantineRelative,
+  );
   await mkdir(path.dirname(quarantinePath), { recursive: true });
   await rename(input.stored.absolutePath, quarantinePath);
 

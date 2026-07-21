@@ -1,185 +1,192 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import Navigation from "@/components/Navigation";
 import WorkflowDashboard from "@/components/workflow/WorkflowDashboard";
 import type { WorkflowPackage } from "@/components/workflow/WorkflowTable";
 
 export default function HomePage() {
   const router = useRouter();
-
   const [packages, setPackages] = useState<WorkflowPackage[]>([]);
   const [loading, setLoading] = useState(true);
-  const [toast, setToast] = useState("");
+  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    loadPackages();
-  }, []);
-
-  async function loadPackages() {
+  const loadPackages = useCallback(async () => {
+    setLoading(true);
+    setMessage("");
     try {
-      setLoading(true);
-
-      const response = await fetch("/api/workflow/list", {
-        cache: "no-store",
-      });
-
+      const response = await fetch("/api/workflow/list", { cache: "no-store" });
       const data = await response.json();
+      if (!response.ok) throw new Error(data?.error || "Dashboard data could not be loaded.");
       setPackages(Array.isArray(data) ? data : data.packages || []);
-    } catch {
-      showToast("Failed to load dashboard data.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Dashboard data could not be loaded.");
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
-  function openPackage(packageId: string) {
-    router.push(`/workflow/${encodeURIComponent(packageId)}`);
-  }
+  useEffect(() => {
+    const request = window.setTimeout(() => void loadPackages(), 0);
+    return () => window.clearTimeout(request);
+  }, [loadPackages]);
 
-  function showToast(message: string) {
-    setToast(message);
-    setTimeout(() => setToast(""), 3000);
-  }
+  const workflowSummary = useMemo(() => {
+    const values = packages.map((item) => String(item.status || "UNKNOWN"));
+    return {
+      total: packages.length,
+      active: values.filter((value) => !/COMPLETE|CREATED|EXCLUDED/.test(value)).length,
+      completed: values.filter((value) => /COMPLETE|CREATED/.test(value)).length,
+    };
+  }, [packages]);
 
   return (
-    <main className="app-shell">
-      <header className="topbar">
-        <div>
-          <div className="brand">ClinixAI</div>
-          <div className="subtitle">Literature Screening V1</div>
-        </div>
-
-        <div className="topbar-meta">
-          <span>Project: Demo</span>
-          <span>User: Madhu</span>
-          <span className="prod-badge">PROD</span>
-        </div>
-      </header>
-
+    <main className="app-shell" id="main-content">
       <Navigation />
+      <InvestorDemoHeader
+        eyebrow="LITERATURE OPERATIONS"
+        title="Literature Screening Command Center"
+        subtitle="A single governed view of enterprise search, evidence packages, AI-assisted Hits and Screening, human decisions, and traceable downstream outputs."
+        status="Operational"
+      />
 
-      <div className="page-actions">
-        <button onClick={loadPackages}>Refresh Dashboard</button>
-        <button onClick={() => router.push("/workflow")}>Open Workflow Manager</button>
-      </div>
+      <section className="quick-actions" aria-label="Primary actions">
+        <div>
+          <span>Current workspace</span>
+          <strong>
+            {workflowSummary.total} packages · {workflowSummary.active} active ·{" "}
+            {workflowSummary.completed} completed
+          </strong>
+        </div>
+        <div className="actions">
+          <button
+            type="button"
+            className="secondary"
+            disabled={loading}
+            onClick={() => void loadPackages()}
+          >
+            {loading ? "Refreshing…" : "Refresh"}
+          </button>
+          <button type="button" onClick={() => router.push("/literature-search")}>
+            Start Literature Search
+          </button>
+          <button type="button" onClick={() => router.push("/workflow")}>
+            Open Workflow Manager
+          </button>
+        </div>
+      </section>
+
+      {message && (
+        <div className="error" role="alert">
+          <strong>Dashboard unavailable</strong>
+          <span>{message}</span>
+          <button type="button" onClick={() => void loadPackages()}>
+            Retry
+          </button>
+        </div>
+      )}
 
       <WorkflowDashboard
         packages={packages}
         loading={loading}
-        onOpenPackage={openPackage}
+        onOpenPackage={(packageId) => router.push(`/workflow/${encodeURIComponent(packageId)}`)}
       />
-
-      {toast && <div className="toast">{toast}</div>}
 
       <style jsx>{`
         .app-shell {
           min-height: 100vh;
-          background: #f4f7fb;
           padding: 24px;
           color: #0f172a;
-          font-family: Arial, Helvetica, sans-serif;
+          background: #eef2f7;
+          font-family: "Poppins", Arial, sans-serif;
         }
-
-        .topbar {
-          background: linear-gradient(135deg, #071b34, #123f68);
-          color: #ffffff;
-          border-radius: 20px;
-          padding: 24px 28px;
+        .quick-actions {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+          gap: 16px;
+          margin-bottom: 14px;
+          padding: 14px 16px;
+          border: 1px solid #cbd5e1;
+          border-radius: 6px;
+          background: #fff;
+          box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
         }
-
-        .brand {
-          font-size: 30px;
+        .quick-actions span {
+          display: block;
+          color: #64748b;
+          font-size: 8px;
           font-weight: 900;
-          letter-spacing: -0.5px;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
         }
-
-        .subtitle {
-          margin-top: 6px;
-          color: #cfe7ff;
-          font-size: 14px;
+        .quick-actions strong {
+          display: block;
+          margin-top: 4px;
+          font-size: 11px;
         }
-
-        .topbar-meta {
+        .actions {
           display: flex;
-          gap: 12px;
-          align-items: center;
-          font-size: 13px;
-        }
-
-        .topbar-meta span {
-          background: rgba(255, 255, 255, 0.12);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          padding: 8px 10px;
-          border-radius: 999px;
-        }
-
-        .prod-badge {
-          font-weight: 900;
-        }
-
-        .page-actions {
-          display: flex;
+          flex-wrap: wrap;
           justify-content: flex-end;
-          gap: 12px;
-          margin-bottom: 18px;
+          gap: 8px;
         }
-
-        .page-actions button {
-          border: none;
-          border-radius: 12px;
-          background: #185a9d;
-          color: #ffffff;
-          padding: 11px 16px;
+        button {
+          min-height: 38px;
+          border: 0;
+          border-radius: 6px;
+          padding: 9px 12px;
+          color: #fff;
+          background: #185abd;
+          font: inherit;
+          font-size: 9px;
+          font-weight: 900;
           cursor: pointer;
-          font-weight: 800;
         }
-
-        .page-actions button:first-child {
-          background: #ffffff;
-          color: #185a9d;
-          border: 1px solid #dbe4ef;
+        button.secondary {
+          border: 1px solid #cbd5e1;
+          color: #334155;
+          background: #fff;
         }
-
-        .toast {
-          position: fixed;
-          right: 24px;
-          bottom: 24px;
-          background: #0f172a;
-          color: #ffffff;
-          padding: 14px 18px;
-          border-radius: 14px;
-          box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);
-          font-weight: 700;
-          z-index: 50;
+        button:disabled {
+          opacity: 0.55;
         }
-
-        @media (max-width: 900px) {
-          .topbar {
-            flex-direction: column;
+        .error {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 14px;
+          padding: 12px 14px;
+          border: 1px solid #fecaca;
+          border-radius: 6px;
+          color: #991b1b;
+          background: #fef2f2;
+          font-size: 10px;
+        }
+        .error span {
+          flex: 1;
+        }
+        .error button {
+          background: #991b1b;
+        }
+        @media (max-width: 800px) {
+          .quick-actions {
             align-items: flex-start;
-            gap: 16px;
+            flex-direction: column;
           }
-
-          .topbar-meta {
-            flex-wrap: wrap;
-          }
-
-          .page-actions {
+          .actions {
             justify-content: flex-start;
-            flex-wrap: wrap;
           }
         }
-
         @media (max-width: 700px) {
           .app-shell {
             padding: 12px;
+          }
+          .actions button {
+            flex: 1 1 140px;
           }
         }
       `}</style>

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   PubMedSearchResponse,
   PubMedStatus,
@@ -57,9 +58,7 @@ export default function PubMedSearchPanel() {
     await loadSearches();
   }
 
-  useEffect(() => {
-    void loadSearches();
-  }, []);
+  useDeferredLoad(loadSearches);
 
   const status = data?.status;
   const searches = data?.searches ?? [];

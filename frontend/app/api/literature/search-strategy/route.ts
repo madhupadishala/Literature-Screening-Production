@@ -40,7 +40,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const strategy = searchStrategyEngine.build(body);
+    const strategy = await searchStrategyEngine.build(body);
 
     const queryParts = [
       ...body.productNames,
@@ -48,11 +48,9 @@ export async function POST(request: Request) {
       ...(body.exclusionTerms ?? []).map((term) => `NOT ${term}`),
     ];
 
-    // Cast to any to safely allow the check for dynamic or custom searchQuery properties
-    const strategyAny = strategy as any;
     const searchQuery =
-      strategyAny.searchQuery && strategyAny.searchQuery.trim().length > 0
-        ? strategyAny.searchQuery
+      strategy.query.trim().length > 0
+        ? strategy.query
         : queryParts.join(" AND ");
 
     return NextResponse.json(

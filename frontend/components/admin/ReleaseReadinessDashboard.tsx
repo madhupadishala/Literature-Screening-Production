@@ -92,8 +92,11 @@ export default function ReleaseReadinessDashboard(): React.ReactElement {
   const [notes, setNotes] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    setToken(window.sessionStorage.getItem("clinix-release-token") || "");
-    setOperator(window.sessionStorage.getItem("clinix-release-operator") || "release-operator");
+    const request = window.setTimeout(() => {
+      setToken(window.sessionStorage.getItem("clinix-release-token") || "");
+      setOperator(window.sessionStorage.getItem("clinix-release-operator") || "release-operator");
+    }, 0);
+    return () => window.clearTimeout(request);
   }, []);
 
   const headers = useCallback(
@@ -118,14 +121,17 @@ export default function ReleaseReadinessDashboard(): React.ReactElement {
       }
       setReport(payload.data);
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : "Release readiness is unavailable.");
+      setError(
+        loadError instanceof Error ? loadError.message : "Release readiness is unavailable.",
+      );
     } finally {
       setLoading(false);
     }
   }, [headers]);
 
   useEffect(() => {
-    void load();
+    const request = window.setTimeout(() => void load(), 0);
+    return () => window.clearTimeout(request);
   }, [load]);
 
   const latestEvidence = useMemo(
@@ -203,32 +209,46 @@ export default function ReleaseReadinessDashboard(): React.ReactElement {
           <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <Metric label="Release status" value={report.ready ? "READY" : "BLOCKED"} />
             <Metric label="Version" value={report.manifest.version} />
-            <Metric label="UAT passed" value={`${report.uat.mandatoryPassed}/${report.uat.mandatoryTotal}`} />
-            <Metric label="Smoke suite" value={report.smoke ? (report.smoke.passed ? "PASSED" : "FAILED") : "PENDING"} />
+            <Metric
+              label="UAT passed"
+              value={`${report.uat.mandatoryPassed}/${report.uat.mandatoryTotal}`}
+            />
+            <Metric
+              label="Smoke suite"
+              value={report.smoke ? (report.smoke.passed ? "PASSED" : "FAILED") : "PENDING"}
+            />
           </section>
 
           <section className="rounded-xl border bg-white p-6 shadow-sm">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <h2 className="text-lg font-semibold text-slate-950">Release identity</h2>
-                <p className="mt-1 text-sm text-slate-500">{report.manifest.architectureBoundary}</p>
+                <p className="mt-1 text-sm text-slate-500">
+                  {report.manifest.architectureBoundary}
+                </p>
               </div>
               <div className="flex flex-wrap gap-2">
                 <ActionButton
                   disabled={Boolean(working)}
-                  onClick={() => action("Automated UAT", "/api/release/uat/run", { executedBy: operator })}
+                  onClick={() =>
+                    action("Automated UAT", "/api/release/uat/run", { executedBy: operator })
+                  }
                 >
                   {working === "Automated UAT" ? "Running…" : "Run automated UAT"}
                 </ActionButton>
                 <ActionButton
                   disabled={Boolean(working)}
-                  onClick={() => action("Smoke suite", "/api/release/smoke", { executedBy: operator })}
+                  onClick={() =>
+                    action("Smoke suite", "/api/release/smoke", { executedBy: operator })
+                  }
                 >
                   {working === "Smoke suite" ? "Running…" : "Run smoke suite"}
                 </ActionButton>
                 <ActionButton
                   disabled={Boolean(working) || !report.ready}
-                  onClick={() => action("Release candidate", "/api/release/candidate", { createdBy: operator })}
+                  onClick={() =>
+                    action("Release candidate", "/api/release/candidate", { createdBy: operator })
+                  }
                 >
                   {working === "Release candidate" ? "Creating…" : "Create release candidate"}
                 </ActionButton>
@@ -257,7 +277,9 @@ export default function ReleaseReadinessDashboard(): React.ReactElement {
                   {report.gates.map((gate) => (
                     <tr key={gate.id}>
                       <td className="px-3 py-3 font-medium text-slate-900">{gate.title}</td>
-                      <td className="px-3 py-3"><StatusBadge status={gate.status} /></td>
+                      <td className="px-3 py-3">
+                        <StatusBadge status={gate.status} />
+                      </td>
                       <td className="px-3 py-3 text-slate-600">{gate.message}</td>
                     </tr>
                   ))}
@@ -272,55 +294,77 @@ export default function ReleaseReadinessDashboard(): React.ReactElement {
               Record governed evidence for each mandatory Literature Screening acceptance scenario.
             </p>
             <div className="mt-5 space-y-4">
-              {report.uat.scenarios.filter((scenario) => scenario.mode === "manual").map((scenario) => {
-                const evidence = latestEvidence.get(scenario.id);
-                return (
-                  <div key={scenario.id} className="rounded-lg border p-4">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div>
-                        <p className="font-semibold text-slate-900">{scenario.id} · {scenario.title}</p>
-                        <p className="mt-1 text-sm text-slate-600">{scenario.description}</p>
-                      </div>
-                      <StatusBadge status={evidence?.outcome === "passed" ? "passed" : evidence?.outcome === "failed" ? "failed" : "pending"} />
-                    </div>
-                    <ul className="mt-3 list-disc space-y-1 pl-5 text-xs text-slate-500">
-                      {scenario.acceptanceCriteria.map((criterion) => <li key={criterion}>{criterion}</li>)}
-                    </ul>
-                    <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto_auto_auto] md:items-end">
-                      <label className="text-xs font-medium text-slate-600">
-                        Evidence notes
-                        <input
-                          value={notes[scenario.id] || ""}
-                          onChange={(event: { target: { value: string } }) => setNotes((current) => ({ ...current, [scenario.id]: event.target.value }))}
-                          placeholder="Test package, observations, evidence location"
-                          className="mt-1 block w-full rounded-lg border px-3 py-2 text-sm font-normal"
+              {report.uat.scenarios
+                .filter((scenario) => scenario.mode === "manual")
+                .map((scenario) => {
+                  const evidence = latestEvidence.get(scenario.id);
+                  return (
+                    <div key={scenario.id} className="rounded-lg border p-4">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                          <p className="font-semibold text-slate-900">
+                            {scenario.id} · {scenario.title}
+                          </p>
+                          <p className="mt-1 text-sm text-slate-600">{scenario.description}</p>
+                        </div>
+                        <StatusBadge
+                          status={
+                            evidence?.outcome === "passed"
+                              ? "passed"
+                              : evidence?.outcome === "failed"
+                                ? "failed"
+                                : "pending"
+                          }
                         />
-                      </label>
-                      {(["passed", "failed", "blocked"] as EvidenceOutcome[]).map((outcome) => (
-                        <button
-                          key={outcome}
-                          type="button"
-                          disabled={Boolean(working)}
-                          onClick={() => action(`UAT ${scenario.id}`, "/api/release/uat/evidence", {
-                            scenarioId: scenario.id,
-                            outcome,
-                            executedBy: operator,
-                            notes: notes[scenario.id],
-                          })}
-                          className="rounded-lg border px-3 py-2 text-xs font-semibold capitalize text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-                        >
-                          {outcome}
-                        </button>
-                      ))}
+                      </div>
+                      <ul className="mt-3 list-disc space-y-1 pl-5 text-xs text-slate-500">
+                        {scenario.acceptanceCriteria.map((criterion) => (
+                          <li key={criterion}>{criterion}</li>
+                        ))}
+                      </ul>
+                      <div className="mt-4 grid gap-3 md:grid-cols-[1fr_auto_auto_auto] md:items-end">
+                        <label className="text-xs font-medium text-slate-600">
+                          Evidence notes
+                          <input
+                            value={notes[scenario.id] || ""}
+                            onChange={(event: { target: { value: string } }) =>
+                              setNotes((current) => ({
+                                ...current,
+                                [scenario.id]: event.target.value,
+                              }))
+                            }
+                            placeholder="Test package, observations, evidence location"
+                            className="mt-1 block w-full rounded-lg border px-3 py-2 text-sm font-normal"
+                          />
+                        </label>
+                        {(["passed", "failed", "blocked"] as EvidenceOutcome[]).map((outcome) => (
+                          <button
+                            key={outcome}
+                            type="button"
+                            disabled={Boolean(working)}
+                            onClick={() =>
+                              action(`UAT ${scenario.id}`, "/api/release/uat/evidence", {
+                                scenarioId: scenario.id,
+                                outcome,
+                                executedBy: operator,
+                                notes: notes[scenario.id],
+                              })
+                            }
+                            className="rounded-lg border px-3 py-2 text-xs font-semibold capitalize text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                          >
+                            {outcome}
+                          </button>
+                        ))}
+                      </div>
+                      {evidence ? (
+                        <p className="mt-3 text-xs text-slate-500">
+                          Latest: {evidence.outcome} by {evidence.executedBy} on{" "}
+                          {new Date(evidence.executedAt).toLocaleString()}
+                        </p>
+                      ) : null}
                     </div>
-                    {evidence ? (
-                      <p className="mt-3 text-xs text-slate-500">
-                        Latest: {evidence.outcome} by {evidence.executedBy} on {new Date(evidence.executedAt).toLocaleString()}
-                      </p>
-                    ) : null}
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </section>
 
@@ -328,10 +372,15 @@ export default function ReleaseReadinessDashboard(): React.ReactElement {
             <h2 className="text-lg font-semibold text-slate-950">Release checklist</h2>
             <div className="mt-4 space-y-3">
               {report.checklist.map((item) => (
-                <div key={item.id} className="grid gap-3 rounded-lg border p-4 md:grid-cols-[1fr_auto] md:items-center">
+                <div
+                  key={item.id}
+                  className="grid gap-3 rounded-lg border p-4 md:grid-cols-[1fr_auto] md:items-center"
+                >
                   <div>
                     <p className="font-medium text-slate-900">{item.title}</p>
-                    <p className="mt-1 text-sm text-slate-500">{item.description} Owner: {item.ownerRole}.</p>
+                    <p className="mt-1 text-sm text-slate-500">
+                      {item.description} Owner: {item.ownerRole}.
+                    </p>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
                     <StatusBadge status={item.status} />
@@ -340,11 +389,13 @@ export default function ReleaseReadinessDashboard(): React.ReactElement {
                         key={status}
                         type="button"
                         disabled={Boolean(working)}
-                        onClick={() => action(`Checklist ${item.id}`, "/api/release/checklist", {
-                          id: item.id,
-                          status,
-                          updatedBy: operator,
-                        })}
+                        onClick={() =>
+                          action(`Checklist ${item.id}`, "/api/release/checklist", {
+                            id: item.id,
+                            status,
+                            updatedBy: operator,
+                          })
+                        }
                         className="rounded-md border px-2.5 py-1.5 text-xs font-semibold capitalize text-slate-700 hover:bg-slate-50 disabled:opacity-50"
                       >
                         {status}
@@ -361,9 +412,17 @@ export default function ReleaseReadinessDashboard(): React.ReactElement {
             {report.candidates.length ? (
               <div className="mt-4 space-y-2">
                 {report.candidates.map((candidate) => (
-                  <div key={candidate.id} className="flex flex-wrap justify-between gap-3 rounded-lg border p-3 text-sm">
-                    <span className="font-medium text-slate-900">{candidate.id} · v{candidate.version}</span>
-                    <span className="text-slate-500">{candidate.buildSha} · {candidate.createdBy} · {new Date(candidate.createdAt).toLocaleString()}</span>
+                  <div
+                    key={candidate.id}
+                    className="flex flex-wrap justify-between gap-3 rounded-lg border p-3 text-sm"
+                  >
+                    <span className="font-medium text-slate-900">
+                      {candidate.id} · v{candidate.version}
+                    </span>
+                    <span className="text-slate-500">
+                      {candidate.buildSha} · {candidate.createdBy} ·{" "}
+                      {new Date(candidate.createdAt).toLocaleString()}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -404,7 +463,11 @@ function StatusBadge({ status }: { status: GateStatus }): React.ReactElement {
         : status === "waived"
           ? "bg-blue-100 text-blue-800"
           : "bg-amber-100 text-amber-800";
-  return <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${classes}`}>{status}</span>;
+  return (
+    <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${classes}`}>
+      {status}
+    </span>
+  );
 }
 
 function ActionButton({

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type { VectorStoreStatus } from "@/lib/platform/vector/vector-types";
 
 interface VectorApiResponse {
@@ -36,9 +37,7 @@ export default function VectorDashboard() {
     setStatus(result.status);
   }
 
-  useEffect(() => {
-    void loadStatus();
-  }, []);
+  useDeferredLoad(loadStatus);
 
   return (
     <section className="space-y-6">

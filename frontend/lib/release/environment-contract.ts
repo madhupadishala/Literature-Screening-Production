@@ -1,10 +1,7 @@
 import { getAiProviderConfiguration } from "../enterprise/ai-provider-config";
 import { getRuntimeConfig } from "../enterprise/environment";
 import { getReleaseConfig } from "./release-config";
-import type {
-  EnvironmentContractItem,
-  EnvironmentContractReport,
-} from "./types";
+import type { EnvironmentContractItem, EnvironmentContractReport } from "./types";
 
 export function validateReleaseEnvironment(): EnvironmentContractReport {
   const runtime = getRuntimeConfig();
@@ -13,17 +10,16 @@ export function validateReleaseEnvironment(): EnvironmentContractReport {
   const nodeMajor = Number.parseInt(process.versions.node.split(".")[0] || "0", 10);
   const ai = getAiProviderConfiguration();
   const databaseConfigured = Boolean(process.env.DATABASE_URL?.trim());
+  const databaseSslMode = process.env.DATABASE_SSL_MODE?.trim().toLowerCase() || "disable";
+  const demoPrincipalDisabled = process.env.ALLOW_DEMO_PRINCIPAL?.trim().toLowerCase() !== "true";
   const knowledgeConfigured = Boolean(
     process.env.KNOWLEDGE_ROOT?.trim() ||
-      (process.env.KNOWLEDGE_SERVICE_URL?.trim() &&
-        process.env.KNOWLEDGE_HEALTH_URL?.trim()),
+    (process.env.KNOWLEDGE_SERVICE_URL?.trim() && process.env.KNOWLEDGE_HEALTH_URL?.trim()),
   );
   const evidenceConfigured = Boolean(
     process.env.EVIDENCE_STORE_ROOT?.trim() ||
-      (process.env.EVIDENCE_STORE_URL?.trim() &&
-        process.env.EVIDENCE_HEALTH_URL?.trim()) ||
-      (process.env.EVIDENCE_STORE_BACKEND?.trim().toLowerCase() === "database" &&
-        databaseConfigured),
+    (process.env.EVIDENCE_STORE_URL?.trim() && process.env.EVIDENCE_HEALTH_URL?.trim()) ||
+    (process.env.EVIDENCE_STORE_BACKEND?.trim().toLowerCase() === "database" && databaseConfigured),
   );
 
   const items: EnvironmentContractItem[] = [
@@ -71,6 +67,22 @@ export function validateReleaseEnvironment(): EnvironmentContractReport {
       databaseConfigured
         ? "PostgreSQL DATABASE_URL is configured; live connectivity and migrations are enforced by the dependency-health gate."
         : "DATABASE_URL is required in production.",
+    ),
+    item(
+      "database-transport-security",
+      !production || databaseSslMode !== "disable",
+      production,
+      databaseSslMode === "disable"
+        ? "DATABASE_SSL_MODE disables transport security."
+        : `Database transport uses ${databaseSslMode} mode.`,
+    ),
+    item(
+      "demo-principal-disabled",
+      !production || demoPrincipalDisabled,
+      production,
+      demoPrincipalDisabled
+        ? "Demo principal fallback is disabled."
+        : "ALLOW_DEMO_PRINCIPAL must be false in production.",
     ),
     item(
       "database-evidence-source",

@@ -11,7 +11,7 @@ export async function GET() {
       "demo-tenant"
     );
 
-    const rows: any[] = [];
+    const rows: Array<Record<string, unknown>> = [];
 
     if (!fs.existsSync(evidenceRoot)) {
       return NextResponse.json(rows);

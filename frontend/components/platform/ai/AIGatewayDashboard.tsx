@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   AICompletionResponse,
   AIGatewayStatus,
@@ -64,9 +66,7 @@ export default function AIGatewayDashboard() {
     await loadGateway();
   }
 
-  useEffect(() => {
-    void loadGateway();
-  }, []);
+  useDeferredLoad(loadGateway);
 
   const status = data?.status;
   const history = data?.history ?? [];

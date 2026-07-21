@@ -1,103 +1,46 @@
 "use client";
 
 import { useState } from "react";
+
+import type { AuditSearchFilters, AuditSeverity } from "@/lib/audit/audit-types";
+
 import styles from "./audit.module.css";
-import type {
-  AuditAction,
-  AuditModule,
-  AuditSearchFilters,
-  AuditSeverity,
-} from "@/lib/audit/audit-types";
 
-type AuditSearchPanelProps = {
+export default function AuditSearchPanel({
+  initialFilters,
+  loading,
+  onSearch,
+}: {
+  initialFilters: AuditSearchFilters;
+  loading: boolean;
   onSearch: (filters: AuditSearchFilters) => void;
-};
+}) {
+  const [filters, setFilters] = useState(initialFilters);
 
-const modules: Array<AuditModule | "ALL"> = [
-  "ALL",
-  "LITERATURE",
-  "MICC",
-  "REGULATORY",
-  "CLINICAL_TRIAL",
-  "LEGAL",
-  "SOCIAL_MEDIA",
-  "ADMIN",
-  "SYSTEM",
-];
-
-const actions: Array<AuditAction | "ALL"> = [
-  "ALL",
-  "CREATED",
-  "UPDATED",
-  "DELETED",
-  "VIEWED",
-  "ASSIGNED",
-  "REASSIGNED",
-  "LOCKED",
-  "UNLOCKED",
-  "ROUTED",
-  "ROUTED_BACK",
-  "OVERRIDDEN",
-  "APPROVED",
-  "REJECTED",
-  "EXPORTED",
-  "LOGIN",
-  "LOGOUT",
-  "SYSTEM_EVENT",
-];
-
-const severities: Array<AuditSeverity | "ALL"> = [
-  "ALL",
-  "INFO",
-  "WARNING",
-  "CRITICAL",
-];
-
-export default function AuditSearchPanel({ onSearch }: AuditSearchPanelProps) {
-  const [filters, setFilters] = useState<AuditSearchFilters>({
-    module: "ALL",
-    action: "ALL",
-    severity: "ALL",
-    tenantId: "TENANT-CLINIXAI",
-  });
-
-  function updateFilter<K extends keyof AuditSearchFilters>(
-    key: K,
-    value: AuditSearchFilters[K],
-  ) {
-    setFilters((current) => ({
-      ...current,
-      [key]: value,
-    }));
-  }
-
-  function submitSearch() {
-    onSearch(filters);
-  }
-
-  function resetSearch() {
-    const defaultFilters: AuditSearchFilters = {
-      module: "ALL",
-      action: "ALL",
-      severity: "ALL",
-      tenantId: "TENANT-CLINIXAI",
-    };
-
-    setFilters(defaultFilters);
-    onSearch(defaultFilters);
+  function update<K extends keyof AuditSearchFilters>(key: K, value: AuditSearchFilters[K]) {
+    setFilters((current) => ({ ...current, [key]: value }));
   }
 
   return (
     <section className={styles.searchPanel}>
       <div className={styles.panelHeader}>
         <div>
-          <p>Enterprise Audit Framework</p>
+          <p>Append-only enterprise ledger</p>
           <h2>Audit Search</h2>
         </div>
-
         <div className={styles.panelActions}>
-          <button onClick={resetSearch}>Reset</button>
-          <button onClick={submitSearch}>Search</button>
+          <button
+            type="button"
+            onClick={() => {
+              setFilters({ severity: "ALL" });
+              onSearch({ severity: "ALL" });
+            }}
+          >
+            Reset
+          </button>
+          <button type="button" disabled={loading} onClick={() => onSearch(filters)}>
+            {loading ? "Searching…" : "Search"}
+          </button>
         </div>
       </div>
 
@@ -105,116 +48,77 @@ export default function AuditSearchPanel({ onSearch }: AuditSearchPanelProps) {
         <label>
           Search
           <input
-            value={filters.search ?? ""}
-            onChange={(event) => updateFilter("search", event.target.value)}
-            placeholder="Search title, entity, user or description..."
+            value={filters.search || ""}
+            onChange={(event) => update("search", event.target.value)}
+            placeholder="Event, actor, package or details"
           />
         </label>
-
         <label>
-          Package ID
+          Package ID / Key
           <input
-            value={filters.packageId ?? ""}
-            onChange={(event) => updateFilter("packageId", event.target.value)}
-            placeholder="PKG-LIT-2026-0001"
+            value={filters.packageId || ""}
+            onChange={(event) => update("packageId", event.target.value)}
+            placeholder="UUID or package key"
           />
         </label>
-
         <label>
-          User ID
+          Event Category
           <input
-            value={filters.userId ?? ""}
-            onChange={(event) => updateFilter("userId", event.target.value)}
-            placeholder="USR-000"
+            value={filters.eventCategory || ""}
+            onChange={(event) => update("eventCategory", event.target.value.toUpperCase())}
+            placeholder="LITERATURE_SCREENING"
           />
         </label>
-
         <label>
-          Tenant ID
+          Event Type
           <input
-            value={filters.tenantId ?? ""}
-            onChange={(event) => updateFilter("tenantId", event.target.value)}
-            placeholder="TENANT-CLINIXAI"
+            value={filters.eventType || ""}
+            onChange={(event) => update("eventType", event.target.value.toUpperCase())}
+            placeholder="SCREENING_REVIEW_SAVED"
           />
         </label>
-
         <label>
-          Module
-          <select
-            value={filters.module ?? "ALL"}
-            onChange={(event) =>
-              updateFilter("module", event.target.value as AuditModule | "ALL")
-            }
-          >
-            {modules.map((module) => (
-              <option key={module} value={module}>
-                {module}
-              </option>
-            ))}
-          </select>
+          Outcome
+          <input
+            value={filters.outcome || ""}
+            onChange={(event) => update("outcome", event.target.value)}
+            placeholder="success"
+          />
         </label>
-
         <label>
-          Action
-          <select
-            value={filters.action ?? "ALL"}
-            onChange={(event) =>
-              updateFilter("action", event.target.value as AuditAction | "ALL")
-            }
-          >
-            {actions.map((action) => (
-              <option key={action} value={action}>
-                {action}
-              </option>
-            ))}
-          </select>
+          Actor ID
+          <input
+            value={filters.actorId || ""}
+            onChange={(event) => update("actorId", event.target.value)}
+            placeholder="User UUID"
+          />
         </label>
-
         <label>
           Severity
           <select
-            value={filters.severity ?? "ALL"}
-            onChange={(event) =>
-              updateFilter(
-                "severity",
-                event.target.value as AuditSeverity | "ALL",
-              )
-            }
+            value={filters.severity || "ALL"}
+            onChange={(event) => update("severity", event.target.value as AuditSeverity | "ALL")}
           >
-            {severities.map((severity) => (
-              <option key={severity} value={severity}>
-                {severity}
-              </option>
-            ))}
+            <option value="ALL">All</option>
+            <option value="INFO">Information</option>
+            <option value="WARNING">Warning</option>
+            <option value="CRITICAL">Critical</option>
           </select>
         </label>
-
-        <label>
-          Workflow Stage
-          <input
-            value={filters.workflowStage ?? ""}
-            onChange={(event) =>
-              updateFilter("workflowStage", event.target.value)
-            }
-            placeholder="SCREENING / QC / LOCKED"
-          />
-        </label>
-
         <label>
           Date From
           <input
             type="date"
-            value={filters.dateFrom ?? ""}
-            onChange={(event) => updateFilter("dateFrom", event.target.value)}
+            value={filters.dateFrom || ""}
+            onChange={(event) => update("dateFrom", event.target.value)}
           />
         </label>
-
         <label>
           Date To
           <input
             type="date"
-            value={filters.dateTo ?? ""}
-            onChange={(event) => updateFilter("dateTo", event.target.value)}
+            value={filters.dateTo || ""}
+            onChange={(event) => update("dateTo", event.target.value)}
           />
         </label>
       </div>

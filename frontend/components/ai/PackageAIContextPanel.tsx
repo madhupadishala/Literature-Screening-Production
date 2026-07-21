@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function PackageAIContextPanel() {
-  const [context, setContext] = useState<any>(null);
+  const [context, setContext] = useState<unknown>(null);
 
   async function loadContext() {
     const response = await fetch("/api/ai/package-context", {
@@ -17,9 +17,13 @@ export default function PackageAIContextPanel() {
       }),
     });
 
-    const data = await response.json();
+    const data: unknown = await response.json();
 
-    setContext(data.context);
+    setContext(
+      typeof data === "object" && data !== null && "context" in data
+        ? data.context
+        : null,
+    );
   }
 
   return (
@@ -30,7 +34,7 @@ export default function PackageAIContextPanel() {
         Build Evidence Package
       </button>
 
-      {context && (
+      {context !== null && (
         <pre
           style={{
             marginTop: 20,

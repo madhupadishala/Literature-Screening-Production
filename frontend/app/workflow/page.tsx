@@ -1,15 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import Navigation from "@/components/Navigation";
 import WorkflowToolbar from "@/components/workflow/WorkflowToolbar";
 import WorkflowMetrics from "@/components/workflow/WorkflowMetrics";
-import WorkflowTable, {
-  type WorkflowPackage,
-} from "@/components/workflow/WorkflowTable";
+import WorkflowTable, { type WorkflowPackage } from "@/components/workflow/WorkflowTable";
 import WorkflowPagination from "@/components/workflow/WorkflowPagination";
 
 const PAGE_SIZE_DEFAULT = 10;
@@ -37,9 +35,29 @@ export default function WorkflowPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(PAGE_SIZE_DEFAULT);
 
-  useEffect(() => {
-    void loadPackages();
+  const showToast = useCallback((message: string) => {
+    setToast(message);
+    window.setTimeout(() => setToast(""), 3000);
   }, []);
+
+  const loadPackages = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/workflow/list", { cache: "no-store" });
+      if (!response.ok) throw new Error(`Workflow API returned HTTP ${response.status}.`);
+      const data = await response.json();
+      setPackages(Array.isArray(data) ? data : data.packages || []);
+    } catch {
+      showToast("Unable to load evidence packages.");
+    } finally {
+      setLoading(false);
+    }
+  }, [showToast]);
+
+  useEffect(() => {
+    const request = window.setTimeout(() => void loadPackages(), 0);
+    return () => window.clearTimeout(request);
+  }, [loadPackages]);
 
   useEffect(() => {
     if (!autoRefresh) return;
@@ -49,11 +67,7 @@ export default function WorkflowPage() {
     }, 30000);
 
     return () => window.clearInterval(interval);
-  }, [autoRefresh]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, statusFilter, sortBy, pageSize]);
+  }, [autoRefresh, loadPackages]);
 
   const metrics = useMemo(() => {
     return {
@@ -62,14 +76,8 @@ export default function WorkflowPage() {
       pending: packages.filter((item) => item.status !== "INTAKE_INPUT_CREATED").length,
       running: packages.filter((item) => item.status.includes("RUNNING")).length,
       hits: packages.reduce((sum, item) => sum + Number(item.hits_count || 0), 0),
-      screening: packages.reduce(
-        (sum, item) => sum + Number(item.screening_count || 0),
-        0,
-      ),
-      output: packages.reduce(
-        (sum, item) => sum + Number(item.intake_input_count || 0),
-        0,
-      ),
+      screening: packages.reduce((sum, item) => sum + Number(item.screening_count || 0), 0),
+      output: packages.reduce((sum, item) => sum + Number(item.intake_input_count || 0), 0),
     };
   }, [packages]);
 
@@ -79,13 +87,9 @@ export default function WorkflowPage() {
 
     if (query) {
       result = result.filter((item) =>
-        [
-          item.package_id,
-          item.pmid,
-          item.title,
-          item.status,
-          item.updated_at,
-        ].some((value) => normalize(value).includes(query)),
+        [item.package_id, item.pmid, item.title, item.status, item.updated_at].some((value) =>
+          normalize(value).includes(query),
+        ),
       );
     }
 
@@ -128,24 +132,6 @@ export default function WorkflowPage() {
   const startItem = filteredPackages.length === 0 ? 0 : startIndex + 1;
   const endItem = Math.min(endIndex, filteredPackages.length);
 
-  async function loadPackages() {
-    try {
-      setLoading(true);
-
-      const response = await fetch("/api/workflow/list", { cache: "no-store" });
-      if (!response.ok) {
-        throw new Error(`Workflow API returned HTTP ${response.status}.`);
-      }
-
-      const data = await response.json();
-      setPackages(Array.isArray(data) ? data : data.packages || []);
-    } catch {
-      showToast("Unable to load evidence packages.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   async function runWorkflow(packageId: string) {
     try {
       setRunningPackage(packageId);
@@ -187,9 +173,7 @@ export default function WorkflowPage() {
   }
 
   function handleRunWorkflow(packageId: string) {
-    const selectedPackage = packages.find(
-      (item) => item.package_id === packageId,
-    );
+    const selectedPackage = packages.find((item) => item.package_id === packageId);
 
     if (!selectedPackage) {
       showToast("Evidence package not found.");
@@ -211,28 +195,20 @@ export default function WorkflowPage() {
     setCurrentPage(1);
   }
 
-  function showToast(message: string) {
-    setToast(message);
-    window.setTimeout(() => setToast(""), 3000);
-  }
-
   return (
     <main className="app-shell">
+      <Navigation />
       <InvestorDemoHeader
         title="Literature Workflow Control Center"
         subtitle="Track every evidence package through product-aware Hits, medically governed Screening, human review and a traceable downstream output."
       />
-
-      <Navigation />
 
       <section className="scope-strip">
         <div>
           <span>Controlled boundary</span>
           <strong>Evidence → Hits → Screening → Downstream Output</strong>
         </div>
-        <p>
-          Case processing and submission are outside this Literature workspace.
-        </p>
+        <p>Case processing and submission are outside this Literature workspace.</p>
       </section>
 
       <WorkflowToolbar
@@ -242,9 +218,18 @@ export default function WorkflowPage() {
         autoRefresh={autoRefresh}
         resultCount={filteredPackages.length}
         totalCount={packages.length}
-        onSearchChange={setSearchTerm}
-        onStatusChange={setStatusFilter}
-        onSortChange={setSortBy}
+        onSearchChange={(value) => {
+          setSearchTerm(value);
+          setCurrentPage(1);
+        }}
+        onStatusChange={(value) => {
+          setStatusFilter(value);
+          setCurrentPage(1);
+        }}
+        onSortChange={(value) => {
+          setSortBy(value);
+          setCurrentPage(1);
+        }}
         onAutoRefreshChange={setAutoRefresh}
         onRefresh={loadPackages}
         onClearFilters={clearFilters}
@@ -292,7 +277,10 @@ export default function WorkflowPage() {
           startItem={startItem}
           endItem={endItem}
           onPageChange={setCurrentPage}
-          onPageSizeChange={setPageSize}
+          onPageSizeChange={(value) => {
+            setPageSize(value);
+            setCurrentPage(1);
+          }}
         />
       </section>
 
@@ -304,8 +292,7 @@ export default function WorkflowPage() {
           padding: 24px;
           color: #0f172a;
           background:
-            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%),
-            #f4f7fb;
+            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%), #f4f7fb;
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 

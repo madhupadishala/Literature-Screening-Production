@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 
 type ResourceType =
   | "PRODUCT_MASTER"
@@ -194,15 +196,6 @@ export default function TenantConfigurationConsole() {
     DEFAULT_JSON.PRODUCT_MASTER,
   );
 
-  useEffect(() => {
-    void loadConfiguration();
-  }, []);
-
-  useEffect(() => {
-    setJsonPayload(DEFAULT_JSON[activeType]);
-    setFile(null);
-  }, [activeType]);
-
   async function loadConfiguration() {
     setLoading(true);
     try {
@@ -234,6 +227,8 @@ export default function TenantConfigurationConsole() {
     }
   }
 
+  useDeferredLoad(loadConfiguration);
+
   const visibleVersions = useMemo(
     () => versions.filter((version) => version.resourceType === activeType),
     [versions, activeType],
@@ -242,6 +237,8 @@ export default function TenantConfigurationConsole() {
   function selectResource(type: ResourceType) {
     setActiveType(type);
     setActiveView("CONFIGURATION");
+    setJsonPayload(DEFAULT_JSON[type]);
+    setFile(null);
   }
 
   async function uploadConfiguration() {

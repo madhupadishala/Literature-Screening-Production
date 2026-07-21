@@ -44,6 +44,23 @@ interface MonitoringSummary {
   security: {
     retainedEvents: number;
   };
+  operations: {
+    available: boolean;
+    auditEvents24h: number;
+    failures24h: number;
+    authorizationDenials24h: number;
+    packagesTotal: number;
+    workflowStates: Record<string, number>;
+    recentIncidents: Array<{
+      id: string;
+      eventType: string;
+      eventCategory: string;
+      outcome: string;
+      occurredAt: string;
+      packageKey?: string;
+      details: Record<string, unknown>;
+    }>;
+  };
   generatedAt: string;
 }
 
@@ -80,9 +97,12 @@ export default function ReliabilityDashboard(): React.ReactElement {
   }, []);
 
   useEffect(() => {
-    void load();
+    const initial = window.setTimeout(() => void load(), 0);
     const timer = window.setInterval(() => void load(), 15_000);
-    return () => window.clearInterval(timer);
+    return () => {
+      window.clearTimeout(initial);
+      window.clearInterval(timer);
+    };
   }, [load]);
 
   if (loading) {
@@ -108,9 +128,7 @@ export default function ReliabilityDashboard(): React.ReactElement {
   const memoryPercentage =
     summary.process.memoryBytes.heapTotal > 0
       ? Math.round(
-          (summary.process.memoryBytes.heapUsed /
-            summary.process.memoryBytes.heapTotal) *
-            100,
+          (summary.process.memoryBytes.heapUsed / summary.process.memoryBytes.heapTotal) * 100,
         )
       : 0;
 
@@ -121,6 +139,16 @@ export default function ReliabilityDashboard(): React.ReactElement {
         <MetricCard label="Uptime" value={formatDuration(summary.process.uptimeSeconds)} />
         <MetricCard label="Heap utilization" value={`${memoryPercentage}%`} />
         <MetricCard label="Security events" value={String(summary.security.retainedEvents)} />
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <MetricCard label="Tenant packages" value={String(summary.operations.packagesTotal)} />
+        <MetricCard label="Audit events · 24h" value={String(summary.operations.auditEvents24h)} />
+        <MetricCard label="Failures · 24h" value={String(summary.operations.failures24h)} />
+        <MetricCard
+          label="Access denials · 24h"
+          value={String(summary.operations.authorizationDenials24h)}
+        />
       </section>
 
       <section className="rounded-xl border bg-white p-6 shadow-sm">
@@ -193,6 +221,52 @@ export default function ReliabilityDashboard(): React.ReactElement {
         />
       </section>
 
+      <section className="grid gap-4 lg:grid-cols-2">
+        <InfoPanel
+          title="Workflow state distribution"
+          rows={
+            Object.entries(summary.operations.workflowStates).length
+              ? Object.entries(summary.operations.workflowStates)
+                  .sort(([left], [right]) => left.localeCompare(right))
+                  .map(([state, count]) => [state, String(count)])
+              : [
+                  [
+                    "Status",
+                    summary.operations.available
+                      ? "No active workflow packages."
+                      : "Operational database telemetry unavailable.",
+                  ],
+                ]
+          }
+        />
+        <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-slate-950">Recent operational incidents</h2>
+          <div className="mt-4 divide-y divide-slate-100">
+            {summary.operations.recentIncidents.length ? (
+              summary.operations.recentIncidents.map((incident) => (
+                <article key={incident.id} className="py-3 text-sm">
+                  <div className="flex items-start justify-between gap-3">
+                    <strong className="text-slate-900">{incident.eventType}</strong>
+                    <StatusBadge status="unhealthy" />
+                  </div>
+                  <p className="mt-1 text-slate-600">
+                    {incident.eventCategory} · {incident.outcome}
+                    {incident.packageKey ? ` · ${incident.packageKey}` : ""}
+                  </p>
+                  <small className="mt-1 block text-slate-400">
+                    {new Date(incident.occurredAt).toLocaleString()}
+                  </small>
+                </article>
+              ))
+            ) : (
+              <p className="py-3 text-sm text-slate-500">
+                No recent failure or access-denial events.
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
       <p className="text-right text-xs text-slate-400">
         Last refreshed {new Date(summary.generatedAt).toLocaleString()}
       </p>
@@ -224,13 +298,7 @@ function StatusBadge({ status }: { status: HealthStatus }): React.ReactElement {
   );
 }
 
-function InfoPanel({
-  title,
-  rows,
-}: {
-  title: string;
-  rows: string[][];
-}): React.ReactElement {
+function InfoPanel({ title, rows }: { title: string; rows: string[][] }): React.ReactElement {
   return (
     <div className="rounded-xl border bg-white p-6 shadow-sm">
       <h2 className="text-lg font-semibold text-slate-950">{title}</h2>

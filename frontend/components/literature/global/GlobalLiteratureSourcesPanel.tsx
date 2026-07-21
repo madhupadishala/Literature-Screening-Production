@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   LiteratureRoutingResult,
   LiteratureSourceStatus,
@@ -64,9 +65,7 @@ export default function GlobalLiteratureSourcesPanel() {
     });
   }
 
-  useEffect(() => {
-    void loadSources();
-  }, []);
+  useDeferredLoad(loadSources);
 
   const status = data?.status;
   const sources = data?.result.sources ?? [];

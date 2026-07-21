@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   SearchStrategyResult,
   SearchStrategyStatus,
@@ -71,9 +72,7 @@ export default function SearchStrategyBuilder() {
     await loadStrategies();
   }
 
-  useEffect(() => {
-    void loadStrategies();
-  }, []);
+  useDeferredLoad(loadStrategies);
 
   const status = data?.status;
   const strategies = data?.strategies ?? [];

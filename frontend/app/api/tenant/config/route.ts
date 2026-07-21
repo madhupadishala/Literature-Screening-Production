@@ -8,10 +8,7 @@ import {
   upsertTenant,
 } from "@/lib/tenant/tenant-store";
 
-import type {
-  TenantConfigUpdateRequest,
-  TenantConfiguration,
-} from "@/lib/tenant/tenant-types";
+import type { TenantConfigUpdateRequest } from "@/lib/tenant/tenant-types";
 
 /**
  * ------------------------------------------------------------------

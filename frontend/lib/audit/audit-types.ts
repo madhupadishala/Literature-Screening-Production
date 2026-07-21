@@ -1,87 +1,42 @@
-export type AuditModule =
-  | "LITERATURE"
-  | "MICC"
-  | "REGULATORY"
-  | "CLINICAL_TRIAL"
-  | "LEGAL"
-  | "SOCIAL_MEDIA"
-  | "ADMIN"
-  | "SYSTEM";
-
-export type AuditEntityType =
-  | "PACKAGE"
-  | "ARTICLE"
-  | "USER"
-  | "TENANT"
-  | "WORKFLOW"
-  | "PRODUCT"
-  | "KNOWLEDGE"
-  | "SESSION"
-  | "CONFIGURATION";
-
 export type AuditSeverity = "INFO" | "WARNING" | "CRITICAL";
 
-export type AuditAction =
-  | "CREATED"
-  | "UPDATED"
-  | "DELETED"
-  | "VIEWED"
-  | "ASSIGNED"
-  | "REASSIGNED"
-  | "LOCKED"
-  | "UNLOCKED"
-  | "ROUTED"
-  | "ROUTED_BACK"
-  | "OVERRIDDEN"
-  | "APPROVED"
-  | "REJECTED"
-  | "EXPORTED"
-  | "LOGIN"
-  | "LOGOUT"
-  | "SYSTEM_EVENT";
-
-export type AuditUser = {
-  id: string;
+export interface AuditUser {
+  id?: string;
   name: string;
   role: string;
-  tenantId: string;
-};
+}
 
-export type AuditRecord = {
+export interface AuditRecord {
   id: string;
-  module: AuditModule;
-  entityType: AuditEntityType;
-  entityId: string;
-  packageId?: string;
-  action: AuditAction;
+  eventType: string;
+  eventCategory: string;
+  outcome: string;
   severity: AuditSeverity;
-  title: string;
-  description: string;
+  packageId?: string;
+  packageKey?: string;
   performedBy: AuditUser;
   performedAt: string;
-  workflowStage?: string;
-  previousValue?: string;
-  newValue?: string;
+  requestId?: string;
+  correlationId?: string;
   ipAddress?: string;
-  userAgent?: string;
-};
+  details: Record<string, unknown>;
+}
 
-export type AuditSearchFilters = {
+export interface AuditSearchFilters {
   packageId?: string;
-  userId?: string;
-  tenantId?: string;
-  module?: AuditModule | "ALL";
-  action?: AuditAction | "ALL";
+  actorId?: string;
+  eventType?: string;
+  eventCategory?: string;
+  outcome?: string;
   severity?: AuditSeverity | "ALL";
-  workflowStage?: string;
   dateFrom?: string;
   dateTo?: string;
   search?: string;
-};
+}
 
-export type AuditSearchResult = {
+export interface AuditSearchResult {
   total: number;
   page: number;
   pageSize: number;
   records: AuditRecord[];
-};
+}

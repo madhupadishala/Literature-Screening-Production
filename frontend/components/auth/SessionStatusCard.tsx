@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type { SessionResponse } from "@/lib/auth/auth-types";
 
 function formatDate(value?: string) {
@@ -30,9 +31,7 @@ export default function SessionStatusCard() {
     }
   }
 
-  useEffect(() => {
-    void loadSession();
-  }, []);
+  useDeferredLoad(loadSession);
 
   const session = data?.session;
 

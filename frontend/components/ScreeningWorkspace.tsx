@@ -13,6 +13,8 @@ type ScreeningArticle = {
   primary_author: string;
   hits_status: string;
   screening_status: string;
+  intake_status: string;
+  intake_export_id?: string;
   evidence_sentence: string;
   company_suspect_drugs: string[];
   active_mah: string;
@@ -46,6 +48,7 @@ type Props = {
   onExclude: (reason: string) => void;
   onSave: (reason: string) => void;
   onRerunAI: (reason: string) => void;
+  onGenerateIntakeInput: (reason: string) => void;
 };
 
 const tabs = [
@@ -79,10 +82,11 @@ export default function ScreeningWorkspace({
   onExclude,
   onSave,
   onRerunAI,
+  onGenerateIntakeInput,
 }: Props) {
   const [modal, setModal] = useState<null | {
     title: string;
-    action: "approve" | "exclude" | "save" | "rerun";
+    action: "approve" | "exclude" | "save" | "rerun" | "generate";
   }>(null);
 
   function submitReason(reason: string) {
@@ -92,6 +96,7 @@ export default function ScreeningWorkspace({
     if (modal.action === "exclude") onExclude(reason);
     if (modal.action === "save") onSave(reason);
     if (modal.action === "rerun") onRerunAI(reason);
+    if (modal.action === "generate") onGenerateIntakeInput(reason);
 
     setModal(null);
   }
@@ -114,7 +119,8 @@ export default function ScreeningWorkspace({
         </header>
 
         <div className="boundary-note">
-          Approval generates the governed downstream file <strong>intake_input.json</strong>.
+          Approval finalizes the governed Screening decision. The downstream
+          <strong> intake_input.json</strong> is generated only by the separate next-stage action.
           No Intake workspace exists inside Literature Intelligence.
         </div>
 
@@ -134,7 +140,10 @@ export default function ScreeningWorkspace({
         <div className="drawer-body">
           {activeTab === "Overview" && (
             <Section title="Review Overview">
-              <Row label="QC Requirement" value={article.qc_required ? "Required" : "Not required"} />
+              <Row
+                label="QC Requirement"
+                value={article.qc_required ? "Required" : "Not required"}
+              />
               <Row label="Journal" value={article.journal} />
               <Row label="Publication Date" value={article.publication_date} />
               <Row label="Country of Interest" value={article.country_of_interest} />
@@ -154,15 +163,12 @@ export default function ScreeningWorkspace({
               <Row label="Company Suspect Drugs" value={list(article.company_suspect_drugs)} />
               <Row label="Active MAH" value={article.active_mah} />
               <Row label="Co-suspect Drugs" value={list(article.co_suspect_drugs)} />
-              <Row
-                label="Concomitant Medications"
-                value={list(article.concomitant_medications)}
-              />
+              <Row label="Concomitant Medications" value={list(article.concomitant_medications)} />
               <Row label="Treatment Medications" value={list(article.treatment_medications)} />
               <p className="support-note">
-                Product identity, company-suspect status and active MAH are assessed here.
-                Dose, indication, action taken and detailed chronology belong to downstream
-                case processing.
+                Product identity, company-suspect status and active MAH are assessed here. Dose,
+                indication, action taken and detailed chronology belong to downstream case
+                processing.
               </p>
             </Section>
           )}
@@ -174,7 +180,10 @@ export default function ScreeningWorkspace({
               <Row label="Event Severity" value={article.event_severity} />
               <Row label="Seriousness" value={article.seriousness} />
               <Row label="Patient Safety Information" value={article.patient_safety} />
-              <Row label="Patient Identification / PII" value={article.patient_identification_pii} />
+              <Row
+                label="Patient Identification / PII"
+                value={article.patient_identification_pii}
+              />
             </Section>
           )}
 
@@ -185,8 +194,8 @@ export default function ScreeningWorkspace({
               <Row label="Active MAH" value={article.active_mah} />
               <Row label="Screening Decision" value={article.screening_decision} />
               <p className="support-note">
-                Literature Intelligence records the evidence and screening decision.
-                Booking and downstream case review occur outside this workspace.
+                Literature Intelligence records the evidence and screening decision. Booking and
+                downstream case review occur outside this workspace.
               </p>
             </Section>
           )}
@@ -239,54 +248,81 @@ export default function ScreeningWorkspace({
         </div>
 
         <footer className="actions">
-          <button
-            type="button"
-            onClick={() =>
-              setModal({
-                title: "Reason required to exclude this screening result",
-                action: "exclude",
-              })
-            }
-          >
-            Exclude
-          </button>
+          {article.screening_status === "completed" && article.screening_decision === "INCLUDE" && (
+            <button
+              type="button"
+              className="primary-action"
+              onClick={() => {
+                if (article.intake_export_id) {
+                  window.location.assign(
+                    `/api/literature/intake-input/${article.intake_export_id}`,
+                  );
+                  return;
+                }
+                setModal({
+                  title: "Reason required to generate governed intake_input.json",
+                  action: "generate",
+                });
+              }}
+            >
+              {article.intake_export_id
+                ? "Download intake_input.json"
+                : "Generate intake_input.json"}
+            </button>
+          )}
 
-          <button
-            type="button"
-            onClick={() =>
-              setModal({
-                title: "Reason required to save this screening review",
-                action: "save",
-              })
-            }
-          >
-            Save Review
-          </button>
+          {article.screening_status !== "completed" && (
+            <>
+              <button
+                type="button"
+                onClick={() =>
+                  setModal({
+                    title: "Reason required to exclude this screening result",
+                    action: "exclude",
+                  })
+                }
+              >
+                Exclude
+              </button>
 
-          <button
-            type="button"
-            onClick={() =>
-              setModal({
-                title: "Reason required to re-run Screening AI",
-                action: "rerun",
-              })
-            }
-          >
-            Re-run AI
-          </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setModal({
+                    title: "Reason required to save this screening review",
+                    action: "save",
+                  })
+                }
+              >
+                Save Review
+              </button>
 
-          <button
-            type="button"
-            className="primary-action"
-            onClick={() =>
-              setModal({
-                title: "Reason required to generate the downstream output",
-                action: "approve",
-              })
-            }
-          >
-            Generate Downstream Output
-          </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setModal({
+                    title: "Reason required to re-run Screening AI",
+                    action: "rerun",
+                  })
+                }
+              >
+                Re-run AI
+              </button>
+
+              <button
+                type="button"
+                className="primary-action"
+                onClick={() =>
+                  setModal({
+                    title: "Reason required to approve the Screening decision",
+                    action: "approve",
+                  })
+                }
+              >
+                Approve Screening
+              </button>
+            </>
+          )}
         </footer>
 
         {modal && (
@@ -449,13 +485,7 @@ export default function ScreeningWorkspace({
   );
 }
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="review-section">
       <h3>{title}</h3>

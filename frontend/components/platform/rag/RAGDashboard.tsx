@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   RAGResponse,
   RAGStatus,
@@ -72,9 +73,7 @@ export default function RAGDashboard() {
     await loadDashboard();
   }
 
-  useEffect(() => {
-    void loadDashboard();
-  }, []);
+  useDeferredLoad(loadDashboard);
 
   const status = data?.status;
   const history = data?.history ?? [];

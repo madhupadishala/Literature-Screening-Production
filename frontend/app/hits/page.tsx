@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import Navigation from "@/components/Navigation";
+import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import AdHocSearchWorkspace from "@/components/literature/AdHocSearchWorkspace";
 
 // Enhanced type definition to track review workflow outcomes
 type HitRecord = {
   hit_id: string;
+  hits_result_id: string;
+  database_package_id: string;
   package_id: string;
+  result_version: number;
   pmid: string;
   title: string;
   journal: string;
@@ -24,14 +28,24 @@ type HitRecord = {
   pii_present: boolean;
   confidence_score: number;
   qc_required: boolean;
+  duplicate_detected: boolean;
+  duplicate_source_count: number;
+  duplicate_confidence: number;
+  duplicate_signals: string[];
   evidence_sentence: string;
   ai_summary: string;
   review_status: "pending" | "approved" | "dismissed" | "flagged"; // Added workflow state tracking
+  review_version: number;
+  review_comments?: string;
 };
 
 type SortConfig = {
   key: keyof HitRecord;
   direction: "asc" | "desc";
+};
+
+type IncomingHitRecord = Partial<HitRecord> & {
+  qc_flags?: unknown[];
 };
 
 function text(value: unknown, fallback = "—") {
@@ -46,10 +60,21 @@ function percent(value: number) {
   return `${Math.round(value * 100)}%`;
 }
 
-function normalizeHit(raw: any, packageId: string): HitRecord {
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function normalizeHit(rawInput: unknown, packageId: string): HitRecord {
+  const raw = (isRecord(rawInput) ? rawInput : {}) as IncomingHitRecord;
+
   return {
-    hit_id: raw.hit_id || `${packageId}-${raw.pmid || Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+    hit_id:
+      raw.hit_id ||
+      `${packageId}-${raw.pmid || Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+    hits_result_id: raw.hits_result_id || raw.hit_id || "",
+    database_package_id: raw.database_package_id || "",
     package_id: packageId,
+    result_version: Number(raw.result_version || 1),
     pmid: raw.pmid || "—",
     title: raw.title || "—",
     journal: raw.journal || "—",
@@ -66,9 +91,17 @@ function normalizeHit(raw: any, packageId: string): HitRecord {
     pii_present: Boolean(raw.pii_present),
     confidence_score: Number(raw.confidence_score || 0),
     qc_required: Boolean(raw.qc_required || raw.qc_flags?.length),
+    duplicate_detected: Boolean(raw.duplicate_detected),
+    duplicate_source_count: Number(raw.duplicate_source_count || 0),
+    duplicate_confidence: Number(raw.duplicate_confidence || 0),
+    duplicate_signals: Array.isArray(raw.duplicate_signals)
+      ? raw.duplicate_signals.filter((signal): signal is string => typeof signal === "string")
+      : [],
     evidence_sentence: raw.evidence_sentence || "—",
     ai_summary: raw.ai_summary || "—",
     review_status: raw.review_status || "pending", // Set sensible operational default
+    review_version: Number(raw.review_version || 0),
+    review_comments: raw.review_comments || "",
   };
 }
 
@@ -78,10 +111,14 @@ export default function HitsReviewPage() {
   const [search, setSearch] = useState("");
   const [selectedHit, setSelectedHit] = useState<HitRecord | null>(null);
   const [toast, setToast] = useState("");
-  
+  const [decisionReason, setDecisionReason] = useState("");
+  const [savingDecision, setSavingDecision] = useState(false);
+
   // Worklist Quick Filters state
-  const [activeTab, setActiveTab] = useState<"all" | "pending_qc" | "approved" | "dismissed" | "flagged">("all");
-  
+  const [activeTab, setActiveTab] = useState<
+    "all" | "pending_qc" | "approved" | "dismissed" | "flagged"
+  >("all");
+
   // Interactive sorting state configuration (Defaulting to descending confidence)
   const [sortConfig, setSortConfig] = useState<SortConfig | null>({
     key: "confidence_score",
@@ -90,43 +127,28 @@ export default function HitsReviewPage() {
 
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    loadHits();
-    return () => {
-      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
-    };
+  const showToast = useCallback((message: string) => {
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    setToast(message);
+    toastTimeoutRef.current = setTimeout(() => setToast(""), 3000);
   }, []);
 
-  async function loadHits() {
+  const loadHits = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/workflow/list", { cache: "no-store" });
-      if (!response.ok) throw new Error("Failed to fetch packages list");
-      
-      const packages = await response.json();
-      const items = Array.isArray(packages) ? packages : packages.packages || [];
-      const validItems = items.filter((item: any) => item && item.package_id);
-
-      const packagePromises = validItems.map(async (item: any) => {
-        try {
-          const packageResponse = await fetch(
-            `/api/workflow/package/${encodeURIComponent(item.package_id)}`,
-            { cache: "no-store" }
-          );
-          if (!packageResponse.ok) return [];
-
-          const packageData = await packageResponse.json();
-          const packageHits = packageData?.hits_output?.hits || [];
-
-          return packageHits.map((hit: any) => normalizeHit(hit, item.package_id));
-        } catch (err) {
-          console.error(`Isolating failure for package: ${item.package_id}`, err);
-          return [];
-        }
+      const response = await fetch("/api/literature/hits?limit=500", {
+        cache: "no-store",
       });
+      if (!response.ok) throw new Error("Failed to fetch the Hits review worklist.");
 
-      const resolvedHitsArrays = await Promise.all(packagePromises);
-      setHits(resolvedHitsArrays.flat());
+      const payload = await response.json();
+      const records = Array.isArray(payload?.data?.hits) ? payload.data.hits : [];
+      setHits(
+        records.map((hit: unknown) => {
+          const packageId = isRecord(hit) ? text(hit.package_id, "") : "";
+          return normalizeHit(hit, packageId);
+        }),
+      );
     } catch (error) {
       console.error(error);
       showToast("Failed to load hits review records.");
@@ -134,34 +156,60 @@ export default function HitsReviewPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [showToast]);
 
-  // Updates item status locally and hooks into mock/real backend mutations
+  useEffect(() => {
+    const initialLoad = window.setTimeout(() => void loadHits(), 0);
+    return () => {
+      window.clearTimeout(initialLoad);
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    };
+  }, [loadHits]);
+
   async function updateHitStatus(hitId: string, newStatus: HitRecord["review_status"]) {
-    // 1. Instantly update UI locally for fluid responsiveness
-    setHits((prevHits) =>
-      prevHits.map((h) => (h.hit_id === hitId ? { ...h, review_status: newStatus } : h))
-    );
-    
-    // Sync active sidebar item text details synchronously
-    if (selectedHit && selectedHit.hit_id === hitId) {
-      setSelectedHit((prev) => prev ? { ...prev, review_status: newStatus } : null);
-    }
-
-    showToast(`Hit item successfully updated to ${newStatus.toUpperCase()}`);
-
-    // 2. Network Sync Hook: (Uncomment and structure path variables when endpoint is activated)
-    /*
     try {
-      await fetch(`/api/workflow/hit/${hitId}/status`, {
+      if (!selectedHit || selectedHit.hit_id !== hitId) return;
+      if (
+        (newStatus === "flagged" || newStatus === "dismissed") &&
+        decisionReason.trim().length < 3
+      ) {
+        showToast("Enter a review reason before flagging or dismissing this Hit.");
+        return;
+      }
+
+      setSavingDecision(true);
+      const response = await fetch("/api/literature/hits/review", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus })
+        body: JSON.stringify({
+          packageId: selectedHit.database_package_id,
+          hitsResultId: selectedHit.hits_result_id,
+          status: newStatus,
+          comments: decisionReason.trim() || undefined,
+          expectedVersion: selectedHit.review_version,
+        }),
       });
-    } catch (e) {
-      console.error("Backend failed to retain workflow action mutation state", e);
+      const payload = await response.json();
+      if (!response.ok || !payload?.success) {
+        throw new Error(payload?.error || "Failed to save Hits review decision.");
+      }
+
+      const reviewVersion = Number(payload.data.reviewVersion);
+      const updated = {
+        ...selectedHit,
+        review_status: newStatus,
+        review_version: reviewVersion,
+        review_comments: decisionReason.trim(),
+      };
+      setHits((current) => current.map((hit) => (hit.hit_id === hitId ? updated : hit)));
+      setSelectedHit(updated);
+      setDecisionReason("");
+      showToast(`Hit review saved as ${newStatus.toUpperCase()}.`);
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : "Failed to save Hits review decision.");
+    } finally {
+      setSavingDecision(false);
     }
-    */
   }
 
   // Sorting controller logic triggered via table column interactions
@@ -189,13 +237,20 @@ export default function HitsReviewPage() {
     if (q) {
       output = output.filter((hit) =>
         [
-          hit.package_id, hit.pmid, hit.title, hit.product_name,
-          hit.normalized_identity, hit.matched_term, hit.country_of_interest,
-          hit.author_country, hit.journal, hit.ai_summary,
+          hit.package_id,
+          hit.pmid,
+          hit.title,
+          hit.product_name,
+          hit.normalized_identity,
+          hit.matched_term,
+          hit.country_of_interest,
+          hit.author_country,
+          hit.journal,
+          hit.ai_summary,
         ]
           .join(" ")
           .toLowerCase()
-          .includes(q)
+          .includes(q),
       );
     }
 
@@ -206,10 +261,10 @@ export default function HitsReviewPage() {
         const valueB = b[sortConfig.key];
 
         if (valueA === valueB) return 0;
-        
+
         // Ensure string safety or type fallback handling
-        const cleanA = typeof valueA === "string" ? valueA.toLowerCase() : valueA;
-        const cleanB = typeof valueB === "string" ? valueB.toLowerCase() : valueB;
+        const cleanA = typeof valueA === "string" ? valueA.toLowerCase() : (valueA ?? "");
+        const cleanB = typeof valueB === "string" ? valueB.toLowerCase() : (valueB ?? "");
 
         if (cleanA < cleanB) return sortConfig.direction === "asc" ? -1 : 1;
         if (cleanA > cleanB) return sortConfig.direction === "asc" ? 1 : -1;
@@ -228,17 +283,9 @@ export default function HitsReviewPage() {
       processed: hits.filter((h) => h.review_status !== "pending").length,
       piiPresent: hits.filter((h) => h.pii_present).length,
       avgConfidence:
-        hits.length > 0
-          ? hits.reduce((sum, h) => sum + h.confidence_score, 0) / hits.length
-          : 0,
+        hits.length > 0 ? hits.reduce((sum, h) => sum + h.confidence_score, 0) / hits.length : 0,
     };
   }, [hits]);
-
-  function showToast(message: string) {
-    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
-    setToast(message);
-    toastTimeoutRef.current = setTimeout(() => setToast(""), 3000);
-  }
 
   // Helper template renderer providing intuitive down/up chevron cues for text headers
   const getSortIcon = (columnKey: keyof HitRecord) => {
@@ -248,27 +295,23 @@ export default function HitsReviewPage() {
 
   return (
     <main className="app-shell">
-      <section className="topbar">
-        <div>
-          <h1>ClinixAI</h1>
-          <p>Literature Hits Review Processor</p>
-        </div>
-
-        <div className="topbar-meta">
-          <span>Project: Demo</span>
-          <span>User: Madhu</span>
-          <strong>PROD</strong>
-        </div>
-      </section>
-
       <Navigation />
+      <InvestorDemoHeader
+        eyebrow="HUMAN-GOVERNED EVIDENCE REVIEW"
+        title="Literature Hits Review"
+        subtitle="Verify product identity, safety signals, special situations, duplicates, and AI evidence before routing governed records to Screening."
+        status="QC Controlled"
+      />
 
       <details className="enterprise-search-shell" open>
         <summary>
           <div>
             <span>SEARCH &amp; ARTICLE INTAKE</span>
             <strong>Enterprise Literature Search</strong>
-            <small>PMID · DOI · Product identity · Company Product ID · Date range · Multi-database selection</small>
+            <small>
+              PMID · DOI · Product identity · Company Product ID · Date range · Multi-database
+              selection
+            </small>
           </div>
           <em>Open / Collapse</em>
         </summary>
@@ -309,17 +352,30 @@ export default function HitsReviewPage() {
         <button className={activeTab === "all" ? "active" : ""} onClick={() => setActiveTab("all")}>
           All Items ({hits.length})
         </button>
-        <button className={activeTab === "pending_qc" ? "active" : ""} onClick={() => setActiveTab("pending_qc")}>
-          Unresolved QC ({hits.filter(h => h.qc_required && h.review_status === "pending").length})
+        <button
+          className={activeTab === "pending_qc" ? "active" : ""}
+          onClick={() => setActiveTab("pending_qc")}
+        >
+          Unresolved QC ({hits.filter((h) => h.qc_required && h.review_status === "pending").length}
+          )
         </button>
-        <button className={activeTab === "approved" ? "active" : ""} onClick={() => setActiveTab("approved")}>
-          Approved ({hits.filter(h => h.review_status === "approved").length})
+        <button
+          className={activeTab === "approved" ? "active" : ""}
+          onClick={() => setActiveTab("approved")}
+        >
+          Approved ({hits.filter((h) => h.review_status === "approved").length})
         </button>
-        <button className={activeTab === "flagged" ? "active" : ""} onClick={() => setActiveTab("flagged")}>
-          Escalated ({hits.filter(h => h.review_status === "flagged").length})
+        <button
+          className={activeTab === "flagged" ? "active" : ""}
+          onClick={() => setActiveTab("flagged")}
+        >
+          Escalated ({hits.filter((h) => h.review_status === "flagged").length})
         </button>
-        <button className={activeTab === "dismissed" ? "active" : ""} onClick={() => setActiveTab("dismissed")}>
-          Dismissed ({hits.filter(h => h.review_status === "dismissed").length})
+        <button
+          className={activeTab === "dismissed" ? "active" : ""}
+          onClick={() => setActiveTab("dismissed")}
+        >
+          Dismissed ({hits.filter((h) => h.review_status === "dismissed").length})
         </button>
       </div>
 
@@ -353,25 +409,45 @@ export default function HitsReviewPage() {
           <table className="hits-table">
             <thead>
               <tr>
-                <th onClick={() => handleRequestSort("qc_required")} className="sortable">QC {getSortIcon("qc_required")}</th>
-                <th onClick={() => handleRequestSort("package_id")} className="sortable">Package {getSortIcon("package_id")}</th>
-                <th onClick={() => handleRequestSort("pmid")} className="sortable">PMID {getSortIcon("pmid")}</th>
-                <th onClick={() => handleRequestSort("product_name")} className="sortable">Product {getSortIcon("product_name")}</th>
-                <th onClick={() => handleRequestSort("matched_term")} className="sortable">Term Match {getSortIcon("matched_term")}</th>
-                <th onClick={() => handleRequestSort("country_of_interest")} className="sortable">Country {getSortIcon("country_of_interest")}</th>
+                <th onClick={() => handleRequestSort("qc_required")} className="sortable">
+                  QC {getSortIcon("qc_required")}
+                </th>
+                <th onClick={() => handleRequestSort("package_id")} className="sortable">
+                  Package {getSortIcon("package_id")}
+                </th>
+                <th onClick={() => handleRequestSort("pmid")} className="sortable">
+                  PMID {getSortIcon("pmid")}
+                </th>
+                <th onClick={() => handleRequestSort("product_name")} className="sortable">
+                  Product {getSortIcon("product_name")}
+                </th>
+                <th onClick={() => handleRequestSort("matched_term")} className="sortable">
+                  Term Match {getSortIcon("matched_term")}
+                </th>
+                <th onClick={() => handleRequestSort("country_of_interest")} className="sortable">
+                  Country {getSortIcon("country_of_interest")}
+                </th>
                 <th>Status</th>
-                <th onClick={() => handleRequestSort("confidence_score")} className="sortable">Confidence {getSortIcon("confidence_score")}</th>
+                <th onClick={() => handleRequestSort("confidence_score")} className="sortable">
+                  Confidence {getSortIcon("confidence_score")}
+                </th>
                 <th>Action</th>
               </tr>
             </thead>
 
             <tbody>
               {processedHits.map((hit) => (
-                <tr key={hit.hit_id} className={selectedHit?.hit_id === hit.hit_id ? "row-selected" : ""}>
+                <tr
+                  key={hit.hit_id}
+                  className={selectedHit?.hit_id === hit.hit_id ? "row-selected" : ""}
+                >
                   <td>
                     <span className={hit.qc_required ? "qc-badge warning" : "qc-badge success"}>
                       {hit.qc_required ? "QC" : "Pass"}
                     </span>
+                    {hit.duplicate_detected && (
+                      <span className="qc-badge warning">DUP ×{hit.duplicate_source_count}</span>
+                    )}
                   </td>
 
                   <td className="mono">{hit.package_id}</td>
@@ -389,16 +465,20 @@ export default function HitsReviewPage() {
 
                   <td>{hit.country_of_interest}</td>
                   <td>
-                    <span className={`status-pill ${hit.review_status}`}>
-                      {hit.review_status}
-                    </span>
+                    <span className={`status-pill ${hit.review_status}`}>{hit.review_status}</span>
                   </td>
                   <td>
                     <span className="confidence-pill">{percent(hit.confidence_score)}</span>
                   </td>
 
                   <td>
-                    <button className="review-button" onClick={() => setSelectedHit(hit)}>
+                    <button
+                      className="review-button"
+                      onClick={() => {
+                        setSelectedHit(hit);
+                        setDecisionReason(hit.review_comments || "");
+                      }}
+                    >
                       Analyze
                     </button>
                   </td>
@@ -407,7 +487,10 @@ export default function HitsReviewPage() {
 
               {!loading && processedHits.length === 0 && (
                 <tr>
-                  <td colSpan={9} style={{ textAlign: "center", color: "#64748b", padding: "40px 14px" }}>
+                  <td
+                    colSpan={9}
+                    style={{ textAlign: "center", color: "#64748b", padding: "40px 14px" }}
+                  >
                     No pending items match this operational queue filter condition.
                   </td>
                 </tr>
@@ -424,30 +507,38 @@ export default function HitsReviewPage() {
               <h2>Interactive Workflow Decision</h2>
               <p>ID Context mapping: {selectedHit.package_id}</p>
             </div>
-            <button className="close-panel-btn" onClick={() => setSelectedHit(null)}>Close View</button>
+            <button className="close-panel-btn" onClick={() => setSelectedHit(null)}>
+              Close View
+            </button>
           </div>
 
           {/* New Active Workflow Action Row Bar components */}
           <div className="workflow-action-bar">
             <span>Commit Decision Audit:</span>
+            <textarea
+              value={decisionReason}
+              onChange={(event) => setDecisionReason(event.target.value)}
+              placeholder="Review rationale (required for flag or dismissal)"
+              aria-label="Hits review rationale"
+            />
             <div className="action-buttons-group">
-              <button 
+              <button
                 className="btn-action approve"
-                disabled={selectedHit.review_status === "approved"}
+                disabled={savingDecision || selectedHit.review_status === "approved"}
                 onClick={() => updateHitStatus(selectedHit.hit_id, "approved")}
               >
                 Approve Entry
               </button>
-              <button 
+              <button
                 className="btn-action flag"
-                disabled={selectedHit.review_status === "flagged"}
+                disabled={savingDecision || selectedHit.review_status === "flagged"}
                 onClick={() => updateHitStatus(selectedHit.hit_id, "flagged")}
               >
                 Escalate / Flag
               </button>
-              <button 
+              <button
                 className="btn-action dismiss"
-                disabled={selectedHit.review_status === "dismissed"}
+                disabled={savingDecision || selectedHit.review_status === "dismissed"}
                 onClick={() => updateHitStatus(selectedHit.hit_id, "dismissed")}
               >
                 Dismiss / Exclude
@@ -501,13 +592,24 @@ export default function HitsReviewPage() {
             <h3>AI Summary Overview Extraction</h3>
             <p>{text(selectedHit.ai_summary)}</p>
           </div>
+
+          {selectedHit.duplicate_detected && (
+            <div className="text-block">
+              <h3>Duplicate Intelligence</h3>
+              <p>
+                {selectedHit.duplicate_source_count} duplicate source record(s) merged into this
+                canonical article workspace at {percent(selectedHit.duplicate_confidence)}{" "}
+                confidence.
+              </p>
+              <p>Signals: {text(selectedHit.duplicate_signals)}</p>
+            </div>
+          )}
         </aside>
       )}
 
       {toast && <div className="toast">{toast}</div>}
 
       <style jsx>{`
-
         .enterprise-search-shell {
           margin: 18px 0;
           border: 1px solid #cbd5e1;
@@ -529,13 +631,34 @@ export default function HitsReviewPage() {
           color: #ffffff;
         }
 
-        .enterprise-search-shell > summary::-webkit-details-marker { display: none; }
-        .enterprise-search-shell > summary div { display: grid; gap: 3px; }
-        .enterprise-search-shell > summary span { font-size: 11px; letter-spacing: 0.14em; opacity: 0.75; }
-        .enterprise-search-shell > summary strong { font-size: 20px; }
-        .enterprise-search-shell > summary small { opacity: 0.84; }
-        .enterprise-search-shell > summary em { font-style: normal; font-size: 12px; opacity: 0.8; white-space: nowrap; }
-        .enterprise-search-body { padding: 16px; background: #f8fafc; }
+        .enterprise-search-shell > summary::-webkit-details-marker {
+          display: none;
+        }
+        .enterprise-search-shell > summary div {
+          display: grid;
+          gap: 3px;
+        }
+        .enterprise-search-shell > summary span {
+          font-size: 11px;
+          letter-spacing: 0.14em;
+          opacity: 0.75;
+        }
+        .enterprise-search-shell > summary strong {
+          font-size: 20px;
+        }
+        .enterprise-search-shell > summary small {
+          opacity: 0.84;
+        }
+        .enterprise-search-shell > summary em {
+          font-style: normal;
+          font-size: 12px;
+          opacity: 0.8;
+          white-space: nowrap;
+        }
+        .enterprise-search-body {
+          padding: 16px;
+          background: #f8fafc;
+        }
         .app-shell {
           min-height: 100vh;
           background: #f4f7fb;
@@ -792,10 +915,22 @@ export default function HitsReviewPage() {
           color: #075985;
         }
 
-        .status-pill.pending { background: #f1f5f9; color: #475569; }
-        .status-pill.approved { background: #dcfce7; color: #166534; }
-        .status-pill.dismissed { background: #fee2e2; color: #991b1b; }
-        .status-pill.flagged { background: #ffedd5; color: #9a3412; }
+        .status-pill.pending {
+          background: #f1f5f9;
+          color: #475569;
+        }
+        .status-pill.approved {
+          background: #dcfce7;
+          color: #166534;
+        }
+        .status-pill.dismissed {
+          background: #fee2e2;
+          color: #991b1b;
+        }
+        .status-pill.flagged {
+          background: #ffedd5;
+          color: #9a3412;
+        }
 
         .review-panel {
           margin-top: 24px;
@@ -840,14 +975,29 @@ export default function HitsReviewPage() {
           pointer-events: none;
         }
 
-        .btn-action.approve { background: #22c55e; color: white; }
-        .btn-action.approve:hover { background: #16a34a; }
-        
-        .btn-action.flag { background: #f97316; color: white; }
-        .btn-action.flag:hover { background: #ea580c; }
+        .btn-action.approve {
+          background: #22c55e;
+          color: white;
+        }
+        .btn-action.approve:hover {
+          background: #16a34a;
+        }
 
-        .btn-action.dismiss { background: #ef4444; color: white; }
-        .btn-action.dismiss:hover { background: #dc2626; }
+        .btn-action.flag {
+          background: #f97316;
+          color: white;
+        }
+        .btn-action.flag:hover {
+          background: #ea580c;
+        }
+
+        .btn-action.dismiss {
+          background: #ef4444;
+          color: white;
+        }
+        .btn-action.dismiss:hover {
+          background: #dc2626;
+        }
 
         .review-grid {
           display: grid;
@@ -941,7 +1091,7 @@ export default function HitsReviewPage() {
           .search-input {
             min-width: 100%;
           }
-          
+
           .workflow-action-bar {
             flex-direction: column;
             align-items: flex-start;

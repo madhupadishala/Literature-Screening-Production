@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   EvidenceNormalizationResult,
   EvidenceNormalizationStatus,
@@ -67,9 +68,7 @@ export default function EvidenceNormalizationDashboard() {
     await loadPackages();
   }
 
-  useEffect(() => {
-    void loadPackages();
-  }, []);
+  useDeferredLoad(loadPackages);
 
   const status = data?.status;
   const packages = data?.packages ?? [];

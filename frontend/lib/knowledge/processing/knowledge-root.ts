@@ -6,7 +6,7 @@ import path from "node:path";
 const KNOWLEDGE_ROOT_ENVIRONMENT_VARIABLE =
   "CLINIXAI_KNOWLEDGE_ROOT";
 
-function defaultKnowledgeRoot() {
+function defaultKnowledgeRoot(): string {
   /*
    * Next.js commands run from:
    * C:\Users\Hp\Literature-Screening-Production\frontend
@@ -14,16 +14,26 @@ function defaultKnowledgeRoot() {
    * The existing knowledge repository is:
    * C:\Users\Hp\Literature-Screening-Production\knowledge
    */
-  return path.resolve(process.cwd(), "..", "knowledge");
+  return path.resolve(
+    /* turbopackIgnore: true */ process.cwd(),
+    "..",
+    "knowledge",
+  );
 }
 
-export function resolveKnowledgeRoot() {
+export function resolveKnowledgeRoot(): string {
   const configuredRoot =
     process.env[KNOWLEDGE_ROOT_ENVIRONMENT_VARIABLE]?.trim();
 
-  return path.resolve(
-    configuredRoot || defaultKnowledgeRoot(),
-  );
+  if (!configuredRoot) return defaultKnowledgeRoot();
+
+  if (!path.isAbsolute(configuredRoot)) {
+    throw new Error(
+      `${KNOWLEDGE_ROOT_ENVIRONMENT_VARIABLE} must be an absolute path.`,
+    );
+  }
+
+  return path.normalize(configuredRoot);
 }
 
 export async function ensureKnowledgeRoot() {

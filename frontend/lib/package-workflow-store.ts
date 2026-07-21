@@ -59,7 +59,7 @@ type ActionInput = {
 
 const now = () => new Date().toISOString();
 
-let packages: PackageRecord[] = [
+const packages: PackageRecord[] = [
   {
     packageId: "PMID_DEMO001",
     pmid: "DEMO001",
@@ -113,7 +113,7 @@ let packages: PackageRecord[] = [
   },
 ];
 
-let audit: PackageAudit[] = [
+const audit: PackageAudit[] = [
   {
     id: "AUD-001",
     packageId: "PMID_DEMO001",
@@ -204,7 +204,7 @@ export function performPackageAction(input: ActionInput) {
   }
 
   const current = packages[index];
-  let updated: PackageRecord = { ...current };
+  const updated: PackageRecord = { ...current };
   const oldValue = current.currentState;
 
   if (input.action === "ASSIGN") {

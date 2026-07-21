@@ -2,7 +2,7 @@ import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import { requirePermission } from "@/lib/rbac/guard";
-import { createEvidencePackagesFromSearch } from "@/lib/literature/adhoc-search/evidence-package-service";
+import { executeSearchToHits } from "@/lib/literature/hits/search-to-hits-service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       resultIds?: string[];
     };
 
-    const packages = await createEvidencePackagesFromSearch({
+    const execution = await executeSearchToHits({
       principal,
       resultIds: Array.isArray(body.resultIds) ? body.resultIds : [],
     });
@@ -26,12 +26,9 @@ export async function POST(request: NextRequest): Promise<Response> {
     return Response.json(
       {
         success: true,
-        data: {
-          createdCount: packages.length,
-          packages,
-        },
+        data: execution,
       },
-      { status: 201 },
+      { status: execution.status === "partial" ? 207 : 201 },
     );
   } catch (error) {
     return routeErrorResponse(error);

@@ -94,7 +94,6 @@ export function buildPubMedQuery(
   criteria: AdHocSearchCriteria,
   resolvedProduct: ResolvedProductContext,
 ): string {
-  const terms = baseSearchTerms(criteria, resolvedProduct);
   const clauses: string[] = [];
 
   if (criteria.pmid) {

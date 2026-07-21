@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   KnowledgeGraph,
   KnowledgeGraphStatus,
@@ -81,9 +82,7 @@ export default function KnowledgeGraphDashboard() {
     await loadGraphs();
   }
 
-  useEffect(() => {
-    void loadGraphs();
-  }, []);
+  useDeferredLoad(loadGraphs);
 
   const status = data?.status;
   const graphs = data?.graphs ?? [];

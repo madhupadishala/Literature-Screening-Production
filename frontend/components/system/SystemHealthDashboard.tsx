@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 interface HealthResponse {
   success: boolean;
   generatedAt: string;
@@ -41,9 +42,7 @@ export default function SystemHealthDashboard() {
     setLoading(false);
   }
 
-  useEffect(() => {
-    loadHealth();
-  }, []);
+  useDeferredLoad(loadHealth);
 
   if (loading) {
     return (

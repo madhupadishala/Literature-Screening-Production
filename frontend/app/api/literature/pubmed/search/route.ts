@@ -42,13 +42,7 @@ export async function POST(request: Request) {
       query: body.query.trim(),
     });
 
-    // Cast to any for the fallback properties to keep the build green 
-    // while preserving the original developer's defensive checks.
-    const articles =
-      result?.articles ??
-      (result as any)?.records ??
-      (result as any)?.results ??
-      [];
+    const articles = result.articles;
 
     return NextResponse.json(
       {

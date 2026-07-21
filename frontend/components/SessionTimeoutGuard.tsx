@@ -39,7 +39,7 @@ export default function SessionTimeoutGuard() {
       }
 
       if (remaining <= 0) {
-        const session = lockSession();
+        lockSession();
         auditSession("SESSION_LOCKED", "Idle timeout reached.");
         setLocked(true);
         setShowWarning(false);

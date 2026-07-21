@@ -1,4 +1,6 @@
 import ReliabilityDashboard from "@/components/admin/ReliabilityDashboard";
+import InvestorDemoHeader from "@/components/InvestorDemoHeader";
+import Navigation from "@/components/Navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -12,18 +14,13 @@ export default function ReliabilityPage(): React.ReactElement {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">
-            Sprint 5
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-            Enterprise Reliability
-          </h1>
-          <p className="mt-2 max-w-3xl text-slate-600">
-            Live monitoring for service readiness, dependency health, runtime resources,
-            circuit protection and security controls.
-          </p>
-        </div>
+        <Navigation />
+        <InvestorDemoHeader
+          eyebrow="ENTERPRISE RELIABILITY"
+          title="Platform Reliability Console"
+          subtitle="Live readiness, dependency latency, runtime resources, circuit protection, tenant operational failures, and durable health snapshots."
+          status="Continuously Monitored"
+        />
         <ReliabilityDashboard />
       </div>
     </main>

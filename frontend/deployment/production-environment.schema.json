@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://theclinixai.com/schemas/literature-production-environment.json",
+  "title": "ClinixAI Literature Production Environment",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "NODE_ENV",
+    "DATABASE_URL",
+    "DATABASE_SSL_MODE",
+    "AI_PROVIDER",
+    "EVIDENCE_STORE_BACKEND",
+    "INTERNAL_MONITORING_TOKEN",
+    "BUILD_SHA",
+    "RELEASE_VERSION",
+    "RELEASE_BASE_URL",
+    "ALLOW_DEMO_PRINCIPAL"
+  ],
+  "properties": {
+    "NODE_ENV": { "const": "production" },
+    "DATABASE_URL": { "type": "string", "pattern": "^postgres(?:ql)?://" },
+    "DATABASE_SSL_MODE": { "enum": ["no-verify", "require", "verify-full"] },
+    "DATABASE_POOL_MIN": { "type": "string", "pattern": "^[0-9]+$" },
+    "DATABASE_POOL_MAX": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+    "AI_PROVIDER": { "type": "string", "minLength": 1 },
+    "EVIDENCE_STORE_BACKEND": { "enum": ["database", "s3", "azure"] },
+    "INTERNAL_MONITORING_TOKEN": { "type": "string", "minLength": 32 },
+    "BUILD_SHA": { "type": "string", "minLength": 7 },
+    "RELEASE_VERSION": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"
+    },
+    "RELEASE_BASE_URL": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "ALLOW_DEMO_PRINCIPAL": { "const": "false" }
+  }
+}

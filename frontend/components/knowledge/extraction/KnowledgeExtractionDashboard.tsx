@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   KnowledgeExtractionResult,
   KnowledgeExtractionStatus,
@@ -58,9 +59,7 @@ export default function KnowledgeExtractionDashboard() {
     await loadExtractions();
   }
 
-  useEffect(() => {
-    void loadExtractions();
-  }, []);
+  useDeferredLoad(loadExtractions);
 
   const status = data?.status;
   const extractions = data?.extractions ?? [];

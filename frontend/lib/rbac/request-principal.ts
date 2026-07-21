@@ -2,10 +2,7 @@ import "server-only";
 
 import type { NextRequest } from "next/server";
 import { getPostgresPool } from "@/lib/database/postgres";
-import {
-  roleHasPermission,
-  type Permission,
-} from "@/lib/rbac/permissions";
+import { roleHasPermission, type Permission } from "@/lib/rbac/permissions";
 
 export interface RequestPrincipal {
   tenantId: string;
@@ -34,39 +31,27 @@ function allowDemoPrincipal(): boolean {
 
 function resolveIdentityHeaders(request: NextRequest) {
   const tenantKey =
-    request.headers.get("x-tenant-key")?.trim() ||
-    request.headers.get("x-tenant-id")?.trim();
+    request.headers.get("x-tenant-key")?.trim() || request.headers.get("x-tenant-id")?.trim();
   const email = request.headers.get("x-user-email")?.trim();
-  const roleKey = request.headers.get("x-role-key")?.trim();
 
   if (tenantKey && email) {
     return {
       tenantKey,
       email,
-      roleKey,
-      displayName:
-        request.headers.get("x-user-display-name")?.trim() || email,
+      displayName: request.headers.get("x-user-display-name")?.trim() || email,
       demoFallback: false,
     };
   }
 
   if (!allowDemoPrincipal()) {
-    throw new AuthorizationError(
-      "Authenticated tenant and user context is required.",
-      401,
-    );
+    throw new AuthorizationError("Authenticated tenant and user context is required.", 401);
   }
 
   return {
     tenantKey: process.env.DEFAULT_TENANT_KEY?.trim() || "demo-tenant",
-    email:
-      process.env.DEFAULT_USER_EMAIL?.trim() ||
-      "product.admin@theclinixai.local",
-    roleKey:
-      process.env.DEFAULT_ROLE_KEY?.trim() || "CLINIXAI_SUPER_ADMIN",
-    displayName:
-      process.env.DEFAULT_USER_DISPLAY_NAME?.trim() ||
-      "Product Administrator",
+    email: process.env.DEFAULT_USER_EMAIL?.trim() || "product.admin@theclinixai.local",
+    roleKey: process.env.DEFAULT_ROLE_KEY?.trim() || "CLINIXAI_SUPER_ADMIN",
+    displayName: process.env.DEFAULT_USER_DISPLAY_NAME?.trim() || "Product Administrator",
     demoFallback: true,
   };
 }
@@ -119,11 +104,7 @@ async function ensureDemoIdentity(input: {
         ON CONFLICT (tenant_id, user_id)
         DO UPDATE SET role_key = EXCLUDED.role_key
       `,
-      [
-        tenant.rows[0].id,
-        user.rows[0].id,
-        input.roleKey || "CLINIXAI_SUPER_ADMIN",
-      ],
+      [tenant.rows[0].id, user.rows[0].id, input.roleKey || "CLINIXAI_SUPER_ADMIN"],
     );
 
     await client.query("COMMIT");
@@ -135,9 +116,7 @@ async function ensureDemoIdentity(input: {
   }
 }
 
-export async function resolveRequestPrincipal(
-  request: NextRequest,
-): Promise<RequestPrincipal> {
+export async function resolveRequestPrincipal(request: NextRequest): Promise<RequestPrincipal> {
   const identity = resolveIdentityHeaders(request);
 
   if (identity.demoFallback) {
@@ -170,6 +149,7 @@ export async function resolveRequestPrincipal(
         AND lower(u.email) = lower($2)
         AND t.status = 'active'
         AND u.status = 'active'
+        AND m.membership_status = 'active'
       LIMIT 1
     `,
     [identity.tenantKey, identity.email],
@@ -177,17 +157,12 @@ export async function resolveRequestPrincipal(
 
   const row = result.rows[0];
   if (!row) {
-    throw new AuthorizationError(
-      "No active tenant membership was found for this user.",
-      403,
-    );
+    throw new AuthorizationError("No active tenant membership was found for this user.", 403);
   }
 
-  const customPermissions = Array.isArray(row.permissions)
-    ? row.permissions.map(String)
-    : [];
+  const customPermissions = Array.isArray(row.permissions) ? row.permissions.map(String) : [];
 
-  const roleKey = identity.roleKey || row.role_key;
+  const roleKey = row.role_key;
 
   return {
     tenantId: row.tenant_id,
@@ -197,7 +172,6 @@ export async function resolveRequestPrincipal(
     displayName: row.display_name,
     roleKey,
     customPermissions,
-    hasPermission: (permission) =>
-      roleHasPermission(roleKey, permission, customPermissions),
+    hasPermission: (permission) => roleHasPermission(roleKey, permission, customPermissions),
   };
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import {
   createDefaultTenant,
   defaultTenantFeatureFlags,
@@ -104,9 +105,7 @@ export default function TenantConfigPanel() {
     await loadTenants();
   }
 
-  useEffect(() => {
-    loadTenants();
-  }, []);
+  useDeferredLoad(loadTenants);
 
   return (
     <section>

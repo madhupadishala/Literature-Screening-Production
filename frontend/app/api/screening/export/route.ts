@@ -11,7 +11,7 @@ export async function GET() {
   const projectRoot = path.resolve(process.cwd(), "..");
   const evidenceRoot = path.join(projectRoot, "evidence_store", "demo-tenant");
 
-  const rows: any[] = [];
+  const rows: Array<Record<string, unknown>> = [];
 
   if (fs.existsSync(evidenceRoot)) {
     const folders = fs

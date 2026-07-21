@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AssignUserModal from "./AssignUserModal";
 import styles from "./super-user.module.css";
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type { PackageAssignment } from "@/lib/super-user/assignment-store";
 
 type PackageAssignmentPanelProps = {
@@ -37,9 +38,7 @@ export default function PackageAssignmentPanel({
     }
   }
 
-  useEffect(() => {
-    loadAssignments();
-  }, [packageId]);
+  useDeferredLoad(loadAssignments, packageId);
 
   const currentAssignment =
     assignments.find((assignment) => assignment.isCurrent) ?? null;

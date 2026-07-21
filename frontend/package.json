@@ -2,11 +2,28 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    },
+    "eslint": {
+      "brace-expansion": "1.1.16"
+    },
+    "next": {
+      "postcss": "8.5.15"
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:migrate": "node scripts/run-database-migrations.mjs",
+    "seed:demo": "node scripts/seed-enterprise-demo.mjs",
+    "verify:demo": "node scripts/verify-enterprise-demo.mjs",
+    "validate:e2e": "node scripts/validate-enterprise-e2e.mjs",
+    "validate:e2e:offline": "node scripts/validate-enterprise-e2e.mjs --offline",
+    "release:gate": "node scripts/production-release-gate.mjs"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.18.0",
@@ -15,8 +32,8 @@
     "exceljs": "4.4.0",
     "fast-xml-parser": "^5.9.3",
     "js-tiktoken": "^1.0.21",
-    "mammoth": "1.10.0",
-    "next": "16.2.9",
+    "mammoth": "1.12.0",
+    "next": "16.2.10",
     "openai": "^6.48.0",
     "papaparse": "^5.5.4",
     "pdfjs-dist": "^6.1.200",

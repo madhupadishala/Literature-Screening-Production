@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type { InfrastructureStatus } from "@/lib/platform/monitoring/health-types";
 
 function MetricCard({ title, value }: { title: string; value: number | string }) {
@@ -54,9 +56,7 @@ export default function SystemHealthDashboard() {
     }
   }
 
-  useEffect(() => {
-    void loadHealth();
-  }, []);
+  useDeferredLoad(loadHealth);
 
   const services = data?.services ?? [];
 

@@ -12,6 +12,9 @@ const INCLUDED_CAPABILITIES = [
   "Intake Input Builder",
   "Governed intake_input.json export",
   "Enterprise monitoring and security",
+  "Immutable audit trail and governed RBAC",
+  "Reliability and performance governance",
+  "Verified synthetic demonstration dataset",
 ];
 
 const EXCLUDED_CAPABILITIES = [

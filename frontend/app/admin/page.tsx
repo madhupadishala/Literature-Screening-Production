@@ -43,15 +43,19 @@ const modules = [
   },
   {
     title: "Audit Logs",
-    description:
-      "Review security, workflow, search, and configuration events.",
+    description: "Review security, workflow, search, and configuration events.",
     action: "/admin/audit-logs",
   },
   {
     title: "System Reliability",
-    description:
-      "View database, AI provider, evidence storage, monitoring, and release health.",
+    description: "View database, AI provider, evidence storage, monitoring, and release health.",
     action: "/admin/reliability",
+  },
+  {
+    title: "Performance",
+    description:
+      "Review throughput, latency percentiles, pool saturation, AI failure rates, slow operations, and performance budgets.",
+    action: "/admin/performance",
   },
 ];
 
@@ -70,11 +74,7 @@ export default function AdminPage() {
 
       <section className="module-grid">
         {modules.map((module) => (
-          <button
-            key={module.title}
-            type="button"
-            onClick={() => router.push(module.action)}
-          >
+          <button key={module.title} type="button" onClick={() => router.push(module.action)}>
             <span>Operational module</span>
             <h2>{module.title}</h2>
             <p>{module.description}</p>
@@ -86,9 +86,8 @@ export default function AdminPage() {
       <section className="boundary">
         <strong>Literature product boundary</strong>
         <p>
-          Administration supports Search, Evidence Package, Hits, Screening,
-          and governed downstream output. No additional Literature workspace
-          is introduced after governed output.
+          Administration supports Search, Evidence Package, Hits, Screening, and governed downstream
+          output. No additional Literature workspace is introduced after governed output.
         </p>
       </section>
 

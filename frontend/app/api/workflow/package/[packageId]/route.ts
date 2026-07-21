@@ -94,7 +94,7 @@ export async function GET(
       },
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Gracefully catch internal failures without exposing low-level system path specifications to client logs
     console.error("[Nexus Download API Exception]:", error);
     return NextResponse.json(

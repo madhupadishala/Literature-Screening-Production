@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type { TenantConfiguration } from "@/lib/tenant/tenant-types";
 
 type TenantConfigSnapshot = {
@@ -40,9 +41,7 @@ export default function TenantSelector() {
     });
   }
 
-  useEffect(() => {
-    loadTenants();
-  }, []);
+  useDeferredLoad(loadTenants);
 
   if (loading) {
     return <span>Loading tenants...</span>;

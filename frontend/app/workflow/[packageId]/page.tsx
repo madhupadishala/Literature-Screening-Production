@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import Navigation from "@/components/Navigation";
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 
 type WorkflowState = {
   state?: string;
@@ -15,21 +16,23 @@ type WorkflowState = {
   packageId?: string;
 };
 
+type JsonObject = Record<string, unknown>;
+
 type WorkflowPackage = {
   packageId?: string;
   package_id?: string;
   id?: string;
   pmid?: string;
   title?: string;
-  metadata?: Record<string, any>;
+  metadata?: JsonObject;
   workflowState?: WorkflowState;
   workflow_state?: WorkflowState;
-  hitsOutput?: any;
-  hits_output?: any;
-  screeningOutput?: any;
-  screening_output?: any;
-  intakeInput?: any;
-  intake_input?: any;
+  hitsOutput?: JsonObject;
+  hits_output?: JsonObject;
+  screeningOutput?: JsonObject;
+  screening_output?: JsonObject;
+  intakeInput?: JsonObject;
+  intake_input?: JsonObject;
 };
 
 const STATUS_LABELS: Record<string, string> = {
@@ -51,15 +54,23 @@ const tabs = [
   "Download",
 ];
 
-function text(value: any, fallback = "â€”") {
+function isJsonObject(value: unknown): value is JsonObject {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isWorkflowPackage(value: unknown): value is WorkflowPackage {
+  return isJsonObject(value);
+}
+
+function text(value: unknown, fallback = "—") {
   if (value === null || value === undefined || value === "") return fallback;
   if (Array.isArray(value)) return value.length ? value.join(", ") : fallback;
   if (typeof value === "object") return JSON.stringify(value);
   return String(value);
 }
 
-function findValue(obj: any, keys: string[]): any {
-  if (!obj || typeof obj !== "object") return undefined;
+function findValue(obj: unknown, keys: string[]): unknown {
+  if (!isJsonObject(obj)) return undefined;
 
   for (const key of keys) {
     if (obj[key] !== undefined && obj[key] !== null && obj[key] !== "") {
@@ -77,7 +88,7 @@ function findValue(obj: any, keys: string[]): any {
   return undefined;
 }
 
-function countItems(value: any) {
+function countItems(value: unknown) {
   if (!value) return 0;
   if (Array.isArray(value)) return value.length;
   if (typeof value === "object") return Object.keys(value).length;
@@ -117,10 +128,6 @@ export default function WorkflowDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    void loadPackages();
-  }, []);
-
   async function loadPackages() {
     try {
       setLoading(true);
@@ -134,8 +141,16 @@ export default function WorkflowDetailsPage() {
         throw new Error("Unable to load the evidence package.");
       }
 
-      const data = await response.json();
-      setPackages(Array.isArray(data) ? data : data.packages || data.items || []);
+      const data: unknown = await response.json();
+      const candidates = Array.isArray(data)
+        ? data
+        : isJsonObject(data) && Array.isArray(data.packages)
+          ? data.packages
+          : isJsonObject(data) && Array.isArray(data.items)
+            ? data.items
+            : [];
+
+      setPackages(candidates.filter(isWorkflowPackage));
     } catch (caught) {
       setError(
         caught instanceof Error
@@ -147,6 +162,8 @@ export default function WorkflowDetailsPage() {
     }
   }
 
+  useDeferredLoad(loadPackages);
+
   const pkg = useMemo(
     () => packages.find((item) => getPackageId(item) === packageId),
     [packages, packageId],
@@ -155,7 +172,7 @@ export default function WorkflowDetailsPage() {
   if (loading) {
     return (
       <main className="details-shell">
-        <div className="loading-card">Loading governed evidence packageâ€¦</div>
+        <div className="loading-card">Loading governed evidence package…</div>
       </main>
     );
   }
@@ -165,7 +182,7 @@ export default function WorkflowDetailsPage() {
       <main className="details-shell">
         <div className="loading-card">
           <Link href="/workflow" className="back-link">
-            â† Back to Workflow
+            ← Back to Workflow
           </Link>
           <h1>Evidence package not found</h1>
           <p>{error || `No package was found for ${packageId}.`}</p>
@@ -270,14 +287,14 @@ export default function WorkflowDetailsPage() {
       <InvestorDemoHeader
         eyebrow="GOVERNED EVIDENCE PACKAGE"
         title={title}
-        subtitle={`Package ${packageId} Â· PMID ${pmid} Â· Every output remains connected to source evidence and workflow state.`}
+        subtitle={`Package ${packageId} · PMID ${pmid} · Every output remains connected to source evidence and workflow state.`}
       />
 
       <Navigation />
 
       <div className="package-toolbar">
         <Link href="/workflow" className="back-link">
-          â† Back to Workflow
+          ← Back to Workflow
         </Link>
         <StatusBadge state={currentState} />
       </div>
@@ -304,7 +321,7 @@ export default function WorkflowDetailsPage() {
                   key={step.label}
                   className={`progress-step ${step.done ? "done" : ""}`}
                 >
-                  <span>{step.done ? "âœ“" : "â—‹"}</span>
+                  <span>{step.done ? "✓" : "○"}</span>
                   <strong>{step.label}</strong>
                 </div>
               ))}
@@ -791,7 +808,7 @@ function StatusBadge({ state }: { state: string }) {
   );
 }
 
-function Field({ label, value }: { label: string; value: any }) {
+function Field({ label, value }: { label: string; value: unknown }) {
   return (
     <div className="field-card">
       <span>{label}</span>

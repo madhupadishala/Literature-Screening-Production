@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   KnowledgeGovernanceAuditEvent,
   KnowledgeGovernanceRecord,
@@ -60,9 +61,7 @@ export default function KnowledgeGovernanceDashboard() {
     await loadData();
   }
 
-  useEffect(() => {
-    void loadData();
-  }, []);
+  useDeferredLoad(loadData);
 
   const status = data?.status;
   const records = data?.records ?? [];

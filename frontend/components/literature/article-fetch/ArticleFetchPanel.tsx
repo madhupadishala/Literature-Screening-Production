@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   ArticleFetchResponse,
   ArticleFetchStatus,
@@ -55,9 +56,7 @@ export default function ArticleFetchPanel() {
     await loadArticles();
   }
 
-  useEffect(() => {
-    void loadArticles();
-  }, []);
+  useDeferredLoad(loadArticles);
 
   const status = data?.status;
   const articles = data?.articles ?? [];

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   MedicalTranslationResult,
   TranslationStatus,
@@ -61,9 +62,7 @@ export default function MedicalTranslationDashboard() {
     await loadTranslations();
   }
 
-  useEffect(() => {
-    void loadTranslations();
-  }, []);
+  useDeferredLoad(loadTranslations);
 
   const status = data?.status;
   const translations = data?.translations ?? [];

@@ -1,89 +1,33 @@
-import { NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
-import { duplicateService } from "@/lib/literature/duplicates/duplicate-service";
+import { routeErrorResponse } from "@/lib/api/route-error";
+import {
+  getDuplicateIntelligenceStatus,
+  listDuplicateAssessments,
+} from "@/lib/literature/duplicates/duplicate-repository";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
-import type {
-  DuplicateCheckRequest,
-} from "@/lib/literature/duplicates/duplicate-types";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-export async function GET() {
-  return NextResponse.json({
-    status: duplicateService.getStatus(),
-    history: duplicateService.list(),
-  });
-}
-
-export async function POST(
-  request: Request,
-) {
+export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const body =
-      (await request.json()) as DuplicateCheckRequest;
-
-    if (!body.tenantId) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "tenantId is required.",
-        },
-        {
-          status: 400,
-        },
-      );
-    }
-
-    if (!body.article) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "article is required.",
-        },
-        {
-          status: 400,
-        },
-      );
-    }
-
-    const result =
-      await duplicateService.check({
-        tenantId: body.tenantId,
-
-        article: body.article,
-
-        existingArticles:
-          body.existingArticles ?? [],
-      });
-
-    return NextResponse.json(
-      {
-        success: true,
-
-        workflowStage:
-          "DUPLICATE_CHECK_COMPLETED",
-
-        result,
-      },
-      {
-        status: 201,
-      },
+    const principal = await requirePermission(
+      request,
+      PERMISSIONS.SEARCH_HISTORY_VIEW,
     );
+    const rawLimit = Number(request.nextUrl.searchParams.get("limit") || 100);
+    const [status, assessments] = await Promise.all([
+      getDuplicateIntelligenceStatus(principal),
+      listDuplicateAssessments({
+        principal,
+        limit: Number.isFinite(rawLimit) ? rawLimit : 100,
+      }),
+    ]);
+
+    return Response.json({ success: true, data: { status, assessments } });
   } catch (error) {
-    console.error(
-      "Duplicate Detection Error",
-      error,
-    );
-
-    return NextResponse.json(
-      {
-        success: false,
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unknown duplicate detection error",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }

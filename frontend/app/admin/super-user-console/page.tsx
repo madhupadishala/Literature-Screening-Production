@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Navigation from "@/components/Navigation";
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type { PackageAudit, PackageRecord, PackageState } from "@/lib/package-workflow-store";
 import {
   getWorkflowPackageAudit,
@@ -43,10 +44,6 @@ export default function SuperUserConsolePage() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState("");
 
-  useEffect(() => {
-    loadPackages("");
-  }, []);
-
   const selectedPackage = useMemo(() => {
     return packages.find((pkg) => pkg.packageId === selectedId) || packages[0] || null;
   }, [packages, selectedId]);
@@ -83,6 +80,8 @@ export default function SuperUserConsolePage() {
       setAuditTrail([]);
     }
   }
+
+  useDeferredLoad(() => loadPackages(""));
 
   async function runAction(action: "ASSIGN" | "UNLOCK" | "LOCK" | "OVERRIDE" | "ROUTE_BACK" | "FORCE_RERUN") {
     if (!selectedPackage) {

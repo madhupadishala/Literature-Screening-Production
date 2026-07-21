@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   EmbeddingEngineStatus,
   EmbeddingResponse,
@@ -59,9 +61,7 @@ export default function EmbeddingDashboard() {
     await loadEmbeddings();
   }
 
-  useEffect(() => {
-    void loadEmbeddings();
-  }, []);
+  useDeferredLoad(loadEmbeddings);
 
   const status = data?.status;
   const history = data?.history ?? [];

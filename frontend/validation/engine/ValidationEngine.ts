@@ -60,7 +60,7 @@ export class ValidationEngine {
         averageConfidence: aggregate.averageConfidence,
         scenarioResults,
       };
-    } catch (error) {
+    } catch {
       return {
         runId: config.runId,
         sprint: config.sprint,

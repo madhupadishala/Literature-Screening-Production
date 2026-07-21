@@ -7,7 +7,6 @@ interface GlobalPostgresState {
 }
 
 declare global {
-  // eslint-disable-next-line no-var
   var __clinixaiPostgresState: GlobalPostgresState | undefined;
 }
 

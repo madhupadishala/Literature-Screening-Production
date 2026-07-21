@@ -1,13 +1,16 @@
-import { NextResponse } from "next/server";
-import { runRoute } from "@/lib/enterprise/api-response";
+import { type NextRequest, NextResponse } from "next/server";
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { registerDefaultDependencyProbes } from "@/lib/enterprise/dependency-probes";
 import { healthRegistry } from "@/lib/enterprise/health-registry";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export async function GET(request: Request): Promise<Response> {
-  return runRoute(request, async () => {
+export async function GET(request: NextRequest): Promise<Response> {
+  try {
+    await requirePermission(request, PERMISSIONS.RELIABILITY_VIEW);
     registerDefaultDependencyProbes();
     const report = await healthRegistry.run();
 
@@ -45,7 +48,9 @@ export async function GET(request: Request): Promise<Response> {
         headers: { "cache-control": "no-store, max-age=0" },
       },
     );
-  });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
 
 function componentFor(name: string): string {

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type { JobRecord, JobSummary } from "@/lib/jobs/job-types";
 
 interface JobStatusResponse {
@@ -39,9 +40,7 @@ export default function JobDashboard() {
     setData(json.data);
   }
 
-  useEffect(() => {
-    loadJobs();
-  }, []);
+  useDeferredLoad(loadJobs);
 
   if (loading) {
     return (

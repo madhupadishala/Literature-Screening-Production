@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { useDeferredLoad } from "@/hooks/use-deferred-load";
 import type {
   DocumentProcessingStatus,
   PDFProcessingResult,
@@ -56,9 +57,7 @@ export default function DocumentProcessingPanel() {
     await loadDocuments();
   }
 
-  useEffect(() => {
-    void loadDocuments();
-  }, []);
+  useDeferredLoad(loadDocuments);
 
   const status = data?.status;
   const documents = data?.documents ?? [];
