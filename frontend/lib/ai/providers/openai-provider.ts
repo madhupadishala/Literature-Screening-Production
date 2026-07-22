@@ -22,7 +22,9 @@ export class OpenAIProvider extends BaseAIProvider {
     runtimeProvider: AIProviderType,
   ): string {
     const apiKey =
-      runtimeProvider === "groq"
+      runtimeProvider === "ollama"
+        ? process.env.AI_API_KEY ?? "ollama-local"
+        : runtimeProvider === "groq"
         ? process.env.GROQ_API_KEY ??
           process.env.AI_API_KEY
         : process.env.OPENAI_API_KEY ??

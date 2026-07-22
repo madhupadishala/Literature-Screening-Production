@@ -84,4 +84,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "013_production_release_governance.sql",
     required: true,
   },
+  {
+    id: "014",
+    name: "Controlled Knowledge pgvector",
+    filename: "014_controlled_knowledge_pgvector.sql",
+    required: true,
+  },
 ] as const;

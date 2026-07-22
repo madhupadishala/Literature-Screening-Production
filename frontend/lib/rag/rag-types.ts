@@ -1,8 +1,11 @@
 import type {
   VectorSearchMode,
-  VectorSearchResult,
   VectorSourceType,
 } from "@/lib/vector/vector-types";
+import type {
+  AgentContextPack,
+  GovernedKnowledgeCitation,
+} from "@/lib/knowledge/retrieval/controlled-knowledge-types";
 
 export type RAGContextSource =
   | VectorSourceType
@@ -25,6 +28,9 @@ export interface RAGContextRequest {
   searchMode?: VectorSearchMode;
   topK?: number;
   minScore?: number;
+  actorId?: string;
+  requestId?: string;
+  correlationId?: string;
 }
 
 export interface RAGContextChunk {
@@ -36,6 +42,7 @@ export interface RAGContextChunk {
   score: number;
   priority: RAGContextPriority;
   retrievalReason: string;
+  citation?: GovernedKnowledgeCitation;
   metadata: {
     tenantId: string;
     versionId?: string;
@@ -57,6 +64,11 @@ export interface RAGMergedContext {
   chunks: RAGContextChunk[];
   sourceBreakdown: Record<string, number>;
   warnings: string[];
+  contextPackId?: string;
+  repositoryId?: string;
+  repositoryVersion?: string;
+  repositoryManifestSha256?: string;
+  citations?: GovernedKnowledgeCitation[];
   generatedAt: string;
 }
 
@@ -73,6 +85,6 @@ export interface RAGMergeOptions {
 
 export interface RAGRetrievalResult {
   request: RAGContextRequest;
-  vectorResults: VectorSearchResult[];
+  contextPack: AgentContextPack;
   generatedAt: string;
 }

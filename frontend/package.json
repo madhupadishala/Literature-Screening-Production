@@ -21,6 +21,12 @@
     "db:migrate": "node scripts/run-database-migrations.mjs",
     "seed:demo": "node scripts/seed-enterprise-demo.mjs",
     "verify:demo": "node scripts/verify-enterprise-demo.mjs",
+    "knowledge:verify": "node scripts/verify-controlled-knowledge.mjs",
+    "knowledge:load:pgvector": "node scripts/load-controlled-knowledge-pgvector.mjs",
+    "knowledge:verify:pgvector": "node scripts/verify-controlled-knowledge-pgvector.mjs",
+    "knowledge:verify:retrieval": "node scripts/verify-controlled-knowledge-retrieval.mjs",
+    "governance:verify:configuration": "node scripts/verify-sprint50-operational-governance.mjs",
+    "governance:verify:operations": "node scripts/verify-sprint50-operational-governance.mjs --full",
     "validate:e2e": "node scripts/validate-enterprise-e2e.mjs",
     "validate:e2e:offline": "node scripts/validate-enterprise-e2e.mjs --offline",
     "release:gate": "node scripts/production-release-gate.mjs"

@@ -1,5 +1,6 @@
 import { ragEngine } from "@/lib/rag/rag-engine";
 import type { RAGMergedContext } from "@/lib/rag/rag-types";
+import { buildTenantRuntimeConfigurationContext } from "@/lib/configuration/runtime-context";
 
 import { recordAIAudit } from "./ai-audit";
 import { recordAIMetric } from "./ai-metrics";
@@ -75,6 +76,7 @@ export class HitsAgent {
         topK: 8,
         minScore: 0,
       });
+      const runtimeConfiguration = await buildTenantRuntimeConfigurationContext(request.tenantId);
 
       const prompt = buildHitsPrompt({
         tenantId: request.tenantId,
@@ -85,6 +87,7 @@ export class HitsAgent {
         productName: request.productName,
         country: request.country,
         ragContext: ragResponse.context,
+        runtimeConfiguration,
       });
 
       const provider = aiProviderFactory.getProvider();
@@ -112,7 +115,7 @@ export class HitsAgent {
         correlationId: request.correlationId,
       });
 
-      recordAIAudit({
+      await recordAIAudit({
         operation: "hits",
         status: "SUCCESS",
         tenantId: request.tenantId,
@@ -130,6 +133,9 @@ export class HitsAgent {
           qcRequired: result.qcRequired,
           duplicateSuspected: result.duplicateSuspected,
           retrievedKnowledgeChunks: ragResponse.context.chunks.length,
+          knowledgeContextPackId: ragResponse.context.contextPackId,
+          knowledgeCitationIds: ragResponse.context.citations?.map((citation) => citation.citationId) || [],
+          configurationSnapshot: runtimeConfiguration.snapshot,
         },
       });
 
@@ -153,7 +159,7 @@ export class HitsAgent {
         },
       };
     } catch (error) {
-      recordAIAudit({
+      await recordAIAudit({
         operation: "hits",
         status: "FAILED",
         tenantId: request.tenantId,

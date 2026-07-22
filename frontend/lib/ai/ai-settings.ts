@@ -11,7 +11,7 @@ export interface AISettings {
   baseURL?: string;
 }
 
-const SUPPORTED_PROVIDERS: AIProviderType[] = ["openai", "groq"];
+const SUPPORTED_PROVIDERS: AIProviderType[] = ["openai", "groq", "ollama"];
 
 function readPositiveInteger(
   value: string | undefined,
@@ -38,8 +38,11 @@ function resolveProvider(value: string | undefined): AIProviderType {
 
 export function getAISettings(): AISettings {
   const provider = resolveProvider(process.env.AI_PROVIDER);
-  const defaultModel =
-    provider === "groq" ? "llama-3.3-70b-versatile" : "gpt-4.1-mini";
+  const defaultModel = provider === "groq"
+    ? "llama-3.3-70b-versatile"
+    : provider === "ollama"
+      ? "llama3.1:8b"
+      : "gpt-4.1-mini";
 
   return {
     provider,
@@ -54,7 +57,11 @@ export function getAISettings(): AISettings {
     retryDelayMs: readPositiveInteger(process.env.AI_RETRY_DELAY_MS, 750),
     baseURL:
       process.env.AI_BASE_URL?.trim() ||
-      (provider === "groq" ? "https://api.groq.com/openai/v1" : undefined),
+      (provider === "groq"
+        ? "https://api.groq.com/openai/v1"
+        : provider === "ollama"
+          ? `${(process.env.OLLAMA_BASE_URL || "http://localhost:11434").replace(/\/+$/u, "")}/v1`
+          : undefined),
   };
 }
 

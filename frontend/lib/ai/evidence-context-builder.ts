@@ -27,6 +27,9 @@ export interface EvidenceContextInput {
   sourceAbstract?: string;
   sourceFullText?: string;
   metadata?: Record<string, unknown>;
+  actorId?: string;
+  requestId?: string;
+  correlationId?: string;
 }
 
 export interface EvidenceContext {
@@ -68,9 +71,9 @@ function resolvePromptConfigurations(
   );
 }
 
-export function buildEvidenceContext(
+export async function buildEvidenceContext(
   input: EvidenceContextInput
-): EvidenceContext {
+): Promise<EvidenceContext> {
   const tenant = getActiveTenant();
 
   const query =
@@ -82,10 +85,13 @@ export function buildEvidenceContext(
 
   const retrievedKnowledge =
     tenant && query.trim()
-      ? searchKnowledge({
+      ? await searchKnowledge({
           tenantId: input.tenantId ?? tenant.id,
           query,
           topK: 10,
+          actorId: input.actorId,
+          requestId: input.requestId,
+          correlationId: input.correlationId,
         })
       : [];
 
@@ -117,36 +123,36 @@ export function buildEvidenceContext(
   };
 }
 
-export function buildScreeningEvidenceContext(
+export async function buildScreeningEvidenceContext(
   input: Omit<EvidenceContextInput, "purpose">
-): EvidenceContext {
+): Promise<EvidenceContext> {
   return buildEvidenceContext({
     ...input,
     purpose: "screening",
   });
 }
 
-export function buildHitGenerationEvidenceContext(
+export async function buildHitGenerationEvidenceContext(
   input: Omit<EvidenceContextInput, "purpose">
-): EvidenceContext {
+): Promise<EvidenceContext> {
   return buildEvidenceContext({
     ...input,
     purpose: "hit_generation",
   });
 }
 
-export function buildIntakeEvidenceContext(
+export async function buildIntakeEvidenceContext(
   input: Omit<EvidenceContextInput, "purpose">
-): EvidenceContext {
+): Promise<EvidenceContext> {
   return buildEvidenceContext({
     ...input,
     purpose: "intake",
   });
 }
 
-export function buildQcEvidenceContext(
+export async function buildQcEvidenceContext(
   input: Omit<EvidenceContextInput, "purpose">
-): EvidenceContext {
+): Promise<EvidenceContext> {
   return buildEvidenceContext({
     ...input,
     purpose: "qc",

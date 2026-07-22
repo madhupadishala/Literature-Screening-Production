@@ -9,6 +9,7 @@ export class AIProviderFactory {
     switch (settings.provider) {
       case "openai":
       case "groq":
+      case "ollama":
         return openAIProvider;
 
       default:

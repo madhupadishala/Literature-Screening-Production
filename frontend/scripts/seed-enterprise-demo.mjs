@@ -497,7 +497,7 @@ try {
        export_version, schema_version, file_name, payload, content, sha256,
        source_lineage_sha256, generated_by, generated_at
      ) VALUES ($1, $2, $3, $4, $5, 1, 'clinixai.literature.intake-input.v1',
-       'intake_input.json', $6::jsonb, $6, $7, $8, $9, now() - interval '30 minutes')
+       'intake_input.json', $6::jsonb, $7, $8, $9, $10, now() - interval '30 minutes')
      ON CONFLICT (id) DO UPDATE SET payload = EXCLUDED.payload, content = EXCLUDED.content,
        sha256 = EXCLUDED.sha256, source_lineage_sha256 = EXCLUDED.source_lineage_sha256`,
     [
@@ -506,6 +506,7 @@ try {
       ids.packages[0],
       ids.screenings[0],
       ids.screeningReviews[0],
+      content,
       content,
       payloadHash,
       lineageHash,

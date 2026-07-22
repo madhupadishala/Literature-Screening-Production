@@ -1,40 +1,32 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
-import { searchKnowledge } from "@/lib/knowledge/knowledge-router";
+import { routeErrorResponse } from "@/lib/api/route-error";
+import { searchControlledKnowledge } from "@/lib/knowledge/retrieval/controlled-knowledge-service";
+import type { ControlledKnowledgeSearchRequest } from "@/lib/knowledge/retrieval/controlled-knowledge-types";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
-import type { KnowledgeSearchRequest } from "@/lib/knowledge/knowledge-types";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const body =
-      (await request.json()) as KnowledgeSearchRequest;
-
-    if (!body.tenantId || !body.query) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "tenantId and query are required.",
-        },
-        { status: 400 }
-      );
-    }
-
-    const results = searchKnowledge(body);
-
-    return NextResponse.json({
-      success: true,
-      total: results.length,
-      results,
+    const principal = await requirePermission(request, PERMISSIONS.SEARCH_HISTORY_VIEW);
+    const body = (await request.json()) as Partial<ControlledKnowledgeSearchRequest>;
+    const response = await searchControlledKnowledge({
+      tenantId: principal.tenantId,
+      query: String(body.query || ""),
+      topK: body.topK,
+      minScore: body.minScore,
+      mode: body.mode,
+      domains: body.domains,
+      knowledgeObjectIds: body.knowledgeObjectIds,
+      actorId: principal.userId,
+      requestId: request.headers.get("x-request-id") || undefined,
+      correlationId: request.headers.get("x-correlation-id") || undefined,
     });
+    return Response.json({ success: true, data: response, results: response.results });
   } catch (error) {
-    console.error(error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Knowledge search failed.",
-      },
-      { status: 500 }
-    );
+    return routeErrorResponse(error);
   }
 }

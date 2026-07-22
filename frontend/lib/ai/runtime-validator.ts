@@ -23,6 +23,8 @@ function hasProviderApiKey(provider: string): boolean {
     return Boolean(process.env.OPENAI_API_KEY || process.env.AI_API_KEY);
   }
 
+  if (provider === "ollama") return true;
+
   return false;
 }
 
@@ -32,7 +34,7 @@ export function validateAIRuntime(): AIRuntimeValidationResult {
   const checks: AIRuntimeValidationCheck[] = [
     {
       name: "provider",
-      passed: settings.provider === "openai" || settings.provider === "groq",
+      passed: settings.provider === "openai" || settings.provider === "groq" || settings.provider === "ollama",
       message: `Configured provider: ${settings.provider}`,
     },
     {
@@ -46,7 +48,9 @@ export function validateAIRuntime(): AIRuntimeValidationResult {
       name: "api_key",
       passed: hasProviderApiKey(settings.provider),
       message: hasProviderApiKey(settings.provider)
-        ? "Provider API key is configured."
+        ? settings.provider === "ollama"
+          ? "Local Ollama provider does not require an API key."
+          : "Provider API key is configured."
         : "Provider API key is missing.",
     },
     {

@@ -1,141 +1,70 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { createAIRequestId } from "@/lib/ai/ai-runtime";
 import { screeningService } from "@/lib/literature/screening/screening-service";
 import type { ScreeningRequest } from "@/lib/literature/screening/screening-types";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function isNonEmptyString(value: unknown): value is string {
+function nonEmpty(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-function isScreeningRequest(value: unknown): value is ScreeningRequest {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return false;
-  }
-
-  const candidate = value as Partial<ScreeningRequest>;
-
-  if (!isNonEmptyString(candidate.tenantId)) {
-    return false;
-  }
-
-  if (!candidate.article || typeof candidate.article !== "object") {
-    return false;
-  }
-
-  return (
-    isNonEmptyString(candidate.article.pmid) &&
-    isNonEmptyString(candidate.article.title) &&
-    (candidate.article.authors === undefined ||
-      Array.isArray(candidate.article.authors))
-  );
+function validArticle(value: unknown): value is ScreeningRequest["article"] {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const article = value as Partial<ScreeningRequest["article"]>;
+  return nonEmpty(article.pmid) && nonEmpty(article.title);
 }
 
-export async function POST(request: NextRequest): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<Response> {
   const correlationId =
-    request.headers.get("x-correlation-id") ??
-    request.headers.get("x-request-id") ??
+    request.headers.get("x-correlation-id") ||
+    request.headers.get("x-request-id") ||
     createAIRequestId("correlation-screening");
-  const startedAt = Date.now();
 
   try {
-    const body: unknown = await request.json();
-
-    if (!isScreeningRequest(body)) {
-      return NextResponse.json(
-        {
-          success: false,
-          correlationId,
-          error: "Invalid screening request.",
-          requiredFields: [
-            "tenantId",
-            "article.pmid",
-            "article.title",
-          ],
-        },
-        {
-          status: 400,
-          headers: {
-            "x-correlation-id": correlationId,
-          },
-        },
+    const principal = await requirePermission(request, PERMISSIONS.SCREENING_EXECUTE);
+    const body = (await request.json()) as { article?: unknown };
+    if (!validArticle(body.article)) {
+      return Response.json(
+        { success: false, correlationId, error: "Valid article.pmid and article.title are required." },
+        { status: 400, headers: { "x-correlation-id": correlationId } },
       );
     }
 
-    const normalizedRequest: ScreeningRequest = {
-      ...body,
-      tenantId: body.tenantId.trim(),
+    const article = body.article;
+    const normalized: ScreeningRequest = {
+      tenantId: principal.tenantId,
       correlationId,
       article: {
-        ...body.article,
-        pmid: body.article.pmid.trim(),
-        title: body.article.title.trim(),
-        abstract: body.article.abstract ?? "",
-        authors: Array.isArray(body.article.authors)
-          ? body.article.authors.filter(
-              (author): author is string =>
-                typeof author === "string" && author.trim().length > 0,
-            )
+        ...article,
+        pmid: article.pmid.trim(),
+        title: article.title.trim(),
+        abstract: article.abstract || "",
+        authors: Array.isArray(article.authors)
+          ? article.authors.filter(nonEmpty).map((author) => author.trim())
           : [],
-        doi: body.article.doi ?? undefined,
-        journal: body.article.journal ?? undefined,
       },
     };
-
-    const result = await screeningService.screenArticle(normalizedRequest);
-
-    return NextResponse.json(
-      {
-        success: true,
-        correlationId,
-        processedAt: new Date().toISOString(),
-        durationMs: Date.now() - startedAt,
-        data: result,
-      },
-      {
-        status: 200,
-        headers: {
-          "x-correlation-id": correlationId,
-        },
-      },
+    const result = await screeningService.screenArticle(normalized);
+    return Response.json(
+      { success: true, correlationId, processedAt: new Date().toISOString(), data: result },
+      { status: 200, headers: { "x-correlation-id": correlationId } },
     );
   } catch (error) {
-    console.error("[POST /api/ai/screening]", {
-      correlationId,
-      error,
-    });
-
-    return NextResponse.json(
-      {
-        success: false,
-        correlationId,
-        durationMs: Date.now() - startedAt,
-        error: "Screening execution failed.",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Unknown screening error.",
-      },
-      {
-        status: 500,
-        headers: {
-          "x-correlation-id": correlationId,
-        },
-      },
-    );
+    return routeErrorResponse(error);
   }
 }
 
-export async function GET(): Promise<NextResponse> {
-  return NextResponse.json(
-    {
-      success: true,
-      status: screeningService.getStatus(),
-      history: screeningService.list(50),
-    },
-    { status: 200 },
-  );
+export async function GET(request: NextRequest): Promise<Response> {
+  try {
+    await requirePermission(request, PERMISSIONS.SCREENING_REVIEW);
+    return Response.json({ success: true, status: screeningService.getStatus(), history: screeningService.list(50) });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }

@@ -1,61 +1,39 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { createAIRequestId } from "@/lib/ai/ai-runtime";
-import {
-  hitsAgent,
-  type HitsAgentRequest,
-} from "@/lib/ai/hits-agent";
+import { hitsAgent, type HitsAgentRequest } from "@/lib/ai/hits-agent";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function isNonEmptyString(value: unknown): value is string {
-  return typeof value === "string" && value.trim().length > 0;
-}
+type HitsBody = Omit<HitsAgentRequest, "tenantId" | "correlationId">;
 
-function isHitsAgentRequest(value: unknown): value is HitsAgentRequest {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return false;
-  }
-
-  const candidate = value as Partial<HitsAgentRequest>;
-  return isNonEmptyString(candidate.tenantId);
-}
-
-export async function POST(request: NextRequest): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<Response> {
   const correlationId =
-    request.headers.get("x-correlation-id") ??
-    request.headers.get("x-request-id") ??
+    request.headers.get("x-correlation-id") ||
+    request.headers.get("x-request-id") ||
     createAIRequestId("correlation-hits");
   const startedAt = Date.now();
 
   try {
-    const body: unknown = await request.json();
-
-    if (!isHitsAgentRequest(body)) {
-      return NextResponse.json(
-        {
-          success: false,
-          correlationId,
-          error: "Invalid Hits AI request.",
-          requiredFields: ["tenantId"],
-        },
-        {
-          status: 400,
-          headers: {
-            "x-correlation-id": correlationId,
-          },
-        },
-      );
-    }
-
+    const principal = await requirePermission(request, PERMISSIONS.HITS_SUBMIT);
+    const body = (await request.json()) as HitsBody;
     const result = await hitsAgent.evaluate({
-      ...body,
-      tenantId: body.tenantId.trim(),
+      tenantId: principal.tenantId,
+      articleId: body.articleId,
+      articleTitle: body.articleTitle,
+      abstractText: body.abstractText,
+      fullTextSnippet: body.fullTextSnippet,
+      productName: body.productName,
+      country: body.country,
+      processArea: body.processArea,
       correlationId,
     });
 
-    return NextResponse.json(
+    return Response.json(
       {
         success: true,
         correlationId,
@@ -63,41 +41,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         processedAt: new Date().toISOString(),
         durationMs: Date.now() - startedAt,
         data: result,
-        next: {
-          endpoint: "/api/workflow/run",
-          method: "POST",
-        },
+        next: { endpoint: "/api/workflow/run", method: "POST" },
       },
-      {
-        status: 200,
-        headers: {
-          "x-correlation-id": correlationId,
-        },
-      },
+      { status: 200, headers: { "x-correlation-id": correlationId } },
     );
   } catch (error) {
-    console.error("[POST /api/ai/hits]", {
-      correlationId,
-      error,
-    });
-
-    return NextResponse.json(
-      {
-        success: false,
-        correlationId,
-        durationMs: Date.now() - startedAt,
-        error: "Hits AI execution failed.",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Unknown Hits AI error.",
-      },
-      {
-        status: 500,
-        headers: {
-          "x-correlation-id": correlationId,
-        },
-      },
-    );
+    return routeErrorResponse(error);
   }
 }

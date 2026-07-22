@@ -3,75 +3,74 @@
 import { useState } from "react";
 
 import KnowledgeResultCard from "./KnowledgeResultCard";
+import type { KnowledgeSearchResult } from "@/lib/knowledge/knowledge-types";
 
-import type {
-  KnowledgeSearchResult,
-} from "@/lib/knowledge/knowledge-types";
+interface KnowledgeSearchApiResponse {
+  success?: boolean;
+  results?: KnowledgeSearchResult[];
+  message?: string;
+}
 
 export default function KnowledgeSearchPanel() {
   const [query, setQuery] = useState("");
-
-  const [results, setResults] = useState<
-    KnowledgeSearchResult[]
-  >([]);
-
+  const [results, setResults] = useState<KnowledgeSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  async function search() {
-    if (!query.trim()) return;
+  async function search(): Promise<void> {
+    const normalizedQuery = query.trim();
+    if (!normalizedQuery || loading) return;
 
     setLoading(true);
+    setError(null);
 
-    const response = await fetch("/api/knowledge/search", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tenantId: "tenant-clinixai-default",
-        query,
-        topK: 10,
-      }),
-    });
-
-    const data = await response.json();
-
-    setResults(data.results ?? []);
-
-    setLoading(false);
+    try {
+      const response = await fetch("/api/knowledge/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: normalizedQuery, topK: 10, mode: "hybrid" }),
+      });
+      const payload = (await response.json()) as KnowledgeSearchApiResponse;
+      if (!response.ok || payload.success === false) {
+        throw new Error(payload.message || "Governed knowledge search failed.");
+      }
+      setResults(payload.results ?? []);
+    } catch (searchError) {
+      setResults([]);
+      setError(
+        searchError instanceof Error
+          ? searchError.message
+          : "Governed knowledge search failed.",
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <div>
-      <h2>Knowledge Search</h2>
-
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          marginBottom: 20,
-        }}
-      >
+    <section>
+      <h2>Governed Knowledge Search</h2>
+      <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
         <input
           value={query}
-          placeholder="Search SOPs, Product Rules..."
-          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search approved PV knowledge..."
+          aria-label="Knowledge search query"
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") void search();
+          }}
         />
-
-        <button onClick={search}>
-          Search
+        <button type="button" disabled={loading || !query.trim()} onClick={() => void search()}>
+          {loading ? "Searching..." : "Search"}
         </button>
       </div>
-
-      {loading && <p>Searching...</p>}
-
-      {!loading &&
-        results.map((result) => (
-          <KnowledgeResultCard
-            key={result.chunk.id}
-            result={result}
-          />
-        ))}
-    </div>
+      {error ? <p role="alert">{error}</p> : null}
+      {!loading && !error && results.length === 0 ? (
+        <p>No approved knowledge results are currently displayed.</p>
+      ) : null}
+      {results.map((result) => (
+        <KnowledgeResultCard key={result.citation.chunkId} result={result} />
+      ))}
+    </section>
   );
 }

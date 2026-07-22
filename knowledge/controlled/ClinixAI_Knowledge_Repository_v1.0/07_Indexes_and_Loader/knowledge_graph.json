@@ -1,0 +1,1896 @@
+{
+  "nodes": [
+    {
+      "id": "LF-001",
+      "type": "KnowledgeObject",
+      "title": "Weekly Literature Monitoring",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-002",
+      "type": "KnowledgeObject",
+      "title": "Literature Calendar",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-003",
+      "type": "KnowledgeObject",
+      "title": "Literature Source Management",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-004",
+      "type": "KnowledgeObject",
+      "title": "Search Profile",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-005",
+      "type": "KnowledgeObject",
+      "title": "Search Execution",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-006",
+      "type": "KnowledgeObject",
+      "title": "Article Identity",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-007",
+      "type": "KnowledgeObject",
+      "title": "Duplicate Article Management",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-008",
+      "type": "KnowledgeObject",
+      "title": "Article Language Preservation",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-009",
+      "type": "KnowledgeObject",
+      "title": "Translation Management",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-010",
+      "type": "KnowledgeObject",
+      "title": "Search History & Audit Trail",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-011",
+      "type": "KnowledgeObject",
+      "title": "Knowledge Source Governance",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-012",
+      "type": "KnowledgeObject",
+      "title": "Literature Search Frequency",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-013",
+      "type": "KnowledgeObject",
+      "title": "Literature Source Activation",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-014",
+      "type": "KnowledgeObject",
+      "title": "Search String Versioning",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-015",
+      "type": "KnowledgeObject",
+      "title": "Search String Validation",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-016",
+      "type": "KnowledgeObject",
+      "title": "Product Search Coverage",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-017",
+      "type": "KnowledgeObject",
+      "title": "Literature Calendar Versioning",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-018",
+      "type": "KnowledgeObject",
+      "title": "Missed Search Detection",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-019",
+      "type": "KnowledgeObject",
+      "title": "Manual HIT Generation",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-020",
+      "type": "KnowledgeObject",
+      "title": "Zero HIT Documentation",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-021",
+      "type": "KnowledgeObject",
+      "title": "Search Evidence Package",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-022",
+      "type": "KnowledgeObject",
+      "title": "Review Workspace Creation",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-023",
+      "type": "KnowledgeObject",
+      "title": "Product Identification",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-024",
+      "type": "KnowledgeObject",
+      "title": "Product Master Matching",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-025",
+      "type": "KnowledgeObject",
+      "title": "Literature Type Classification",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-026",
+      "type": "KnowledgeObject",
+      "title": "Primary Reporter Identification",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-027",
+      "type": "KnowledgeObject",
+      "title": "Multi-Patient Article Principle",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-028",
+      "type": "KnowledgeObject",
+      "title": "AI Search Responsibility",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-029",
+      "type": "KnowledgeObject",
+      "title": "Literature Audit Trail",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "LF-030",
+      "type": "KnowledgeObject",
+      "title": "Literature Workflow Principle",
+      "domain": "Literature Foundation",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-001",
+      "type": "KnowledgeObject",
+      "title": "Search Strategy Objective",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-002",
+      "type": "KnowledgeObject",
+      "title": "Recall Over Precision",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-003",
+      "type": "KnowledgeObject",
+      "title": "Product Expansion Rule",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-004",
+      "type": "KnowledgeObject",
+      "title": "Safety Concept Expansion",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-005",
+      "type": "KnowledgeObject",
+      "title": "Boolean Construction",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-006",
+      "type": "KnowledgeObject",
+      "title": "Broad First Strategy",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-007",
+      "type": "KnowledgeObject",
+      "title": "Search Strategy Explainability",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-008",
+      "type": "KnowledgeObject",
+      "title": "Search Strategy Validation",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-009",
+      "type": "KnowledgeObject",
+      "title": "Search Strategy Version Control",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SI-010",
+      "type": "KnowledgeObject",
+      "title": "Search Strategy Regeneration",
+      "domain": "Search Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-001",
+      "type": "KnowledgeObject",
+      "title": "PubMed Primary Database",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-002",
+      "type": "KnowledgeObject",
+      "title": "Database-Specific Search Syntax",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-003",
+      "type": "KnowledgeObject",
+      "title": "Field Tag Optimization",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-004",
+      "type": "KnowledgeObject",
+      "title": "Controlled Vocabulary Utilization",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-005",
+      "type": "KnowledgeObject",
+      "title": "Free-text Searching",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-006",
+      "type": "KnowledgeObject",
+      "title": "Automatic Term Mapping Awareness",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-007",
+      "type": "KnowledgeObject",
+      "title": "Search Translation Engine",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-008",
+      "type": "KnowledgeObject",
+      "title": "Database Capability Awareness",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-009",
+      "type": "KnowledgeObject",
+      "title": "Search Equivalence Validation",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "DB-010",
+      "type": "KnowledgeObject",
+      "title": "Database Search Evidence",
+      "domain": "Database Search Engineering",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-001",
+      "type": "KnowledgeObject",
+      "title": "HIT Neutrality Principle",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-002",
+      "type": "KnowledgeObject",
+      "title": "Publication Classification",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-003",
+      "type": "KnowledgeObject",
+      "title": "Screening Decision Engine",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-004",
+      "type": "KnowledgeObject",
+      "title": "Active MAH Verification",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-005",
+      "type": "KnowledgeObject",
+      "title": "Product Lifecycle Verification",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-006",
+      "type": "KnowledgeObject",
+      "title": "Publication Type Independence",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-007",
+      "type": "KnowledgeObject",
+      "title": "Deterministic Screening",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-008",
+      "type": "KnowledgeObject",
+      "title": "Evidence-Based Screening",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-009",
+      "type": "KnowledgeObject",
+      "title": "Reviewer Override",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "SDI-010",
+      "type": "KnowledgeObject",
+      "title": "Explainable Screening",
+      "domain": "Screening Decision Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-001",
+      "type": "KnowledgeObject",
+      "title": "Country of Incidence (COI) Determination",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-002",
+      "type": "KnowledgeObject",
+      "title": "COI Determination Hierarchy",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-003",
+      "type": "KnowledgeObject",
+      "title": "Reporter Country Resolution",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-004",
+      "type": "KnowledgeObject",
+      "title": "Safety Information Definition",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-005",
+      "type": "KnowledgeObject",
+      "title": "Full-Text Acquisition",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-006",
+      "type": "KnowledgeObject",
+      "title": "Full-Text Request Workflow",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-007",
+      "type": "KnowledgeObject",
+      "title": "Original Language Preservation",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-008",
+      "type": "KnowledgeObject",
+      "title": "Confidence Score & Unknown Handling",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-009",
+      "type": "KnowledgeObject",
+      "title": "Manual Review Recommendation",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "OI-010",
+      "type": "KnowledgeObject",
+      "title": "Output Traceability & Explainability",
+      "domain": "Output Intelligence",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-001",
+      "type": "KnowledgeObject",
+      "title": "Literature Valid Case Definition",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-002",
+      "type": "KnowledgeObject",
+      "title": "Identifiable Patient",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-003",
+      "type": "KnowledgeObject",
+      "title": "Identifiable Reporter",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-004",
+      "type": "KnowledgeObject",
+      "title": "Company Suspect Product Identification",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-005",
+      "type": "KnowledgeObject",
+      "title": "Adverse Event & Special Situation Recognition",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-006",
+      "type": "KnowledgeObject",
+      "title": "Active MAH Verification",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-007",
+      "type": "KnowledgeObject",
+      "title": "Personally Identifiable Information (PII) Recognition",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-008",
+      "type": "KnowledgeObject",
+      "title": "Evidence-Based Validity Assessment",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-009",
+      "type": "KnowledgeObject",
+      "title": "Medical Knowledge Recognition",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "VAL-010",
+      "type": "KnowledgeObject",
+      "title": "Explainable Regulatory Decision",
+      "domain": "Validity Engine",
+      "status": "Approved",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-001",
+      "type": "KnowledgeObject",
+      "title": "Knowledge Supremacy Principle",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-002",
+      "type": "KnowledgeObject",
+      "title": "Explainability by Design",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-003",
+      "type": "KnowledgeObject",
+      "title": "Hallucination Prohibition",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-004",
+      "type": "KnowledgeObject",
+      "title": "Unknown Principle",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-005",
+      "type": "KnowledgeObject",
+      "title": "Evidence Before Conclusion",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-006",
+      "type": "KnowledgeObject",
+      "title": "Human Authority Principle",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-007",
+      "type": "KnowledgeObject",
+      "title": "Deterministic Before Probabilistic",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-008",
+      "type": "KnowledgeObject",
+      "title": "Regulatory Neutrality",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-009",
+      "type": "KnowledgeObject",
+      "title": "Controlled Source Hierarchy",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-010",
+      "type": "KnowledgeObject",
+      "title": "Immutable Audit Principle",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-011",
+      "type": "KnowledgeObject",
+      "title": "Knowledge Versioning",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-012",
+      "type": "KnowledgeObject",
+      "title": "Knowledge Approval Workflow",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-013",
+      "type": "KnowledgeObject",
+      "title": "Knowledge Retrieval First",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-014",
+      "type": "KnowledgeObject",
+      "title": "Tenant Isolation",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-015",
+      "type": "KnowledgeObject",
+      "title": "Least Assumption Principle",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-016",
+      "type": "KnowledgeObject",
+      "title": "Medical Neutrality",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-017",
+      "type": "KnowledgeObject",
+      "title": "Continuous Knowledge Governance",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-018",
+      "type": "KnowledgeObject",
+      "title": "AI Learning Boundary",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-019",
+      "type": "KnowledgeObject",
+      "title": "Security and Privacy by Design",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    },
+    {
+      "id": "CDS-020",
+      "type": "KnowledgeObject",
+      "title": "Patient Safety First",
+      "domain": "Constitution and Governance",
+      "status": "Draft \u2013 Requires Approval",
+      "version": "1.0.0"
+    }
+  ],
+  "edges": [
+    {
+      "source": "LF-001",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-002",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-002",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-002",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-003",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-004",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-005",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-005",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-005",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-006",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-007",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-008",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-009",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-010",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-010",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-010",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-012",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-012",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-012",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-013",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-014",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-015",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-015",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-015",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-016",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-016",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-016",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-017",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-017",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-017",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-018",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-018",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-018",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-019",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-020",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-021",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-021",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-021",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-022",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-023",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-024",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-025",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-026",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-027",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-028",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-028",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-028",
+      "target": "LF-014",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-029",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "LF-030",
+      "target": "LF-011",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-001",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-001",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-001",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-002",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-002",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-002",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-003",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-003",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-003",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-004",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-004",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-004",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-005",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-005",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-005",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-006",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-006",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-006",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-007",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-007",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-007",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-008",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-008",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-008",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-009",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-009",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-009",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-010",
+      "target": "LF-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-010",
+      "target": "LF-015",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SI-010",
+      "target": "LF-016",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-001",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-001",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-001",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-002",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-002",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-002",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-003",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-003",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-003",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-004",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-004",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-004",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-005",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-005",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-005",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-006",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-006",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-006",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-007",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-007",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-007",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-008",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-008",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-008",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-009",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-009",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-009",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-010",
+      "target": "SI-005",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-010",
+      "target": "SI-008",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "DB-010",
+      "target": "LF-021",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-001",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-001",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-001",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-001",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-002",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-002",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-002",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-002",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-003",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-003",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-003",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-003",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-004",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-004",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-004",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-004",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-005",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-005",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-005",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-005",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-006",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-006",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-006",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-006",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-007",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-007",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-007",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-007",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-008",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-008",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-008",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-008",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-009",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-009",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-009",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-009",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-010",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-010",
+      "target": "LF-024",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-010",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "SDI-010",
+      "target": "VAL-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-001",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-001",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-002",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-002",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-003",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-003",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-004",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-004",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-005",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-005",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-006",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-006",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-007",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-007",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-008",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-008",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-009",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-009",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-010",
+      "target": "LF-022",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "OI-010",
+      "target": "LF-029",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-001",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-001",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-001",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-002",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-002",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-002",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-003",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-003",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-003",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-004",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-004",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-004",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-005",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-005",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-005",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-006",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-006",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-006",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-007",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-007",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-007",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-008",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-008",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-008",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-009",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-009",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-009",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-010",
+      "target": "LF-023",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-010",
+      "target": "OI-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "VAL-010",
+      "target": "OI-004",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-002",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-003",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-004",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-005",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-006",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-007",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-008",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-009",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-010",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-011",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-012",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-013",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-014",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-015",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-016",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-017",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-018",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-019",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    },
+    {
+      "source": "CDS-020",
+      "target": "CDS-001",
+      "relationship": "DEPENDS_ON"
+    }
+  ]
+}

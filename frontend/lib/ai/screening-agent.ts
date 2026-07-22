@@ -2,6 +2,9 @@ import type {
   ScreeningRequest,
   ScreeningResponse,
 } from "@/lib/literature/screening/screening-types";
+import { buildTenantRuntimeConfigurationContext } from "@/lib/configuration/runtime-context";
+import { ragEngine } from "@/lib/rag/rag-engine";
+import type { RAGMergedContext } from "@/lib/rag/rag-types";
 
 import { recordAIAudit } from "./ai-audit";
 import { recordAIMetric } from "./ai-metrics";
@@ -11,6 +14,8 @@ import { screeningPromptBuilder } from "./screening-prompt-builder";
 import { parseScreeningAIResult } from "./screening-result-parser";
 
 export interface ScreeningAgentResponse extends ScreeningResponse {
+  ragContext: RAGMergedContext;
+  configurationSnapshot: unknown;
   aiExecution: {
     provider: string;
     model: string;
@@ -30,7 +35,27 @@ export class ScreeningAgent {
 
     try {
       const provider = aiProviderFactory.getProvider();
-      const prompt = screeningPromptBuilder.build(request);
+      const ragResponse = await ragEngine.buildContext({
+        tenantId: request.tenantId,
+        query: [
+          "literature screening validity decision",
+          request.article.title,
+          request.article.abstract,
+          request.article.country,
+          "patient reporter suspect product adverse event special situation active MAH duplicate inclusion exclusion",
+        ].filter(Boolean).join(" "),
+        country: request.article.country,
+        processArea: "literature_screening",
+        searchMode: "hybrid",
+        topK: 10,
+        minScore: 0,
+        correlationId: request.correlationId,
+      });
+      const runtimeConfiguration = await buildTenantRuntimeConfigurationContext(request.tenantId);
+      const prompt = screeningPromptBuilder.build(request, {
+        ragContext: ragResponse.context,
+        runtimeConfiguration,
+      });
 
       const completion = await provider.complete({
         systemPrompt:
@@ -56,7 +81,7 @@ export class ScreeningAgent {
         correlationId: request.correlationId,
       });
 
-      recordAIAudit({
+      await recordAIAudit({
         operation: "screening",
         status: "SUCCESS",
         tenantId: request.tenantId,
@@ -72,6 +97,9 @@ export class ScreeningAgent {
         metadata: {
           reason: parsed.reason,
           findingsCount: parsed.findings.length,
+          knowledgeContextPackId: ragResponse.context.contextPackId,
+          knowledgeCitationIds: ragResponse.context.citations?.map((citation) => citation.citationId) || [],
+          configurationSnapshot: runtimeConfiguration.snapshot,
         },
       });
 
@@ -84,6 +112,8 @@ export class ScreeningAgent {
         findings: parsed.findings,
         screenedAt: new Date().toISOString(),
         workflowStage: "SCREENING_COMPLETED",
+        ragContext: ragResponse.context,
+        configurationSnapshot: runtimeConfiguration.snapshot,
         aiExecution: {
           provider: completion.provider,
           model: completion.model,
@@ -97,7 +127,7 @@ export class ScreeningAgent {
         },
       };
     } catch (error) {
-      recordAIAudit({
+      await recordAIAudit({
         operation: "screening",
         status: "FAILED",
         tenantId: request.tenantId,
