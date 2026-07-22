@@ -121,6 +121,14 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
   const product = row.product_context || {};
   const resolvedProduct = recordValue(product, "resolvedProduct");
   const detectedProducts = stringArray(result.detectedProducts);
+  const assessments = Array.isArray(result.companySuspectAssessments)
+    ? result.companySuspectAssessments.filter(isRecord)
+    : [];
+  const assessment = assessments[0] || {};
+  const selectedCandidate = recordValue(assessment, "selectedCandidate");
+  const decisionTrail = Array.isArray(assessment.decisionTrail)
+    ? assessment.decisionTrail.filter(isRecord)
+    : [];
   const reasons = stringArray(result.reasons);
   const productName =
     detectedProducts[0] ||
@@ -144,14 +152,28 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
     publication_date: stringValue(identity.publicationDate, "—"),
     product_name: productName,
     normalized_identity:
-      stringValue(resolvedProduct.preferredName) || productName,
-    matched_term: stringValue(product.matchedTerm, "—"),
-    match_type: stringValue(product.matchType, "—"),
-    match_source: stringValue(product.matchSource, "GOVERNED_PRODUCT_CONTEXT"),
-    company_product_status: stringValue(result.classification, "needs_manual_review"),
+      stringValue(assessment.normalizedProduct) ||
+      stringValue(resolvedProduct.preferredName) ||
+      productName,
+    matched_term:
+      stringValue(selectedCandidate.matchedName) ||
+      stringValue(product.matchedTerm, "—"),
+    match_type:
+      stringValue(assessment.relationship) ||
+      stringValue(product.matchType, "—"),
+    match_source: assessments.length
+      ? `PPI ${stringValue(assessment.knowledgeVersion, "governed")}`
+      : stringValue(product.matchSource, "GOVERNED_PRODUCT_CONTEXT"),
+    company_product_status:
+      stringValue(assessment.conclusion) ||
+      stringValue(result.classification, "needs_manual_review"),
     author_country: stringValue(identity.authorCountry, "—"),
-    country_of_interest: stringValue(product.countryOfInterest, "—"),
-    mah_country_match: booleanValue(product.mahCountryMatch),
+    country_of_interest:
+      stringValue(assessment.countryOfInterest) ||
+      stringValue(product.countryOfInterest, "—"),
+    mah_country_match: assessment.companySuspect === true
+      ? true
+      : booleanValue(product.mahCountryMatch),
     pii_present: booleanValue(result.piiPresent),
     confidence_score: numberValue(row.confidence),
     qc_required: booleanValue(result.qcRequired),
@@ -159,7 +181,10 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
     duplicate_source_count: numberValue(row.duplicate_source_count),
     duplicate_confidence: numberValue(row.duplicate_confidence),
     duplicate_signals: stringArray(row.duplicate_signals),
-    evidence_sentence: reasons[0] || "No evidence rationale was returned.",
+    evidence_sentence:
+      stringValue(decisionTrail[0]?.explanation) ||
+      reasons[0] ||
+      "No evidence rationale was returned.",
     ai_summary: reasons.join(" ") || "Manual Hits review is required.",
     review_status: row.review_status || "pending",
     review_decision: row.decision || "pending",

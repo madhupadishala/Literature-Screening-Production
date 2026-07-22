@@ -11,6 +11,7 @@ import {
   type HitsAIResult,
 } from "./hits-result-parser";
 import { aiProviderFactory } from "./provider-factory";
+import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
 
 export interface HitsAgentRequest {
   tenantId: string;
@@ -99,7 +100,30 @@ export class HitsAgent {
         requestId,
       });
 
-      const result = parseHitsAIResult(aiResponse.content);
+      const aiResult = parseHitsAIResult(aiResponse.content);
+      const companySuspectAssessments = aiResult.extractedSuspectEvidence.map((evidence) =>
+        assessCompanySuspect({
+          evidence,
+          productMaster: runtimeConfiguration.productMaster,
+        }),
+      );
+      const requiresProductReview = companySuspectAssessments.some(
+        (assessment) => assessment.manualReviewRequired,
+      );
+      const result: HitsAIResult = {
+        ...aiResult,
+        companySuspectAssessments,
+        classification: requiresProductReview ? "needs_manual_review" : aiResult.classification,
+        recommendedNextStep: requiresProductReview ? "manual_review" : aiResult.recommendedNextStep,
+        qcRequired: requiresProductReview || aiResult.qcRequired,
+        reasons: [
+          ...aiResult.reasons,
+          ...companySuspectAssessments.map(
+            (assessment) =>
+              `${assessment.reportedProduct}: ${assessment.conclusion} (${assessment.assessmentId})`,
+          ),
+        ],
+      };
 
       recordAIMetric({
         operation: "hits",
@@ -136,6 +160,9 @@ export class HitsAgent {
           knowledgeContextPackId: ragResponse.context.contextPackId,
           knowledgeCitationIds: ragResponse.context.citations?.map((citation) => citation.citationId) || [],
           configurationSnapshot: runtimeConfiguration.snapshot,
+          pharmaceuticalKnowledgeVersion:
+            companySuspectAssessments[0]?.knowledgeVersion || null,
+          companySuspectAssessments,
         },
       });
 

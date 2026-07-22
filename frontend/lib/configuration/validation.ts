@@ -69,6 +69,68 @@ export function validateConfigurationPayload(
           ),
         );
       }
+
+      const productId = String(value.clientProductId || value.productId || "").trim();
+      if (!productId) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].clientProductId`,
+            "A governed clientProductId or productId is required for auditable product matching.",
+          ),
+        );
+      }
+
+      const hasPharmaceuticalIdentity = [
+        value.genericName,
+        value.inn,
+        value.api,
+        value.composition,
+        value.activeComposition,
+      ].some((entry) => String(entry || "").trim().length > 0);
+      if (!hasPharmaceuticalIdentity) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].inn`,
+            "A governed generic, INN, API, composition, or active composition is required; brand alone is insufficient.",
+          ),
+        );
+      }
+
+      if (!String(value.country || value.market || "").trim()) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].country`,
+            "Country/market is required for COI-specific licence assessment.",
+          ),
+        );
+      }
+
+      if (
+        value.active === undefined &&
+        value.authorizationActive === undefined &&
+        value.licenceActive === undefined
+      ) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].active`,
+            "An explicit licence/authorization active status is required.",
+          ),
+        );
+      }
+
+      if (!String(value.dosageForm || value.formulation || value.presentation || "").trim()) {
+        warnings.push(
+          issue(
+            "warning",
+            `records[${index}].dosageForm`,
+            "No dosage form or formulation is configured; presentation-specific source products cannot be confirmed from this row.",
+          ),
+        );
+      }
     });
   }
 

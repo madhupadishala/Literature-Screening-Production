@@ -41,6 +41,18 @@ Return strict JSON only:
   "confidence":0-100,
   "reason":"CASE_REPORT | ADVERSE_EVENT | PRODUCT_MENTION | HUMAN_STUDY | ANIMAL_STUDY | REVIEW_ARTICLE | NO_ADVERSE_EVENT | NON_MEDICAL | INSUFFICIENT_INFORMATION | NON_ENGLISH | DUPLICATE | UNKNOWN",
   "findings":[{"rule":"knowledge citation or tenant rule", "passed":true, "score":20, "comment":"evidence-based comment"}],
+  "extractedSuspectEvidence":[{
+    "reportedProduct":"exact suspect wording from source",
+    "reportedChemicalName":"chemical name if explicitly reported",
+    "reportedComposition":"composition if explicitly reported",
+    "reportedDosageForm":"dosage form if explicitly reported",
+    "reportedFormulation":"formulation/presentation if explicitly reported",
+    "reportedAdministrationRoute":"route actually administered if explicitly reported",
+    "presentationQualifierRole":"PRODUCT_PRESENTATION | ADMINISTRATION_CIRCUMSTANCE | NOT_REPORTED | UNCLEAR",
+    "countryOfInterest":"COI only when supported by governed COI evidence",
+    "relevantDate":"YYYY-MM-DD only when supported",
+    "sourceEvidence":"short verbatim evidence span"
+  }],
   "knowledgeCitationIds":[]
 }
 
@@ -68,6 +80,7 @@ Repository Manifest: ${governance.ragContext.repositoryManifestSha256 ?? "Not Av
 ${knowledgeContext(governance.ragContext)}
 
 knowledgeCitationIds may contain only citation identifiers supplied above and directly supporting the decision.
+Preserve every suspect exactly as reported and distinguish product formulation/presentation from the route by which an identified product was administered. Do not invent company ownership, pharmaceutical equivalence, COI, licence status, or dates. The deterministic Pharmaceutical Product Intelligence engine performs those conclusions after evidence extraction.
 `.trim();
   }
 }

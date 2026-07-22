@@ -23,6 +23,10 @@ export interface HitsAIResult {
 
   detectedSpecialSituations: string[];
 
+  extractedSuspectEvidence: SuspectProductEvidence[];
+
+  companySuspectAssessments: CompanySuspectAssessment[];
+
   recommendedNextStep: HitsRecommendedNextStep;
 
   qcRequired: boolean;
@@ -49,6 +53,10 @@ const fallbackResult: HitsAIResult = {
   detectedEvents: [],
 
   detectedSpecialSituations: [],
+
+  extractedSuspectEvidence: [],
+
+  companySuspectAssessments: [],
 
   recommendedNextStep:
     "manual_review",
@@ -92,6 +100,43 @@ function normalizeStringArray(
     (item): item is string =>
       typeof item === "string",
   );
+}
+
+export function normalizeSuspectEvidence(value: unknown): SuspectProductEvidence[] {
+  if (!Array.isArray(value)) return [];
+  const roles: PresentationQualifierRole[] = [
+    "PRODUCT_PRESENTATION",
+    "ADMINISTRATION_CIRCUMSTANCE",
+    "NOT_REPORTED",
+    "UNCLEAR",
+  ];
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return [];
+    const record = item as Record<string, unknown>;
+    const reportedProduct = typeof record.reportedProduct === "string"
+      ? record.reportedProduct.trim()
+      : "";
+    if (!reportedProduct) return [];
+    const optional = (key: string) =>
+      typeof record[key] === "string" && String(record[key]).trim()
+        ? String(record[key]).trim()
+        : undefined;
+    const role = roles.includes(record.presentationQualifierRole as PresentationQualifierRole)
+      ? (record.presentationQualifierRole as PresentationQualifierRole)
+      : "UNCLEAR";
+    return [{
+      reportedProduct,
+      reportedChemicalName: optional("reportedChemicalName"),
+      reportedComposition: optional("reportedComposition"),
+      reportedDosageForm: optional("reportedDosageForm"),
+      reportedFormulation: optional("reportedFormulation"),
+      reportedAdministrationRoute: optional("reportedAdministrationRoute"),
+      presentationQualifierRole: role,
+      countryOfInterest: optional("countryOfInterest"),
+      relevantDate: optional("relevantDate"),
+      sourceEvidence: optional("sourceEvidence"),
+    }];
+  });
 }
 
 function normalizeClassification(
@@ -165,6 +210,13 @@ export function parseHitsAIResult(
           parsed.detectedSpecialSituations,
         ),
 
+      extractedSuspectEvidence:
+        normalizeSuspectEvidence(
+          parsed.extractedSuspectEvidence,
+        ),
+
+      companySuspectAssessments: [],
+
       recommendedNextStep:
         normalizeNextStep(
           parsed.recommendedNextStep,
@@ -185,3 +237,8 @@ export function parseHitsAIResult(
     return fallbackResult;
   }
 }
+import type {
+  CompanySuspectAssessment,
+  PresentationQualifierRole,
+  SuspectProductEvidence,
+} from "@/lib/pharmaceutical-intelligence/types";

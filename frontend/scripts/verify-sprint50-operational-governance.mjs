@@ -1,4 +1,6 @@
 import process from "node:process";
+import fs from "node:fs";
+import path from "node:path";
 
 import pg from "pg";
 
@@ -40,6 +42,15 @@ function productIdentity(product) {
 }
 
 try {
+  const ppiRegistryPath = path.resolve(process.cwd(), "lib/pharmaceutical-intelligence/approved-scenarios.json");
+  const ppiGovernancePath = path.resolve(process.cwd(), "../knowledge/pharmaceutical-product-intelligence/v1.0/scenarios.json");
+  assert(fs.existsSync(ppiRegistryPath), "Approved Pharmaceutical Product Intelligence registry is missing.");
+  assert(fs.existsSync(ppiGovernancePath), "Pharmaceutical Product Intelligence governance manifest is missing.");
+  const ppiRegistry = JSON.parse(fs.readFileSync(ppiRegistryPath, "utf8"));
+  assert(ppiRegistry.knowledgeVersion === "PPI-KB-1.0.0", "Unexpected Pharmaceutical Product Intelligence knowledge version.");
+  assert(Array.isArray(ppiRegistry.scenarios) && ppiRegistry.scenarios.length === 6, "Six approved pharmaceutical decision scenarios are required.");
+  assert(ppiRegistry.scenarios.every((scenario) => scenario.status === "APPROVED"), "A pharmaceutical decision scenario is not Approved.");
+  assert(ppiRegistry.scenarios.every((scenario) => Array.isArray(scenario.prohibitedConclusions) && scenario.prohibitedConclusions.length > 0), "A pharmaceutical scenario has no prohibited conclusions.");
   const tenantResult = await pool.query(
     `SELECT id, tenant_key, status FROM tenants WHERE tenant_key = $1`,
     [tenantKey],
@@ -111,6 +122,13 @@ try {
       version: repository.version_label,
       source: repository.embedding_model,
       records: `${repository.approved_object_count} objects / ${repository.indexed_chunk_count} chunks`,
+      status: "PASS",
+    },
+    {
+      control: "Pharmaceutical Product Intelligence",
+      version: ppiRegistry.knowledgeVersion,
+      source: "approved-scenarios.json",
+      records: ppiRegistry.scenarios.length,
       status: "PASS",
     },
     {

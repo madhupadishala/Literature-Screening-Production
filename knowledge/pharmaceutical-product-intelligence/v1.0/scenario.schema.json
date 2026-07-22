@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://theclinixai.com/schemas/pharmaceutical-scenario-v1.json",
+  "title": "ClinixAI Pharmaceutical Product Intelligence Scenario",
+  "type": "object",
+  "required": ["id", "title", "status", "version", "decisionArea", "rule", "expectedDecision", "prohibitedConclusions", "manualReviewWhen", "examples"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^PPI-SCN-[0-9]{3}$" },
+    "title": { "type": "string", "minLength": 1 },
+    "status": { "const": "APPROVED" },
+    "version": { "type": "string", "minLength": 1 },
+    "decisionArea": { "type": "string", "minLength": 1 },
+    "rule": { "type": "string", "minLength": 1 },
+    "triggers": { "type": "array", "items": { "type": "string" } },
+    "expectedDecision": { "type": "object" },
+    "prohibitedConclusions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "manualReviewWhen": { "type": "array", "items": { "type": "string" } },
+    "examples": { "type": "array", "minItems": 1, "items": { "type": "object" } }
+  },
+  "additionalProperties": false
+}

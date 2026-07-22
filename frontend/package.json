@@ -27,6 +27,7 @@
     "knowledge:verify:retrieval": "node scripts/verify-controlled-knowledge-retrieval.mjs",
     "governance:verify:configuration": "node scripts/verify-sprint50-operational-governance.mjs",
     "governance:verify:operations": "node scripts/verify-sprint50-operational-governance.mjs --full",
+    "pharmaceutical:verify": "node --import tsx scripts/verify-pharmaceutical-product-intelligence.ts",
     "validate:e2e": "node scripts/validate-enterprise-e2e.mjs",
     "validate:e2e:offline": "node scripts/validate-enterprise-e2e.mjs --offline",
     "release:gate": "node scripts/production-release-gate.mjs"
@@ -58,6 +59,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

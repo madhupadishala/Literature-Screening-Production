@@ -12,10 +12,13 @@ import { aiProviderFactory } from "./provider-factory";
 import { createAIRequestId } from "./ai-runtime";
 import { screeningPromptBuilder } from "./screening-prompt-builder";
 import { parseScreeningAIResult } from "./screening-result-parser";
+import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
+import type { CompanySuspectAssessment } from "@/lib/pharmaceutical-intelligence/types";
 
 export interface ScreeningAgentResponse extends ScreeningResponse {
   ragContext: RAGMergedContext;
   configurationSnapshot: unknown;
+  companySuspectAssessments: CompanySuspectAssessment[];
   aiExecution: {
     provider: string;
     model: string;
@@ -66,6 +69,16 @@ export class ScreeningAgent {
       });
 
       const parsed = parseScreeningAIResult(completion.content);
+      const companySuspectAssessments = parsed.extractedSuspectEvidence.map((evidence) =>
+        assessCompanySuspect({
+          evidence,
+          productMaster: runtimeConfiguration.productMaster,
+        }),
+      );
+      const productReviewRequired = companySuspectAssessments.some(
+        (assessment) => assessment.manualReviewRequired,
+      );
+      const governedDecision = productReviewRequired ? "REVIEW" : parsed.decision;
 
       recordAIMetric({
         operation: "screening",
@@ -92,7 +105,7 @@ export class ScreeningAgent {
         correlationId: request.correlationId,
         attempts: completion.attempts,
         latencyMs: completion.latencyMs,
-        decision: parsed.decision,
+        decision: governedDecision,
         confidence: parsed.confidence,
         metadata: {
           reason: parsed.reason,
@@ -100,13 +113,16 @@ export class ScreeningAgent {
           knowledgeContextPackId: ragResponse.context.contextPackId,
           knowledgeCitationIds: ragResponse.context.citations?.map((citation) => citation.citationId) || [],
           configurationSnapshot: runtimeConfiguration.snapshot,
+          pharmaceuticalKnowledgeVersion:
+            companySuspectAssessments[0]?.knowledgeVersion || null,
+          companySuspectAssessments,
         },
       });
 
       return {
         tenantId: request.tenantId,
         pmid: request.article.pmid,
-        decision: parsed.decision,
+        decision: governedDecision,
         confidence: parsed.confidence,
         reason: parsed.reason,
         findings: parsed.findings,
@@ -114,6 +130,7 @@ export class ScreeningAgent {
         workflowStage: "SCREENING_COMPLETED",
         ragContext: ragResponse.context,
         configurationSnapshot: runtimeConfiguration.snapshot,
+        companySuspectAssessments,
         aiExecution: {
           provider: completion.provider,
           model: completion.model,

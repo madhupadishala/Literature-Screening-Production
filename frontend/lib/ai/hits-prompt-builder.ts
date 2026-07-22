@@ -112,6 +112,20 @@ Return strict JSON only, without markdown, explanation, or additional text.
   "detectedProducts": [],
   "detectedEvents": [],
   "detectedSpecialSituations": [],
+  "extractedSuspectEvidence": [
+    {
+      "reportedProduct": "exact suspect wording from the source",
+      "reportedChemicalName": "chemical name if explicitly reported",
+      "reportedComposition": "composition if explicitly reported",
+      "reportedDosageForm": "dosage form if explicitly reported",
+      "reportedFormulation": "formulation/presentation if explicitly reported",
+      "reportedAdministrationRoute": "route actually administered if explicitly reported",
+      "presentationQualifierRole": "PRODUCT_PRESENTATION | ADMINISTRATION_CIRCUMSTANCE | NOT_REPORTED | UNCLEAR",
+      "countryOfInterest": "COI only when supported by the governed COI evidence hierarchy",
+      "relevantDate": "YYYY-MM-DD only when supported",
+      "sourceEvidence": "short verbatim evidence span"
+    }
+  ],
   "knowledgeCitationIds": [],
   "recommendedNextStep": "send_to_screening"
 }
@@ -119,5 +133,6 @@ Return strict JSON only, without markdown, explanation, or additional text.
 classification must be one of: hit, no_hit, needs_manual_review.
 recommendedNextStep must be one of: send_to_screening, reject, manual_review.
 knowledgeCitationIds must contain only citation IDs explicitly supplied above and directly supporting the decision.
+Extract every reported suspect separately. Preserve exact source wording. Distinguish a formulation/presentation qualifier (for example, “paracetamol IV”) from an administration circumstance (for example, “paracetamol tablet administered intravenously”). Do not decide company ownership, licence status, or pharmaceutical equivalence in extractedSuspectEvidence; deterministic governed assessment occurs after extraction. Use UNCLEAR when the semantic role cannot be established from the source.
 `.trim();
 }

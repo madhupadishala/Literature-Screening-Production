@@ -1,0 +1,112 @@
+{
+  "knowledgeVersion": "PPI-KB-1.0.0",
+  "approvedAt": "2026-07-22",
+  "approvalBasis": "ClinixAI PV product-identification governance discussion",
+  "equivalentNames": [
+    { "canonical": "paracetamol", "terms": ["paracetamol", "acetaminophen"] },
+    { "canonical": "vitamin c", "terms": ["vitamin c", "ascorbic acid"] }
+  ],
+  "commonSaltTokens": ["hydrochloride", "hcl", "sodium", "na"],
+  "distinctSaltRelationships": [],
+  "distinctSubstances": [
+    { "family": "vitamin a", "canonical": "retinol", "terms": ["retinol", "all-trans-retinol"] },
+    { "family": "vitamin a", "canonical": "retinal", "terms": ["retinal", "retinaldehyde"] },
+    { "family": "vitamin a", "canonical": "tretinoin", "terms": ["tretinoin", "retinoic acid", "retin-a"] },
+    { "family": "vitamin a", "canonical": "retinyl palmitate", "terms": ["retinyl palmitate", "vitamin a palmitate"] },
+    { "family": "vitamin a", "canonical": "retinyl acetate", "terms": ["retinyl acetate", "vitamin a acetate"] }
+  ],
+  "scenarios": [
+    {
+      "id": "PPI-SCN-001",
+      "title": "INN, generic and equivalent-name company-product matching",
+      "status": "APPROVED",
+      "version": "1.0",
+      "decisionArea": "PRODUCT_IDENTITY",
+      "rule": "An extracted suspect is compared with the configured Product Master using its governed pharmaceutical identity, including approved INN, generic, common and chemical-name equivalence; literal string equality is not required.",
+      "triggers": ["equivalent name", "INN", "generic name", "chemical name"],
+      "expectedDecision": { "paracetamolVsAcetaminophen": "MATCH", "ascorbicAcidVsVitaminC": "MATCH" },
+      "prohibitedConclusions": ["Reject an extracted suspect solely because the source and Product Master use different approved equivalent names."],
+      "manualReviewWhen": ["The reported name cannot be resolved through approved pharmaceutical knowledge."],
+      "examples": [
+        { "source": "Acetaminophen", "productMaster": "Paracetamol", "companyProductMatch": true },
+        { "source": "Ascorbic acid", "productMaster": "Vitamin C", "companyProductMatch": true }
+      ]
+    },
+    {
+      "id": "PPI-SCN-002",
+      "title": "Common salt normalization for initial product matching",
+      "status": "APPROVED",
+      "version": "1.0",
+      "decisionArea": "SALT_NORMALIZATION",
+      "rule": "A common salt descriptor such as hydrochloride or sodium is omitted for initial matching to the configured product name while the complete reported salt is preserved. The omission is not permitted when governed knowledge establishes that the salt represents a clinically distinct product identity or indication.",
+      "triggers": ["hydrochloride", "HCl", "sodium", "Na", "salt form"],
+      "expectedDecision": { "initialMatch": "MATCH_ON_BASE_PRODUCT", "preserveReportedSalt": true },
+      "prohibitedConclusions": ["Erase the reported salt from evidence.", "Reject a company product solely because a common salt descriptor is present."],
+      "manualReviewWhen": ["The salt has a governed clinically distinct identity.", "The salt relationship is unknown or contradictory."],
+      "examples": [
+        { "source": "Diclofenac sodium", "productMaster": "Diclofenac", "companyProductMatch": true }
+      ]
+    },
+    {
+      "id": "PPI-SCN-003",
+      "title": "Composition-specific handling of ambiguous product families",
+      "status": "APPROVED",
+      "version": "1.0",
+      "decisionArea": "COMPOSITION",
+      "rule": "A broad family name such as Vitamin A must not make all related compositions interchangeable. When a specific composition is reported, match that composition. When only the family is reported and multiple distinct compositions are possible, do not guess and require manual review.",
+      "triggers": ["Vitamin A", "family name", "multiple compositions"],
+      "expectedDecision": { "specificComposition": "MATCH_EXACT_COMPOSITION", "ambiguousFamily": "MANUAL_REVIEW" },
+      "prohibitedConclusions": ["Treat tretinoin, retinol, retinal, retinyl palmitate and retinyl acetate as interchangeable company products."],
+      "manualReviewWhen": ["Only a broad family name is reported and the composition cannot be established."],
+      "examples": [
+        { "source": "Tretinoin", "productMaster": "Retinyl palmitate", "companyProductMatch": false },
+        { "source": "Vitamin A", "productMaster": ["Retinol", "Retinyl palmitate"], "companyProductMatch": null }
+      ]
+    },
+    {
+      "id": "PPI-SCN-004",
+      "title": "Reported formulation is part of company-product identity",
+      "status": "APPROVED",
+      "version": "1.0",
+      "decisionArea": "PRESENTATION",
+      "rule": "When a qualifier identifies the medicinal-product formulation or presentation, that presentation must exist in the configured Product Master. A base-substance match alone does not confirm the company suspect.",
+      "triggers": ["IV formulation", "product presentation", "dosage form"],
+      "expectedDecision": { "paracetamolIVVsParacetamolOnly": "NOT_COMPANY_PRESENTATION" },
+      "prohibitedConclusions": ["Remove IV when IV identifies the product formulation.", "Confirm company suspect from the base substance alone when the reported presentation is absent from the Product Master."],
+      "manualReviewWhen": ["It is unclear whether the qualifier describes the product formulation or administration circumstance."],
+      "examples": [
+        { "source": "Paracetamol IV", "productMaster": "Paracetamol", "companySuspect": false }
+      ]
+    },
+    {
+      "id": "PPI-SCN-005",
+      "title": "Administration route does not replace identified product presentation",
+      "status": "APPROVED",
+      "version": "1.0",
+      "decisionArea": "SPECIAL_SITUATION",
+      "rule": "When the source identifies the company product and separately reports administration by a non-approved route, retain the company-product match. Evaluate the route mismatch as a potential special situation without using it to invalidate the product or ICSR.",
+      "triggers": ["administered via", "route mismatch", "not according to label"],
+      "expectedDecision": { "paracetamolTabletAdministeredIV": "COMPANY_PRODUCT_WITH_SPECIAL_SITUATION_REVIEW" },
+      "prohibitedConclusions": ["Reject the company product because it was administered by a non-approved route.", "Automatically classify medication error without evidence of intent.", "Use route mismatch to invalidate the ICSR."],
+      "manualReviewWhen": ["Intent is not reported.", "The narrative does not distinguish formulation from administration route."],
+      "examples": [
+        { "source": "Paracetamol tablet administered intravenously", "productMaster": "Paracetamol", "companySuspect": true, "specialSituationReview": true }
+      ]
+    },
+    {
+      "id": "PPI-SCN-006",
+      "title": "COI and date-effective licence confirmation",
+      "status": "APPROVED",
+      "version": "1.0",
+      "decisionArea": "MAH_RESPONSIBILITY",
+      "rule": "After product and presentation matching, confirm company-suspect responsibility against the configured Product Master for the COI supplied by the governed COI Engine and the relevant date. Do not invent COI, licence, MAH or dates.",
+      "triggers": ["country of interest", "active licence", "MAH effective date", "MAH expiry date"],
+      "expectedDecision": { "activeLicence": "CONFIRMED", "noLicence": "NO_ACTIVE_LICENCE_IN_COI", "missingEvidence": "MANUAL_REVIEW" },
+      "prohibitedConclusions": ["Use publication country automatically as COI.", "Assume a licence is active when country or effective dates are absent."],
+      "manualReviewWhen": ["COI is unresolved.", "Relevant date is unavailable for a historical or time-bounded licence.", "Licence data conflict."],
+      "examples": [
+        { "sourceProduct": "Paracetamol tablet", "coi": "India", "activeLicence": true, "companySuspect": true }
+      ]
+    }
+  ]
+}

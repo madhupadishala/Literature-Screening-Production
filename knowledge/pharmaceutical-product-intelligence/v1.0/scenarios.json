@@ -1,0 +1,5 @@
+{
+  "canonicalSource": "frontend/lib/pharmaceutical-intelligence/approved-scenarios.json",
+  "control": "The operational JSON is the approved machine-readable scenario registry. The governance verifier compares SHA-256 digests and validates all scenario controls.",
+  "knowledgeVersion": "PPI-KB-1.0.0"
+}

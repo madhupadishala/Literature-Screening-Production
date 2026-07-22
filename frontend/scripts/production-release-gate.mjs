@@ -20,6 +20,7 @@ if ((process.env.INTERNAL_MONITORING_TOKEN?.trim().length || 0) < 32) {
   throw new Error("INTERNAL_MONITORING_TOKEN must contain at least 32 characters.");
 }
 
+run("pharmaceutical-product-intelligence", "npm", ["run", "pharmaceutical:verify"]);
 run("authoritative-e2e", "npm", ["run", "validate:e2e"]);
 run("production-build", "npm", ["run", "build"]);
 

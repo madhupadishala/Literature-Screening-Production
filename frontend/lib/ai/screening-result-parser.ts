@@ -3,12 +3,15 @@ import type {
   ScreeningFinding,
   ScreeningReason,
 } from "@/lib/literature/screening/screening-types";
+import type { SuspectProductEvidence } from "@/lib/pharmaceutical-intelligence/types";
+import { normalizeSuspectEvidence } from "./hits-result-parser";
 
 export interface ParsedScreeningAIResult {
   decision: ScreeningDecision;
   confidence: number;
   reason: ScreeningReason;
   findings: ScreeningFinding[];
+  extractedSuspectEvidence: SuspectProductEvidence[];
 }
 
 const ALLOWED_DECISIONS: ScreeningDecision[] = ["INCLUDE", "EXCLUDE", "REVIEW"];
@@ -82,5 +85,6 @@ export function parseScreeningAIResult(raw: string): ParsedScreeningAIResult {
     confidence: normalizeConfidence(parsed.confidence),
     reason,
     findings: normalizeFindings(parsed.findings),
+    extractedSuspectEvidence: normalizeSuspectEvidence(parsed.extractedSuspectEvidence),
   };
 }
