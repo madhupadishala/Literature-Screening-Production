@@ -123,7 +123,12 @@ Return strict JSON only, without markdown, explanation, or additional text.
       "presentationQualifierRole": "PRODUCT_PRESENTATION | ADMINISTRATION_CIRCUMSTANCE | NOT_REPORTED | UNCLEAR",
       "countryOfInterest": "COI only when supported by the governed COI evidence hierarchy",
       "relevantDate": "YYYY-MM-DD only when supported",
-      "sourceEvidence": "short verbatim evidence span"
+      "sourceEvidence": "short verbatim evidence span",
+      "role": "SUSPECT | CONCOMITANT | TREATMENT | EXPOSURE | PRODUCT_MENTION | UNRESOLVED",
+      "roleEvidence": "source wording supporting the role",
+      "evidenceLocation": "TITLE | ABSTRACT | KEYWORDS | TABLE | FIGURE | CAPTION | SUPPLEMENT | FULL_TEXT | UNKNOWN",
+      "components": ["component names for a combination product"],
+      "conflictingEvidence": ["contradictory product statements"]
     }
   ],
   "knowledgeCitationIds": [],
@@ -133,6 +138,6 @@ Return strict JSON only, without markdown, explanation, or additional text.
 classification must be one of: hit, no_hit, needs_manual_review.
 recommendedNextStep must be one of: send_to_screening, reject, manual_review.
 knowledgeCitationIds must contain only citation IDs explicitly supplied above and directly supporting the decision.
-Extract every reported suspect separately. Preserve exact source wording. Distinguish a formulation/presentation qualifier (for example, “paracetamol IV”) from an administration circumstance (for example, “paracetamol tablet administered intravenously”). Do not decide company ownership, licence status, or pharmaceutical equivalence in extractedSuspectEvidence; deterministic governed assessment occurs after extraction. Use UNCLEAR when the semantic role cannot be established from the source.
+Extract every medicinal product separately, including multiple suspects, concomitants, treatment products, exposures, and product mentions. Preserve exact source wording and location. Treat a fixed combination as one reported suspect entity while preserving its components. Record contradictions without resolving them silently. Distinguish a formulation/presentation qualifier from an administration circumstance. Do not decide company ownership, licence status, or pharmaceutical equivalence; deterministic governed assessment occurs after extraction.
 `.trim();
 }

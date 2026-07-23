@@ -110,6 +110,7 @@ export function normalizeSuspectEvidence(value: unknown): SuspectProductEvidence
     "NOT_REPORTED",
     "UNCLEAR",
   ];
+  const productRoles: ReportedProductRole[] = ["SUSPECT", "CONCOMITANT", "TREATMENT", "EXPOSURE", "PRODUCT_MENTION", "UNRESOLVED"];
   return value.flatMap((item) => {
     if (!item || typeof item !== "object" || Array.isArray(item)) return [];
     const record = item as Record<string, unknown>;
@@ -124,6 +125,12 @@ export function normalizeSuspectEvidence(value: unknown): SuspectProductEvidence
     const role = roles.includes(record.presentationQualifierRole as PresentationQualifierRole)
       ? (record.presentationQualifierRole as PresentationQualifierRole)
       : "UNCLEAR";
+    const productRole = productRoles.includes(record.role as ReportedProductRole)
+      ? (record.role as ReportedProductRole)
+      : "UNRESOLVED";
+    const stringList = (key: string) => Array.isArray(record[key])
+      ? (record[key] as unknown[]).filter((entry): entry is string => typeof entry === "string")
+      : undefined;
     return [{
       reportedProduct,
       reportedChemicalName: optional("reportedChemicalName"),
@@ -135,6 +142,11 @@ export function normalizeSuspectEvidence(value: unknown): SuspectProductEvidence
       countryOfInterest: optional("countryOfInterest"),
       relevantDate: optional("relevantDate"),
       sourceEvidence: optional("sourceEvidence"),
+      role: productRole,
+      roleEvidence: optional("roleEvidence"),
+      evidenceLocation: optional("evidenceLocation") as SuspectProductEvidence["evidenceLocation"],
+      components: stringList("components"),
+      conflictingEvidence: stringList("conflictingEvidence"),
     }];
   });
 }
@@ -240,5 +252,6 @@ export function parseHitsAIResult(
 import type {
   CompanySuspectAssessment,
   PresentationQualifierRole,
+  ReportedProductRole,
   SuspectProductEvidence,
 } from "@/lib/pharmaceutical-intelligence/types";

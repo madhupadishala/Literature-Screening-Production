@@ -227,6 +227,27 @@ export function assessCompanySuspect(input: {
   const { evidence } = input;
   const applied = new Set<string>();
   const decisionTrail: ProductDecisionStep[] = [];
+  const reportedRole = evidence.role ?? "SUSPECT";
+  const roleSupportsSuspicion = reportedRole === "SUSPECT"
+    ? true
+    : ["CONCOMITANT", "TREATMENT", "EXPOSURE", "PRODUCT_MENTION"].includes(reportedRole)
+      ? false
+      : null;
+  if (evidence.conflictingEvidence?.length) {
+    const appliedScenarioIds = ["P1-SCN-010"];
+    return unresolvedAssessment(evidence, reportedRole, roleSupportsSuspicion, appliedScenarioIds, "Conflicting product evidence requires manual review.");
+  }
+  if (!evidence.reportedProduct.trim()) {
+    const appliedScenarioIds = ["P1-SCN-012"];
+    return unresolvedAssessment(evidence, reportedRole, roleSupportsSuspicion, appliedScenarioIds, "No identifiable suspect product was reported.", false);
+  }
+  if (roleSupportsSuspicion === false) {
+    const appliedScenarioIds = [reportedRole === "PRODUCT_MENTION" || reportedRole === "EXPOSURE" ? "P1-SCN-008" : "P1-SCN-006"];
+    return unresolvedAssessment(evidence, reportedRole, false, appliedScenarioIds, `The product was reported as ${reportedRole}, not as a suspect.`, false);
+  }
+  if (roleSupportsSuspicion === null) {
+    return unresolvedAssessment(evidence, reportedRole, null, ["P1-SCN-006"], "The reported product role is unresolved.");
+  }
   const reportedTerm = evidence.reportedComposition || evidence.reportedChemicalName || evidence.reportedProduct;
   const identitySource = productIdentityTerm(reportedTerm, evidence);
   const saltResolution = removeCommonSalt(identitySource);
@@ -256,6 +277,9 @@ export function assessCompanySuspect(input: {
       appliedScenarioIds,
       prohibitedConclusions: scenario(appliedScenarioIds).prohibited,
       decisionTrail,
+      reportedRole,
+      roleSupportsSuspicion,
+      evidenceLocation: evidence.evidenceLocation,
     };
   }
 
@@ -266,6 +290,12 @@ export function assessCompanySuspect(input: {
   decisionTrail.push(trailStep(2, "PRODUCT_MASTER_CANDIDATES", candidates.length ? "PASS" : "FAIL", `${candidates.length} configured Product Master candidate(s) matched the governed product identity.`, ["PPI-SCN-001"]));
 
   if (!candidates.length) {
+    const possibleSpellingMatch = records(input.productMaster).some((record) =>
+      namesFor(record).some((name) => editDistance(normalize(name), identity.canonical) <= 2),
+    );
+    if (possibleSpellingMatch) {
+      return unresolvedAssessment(evidence, reportedRole, true, ["P1-SCN-004"], "A possible spelling/OCR product candidate was found; similarity alone cannot confirm identity.");
+    }
     const appliedScenarioIds = [...applied];
     return {
       assessmentId: assessmentId(evidence), knowledgeVersion: PHARMACEUTICAL_KNOWLEDGE_VERSION,
@@ -276,10 +306,15 @@ export function assessCompanySuspect(input: {
       companySuspect: false, conclusion: "NOT_COMPANY_PRODUCT",
       specialSituationReviewRequired: false, manualReviewRequired: false,
       appliedScenarioIds, prohibitedConclusions: scenario(appliedScenarioIds).prohibited, decisionTrail,
+      reportedRole, roleSupportsSuspicion, evidenceLocation: evidence.evidenceLocation,
     };
   }
 
-  const role = evidence.presentationQualifierRole ?? "UNCLEAR";
+  const role = evidence.presentationQualifierRole ?? (
+    evidence.reportedFormulation || evidence.reportedDosageForm || evidence.reportedAdministrationRoute
+      ? "UNCLEAR"
+      : "NOT_REPORTED"
+  );
   if (role === "PRODUCT_PRESENTATION") applied.add("PPI-SCN-004");
   if (role === "ADMINISTRATION_CIRCUMSTANCE") applied.add("PPI-SCN-005");
   const evaluated = candidates.map((candidate) => ({ candidate, presentation: presentationMatches(evidence, candidate) }));
@@ -300,6 +335,7 @@ export function assessCompanySuspect(input: {
       companySuspect: false, conclusion: "NOT_COMPANY_PRESENTATION",
       specialSituationReviewRequired: false, manualReviewRequired: false,
       appliedScenarioIds, prohibitedConclusions: scenario(appliedScenarioIds).prohibited, decisionTrail,
+      reportedRole, roleSupportsSuspicion, evidenceLocation: evidence.evidenceLocation,
     };
   }
 
@@ -327,6 +363,34 @@ export function assessCompanySuspect(input: {
     specialSituationReviewRequired: administrationMismatch,
     manualReviewRequired,
     appliedScenarioIds, prohibitedConclusions: scenario(appliedScenarioIds).prohibited, decisionTrail,
+    reportedRole, roleSupportsSuspicion, evidenceLocation: evidence.evidenceLocation,
+  };
+}
+
+export function assessCompanySuspects(input: {
+  evidence: SuspectProductEvidence[];
+  productMaster: unknown;
+}): CompanySuspectAssessment[] {
+  return input.evidence.map((evidence) => assessCompanySuspect({ evidence, productMaster: input.productMaster }));
+}
+
+function unresolvedAssessment(
+  evidence: SuspectProductEvidence,
+  reportedRole: CompanySuspectAssessment["reportedRole"],
+  roleSupportsSuspicion: boolean | null,
+  appliedScenarioIds: string[],
+  explanation: string,
+  manualReviewRequired = true,
+): CompanySuspectAssessment {
+  return {
+    assessmentId: assessmentId(evidence), knowledgeVersion: PHARMACEUTICAL_KNOWLEDGE_VERSION,
+    reportedProduct: evidence.reportedProduct || "NOT_IDENTIFIABLE", relationship: "UNRESOLVED",
+    candidates: [], productMatched: false, presentationMatched: null,
+    countryOfInterest: evidence.countryOfInterest, licenceStatus: "UNRESOLVED",
+    companySuspect: false, conclusion: "UNRESOLVED", specialSituationReviewRequired: false,
+    manualReviewRequired, appliedScenarioIds, prohibitedConclusions: [],
+    decisionTrail: [trailStep(1, "PRODUCT_ROLE_OR_IDENTITY_UNRESOLVED", manualReviewRequired ? "REVIEW" : "FAIL", explanation, appliedScenarioIds)],
+    reportedRole, roleSupportsSuspicion, evidenceLocation: evidence.evidenceLocation,
   };
 }
 
@@ -357,4 +421,19 @@ function assessmentId(evidence: SuspectProductEvidence): string {
     hash = Math.imul(hash, 16777619);
   }
   return `ppi_${(hash >>> 0).toString(16).padStart(8, "0")}`;
+}
+
+function editDistance(left: string, right: string): number {
+  if (!left || !right) return Math.max(left.length, right.length);
+  const row = Array.from({ length: right.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= left.length; i += 1) {
+    let previous = row[0];
+    row[0] = i;
+    for (let j = 1; j <= right.length; j += 1) {
+      const current = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, previous + (left[i - 1] === right[j - 1] ? 0 : 1));
+      previous = current;
+    }
+  }
+  return row[right.length];
 }

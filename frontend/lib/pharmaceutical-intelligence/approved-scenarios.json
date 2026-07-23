@@ -15,6 +15,20 @@
     { "family": "vitamin a", "canonical": "retinyl palmitate", "terms": ["retinyl palmitate", "vitamin a palmitate"] },
     { "family": "vitamin a", "canonical": "retinyl acetate", "terms": ["retinyl acetate", "vitamin a acetate"] }
   ],
+  "point1Approval": {
+    "status": "APPROVED",
+    "approvedAt": "2026-07-22",
+    "scenarioIds": ["P1-SCN-001","P1-SCN-002","P1-SCN-003","P1-SCN-004","P1-SCN-005","P1-SCN-006","P1-SCN-007","P1-SCN-008","P1-SCN-009","P1-SCN-010","P1-SCN-011","P1-SCN-012"],
+    "controls": [
+      "Preserve exact product wording, role, evidence and location.",
+      "Assess every reported medicinal product independently.",
+      "Do not equate Product Master membership with suspect role.",
+      "Treat fixed combinations as the reported entity and preserve components.",
+      "Do not silently resolve conflicting product evidence.",
+      "Search all legally accessible source sections.",
+      "Do not invent a missing suspect product."
+    ]
+  },
   "scenarios": [
     {
       "id": "PPI-SCN-001",

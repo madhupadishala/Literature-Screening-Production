@@ -19,6 +19,14 @@ export type CompanySuspectConclusion =
   | "NO_ACTIVE_LICENCE_IN_COI"
   | "UNRESOLVED";
 
+export type ReportedProductRole =
+  | "SUSPECT"
+  | "CONCOMITANT"
+  | "TREATMENT"
+  | "EXPOSURE"
+  | "PRODUCT_MENTION"
+  | "UNRESOLVED";
+
 export interface SuspectProductEvidence {
   reportedProduct: string;
   reportedChemicalName?: string;
@@ -30,6 +38,11 @@ export interface SuspectProductEvidence {
   countryOfInterest?: string;
   relevantDate?: string;
   sourceEvidence?: string;
+  role?: ReportedProductRole;
+  roleEvidence?: string;
+  evidenceLocation?: "TITLE" | "ABSTRACT" | "KEYWORDS" | "TABLE" | "FIGURE" | "CAPTION" | "SUPPLEMENT" | "FULL_TEXT" | "UNKNOWN";
+  components?: string[];
+  conflictingEvidence?: string[];
 }
 
 export interface ProductMasterCandidate {
@@ -78,6 +91,9 @@ export interface CompanySuspectAssessment {
   appliedScenarioIds: string[];
   prohibitedConclusions: string[];
   decisionTrail: ProductDecisionStep[];
+  reportedRole: ReportedProductRole;
+  roleSupportsSuspicion: boolean | null;
+  evidenceLocation?: SuspectProductEvidence["evidenceLocation"];
 }
 
 export interface PharmaceuticalScenario {
