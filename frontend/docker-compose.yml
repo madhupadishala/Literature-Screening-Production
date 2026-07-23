@@ -1,0 +1,75 @@
+name: clinixai-literature
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: clinixai
+      POSTGRES_USER: clinixai
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-clinixai-local-only}
+    ports:
+      - "5432:5432"
+    volumes:
+      - clinixai-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clinixai -d clinixai"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+      args:
+        BUILD_SHA: local-compose
+        RELEASE_VERSION: 0.1.0-local
+    command: ["node", "scripts/run-database-migrations.mjs"]
+    environment: &app-environment
+      NODE_ENV: production
+      DATABASE_URL: postgresql://clinixai:${POSTGRES_PASSWORD:-clinixai-local-only}@postgres:5432/clinixai
+      DATABASE_SSL_MODE: disable
+      AI_PROVIDER: ${AI_PROVIDER:-groq}
+      GROQ_API_KEY: ${GROQ_API_KEY:-local-not-configured}
+      GROQ_MODEL: ${GROQ_MODEL:-llama-3.3-70b-versatile}
+      EVIDENCE_STORE_BACKEND: database
+      KNOWLEDGE_ROOT: /app/knowledge
+      CLINIXAI_KNOWLEDGE_ROOT: /app/knowledge
+      INTERNAL_MONITORING_TOKEN: ${INTERNAL_MONITORING_TOKEN:-local-monitoring-token-change-me-1234567890}
+      BUILD_SHA: local-compose
+      RELEASE_VERSION: 0.1.0-local
+      RELEASE_BASE_URL: http://localhost:3000
+      ALLOW_DEMO_PRINCIPAL: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  app:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+      args:
+        BUILD_SHA: local-compose
+        RELEASE_VERSION: 0.1.0-local
+    restart: unless-stopped
+    environment:
+      <<: *app-environment
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health/live').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  clinixai-postgres:
