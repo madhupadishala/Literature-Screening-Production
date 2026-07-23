@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 
-import { assessCompanySuspect } from "../lib/pharmaceutical-intelligence/assessment-engine";
+import { assessCompanySuspect, assessCompanySuspects } from "../lib/pharmaceutical-intelligence/assessment-engine";
 import {
   APPROVED_PHARMACEUTICAL_SCENARIOS,
   PHARMACEUTICAL_KNOWLEDGE_VERSION,
@@ -106,5 +106,59 @@ const results = fixtures.map((fixture) => {
   return { fixture: fixture.id, conclusion: assessment.conclusion, assessmentId: assessment.assessmentId, status: "PASS" };
 });
 
+const point1Checks = [
+  {
+    id: "P1-SCN-004 spelling candidate",
+    assessment: assessCompanySuspect({ evidence: { reportedProduct: "Paracetmol", role: "SUSPECT" }, productMaster: [activeIndia] }),
+    conclusion: "UNRESOLVED", manual: true,
+  },
+  {
+    id: "P1-SCN-006 concomitant is not suspect",
+    assessment: assessCompanySuspect({ evidence: { reportedProduct: "Paracetamol", role: "CONCOMITANT" }, productMaster: [activeIndia] }),
+    conclusion: "UNRESOLVED", manual: false,
+  },
+  {
+    id: "P1-SCN-007 exact combination",
+    assessment: assessCompanySuspect({ evidence: { reportedProduct: "Amoxicillin clavulanic acid", role: "SUSPECT", components: ["Amoxicillin", "Clavulanic acid"], countryOfInterest: "India" }, productMaster: [{ clientProductId: "COMBO-1", genericName: "Amoxicillin clavulanic acid", composition: "Amoxicillin clavulanic acid", country: "India", active: true }] }),
+    conclusion: "CONFIRMED", manual: false,
+  },
+  {
+    id: "P1-SCN-008 mention is not suspect",
+    assessment: assessCompanySuspect({ evidence: { reportedProduct: "Paracetamol", role: "PRODUCT_MENTION" }, productMaster: [activeIndia] }),
+    conclusion: "UNRESOLVED", manual: false,
+  },
+  {
+    id: "P1-SCN-010 conflict",
+    assessment: assessCompanySuspect({ evidence: { reportedProduct: "Paracetamol", role: "SUSPECT", conflictingEvidence: ["Paracetamol IV", "Paracetamol tablet administered IV"] }, productMaster: [activeIndia] }),
+    conclusion: "UNRESOLVED", manual: true,
+  },
+  {
+    id: "P1-SCN-011 table evidence provenance",
+    assessment: assessCompanySuspect({ evidence: { reportedProduct: "Paracetamol", role: "SUSPECT", evidenceLocation: "TABLE", countryOfInterest: "India" }, productMaster: [activeIndia] }),
+    conclusion: "CONFIRMED", manual: false,
+  },
+  {
+    id: "P1-SCN-012 no identifiable product",
+    assessment: assessCompanySuspect({ evidence: { reportedProduct: "", role: "SUSPECT" }, productMaster: [activeIndia] }),
+    conclusion: "UNRESOLVED", manual: false,
+  },
+];
+
+for (const check of point1Checks) {
+  assert.equal(check.assessment.conclusion, check.conclusion, check.id);
+  assert.equal(check.assessment.manualReviewRequired, check.manual, check.id);
+}
+const multiple = assessCompanySuspects({
+  evidence: [
+    { reportedProduct: "Paracetamol", role: "SUSPECT", countryOfInterest: "India" },
+    { reportedProduct: "Amoxicillin", role: "SUSPECT", countryOfInterest: "India" },
+  ],
+  productMaster: [activeIndia, { clientProductId: "AMX-1", inn: "Amoxicillin", country: "India", active: true }],
+});
+assert.equal(multiple.length, 2, "P1-SCN-005 must assess every suspect independently.");
+assert.ok(multiple.every((item) => item.companySuspect === true), "P1-SCN-005 multiple suspects did not resolve independently.");
+
 console.log("ClinixAI Pharmaceutical Product Intelligence verification passed.");
 console.table(results);
+console.table(point1Checks.map((check) => ({ scenario: check.id, conclusion: check.assessment.conclusion, status: "PASS" })));
+console.log("Point 1 company-suspect scenarios: 12/12 governed; extended executable checks passed.");

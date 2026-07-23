@@ -51,7 +51,12 @@ Return strict JSON only:
     "presentationQualifierRole":"PRODUCT_PRESENTATION | ADMINISTRATION_CIRCUMSTANCE | NOT_REPORTED | UNCLEAR",
     "countryOfInterest":"COI only when supported by governed COI evidence",
     "relevantDate":"YYYY-MM-DD only when supported",
-    "sourceEvidence":"short verbatim evidence span"
+    "sourceEvidence":"short verbatim evidence span",
+    "role":"SUSPECT | CONCOMITANT | TREATMENT | EXPOSURE | PRODUCT_MENTION | UNRESOLVED",
+    "roleEvidence":"source wording supporting the role",
+    "evidenceLocation":"TITLE | ABSTRACT | KEYWORDS | TABLE | FIGURE | CAPTION | SUPPLEMENT | FULL_TEXT | UNKNOWN",
+    "components":["component names for a combination product"],
+    "conflictingEvidence":["contradictory product statements"]
   }],
   "knowledgeCitationIds":[]
 }
