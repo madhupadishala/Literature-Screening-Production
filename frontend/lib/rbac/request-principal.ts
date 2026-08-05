@@ -3,6 +3,7 @@ import "server-only";
 import type { NextRequest } from "next/server";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { roleHasPermission, type Permission } from "@/lib/rbac/permissions";
+import { tokenService } from "@/lib/auth/token-service";
 
 export interface RequestPrincipal {
   tenantId: string;
@@ -116,7 +117,76 @@ async function ensureDemoIdentity(input: {
   }
 }
 
+async function resolvePrincipalFromBearerToken(
+  request: NextRequest,
+): Promise<RequestPrincipal | null> {
+  const header = request.headers.get("authorization");
+  if (!header?.startsWith("Bearer ")) return null;
+
+  const token = header.slice("Bearer ".length);
+  const payload = tokenService.validate(token);
+  if (!payload) return null;
+
+  // The token proves who issued it (its HMAC signature can't be forged
+  // without SESSION_SECRET) and when it was issued, but role/permissions
+  // are re-read from the database on every request rather than trusted
+  // from the token payload -- an admin who gets demoted or deactivated
+  // mid-session loses access on their very next request, not just when
+  // their token expires.
+  const pool = getPostgresPool();
+  const result = await pool.query<{
+    tenant_id: string;
+    tenant_key: string;
+    user_id: string;
+    email: string;
+    display_name: string;
+    role_key: string;
+    permissions: unknown;
+  }>(
+    `
+      SELECT
+        t.id AS tenant_id,
+        t.tenant_key,
+        u.id AS user_id,
+        u.email,
+        u.display_name,
+        m.role_key,
+        m.permissions
+      FROM tenants t
+      JOIN tenant_memberships m ON m.tenant_id = t.id
+      JOIN application_users u ON u.id = m.user_id
+      WHERE t.id = $1
+        AND u.id = $2
+        AND t.status = 'active'
+        AND u.status = 'active'
+        AND m.membership_status = 'active'
+      LIMIT 1
+    `,
+    [payload.tenantId, payload.userId],
+  );
+
+  const row = result.rows[0];
+  if (!row) return null;
+
+  const customPermissions = Array.isArray(row.permissions) ? row.permissions.map(String) : [];
+  const roleKey = row.role_key;
+
+  return {
+    tenantId: row.tenant_id,
+    tenantKey: row.tenant_key,
+    userId: row.user_id,
+    email: row.email,
+    displayName: row.display_name,
+    roleKey,
+    customPermissions,
+    hasPermission: (permission) => roleHasPermission(roleKey, permission, customPermissions),
+  };
+}
+
 export async function resolveRequestPrincipal(request: NextRequest): Promise<RequestPrincipal> {
+  const bearerPrincipal = await resolvePrincipalFromBearerToken(request);
+  if (bearerPrincipal) return bearerPrincipal;
+
   const identity = resolveIdentityHeaders(request);
 
   if (identity.demoFallback) {

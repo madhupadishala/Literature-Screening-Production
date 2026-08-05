@@ -13,7 +13,14 @@ const TENANTS = [
 export default function TenantSwitcher() {
   const [session, setSession] = useState(() => getSession());
 
+  // Note: this only changes what the client *displays* as the active
+  // tenant. It grants no real access -- every API route that calls
+  // requirePermission() re-checks this user's actual tenant_memberships
+  // row in Postgres, so switching here to a tenant the user doesn't
+  // belong to will fail server-side with a 403/401.
   function switchTenant(tenantId: string) {
+    if (!session) return;
+
     const tenant = TENANTS.find((item) => item.tenantId === tenantId);
     if (!tenant) return;
 
@@ -29,6 +36,8 @@ export default function TenantSwitcher() {
     setSession(updated);
     window.location.reload();
   }
+
+  if (!session) return null;
 
   return (
     <div className="tenant-switcher">

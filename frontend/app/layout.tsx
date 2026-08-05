@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import SessionTimeoutGuard from "@/components/SessionTimeoutGuard";
+import AuthGate from "@/components/AuthGate";
 
 export const metadata: Metadata = {
   title: "ClinixAI Literature Intelligence",
@@ -18,8 +19,8 @@ export default function RootLayout({
         {/* Global Session Manager */}
         <SessionTimeoutGuard />
 
-        {/* Application */}
-        {children}
+        {/* Redirects to /login when there is no valid, non-expired session */}
+        <AuthGate>{children}</AuthGate>
       </body>
     </html>
   );

@@ -17,12 +17,19 @@ export default function SessionTimeoutGuard() {
   const [countdown, setCountdown] = useState(60);
 
   useEffect(() => {
+    // Nothing to time out if the user hasn't logged in yet (e.g. on
+    // /login itself) -- without this guard, getRemainingSessionMs()
+    // returns 0 for an unauthenticated visitor and the lock screen fires
+    // immediately.
+    if (!getSession()) return;
+
     refreshSessionActivity();
 
     const activityEvents = ["mousemove", "keydown", "click", "scroll"];
 
     function handleActivity() {
       if (locked) return;
+      if (!getSession()) return;
       refreshSessionActivity();
       setShowWarning(false);
       setCountdown(60);
@@ -31,6 +38,8 @@ export default function SessionTimeoutGuard() {
     activityEvents.forEach((event) => window.addEventListener(event, handleActivity));
 
     const interval = setInterval(() => {
+      if (!getSession()) return;
+
       const remaining = getRemainingSessionMs();
 
       if (remaining <= WARNING_BEFORE_MS && remaining > 0) {
@@ -55,6 +64,7 @@ export default function SessionTimeoutGuard() {
 
   async function auditSession(action: string, reason: string) {
     const session = getSession();
+    if (!session) return;
 
     await fetch("/api/session/audit", {
       method: "POST",
@@ -97,6 +107,7 @@ export default function SessionTimeoutGuard() {
 
   if (locked) {
     const session = getSession();
+    if (!session) return null;
 
     return (
       <div className="session-overlay">

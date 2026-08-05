@@ -1,18 +1,56 @@
+import "server-only";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import type {
   AuthProvider,
   AuthTokenPayload,
   UserRole,
 } from "./auth-types";
 
-function encodeToken(payload: AuthTokenPayload) {
-  return Buffer.from(JSON.stringify(payload), "utf8").toString("base64url");
+function getSigningSecret(): string {
+  const secret = process.env.SESSION_SECRET;
+
+  if (!secret || secret.trim().length < 32) {
+    throw new Error(
+      "SESSION_SECRET must be set to a random string of at least 32 characters. " +
+        "Generate one with: openssl rand -base64 48",
+    );
+  }
+
+  return secret;
+}
+
+function sign(payloadB64: string): string {
+  return createHmac("sha256", getSigningSecret()).update(payloadB64).digest("base64url");
+}
+
+function encodeToken(payload: AuthTokenPayload): string {
+  const payloadB64 = Buffer.from(JSON.stringify(payload), "utf8").toString("base64url");
+  const signature = sign(payloadB64);
+  return `${payloadB64}.${signature}`;
 }
 
 function decodeToken(token: string): AuthTokenPayload | null {
+  const parts = token.split(".");
+  if (parts.length !== 2) return null;
+
+  const [payloadB64, signature] = parts;
+
+  let expectedSignature: string;
   try {
-    return JSON.parse(
-      Buffer.from(token, "base64url").toString("utf8"),
-    ) as AuthTokenPayload;
+    expectedSignature = sign(payloadB64);
+  } catch {
+    return null;
+  }
+
+  const sigBuf = Buffer.from(signature);
+  const expectedBuf = Buffer.from(expectedSignature);
+
+  if (sigBuf.length !== expectedBuf.length || !timingSafeEqual(sigBuf, expectedBuf)) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(Buffer.from(payloadB64, "base64url").toString("utf8")) as AuthTokenPayload;
   } catch {
     return null;
   }
@@ -54,6 +92,9 @@ class TokenService {
     });
   }
 
+  // Verifies the HMAC signature before returning the payload. A token that
+  // fails signature verification (tampered, forged, or signed with a
+  // different secret) returns null, same as a malformed token.
   decode(token: string) {
     return decodeToken(token);
   }

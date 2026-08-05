@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { saveSession } from "@/lib/session-manager";
+import { saveSession, type ClinixSession } from "@/lib/session-manager";
 
 const TENANTS = [
   { tenantId: "demo-tenant", tenantName: "Demo Tenant" },
@@ -11,11 +11,34 @@ const TENANTS = [
   { tenantId: "training-tenant", tenantName: "Training Workspace" },
 ];
 
+const ROLE_LABELS: Record<string, string> = {
+  super_admin: "Super Admin",
+  client_admin: "Client Admin",
+  super_user: "Super User",
+  qc: "QC Reviewer",
+  auditor: "Auditor",
+  read_only: "Read Only",
+};
+
+type ServerSession = {
+  id: string;
+  accessToken: string;
+  expiresAt: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    tenantId: string;
+    role: string;
+    permissions: string[];
+  };
+};
+
 export default function LoginPage() {
   const router = useRouter();
 
-  const [username, setUsername] = useState("super.user");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [environment, setEnvironment] = useState<"PROD" | "UAT" | "TRAINING">("PROD");
   const [tenantId, setTenantId] = useState("demo-tenant");
   const [loading, setLoading] = useState(false);
@@ -26,27 +49,49 @@ export default function LoginPage() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("/api/session/login", {
+      const response = await fetch("/api/auth/session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username,
-          password,
-          environment,
-          tenantId,
-        }),
+        body: JSON.stringify({ email, password, tenantId }),
       });
 
       const data = await response.json();
 
-      if (!data.success) {
+      if (!response.ok || !data.authenticated) {
         setError(data.error || "Login failed.");
         return;
       }
 
-      saveSession(data.session);
+      const server = data.session as ServerSession;
+      const tenant = TENANTS.find((item) => item.tenantId === tenantId);
+      const now = new Date().toISOString();
+
+      const session: ClinixSession = {
+        sessionId: server.id,
+        organizationId: "ORG-CLINIXAI",
+        organizationName: "ClinixAI",
+        tenantId: server.user.tenantId,
+        tenantName: tenant?.tenantName ?? server.user.tenantId,
+        userId: server.user.id,
+        userName: server.user.name,
+        role: ROLE_LABELS[server.user.role] ?? server.user.role,
+        environment,
+        permissions: server.user.permissions,
+        loginTime: now,
+        lastActivity: now,
+        expiresAt: server.expiresAt,
+        locked: false,
+        // Signed server token (HMAC, see lib/auth/token-service.ts). API
+        // calls that need to authenticate should send this as
+        // `Authorization: Bearer <accessToken>`. It is not yet wired into
+        // every API client call in this codebase -- that's a follow-up,
+        // not something this session object claims to solve on its own.
+        accessToken: server.accessToken,
+      };
+
+      saveSession(session);
       router.push("/");
     } catch {
       setError("Login failed.");
@@ -65,8 +110,13 @@ export default function LoginPage() {
 
         <div className="form-grid">
           <label>
-            Username
-            <input value={username} onChange={(event) => setUsername(event.target.value)} />
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@company.com"
+            />
           </label>
 
           <label>
@@ -110,7 +160,7 @@ export default function LoginPage() {
           {loading ? "Signing in..." : "Sign In"}
         </button>
 
-        <p className="hint">Username + password + environment + tenant are mandatory.</p>
+        <p className="hint">Email + password + environment + tenant are mandatory.</p>
       </section>
 
       <style jsx>{`
