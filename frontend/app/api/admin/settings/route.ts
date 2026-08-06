@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { configurationStoreService } from "@/lib/admin/config-store";
 import { featureFlagsService } from "@/lib/admin/feature-flags";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { routeErrorResponse } from "@/lib/api/route-error";
 
 export async function GET(request: NextRequest) {
   try {
-    const tenantId =
-      request.nextUrl.searchParams.get("tenantId") ??
-      "demo-tenant";
+    const principal = await requirePermission(request, PERMISSIONS.CONFIG_VIEW);
 
     configurationStoreService.seedDemoTenant();
     featureFlagsService.seedDefaults();
@@ -17,22 +18,13 @@ export async function GET(request: NextRequest) {
 
       configuration:
         configurationStoreService.get(
-          tenantId,
+          principal.tenantKey,
         ),
 
       featureFlags:
         featureFlagsService.list(),
     });
   } catch (error) {
-    console.error(error);
-
-    return NextResponse.json(
-      {
-        success: false,
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }

@@ -3,6 +3,9 @@ import {
   getAssignableUsers,
   type AssignmentRole,
 } from "@/lib/super-user/assignment-store";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { routeErrorResponse } from "@/lib/api/route-error";
 
 const validRoles: AssignmentRole[] = [
   "SUPER_USER",
@@ -14,27 +17,36 @@ const validRoles: AssignmentRole[] = [
 ];
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  try {
+    const principal = await requirePermission(request, PERMISSIONS.SUPER_USER_CONSOLE_MANAGE);
 
-  const tenantId = searchParams.get("tenantId") ?? "TENANT-CLINIXAI";
-  const roleParam = searchParams.get("role");
-  const availabilityOnly = searchParams.get("availabilityOnly") === "true";
+    const { searchParams } = new URL(request.url);
 
-  const role =
-    roleParam && validRoles.includes(roleParam as AssignmentRole)
-      ? (roleParam as AssignmentRole)
-      : undefined;
+    const roleParam = searchParams.get("role");
+    const availabilityOnly = searchParams.get("availabilityOnly") === "true";
 
-  const users = getAssignableUsers({
-    tenantId,
-    role,
-    availabilityOnly,
-  });
+    const role =
+      roleParam && validRoles.includes(roleParam as AssignmentRole)
+        ? (roleParam as AssignmentRole)
+        : undefined;
 
-  return NextResponse.json({
-    ok: true,
-    module: "super-user-assignable-users",
-    generatedAt: new Date().toISOString(),
-    data: users,
-  });
+    const users = getAssignableUsers({
+      // Previously: tenantId came straight from an unauthenticated query
+      // param (`?tenantId=any-other-tenant`), so anyone could list any
+      // tenant's users. Now bound to the authenticated caller's own
+      // verified tenant.
+      tenantId: principal.tenantKey,
+      role,
+      availabilityOnly,
+    });
+
+    return NextResponse.json({
+      ok: true,
+      module: "super-user-assignable-users",
+      generatedAt: new Date().toISOString(),
+      data: users,
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }

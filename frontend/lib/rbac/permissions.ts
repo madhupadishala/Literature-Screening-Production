@@ -22,6 +22,18 @@ export const PERMISSIONS = {
   RBAC_MANAGE: "tenant.rbac.manage",
   RELIABILITY_VIEW: "platform.reliability.view",
   PERFORMANCE_VIEW: "platform.performance.view",
+
+  SUPER_USER_CONSOLE_MANAGE: "platform.super_user.manage",
+  ADMIN_SETTINGS_MANAGE: "platform.admin.settings.manage",
+  PACKAGE_ACTION_EXECUTE: "literature.package.action.execute",
+  PACKAGE_VIEW: "literature.package.view",
+  STORAGE_UPLOAD_EXECUTE: "platform.storage.upload",
+  TENANT_CONFIG_MANAGE: "platform.tenant.config.manage",
+  RELEASE_MANAGE: "platform.release.manage",
+  RELEASE_VIEW: "platform.release.view",
+  DATA_EXPORT: "platform.data.export",
+  DATA_IMPORT: "platform.data.import",
+  VERSIONING_MANAGE: "literature.package.versioning.manage",
 } as const;
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];

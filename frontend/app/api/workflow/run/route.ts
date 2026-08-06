@@ -1,6 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { literatureWorkflowService } from "@/lib/literature/workflow/literature-workflow-service";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { routeErrorResponse } from "@/lib/api/route-error";
 
 const TENANT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 
@@ -60,43 +63,35 @@ function readMaxResults(value: unknown): number {
   );
 }
 
-function toErrorResponse(error: unknown): NextResponse {
-  const message =
-    error instanceof Error
-      ? error.message
-      : "Literature workflow execution failed.";
-
-  const isValidationError =
-    message.endsWith("is required.") ||
-    message.includes("must be") ||
-    message === "Invalid tenantId.";
-
-  return NextResponse.json(
-    {
-      success: false,
-      error: message,
-    },
-    {
-      status: isValidationError ? 400 : 500,
-    },
-  );
-}
-
 export async function POST(
-  request: Request,
-): Promise<NextResponse> {
+  request: NextRequest,
+): Promise<Response> {
   try {
+    const principal = await requirePermission(
+      request,
+      PERMISSIONS.PACKAGE_ACTION_EXECUTE,
+    );
+
     const body =
       (await request.json()) as WorkflowRunBody;
 
-    const tenantId = readRequiredString(
-      body.tenantId ?? body.tenant_id,
-      "tenantId",
-    );
+    // A tenantId may still arrive in the body for backward compatibility
+    // with older callers, but it is validated against a strict pattern
+    // and, more importantly, is never actually trusted -- the workflow
+    // always runs against the authenticated caller's own verified tenant
+    // below, so a client can no longer trigger a run against a tenant it
+    // doesn't belong to just by changing this field.
+    const requestedTenantId = body.tenantId ?? body.tenant_id;
 
-    if (!TENANT_ID_PATTERN.test(tenantId)) {
+    if (
+      requestedTenantId !== undefined &&
+      (typeof requestedTenantId !== "string" ||
+        !TENANT_ID_PATTERN.test(requestedTenantId))
+    ) {
       throw new Error("Invalid tenantId.");
     }
+
+    const tenantId = principal.tenantKey;
 
     const query = readRequiredString(
       body.query,
@@ -175,12 +170,14 @@ export async function POST(
       error,
     );
 
-    return toErrorResponse(error);
+    return routeErrorResponse(error);
   }
 }
 
-export async function GET(): Promise<NextResponse> {
+export async function GET(request: NextRequest): Promise<Response> {
   try {
+    await requirePermission(request, PERMISSIONS.PACKAGE_ACTION_EXECUTE);
+
     return NextResponse.json(
       {
         success: true,
@@ -199,6 +196,6 @@ export async function GET(): Promise<NextResponse> {
       error,
     );
 
-    return toErrorResponse(error);
+    return routeErrorResponse(error);
   }
 }
