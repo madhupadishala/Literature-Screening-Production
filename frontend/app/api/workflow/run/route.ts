@@ -8,7 +8,7 @@ import { routeErrorResponse } from "@/lib/api/route-error";
 const TENANT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 
 const DEFAULT_MAX_RESULTS = 20;
-const MAX_MAX_RESULTS = 100;
+const MAX_MAX_RESULTS = 500;
 
 interface WorkflowRunBody {
   tenantId?: unknown;

@@ -27,10 +27,21 @@ function asArray<T>(value: T | T[] | undefined): T[] {
   return Array.isArray(value) ? value : [value];
 }
 
+function decodeXmlEntities(text: string): string {
+  return text
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'");
+}
+
 function extractText(node: unknown): string {
-  if (typeof node === "string") return node;
+  if (typeof node === "string") return decodeXmlEntities(node);
   if (node && typeof node === "object" && "#text" in (node as Record<string, unknown>)) {
-    return String((node as Record<string, unknown>)["#text"]);
+    return decodeXmlEntities(String((node as Record<string, unknown>)["#text"]));
   }
   return "";
 }
@@ -167,7 +178,7 @@ class ArticleFetchClient {
       pmid: request.pmid,
       title: extractText(articleNode?.ArticleTitle) || `PMID ${request.pmid}`,
       abstract: extractAbstract(articleNode),
-      journal: articleNode?.Journal?.Title,
+      journal: articleNode?.Journal?.Title ? decodeXmlEntities(String(articleNode.Journal.Title)) : undefined,
       publicationDate,
       doi: extractDoi(articleNode, pubmedData),
       authors: extractAuthors(articleNode),
