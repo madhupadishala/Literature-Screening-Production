@@ -38,7 +38,7 @@ services:
       NCBI_API_KEY: ${NCBI_API_KEY:-}
       NCBI_EMAIL: ${NCBI_EMAIL:-}
       NCBI_TOOL: ${NCBI_TOOL:-ClinixAI}
-      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET must be set in frontend/.env -- generate one with: openssl rand -base64 48}
+      SESSION_SECRET: "${SESSION_SECRET:?Set SESSION_SECRET in frontend/.env - see .env.production.example}"
       EVIDENCE_STORE_BACKEND: database
       KNOWLEDGE_ROOT: /app/knowledge
       CLINIXAI_KNOWLEDGE_ROOT: /app/knowledge
