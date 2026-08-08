@@ -158,6 +158,25 @@ class LiteratureWorkflowService {
         maxResults: normalizedRequest.maxResults,
       });
 
+      // Populated as each article in this batch is processed, so later
+      // articles get checked against earlier ones from the same run.
+      // NOTE: this catches in-batch duplicates (e.g. the same underlying
+      // article surfacing twice in one search) but not cross-run
+      // duplicates against previously processed batches -- that needs a
+      // persisted article history to check against, which doesn't exist
+      // yet (workflow results aren't currently written anywhere
+      // queryable). Tracked separately, not solved here.
+      const processedCandidates: Array<{
+        id: string;
+        articleId: string;
+        pmid?: string;
+        doi?: string;
+        title: string;
+        authors?: string[];
+        publicationDate?: string;
+        source?: string;
+      }> = [];
+
       const batchResult = await runAsyncBatch({
         items: search.articles,
         concurrency: settings.articleConcurrency,
@@ -168,19 +187,25 @@ class LiteratureWorkflowService {
           const articleId = article.pmid;
 
           const duplicateStartedAt = Date.now();
+          const candidate = {
+            id: articleId,
+            articleId,
+            pmid: article.pmid,
+            doi: article.doi,
+            title: article.title,
+            authors: article.authors,
+            publicationDate: article.publicationDate,
+            source: "PubMed",
+          };
+
           const duplicateResult =
             await duplicateService.check({
               tenantId: normalizedRequest.tenantId,
-              article: {
-                id: articleId,
-                articleId,
-                pmid: article.pmid,
-                doi: article.doi,
-                title: article.title,
-                source: "PubMed",
-              },
-              existingArticles: [],
+              article: candidate,
+              existingArticles: processedCandidates.slice(),
             });
+
+          processedCandidates.push(candidate);
 
           recordPerformanceMetric({
             operation: "duplicate_check",
