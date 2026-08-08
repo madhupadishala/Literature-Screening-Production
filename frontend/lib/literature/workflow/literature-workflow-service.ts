@@ -1,4 +1,5 @@
 import { duplicateService } from "@/lib/literature/duplicates/duplicate-service";
+import { persistWorkflowArticle } from "@/lib/literature/persistence/workflow-persistence-service";
 import { pubMedService } from "@/lib/literature/pubmed/pubmed-service";
 import { screeningService } from "@/lib/literature/screening/screening-service";
 import { runAsyncBatch } from "@/lib/performance/async-batch-runner";
@@ -257,6 +258,23 @@ class LiteratureWorkflowService {
             duplicateResult,
             screeningResult,
           };
+
+          persistWorkflowArticle({
+            tenantKey: normalizedRequest.tenantId,
+            pmid: article.pmid,
+            doi: article.doi,
+            title: article.title,
+            searchResult: article,
+            fetchResult,
+            duplicateResult,
+            screeningResult,
+          }).catch((error) => {
+            // persistWorkflowArticle already logs and never throws, but
+            // guard here too in case that contract ever changes -- a
+            // persistence bug must never fail the actual workflow
+            // response the caller is waiting on.
+            console.error("[literature-workflow-service] Unexpected persistence error:", error);
+          });
 
           recordPerformanceMetric({
             operation: "article_processing",
