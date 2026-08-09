@@ -1,5 +1,5 @@
 import { duplicateService } from "@/lib/literature/duplicates/duplicate-service";
-import { persistWorkflowArticle } from "@/lib/literature/persistence/workflow-persistence-service";
+import { persistWorkflowArticle, findExistingArticlesByIdentity } from "@/lib/literature/persistence/workflow-persistence-service";
 import { pubMedService } from "@/lib/literature/pubmed/pubmed-service";
 import { screeningService } from "@/lib/literature/screening/screening-service";
 import { runAsyncBatch } from "@/lib/performance/async-batch-runner";
@@ -159,14 +159,11 @@ class LiteratureWorkflowService {
         maxResults: normalizedRequest.maxResults,
       });
 
-      // Populated as each article in this batch is processed, so later
-      // articles get checked against earlier ones from the same run.
-      // NOTE: this catches in-batch duplicates (e.g. the same underlying
-      // article surfacing twice in one search) but not cross-run
-      // duplicates against previously processed batches -- that needs a
-      // persisted article history to check against, which doesn't exist
-      // yet (workflow results aren't currently written anywhere
-      // queryable). Tracked separately, not solved here.
+      // Seeded below with real cross-run history from Postgres (now
+      // that persistWorkflowArticle actually writes it), then appended
+      // to as each article in this batch completes -- so duplicate
+      // checks cover both "seen in a previous run" and "seen earlier in
+      // this same run."
       const processedCandidates: Array<{
         id: string;
         articleId: string;
@@ -177,6 +174,31 @@ class LiteratureWorkflowService {
         publicationDate?: string;
         source?: string;
       }> = [];
+
+      try {
+        const priorArticles = await findExistingArticlesByIdentity(
+          normalizedRequest.tenantId,
+          search.articles.map((article) => article.pmid),
+        );
+
+        for (const prior of priorArticles) {
+          processedCandidates.push({
+            id: prior.pmid,
+            articleId: prior.pmid,
+            pmid: prior.pmid,
+            doi: prior.doi ?? undefined,
+            title: prior.title,
+            source: "PubMed",
+          });
+        }
+      } catch (error) {
+        // A lookup failure here should degrade to in-batch-only dedup,
+        // not fail the whole workflow run.
+        console.error(
+          "[literature-workflow-service] Cross-run duplicate lookup failed, continuing with in-batch dedup only:",
+          error,
+        );
+      }
 
       const batchResult = await runAsyncBatch({
         items: search.articles,
