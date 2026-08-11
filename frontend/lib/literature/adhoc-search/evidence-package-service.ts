@@ -376,6 +376,37 @@ export async function createEvidencePackagesFromSearch(input: {
 
       const packageId = packageResult.rows[0].id;
 
+      // Without this, the package/workflow-state/sources rows above are
+      // all correct but the article still never appears on the Hits
+      // screen -- listHitsForReview's query is built on top of
+      // hits_results as its base table (INNER JOIN chain from there),
+      // so a package with no hits_results row is invisible to it
+      // regardless of how complete every other table is. Found while
+      // tracing why ad-hoc-search-promoted articles weren't showing up
+      // on Hits despite the promotion flow otherwise looking correct.
+      await client.query(
+        `
+          INSERT INTO hits_results (tenant_id, package_id, result_version, result_payload, confidence)
+          VALUES ($1, $2, 1, $3::jsonb, $4)
+        `,
+        [
+          input.principal.tenantId,
+          packageId,
+          JSON.stringify({
+            source: "AD_HOC_GLOBAL_SEARCH",
+            title: primary.title,
+            pmid: primary.pmid,
+            doi: primary.doi,
+            sourceRecords: rows.map((row) => ({
+              sourceKey: row.source_key,
+              sourceRecordId: row.source_record_id,
+              landingUrl: row.landing_url,
+            })),
+          }),
+          typeof primary.match_metadata?.confidence === "number" ? primary.match_metadata.confidence : null,
+        ],
+      );
+
       for (const row of rows) {
         await client.query(
           `

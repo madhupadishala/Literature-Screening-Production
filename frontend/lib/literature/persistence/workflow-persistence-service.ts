@@ -75,6 +75,23 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
 
     const packageId = packageResult.rows[0].id;
 
+    // The Hits screen's query INNER JOINs this table -- without a row
+    // here, a persisted article would silently never appear on Hits at
+    // all, even though literature_packages/hits_results/screening_results
+    // all have real rows for it.
+    await client.query(
+      `INSERT INTO literature_workflow_state (package_id, tenant_id, workflow_state, state_version, state_payload)
+       VALUES ($1, $2, $3, 1, $4::jsonb)
+       ON CONFLICT (package_id)
+       DO UPDATE SET workflow_state = EXCLUDED.workflow_state, state_version = literature_workflow_state.state_version + 1, updated_at = now()`,
+      [
+        packageId,
+        tenantId,
+        "HITS_REVIEW_PENDING",
+        JSON.stringify({ screeningDecision: input.screeningResult.decision }),
+      ],
+    );
+
     await client.query(
       `INSERT INTO literature_package_sources (tenant_id, package_id, source_key, source_record_id, pmid, doi)
        VALUES ($1, $2, 'PubMed', $3, $4, $5)
