@@ -176,19 +176,9 @@ class LiteratureWorkflowService {
       }> = [];
 
       try {
-        const pmidsToCheck = search.articles.map((article) => article.pmid);
-
-        console.log(
-          `[DEDUP-DIAG] Checking tenantKey="${normalizedRequest.tenantId}" against ${pmidsToCheck.length} PMIDs: ${pmidsToCheck.join(", ")}`,
-        );
-
         const priorArticles = await findExistingArticlesByIdentity(
           normalizedRequest.tenantId,
-          pmidsToCheck,
-        );
-
-        console.log(
-          `[DEDUP-DIAG] Found ${priorArticles.length} prior article(s): ${priorArticles.map((a) => a.pmid).join(", ") || "(none)"}`,
+          search.articles.map((article) => article.pmid),
         );
 
         for (const prior of priorArticles) {
@@ -202,7 +192,12 @@ class LiteratureWorkflowService {
           });
         }
       } catch (error) {
-        console.error("[DEDUP-DIAG] Lookup threw an error:", error);
+        // A lookup failure here should degrade to in-batch-only dedup,
+        // not fail the whole workflow run.
+        console.error(
+          "[literature-workflow-service] Cross-run duplicate lookup failed, continuing with in-batch dedup only:",
+          error,
+        );
       }
 
       const batchResult = await runAsyncBatch({
