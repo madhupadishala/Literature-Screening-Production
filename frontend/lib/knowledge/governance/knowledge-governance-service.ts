@@ -41,7 +41,7 @@ class KnowledgeGovernanceService {
   applyAction(input: GovernanceActionInput) {
     const existing = this.records.get(input.governanceRecordId);
 
-    if (!existing) {
+    if (!existing || existing.tenantId !== input.tenantId) {
       throw new Error("Knowledge governance record not found");
     }
 
@@ -56,6 +56,7 @@ class KnowledgeGovernanceService {
     this.records.set(updated.id, updated);
 
     const auditEvent: KnowledgeGovernanceAuditEvent = {
+      tenantId: input.tenantId,
       id: createId("kgov_audit"),
       governanceRecordId: updated.id,
       action: input.action,
@@ -72,18 +73,20 @@ class KnowledgeGovernanceService {
     };
   }
 
-  listRecords() {
-    return Array.from(this.records.values()).sort((a, b) =>
-      b.updatedAt.localeCompare(a.updatedAt),
-    );
+  listRecords(tenantId: string) {
+    return Array.from(this.records.values())
+      .filter((record) => record.tenantId === tenantId)
+      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   }
 
-  listAuditEvents(limit = 50) {
-    return this.auditEvents.slice(0, limit);
+  listAuditEvents(tenantId: string, limit = 50) {
+    return this.auditEvents
+      .filter((event) => event.tenantId === tenantId)
+      .slice(0, limit);
   }
 
-  getStatus(): KnowledgeGovernanceStatus {
-    const records = this.listRecords();
+  getStatus(tenantId: string): KnowledgeGovernanceStatus {
+    const records = this.listRecords(tenantId);
 
     return {
       totalRecords: records.length,
