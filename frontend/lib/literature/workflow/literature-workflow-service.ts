@@ -281,7 +281,7 @@ class LiteratureWorkflowService {
             screeningResult,
           };
 
-          persistWorkflowArticle({
+          await persistWorkflowArticle({
             tenantKey: normalizedRequest.tenantId,
             pmid: article.pmid,
             doi: article.doi,
@@ -290,12 +290,6 @@ class LiteratureWorkflowService {
             fetchResult,
             duplicateResult,
             screeningResult,
-          }).catch((error) => {
-            // persistWorkflowArticle already logs and never throws, but
-            // guard here too in case that contract ever changes -- a
-            // persistence bug must never fail the actual workflow
-            // response the caller is waiting on.
-            console.error("[literature-workflow-service] Unexpected persistence error:", error);
           });
 
           recordPerformanceMetric({
