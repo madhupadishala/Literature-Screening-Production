@@ -2,6 +2,7 @@ import { duplicateService } from "@/lib/literature/duplicates/duplicate-service"
 import { persistWorkflowArticle, findExistingArticlesByIdentity } from "@/lib/literature/persistence/workflow-persistence-service";
 import { pubMedService } from "@/lib/literature/pubmed/pubmed-service";
 import { screeningService } from "@/lib/literature/screening/screening-service";
+import { resolveOpenAccessPmcPdf } from "@/lib/literature/full-text/full-text-artifact-service";
 import { runAsyncBatch } from "@/lib/performance/async-batch-runner";
 import {
   getPerformanceSummary,
@@ -241,6 +242,23 @@ class LiteratureWorkflowService {
             },
           });
 
+          const fetchResult = findFetchedArticle(
+            search.fetchedArticles,
+            article.pmid,
+          );
+
+          let fullTextArtifact;
+          try {
+            fullTextArtifact = await resolveOpenAccessPmcPdf(
+              fetchResult?.metadata.pmcid,
+            );
+          } catch (error) {
+            console.error(
+              `[literature-workflow-service] Full-text retrieval failed for PMID ${article.pmid}; screening will use the abstract:`,
+              error,
+            );
+          }
+
           const screeningStartedAt = Date.now();
           const screeningResult =
             await screeningService.screenArticle({
@@ -248,7 +266,10 @@ class LiteratureWorkflowService {
               article: {
                 pmid: article.pmid,
                 title: article.title,
-                abstract: article.abstract ?? "",
+                abstract:
+                  fullTextArtifact?.extractedText ||
+                  article.abstract ||
+                  "",
                 authors: normalizeStringArray(
                   article.authors,
                 ),
@@ -269,14 +290,21 @@ class LiteratureWorkflowService {
             },
           });
 
-          const fetchResult = findFetchedArticle(
-            search.fetchedArticles,
-            article.pmid,
-          );
-
           const workflowArticle: LiteratureWorkflowArticle = {
             searchResult: article,
             fetchResult,
+            fullText: fullTextArtifact
+              ? {
+                  source: fullTextArtifact.source,
+                  pmcid: fullTextArtifact.pmcid,
+                  provenanceUrl: fullTextArtifact.provenanceUrl,
+                  sha256: fullTextArtifact.sha256,
+                  sizeBytes: fullTextArtifact.sizeBytes,
+                  retrievedAt: fullTextArtifact.retrievedAt,
+                  pageCount: fullTextArtifact.pageCount,
+                  extractedTextLength: fullTextArtifact.extractedText.length,
+                }
+              : undefined,
             duplicateResult,
             screeningResult,
           };
@@ -288,6 +316,7 @@ class LiteratureWorkflowService {
             title: article.title,
             searchResult: article,
             fetchResult,
+            fullTextArtifact,
             duplicateResult,
             screeningResult,
           });
