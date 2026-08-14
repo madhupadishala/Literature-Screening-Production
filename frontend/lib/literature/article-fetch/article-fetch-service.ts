@@ -10,6 +10,7 @@ import type {
 
 export interface ArticleFetchWorkflowResponse
   extends ArticleFetchResponse {
+  tenantId: string;
   evidencePackageId?: string;
   workflowStage: "ARTICLE_FETCH_COMPLETED";
 }
@@ -103,6 +104,8 @@ class ArticleFetchService {
       {
         ...response,
 
+        tenantId: request.tenantId,
+
         evidencePackageId,
 
         workflowStage:
@@ -115,35 +118,41 @@ class ArticleFetchService {
   }
 
   list(
+    tenantId: string,
     limit = 20,
   ): ArticleFetchWorkflowResponse[] {
-    return this.history.slice(0, limit);
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, limit);
   }
 
   clear(): void {
     this.history = [];
   }
 
-  getStatus(): ArticleFetchStatus {
+  getStatus(tenantId: string): ArticleFetchStatus {
+    const tenantHistory = this.history.filter(
+      (item) => item.tenantId === tenantId,
+    );
     const successfulFetches =
-      this.history.filter(
+      tenantHistory.filter(
         (item) => item.success,
       ).length;
 
     const failedFetches =
-      this.history.length -
+      tenantHistory.length -
       successfulFetches;
 
     return {
       totalArticlesFetched:
-        this.history.length,
+        tenantHistory.length,
 
       successfulFetches,
 
       failedFetches,
 
       lastFetchAt:
-        this.history[0]?.fetchedAt,
+        tenantHistory[0]?.fetchedAt,
     };
   }
 }
