@@ -1,11 +1,7 @@
 import assert from "node:assert/strict";
+import Module from "node:module";
 import { NextRequest } from "next/server";
 import { Pool } from "pg";
-
-import {
-  DELETE as deleteArtifact,
-  GET as getArtifact,
-} from "../app/api/evidence/artifacts/[artifactId]/route";
 import { closePostgresPool } from "../lib/database/postgres";
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -36,6 +32,24 @@ function request(
 }
 
 async function main() {
+  const moduleLoader = Module as unknown as {
+    _load: (request: string, parent: unknown, isMain: boolean) => unknown;
+  };
+  const originalLoad = moduleLoader._load;
+  moduleLoader._load = function loadForQualification(
+    requestName,
+    parent,
+    isMain,
+  ) {
+    if (requestName === "server-only") return {};
+    return originalLoad.call(this, requestName, parent, isMain);
+  };
+
+  const {
+    DELETE: deleteArtifact,
+    GET: getArtifact,
+  } = await import("../app/api/evidence/artifacts/[artifactId]/route");
+
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
   const tenantBKey = `qualification-b-${suffix}`;
