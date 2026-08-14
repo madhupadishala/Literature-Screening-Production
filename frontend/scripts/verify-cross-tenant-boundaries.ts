@@ -6,7 +6,6 @@ import { evidenceNormalizationService } from "../lib/literature/evidence-normali
 import { medicalTranslationService } from "../lib/literature/translation/medical-translation-service";
 import { knowledgeExtractionService } from "../lib/knowledge/extraction/knowledge-extraction-service";
 import { knowledgeGraphService } from "../lib/knowledge/graph/knowledge-graph-service";
-import { knowledgeStore } from "../lib/knowledge/repository/knowledge-store";
 import { embeddingEngine } from "../lib/platform/ai/embeddings/embedding-engine";
 import { vectorStore as platformVectorStore } from "../lib/platform/vector/vector-store";
 
@@ -61,23 +60,6 @@ assert.deepEqual(
   ["Tenant B safety text"],
 );
 
-
-knowledgeStore.create({
-  tenantId: tenantA,
-  title: "Tenant A SOP",
-  category: "sop",
-  version: "1.0",
-  content: "A",
-});
-knowledgeStore.create({
-  tenantId: tenantB,
-  title: "Tenant B SOP",
-  category: "sop",
-  version: "1.0",
-  content: "B",
-});
-assert.deepEqual(knowledgeStore.list(tenantA).map((item) => item.title), ["Tenant A SOP"]);
-assert.deepEqual(knowledgeStore.list(tenantB).map((item) => item.title), ["Tenant B SOP"]);
 
 knowledgeExtractionService.extract({
   tenantId: tenantA,

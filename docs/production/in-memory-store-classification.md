@@ -8,7 +8,6 @@ authoritative state exists only in memory.
 
 | Path | State | Release treatment |
 | --- | --- | --- |
-| `frontend/lib/knowledge/repository/knowledge-registry.ts` | Knowledge documents | Migrate repository API to PostgreSQL; controlled pgvector loading does not make this legacy registry durable. |
 | `frontend/lib/storage/storage-service.ts` and `document-manager.ts` | Uploaded documents and registry | Replace with tenant-scoped durable object storage plus PostgreSQL metadata before enabling generic upload. |
 | `frontend/lib/jobs/job-queue.ts` and `scheduler/scheduler-service.ts` | Work and schedules | Use a durable queue/schedule ledger or disable background processing endpoints. |
 | `frontend/lib/admin/config-store.ts` and `feature-flags.ts` | Tenant configuration and flags | Move authoritative configuration to versioned PostgreSQL governance records. |
@@ -37,3 +36,4 @@ in memory when production behavior is documented and multi-instance limitations 
 - Governed review and Evidence Package snapshots.
 - Import/export jobs and export download content.
 - Knowledge governance records and transition history (migration 019).
+- Knowledge Repository API content, integrity hashes and lifecycle state (migration 020).

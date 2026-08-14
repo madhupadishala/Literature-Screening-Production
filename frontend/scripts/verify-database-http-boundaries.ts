@@ -69,6 +69,11 @@ async function main() {
     POST: createKnowledgeGovernance,
     PATCH: transitionKnowledgeGovernance,
   } = await import("../app/api/knowledge/governance/route");
+  const {
+    GET: getKnowledgeRepository,
+    POST: createKnowledgeDocument,
+    PATCH: transitionKnowledgeDocument,
+  } = await import("../app/api/knowledge/repository/route");
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -351,18 +356,94 @@ async function main() {
     DROP FUNCTION qualification_fail_export_audit();
   `);
 
-  const knowledgeDocument = await pool.query<{ id: string }>(
-    `INSERT INTO knowledge_documents (
-       tenant_id, document_key, title, source_type, version_label, content_sha256
-     ) VALUES ($1, $2, 'Qualification SOP', 'sop', '1.0', $3) RETURNING id`,
-    [tenantA.rows[0].id, `qualification-sop-${suffix}`, "c".repeat(64)],
-  );
   const governanceHeaders = {
     "content-type": "application/json",
     "x-tenant-key": tenantAKey,
     "x-user-email": emailA,
     "x-request-id": `qualification-governance-${suffix}`,
   };
+  const knowledgeInput = {
+    tenantId: tenantB.rows[0].id,
+    title: `Qualification SOP ${suffix}`,
+    category: "sop",
+    version: "1.0",
+    sourceAuthority: "ClinixAI Qualification",
+    tags: ["qualification"],
+    content: "Controlled qualification knowledge content",
+  };
+  const knowledgeCreate = await createKnowledgeDocument(new NextRequest(
+    "http://localhost/api/knowledge/repository",
+    { method: "POST", headers: governanceHeaders, body: JSON.stringify(knowledgeInput) },
+  ));
+  assert.equal(knowledgeCreate.status, 201);
+  const createdKnowledge = (await knowledgeCreate.json()) as {
+    document: { id: string; tenantId: string; content: string; status: string };
+  };
+  assert.equal(createdKnowledge.document.tenantId, tenantA.rows[0].id);
+  assert.equal(createdKnowledge.document.content, knowledgeInput.content);
+  const knowledgeDocument = { rows: [{ id: createdKnowledge.document.id }] };
+
+  const versionConflict = await createKnowledgeDocument(new NextRequest(
+    "http://localhost/api/knowledge/repository",
+    { method: "POST", headers: governanceHeaders, body: JSON.stringify(knowledgeInput) },
+  ));
+  assert.equal(versionConflict.status, 409);
+  const tenantBKnowledge = await getKnowledgeRepository(new NextRequest(
+    "http://localhost/api/knowledge/repository",
+    { headers: { "x-tenant-key": tenantBKey, "x-user-email": emailB } },
+  ));
+  const tenantBKnowledgeBody = (await tenantBKnowledge.json()) as {
+    documents: Array<{ id: string }>;
+  };
+  assert.equal(tenantBKnowledgeBody.documents.some(
+    (document) => document.id === createdKnowledge.document.id), false);
+  const deniedKnowledge = await transitionKnowledgeDocument(new NextRequest(
+    "http://localhost/api/knowledge/repository",
+    { method: "PATCH", headers: { "content-type": "application/json",
+      "x-tenant-key": tenantAKey, "x-user-email": readOnlyEmail },
+      body: JSON.stringify({ documentId: createdKnowledge.document.id, action: "activate" }) },
+  ));
+  assert.equal(deniedKnowledge.status, 403);
+
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_knowledge_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
+    BEGIN
+      IF NEW.event_type = 'KNOWLEDGE_DOCUMENT_STATUS_CHANGED'
+         AND NEW.details->>'documentId' = '${createdKnowledge.document.id}'
+         AND NEW.details->>'action' = 'activate' THEN
+        RAISE EXCEPTION 'qualification forced knowledge persistence failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $qualification$;
+    CREATE TRIGGER qualification_fail_knowledge_audit_trigger
+      BEFORE INSERT ON audit_events
+      FOR EACH ROW EXECUTE FUNCTION qualification_fail_knowledge_audit();
+  `);
+  const failedActivation = await transitionKnowledgeDocument(new NextRequest(
+    "http://localhost/api/knowledge/repository",
+    { method: "PATCH", headers: governanceHeaders,
+      body: JSON.stringify({ documentId: createdKnowledge.document.id, action: "activate" }) },
+  ));
+  assert.equal(failedActivation.status, 500);
+  const afterKnowledgeRollback = await pool.query<{ governance_status: string }>(
+    `SELECT governance_status FROM knowledge_documents WHERE id = $1`,
+    [createdKnowledge.document.id],
+  );
+  assert.equal(afterKnowledgeRollback.rows[0].governance_status, "draft");
+  await pool.query(`
+    DROP TRIGGER qualification_fail_knowledge_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_knowledge_audit();
+  `);
+  for (const action of ["activate", "supersede"]) {
+    const lifecycleResponse = await transitionKnowledgeDocument(new NextRequest(
+      "http://localhost/api/knowledge/repository",
+      { method: "PATCH", headers: governanceHeaders,
+        body: JSON.stringify({ documentId: createdKnowledge.document.id, action }) },
+    ));
+    assert.equal(lifecycleResponse.status, 200);
+  }
   const governanceCreate = await createKnowledgeGovernance(new NextRequest(
     "http://localhost/api/knowledge/governance",
     {
@@ -701,7 +782,7 @@ async function main() {
   assert.equal(afterDelete.rows[0].audit_count, "1");
 
   console.log(
-    "Database-backed qualification passed: workflow, review, export, and knowledge-governance failures rolled back every write; tenant spoofing was neutralized; export idempotency and provenance were preserved; cross-tenant access and unauthorized governance were denied; legal-hold rollback preserved content; approved deletion committed with audit.",
+    "Database-backed qualification passed: workflow, review, export, knowledge repository, and governance failures rolled back every write; tenant spoofing was neutralized; export and knowledge provenance were preserved; cross-tenant access and unauthorized lifecycle changes were denied; legal-hold rollback preserved content; approved deletion committed with audit.",
   );
 }
 
