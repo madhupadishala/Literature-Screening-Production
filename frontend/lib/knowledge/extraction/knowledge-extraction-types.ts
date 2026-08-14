@@ -26,6 +26,7 @@ export interface KnowledgeObject {
 }
 
 export interface KnowledgeExtractionResult {
+  tenantId: string;
   documentId: string;
   objects: KnowledgeObject[];
   extractedAt: string;
