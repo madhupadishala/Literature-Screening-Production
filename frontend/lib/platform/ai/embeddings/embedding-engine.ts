@@ -38,12 +38,17 @@ class EmbeddingEngine {
     return Promise.all(requests.map((request) => this.embed(request)));
   }
 
-  listHistory(limit = 20) {
-    return this.history.slice(0, limit);
+  listHistory(tenantId: string, limit = 20) {
+    return this.history
+      .filter((item) => item.metadata.tenantId === tenantId)
+      .slice(0, limit);
   }
 
-  getStatus(): EmbeddingEngineStatus {
-    const totalLatency = this.history.reduce(
+  getStatus(tenantId: string): EmbeddingEngineStatus {
+    const tenantHistory = this.history.filter(
+      (item) => item.metadata.tenantId === tenantId,
+    );
+    const totalLatency = tenantHistory.reduce(
       (sum, item) => sum + item.latencyMs,
       0,
     );
@@ -53,11 +58,11 @@ class EmbeddingEngine {
       defaultProvider: defaultEmbeddingConfig.provider,
       defaultModel: defaultEmbeddingConfig.model,
       defaultDimensions: defaultEmbeddingConfig.dimensions,
-      totalEmbeddings: this.history.length,
+      totalEmbeddings: tenantHistory.length,
       averageLatencyMs:
-        this.history.length === 0
+        tenantHistory.length === 0
           ? 0
-          : Math.round(totalLatency / this.history.length),
+          : Math.round(totalLatency / tenantHistory.length),
     };
   }
 }
