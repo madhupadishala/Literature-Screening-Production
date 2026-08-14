@@ -1,37 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { checkPermission } from "@/lib/rbac/rbac-store";
-
-import type { PermissionAction } from "@/lib/rbac/rbac-rules";
+import { routeErrorResponse } from "@/lib/api/route-error";
+import { requirePermission } from "@/lib/rbac/guard";
+import { isPermission, PERMISSIONS } from "@/lib/rbac/permissions";
 
 export async function POST(request: NextRequest) {
   try {
-    const body = (await request.json()) as {
-      permission?: PermissionAction;
-    };
+    const principal = await requirePermission(request, PERMISSIONS.RBAC_VIEW);
+    const body = (await request.json()) as { permission?: string };
+    const permission = body.permission?.trim();
 
-    if (!body.permission) {
+    if (!permission || !isPermission(permission)) {
       return NextResponse.json(
         {
           allowed: false,
-          message: "permission is required.",
+          message: "A valid canonical permission is required.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const result = checkPermission(body.permission);
-
-    return NextResponse.json(result);
+    return NextResponse.json({
+      allowed: principal.hasPermission(permission),
+      role: principal.roleKey,
+      permission,
+      tenantId: principal.tenantId,
+    });
   } catch (error) {
-    console.error("RBAC permission check failed", error);
-
-    return NextResponse.json(
-      {
-        allowed: false,
-        message: "Unable to validate permission.",
-      },
-      { status: 500 }
-    );
+    return routeErrorResponse(error);
   }
 }
