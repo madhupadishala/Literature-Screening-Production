@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
       ...body,
       tenantId: principal.tenantId,
       createdBy: principal.userId,
+      requestId: request.headers.get("x-request-id"),
     });
 
     return NextResponse.json({

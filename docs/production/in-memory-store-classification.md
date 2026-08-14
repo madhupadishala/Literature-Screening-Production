@@ -8,7 +8,6 @@ authoritative state exists only in memory.
 
 | Path | State | Release treatment |
 | --- | --- | --- |
-| `frontend/lib/storage/storage-service.ts` and `document-manager.ts` | Uploaded documents and registry | Replace with tenant-scoped durable object storage plus PostgreSQL metadata before enabling generic upload. |
 | `frontend/lib/jobs/job-queue.ts` and `scheduler/scheduler-service.ts` | Work and schedules | Use a durable queue/schedule ledger or disable background processing endpoints. |
 | `frontend/lib/admin/config-store.ts` and `feature-flags.ts` | Tenant configuration and flags | Move authoritative configuration to versioned PostgreSQL governance records. |
 | `frontend/lib/platform/vector/vector-provider.ts` and `frontend/lib/vector/vector-store.ts` | Vector data | Production RAG must use the controlled pgvector path; memory providers must be development-only. |
@@ -37,3 +36,4 @@ in memory when production behavior is documented and multi-instance limitations 
 - Import/export jobs and export download content.
 - Knowledge governance records and transition history (migration 019).
 - Knowledge Repository API content, integrity hashes and lifecycle state (migration 020).
+- Generic document upload/retrieval/deletion API with PostgreSQL content and metadata (migration 021).

@@ -74,6 +74,11 @@ async function main() {
     POST: createKnowledgeDocument,
     PATCH: transitionKnowledgeDocument,
   } = await import("../app/api/knowledge/repository/route");
+  const { POST: uploadStoredDocument } = await import("../app/api/storage/upload/route");
+  const {
+    GET: getStoredDocument,
+    DELETE: deleteStoredDocument,
+  } = await import("../app/api/storage/documents/[documentId]/route");
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -536,6 +541,111 @@ async function main() {
     DROP FUNCTION qualification_fail_governance_audit();
   `);
 
+  const storedContent = "Qualification generic document content";
+  const storageHeaders = {
+    "content-type": "application/json",
+    "x-tenant-key": tenantAKey,
+    "x-user-email": emailA,
+    "x-request-id": `qualification-storage-${suffix}`,
+  };
+  const uploadResponse = await uploadStoredDocument(new NextRequest(
+    "http://localhost/api/storage/upload",
+    {
+      method: "POST",
+      headers: storageHeaders,
+      body: JSON.stringify({
+        tenantId: tenantB.rows[0].id,
+        category: "knowledge",
+        documentType: "sop",
+        fileName: "qualification.txt",
+        contentType: "text/plain",
+        content: storedContent,
+        retentionPolicy: "selective",
+      }),
+    },
+  ));
+  assert.equal(uploadResponse.status, 200);
+  const uploaded = (await uploadResponse.json()) as {
+    data: { id: string; tenantId: string; checksum: string };
+  };
+  assert.equal(uploaded.data.tenantId, tenantA.rows[0].id);
+  assert.match(uploaded.data.checksum, /^[0-9a-f]{64}$/);
+  const storageContext = { params: Promise.resolve({ documentId: uploaded.data.id }) };
+  const ownStoredDocument = await getStoredDocument(new NextRequest(
+    `http://localhost/api/storage/documents/${uploaded.data.id}`,
+    { headers: { "x-tenant-key": tenantAKey, "x-user-email": emailA } },
+  ), storageContext);
+  assert.equal(ownStoredDocument.status, 200);
+  assert.equal(Buffer.from(await ownStoredDocument.arrayBuffer()).toString(), storedContent);
+  assert.equal(ownStoredDocument.headers.get("x-content-sha256"), uploaded.data.checksum);
+  const crossTenantStoredDocument = await getStoredDocument(new NextRequest(
+    `http://localhost/api/storage/documents/${uploaded.data.id}`,
+    { headers: { "x-tenant-key": tenantBKey, "x-user-email": emailB } },
+  ), storageContext);
+  assert.equal(crossTenantStoredDocument.status, 404);
+
+  await pool.query(`UPDATE stored_documents SET legal_hold = true WHERE id = $1`, [uploaded.data.id]);
+  const heldDelete = await deleteStoredDocument(new NextRequest(
+    `http://localhost/api/storage/documents/${uploaded.data.id}`,
+    { method: "DELETE", headers: storageHeaders,
+      body: JSON.stringify({ reason: "Qualification held delete" }) },
+  ), storageContext);
+  assert.equal(heldDelete.status, 400);
+  await pool.query(`UPDATE stored_documents SET legal_hold = false WHERE id = $1`, [uploaded.data.id]);
+
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_document_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
+    BEGIN
+      IF NEW.event_type = 'DOCUMENT_DELETED'
+         AND NEW.details->>'documentId' = '${uploaded.data.id}' THEN
+        RAISE EXCEPTION 'qualification forced document deletion failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $qualification$;
+    CREATE TRIGGER qualification_fail_document_audit_trigger
+      BEFORE INSERT ON audit_events
+      FOR EACH ROW EXECUTE FUNCTION qualification_fail_document_audit();
+  `);
+  const failedStoredDelete = await deleteStoredDocument(new NextRequest(
+    `http://localhost/api/storage/documents/${uploaded.data.id}`,
+    { method: "DELETE", headers: storageHeaders,
+      body: JSON.stringify({ reason: "Qualification rollback delete" }) },
+  ), storageContext);
+  assert.equal(failedStoredDelete.status, 500);
+  const storedAfterRollback = await pool.query<{ status: string; content_count: string }>(
+    `SELECT document.status,
+       (SELECT count(*) FROM stored_document_contents contents
+         WHERE contents.document_id = document.id) AS content_count
+     FROM stored_documents document WHERE document.id = $1`,
+    [uploaded.data.id],
+  );
+  assert.equal(storedAfterRollback.rows[0].status, "active");
+  assert.equal(storedAfterRollback.rows[0].content_count, "1");
+  await pool.query(`
+    DROP TRIGGER qualification_fail_document_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_document_audit();
+  `);
+  const completedStoredDelete = await deleteStoredDocument(new NextRequest(
+    `http://localhost/api/storage/documents/${uploaded.data.id}`,
+    { method: "DELETE", headers: storageHeaders,
+      body: JSON.stringify({ reason: "Qualification approved delete" }) },
+  ), storageContext);
+  assert.equal(completedStoredDelete.status, 200);
+  const storedAfterDelete = await pool.query<{ status: string; content_count: string; audit_count: string }>(
+    `SELECT document.status,
+       (SELECT count(*) FROM stored_document_contents contents
+         WHERE contents.document_id = document.id) AS content_count,
+       (SELECT count(*) FROM audit_events event WHERE event.event_type = 'DOCUMENT_DELETED'
+         AND event.details->>'documentId' = document.id::text) AS audit_count
+     FROM stored_documents document WHERE document.id = $1`,
+    [uploaded.data.id],
+  );
+  assert.equal(storedAfterDelete.rows[0].status, "deleted");
+  assert.equal(storedAfterDelete.rows[0].content_count, "0");
+  assert.equal(storedAfterDelete.rows[0].audit_count, "1");
+
 
   const rollbackPmid = `ROLLBACK-${suffix}`;
   await pool.query(`
@@ -782,7 +892,7 @@ async function main() {
   assert.equal(afterDelete.rows[0].audit_count, "1");
 
   console.log(
-    "Database-backed qualification passed: workflow, review, export, knowledge repository, and governance failures rolled back every write; tenant spoofing was neutralized; export and knowledge provenance were preserved; cross-tenant access and unauthorized lifecycle changes were denied; legal-hold rollback preserved content; approved deletion committed with audit.",
+    "Database-backed qualification passed: workflow, review, export, knowledge, governance, and generic-document failures rolled back every write; tenant spoofing was neutralized; export, knowledge, and document provenance were preserved; cross-tenant access and unauthorized lifecycle changes were denied; legal holds preserved content; approved deletions committed with audit.",
   );
 }
 
