@@ -14,10 +14,10 @@ class VectorStore {
     return memoryVectorProvider.search(request);
   }
 
-  getStatus(): VectorStoreStatus {
+  getStatus(tenantId: string): VectorStoreStatus {
     return {
       provider: "memory",
-      totalVectors: memoryVectorProvider.count(),
+      totalVectors: memoryVectorProvider.count(tenantId),
       namespaces: 1,
     };
   }
