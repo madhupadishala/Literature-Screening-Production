@@ -176,13 +176,16 @@ export async function POST(
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    await requirePermission(request, PERMISSIONS.PACKAGE_ACTION_EXECUTE);
+    const principal = await requirePermission(
+      request,
+      PERMISSIONS.PACKAGE_ACTION_EXECUTE,
+    );
 
     return NextResponse.json(
       {
         success: true,
         status:
-          literatureWorkflowService.getStatus(),
+          literatureWorkflowService.getStatus(principal.tenantId),
         performance:
           literatureWorkflowService.getPerformanceStatus(),
       },
