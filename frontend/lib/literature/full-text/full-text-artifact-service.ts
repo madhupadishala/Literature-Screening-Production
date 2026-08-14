@@ -112,9 +112,7 @@ export async function resolveOpenAccessPmcPdf(
 
   try {
     const extracted = await extractText(pdf, { mergePages: true });
-    const text = typeof extracted.text === "string"
-      ? extracted.text.trim()
-      : extracted.text.join("\n\n").trim();
+    const text = extracted.text.trim();
 
     return {
       source: "EuropePMC",
