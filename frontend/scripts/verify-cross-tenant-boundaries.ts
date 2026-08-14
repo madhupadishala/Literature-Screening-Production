@@ -8,6 +8,8 @@ import { knowledgeExtractionService } from "../lib/knowledge/extraction/knowledg
 import { knowledgeGraphService } from "../lib/knowledge/graph/knowledge-graph-service";
 import { knowledgeGovernanceService } from "../lib/knowledge/governance/knowledge-governance-service";
 import { knowledgeStore } from "../lib/knowledge/repository/knowledge-store";
+import { embeddingEngine } from "../lib/platform/ai/embeddings/embedding-engine";
+import { vectorStore as platformVectorStore } from "../lib/platform/vector/vector-store";
 
 async function main() {
 const tenantA = "00000000-0000-4000-8000-00000000000a";
@@ -139,6 +141,47 @@ assert.deepEqual(
   [governanceB.id],
 );
 
+
+await embeddingEngine.embed({ tenantId: tenantA, text: "Tenant A embedding" });
+await embeddingEngine.embed({ tenantId: tenantB, text: "Tenant B embedding" });
+assert.equal(embeddingEngine.listHistory(tenantA).length, 1);
+assert.equal(embeddingEngine.listHistory(tenantB).length, 1);
+assert.equal(embeddingEngine.getStatus(tenantA).totalEmbeddings, 1);
+assert.equal(embeddingEngine.getStatus(tenantB).totalEmbeddings, 1);
+
+platformVectorStore.upsert({
+  id: "vector-a",
+  vector: [1, 0],
+  metadata: {
+    tenantId: tenantA,
+    documentId: "doc-a",
+    chunkId: "chunk-a",
+  },
+  createdAt: new Date().toISOString(),
+});
+platformVectorStore.upsert({
+  id: "vector-b",
+  vector: [0, 1],
+  metadata: {
+    tenantId: tenantB,
+    documentId: "doc-b",
+    chunkId: "chunk-b",
+  },
+  createdAt: new Date().toISOString(),
+});
+assert.deepEqual(
+  platformVectorStore.search({ tenantId: tenantA, queryVector: [1, 0] })
+    .map((item) => item.id),
+  ["vector-a"],
+);
+assert.deepEqual(
+  platformVectorStore.search({ tenantId: tenantB, queryVector: [0, 1] })
+    .map((item) => item.id),
+  ["vector-b"],
+);
+assert.equal(platformVectorStore.getStatus(tenantA).totalVectors, 1);
+assert.equal(platformVectorStore.getStatus(tenantB).totalVectors, 1);
+
 const guardedRoutes = [
   "app/api/literature/article-fetch/route.ts",
   "app/api/literature/document-processing/route.ts",
@@ -150,6 +193,11 @@ const guardedRoutes = [
   "app/api/knowledge/extraction/route.ts",
   "app/api/knowledge/graph/route.ts",
   "app/api/knowledge/governance/route.ts",
+  "app/api/platform/ai/embeddings/route.ts",
+  "app/api/platform/ai/gateway/route.ts",
+  "app/api/platform/ai/vector/route.ts",
+  "app/api/vector/search/route.ts",
+  "app/api/rbac/check/route.ts",
 ];
 
 for (const route of guardedRoutes) {
