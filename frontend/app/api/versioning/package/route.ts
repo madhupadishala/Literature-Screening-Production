@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+
+import { routeErrorResponse } from "@/lib/api/route-error";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 import {
   getLatestVersion,
   getVersionHistory,
@@ -29,87 +33,72 @@ const validWorkflowStages: VersionWorkflowStage[] = [
 ];
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  try {
+    await requirePermission(request, PERMISSIONS.PACKAGE_VIEW);
+    const packageId = request.nextUrl.searchParams.get("packageId");
 
-  const packageId = searchParams.get("packageId") ?? "PKG-LIT-2026-0001";
+    if (!packageId) {
+      return NextResponse.json(
+        { ok: false, error: "packageId is required." },
+        { status: 400 },
+      );
+    }
 
-  const history = getVersionHistory(packageId);
-
-  return NextResponse.json({
-    ok: true,
-    module: "package-versioning",
-    generatedAt: new Date().toISOString(),
-    data: history,
-  });
+    return NextResponse.json({
+      ok: true,
+      module: "package-versioning",
+      generatedAt: new Date().toISOString(),
+      data: getVersionHistory(packageId),
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-
-  const packageId = String(body.packageId ?? "").trim();
-  const trigger = String(body.trigger ?? "").trim() as VersionTrigger;
-  const workflowStage = String(body.workflowStage ?? "").trim() as VersionWorkflowStage;
-  const reason = String(body.reason ?? "").trim();
-
-  if (!packageId) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "packageId is required.",
-      },
-      { status: 400 },
+  try {
+    const principal = await requirePermission(
+      request,
+      PERMISSIONS.VERSIONING_MANAGE,
     );
-  }
+    const body = await request.json();
 
-  if (!validTriggers.includes(trigger)) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "Valid version trigger is required.",
+    const packageId = String(body.packageId ?? "").trim();
+    const trigger = String(body.trigger ?? "").trim() as VersionTrigger;
+    const workflowStage = String(body.workflowStage ?? "").trim() as VersionWorkflowStage;
+    const reason = String(body.reason ?? "").trim();
+
+    if (!packageId) throw new Error("packageId is required.");
+    if (!validTriggers.includes(trigger)) {
+      throw new Error("Valid version trigger is required.");
+    }
+    if (!validWorkflowStages.includes(workflowStage)) {
+      throw new Error("Valid workflow stage is required.");
+    }
+    if (!reason) throw new Error("Version reason is mandatory.");
+
+    const version = incrementVersion({
+      packageId,
+      trigger,
+      workflowStage,
+      reason,
+      createdBy: {
+        id: principal.userId,
+        name: principal.displayName,
+        role: principal.roleKey,
+        tenantId: principal.tenantId,
       },
-      { status: 400 },
-    );
+      changes: Array.isArray(body.changes) ? body.changes : [],
+    });
+
+    return NextResponse.json({
+      ok: true,
+      module: "package-versioning",
+      generatedAt: new Date().toISOString(),
+      latestVersion: getLatestVersion(packageId),
+      data: version,
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
   }
-
-  if (!validWorkflowStages.includes(workflowStage)) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "Valid workflow stage is required.",
-      },
-      { status: 400 },
-    );
-  }
-
-  if (!reason) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "Version reason is mandatory.",
-      },
-      { status: 400 },
-    );
-  }
-
-  const version = incrementVersion({
-    packageId,
-    trigger,
-    workflowStage,
-    reason,
-    createdBy: {
-      id: String(body.userId ?? "USR-000"),
-      name: String(body.userName ?? "Super User"),
-      role: String(body.userRole ?? "SUPER_USER"),
-      tenantId: String(body.tenantId ?? "TENANT-CLINIXAI"),
-    },
-    changes: Array.isArray(body.changes) ? body.changes : [],
-  });
-
-  return NextResponse.json({
-    ok: true,
-    module: "package-versioning",
-    generatedAt: new Date().toISOString(),
-    latestVersion: getLatestVersion(packageId),
-    data: version,
-  });
 }
