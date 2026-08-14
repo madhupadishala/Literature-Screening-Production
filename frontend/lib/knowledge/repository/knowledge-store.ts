@@ -47,8 +47,8 @@ class KnowledgeStore {
     return knowledgeRegistry.listByTenant(tenantId);
   }
 
-  getStatus() {
-    return knowledgeRegistry.status();
+  getStatus(tenantId: string) {
+    return knowledgeRegistry.status(tenantId);
   }
 }
 
