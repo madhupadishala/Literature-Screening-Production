@@ -23,6 +23,12 @@ export interface PersistWorkflowArticleInput {
   };
 }
 
+function normalizeConfidence(value: number | undefined): number | null {
+  if (value === undefined || !Number.isFinite(value)) return null;
+  const normalized = value > 1 ? value / 100 : value;
+  return Math.min(1, Math.max(0, normalized));
+}
+
 // Writes one article's full workflow output to Postgres. This is the
 // gap found on 2026-08-08: literature_packages, hits_results,
 // screening_results, and literature_package_sources already existed as
@@ -177,7 +183,7 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
        VALUES ($1, $2, 1, $3::jsonb, $4)
        ON CONFLICT (package_id, result_version)
        DO UPDATE SET result_payload = EXCLUDED.result_payload, confidence = EXCLUDED.confidence`,
-      [tenantId, packageId, JSON.stringify(hitsPayload), input.duplicateResult.confidence || null],
+      [tenantId, packageId, JSON.stringify(hitsPayload), normalizeConfidence(input.duplicateResult.confidence)],
     );
 
     await client.query(
@@ -190,7 +196,7 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
         packageId,
         input.screeningResult.decision,
         JSON.stringify(input.screeningResult),
-        (input.screeningResult.confidence ?? 0) / 100 || null,
+        normalizeConfidence(input.screeningResult.confidence),
       ],
     );
 
