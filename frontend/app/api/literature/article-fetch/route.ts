@@ -1,88 +1,50 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { articleFetchService } from "@/lib/literature/article-fetch/article-fetch-service";
 import type { ArticleFetchRequest } from "@/lib/literature/article-fetch/article-fetch-types";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    return NextResponse.json(
-      {
-        success: true,
-        status: articleFetchService.getStatus(),
-        articles: articleFetchService.list(),
-      },
-      {
-        status: 200,
-      },
+    const principal = await requirePermission(
+      request,
+      PERMISSIONS.SEARCH_HISTORY_VIEW,
     );
+    return NextResponse.json({
+      success: true,
+      status: articleFetchService.getStatus(principal.tenantId),
+      articles: articleFetchService.list(principal.tenantId),
+    });
   } catch (error) {
-    console.error("Article Fetch GET Error:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Unable to retrieve fetched articles.",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
+    const principal = await requirePermission(request, PERMISSIONS.SEARCH_EXECUTE);
     const body = (await request.json()) as ArticleFetchRequest;
-
-    if (
-      !body.tenantId ||
-      typeof body.tenantId !== "string" ||
-      !body.pmid ||
-      typeof body.pmid !== "string"
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "tenantId and pmid are required.",
-        },
-        {
-          status: 400,
-        },
-      );
+    if (!body.pmid || typeof body.pmid !== "string") {
+      throw new Error("pmid is required.");
     }
 
+    const pmid = body.pmid.trim();
     const article = await articleFetchService.fetch({
       ...body,
-      tenantId: body.tenantId.trim(),
-      pmid: body.pmid.trim(),
+      tenantId: principal.tenantId,
+      pmid,
     });
 
-    return NextResponse.json(
-      {
-        success: true,
-        tenantId: body.tenantId,
-        pmid: body.pmid,
-        article,
-        next: {
-          endpoint: "/api/evidence/package",
-          method: "POST",
-        },
-      },
-      {
-        status: 200,
-      },
-    );
+    return NextResponse.json({
+      success: true,
+      tenantId: principal.tenantId,
+      pmid,
+      article,
+      next: { endpoint: "/api/evidence/package", method: "POST" },
+    });
   } catch (error) {
-    console.error("Article Fetch Error:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Failed to fetch article.",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }
