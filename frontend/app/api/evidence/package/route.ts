@@ -1,12 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { evidencePackageGenerator } from "@/lib/evidence/evidence-package-generator";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export async function POST(request: NextRequest) {
   try {
+    const principal = await requirePermission(
+      request,
+      PERMISSIONS.EVIDENCE_CREATE,
+    );
     const body = await request.json();
 
-    const evidencePackage = evidencePackageGenerator.build(body);
+    const evidencePackage = evidencePackageGenerator.build({
+      ...body,
+      tenantId: principal.tenantId,
+    });
 
     return NextResponse.json(
       {
@@ -20,19 +30,6 @@ export async function POST(request: NextRequest) {
       },
     );
   } catch (error) {
-    console.error("Evidence Package Error", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        message:
-          error instanceof Error
-            ? error.message
-            : "Unknown evidence package error",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }
