@@ -30,7 +30,7 @@ class ArticleFetchService {
       const metadata = response.metadata;
 
       const evidencePackage =
-        evidencePackageGenerator.build({
+        await evidencePackageGenerator.build({
           tenantId: request.tenantId,
 
           articleId: metadata.pmid,

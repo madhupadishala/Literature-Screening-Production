@@ -55,12 +55,17 @@ async function main() {
   const { generateIntakeInput, getIntakeInputExport } = await import(
     "../lib/literature/intake-input/intake-input-service"
   );
+  const { POST: createEvidencePackage } = await import("../app/api/evidence/package/route");
+  const { POST: saveGovernedReview } = await import("../app/api/review/save/route");
+  const { evidencePackageGenerator } = await import("../lib/evidence/evidence-package-generator");
+  const { reviewRepository } = await import("../lib/review/review-store");
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
   const tenantBKey = `qualification-b-${suffix}`;
   const emailA = `qualification-a-${suffix}@example.test`;
   const emailB = `qualification-b-${suffix}@example.test`;
+  const readOnlyEmail = `qualification-read-only-${suffix}@example.test`;
 
   const tenantA = await pool.query<{ id: string }>(
     "INSERT INTO tenants (tenant_key, display_name) VALUES ($1, 'Qualification A') RETURNING id",
@@ -78,12 +83,154 @@ async function main() {
     "INSERT INTO application_users (email, display_name) VALUES ($1, 'Qualification B') RETURNING id",
     [emailB],
   );
+  const readOnlyUser = await pool.query<{ id: string }>(
+    "INSERT INTO application_users (email, display_name) VALUES ($1, 'Qualification Read Only') RETURNING id",
+    [readOnlyEmail],
+  );
 
   await pool.query(
     `INSERT INTO tenant_memberships (tenant_id, user_id, role_key)
      VALUES ($1, $2, 'CLIENT_OWNER'), ($3, $4, 'CLIENT_OWNER')`,
     [tenantA.rows[0].id, userA.rows[0].id, tenantB.rows[0].id, userB.rows[0].id],
   );
+  await pool.query(
+    `INSERT INTO tenant_memberships (tenant_id, user_id, role_key)
+     VALUES ($1, $2, 'READ_ONLY')`,
+    [tenantA.rows[0].id, readOnlyUser.rows[0].id],
+  );
+
+  const evidenceResponse = await createEvidencePackage(new NextRequest(
+    "http://localhost/api/evidence/package",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-tenant-key": tenantAKey,
+        "x-user-email": emailA,
+        "x-request-id": `qualification-evidence-${suffix}`,
+      },
+      body: JSON.stringify({
+        tenantId: tenantB.rows[0].id,
+        articleId: `ARTICLE-${suffix}`,
+        article: { authors: ["Qualification Author"], hasFullText: true, pmid: suffix },
+        ragContext: {
+          tenantId: tenantA.rows[0].id,
+          query: `PMID:${suffix}`,
+          summary: "Qualification context",
+          chunks: [],
+          sourceBreakdown: {},
+          warnings: [],
+          generatedAt: new Date().toISOString(),
+        },
+        aiExecution: {
+          agentName: "Qualification Agent",
+          agentVersion: "1",
+          modelName: "qualification",
+          modelVersion: "1",
+          promptVersion: "1",
+          confidence: 1,
+          executedAt: new Date().toISOString(),
+        },
+        aiResult: { decision: "qualification" },
+      }),
+    },
+  ));
+  assert.equal(evidenceResponse.status, 201);
+  const evidenceBody = await evidenceResponse.json() as { packageId: string };
+  const ownPackage = await evidencePackageGenerator.get(
+    tenantA.rows[0].id,
+    evidenceBody.packageId,
+  );
+  assert.equal(ownPackage?.metadata.tenantId, tenantA.rows[0].id);
+  assert.equal(
+    await evidencePackageGenerator.get(tenantB.rows[0].id, evidenceBody.packageId),
+    undefined,
+  );
+
+  const deniedEvidence = await createEvidencePackage(new NextRequest(
+    "http://localhost/api/evidence/package",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-tenant-key": tenantAKey,
+        "x-user-email": readOnlyEmail,
+      },
+      body: JSON.stringify({}),
+    },
+  ));
+  assert.equal(deniedEvidence.status, 403);
+
+  const reviewId = `REVIEW-${suffix}`;
+  const reviewPayload = {
+    id: reviewId,
+    tenantId: tenantB.rows[0].id,
+    articleId: `ARTICLE-${suffix}`,
+    evidencePackageId: evidenceBody.packageId,
+    workflowStage: "screening" as const,
+    status: "approved" as const,
+    aiExecution: {
+      agentName: "Qualification Agent",
+      agentVersion: "1",
+      promptVersion: "1",
+      modelName: "qualification",
+      modelVersion: "1",
+      confidence: 1,
+      executedAt: new Date().toISOString(),
+    },
+    aiResult: { decision: "INCLUDE" },
+    evidence: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  const reviewResponse = await saveGovernedReview(new NextRequest(
+    "http://localhost/api/review/save",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-tenant-key": tenantAKey,
+        "x-user-email": emailA,
+        "x-request-id": `qualification-review-${suffix}`,
+      },
+      body: JSON.stringify({ tenantId: tenantB.rows[0].id, review: reviewPayload }),
+    },
+  ));
+  assert.equal(reviewResponse.status, 200);
+  assert.equal(
+    (await reviewRepository.get(tenantA.rows[0].id, reviewId))?.tenantId,
+    tenantA.rows[0].id,
+  );
+  assert.equal(await reviewRepository.get(tenantB.rows[0].id, reviewId), undefined);
+
+  const rollbackReviewId = `ROLLBACK-REVIEW-${suffix}`;
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_review_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
+    BEGIN
+      IF NEW.event_type = 'GOVERNED_REVIEW_SAVED'
+         AND NEW.details->>'reviewId' = '${rollbackReviewId}' THEN
+        RAISE EXCEPTION 'qualification forced review persistence failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $qualification$;
+    CREATE TRIGGER qualification_fail_review_audit_trigger
+      BEFORE INSERT ON audit_events
+      FOR EACH ROW EXECUTE FUNCTION qualification_fail_review_audit();
+  `);
+  await assert.rejects(
+    reviewRepository.save(
+      { ...reviewPayload, id: rollbackReviewId, tenantId: tenantA.rows[0].id },
+      userA.rows[0].id,
+    ),
+    /qualification forced review persistence failure/i,
+  );
+  assert.equal(await reviewRepository.get(tenantA.rows[0].id, rollbackReviewId), undefined);
+  await pool.query(`
+    DROP TRIGGER qualification_fail_review_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_review_audit();
+  `);
 
 
   const rollbackPmid = `ROLLBACK-${suffix}`;
@@ -331,7 +478,7 @@ async function main() {
   assert.equal(afterDelete.rows[0].audit_count, "1");
 
   console.log(
-    "Database-backed qualification passed: workflow failure rolled back every write; cross-tenant access was denied; legal-hold rollback preserved content; approved deletion committed with audit.",
+    "Database-backed qualification passed: workflow and governed-review failures rolled back every write; package/review tenant spoofing was neutralized; cross-tenant access was denied; legal-hold rollback preserved content; approved deletion committed with audit.",
   );
 }
 

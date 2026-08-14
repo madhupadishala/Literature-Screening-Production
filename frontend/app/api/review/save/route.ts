@@ -14,10 +14,11 @@ export async function POST(request: NextRequest) {
     );
     const body = (await request.json()) as SaveReviewRequest;
 
-    const result = reviewRepository.save({
-      ...body.review,
-      tenantId: principal.tenantId,
-    });
+    const result = await reviewRepository.save(
+      { ...body.review, tenantId: principal.tenantId },
+      principal.userId,
+      request.headers.get("x-request-id"),
+    );
 
     return NextResponse.json(result);
   } catch (error) {

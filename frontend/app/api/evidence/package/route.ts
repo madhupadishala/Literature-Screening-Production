@@ -13,9 +13,11 @@ export async function POST(request: NextRequest) {
     );
     const body = await request.json();
 
-    const evidencePackage = evidencePackageGenerator.build({
+    const evidencePackage = await evidencePackageGenerator.build({
       ...body,
       tenantId: principal.tenantId,
+      actorId: principal.userId,
+      requestId: request.headers.get("x-request-id"),
     });
 
     return NextResponse.json(
