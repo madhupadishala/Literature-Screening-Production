@@ -86,7 +86,7 @@ async function main() {
   const rollbackPmid = `ROLLBACK-${suffix}`;
   await pool.query(`
     CREATE OR REPLACE FUNCTION qualification_fail_workflow_audit()
-    RETURNS trigger LANGUAGE plpgsql AS $
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
     BEGIN
       IF NEW.event_type = 'LITERATURE_ARTICLE_PERSISTED'
          AND NEW.details->>'pmid' = '${rollbackPmid}' THEN
@@ -94,7 +94,7 @@ async function main() {
       END IF;
       RETURN NEW;
     END;
-    $;
+    $qualification$;
     DROP TRIGGER IF EXISTS qualification_fail_workflow_audit_trigger ON audit_events;
     CREATE TRIGGER qualification_fail_workflow_audit_trigger
       BEFORE INSERT ON audit_events
