@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const job = importStore.create({
       ...body,
       tenantId: principal.tenantId,
-      requestedBy: principal.userId,
+      createdBy: principal.userId,
     });
 
     return NextResponse.json({
