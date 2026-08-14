@@ -52,6 +52,9 @@ async function main() {
   const { persistWorkflowArticle } = await import(
     "../lib/literature/persistence/workflow-persistence-service"
   );
+  const { generateIntakeInput, getIntakeInputExport } = await import(
+    "../lib/literature/intake-input/intake-input-service"
+  );
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -164,6 +167,83 @@ async function main() {
      ) VALUES ($1, $2, 'PubMed', $3) RETURNING id`,
     [tenantA.rows[0].id, `PKG-${suffix}`, userA.rows[0].id],
   );
+
+  await pool.query(
+    `INSERT INTO literature_workflow_state (
+       package_id, tenant_id, workflow_state, state_payload, updated_by
+     ) VALUES ($1, $2, 'SCREENING_COMPLETE', '{}'::jsonb, $3)`,
+    [pkg.rows[0].id, tenantA.rows[0].id, userA.rows[0].id],
+  );
+  const canonicalScreening = {
+    decision: "INCLUDE",
+    patient: { identifiable: true, age: 42 },
+    reporter: { identifiable: true, type: "physician" },
+    suspectProducts: [{ name: "Qualification Product", role: "suspect" }],
+    events: [{ term: "Qualification Event", serious: false }],
+    sourceTextHash: "canonical-source-hash",
+  };
+  const screening = await pool.query<{ id: string }>(
+    `INSERT INTO screening_results (
+       tenant_id, package_id, result_version, decision, result_payload, confidence
+     ) VALUES ($1, $2, 1, 'INCLUDE', $3::jsonb, 0.99) RETURNING id`,
+    [tenantA.rows[0].id, pkg.rows[0].id, JSON.stringify(canonicalScreening)],
+  );
+  await pool.query(
+    `INSERT INTO screening_reviews (
+       tenant_id, package_id, screening_result_id, review_status,
+       final_decision, comments, reviewed_by, reviewed_at
+     ) VALUES ($1, $2, $3, 'approved', 'INCLUDE',
+       'Qualification approval', $4, now())`,
+    [
+      tenantA.rows[0].id,
+      pkg.rows[0].id,
+      screening.rows[0].id,
+      userA.rows[0].id,
+    ],
+  );
+
+  const principal = {
+    tenantId: tenantA.rows[0].id,
+    tenantKey: tenantAKey,
+    userId: userA.rows[0].id,
+    email: emailA,
+    displayName: "Qualification A",
+    roleKey: "CLIENT_OWNER",
+    customPermissions: [],
+    hasPermission: () => true,
+  };
+  const firstIntake = await generateIntakeInput({
+    principal,
+    request: {
+      packageId: pkg.rows[0].id,
+      reason: "Qualification of canonical downstream reuse",
+    },
+  });
+  assert.equal(firstIntake.reused, false);
+
+  const downloadedIntake = await getIntakeInputExport({
+    principal,
+    exportId: firstIntake.exportId,
+  });
+  const screeningAssessment = downloadedIntake.payload.screening_assessment as {
+    result: unknown;
+  };
+  assert.deepEqual(screeningAssessment.result, canonicalScreening);
+  assert.deepEqual(downloadedIntake.payload.article, {
+    pmid: undefined,
+  }, "placeholder");
+
+  const reusedIntake = await generateIntakeInput({
+    principal,
+    request: {
+      packageId: pkg.rows[0].id,
+      reason: "Qualification of canonical downstream reuse",
+    },
+  });
+  assert.equal(reusedIntake.reused, true);
+  assert.equal(reusedIntake.exportId, firstIntake.exportId);
+  assert.equal(reusedIntake.sha256, firstIntake.sha256);
+
   const artifact = await pool.query<{ id: string }>(
     `INSERT INTO evidence_artifacts (
        tenant_id, package_id, artifact_type, storage_backend, storage_key,
