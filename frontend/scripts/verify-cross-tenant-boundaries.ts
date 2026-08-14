@@ -5,6 +5,7 @@ import { ocrService } from "../lib/literature/document-processing/ocr-service";
 import { evidenceNormalizationService } from "../lib/literature/evidence-normalization/evidence-normalization-service";
 import { medicalTranslationService } from "../lib/literature/translation/medical-translation-service";
 
+async function main() {
 const tenantA = "00000000-0000-4000-8000-00000000000a";
 const tenantB = "00000000-0000-4000-8000-00000000000b";
 
@@ -65,7 +66,7 @@ const guardedRoutes = [
 ];
 
 for (const route of guardedRoutes) {
-  const source = await readFile(new URL(`../${route}`, import.meta.url), "utf8");
+  const source = await readFile(route, "utf8");
   assert.match(source, /requirePermission\s*\(/, `${route} must authorize requests`);
   assert.match(
     source,
@@ -77,3 +78,9 @@ for (const route of guardedRoutes) {
 console.log(
   "Cross-tenant qualification passed: service histories are isolated and protected routes force authenticated tenant identity.",
 );
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
