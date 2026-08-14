@@ -27,6 +27,17 @@ export interface LiteratureWorkflowArticle {
 
   fetchResult?: ArticleFetchWorkflowResponse;
 
+  fullText?: {
+    source: "EuropePMC";
+    pmcid: string;
+    provenanceUrl: string;
+    sha256: string;
+    sizeBytes: number;
+    retrievedAt: string;
+    pageCount: number;
+    extractedTextLength: number;
+  };
+
   duplicateResult?: DuplicateCheckResponse;
 
   screeningResult?: ScreeningResponse;
