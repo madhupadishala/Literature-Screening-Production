@@ -31,6 +31,7 @@ export interface KnowledgeGovernanceRecord {
 }
 
 export interface KnowledgeGovernanceAuditEvent {
+  tenantId: string;
   id: string;
   governanceRecordId: string;
   action: KnowledgeGovernanceAction;
@@ -51,6 +52,7 @@ export interface CreateGovernanceRecordInput {
 }
 
 export interface GovernanceActionInput {
+  tenantId: string;
   governanceRecordId: string;
   action: KnowledgeGovernanceAction;
   actor: string;
