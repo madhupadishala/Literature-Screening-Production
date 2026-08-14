@@ -4,6 +4,10 @@ import { readFile } from "node:fs/promises";
 import { ocrService } from "../lib/literature/document-processing/ocr-service";
 import { evidenceNormalizationService } from "../lib/literature/evidence-normalization/evidence-normalization-service";
 import { medicalTranslationService } from "../lib/literature/translation/medical-translation-service";
+import { knowledgeExtractionService } from "../lib/knowledge/extraction/knowledge-extraction-service";
+import { knowledgeGraphService } from "../lib/knowledge/graph/knowledge-graph-service";
+import { knowledgeGovernanceService } from "../lib/knowledge/governance/knowledge-governance-service";
+import { knowledgeStore } from "../lib/knowledge/repository/knowledge-store";
 
 async function main() {
 const tenantA = "00000000-0000-4000-8000-00000000000a";
@@ -56,6 +60,85 @@ assert.deepEqual(
   ["Tenant B safety text"],
 );
 
+
+knowledgeStore.create({
+  tenantId: tenantA,
+  title: "Tenant A SOP",
+  category: "sop",
+  version: "1.0",
+  content: "A",
+});
+knowledgeStore.create({
+  tenantId: tenantB,
+  title: "Tenant B SOP",
+  category: "sop",
+  version: "1.0",
+  content: "B",
+});
+assert.deepEqual(knowledgeStore.list(tenantA).map((item) => item.title), ["Tenant A SOP"]);
+assert.deepEqual(knowledgeStore.list(tenantB).map((item) => item.title), ["Tenant B SOP"]);
+
+knowledgeExtractionService.extract({
+  tenantId: tenantA,
+  documentId: "doc-a",
+  title: "A",
+  content: "A",
+});
+knowledgeExtractionService.extract({
+  tenantId: tenantB,
+  documentId: "doc-b",
+  title: "B",
+  content: "B",
+});
+assert.deepEqual(
+  knowledgeExtractionService.list(tenantA).map((item) => item.documentId),
+  ["doc-a"],
+);
+assert.deepEqual(
+  knowledgeExtractionService.list(tenantB).map((item) => item.documentId),
+  ["doc-b"],
+);
+
+knowledgeGraphService.build({ tenantId: tenantA, documentId: "doc-a", nodes: [] });
+knowledgeGraphService.build({ tenantId: tenantB, documentId: "doc-b", nodes: [] });
+assert.deepEqual(knowledgeGraphService.list(tenantA).map((item) => item.documentId), ["doc-a"]);
+assert.deepEqual(knowledgeGraphService.list(tenantB).map((item) => item.documentId), ["doc-b"]);
+
+const governanceA = knowledgeGovernanceService.createRecord({
+  tenantId: tenantA,
+  knowledgeDocumentId: "doc-a",
+  version: "1.0",
+});
+const governanceB = knowledgeGovernanceService.createRecord({
+  tenantId: tenantB,
+  knowledgeDocumentId: "doc-b",
+  version: "1.0",
+});
+knowledgeGovernanceService.applyAction({
+  tenantId: tenantA,
+  governanceRecordId: governanceA.id,
+  action: "submit_for_review",
+  actor: "Tenant A Reviewer",
+});
+assert.throws(
+  () =>
+    knowledgeGovernanceService.applyAction({
+      tenantId: tenantB,
+      governanceRecordId: governanceA.id,
+      action: "approve",
+      actor: "Tenant B Reviewer",
+    }),
+  /not found/i,
+);
+assert.deepEqual(
+  knowledgeGovernanceService.listRecords(tenantA).map((item) => item.id),
+  [governanceA.id],
+);
+assert.deepEqual(
+  knowledgeGovernanceService.listRecords(tenantB).map((item) => item.id),
+  [governanceB.id],
+);
+
 const guardedRoutes = [
   "app/api/literature/article-fetch/route.ts",
   "app/api/literature/document-processing/route.ts",
@@ -63,6 +146,10 @@ const guardedRoutes = [
   "app/api/literature/search-strategy/route.ts",
   "app/api/literature/translation/route.ts",
   "app/api/literature/workflow/route.ts",
+  "app/api/knowledge/repository/route.ts",
+  "app/api/knowledge/extraction/route.ts",
+  "app/api/knowledge/graph/route.ts",
+  "app/api/knowledge/governance/route.ts",
 ];
 
 for (const route of guardedRoutes) {
