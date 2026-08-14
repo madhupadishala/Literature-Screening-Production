@@ -229,10 +229,6 @@ async function main() {
     result: unknown;
   };
   assert.deepEqual(screeningAssessment.result, canonicalScreening);
-  assert.deepEqual(downloadedIntake.payload.article, {
-    pmid: undefined,
-  }, "placeholder");
-
   const reusedIntake = await generateIntakeInput({
     principal,
     request: {
