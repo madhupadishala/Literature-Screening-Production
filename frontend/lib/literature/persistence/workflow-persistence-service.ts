@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getPostgresPool } from "@/lib/database/postgres";
+import type { FullTextArtifact } from "@/lib/literature/full-text/full-text-artifact-service";
 
 export interface PersistWorkflowArticleInput {
   tenantKey: string;
@@ -9,6 +10,7 @@ export interface PersistWorkflowArticleInput {
   title: string;
   searchResult: unknown;
   fetchResult: unknown;
+  fullTextArtifact?: FullTextArtifact;
   duplicateResult: {
     isDuplicate: boolean;
     requiresReview: boolean;
@@ -99,9 +101,74 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
       [tenantId, packageId, input.pmid, input.pmid, input.doi ?? null],
     );
 
+    if (input.fullTextArtifact) {
+      const artifact = input.fullTextArtifact;
+      const storageKey = [
+        tenantId,
+        packageId,
+        "source",
+        `${artifact.sha256}.pdf`,
+      ].join("/");
+
+      const artifactResult = await client.query<{ id: string }>(
+        `INSERT INTO evidence_artifacts (
+           tenant_id, package_id, artifact_type, storage_backend, storage_key,
+           media_type, sha256, size_bytes, metadata, provenance_url,
+           retrieved_at, retention_policy
+         ) VALUES (
+           $1, $2, 'SOURCE_PDF', 'postgres-bytea', $3,
+           $4, $5, $6, $7::jsonb, $8, $9, 'retain'
+         )
+         ON CONFLICT (tenant_id, package_id, artifact_type, storage_key)
+         DO UPDATE SET
+           metadata = EXCLUDED.metadata,
+           provenance_url = EXCLUDED.provenance_url,
+           retrieved_at = EXCLUDED.retrieved_at
+         RETURNING id`,
+        [
+          tenantId,
+          packageId,
+          storageKey,
+          artifact.mediaType,
+          artifact.sha256,
+          artifact.sizeBytes,
+          JSON.stringify({
+            source: artifact.source,
+            pmcid: artifact.pmcid,
+            fileName: artifact.fileName,
+            pageCount: artifact.pageCount,
+            extractedTextLength: artifact.extractedText.length,
+          }),
+          artifact.provenanceUrl,
+          artifact.retrievedAt,
+        ],
+      );
+
+      await client.query(
+        `INSERT INTO evidence_artifact_contents (artifact_id, tenant_id, content)
+         VALUES ($1, $2, decode($3, 'base64'))
+         ON CONFLICT (artifact_id)
+         DO UPDATE SET content = EXCLUDED.content`,
+        [artifactResult.rows[0].id, tenantId, artifact.bytesBase64],
+      );
+    }
+
+    const fullTextSummary = input.fullTextArtifact
+      ? {
+          source: input.fullTextArtifact.source,
+          pmcid: input.fullTextArtifact.pmcid,
+          provenanceUrl: input.fullTextArtifact.provenanceUrl,
+          sha256: input.fullTextArtifact.sha256,
+          sizeBytes: input.fullTextArtifact.sizeBytes,
+          pageCount: input.fullTextArtifact.pageCount,
+          retrievedAt: input.fullTextArtifact.retrievedAt,
+        }
+      : undefined;
+
     const hitsPayload = {
       searchResult: input.searchResult,
       fetchResult: input.fetchResult,
+      fullText: fullTextSummary,
       duplicateResult: input.duplicateResult,
     };
 
@@ -140,6 +207,8 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
           screeningDecision: input.screeningResult.decision,
           screeningConfidence: input.screeningResult.confidence,
           duplicate: input.duplicateResult.isDuplicate,
+          fullTextSha256: input.fullTextArtifact?.sha256 ?? null,
+          fullTextPmcid: input.fullTextArtifact?.pmcid ?? null,
         }),
       ],
     );
