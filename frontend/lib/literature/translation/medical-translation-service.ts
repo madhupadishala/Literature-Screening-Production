@@ -28,6 +28,7 @@ class MedicalTranslationService {
     const targetLanguage = request.targetLanguage ?? "en";
 
     const result: MedicalTranslationResult = {
+      tenantId: request.tenantId,
       id: createTranslationId(),
       sourceLanguage: detected.language,
       targetLanguage,
@@ -46,12 +47,17 @@ class MedicalTranslationService {
     return result;
   }
 
-  list(limit = 20) {
-    return this.history.slice(0, limit);
+  list(tenantId: string, limit = 20) {
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, limit);
   }
 
-  getStatus(): TranslationStatus {
-    const totalTranslations = this.history.length;
+  getStatus(tenantId: string): TranslationStatus {
+    const tenantHistory = this.history.filter(
+      (item) => item.tenantId === tenantId,
+    );
+    const totalTranslations = tenantHistory.length;
 
     return {
       totalTranslations,
@@ -60,7 +66,7 @@ class MedicalTranslationService {
           ? 0
           : Number(
               (
-                this.history.reduce((sum, item) => sum + item.confidence, 0) /
+                tenantHistory.reduce((sum, item) => sum + item.confidence, 0) /
                 totalTranslations
               ).toFixed(2),
             ),
