@@ -19,6 +19,8 @@ export interface ArticleMetadata {
 
   doi?: string;
 
+  pmcid?: string;
+
   authors: string[];
 
   keywords?: string[];
