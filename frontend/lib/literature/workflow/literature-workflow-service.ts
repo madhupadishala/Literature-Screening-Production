@@ -424,6 +424,7 @@ class LiteratureWorkflowService {
   }
 
   list(
+    tenantId: string,
     limit = 20,
   ): LiteratureWorkflowResponse[] {
     const safeLimit =
@@ -431,7 +432,9 @@ class LiteratureWorkflowService {
         ? Math.min(Math.floor(limit), 100)
         : 20;
 
-    return this.history.slice(0, safeLimit);
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, safeLimit);
   }
 
   clear(): void {
@@ -439,10 +442,13 @@ class LiteratureWorkflowService {
     this.workflowCache.clear();
   }
 
-  getStatus(): LiteratureWorkflowStatus {
+  getStatus(tenantId: string): LiteratureWorkflowStatus {
+    const tenantHistory = this.history.filter(
+      (item) => item.tenantId === tenantId,
+    );
     return {
-      totalRuns: this.history.length,
-      completedRuns: this.history.length,
+      totalRuns: tenantHistory.length,
+      completedRuns: tenantHistory.length,
       failedRuns:
         getPerformanceSummary().byOperation[
           "literature_workflow"
@@ -450,7 +456,7 @@ class LiteratureWorkflowService {
           ? 0
           : getPerformanceSummary().failedOperations,
       lastRunAt:
-        this.history[0]?.completedAt,
+        tenantHistory[0]?.completedAt,
     };
   }
 
