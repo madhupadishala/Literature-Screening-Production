@@ -10,10 +10,12 @@ export async function POST(request: NextRequest) {
     const principal = await requirePermission(request, PERMISSIONS.DATA_IMPORT);
     const body = await request.json();
 
-    const job = importStore.create({
+    const job = await importStore.create({
       ...body,
       tenantId: principal.tenantId,
       createdBy: principal.userId,
+      idempotencyKey: request.headers.get("x-idempotency-key")?.trim() || undefined,
+      requestId: request.headers.get("x-request-id"),
     });
 
     return NextResponse.json({

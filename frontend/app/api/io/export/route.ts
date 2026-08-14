@@ -10,10 +10,12 @@ export async function POST(request: NextRequest) {
     const principal = await requirePermission(request, PERMISSIONS.DATA_EXPORT);
     const body = await request.json();
 
-    const job = exportStore.create({
+    const job = await exportStore.create({
       ...body,
       tenantId: principal.tenantId,
       requestedBy: principal.userId,
+      idempotencyKey: request.headers.get("x-idempotency-key")?.trim() || undefined,
+      requestId: request.headers.get("x-request-id"),
     });
 
     return NextResponse.json({

@@ -59,6 +59,11 @@ async function main() {
   const { POST: saveGovernedReview } = await import("../app/api/review/save/route");
   const { evidencePackageGenerator } = await import("../lib/evidence/evidence-package-generator");
   const { reviewRepository } = await import("../lib/review/review-store");
+  const { POST: createImportJob } = await import("../app/api/io/import/route");
+  const { POST: createExportJob } = await import("../app/api/io/export/route");
+  const { GET: downloadExport } = await import("../app/api/io/export/[jobId]/route");
+  const { importStore } = await import("../lib/io/import-store");
+  const { exportStore } = await import("../lib/io/export-store");
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -230,6 +235,115 @@ async function main() {
   await pool.query(`
     DROP TRIGGER qualification_fail_review_audit_trigger ON audit_events;
     DROP FUNCTION qualification_fail_review_audit();
+  `);
+
+  const ioHeaders = {
+    "content-type": "application/json",
+    "x-tenant-key": tenantAKey,
+    "x-user-email": emailA,
+    "x-idempotency-key": `qualification-io-${suffix}`,
+    "x-request-id": `qualification-io-${suffix}`,
+  };
+  const importBody = {
+    tenantId: tenantB.rows[0].id,
+    sourceType: "csv",
+    fileName: "qualification.csv",
+    totalRecords: 2,
+    metadata: { sourceSha256: "b".repeat(64) },
+  };
+  const firstImportResponse = await createImportJob(new NextRequest(
+    "http://localhost/api/io/import",
+    { method: "POST", headers: ioHeaders, body: JSON.stringify(importBody) },
+  ));
+  assert.equal(firstImportResponse.status, 200);
+  const firstImport = (await firstImportResponse.json()) as { data: { id: string } };
+  const repeatedImportResponse = await createImportJob(new NextRequest(
+    "http://localhost/api/io/import",
+    { method: "POST", headers: ioHeaders, body: JSON.stringify(importBody) },
+  ));
+  const repeatedImport = (await repeatedImportResponse.json()) as { data: { id: string } };
+  assert.equal(repeatedImport.data.id, firstImport.data.id);
+  assert.equal((await importStore.get(tenantA.rows[0].id, firstImport.data.id))?.tenantId,
+    tenantA.rows[0].id);
+  assert.equal(await importStore.get(tenantB.rows[0].id, firstImport.data.id), undefined);
+
+  const exportBody = { tenantId: tenantB.rows[0].id, scope: "screening", format: "json" };
+  const firstExportResponse = await createExportJob(new NextRequest(
+    "http://localhost/api/io/export",
+    { method: "POST", headers: ioHeaders, body: JSON.stringify(exportBody) },
+  ));
+  assert.equal(firstExportResponse.status, 200);
+  const firstExport = (await firstExportResponse.json()) as { data: { id: string } };
+  const repeatedExportResponse = await createExportJob(new NextRequest(
+    "http://localhost/api/io/export",
+    { method: "POST", headers: ioHeaders, body: JSON.stringify(exportBody) },
+  ));
+  const repeatedExport = (await repeatedExportResponse.json()) as { data: { id: string } };
+  assert.equal(repeatedExport.data.id, firstExport.data.id);
+  const exportBytes = Buffer.from('{"qualification":true}');
+  await exportStore.attachContent({
+    tenantId: tenantA.rows[0].id,
+    jobId: firstExport.data.id,
+    bytes: exportBytes,
+    mediaType: "application/json",
+    fileName: "qualification.json",
+    actorId: userA.rows[0].id,
+  });
+  const ownExport = await downloadExport(
+    new NextRequest(`http://localhost/api/io/export/${firstExport.data.id}`, {
+      headers: { "x-tenant-key": tenantAKey, "x-user-email": emailA },
+    }),
+    { params: Promise.resolve({ jobId: firstExport.data.id }) },
+  );
+  assert.equal(ownExport.status, 200);
+  assert.equal(Buffer.from(await ownExport.arrayBuffer()).toString(), exportBytes.toString());
+  assert.match(ownExport.headers.get("x-content-sha256") ?? "", /^[0-9a-f]{64}$/);
+  const crossTenantExport = await downloadExport(
+    new NextRequest(`http://localhost/api/io/export/${firstExport.data.id}`, {
+      headers: { "x-tenant-key": tenantBKey, "x-user-email": emailB },
+    }),
+    { params: Promise.resolve({ jobId: firstExport.data.id }) },
+  );
+  assert.equal(crossTenantExport.status, 404);
+  const deniedExport = await createExportJob(new NextRequest("http://localhost/api/io/export", {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-tenant-key": tenantAKey,
+      "x-user-email": readOnlyEmail },
+    body: JSON.stringify(exportBody),
+  }));
+  assert.equal(deniedExport.status, 403);
+
+  const rollbackIdempotencyKey = `rollback-export-${suffix}`;
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_export_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
+    BEGIN
+      IF NEW.event_type = 'EXPORT_JOB_CREATED'
+         AND NEW.details->>'idempotencyKey' = '${rollbackIdempotencyKey}' THEN
+        RAISE EXCEPTION 'qualification forced export persistence failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $qualification$;
+    CREATE TRIGGER qualification_fail_export_audit_trigger
+      BEFORE INSERT ON audit_events
+      FOR EACH ROW EXECUTE FUNCTION qualification_fail_export_audit();
+  `);
+  await assert.rejects(exportStore.create({
+    tenantId: tenantA.rows[0].id,
+    scope: "screening",
+    format: "json",
+    requestedBy: userA.rows[0].id,
+    idempotencyKey: rollbackIdempotencyKey,
+  }), /qualification forced export persistence failure/i);
+  const rolledBackExport = await pool.query(
+    `SELECT id FROM export_jobs WHERE tenant_id = $1 AND idempotency_key = $2`,
+    [tenantA.rows[0].id, rollbackIdempotencyKey],
+  );
+  assert.equal(rolledBackExport.rowCount, 0);
+  await pool.query(`
+    DROP TRIGGER qualification_fail_export_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_export_audit();
   `);
 
 
@@ -478,7 +592,7 @@ async function main() {
   assert.equal(afterDelete.rows[0].audit_count, "1");
 
   console.log(
-    "Database-backed qualification passed: workflow and governed-review failures rolled back every write; package/review tenant spoofing was neutralized; cross-tenant access was denied; legal-hold rollback preserved content; approved deletion committed with audit.",
+    "Database-backed qualification passed: workflow, governed-review, and export failures rolled back every write; package/review/import/export tenant spoofing was neutralized; export idempotency and provenance were preserved; cross-tenant access was denied; legal-hold rollback preserved content; approved deletion committed with audit.",
   );
 }
 
