@@ -58,8 +58,10 @@ class MemoryVectorProvider {
       .slice(0, request.topK ?? 10);
   }
 
-  count() {
-    return this.vectors.length;
+  count(tenantId: string) {
+    return this.vectors.filter(
+      (item) => item.metadata.tenantId === tenantId,
+    ).length;
   }
 }
 
