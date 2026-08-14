@@ -41,7 +41,7 @@ export async function POST(request: Request): Promise<Response> {
       id: definition.id,
       status: body.status,
       updatedAt: new Date().toISOString(),
-      updatedBy: body.updatedBy?.trim() || "release-operator",
+      updatedBy: "internal-release-operator",
       notes: body.notes?.trim() || undefined,
     });
 
