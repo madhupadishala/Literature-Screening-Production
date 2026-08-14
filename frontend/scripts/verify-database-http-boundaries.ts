@@ -49,6 +49,9 @@ async function main() {
     DELETE: deleteArtifact,
     GET: getArtifact,
   } = await import("../app/api/evidence/artifacts/[artifactId]/route");
+  const { persistWorkflowArticle } = await import(
+    "../lib/literature/persistence/workflow-persistence-service"
+  );
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -78,6 +81,82 @@ async function main() {
      VALUES ($1, $2, 'CLIENT_OWNER'), ($3, $4, 'CLIENT_OWNER')`,
     [tenantA.rows[0].id, userA.rows[0].id, tenantB.rows[0].id, userB.rows[0].id],
   );
+
+
+  const rollbackPmid = `ROLLBACK-${suffix}`;
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_workflow_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $
+    BEGIN
+      IF NEW.event_type = 'LITERATURE_ARTICLE_PERSISTED'
+         AND NEW.details->>'pmid' = '${rollbackPmid}' THEN
+        RAISE EXCEPTION 'qualification forced persistence failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $;
+    DROP TRIGGER IF EXISTS qualification_fail_workflow_audit_trigger ON audit_events;
+    CREATE TRIGGER qualification_fail_workflow_audit_trigger
+      BEFORE INSERT ON audit_events
+      FOR EACH ROW EXECUTE FUNCTION qualification_fail_workflow_audit();
+  `);
+
+  await assert.rejects(
+    persistWorkflowArticle({
+      tenantKey: tenantAKey,
+      pmid: rollbackPmid,
+      title: "Atomic rollback qualification",
+      searchResult: { pmid: rollbackPmid },
+      fetchResult: { pmid: rollbackPmid },
+      duplicateResult: {
+        isDuplicate: false,
+        requiresReview: false,
+        confidence: 100,
+        matches: [],
+      },
+      screeningResult: {
+        decision: "INCLUDE",
+        confidence: 99,
+      },
+    }),
+    /qualification forced persistence failure/i,
+  );
+
+  const rollbackState = await pool.query<{
+    package_count: string;
+    workflow_count: string;
+    source_count: string;
+    hits_count: string;
+    screening_count: string;
+    audit_count: string;
+  }>(
+    `SELECT
+       (SELECT count(*) FROM literature_packages
+          WHERE tenant_id = $1 AND package_key = $2) AS package_count,
+       (SELECT count(*) FROM literature_workflow_state ws
+          JOIN literature_packages p ON p.id = ws.package_id
+          WHERE p.tenant_id = $1 AND p.package_key = $2) AS workflow_count,
+       (SELECT count(*) FROM literature_package_sources s
+          JOIN literature_packages p ON p.id = s.package_id
+          WHERE p.tenant_id = $1 AND p.package_key = $2) AS source_count,
+       (SELECT count(*) FROM hits_results h
+          JOIN literature_packages p ON p.id = h.package_id
+          WHERE p.tenant_id = $1 AND p.package_key = $2) AS hits_count,
+       (SELECT count(*) FROM screening_results sr
+          JOIN literature_packages p ON p.id = sr.package_id
+          WHERE p.tenant_id = $1 AND p.package_key = $2) AS screening_count,
+       (SELECT count(*) FROM audit_events
+          WHERE tenant_id = $1 AND details->>'pmid' = $2) AS audit_count`,
+    [tenantA.rows[0].id, rollbackPmid],
+  );
+  for (const count of Object.values(rollbackState.rows[0])) {
+    assert.equal(count, "0");
+  }
+
+  await pool.query(`
+    DROP TRIGGER qualification_fail_workflow_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_workflow_audit();
+  `);
 
   const pkg = await pool.query<{ id: string }>(
     `INSERT INTO literature_packages (
@@ -176,7 +255,7 @@ async function main() {
   assert.equal(afterDelete.rows[0].audit_count, "1");
 
   console.log(
-    "Database-backed HTTP qualification passed: cross-tenant access denied, legal-hold rollback preserved content, and approved deletion committed with audit.",
+    "Database-backed qualification passed: workflow failure rolled back every write; cross-tenant access was denied; legal-hold rollback preserved content; approved deletion committed with audit.",
   );
 }
 
