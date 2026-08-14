@@ -22,6 +22,7 @@ export interface KnowledgeEdge {
 }
 
 export interface KnowledgeGraph {
+  tenantId: string;
   id: string;
   documentId: string;
   nodes: KnowledgeNode[];
@@ -30,6 +31,7 @@ export interface KnowledgeGraph {
 }
 
 export interface KnowledgeGraphRequest {
+  tenantId: string;
   documentId: string;
   nodes: KnowledgeNode[];
 }
