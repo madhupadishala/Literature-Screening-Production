@@ -127,13 +127,28 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
       ],
     );
 
+    await client.query(
+      `INSERT INTO audit_events (
+         tenant_id, package_id, event_type, event_category, outcome, details
+       ) VALUES ($1, $2, 'LITERATURE_ARTICLE_PERSISTED', 'LITERATURE_WORKFLOW', 'success', $3::jsonb)`,
+      [
+        tenantId,
+        packageId,
+        JSON.stringify({
+          pmid: input.pmid,
+          doi: input.doi ?? null,
+          screeningDecision: input.screeningResult.decision,
+          screeningConfidence: input.screeningResult.confidence,
+          duplicate: input.duplicateResult.isDuplicate,
+        }),
+      ],
+    );
+
     await client.query("COMMIT");
   } catch (error) {
     await client.query("ROLLBACK");
-    // Persistence failing should not fail the whole workflow response --
-    // the caller already has the real, correct result to return to the
-    // user. Log loudly so it's visible, but don't throw.
-    console.error("[persistWorkflowArticle] Failed to persist article, continuing without persistence:", error);
+    console.error("[persistWorkflowArticle] Transaction failed and was rolled back:", error);
+    throw error;
   } finally {
     client.release();
   }
