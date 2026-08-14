@@ -6,10 +6,6 @@ import { readReleaseState } from "../../../../lib/release/release-state-store";
 
 export const dynamic = "force-dynamic";
 
-interface CandidateBody {
-  createdBy?: string;
-}
-
 export async function GET(request: Request): Promise<Response> {
   return runRoute(request, async (context) => {
     authorizeReleaseRoute(request);
@@ -20,8 +16,8 @@ export async function GET(request: Request): Promise<Response> {
 export async function POST(request: Request): Promise<Response> {
   return runRoute(request, async (context) => {
     authorizeReleaseRoute(request);
-    const body = await readJsonBody<CandidateBody>(request);
-    const candidate = await createReleaseCandidate(body.createdBy);
+    await readJsonBody<Record<string, unknown>>(request);
+    const candidate = await createReleaseCandidate("internal-release-operator");
     return successResponse(candidate, 201, context.requestId);
   });
 }
