@@ -38,6 +38,7 @@ export class KnowledgeExtractor {
     ];
 
     return {
+      tenantId: request.tenantId || "",
       documentId: request.documentId,
       objects,
       extractedAt: new Date().toISOString(),
