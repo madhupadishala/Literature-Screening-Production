@@ -53,6 +53,9 @@ jobs:
             echo "No lint script is currently configured."
           fi
 
+      - name: Verify cross-tenant boundaries
+        run: npm run validate:tenant-boundaries
+
       - name: Build production application
         run: npm run build
 
