@@ -32,7 +32,8 @@
     "validate:e2e:offline": "node scripts/validate-enterprise-e2e.mjs --offline",
     "deployment:verify": "node scripts/verify-azure-deployment-foundation.mjs",
     "release:gate": "node scripts/production-release-gate.mjs",
-    "validate:tenant-boundaries": "node --import tsx scripts/verify-cross-tenant-boundaries.ts"
+    "validate:tenant-boundaries": "node --import tsx scripts/verify-cross-tenant-boundaries.ts",
+    "validate:database-http-boundaries": "node --conditions=react-server --import tsx scripts/verify-database-http-boundaries.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.18.0",
