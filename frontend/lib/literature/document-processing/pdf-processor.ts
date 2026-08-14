@@ -8,6 +8,7 @@ export class PDFProcessor {
     request: PDFProcessingRequest,
   ): Promise<PDFProcessingResult> {
     return {
+      tenantId: request.tenantId,
       pmid: request.pmid,
       fileName: request.fileName,
       pageCount: 5,
