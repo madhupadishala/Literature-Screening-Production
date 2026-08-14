@@ -13,9 +13,9 @@ export async function GET(request: NextRequest) {
   try {
     const principal = await requirePermission(request, PERMISSIONS.CONFIG_VIEW);
     return NextResponse.json({
-      status: knowledgeGovernanceService.getStatus(principal.tenantId),
-      records: knowledgeGovernanceService.listRecords(principal.tenantId),
-      auditEvents: knowledgeGovernanceService.listAuditEvents(principal.tenantId),
+      status: await knowledgeGovernanceService.getStatus(principal.tenantId),
+      records: await knowledgeGovernanceService.listRecords(principal.tenantId),
+      auditEvents: await knowledgeGovernanceService.listAuditEvents(principal.tenantId),
     });
   } catch (error) {
     return routeErrorResponse(error);
@@ -29,10 +29,11 @@ export async function POST(request: NextRequest) {
     if (!body.knowledgeDocumentId || !body.version) {
       throw new Error("knowledgeDocumentId and version are required.");
     }
-    const record = knowledgeGovernanceService.createRecord({
-      ...body,
-      tenantId: principal.tenantId,
-    });
+    const record = await knowledgeGovernanceService.createRecord(
+      { ...body, tenantId: principal.tenantId },
+      principal.userId,
+      request.headers.get("x-request-id"),
+    );
     return NextResponse.json({ record }, { status: 201 });
   } catch (error) {
     return routeErrorResponse(error);
@@ -46,11 +47,11 @@ export async function PATCH(request: NextRequest) {
     if (!body.governanceRecordId || !body.action) {
       throw new Error("governanceRecordId and action are required.");
     }
-    const result = knowledgeGovernanceService.applyAction({
-      ...body,
-      tenantId: principal.tenantId,
-      actor: principal.displayName,
-    });
+    const result = await knowledgeGovernanceService.applyAction(
+      { ...body, tenantId: principal.tenantId, actor: principal.displayName },
+      principal.userId,
+      request.headers.get("x-request-id"),
+    );
     return NextResponse.json(result);
   } catch (error) {
     return routeErrorResponse(error);

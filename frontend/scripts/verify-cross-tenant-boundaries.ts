@@ -6,7 +6,6 @@ import { evidenceNormalizationService } from "../lib/literature/evidence-normali
 import { medicalTranslationService } from "../lib/literature/translation/medical-translation-service";
 import { knowledgeExtractionService } from "../lib/knowledge/extraction/knowledge-extraction-service";
 import { knowledgeGraphService } from "../lib/knowledge/graph/knowledge-graph-service";
-import { knowledgeGovernanceService } from "../lib/knowledge/governance/knowledge-governance-service";
 import { knowledgeStore } from "../lib/knowledge/repository/knowledge-store";
 import { embeddingEngine } from "../lib/platform/ai/embeddings/embedding-engine";
 import { vectorStore as platformVectorStore } from "../lib/platform/vector/vector-store";
@@ -105,42 +104,6 @@ knowledgeGraphService.build({ tenantId: tenantA, documentId: "doc-a", nodes: [] 
 knowledgeGraphService.build({ tenantId: tenantB, documentId: "doc-b", nodes: [] });
 assert.deepEqual(knowledgeGraphService.list(tenantA).map((item) => item.documentId), ["doc-a"]);
 assert.deepEqual(knowledgeGraphService.list(tenantB).map((item) => item.documentId), ["doc-b"]);
-
-const governanceA = knowledgeGovernanceService.createRecord({
-  tenantId: tenantA,
-  knowledgeDocumentId: "doc-a",
-  version: "1.0",
-});
-const governanceB = knowledgeGovernanceService.createRecord({
-  tenantId: tenantB,
-  knowledgeDocumentId: "doc-b",
-  version: "1.0",
-});
-knowledgeGovernanceService.applyAction({
-  tenantId: tenantA,
-  governanceRecordId: governanceA.id,
-  action: "submit_for_review",
-  actor: "Tenant A Reviewer",
-});
-assert.throws(
-  () =>
-    knowledgeGovernanceService.applyAction({
-      tenantId: tenantB,
-      governanceRecordId: governanceA.id,
-      action: "approve",
-      actor: "Tenant B Reviewer",
-    }),
-  /not found/i,
-);
-assert.deepEqual(
-  knowledgeGovernanceService.listRecords(tenantA).map((item) => item.id),
-  [governanceA.id],
-);
-assert.deepEqual(
-  knowledgeGovernanceService.listRecords(tenantB).map((item) => item.id),
-  [governanceB.id],
-);
-
 
 await embeddingEngine.embed({ tenantId: tenantA, text: "Tenant A embedding" });
 await embeddingEngine.embed({ tenantId: tenantB, text: "Tenant B embedding" });

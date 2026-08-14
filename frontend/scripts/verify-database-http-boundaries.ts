@@ -64,6 +64,11 @@ async function main() {
   const { GET: downloadExport } = await import("../app/api/io/export/[jobId]/route");
   const { importStore } = await import("../lib/io/import-store");
   const { exportStore } = await import("../lib/io/export-store");
+  const {
+    GET: getKnowledgeGovernance,
+    POST: createKnowledgeGovernance,
+    PATCH: transitionKnowledgeGovernance,
+  } = await import("../app/api/knowledge/governance/route");
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -346,6 +351,110 @@ async function main() {
     DROP FUNCTION qualification_fail_export_audit();
   `);
 
+  const knowledgeDocument = await pool.query<{ id: string }>(
+    `INSERT INTO knowledge_documents (
+       tenant_id, document_key, title, source_type, version_label, content_sha256
+     ) VALUES ($1, $2, 'Qualification SOP', 'sop', '1.0', $3) RETURNING id`,
+    [tenantA.rows[0].id, `qualification-sop-${suffix}`, "c".repeat(64)],
+  );
+  const governanceHeaders = {
+    "content-type": "application/json",
+    "x-tenant-key": tenantAKey,
+    "x-user-email": emailA,
+    "x-request-id": `qualification-governance-${suffix}`,
+  };
+  const governanceCreate = await createKnowledgeGovernance(new NextRequest(
+    "http://localhost/api/knowledge/governance",
+    {
+      method: "POST",
+      headers: governanceHeaders,
+      body: JSON.stringify({
+        tenantId: tenantB.rows[0].id,
+        knowledgeDocumentId: knowledgeDocument.rows[0].id,
+        version: "1.0",
+        trainingRequired: true,
+      }),
+    },
+  ));
+  assert.equal(governanceCreate.status, 201);
+  const governanceRecord = (await governanceCreate.json()) as { record: { id: string } };
+  const governanceList = await getKnowledgeGovernance(new NextRequest(
+    "http://localhost/api/knowledge/governance",
+    { headers: { "x-tenant-key": tenantAKey, "x-user-email": emailA } },
+  ));
+  const governanceListBody = (await governanceList.json()) as {
+    records: Array<{ id: string; tenantId: string }>;
+  };
+  assert.equal(governanceListBody.records[0].tenantId, tenantA.rows[0].id);
+
+  const crossTenantTransition = await transitionKnowledgeGovernance(new NextRequest(
+    "http://localhost/api/knowledge/governance",
+    {
+      method: "PATCH",
+      headers: { "content-type": "application/json", "x-tenant-key": tenantBKey,
+        "x-user-email": emailB },
+      body: JSON.stringify({ governanceRecordId: governanceRecord.record.id,
+        action: "submit_for_review", tenantId: tenantA.rows[0].id }),
+    },
+  ));
+  assert.equal(crossTenantTransition.status, 404);
+  const deniedGovernance = await transitionKnowledgeGovernance(new NextRequest(
+    "http://localhost/api/knowledge/governance",
+    {
+      method: "PATCH",
+      headers: { "content-type": "application/json", "x-tenant-key": tenantAKey,
+        "x-user-email": readOnlyEmail },
+      body: JSON.stringify({ governanceRecordId: governanceRecord.record.id,
+        action: "submit_for_review" }),
+    },
+  ));
+  assert.equal(deniedGovernance.status, 403);
+
+  for (const action of ["submit_for_review", "approve"]) {
+    const transition = await transitionKnowledgeGovernance(new NextRequest(
+      "http://localhost/api/knowledge/governance",
+      { method: "PATCH", headers: governanceHeaders,
+        body: JSON.stringify({ governanceRecordId: governanceRecord.record.id, action }) },
+    ));
+    assert.equal(transition.status, 200);
+  }
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_governance_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
+    BEGIN
+      IF NEW.event_type = 'KNOWLEDGE_GOVERNANCE_TRANSITION'
+         AND NEW.details->>'governanceRecordId' = '${governanceRecord.record.id}'
+         AND NEW.details->>'action' = 'mark_effective' THEN
+        RAISE EXCEPTION 'qualification forced governance persistence failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $qualification$;
+    CREATE TRIGGER qualification_fail_governance_audit_trigger
+      BEFORE INSERT ON audit_events
+      FOR EACH ROW EXECUTE FUNCTION qualification_fail_governance_audit();
+  `);
+  const failedEffective = await transitionKnowledgeGovernance(new NextRequest(
+    "http://localhost/api/knowledge/governance",
+    { method: "PATCH", headers: governanceHeaders,
+      body: JSON.stringify({ governanceRecordId: governanceRecord.record.id,
+        action: "mark_effective" }) },
+  ));
+  assert.equal(failedEffective.status, 500);
+  const governanceAfterRollback = await pool.query<{ status: string; effective_events: string }>(
+    `SELECT record.status,
+       (SELECT count(*) FROM knowledge_governance_events event
+         WHERE event.governance_record_id = record.id AND event.action = 'mark_effective') AS effective_events
+     FROM knowledge_governance_records record WHERE record.id = $1`,
+    [governanceRecord.record.id],
+  );
+  assert.equal(governanceAfterRollback.rows[0].status, "approved");
+  assert.equal(governanceAfterRollback.rows[0].effective_events, "0");
+  await pool.query(`
+    DROP TRIGGER qualification_fail_governance_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_governance_audit();
+  `);
+
 
   const rollbackPmid = `ROLLBACK-${suffix}`;
   await pool.query(`
@@ -592,7 +701,7 @@ async function main() {
   assert.equal(afterDelete.rows[0].audit_count, "1");
 
   console.log(
-    "Database-backed qualification passed: workflow, governed-review, and export failures rolled back every write; package/review/import/export tenant spoofing was neutralized; export idempotency and provenance were preserved; cross-tenant access was denied; legal-hold rollback preserved content; approved deletion committed with audit.",
+    "Database-backed qualification passed: workflow, review, export, and knowledge-governance failures rolled back every write; tenant spoofing was neutralized; export idempotency and provenance were preserved; cross-tenant access and unauthorized governance were denied; legal-hold rollback preserved content; approved deletion committed with audit.",
   );
 }
 
