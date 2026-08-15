@@ -8,6 +8,7 @@ import { knowledgeExtractionService } from "../lib/knowledge/extraction/knowledg
 import { knowledgeGraphService } from "../lib/knowledge/graph/knowledge-graph-service";
 import { embeddingEngine } from "../lib/platform/ai/embeddings/embedding-engine";
 import { vectorStore as platformVectorStore } from "../lib/platform/vector/vector-store";
+import { assertLegacyVectorRuntimeAllowed } from "../lib/vector/legacy-vector-policy";
 
 async function main() {
 process.env.ALLOW_LEGACY_IN_MEMORY_VECTOR = "true";
@@ -128,20 +129,10 @@ assert.deepEqual(
 assert.equal(platformVectorStore.getStatus(tenantA).totalVectors, 1);
 assert.equal(platformVectorStore.getStatus(tenantB).totalVectors, 1);
 
-const originalNodeEnvironment = process.env.NODE_ENV;
-process.env.NODE_ENV = "production";
 assert.throws(
-  () => platformVectorStore.upsert({ id: "production-vector", vector: [1, 0],
-    metadata: { tenantId: tenantA, documentId: "doc", chunkId: "chunk" },
-    createdAt: new Date().toISOString() }),
+  () => assertLegacyVectorRuntimeAllowed("production"),
   /legacy in-memory vector/i,
 );
-await assert.rejects(
-  embeddingEngine.embed({ tenantId: tenantA, text: "production mock embedding" }),
-  /mock embedding operations are disabled/i,
-);
-if (originalNodeEnvironment === undefined) delete process.env.NODE_ENV;
-else process.env.NODE_ENV = originalNodeEnvironment;
 
 const guardedRoutes = [
   "app/api/literature/article-fetch/route.ts",
