@@ -48,6 +48,8 @@ export interface CreateJobInput {
   priority?: JobPriority;
   maxAttempts?: number;
   createdBy?: string;
+  idempotencyKey?: string;
+  requestId?: string | null;
 }
 
 export interface JobSummary {

@@ -1,158 +1,205 @@
-import type {
-  CreateJobInput,
-  JobRecord,
-  JobStatus,
-  JobSummary,
-} from "./job-types";
+import "server-only";
 
-const jobs = new Map<string, JobRecord>();
+import { getPostgresPool } from "@/lib/database/postgres";
+import type { CreateJobInput, JobRecord, JobStatus, JobSummary } from "./job-types";
 
-function createJobId(): string {
-  return `job-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+interface JobRow {
+  id: string;
+  tenant_id: string;
+  job_type: JobRecord["type"];
+  status: JobStatus;
+  priority: JobRecord["priority"];
+  payload: Record<string, unknown>;
+  attempts: number;
+  max_attempts: number;
+  progress: number;
+  error_message: string | null;
+  result: Record<string, unknown> | null;
+  created_by: string | null;
+  created_at: Date;
+  updated_at: Date;
+  started_at: Date | null;
+  completed_at: Date | null;
+}
+
+function toJob(row: JobRow): JobRecord {
+  return {
+    id: row.id,
+    tenantId: row.tenant_id,
+    type: row.job_type,
+    status: row.status,
+    priority: row.priority,
+    payload: row.payload,
+    attempts: row.attempts,
+    maxAttempts: row.max_attempts,
+    progress: row.progress,
+    error: row.error_message ?? undefined,
+    result: row.result ?? undefined,
+    createdBy: row.created_by ?? undefined,
+    createdAt: row.created_at.toISOString(),
+    updatedAt: row.updated_at.toISOString(),
+    startedAt: row.started_at?.toISOString(),
+    completedAt: row.completed_at?.toISOString(),
+  };
+}
+
+async function audit(
+  client: { query: (text: string, values?: unknown[]) => Promise<unknown> },
+  tenantId: string,
+  actorId: string | undefined,
+  requestId: string | null | undefined,
+  eventType: string,
+  details: Record<string, unknown>,
+) {
+  await client.query(
+    `INSERT INTO audit_events (
+       tenant_id, actor_id, event_type, event_category, outcome, request_id, details
+     ) VALUES ($1, $2, $3, 'BACKGROUND_JOBS', 'success', $4, $5::jsonb)`,
+    [tenantId, actorId ?? null, eventType, requestId ?? null,
+      JSON.stringify(details)],
+  );
 }
 
 export class JobQueue {
-  enqueue(input: CreateJobInput): JobRecord {
-    const now = new Date().toISOString();
-
-    const job: JobRecord = {
-      id: createJobId(),
-      tenantId: input.tenantId,
-      type: input.type,
-      status: "queued",
-      priority: input.priority ?? "normal",
-      payload: input.payload ?? {},
-      attempts: 0,
-      maxAttempts: input.maxAttempts ?? 3,
-      progress: 0,
-      createdBy: input.createdBy,
-      createdAt: now,
-      updatedAt: now,
-    };
-
-    jobs.set(job.id, job);
-
-    return job;
-  }
-
-  get(jobId: string): JobRecord | undefined {
-    return jobs.get(jobId);
-  }
-
-  list(tenantId: string): JobRecord[] {
-    return Array.from(jobs.values())
-      .filter((job) => job.tenantId === tenantId)
-      .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
-  }
-
-  listByStatus(tenantId: string, status: JobStatus): JobRecord[] {
-    return this.list(tenantId).filter((job) => job.status === status);
-  }
-
-  next(tenantId?: string): JobRecord | undefined {
-    const queued = Array.from(jobs.values())
-      .filter((job) => job.status === "queued")
-      .filter((job) => !tenantId || job.tenantId === tenantId)
-      .sort((left, right) => {
-        const priorityOrder = {
-          critical: 4,
-          high: 3,
-          normal: 2,
-          low: 1,
-        };
-
-        return (
-          priorityOrder[right.priority] - priorityOrder[left.priority] ||
-          left.createdAt.localeCompare(right.createdAt)
+  async enqueue(input: CreateJobInput): Promise<JobRecord> {
+    const client = await getPostgresPool().connect();
+    try {
+      await client.query("BEGIN");
+      if (input.idempotencyKey) {
+        await client.query(`SELECT pg_advisory_xact_lock(hashtext($1))`,
+          [`${input.tenantId}:${input.idempotencyKey}`]);
+        const existing = await client.query<JobRow>(
+          `SELECT * FROM background_jobs WHERE tenant_id = $1 AND idempotency_key = $2`,
+          [input.tenantId, input.idempotencyKey],
         );
-      });
-
-    return queued[0];
+        if (existing.rows[0]) {
+          await client.query("COMMIT");
+          return toJob(existing.rows[0]);
+        }
+      }
+      const inserted = await client.query<JobRow>(
+        `INSERT INTO background_jobs (
+           tenant_id, idempotency_key, job_type, priority, payload, max_attempts, created_by
+         ) VALUES ($1, $2, $3, $4, $5::jsonb, $6, $7) RETURNING *`,
+        [input.tenantId, input.idempotencyKey ?? null, input.type,
+          input.priority ?? "normal", JSON.stringify(input.payload ?? {}),
+          input.maxAttempts ?? 3, input.createdBy ?? null],
+      );
+      await audit(client, input.tenantId, input.createdBy, input.requestId,
+        "BACKGROUND_JOB_ENQUEUED", {
+        jobId: inserted.rows[0].id,
+        jobType: input.type,
+        idempotencyKey: input.idempotencyKey ?? null,
+        });
+      await client.query("COMMIT");
+      return toJob(inserted.rows[0]);
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
-  update(jobId: string, patch: Partial<JobRecord>): JobRecord | undefined {
-    const existing = jobs.get(jobId);
+  async get(tenantId: string, id: string): Promise<JobRecord | undefined> {
+    const result = await getPostgresPool().query<JobRow>(
+      `SELECT * FROM background_jobs WHERE tenant_id = $1 AND id = $2`,
+      [tenantId, id],
+    );
+    return result.rows[0] ? toJob(result.rows[0]) : undefined;
+  }
 
-    if (!existing) {
-      return undefined;
-    }
+  async list(tenantId: string): Promise<JobRecord[]> {
+    const result = await getPostgresPool().query<JobRow>(
+      `SELECT * FROM background_jobs WHERE tenant_id = $1 ORDER BY created_at DESC`,
+      [tenantId],
+    );
+    return result.rows.map(toJob);
+  }
 
-    const updated: JobRecord = {
-      ...existing,
-      ...patch,
-      id: existing.id,
-      tenantId: existing.tenantId,
-      createdAt: existing.createdAt,
-      updatedAt: new Date().toISOString(),
+  async summary(tenantId: string): Promise<JobSummary> {
+    const result = await getPostgresPool().query<{ status: JobStatus; count: string }>(
+      `SELECT status, count(*)::text AS count FROM background_jobs
+        WHERE tenant_id = $1 GROUP BY status`,
+      [tenantId],
+    );
+    const counts = new Map(result.rows.map((row) => [row.status, Number(row.count)]));
+    const summary: JobSummary = {
+      total: 0,
+      queued: counts.get("queued") ?? 0,
+      processing: counts.get("processing") ?? 0,
+      completed: counts.get("completed") ?? 0,
+      failed: counts.get("failed") ?? 0,
+      cancelled: counts.get("cancelled") ?? 0,
     };
-
-    jobs.set(jobId, updated);
-
-    return updated;
+    summary.total = summary.queued + summary.processing + summary.completed +
+      summary.failed + summary.cancelled;
+    return summary;
   }
 
-  cancel(jobId: string): boolean {
-    const existing = jobs.get(jobId);
-
-    if (!existing) {
-      return false;
-    }
-
-    this.update(jobId, {
-      status: "cancelled",
-      progress: existing.progress,
-    });
-
-    return true;
+  async claimNext(tenantId: string, leaseSeconds = 60): Promise<JobRecord | undefined> {
+    const result = await getPostgresPool().query<JobRow>(
+      `WITH candidate AS (
+         SELECT id FROM background_jobs
+          WHERE tenant_id = $1 AND status = 'queued' AND next_attempt_at <= now()
+          ORDER BY CASE priority WHEN 'critical' THEN 1 WHEN 'high' THEN 2
+                   WHEN 'normal' THEN 3 ELSE 4 END, created_at
+          FOR UPDATE SKIP LOCKED LIMIT 1
+       )
+       UPDATE background_jobs job SET status = 'processing', attempts = attempts + 1,
+         progress = 1, claim_token = gen_random_uuid(),
+         locked_until = now() + ($2 * interval '1 second'),
+         started_at = COALESCE(started_at, now()), updated_at = now()
+       FROM candidate WHERE job.id = candidate.id RETURNING job.*`,
+      [tenantId, Math.max(1, Math.min(leaseSeconds, 3600))],
+    );
+    return result.rows[0] ? toJob(result.rows[0]) : undefined;
   }
 
-  summary(tenantId: string): JobSummary {
-    const list = this.list(tenantId);
-
-    return {
-      total: list.length,
-      queued: list.filter((job) => job.status === "queued").length,
-      processing: list.filter((job) => job.status === "processing").length,
-      completed: list.filter((job) => job.status === "completed").length,
-      failed: list.filter((job) => job.status === "failed").length,
-      cancelled: list.filter((job) => job.status === "cancelled").length,
-    };
+  async complete(
+    tenantId: string,
+    id: string,
+    resultPayload: Record<string, unknown>,
+  ): Promise<JobRecord | undefined> {
+    const result = await getPostgresPool().query<JobRow>(
+      `UPDATE background_jobs SET status = 'completed', progress = 100,
+         result = $3::jsonb, completed_at = now(), locked_until = NULL,
+         claim_token = NULL, updated_at = now()
+       WHERE tenant_id = $1 AND id = $2 AND status = 'processing' RETURNING *`,
+      [tenantId, id, JSON.stringify(resultPayload)],
+    );
+    return result.rows[0] ? toJob(result.rows[0]) : undefined;
   }
 
-  seedDemoJobs(tenantId: string): void {
-    if (this.list(tenantId).length > 0) {
-      return;
-    }
+  async fail(tenantId: string, id: string, message: string): Promise<JobRecord | undefined> {
+    const result = await getPostgresPool().query<JobRow>(
+      `UPDATE background_jobs SET
+         status = CASE WHEN attempts < max_attempts THEN 'queued' ELSE 'failed' END,
+         progress = CASE WHEN attempts < max_attempts THEN 0 ELSE progress END,
+         error_message = $3, claim_token = NULL, locked_until = NULL,
+         next_attempt_at = CASE WHEN attempts < max_attempts
+           THEN now() + (LEAST(300, power(2, attempts)::integer) * interval '1 second')
+           ELSE next_attempt_at END,
+         completed_at = CASE WHEN attempts >= max_attempts THEN now() ELSE completed_at END,
+         updated_at = now()
+       WHERE tenant_id = $1 AND id = $2 AND status = 'processing' RETURNING *`,
+      [tenantId, id, message.slice(0, 2000)],
+    );
+    return result.rows[0] ? toJob(result.rows[0]) : undefined;
+  }
 
-    this.enqueue({
-      tenantId,
-      type: "article_fetch",
-      priority: "high",
-      payload: {
-        pmid: "demo-001",
-      },
-      createdBy: "scheduler",
-    });
-
-    this.enqueue({
-      tenantId,
-      type: "ocr",
-      priority: "normal",
-      payload: {
-        documentId: "doc-demo-001",
-      },
-      createdBy: "document-manager",
-    });
-
-    this.enqueue({
-      tenantId,
-      type: "hits_ai",
-      priority: "critical",
-      payload: {
-        articleId: "article-demo-001",
-      },
-      createdBy: "ai-orchestrator",
-    });
+  async recoverStaleClaims(tenantId: string): Promise<number> {
+    const result = await getPostgresPool().query(
+      `UPDATE background_jobs SET
+         status = CASE WHEN attempts < max_attempts THEN 'queued' ELSE 'failed' END,
+         error_message = 'Worker lease expired', claim_token = NULL, locked_until = NULL,
+         next_attempt_at = now(),
+         completed_at = CASE WHEN attempts >= max_attempts THEN now() ELSE completed_at END,
+         updated_at = now()
+       WHERE tenant_id = $1 AND status = 'processing' AND locked_until < now()`,
+      [tenantId],
+    );
+    return result.rowCount ?? 0;
   }
 }
 

@@ -79,6 +79,13 @@ async function main() {
     GET: getStoredDocument,
     DELETE: deleteStoredDocument,
   } = await import("../app/api/storage/documents/[documentId]/route");
+  const { GET: getJobs, POST: runJobs } = await import("../app/api/jobs/status/route");
+  const {
+    GET: getSchedules,
+    POST: createSchedule,
+    PATCH: dispatchSchedules,
+  } = await import("../app/api/scheduler/status/route");
+  const { jobQueue } = await import("../lib/jobs/job-queue");
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -118,6 +125,134 @@ async function main() {
      VALUES ($1, $2, 'READ_ONLY')`,
     [tenantA.rows[0].id, readOnlyUser.rows[0].id],
   );
+
+  const schedulerHeaders = {
+    "content-type": "application/json",
+    "x-tenant-key": tenantAKey,
+    "x-user-email": emailA,
+    "x-idempotency-key": `qualification-schedule-${suffix}`,
+    "x-request-id": `qualification-schedule-${suffix}`,
+  };
+  const scheduleBody = {
+    tenantId: tenantB.rows[0].id,
+    name: `Qualification once ${suffix}`,
+    jobType: "system",
+    frequency: "once",
+    nextRunAt: new Date(Date.now() - 60_000).toISOString(),
+    payload: { qualification: true },
+  };
+  const firstScheduleResponse = await createSchedule(new NextRequest(
+    "http://localhost/api/scheduler/status",
+    { method: "POST", headers: schedulerHeaders, body: JSON.stringify(scheduleBody) },
+  ));
+  assert.equal(firstScheduleResponse.status, 201);
+  const firstSchedule = (await firstScheduleResponse.json()) as {
+    schedule: { id: string; tenantId: string };
+  };
+  assert.equal(firstSchedule.schedule.tenantId, tenantA.rows[0].id);
+  const repeatedScheduleResponse = await createSchedule(new NextRequest(
+    "http://localhost/api/scheduler/status",
+    { method: "POST", headers: schedulerHeaders, body: JSON.stringify(scheduleBody) },
+  ));
+  const repeatedSchedule = (await repeatedScheduleResponse.json()) as {
+    schedule: { id: string };
+  };
+  assert.equal(repeatedSchedule.schedule.id, firstSchedule.schedule.id);
+
+  const tenantBSchedules = await getSchedules(new NextRequest(
+    `http://localhost/api/scheduler/status?tenantId=${tenantA.rows[0].id}`,
+    { headers: { "x-tenant-key": tenantBKey, "x-user-email": emailB } },
+  ));
+  const tenantBScheduleBody = (await tenantBSchedules.json()) as {
+    schedules: Array<{ id: string }>;
+  };
+  assert.equal(tenantBScheduleBody.schedules.some(
+    (schedule) => schedule.id === firstSchedule.schedule.id), false);
+  const deniedSchedule = await createSchedule(new NextRequest(
+    "http://localhost/api/scheduler/status",
+    { method: "POST", headers: { "content-type": "application/json",
+      "x-tenant-key": tenantAKey, "x-user-email": readOnlyEmail },
+      body: JSON.stringify(scheduleBody) },
+  ));
+  assert.equal(deniedSchedule.status, 403);
+
+  const dispatched = await dispatchSchedules(new NextRequest(
+    "http://localhost/api/scheduler/status",
+    { method: "PATCH", headers: schedulerHeaders },
+  ));
+  const dispatchedBody = (await dispatched.json()) as { count: number; createdJobIds: string[] };
+  assert.equal(dispatchedBody.count, 1);
+  const repeatedDispatch = await dispatchSchedules(new NextRequest(
+    "http://localhost/api/scheduler/status",
+    { method: "PATCH", headers: schedulerHeaders },
+  ));
+  assert.equal(((await repeatedDispatch.json()) as { count: number }).count, 0);
+
+  const ownJobsResponse = await getJobs(new NextRequest(
+    `http://localhost/api/jobs/status?tenantId=${tenantB.rows[0].id}`,
+    { headers: { "x-tenant-key": tenantAKey, "x-user-email": emailA } },
+  ));
+  const ownJobs = (await ownJobsResponse.json()) as {
+    data: { jobs: Array<{ id: string; tenantId: string }> };
+  };
+  assert.equal(ownJobs.data.jobs.some((job) => job.id === dispatchedBody.createdJobIds[0]), true);
+  assert.equal(ownJobs.data.jobs.every((job) => job.tenantId === tenantA.rows[0].id), true);
+  const crossTenantJobs = await getJobs(new NextRequest(
+    "http://localhost/api/jobs/status",
+    { headers: { "x-tenant-key": tenantBKey, "x-user-email": emailB } },
+  ));
+  const crossTenantJobBody = (await crossTenantJobs.json()) as {
+    data: { jobs: Array<{ id: string }> };
+  };
+  assert.equal(crossTenantJobBody.data.jobs.some(
+    (job) => job.id === dispatchedBody.createdJobIds[0]), false);
+  const deniedRunner = await runJobs(new NextRequest("http://localhost/api/jobs/status", {
+    method: "POST", headers: { "content-type": "application/json",
+      "x-tenant-key": tenantAKey, "x-user-email": readOnlyEmail }, body: "{}",
+  }));
+  assert.equal(deniedRunner.status, 403);
+
+  const claimJob = await jobQueue.enqueue({ tenantId: tenantA.rows[0].id, type: "system",
+    payload: { claim: true }, maxAttempts: 2, createdBy: userA.rows[0].id,
+    idempotencyKey: `qualification-claim-${suffix}` });
+  const claims = await Promise.all([
+    jobQueue.claimNext(tenantA.rows[0].id), jobQueue.claimNext(tenantA.rows[0].id),
+  ]);
+  const claimedIds = claims.filter(Boolean).map((job) => job?.id);
+  assert.equal(new Set(claimedIds).size, claimedIds.length);
+  assert.equal(claimedIds.includes(claimJob.id), true);
+  await pool.query(`UPDATE background_jobs SET locked_until = now() - interval '1 minute'
+    WHERE tenant_id = $1 AND id = $2`, [tenantA.rows[0].id, claimJob.id]);
+  assert.equal(await jobQueue.recoverStaleClaims(tenantA.rows[0].id) >= 1, true);
+  assert.equal((await jobQueue.get(tenantA.rows[0].id, claimJob.id))?.status, "queued");
+
+  const rollbackJobKey = `rollback-background-job-${suffix}`;
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_background_job_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
+    BEGIN
+      IF NEW.event_type = 'BACKGROUND_JOB_ENQUEUED'
+         AND NEW.details->>'idempotencyKey' = '${rollbackJobKey}' THEN
+        RAISE EXCEPTION 'qualification forced background job failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $qualification$;
+    CREATE TRIGGER qualification_fail_background_job_audit_trigger
+      BEFORE INSERT ON audit_events FOR EACH ROW
+      EXECUTE FUNCTION qualification_fail_background_job_audit();
+  `);
+  await assert.rejects(jobQueue.enqueue({ tenantId: tenantA.rows[0].id, type: "system",
+    idempotencyKey: rollbackJobKey, createdBy: userA.rows[0].id }),
+  /qualification forced background job failure/i);
+  const rolledBackJob = await pool.query(
+    `SELECT id FROM background_jobs WHERE tenant_id = $1 AND idempotency_key = $2`,
+    [tenantA.rows[0].id, rollbackJobKey]);
+  assert.equal(rolledBackJob.rowCount, 0);
+  await pool.query(`
+    DROP TRIGGER qualification_fail_background_job_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_background_job_audit();
+  `);
 
   const evidenceResponse = await createEvidencePackage(new NextRequest(
     "http://localhost/api/evidence/package",
