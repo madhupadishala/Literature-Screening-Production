@@ -132,6 +132,9 @@ function applySecurityHeaders(headers: Headers): void {
   headers.set("cross-origin-opener-policy", "same-origin");
   headers.set("cross-origin-resource-policy", "same-origin");
   headers.set("content-security-policy", buildContentSecurityPolicy());
+  if (process.env.NODE_ENV === "production") {
+    headers.set("strict-transport-security", "max-age=31536000; includeSubDomains");
+  }
 }
 
 function buildContentSecurityPolicy(): string {

@@ -30,12 +30,24 @@ function allowDemoPrincipal(): boolean {
   return process.env.ALLOW_DEMO_PRINCIPAL?.trim().toLowerCase() === "true";
 }
 
+export function identityHeadersAllowed(
+  environment = process.env.NODE_ENV || "development",
+): boolean {
+  return environment !== "production";
+}
+
 function resolveIdentityHeaders(request: NextRequest) {
   const tenantKey =
     request.headers.get("x-tenant-key")?.trim() || request.headers.get("x-tenant-id")?.trim();
   const email = request.headers.get("x-user-email")?.trim();
 
   if (tenantKey && email) {
+    if (!identityHeadersAllowed()) {
+      throw new AuthorizationError(
+        "Production requests must use a server-issued bearer session.",
+        401,
+      );
+    }
     return {
       tenantKey,
       email,

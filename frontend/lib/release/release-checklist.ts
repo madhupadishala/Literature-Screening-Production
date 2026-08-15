@@ -12,7 +12,7 @@ export const RELEASE_CHECKLIST: ReleaseChecklistDefinition[] = [
   {
     id: "migrations-verified",
     title: "Database migrations verified",
-    description: "Required migrations 001-013 are applied and database readiness reports no drift.",
+    description: "Required migrations 001-023 are applied and database readiness reports no drift.",
     mandatory: true,
     ownerRole: "Engineering / Database Operations",
   },

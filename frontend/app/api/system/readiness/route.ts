@@ -4,12 +4,14 @@ import { validateRuntimeConfiguration } from "@/lib/enterprise/config-validator"
 import { registerDefaultDependencyProbes } from "@/lib/enterprise/dependency-probes";
 import { healthRegistry } from "@/lib/enterprise/health-registry";
 import { validateReleaseEnvironment } from "@/lib/release/environment-contract";
+import { requireInternalMonitoringToken } from "@/lib/enterprise/request-guard";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET(request: Request): Promise<Response> {
   return runRoute(request, async () => {
+    requireInternalMonitoringToken(request);
     registerDefaultDependencyProbes();
 
     const [health, configuration] = await Promise.all([

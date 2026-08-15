@@ -83,6 +83,9 @@ jobs:
       - name: Verify database-backed HTTP boundaries
         run: npm run validate:database-http-boundaries
 
+      - name: Verify operational and security controls
+        run: npm run validate:operational-security
+
       - name: Build production application
         run: npm run build
 

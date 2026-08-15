@@ -127,8 +127,8 @@ export async function getDatabaseReadiness(): Promise<DatabaseReadinessReport> {
           provider: target.provider,
           configured: true,
           connectivityVerified: true,
-          message:
-            "PostgreSQL connectivity is verified, but required migrations 001, 002 and 003 are not all applied.",
+        message:
+            "PostgreSQL connectivity is verified, but one or more required migrations are not applied.",
           checkedAt,
           migrations,
           details: {

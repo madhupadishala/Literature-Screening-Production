@@ -8,6 +8,12 @@ const required = [
   "INTERNAL_MONITORING_TOKEN",
   "BUILD_SHA",
   "RELEASE_VERSION",
+  "SESSION_SECRET",
+  "EDGE_RATE_LIMIT_PROVIDER",
+  "SECURITY_EVENT_SINK",
+  "DATABASE_BACKUP_VERIFIED_AT",
+  "DATABASE_RESTORE_VERIFIED_AT",
+  "ROLLBACK_BUILD_SHA",
 ];
 const missing = required.filter((name) => !process.env[name]?.trim());
 if (missing.length)
@@ -19,12 +25,24 @@ if (process.env.ALLOW_DEMO_PRINCIPAL?.trim().toLowerCase() === "true") {
 if ((process.env.INTERNAL_MONITORING_TOKEN?.trim().length || 0) < 32) {
   throw new Error("INTERNAL_MONITORING_TOKEN must contain at least 32 characters.");
 }
+if ((process.env.SESSION_SECRET?.trim().length || 0) < 32) {
+  throw new Error("SESSION_SECRET must contain at least 32 characters.");
+}
+for (const name of ["DATABASE_BACKUP_VERIFIED_AT", "DATABASE_RESTORE_VERIFIED_AT"]) {
+  const timestamp = Date.parse(process.env[name]);
+  if (!Number.isFinite(timestamp) || timestamp > Date.now() ||
+      Date.now() - timestamp > 30 * 24 * 60 * 60 * 1_000) {
+    throw new Error(`${name} must be a valid timestamp from the last 30 days.`);
+  }
+}
 
 run("pharmaceutical-product-intelligence", "npm", ["run", "pharmaceutical:verify"]);
 run("authoritative-e2e", "npm", ["run", "validate:e2e"]);
 run("production-build", "npm", ["run", "build"]);
 
-const baseUrl = new URL(process.env.RELEASE_BASE_URL).origin;
+const releaseUrl = new URL(process.env.RELEASE_BASE_URL);
+if (releaseUrl.protocol !== "https:") throw new Error("RELEASE_BASE_URL must use HTTPS.");
+const baseUrl = releaseUrl.origin;
 const headers = {
   accept: "application/json",
   "x-monitoring-token": process.env.INTERNAL_MONITORING_TOKEN,
