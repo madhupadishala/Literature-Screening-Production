@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { saveSession, type ClinixSession } from "@/lib/session-manager";
 
 const TENANTS = [
-  { tenantId: "demo-tenant", tenantName: "Demo Tenant" },
-  { tenantId: "novartis-prod", tenantName: "Novartis Workspace" },
-  { tenantId: "uat-tenant", tenantName: "UAT Workspace" },
-  { tenantId: "training-tenant", tenantName: "Training Workspace" },
+  {
+    tenantId: "clinixai-internal-validation",
+    tenantName: "ClinixAI Internal PV Validation",
+  },
 ];
 
 const ROLE_LABELS: Record<string, string> = {
@@ -39,10 +39,34 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [environment, setEnvironment] = useState<"PROD" | "UAT" | "TRAINING">("PROD");
-  const [tenantId, setTenantId] = useState("demo-tenant");
+  const [environment] = useState<"VALIDATION">("VALIDATION");
+  const [tenantId] = useState("clinixai-internal-validation");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const demoMode = process.env.NEXT_PUBLIC_VALIDATION_DEMO_MODE === "true";
+
+  function continueInDemoMode() {
+    const now = new Date();
+    const session: ClinixSession = {
+      sessionId: `validation-demo-${now.getTime()}`,
+      organizationId: "ORG-CLINIXAI-VALIDATION",
+      organizationName: "ClinixAI",
+      tenantId,
+      tenantName: "ClinixAI Internal PV Validation",
+      userId: "validation-demo-user",
+      userName: "ClinixAI Validation Demo",
+      role: "PV Validation Demo",
+      environment,
+      permissions: ["review:read", "review:write", "reports:read"],
+      loginTime: now.toISOString(),
+      lastActivity: now.toISOString(),
+      expiresAt: new Date(now.getTime() + 30 * 60 * 1000).toISOString(),
+      locked: false,
+    };
+
+    saveSession(session);
+    router.push("/");
+  }
 
   async function login() {
     try {
@@ -130,21 +154,12 @@ export default function LoginPage() {
 
           <label>
             Environment
-            <select
-              value={environment}
-              onChange={(event) =>
-                setEnvironment(event.target.value as "PROD" | "UAT" | "TRAINING")
-              }
-            >
-              <option>PROD</option>
-              <option>UAT</option>
-              <option>TRAINING</option>
-            </select>
+            <input value="VALIDATION" readOnly />
           </label>
 
           <label>
             Tenant
-            <select value={tenantId} onChange={(event) => setTenantId(event.target.value)}>
+            <select value={tenantId} disabled>
               {TENANTS.map((tenant) => (
                 <option key={tenant.tenantId} value={tenant.tenantId}>
                   {tenant.tenantName}
@@ -159,6 +174,17 @@ export default function LoginPage() {
         <button onClick={login} disabled={loading}>
           {loading ? "Signing in..." : "Sign In"}
         </button>
+
+        {demoMode && (
+          <>
+            <div className="demo-warning">
+              DEMO MODE — PUBLIC, SYNTHETIC OR DE-IDENTIFIED DATA ONLY
+            </div>
+            <button className="demo-button" onClick={continueInDemoMode}>
+              Continue to Temporary Demo
+            </button>
+          </>
+        )}
 
         <p className="hint">Email + password + environment + tenant are mandatory.</p>
       </section>
@@ -246,6 +272,23 @@ export default function LoginPage() {
           padding: 12px;
           border-radius: 12px;
           font-weight: 800;
+        }
+
+        .demo-warning {
+          margin-top: 18px;
+          border: 1px solid #f59e0b;
+          background: #fffbeb;
+          color: #92400e;
+          padding: 12px;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 900;
+          text-align: center;
+        }
+
+        button.demo-button {
+          margin-top: 10px;
+          background: #92400e;
         }
 
         .hint {
