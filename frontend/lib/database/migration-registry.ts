@@ -98,4 +98,5 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
   { id: "020", name: "Knowledge Repository Persistence", filename: "020_knowledge_repository_persistence.sql", required: true },
   { id: "021", name: "Generic Document Storage", filename: "021_generic_document_storage.sql", required: true },
   { id: "022", name: "Durable Jobs Scheduler", filename: "022_durable_jobs_scheduler.sql", required: true },
+  { id: "023", name: "Tenant Configuration Sessions", filename: "023_tenant_configuration_sessions.sql", required: true },
 ] as const;

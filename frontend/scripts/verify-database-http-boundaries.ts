@@ -86,6 +86,13 @@ async function main() {
     PATCH: dispatchSchedules,
   } = await import("../app/api/scheduler/status/route");
   const { jobQueue } = await import("../lib/jobs/job-queue");
+  const { GET: getSettings, PATCH: patchSettings } = await import(
+    "../app/api/admin/settings/route"
+  );
+  const { GET: getAuthSession, DELETE: revokeAuthSession } = await import(
+    "../app/api/auth/session/route"
+  );
+  const { SessionManager, sessionManager } = await import("../lib/auth/session-manager");
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -125,6 +132,150 @@ async function main() {
      VALUES ($1, $2, 'READ_ONLY')`,
     [tenantA.rows[0].id, readOnlyUser.rows[0].id],
   );
+
+  const settingsHeaders = {
+    "content-type": "application/json",
+    "x-tenant-key": tenantAKey,
+    "x-user-email": emailA,
+    "x-request-id": `qualification-settings-${suffix}`,
+  };
+  const initialSettingsResponse = await getSettings(new NextRequest(
+    "http://localhost/api/admin/settings", { headers: settingsHeaders }));
+  assert.equal(initialSettingsResponse.status, 200);
+  const initialSettings = (await initialSettingsResponse.json()) as {
+    configuration: { tenantId: string; version: number; organizationName: string };
+    featureFlags: Array<{ key: string; enabled: boolean; version: number }>;
+  };
+  assert.equal(initialSettings.configuration.tenantId, tenantA.rows[0].id);
+  const vectorFlag = initialSettings.featureFlags.find((flag) => flag.key === "vector-search");
+  assert.ok(vectorFlag);
+
+  const settingsPatchResponse = await patchSettings(new NextRequest(
+    "http://localhost/api/admin/settings", { method: "PATCH", headers: settingsHeaders,
+      body: JSON.stringify({
+        configuration: { ...initialSettings.configuration, tenantId: tenantB.rows[0].id,
+          organizationName: `Qualification A ${suffix}`, environment: "production",
+          timezone: "Asia/Kolkata", ai: { defaultModel: "qualification",
+            defaultPromptVersion: "v1", enableRAG: true, enableVectorSearch: true },
+          workflow: { autoAssignment: true, requireQC: true, requireHumanReview: true },
+          branding: { applicationName: "Qualification A" }, updatedAt: new Date().toISOString() },
+        featureFlag: { ...vectorFlag, enabled: false },
+      }) }));
+  assert.equal(settingsPatchResponse.status, 200);
+  const patchedSettings = (await settingsPatchResponse.json()) as {
+    configuration: { tenantId: string; version: number };
+    featureFlag: { key: string; enabled: boolean; version: number };
+  };
+  assert.equal(patchedSettings.configuration.tenantId, tenantA.rows[0].id);
+  assert.equal(patchedSettings.configuration.version, initialSettings.configuration.version + 1);
+  assert.equal(patchedSettings.featureFlag.enabled, false);
+
+  const tenantBSettings = await getSettings(new NextRequest(
+    `http://localhost/api/admin/settings?tenantId=${tenantA.rows[0].id}`,
+    { headers: { "x-tenant-key": tenantBKey, "x-user-email": emailB } }));
+  const tenantBSettingsBody = (await tenantBSettings.json()) as {
+    configuration: { tenantId: string };
+    featureFlags: Array<{ key: string; enabled: boolean }>;
+  };
+  assert.equal(tenantBSettingsBody.configuration.tenantId, tenantB.rows[0].id);
+  assert.equal(tenantBSettingsBody.featureFlags.find(
+    (flag) => flag.key === "vector-search")?.enabled, true);
+  const deniedSettings = await patchSettings(new NextRequest(
+    "http://localhost/api/admin/settings", { method: "PATCH",
+      headers: { "content-type": "application/json", "x-tenant-key": tenantAKey,
+        "x-user-email": readOnlyEmail }, body: JSON.stringify({ featureFlag: vectorFlag }) }));
+  assert.equal(deniedSettings.status, 403);
+  const conflictSettings = await patchSettings(new NextRequest(
+    "http://localhost/api/admin/settings", { method: "PATCH", headers: settingsHeaders,
+      body: JSON.stringify({ featureFlag: { ...vectorFlag, enabled: true } }) }));
+  assert.equal(conflictSettings.status, 409);
+
+  const rollbackFlagVersion = patchedSettings.featureFlag.version;
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_flag_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
+    BEGIN
+      IF NEW.event_type = 'TENANT_FEATURE_FLAG_UPDATED'
+         AND NEW.request_id = 'rollback-settings-${suffix}' THEN
+        RAISE EXCEPTION 'qualification forced flag audit failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $qualification$;
+    CREATE TRIGGER qualification_fail_flag_audit_trigger BEFORE INSERT ON audit_events
+      FOR EACH ROW EXECUTE FUNCTION qualification_fail_flag_audit();
+  `);
+  const failedFlagUpdate = await patchSettings(new NextRequest(
+    "http://localhost/api/admin/settings", { method: "PATCH",
+      headers: { ...settingsHeaders, "x-request-id": `rollback-settings-${suffix}` },
+      body: JSON.stringify({ featureFlag: { key: "vector-search", enabled: true,
+        version: rollbackFlagVersion } }) }));
+  assert.equal(failedFlagUpdate.status, 500);
+  const rolledBackFlag = await pool.query<{ enabled: boolean; flag_version: number }>(
+    `SELECT enabled, flag_version FROM tenant_feature_flags
+      WHERE tenant_id = $1 AND flag_key = 'vector-search'`, [tenantA.rows[0].id]);
+  assert.equal(rolledBackFlag.rows[0].enabled, false);
+  assert.equal(rolledBackFlag.rows[0].flag_version, rollbackFlagVersion);
+  await pool.query(`DROP TRIGGER qualification_fail_flag_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_flag_audit();`);
+
+  const durableSession = await sessionManager.createSession({ userId: userA.rows[0].id,
+    email: emailA, name: "Qualification A", tenantId: tenantA.rows[0].id,
+    role: "client_admin", provider: "internal" }, `qualification-session-${suffix}`);
+  assert.ok(durableSession.accessToken);
+  const restartedSessionManager = new SessionManager();
+  assert.equal((await restartedSessionManager.getSessionFromToken(
+    durableSession.accessToken!))?.id, durableSession.id);
+  const authResponse = await getAuthSession(new NextRequest("http://localhost/api/auth/session", {
+    headers: { authorization: `Bearer ${durableSession.accessToken}` },
+  }));
+  assert.equal(((await authResponse.json()) as { authenticated: boolean }).authenticated, true);
+  const bearerSettings = await getSettings(new NextRequest(
+    "http://localhost/api/admin/settings", {
+      headers: { authorization: `Bearer ${durableSession.accessToken}` },
+    }));
+  assert.equal(bearerSettings.status, 200);
+  const revokeResponse = await revokeAuthSession(new NextRequest(
+    "http://localhost/api/auth/session", { method: "DELETE",
+      headers: { authorization: `Bearer ${durableSession.accessToken}` } }));
+  assert.equal(((await revokeResponse.json()) as { revoked: boolean }).revoked, true);
+  const afterRevocation = await getAuthSession(new NextRequest(
+    "http://localhost/api/auth/session", {
+      headers: { authorization: `Bearer ${durableSession.accessToken}` },
+    }));
+  assert.equal(((await afterRevocation.json()) as { authenticated: boolean }).authenticated, false);
+  const revokedBearerSettings = await getSettings(new NextRequest(
+    "http://localhost/api/admin/settings", {
+      headers: { authorization: `Bearer ${durableSession.accessToken}` },
+    }));
+  assert.equal(revokedBearerSettings.status, 401);
+
+  const sessionsBeforeRollback = await pool.query<{ count: string }>(
+    `SELECT count(*)::text AS count FROM authentication_sessions WHERE tenant_id = $1`,
+    [tenantA.rows[0].id]);
+  await pool.query(`
+    CREATE OR REPLACE FUNCTION qualification_fail_session_audit()
+    RETURNS trigger LANGUAGE plpgsql AS $qualification$
+    BEGIN
+      IF NEW.event_type = 'AUTHENTICATION_SESSION_CREATED'
+         AND NEW.request_id = 'rollback-session-${suffix}' THEN
+        RAISE EXCEPTION 'qualification forced session audit failure';
+      END IF;
+      RETURN NEW;
+    END;
+    $qualification$;
+    CREATE TRIGGER qualification_fail_session_audit_trigger BEFORE INSERT ON audit_events
+      FOR EACH ROW EXECUTE FUNCTION qualification_fail_session_audit();
+  `);
+  await assert.rejects(sessionManager.createSession({ userId: userA.rows[0].id,
+    email: emailA, tenantId: tenantA.rows[0].id, role: "client_admin" },
+  `rollback-session-${suffix}`), /qualification forced session audit failure/i);
+  const sessionsAfterRollback = await pool.query<{ count: string }>(
+    `SELECT count(*)::text AS count FROM authentication_sessions WHERE tenant_id = $1`,
+    [tenantA.rows[0].id]);
+  assert.equal(sessionsAfterRollback.rows[0].count, sessionsBeforeRollback.rows[0].count);
+  await pool.query(`DROP TRIGGER qualification_fail_session_audit_trigger ON audit_events;
+    DROP FUNCTION qualification_fail_session_audit();`);
 
   const schedulerHeaders = {
     "content-type": "application/json",

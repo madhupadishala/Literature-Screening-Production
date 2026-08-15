@@ -155,14 +155,18 @@ async function resolvePrincipalFromBearerToken(
       FROM tenants t
       JOIN tenant_memberships m ON m.tenant_id = t.id
       JOIN application_users u ON u.id = m.user_id
+      JOIN authentication_sessions session
+        ON session.id = $3 AND session.tenant_id = t.id AND session.user_id = u.id
       WHERE t.id = $1
         AND u.id = $2
         AND t.status = 'active'
         AND u.status = 'active'
         AND m.membership_status = 'active'
+        AND session.status = 'active'
+        AND session.expires_at > now()
       LIMIT 1
     `,
-    [payload.tenantId, payload.userId],
+    [payload.tenantId, payload.userId, payload.sessionId],
   );
 
   const row = result.rows[0];

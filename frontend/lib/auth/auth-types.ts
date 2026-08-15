@@ -40,14 +40,15 @@ export interface AuthSession {
   user: AuthUser;
   provider: AuthProvider;
   status: SessionStatus;
-  accessToken: string;
-  refreshToken: string;
+  accessToken?: string;
+  refreshToken?: string;
   issuedAt: string;
   expiresAt: string;
   revokedAt?: string;
 }
 
 export interface CreateSessionInput {
+  userId: string;
   email: string;
   name?: string;
   tenantId: string;

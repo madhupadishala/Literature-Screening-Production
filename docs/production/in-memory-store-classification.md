@@ -8,9 +8,7 @@ authoritative state exists only in memory.
 
 | Path | State | Release treatment |
 | --- | --- | --- |
-| `frontend/lib/admin/config-store.ts` and `feature-flags.ts` | Tenant configuration and flags | Move authoritative configuration to versioned PostgreSQL governance records. |
 | `frontend/lib/platform/vector/vector-provider.ts` and `frontend/lib/vector/vector-store.ts` | Vector data | Production RAG must use the controlled pgvector path; memory providers must be development-only. |
-| `frontend/lib/auth/session-manager.ts` | Session registry | Confirm all production authentication is stateless/database-backed or replace this registry. |
 
 ## Operational state — persist when relied upon
 
@@ -37,3 +35,4 @@ in memory when production behavior is documented and multi-instance limitations 
 - Knowledge Repository API content, integrity hashes and lifecycle state (migration 020).
 - Generic document upload/retrieval/deletion API with PostgreSQL content and metadata (migration 021).
 - Background jobs and tenant schedules with atomic claiming, leases, retries and dispatch (migration 022).
+- Versioned tenant runtime configuration, tenant feature flags, and revocable authentication sessions (migration 023).
