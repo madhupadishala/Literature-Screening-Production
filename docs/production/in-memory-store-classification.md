@@ -8,7 +8,6 @@ authoritative state exists only in memory.
 
 | Path | State | Release treatment |
 | --- | --- | --- |
-| `frontend/lib/platform/vector/vector-provider.ts` and `frontend/lib/vector/vector-store.ts` | Vector data | Production RAG must use the controlled pgvector path; memory providers must be development-only. |
 
 ## Operational state — persist when relied upon
 
@@ -36,3 +35,4 @@ in memory when production behavior is documented and multi-instance limitations 
 - Generic document upload/retrieval/deletion API with PostgreSQL content and metadata (migration 021).
 - Background jobs and tenant schedules with atomic claiming, leases, retries and dispatch (migration 022).
 - Versioned tenant runtime configuration, tenant feature flags, and revocable authentication sessions (migration 023).
+- Production vector search and RAG are forced through tenant-scoped controlled pgvector retrieval; legacy memory/mock providers require an explicit development-only override.

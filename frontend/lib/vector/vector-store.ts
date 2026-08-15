@@ -1,4 +1,5 @@
 import { embeddingService } from "./embedding-service";
+import { assertLegacyVectorRuntimeAllowed } from "./legacy-vector-policy";
 import type {
   VectorDocument,
   VectorSearchRequest,
@@ -63,6 +64,7 @@ function keywordScore(query: string, content: string): number {
 
 export class VectorStore {
   async upsertDocument(input: VectorUpsertInput): Promise<VectorDocument> {
+    assertLegacyVectorRuntimeAllowed();
     const normalizedContent = normalizeContent(input.content);
 
     if (!input.tenantId) {
@@ -108,6 +110,7 @@ export class VectorStore {
   }
 
   async search(request: VectorSearchRequest): Promise<VectorSearchResponse> {
+    assertLegacyVectorRuntimeAllowed();
     const mode = request.mode ?? "hybrid";
     const topK = request.topK ?? 10;
     const minScore = request.minScore ?? 0;
@@ -191,12 +194,14 @@ export class VectorStore {
   }
 
   listDocuments(tenantId: string): VectorDocument[] {
+    assertLegacyVectorRuntimeAllowed();
     return Array.from(vectorDocuments.values()).filter(
       (document) => document.tenantId === tenantId && document.metadata.status === "active",
     );
   }
 
   archiveDocument(documentId: string): boolean {
+    assertLegacyVectorRuntimeAllowed();
     const document = vectorDocuments.get(documentId);
 
     if (!document) {
@@ -216,6 +221,7 @@ export class VectorStore {
   }
 
   clearTenantDocuments(tenantId: string): number {
+    assertLegacyVectorRuntimeAllowed();
     let removedCount = 0;
 
     for (const [documentId, document] of vectorDocuments.entries()) {

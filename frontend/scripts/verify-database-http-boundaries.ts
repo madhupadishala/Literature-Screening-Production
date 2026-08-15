@@ -93,6 +93,10 @@ async function main() {
     "../app/api/auth/session/route"
   );
   const { SessionManager, sessionManager } = await import("../lib/auth/session-manager");
+  const { GET: getVectorStatus, POST: postRawVector } = await import(
+    "../app/api/platform/ai/vector/route"
+  );
+  const { GET: getPlatformRagStatus } = await import("../app/api/platform/rag/route");
 
   const suffix = Date.now().toString();
   const tenantAKey = `qualification-a-${suffix}`;
@@ -132,6 +136,52 @@ async function main() {
      VALUES ($1, $2, 'READ_ONLY')`,
     [tenantA.rows[0].id, readOnlyUser.rows[0].id],
   );
+
+  await pool.query(
+    `INSERT INTO controlled_knowledge_repositories (
+       tenant_id, repository_key, version_label, lifecycle_status,
+       manifest_sha256, checksum_manifest_sha256, approved_object_count,
+       excluded_draft_object_count, indexed_chunk_count, excluded_draft_chunk_count,
+       embedding_provider, embedding_model, embedding_dimensions, loaded_by, loaded_at
+     ) VALUES ($1, 'clinixai-literature-knowledge', 'qualification', 'active',
+       $2, $3, 0, 0, 0, 0, 'qualification', 'qualification-model', 3, $4, now())`,
+    [tenantA.rows[0].id, "c".repeat(64), "d".repeat(64), userA.rows[0].id],
+  );
+  const vectorStatusResponse = await getVectorStatus(new NextRequest(
+    `http://localhost/api/platform/ai/vector?tenantId=${tenantB.rows[0].id}`,
+    { headers: { "x-tenant-key": tenantAKey, "x-user-email": emailA } }));
+  const vectorStatus = (await vectorStatusResponse.json()) as {
+    status: { tenantId: string; provider: string; activeRepositories: number };
+  };
+  assert.equal(vectorStatus.status.tenantId, tenantA.rows[0].id);
+  assert.equal(vectorStatus.status.provider, "pgvector");
+  assert.equal(vectorStatus.status.activeRepositories, 1);
+  const tenantBVectorStatus = await getVectorStatus(new NextRequest(
+    "http://localhost/api/platform/ai/vector",
+    { headers: { "x-tenant-key": tenantBKey, "x-user-email": emailB } }));
+  assert.equal(((await tenantBVectorStatus.json()) as {
+    status: { activeRepositories: number };
+  }).status.activeRepositories, 0);
+  const disabledRawVector = await postRawVector(new NextRequest(
+    "http://localhost/api/platform/ai/vector", { method: "POST",
+      headers: { "content-type": "application/json", "x-tenant-key": tenantAKey,
+        "x-user-email": emailA }, body: JSON.stringify({ tenantId: tenantB.rows[0].id }) }));
+  assert.equal(disabledRawVector.status, 503);
+  const deniedRawVector = await postRawVector(new NextRequest(
+    "http://localhost/api/platform/ai/vector", { method: "POST",
+      headers: { "content-type": "application/json", "x-tenant-key": tenantAKey,
+        "x-user-email": readOnlyEmail }, body: "{}" }));
+  assert.equal(deniedRawVector.status, 403);
+  const ragStatusResponse = await getPlatformRagStatus(new NextRequest(
+    "http://localhost/api/platform/rag",
+    { headers: { "x-tenant-key": tenantAKey, "x-user-email": emailA } }));
+  const ragStatus = (await ragStatusResponse.json()) as {
+    status: { provider: string; activeRepositories: number };
+    history: unknown[];
+  };
+  assert.equal(ragStatus.status.provider, "pgvector");
+  assert.equal(ragStatus.status.activeRepositories, 1);
+  assert.deepEqual(ragStatus.history, []);
 
   const settingsHeaders = {
     "content-type": "application/json",

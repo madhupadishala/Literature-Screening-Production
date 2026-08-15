@@ -5,6 +5,7 @@ import type {
   EmbeddingRequest,
   EmbeddingResponse,
 } from "./embedding-types";
+import { assertLegacyVectorRuntimeAllowed } from "@/lib/vector/legacy-vector-policy";
 
 const defaultEmbeddingConfig: EmbeddingModelConfig = {
   provider: "mock",
@@ -16,6 +17,7 @@ class EmbeddingEngine {
   private history: EmbeddingResponse[] = [];
 
   async embed(request: EmbeddingRequest) {
+    assertLegacyVectorRuntimeAllowed();
     const config: EmbeddingModelConfig = {
       ...defaultEmbeddingConfig,
       ...request.modelConfig,
@@ -39,12 +41,14 @@ class EmbeddingEngine {
   }
 
   listHistory(tenantId: string, limit = 20) {
+    assertLegacyVectorRuntimeAllowed();
     return this.history
       .filter((item) => item.metadata.tenantId === tenantId)
       .slice(0, limit);
   }
 
   getStatus(tenantId: string): EmbeddingEngineStatus {
+    assertLegacyVectorRuntimeAllowed();
     const tenantHistory = this.history.filter(
       (item) => item.metadata.tenantId === tenantId,
     );

@@ -10,6 +10,7 @@ import { embeddingEngine } from "../lib/platform/ai/embeddings/embedding-engine"
 import { vectorStore as platformVectorStore } from "../lib/platform/vector/vector-store";
 
 async function main() {
+process.env.ALLOW_LEGACY_IN_MEMORY_VECTOR = "true";
 const tenantA = "00000000-0000-4000-8000-00000000000a";
 const tenantB = "00000000-0000-4000-8000-00000000000b";
 
@@ -127,6 +128,21 @@ assert.deepEqual(
 assert.equal(platformVectorStore.getStatus(tenantA).totalVectors, 1);
 assert.equal(platformVectorStore.getStatus(tenantB).totalVectors, 1);
 
+const originalNodeEnvironment = process.env.NODE_ENV;
+process.env.NODE_ENV = "production";
+assert.throws(
+  () => platformVectorStore.upsert({ id: "production-vector", vector: [1, 0],
+    metadata: { tenantId: tenantA, documentId: "doc", chunkId: "chunk" },
+    createdAt: new Date().toISOString() }),
+  /legacy in-memory vector/i,
+);
+await assert.rejects(
+  embeddingEngine.embed({ tenantId: tenantA, text: "production mock embedding" }),
+  /mock embedding operations are disabled/i,
+);
+if (originalNodeEnvironment === undefined) delete process.env.NODE_ENV;
+else process.env.NODE_ENV = originalNodeEnvironment;
+
 const guardedRoutes = [
   "app/api/literature/article-fetch/route.ts",
   "app/api/literature/document-processing/route.ts",
@@ -142,6 +158,7 @@ const guardedRoutes = [
   "app/api/platform/ai/gateway/route.ts",
   "app/api/platform/ai/vector/route.ts",
   "app/api/vector/search/route.ts",
+  "app/api/platform/rag/route.ts",
   "app/api/rbac/check/route.ts",
 ];
 
@@ -153,6 +170,16 @@ for (const route of guardedRoutes) {
     /tenantId:\s*principal\.tenantId/,
     `${route} must override request tenant identity`,
   );
+}
+
+for (const route of [
+  "app/api/vector/search/route.ts",
+  "app/api/platform/rag/route.ts",
+  "app/api/platform/ai/vector/route.ts",
+]) {
+  const source = await readFile(route, "utf8");
+  assert.doesNotMatch(source, /lib\/(platform\/)?vector\/vector-store/,
+    `${route} must not use a process-memory vector store`);
 }
 
 console.log(

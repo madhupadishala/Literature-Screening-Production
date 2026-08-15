@@ -1,19 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
-import { vectorStore } from "@/lib/platform/vector/vector-store";
-import type {
-  VectorRecord,
-  VectorSearchRequest,
-} from "@/lib/platform/vector/vector-types";
+import { getControlledVectorStatus } from "@/lib/knowledge/retrieval/controlled-vector-status";
 import { requirePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { LEGACY_VECTOR_DISABLED_MESSAGE } from "@/lib/vector/legacy-vector-policy";
 
 export async function GET(request: NextRequest) {
   try {
     const principal = await requirePermission(request, PERMISSIONS.CONFIG_VIEW);
     return NextResponse.json({
-      status: vectorStore.getStatus(principal.tenantId),
+      status: await getControlledVectorStatus(principal.tenantId),
     });
   } catch (error) {
     return routeErrorResponse(error);
@@ -22,33 +19,10 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = (await request.json()) as VectorRecord | VectorSearchRequest;
-    const permission = "queryVector" in body
-      ? PERMISSIONS.CONFIG_VIEW
-      : PERMISSIONS.SOURCE_MANAGE;
-    const principal = await requirePermission(request, permission);
-
-    if ("queryVector" in body) {
-      return NextResponse.json({
-        results: vectorStore.search({
-          ...body,
-          tenantId: principal.tenantId,
-        }),
-      });
-    }
-
-    return NextResponse.json(
-      {
-        record: vectorStore.upsert({
-          ...body,
-          metadata: {
-            ...body.metadata,
-            tenantId: principal.tenantId,
-          },
-        }),
-      },
-      { status: 201 },
-    );
+    const principal = await requirePermission(request, PERMISSIONS.SOURCE_MANAGE);
+    const disabledRequestContext = { tenantId: principal.tenantId };
+    void disabledRequestContext;
+    throw new Error(LEGACY_VECTOR_DISABLED_MESSAGE);
   } catch (error) {
     return routeErrorResponse(error);
   }
