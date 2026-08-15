@@ -54,6 +54,7 @@ export const RELEASE_CHECKLIST: ReleaseChecklistDefinition[] = [
     description:
       "Mandatory automated and manual Literature Screening scenarios passed with governed evidence.",
     mandatory: true,
+    waivable: false,
     ownerRole: "PV Product / QA",
   },
   {
@@ -70,6 +71,7 @@ export const RELEASE_CHECKLIST: ReleaseChecklistDefinition[] = [
     description:
       "The designated release owner authorizes creation of the immutable release candidate.",
     mandatory: true,
+    waivable: false,
     ownerRole: "Release Owner",
   },
 ];

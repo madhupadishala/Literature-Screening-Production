@@ -36,6 +36,9 @@ export async function POST(request: Request): Promise<Response> {
     if (!body.status || !["passed", "failed", "pending", "waived"].includes(body.status)) {
       throw new ValidationError("A valid checklist status is required.");
     }
+    if (body.status === "waived" && definition.waivable === false) {
+      throw new ValidationError(`${definition.title} cannot be waived.`);
+    }
 
     await updateChecklistRecord({
       id: definition.id,

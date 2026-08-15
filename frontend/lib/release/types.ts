@@ -84,6 +84,7 @@ export interface ReleaseChecklistDefinition {
   title: string;
   description: string;
   mandatory: boolean;
+  waivable?: boolean;
   ownerRole: string;
 }
 

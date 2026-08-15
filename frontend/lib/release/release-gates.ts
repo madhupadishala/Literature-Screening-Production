@@ -32,7 +32,7 @@ export function evaluateReleaseGates(input: {
   const mandatoryChecklist = RELEASE_CHECKLIST.filter((item) => item.mandatory);
   const checklistPassed = mandatoryChecklist.every((item) => {
     const status = input.state.checklist[item.id]?.status || "pending";
-    return status === "passed" || status === "waived";
+    return status === "passed" || (status === "waived" && item.waivable !== false);
   });
   const criticalHealthFailures = input.health.checks.filter(
     (check) => check.critical && check.status !== "healthy",
@@ -108,7 +108,7 @@ export function evaluateReleaseGates(input: {
       true,
       `${mandatoryChecklist.filter((item) => {
         const status = input.state.checklist[item.id]?.status || "pending";
-        return status === "passed" || status === "waived";
+        return status === "passed" || (status === "waived" && item.waivable !== false);
       }).length} of ${mandatoryChecklist.length} mandatory checklist items are complete.`,
     ),
   ];
@@ -119,7 +119,10 @@ export function latestEvidenceByScenario(
 ): Map<string, UatEvidence> {
   const latest = new Map<string, UatEvidence>();
   for (const item of evidence) {
-    if (!latest.has(item.scenarioId)) latest.set(item.scenarioId, item);
+    const current = latest.get(item.scenarioId);
+    if (!current || Date.parse(item.executedAt) > Date.parse(current.executedAt)) {
+      latest.set(item.scenarioId, item);
+    }
   }
   return latest;
 }
