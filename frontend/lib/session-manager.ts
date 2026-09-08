@@ -7,7 +7,7 @@ export type ClinixSession = {
   userId: string;
   userName: string;
   role: string;
-  environment: "PROD" | "UAT" | "TRAINING";
+  environment: "PROD" | "UAT" | "TRAINING" | "VALIDATION";
   permissions: string[];
   loginTime: string;
   lastActivity: string;

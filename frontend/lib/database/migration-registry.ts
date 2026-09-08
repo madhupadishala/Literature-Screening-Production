@@ -90,4 +90,13 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "014_controlled_knowledge_pgvector.sql",
     required: true,
   },
+  { id: "015", name: "Authentication Credentials", filename: "015_authentication_credentials.sql", required: true },
+  { id: "016", name: "Evidence Artifact Retention", filename: "016_evidence_artifact_retention.sql", required: true },
+  { id: "017", name: "Legacy Evidence Review Persistence", filename: "017_legacy_evidence_review_persistence.sql", required: true },
+  { id: "018", name: "IO Job Persistence", filename: "018_io_job_persistence.sql", required: true },
+  { id: "019", name: "Knowledge Governance Persistence", filename: "019_knowledge_governance_persistence.sql", required: true },
+  { id: "020", name: "Knowledge Repository Persistence", filename: "020_knowledge_repository_persistence.sql", required: true },
+  { id: "021", name: "Generic Document Storage", filename: "021_generic_document_storage.sql", required: true },
+  { id: "022", name: "Durable Jobs Scheduler", filename: "022_durable_jobs_scheduler.sql", required: true },
+  { id: "023", name: "Tenant Configuration Sessions", filename: "023_tenant_configuration_sessions.sql", required: true },
 ] as const;

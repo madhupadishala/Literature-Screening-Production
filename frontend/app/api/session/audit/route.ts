@@ -1,53 +1,58 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
+import { getPostgresPool } from "@/lib/database/postgres";
+import { resolveRequestPrincipal } from "@/lib/rbac/request-principal";
+
 type SessionAuditBody = {
-  action: string;
+  action?: string;
   sessionId?: string;
-  userName?: string;
-  role?: string;
-  tenantId?: string;
   environment?: string;
   reason?: string;
 };
 
-// NOTE: this currently only console.logs. SessionTimeoutGuard calls
-// /api/session/audit (singular), but this route previously lived at
-// /api/sessions/audit (plural) and was never actually reachable -- fixed
-// here by moving it to the path the UI calls.
-//
-// Follow-up (not done yet): write these events into the real `audit_events`
-// Postgres table that lib/rbac/guard.ts already uses for
-// AUTHORIZATION_DENIED events, so session lock/unlock/logout show up in the
-// same audit trail instead of only server logs.
 export async function POST(request: NextRequest) {
   try {
+    const principal = await resolveRequestPrincipal(request);
     const body = (await request.json()) as SessionAuditBody;
+    const action = String(body.action || "").trim().toUpperCase();
 
-    const auditRecord = {
-      id: `SESSION-AUD-${Date.now()}`,
-      timestamp: new Date().toISOString(),
-      action: body.action,
-      sessionId: body.sessionId || "unknown",
-      userName: body.userName || "unknown",
-      role: body.role || "unknown",
-      tenantId: body.tenantId || "unknown",
-      environment: body.environment || "unknown",
-      reason: body.reason || "",
-    };
+    if (!action) throw new Error("Session audit action is required.");
 
-    console.log("[SESSION AUDIT]", auditRecord);
+    const result = await getPostgresPool().query<{ id: string; occurred_at: Date }>(
+      `
+        INSERT INTO audit_events (
+          tenant_id, actor_id, event_type, event_category, outcome,
+          request_id, source_ip, details
+        ) VALUES ($1, $2, $3, 'SESSION_SECURITY', 'success', $4, $5, $6::jsonb)
+        RETURNING id, occurred_at
+      `,
+      [
+        principal.tenantId,
+        principal.userId,
+        `SESSION_${action}`,
+        request.headers.get("x-request-id")?.trim() || null,
+        request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null,
+        JSON.stringify({
+          sessionId: body.sessionId || null,
+          environment: body.environment || null,
+          reason: body.reason || null,
+          roleKey: principal.roleKey,
+        }),
+      ],
+    );
 
     return NextResponse.json({
       success: true,
-      audit: auditRecord,
-    });
-  } catch {
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Failed to record session audit.",
+      audit: {
+        id: result.rows[0].id,
+        timestamp: result.rows[0].occurred_at.toISOString(),
+        action,
+        tenantId: principal.tenantId,
+        userId: principal.userId,
       },
-      { status: 400 }
-    );
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
   }
 }

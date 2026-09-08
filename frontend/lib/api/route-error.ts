@@ -8,6 +8,8 @@ export function routeErrorResponse(error: unknown): Response {
 
   const status = /version conflict/i.test(message)
     ? 409
+    : /legacy in-memory vector|mock embedding operations are disabled/i.test(message)
+      ? 503
     : /not found/i.test(message)
       ? 404
       : /required|invalid|select|cannot|maximum|supports|validation failed/i.test(message)

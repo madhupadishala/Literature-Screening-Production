@@ -1,93 +1,44 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { literatureWorkflowService } from "@/lib/literature/workflow/literature-workflow-service";
+import type { LiteratureWorkflowRequest } from "@/lib/literature/workflow/literature-workflow-types";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
-import type {
-  LiteratureWorkflowRequest,
-} from "@/lib/literature/workflow/literature-workflow-types";
-
-export async function GET() {
-  return NextResponse.json(
-    {
+export async function GET(request: NextRequest) {
+  try {
+    const principal = await requirePermission(
+      request,
+      PERMISSIONS.SEARCH_HISTORY_VIEW,
+    );
+    return NextResponse.json({
       success: true,
-
-      status:
-        literatureWorkflowService.getStatus(),
-
-      history:
-        literatureWorkflowService.list(),
-    },
-    {
-      status: 200,
-    },
-  );
+      status: literatureWorkflowService.getStatus(principal.tenantId),
+      history: literatureWorkflowService.list(principal.tenantId),
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
 
-export async function POST(
-  request: Request,
-) {
+export async function POST(request: NextRequest) {
   try {
-    const body =
-      (await request.json()) as LiteratureWorkflowRequest;
+    const principal = await requirePermission(request, PERMISSIONS.SEARCH_EXECUTE);
+    const body = (await request.json()) as LiteratureWorkflowRequest;
+    if (!body.query) throw new Error("query is required.");
 
-    if (
-      !body.tenantId ||
-      !body.query
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-
-          error:
-            "tenantId and query are required.",
-        },
-        {
-          status: 400,
-        },
-      );
-    }
-
-    const result =
-      await literatureWorkflowService.execute({
-        tenantId: body.tenantId,
-
-        query: body.query.trim(),
-
-        maxResults:
-          body.maxResults,
-      });
+    const result = await literatureWorkflowService.execute({
+      tenantId: principal.tenantId,
+      query: body.query.trim(),
+      maxResults: body.maxResults,
+    });
 
     return NextResponse.json(
-      {
-        success: true,
-
-        workflowStage:
-          "WORKFLOW_COMPLETED",
-
-        result,
-      },
-      {
-        status: 201,
-      },
+      { success: true, workflowStage: "WORKFLOW_COMPLETED", result },
+      { status: 201 },
     );
   } catch (error) {
-    console.error(
-      "Workflow Error",
-      error,
-    );
-
-    return NextResponse.json(
-      {
-        success: false,
-
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unknown workflow error",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }

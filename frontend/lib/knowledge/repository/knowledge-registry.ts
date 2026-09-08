@@ -45,15 +45,15 @@ class KnowledgeRegistry {
     return updated;
   }
 
-  status(): KnowledgeRepositoryStatus {
-    const documents = this.list();
+  status(tenantId: string): KnowledgeRepositoryStatus {
+    const documents = this.listByTenant(tenantId);
 
     return {
       totalDocuments: documents.length,
       activeDocuments: documents.filter((item) => item.status === "active")
         .length,
       globalDocuments: documents.filter((item) => !item.tenantId).length,
-      tenantDocuments: documents.filter((item) => item.tenantId).length,
+      tenantDocuments: documents.filter((item) => item.tenantId === tenantId).length,
     };
   }
 }

@@ -1,29 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
+
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { getPackageAudit, searchPackages } from "@/lib/package-workflow-store";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const packageId = searchParams.get("package_id") || "";
-    const tenantId = searchParams.get("tenant_id") || "demo-tenant";
+    const principal = await requirePermission(request, PERMISSIONS.PACKAGE_VIEW);
+    const packageId = request.nextUrl.searchParams.get("package_id") || "";
 
     if (!packageId) {
       return NextResponse.json(
         { success: false, error: "package_id is required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const pkg = searchPackages("", tenantId).find((item) => item.packageId === packageId);
-
-    if (!pkg) {
-      return NextResponse.json(
-        { success: false, error: "Package not found." },
-        { status: 404 }
-      );
-    }
-
-    const audit = getPackageAudit(packageId);
+    const pkg = searchPackages("", principal.tenantId).find(
+      (item) => item.packageId === packageId,
+    );
+    if (!pkg) throw new Error("Package not found.");
 
     return NextResponse.json({
       success: true,
@@ -37,15 +34,9 @@ export async function GET(request: NextRequest) {
           assignedTo: pkg.assignedTo,
         },
       ],
-      audit,
+      audit: getPackageAudit(packageId),
     });
   } catch (error) {
-    return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "History fetch failed.",
-      },
-      { status: 500 }
-    );
+    return routeErrorResponse(error);
   }
 }

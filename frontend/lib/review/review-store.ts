@@ -1,68 +1,102 @@
+import { getPostgresPool } from "@/lib/database/postgres";
 import type {
   ReviewRecord,
   SaveReviewResponse,
 } from "./review-types";
 
-const reviewStore = new Map<string, ReviewRecord>();
-
-function createReviewId(review: ReviewRecord): string {
-  return review.id;
-}
-
 export class ReviewStore {
-  save(review: ReviewRecord): SaveReviewResponse {
-    const id = createReviewId(review);
-
-    const existing = reviewStore.get(id);
-
-    const record: ReviewRecord = {
-      ...review,
-      createdAt: existing?.createdAt ?? review.createdAt,
-      updatedAt: new Date().toISOString(),
-    };
-
-    reviewStore.set(id, record);
-
-    return {
-      success: true,
-      review: record,
-    };
+  async save(
+    review: ReviewRecord,
+    actorId?: string,
+    requestId?: string | null,
+  ): Promise<SaveReviewResponse> {
+    const client = await getPostgresPool().connect();
+    try {
+      await client.query("BEGIN");
+      const existing = await client.query<{ payload: ReviewRecord }>(
+        `SELECT payload FROM governed_review_records
+          WHERE tenant_id = $1 AND review_id = $2 FOR UPDATE`,
+        [review.tenantId, review.id],
+      );
+      const now = new Date().toISOString();
+      const record: ReviewRecord = {
+        ...review,
+        createdAt: existing.rows[0]?.payload.createdAt ?? review.createdAt ?? now,
+        updatedAt: now,
+      };
+      const saved = await client.query<{ payload: ReviewRecord; review_version: number }>(
+        `INSERT INTO governed_review_records (
+           tenant_id, review_id, article_id, evidence_package_id, workflow_stage,
+           review_status, payload, created_by, updated_by
+         ) VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $8)
+         ON CONFLICT (tenant_id, review_id) DO UPDATE SET
+           article_id = EXCLUDED.article_id,
+           evidence_package_id = EXCLUDED.evidence_package_id,
+           workflow_stage = EXCLUDED.workflow_stage,
+           review_status = EXCLUDED.review_status,
+           payload = EXCLUDED.payload,
+           review_version = governed_review_records.review_version + 1,
+           updated_by = EXCLUDED.updated_by,
+           updated_at = now()
+         RETURNING payload, review_version`,
+        [
+          review.tenantId,
+          review.id,
+          review.articleId ?? null,
+          review.evidencePackageId ?? null,
+          review.workflowStage,
+          review.status,
+          JSON.stringify(record),
+          actorId ?? null,
+        ],
+      );
+      await client.query(
+        `INSERT INTO audit_events (
+           tenant_id, actor_id, event_type, event_category, outcome, request_id, details
+         ) VALUES ($1, $2, 'GOVERNED_REVIEW_SAVED', 'LITERATURE_REVIEW', 'success', $3, $4::jsonb)`,
+        [review.tenantId, actorId ?? null, requestId ?? null, JSON.stringify({
+          reviewId: review.id,
+          workflowStage: review.workflowStage,
+          status: review.status,
+          reviewVersion: saved.rows[0].review_version,
+        })],
+      );
+      await client.query("COMMIT");
+      return { success: true, review: saved.rows[0].payload };
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
-  get(reviewId: string): ReviewRecord | undefined {
-    return reviewStore.get(reviewId);
-  }
-
-  listByTenant(tenantId: string): ReviewRecord[] {
-    return Array.from(reviewStore.values()).filter(
-      (review) => review.tenantId === tenantId,
+  async get(tenantId: string, reviewId: string): Promise<ReviewRecord | undefined> {
+    const result = await getPostgresPool().query<{ payload: ReviewRecord }>(
+      `SELECT payload FROM governed_review_records WHERE tenant_id = $1 AND review_id = $2`,
+      [tenantId, reviewId],
     );
+    return result.rows[0]?.payload;
   }
 
-  listByWorkflow(
+  async listByTenant(tenantId: string): Promise<ReviewRecord[]> {
+    const result = await getPostgresPool().query<{ payload: ReviewRecord }>(
+      `SELECT payload FROM governed_review_records WHERE tenant_id = $1 ORDER BY updated_at DESC`,
+      [tenantId],
+    );
+    return result.rows.map((row) => row.payload);
+  }
+
+  async listByWorkflow(
     tenantId: string,
     workflowStage: ReviewRecord["workflowStage"],
-  ): ReviewRecord[] {
-    return this.listByTenant(tenantId).filter(
-      (review) => review.workflowStage === workflowStage,
+  ): Promise<ReviewRecord[]> {
+    const result = await getPostgresPool().query<{ payload: ReviewRecord }>(
+      `SELECT payload FROM governed_review_records
+        WHERE tenant_id = $1 AND workflow_stage = $2 ORDER BY updated_at DESC`,
+      [tenantId, workflowStage],
     );
-  }
-
-  delete(reviewId: string): boolean {
-    return reviewStore.delete(reviewId);
-  }
-
-  clearTenant(tenantId: string): number {
-    let deleted = 0;
-
-    for (const [id, review] of reviewStore.entries()) {
-      if (review.tenantId === tenantId) {
-        reviewStore.delete(id);
-        deleted++;
-      }
-    }
-
-    return deleted;
+    return result.rows.map((row) => row.payload);
   }
 }
 

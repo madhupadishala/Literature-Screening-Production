@@ -1,6 +1,7 @@
 import { getAiProviderConfiguration } from "./ai-provider-config";
 import { getDatabaseReadiness } from "./database-readiness";
 import { getRuntimeConfig } from "./environment";
+import { getPostgresPool } from "@/lib/database/postgres";
 import { healthRegistry } from "./health-registry";
 import { probeHealthEndpoint, probeLocalDirectory } from "./resource-probes";
 import type { HealthProbeOutput } from "./types";
@@ -38,7 +39,7 @@ export function registerDefaultDependencyProbes(): void {
 
   healthRegistry.register({
     name: "vector-service",
-    critical: false,
+    critical: true,
     probe: probeVectorService,
   });
 
@@ -134,47 +135,27 @@ async function probeKnowledgeService(): Promise<HealthProbeOutput> {
 }
 
 async function probeVectorService(): Promise<HealthProbeOutput> {
-  const runtime = getRuntimeConfig();
-  const healthUrl = process.env.VECTOR_HEALTH_URL?.trim();
-
-  if (healthUrl) {
-    return probeHealthEndpoint({
-      name: "Vector service",
-      healthUrl,
-      timeoutMs: runtime.dependencyTimeoutMs,
-    });
+  if (!process.env.DATABASE_URL?.trim()) {
+    return { status: "unhealthy", message: "Controlled pgvector requires DATABASE_URL." };
   }
-
-  const localRoot =
-    process.env.CHROMA_PATH?.trim() ||
-    process.env.VECTOR_STORE_ROOT?.trim() ||
-    process.env.PGVECTOR_DATA_ROOT?.trim();
-
-  if (localRoot) {
-    return probeLocalDirectory({
-      name: "Vector service",
-      root: localRoot,
-      requireContent: false,
-      requireWritable: true,
-    });
+  try {
+    const result = await getPostgresPool().query<{
+      vector_installed: boolean; repository_table: boolean; chunk_table: boolean;
+    }>(`SELECT
+      EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'vector') AS vector_installed,
+      to_regclass('public.controlled_knowledge_repositories') IS NOT NULL AS repository_table,
+      to_regclass('public.knowledge_chunks') IS NOT NULL AS chunk_table`);
+    const row = result.rows[0];
+    const ready = row?.vector_installed && row.repository_table && row.chunk_table;
+    return { status: ready ? "healthy" : "unhealthy",
+      message: ready
+        ? "Controlled PostgreSQL/pgvector schema is available."
+        : "Controlled pgvector extension or required schema is unavailable.",
+      details: row };
+  } catch (error) {
+    return { status: "unhealthy", message: "Controlled pgvector health query failed.",
+      details: { error: error instanceof Error ? error.message : String(error) } };
   }
-
-  if (
-    process.env.VECTOR_DATABASE_URL?.trim() ||
-    process.env.CHROMA_URL?.trim() ||
-    process.env.PGVECTOR_URL?.trim()
-  ) {
-    return {
-      status: "degraded",
-      message:
-        "Vector service is configured, but VECTOR_HEALTH_URL is not available for connectivity verification.",
-    };
-  }
-
-  return {
-    status: "degraded",
-    message: "Vector service is not configured; semantic retrieval is unavailable.",
-  };
 }
 
 async function probeEvidenceStore(): Promise<HealthProbeOutput> {

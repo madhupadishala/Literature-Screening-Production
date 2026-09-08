@@ -14,8 +14,10 @@ const defaultModelConfig: AIModelConfig = {
 };
 
 class AIGateway {
-  private requestsHandled = 0;
-  private history: AICompletionResponse[] = [];
+  private history: Array<{
+    tenantId: string;
+    response: AICompletionResponse;
+  }> = [];
 
   async complete(request: AICompletionRequest) {
     const modelConfig = {
@@ -34,22 +36,24 @@ class AIGateway {
       modelConfig,
     });
 
-    this.requestsHandled += 1;
-    this.history.unshift(response);
+    this.history.unshift({ tenantId: request.tenantId, response });
 
     return response;
   }
 
-  listHistory(limit = 20) {
-    return this.history.slice(0, limit);
+  listHistory(tenantId: string, limit = 20) {
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, limit)
+      .map((item) => item.response);
   }
 
-  getStatus(): AIGatewayStatus {
+  getStatus(tenantId: string): AIGatewayStatus {
     return {
       providers: aiProviderRegistry.listProviders(),
       defaultProvider: defaultModelConfig.provider,
       defaultModel: defaultModelConfig.model,
-      requestsHandled: this.requestsHandled,
+      requestsHandled: this.history.filter((item) => item.tenantId === tenantId).length,
     };
   }
 }

@@ -3,6 +3,7 @@ export const PERMISSIONS = {
   SEARCH_EXPORT: "literature.search.export",
   SEARCH_HISTORY_VIEW: "literature.search.history.view",
   EVIDENCE_CREATE: "literature.evidence.create",
+  EVIDENCE_DELETE: "literature.evidence.delete",
   HITS_SUBMIT: "literature.hits.submit",
   SCREENING_EXECUTE: "literature.screening.execute",
   SCREENING_REVIEW: "literature.screening.review",

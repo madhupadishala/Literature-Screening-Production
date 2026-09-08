@@ -15,7 +15,7 @@ function getBearerToken(request: Request) {
 export async function GET(request: Request) {
   const token = getBearerToken(request);
 
-  return NextResponse.json(sessionManager.getCurrentSessionResponse(token));
+  return NextResponse.json(await sessionManager.getCurrentSessionResponse(token));
 }
 
 type LoginBody = {
@@ -56,13 +56,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: messages[check.reason] }, { status: 401 });
   }
 
-  const session = sessionManager.createSession({
+  const session = await sessionManager.createSession({
+    userId: check.userId,
     email: check.email,
     name: check.displayName,
     tenantId: check.tenantId,
     role: check.role,
     provider: "internal",
-  });
+  }, request.headers.get("x-request-id"));
 
   return NextResponse.json(
     {
@@ -75,7 +76,7 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   const token = getBearerToken(request);
-  const current = sessionManager.getCurrentSessionResponse(token);
+  const current = await sessionManager.getCurrentSessionResponse(token);
 
   if (!current.session) {
     return NextResponse.json({
@@ -83,7 +84,8 @@ export async function DELETE(request: Request) {
     });
   }
 
-  const revokedSession = sessionManager.revokeSession(current.session.id);
+  const revokedSession = await sessionManager.revokeSession(
+    current.session.id, request.headers.get("x-request-id"));
 
   return NextResponse.json({
     revoked: Boolean(revokedSession),

@@ -28,6 +28,7 @@ export interface MedicalTranslationRequest {
 }
 
 export interface MedicalTranslationResult {
+  tenantId: string;
   id: string;
   sourceLanguage: SupportedLanguage;
   targetLanguage: SupportedLanguage;

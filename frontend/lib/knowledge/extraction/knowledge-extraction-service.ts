@@ -17,14 +17,19 @@ class KnowledgeExtractionService {
     return result;
   }
 
-  list(limit = 20) {
-    return this.history.slice(0, limit);
+  list(tenantId: string, limit = 20) {
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, limit);
   }
 
-  getStatus(): KnowledgeExtractionStatus {
+  getStatus(tenantId: string): KnowledgeExtractionStatus {
+    const tenantHistory = this.history.filter(
+      (item) => item.tenantId === tenantId,
+    );
     return {
-      processedDocuments: this.history.length,
-      extractedObjects: this.history.reduce(
+      processedDocuments: tenantHistory.length,
+      extractedObjects: tenantHistory.reduce(
         (sum, item) => sum + item.objects.length,
         0,
       ),

@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getPostgresPool } from "@/lib/database/postgres";
+import type { FullTextArtifact } from "@/lib/literature/full-text/full-text-artifact-service";
 
 export interface PersistWorkflowArticleInput {
   tenantKey: string;
@@ -9,6 +10,7 @@ export interface PersistWorkflowArticleInput {
   title: string;
   searchResult: unknown;
   fetchResult: unknown;
+  fullTextArtifact?: FullTextArtifact;
   duplicateResult: {
     isDuplicate: boolean;
     requiresReview: boolean;
@@ -19,6 +21,12 @@ export interface PersistWorkflowArticleInput {
     decision: string;
     confidence: number;
   };
+}
+
+function normalizeConfidence(value: number | undefined): number | null {
+  if (value === undefined || !Number.isFinite(value)) return null;
+  const normalized = value > 1 ? value / 100 : value;
+  return Math.min(1, Math.max(0, normalized));
 }
 
 // Writes one article's full workflow output to Postgres. This is the
@@ -99,9 +107,74 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
       [tenantId, packageId, input.pmid, input.pmid, input.doi ?? null],
     );
 
+    if (input.fullTextArtifact) {
+      const artifact = input.fullTextArtifact;
+      const storageKey = [
+        tenantId,
+        packageId,
+        "source",
+        `${artifact.sha256}.pdf`,
+      ].join("/");
+
+      const artifactResult = await client.query<{ id: string }>(
+        `INSERT INTO evidence_artifacts (
+           tenant_id, package_id, artifact_type, storage_backend, storage_key,
+           media_type, sha256, size_bytes, metadata, provenance_url,
+           retrieved_at, retention_policy
+         ) VALUES (
+           $1, $2, 'SOURCE_PDF', 'postgres-bytea', $3,
+           $4, $5, $6, $7::jsonb, $8, $9, 'retain'
+         )
+         ON CONFLICT (tenant_id, package_id, artifact_type, storage_key)
+         DO UPDATE SET
+           metadata = EXCLUDED.metadata,
+           provenance_url = EXCLUDED.provenance_url,
+           retrieved_at = EXCLUDED.retrieved_at
+         RETURNING id`,
+        [
+          tenantId,
+          packageId,
+          storageKey,
+          artifact.mediaType,
+          artifact.sha256,
+          artifact.sizeBytes,
+          JSON.stringify({
+            source: artifact.source,
+            pmcid: artifact.pmcid,
+            fileName: artifact.fileName,
+            pageCount: artifact.pageCount,
+            extractedTextLength: artifact.extractedText.length,
+          }),
+          artifact.provenanceUrl,
+          artifact.retrievedAt,
+        ],
+      );
+
+      await client.query(
+        `INSERT INTO evidence_artifact_contents (artifact_id, tenant_id, content)
+         VALUES ($1, $2, decode($3, 'base64'))
+         ON CONFLICT (artifact_id)
+         DO UPDATE SET content = EXCLUDED.content`,
+        [artifactResult.rows[0].id, tenantId, artifact.bytesBase64],
+      );
+    }
+
+    const fullTextSummary = input.fullTextArtifact
+      ? {
+          source: input.fullTextArtifact.source,
+          pmcid: input.fullTextArtifact.pmcid,
+          provenanceUrl: input.fullTextArtifact.provenanceUrl,
+          sha256: input.fullTextArtifact.sha256,
+          sizeBytes: input.fullTextArtifact.sizeBytes,
+          pageCount: input.fullTextArtifact.pageCount,
+          retrievedAt: input.fullTextArtifact.retrievedAt,
+        }
+      : undefined;
+
     const hitsPayload = {
       searchResult: input.searchResult,
       fetchResult: input.fetchResult,
+      fullText: fullTextSummary,
       duplicateResult: input.duplicateResult,
     };
 
@@ -110,7 +183,7 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
        VALUES ($1, $2, 1, $3::jsonb, $4)
        ON CONFLICT (package_id, result_version)
        DO UPDATE SET result_payload = EXCLUDED.result_payload, confidence = EXCLUDED.confidence`,
-      [tenantId, packageId, JSON.stringify(hitsPayload), input.duplicateResult.confidence || null],
+      [tenantId, packageId, JSON.stringify(hitsPayload), normalizeConfidence(input.duplicateResult.confidence)],
     );
 
     await client.query(
@@ -123,17 +196,34 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
         packageId,
         input.screeningResult.decision,
         JSON.stringify(input.screeningResult),
-        (input.screeningResult.confidence ?? 0) / 100 || null,
+        normalizeConfidence(input.screeningResult.confidence),
+      ],
+    );
+
+    await client.query(
+      `INSERT INTO audit_events (
+         tenant_id, package_id, event_type, event_category, outcome, details
+       ) VALUES ($1, $2, 'LITERATURE_ARTICLE_PERSISTED', 'LITERATURE_WORKFLOW', 'success', $3::jsonb)`,
+      [
+        tenantId,
+        packageId,
+        JSON.stringify({
+          pmid: input.pmid,
+          doi: input.doi ?? null,
+          screeningDecision: input.screeningResult.decision,
+          screeningConfidence: input.screeningResult.confidence,
+          duplicate: input.duplicateResult.isDuplicate,
+          fullTextSha256: input.fullTextArtifact?.sha256 ?? null,
+          fullTextPmcid: input.fullTextArtifact?.pmcid ?? null,
+        }),
       ],
     );
 
     await client.query("COMMIT");
   } catch (error) {
     await client.query("ROLLBACK");
-    // Persistence failing should not fail the whole workflow response --
-    // the caller already has the real, correct result to return to the
-    // user. Log loudly so it's visible, but don't throw.
-    console.error("[persistWorkflowArticle] Failed to persist article, continuing without persistence:", error);
+    console.error("[persistWorkflowArticle] Transaction failed and was rolled back:", error);
+    throw error;
   } finally {
     client.release();
   }

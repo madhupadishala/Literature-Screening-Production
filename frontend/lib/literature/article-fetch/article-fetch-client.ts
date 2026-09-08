@@ -97,6 +97,14 @@ function extractAuthors(articleNode: PubmedArticleXml | undefined): string[] {
     .filter(Boolean);
 }
 
+function extractPmcid(pubmedData: PubmedDataXml | undefined): string | undefined {
+  const pmcIdentifier = asArray(pubmedData?.ArticleIdList?.ArticleId).find(
+    (id) => xmlAttr(id, "@_IdType") === "pmc",
+  );
+  const value = pmcIdentifier ? extractText(pmcIdentifier).trim().toUpperCase() : "";
+  return /^PMC\d+$/.test(value) ? value : undefined;
+}
+
 function extractDoi(
   articleNode: PubmedArticleXml | undefined,
   pubmedData: PubmedDataXml | undefined,
@@ -174,6 +182,8 @@ class ArticleFetchClient {
           ? `${pubDate.Year}-01-01`
           : undefined;
 
+    const pmcid = extractPmcid(pubmedData);
+
     const metadata: ArticleMetadata = {
       pmid: request.pmid,
       title: extractText(articleNode?.ArticleTitle) || `PMID ${request.pmid}`,
@@ -181,12 +191,16 @@ class ArticleFetchClient {
       journal: articleNode?.Journal?.Title ? decodeXmlEntities(String(articleNode.Journal.Title)) : undefined,
       publicationDate,
       doi: extractDoi(articleNode, pubmedData),
+      pmcid,
       authors: extractAuthors(articleNode),
       meshTerms: asArray(record?.MedlineCitation?.MeshHeadingList?.MeshHeading)
         .map((heading) => extractText(heading?.DescriptorName))
         .filter(Boolean),
       language: extractText(articleNode?.Language),
-      fullTextAvailable: false,
+      fullTextAvailable: Boolean(pmcid),
+      fullTextPdf: pmcid
+        ? `https://www.ebi.ac.uk/europepmc/webservices/rest/${pmcid}/fullTextPDF`
+        : undefined,
     };
 
     const evidenceManifest: ArticleEvidenceManifest = {

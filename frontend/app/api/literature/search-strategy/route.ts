@@ -1,83 +1,62 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { searchStrategyEngine } from "@/lib/literature/search/search-strategy-engine";
 import type { SearchStrategyRequest } from "@/lib/literature/search/search-strategy-types";
+import { requirePermission } from "@/lib/rbac/guard";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 
-export async function GET() {
-  return NextResponse.json(
-    {
+export async function GET(request: NextRequest) {
+  try {
+    const principal = await requirePermission(
+      request,
+      PERMISSIONS.SEARCH_HISTORY_VIEW,
+    );
+    return NextResponse.json({
       success: true,
-      status: searchStrategyEngine.getStatus(),
-      strategies: searchStrategyEngine.list(),
-    },
-    {
-      status: 200,
-    },
-  );
+      status: searchStrategyEngine.getStatus(principal.tenantId),
+      strategies: searchStrategyEngine.list(principal.tenantId),
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
+    const principal = await requirePermission(request, PERMISSIONS.SEARCH_EXECUTE);
     const body = (await request.json()) as SearchStrategyRequest;
-
     if (
-      !body.tenantId ||
       !body.strategyName ||
       !Array.isArray(body.productNames) ||
       body.productNames.length === 0 ||
       !Array.isArray(body.inclusionTerms) ||
       body.inclusionTerms.length === 0
     ) {
-      return NextResponse.json(
-        {
-          success: false,
-          error:
-            "tenantId, strategyName, productNames and inclusionTerms are required.",
-        },
-        {
-          status: 400,
-        },
+      throw new Error(
+        "strategyName, productNames and inclusionTerms are required.",
       );
     }
 
-    const strategy = await searchStrategyEngine.build(body);
-
+    const scopedRequest = { ...body, tenantId: principal.tenantId };
+    const strategy = await searchStrategyEngine.build(scopedRequest);
     const queryParts = [
       ...body.productNames,
       ...body.inclusionTerms,
       ...(body.exclusionTerms ?? []).map((term) => `NOT ${term}`),
     ];
-
-    const searchQuery =
-      strategy.query.trim().length > 0
-        ? strategy.query
-        : queryParts.join(" AND ");
+    const searchQuery = strategy.query.trim() || queryParts.join(" AND ");
 
     return NextResponse.json(
       {
         success: true,
         strategy,
         searchQuery,
-        next: {
-          endpoint: "/api/literature/pubmed/search",
-          method: "POST",
-        },
+        next: { endpoint: "/api/literature/pubmed/search", method: "POST" },
       },
-      {
-        status: 201,
-      },
+      { status: 201 },
     );
   } catch (error) {
-    console.error("Search Strategy Error:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Failed to generate search strategy.",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }

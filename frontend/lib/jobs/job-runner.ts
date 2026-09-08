@@ -10,42 +10,19 @@ function mockResult(job: JobRecord): Record<string, unknown> {
 }
 
 export class JobRunner {
-  async runNext(tenantId?: string): Promise<JobRecord | undefined> {
-    const job = jobQueue.next(tenantId);
+  async runNext(tenantId: string): Promise<JobRecord | undefined> {
+    const job = await jobQueue.claimNext(tenantId);
 
     if (!job) {
       return undefined;
     }
 
-    jobQueue.update(job.id, {
-      status: "processing",
-      attempts: job.attempts + 1,
-      progress: 25,
-      startedAt: new Date().toISOString(),
-    });
-
     try {
       await Promise.resolve();
-
-      const completed = jobQueue.update(job.id, {
-        status: "completed",
-        progress: 100,
-        result: mockResult(job),
-        completedAt: new Date().toISOString(),
-      });
-
-      return completed;
+      return await jobQueue.complete(tenantId, job.id, mockResult(job));
     } catch (error) {
-      const canRetry = job.attempts + 1 < job.maxAttempts;
-
-      return jobQueue.update(job.id, {
-        status: canRetry ? "queued" : "failed",
-        progress: canRetry ? 0 : job.progress,
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unknown job execution error",
-      });
+      return await jobQueue.fail(tenantId, job.id,
+        error instanceof Error ? error.message : "Unknown job execution error");
     }
   }
 

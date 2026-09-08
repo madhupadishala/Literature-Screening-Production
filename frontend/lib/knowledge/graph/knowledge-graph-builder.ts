@@ -24,6 +24,7 @@ export class KnowledgeGraphBuilder {
     }
 
     return {
+      tenantId: request.tenantId,
       id: createId("graph"),
       documentId: request.documentId,
       nodes: request.nodes,

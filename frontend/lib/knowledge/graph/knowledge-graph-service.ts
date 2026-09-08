@@ -17,18 +17,23 @@ class KnowledgeGraphService {
     return graph;
   }
 
-  list(limit = 20) {
-    return this.graphs.slice(0, limit);
+  list(tenantId: string, limit = 20) {
+    return this.graphs
+      .filter((graph) => graph.tenantId === tenantId)
+      .slice(0, limit);
   }
 
-  getStatus(): KnowledgeGraphStatus {
+  getStatus(tenantId: string): KnowledgeGraphStatus {
+    const tenantGraphs = this.graphs.filter(
+      (graph) => graph.tenantId === tenantId,
+    );
     return {
-      totalGraphs: this.graphs.length,
-      totalNodes: this.graphs.reduce(
+      totalGraphs: tenantGraphs.length,
+      totalNodes: tenantGraphs.reduce(
         (sum, graph) => sum + graph.nodes.length,
         0,
       ),
-      totalEdges: this.graphs.reduce(
+      totalEdges: tenantGraphs.reduce(
         (sum, graph) => sum + graph.edges.length,
         0,
       ),

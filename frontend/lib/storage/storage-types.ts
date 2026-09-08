@@ -1,4 +1,5 @@
 export type StorageProvider =
+  | "postgresql"
   | "memory-development"
   | "aws-s3"
   | "cloudflare-r2"

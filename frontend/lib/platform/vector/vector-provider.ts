@@ -4,6 +4,7 @@ import type {
   VectorSearchRequest,
   VectorSearchResult,
 } from "./vector-types";
+import { assertLegacyVectorRuntimeAllowed } from "@/lib/vector/legacy-vector-policy";
 
 function cosineSimilarity(a: number[], b: number[]) {
   if (a.length !== b.length) {
@@ -33,6 +34,7 @@ class MemoryVectorProvider {
   private vectors: VectorRecord[] = [];
 
   upsert(record: VectorRecord) {
+    assertLegacyVectorRuntimeAllowed();
     const index = this.vectors.findIndex((item) => item.id === record.id);
 
     if (index >= 0) {
@@ -45,6 +47,7 @@ class MemoryVectorProvider {
   }
 
   search(request: VectorSearchRequest): VectorSearchResult[] {
+    assertLegacyVectorRuntimeAllowed();
     return this.vectors
       .filter(
         (item) => item.metadata.tenantId === request.tenantId,
@@ -58,8 +61,11 @@ class MemoryVectorProvider {
       .slice(0, request.topK ?? 10);
   }
 
-  count() {
-    return this.vectors.length;
+  count(tenantId: string) {
+    assertLegacyVectorRuntimeAllowed();
+    return this.vectors.filter(
+      (item) => item.metadata.tenantId === tenantId,
+    ).length;
   }
 }
 

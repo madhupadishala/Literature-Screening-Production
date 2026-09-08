@@ -2,6 +2,7 @@ import { duplicateService } from "@/lib/literature/duplicates/duplicate-service"
 import { persistWorkflowArticle, findExistingArticlesByIdentity } from "@/lib/literature/persistence/workflow-persistence-service";
 import { pubMedService } from "@/lib/literature/pubmed/pubmed-service";
 import { screeningService } from "@/lib/literature/screening/screening-service";
+import { resolveOpenAccessPmcPdf } from "@/lib/literature/full-text/full-text-artifact-service";
 import { runAsyncBatch } from "@/lib/performance/async-batch-runner";
 import {
   getPerformanceSummary,
@@ -241,6 +242,23 @@ class LiteratureWorkflowService {
             },
           });
 
+          const fetchResult = findFetchedArticle(
+            search.fetchedArticles,
+            article.pmid,
+          );
+
+          let fullTextArtifact;
+          try {
+            fullTextArtifact = await resolveOpenAccessPmcPdf(
+              fetchResult?.metadata.pmcid,
+            );
+          } catch (error) {
+            console.error(
+              `[literature-workflow-service] Full-text retrieval failed for PMID ${article.pmid}; screening will use the abstract:`,
+              error,
+            );
+          }
+
           const screeningStartedAt = Date.now();
           const screeningResult =
             await screeningService.screenArticle({
@@ -248,7 +266,10 @@ class LiteratureWorkflowService {
               article: {
                 pmid: article.pmid,
                 title: article.title,
-                abstract: article.abstract ?? "",
+                abstract:
+                  fullTextArtifact?.extractedText ||
+                  article.abstract ||
+                  "",
                 authors: normalizeStringArray(
                   article.authors,
                 ),
@@ -269,33 +290,35 @@ class LiteratureWorkflowService {
             },
           });
 
-          const fetchResult = findFetchedArticle(
-            search.fetchedArticles,
-            article.pmid,
-          );
-
           const workflowArticle: LiteratureWorkflowArticle = {
             searchResult: article,
             fetchResult,
+            fullText: fullTextArtifact
+              ? {
+                  source: fullTextArtifact.source,
+                  pmcid: fullTextArtifact.pmcid,
+                  provenanceUrl: fullTextArtifact.provenanceUrl,
+                  sha256: fullTextArtifact.sha256,
+                  sizeBytes: fullTextArtifact.sizeBytes,
+                  retrievedAt: fullTextArtifact.retrievedAt,
+                  pageCount: fullTextArtifact.pageCount,
+                  extractedTextLength: fullTextArtifact.extractedText.length,
+                }
+              : undefined,
             duplicateResult,
             screeningResult,
           };
 
-          persistWorkflowArticle({
+          await persistWorkflowArticle({
             tenantKey: normalizedRequest.tenantId,
             pmid: article.pmid,
             doi: article.doi,
             title: article.title,
             searchResult: article,
             fetchResult,
+            fullTextArtifact,
             duplicateResult,
             screeningResult,
-          }).catch((error) => {
-            // persistWorkflowArticle already logs and never throws, but
-            // guard here too in case that contract ever changes -- a
-            // persistence bug must never fail the actual workflow
-            // response the caller is waiting on.
-            console.error("[literature-workflow-service] Unexpected persistence error:", error);
           });
 
           recordPerformanceMetric({
@@ -401,6 +424,7 @@ class LiteratureWorkflowService {
   }
 
   list(
+    tenantId: string,
     limit = 20,
   ): LiteratureWorkflowResponse[] {
     const safeLimit =
@@ -408,7 +432,9 @@ class LiteratureWorkflowService {
         ? Math.min(Math.floor(limit), 100)
         : 20;
 
-    return this.history.slice(0, safeLimit);
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, safeLimit);
   }
 
   clear(): void {
@@ -416,10 +442,13 @@ class LiteratureWorkflowService {
     this.workflowCache.clear();
   }
 
-  getStatus(): LiteratureWorkflowStatus {
+  getStatus(tenantId: string): LiteratureWorkflowStatus {
+    const tenantHistory = this.history.filter(
+      (item) => item.tenantId === tenantId,
+    );
     return {
-      totalRuns: this.history.length,
-      completedRuns: this.history.length,
+      totalRuns: tenantHistory.length,
+      completedRuns: tenantHistory.length,
       failedRuns:
         getPerformanceSummary().byOperation[
           "literature_workflow"
@@ -427,7 +456,7 @@ class LiteratureWorkflowService {
           ? 0
           : getPerformanceSummary().failedOperations,
       lastRunAt:
-        this.history[0]?.completedAt,
+        tenantHistory[0]?.completedAt,
     };
   }
 

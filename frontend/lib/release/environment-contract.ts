@@ -21,6 +21,12 @@ export function validateReleaseEnvironment(): EnvironmentContractReport {
     (process.env.EVIDENCE_STORE_URL?.trim() && process.env.EVIDENCE_HEALTH_URL?.trim()) ||
     (process.env.EVIDENCE_STORE_BACKEND?.trim().toLowerCase() === "database" && databaseConfigured),
   );
+  const sessionSecret = process.env.SESSION_SECRET?.trim() || "";
+  const edgeRateLimitProvider = process.env.EDGE_RATE_LIMIT_PROVIDER?.trim() || "";
+  const securityEventSink = process.env.SECURITY_EVENT_SINK?.trim() || "";
+  const backupVerifiedAt = recentVerification(process.env.DATABASE_BACKUP_VERIFIED_AT);
+  const restoreVerifiedAt = recentVerification(process.env.DATABASE_RESTORE_VERIFIED_AT);
+  const rollbackBuildSha = process.env.ROLLBACK_BUILD_SHA?.trim() || "";
 
   const items: EnvironmentContractItem[] = [
     item(
@@ -85,6 +91,50 @@ export function validateReleaseEnvironment(): EnvironmentContractReport {
         : "ALLOW_DEMO_PRINCIPAL must be false in production.",
     ),
     item(
+      "session-secret-strength",
+      !production || sessionSecret.length >= 32,
+      production,
+      sessionSecret.length >= 32
+        ? "Server session signing secret length is acceptable."
+        : "SESSION_SECRET must contain at least 32 characters.",
+    ),
+    item(
+      "distributed-rate-limit",
+      !production || Boolean(edgeRateLimitProvider),
+      production,
+      edgeRateLimitProvider
+        ? `Distributed API rate limiting is delegated to ${edgeRateLimitProvider}.`
+        : "EDGE_RATE_LIMIT_PROVIDER is required; process-local limiting is insufficient for production.",
+    ),
+    item(
+      "durable-security-event-sink",
+      !production || Boolean(securityEventSink),
+      production,
+      securityEventSink
+        ? `Proxy security events are exported through ${securityEventSink}.`
+        : "SECURITY_EVENT_SINK is required; process-local security events are not durable.",
+    ),
+    item(
+      "recent-database-backup",
+      !production || backupVerifiedAt.passed,
+      production,
+      backupVerifiedAt.message,
+    ),
+    item(
+      "recent-restore-test",
+      !production || restoreVerifiedAt.passed,
+      production,
+      restoreVerifiedAt.message,
+    ),
+    item(
+      "rollback-build-available",
+      !production || Boolean(rollbackBuildSha),
+      production,
+      rollbackBuildSha
+        ? `Rollback build ${rollbackBuildSha} is identified.`
+        : "ROLLBACK_BUILD_SHA is required before production release.",
+    ),
+    item(
       "database-evidence-source",
       true,
       false,
@@ -114,8 +164,8 @@ export function validateReleaseEnvironment(): EnvironmentContractReport {
     ),
     item(
       "release-base-url",
-      !production || Boolean(release.baseUrl),
-      false,
+      !production || isSecureReleaseUrl(release.baseUrl),
+      production,
       release.baseUrl
         ? `Release probes use ${release.baseUrl}.`
         : "RELEASE_BASE_URL is unset; API-triggered probes will use the request origin.",
@@ -127,6 +177,23 @@ export function validateReleaseEnvironment(): EnvironmentContractReport {
     checkedAt: new Date().toISOString(),
     items,
   };
+}
+
+function recentVerification(value: string | undefined): { passed: boolean; message: string } {
+  const timestamp = value?.trim();
+  if (!timestamp) return { passed: false, message: "Verification timestamp is not configured." };
+  const parsed = Date.parse(timestamp);
+  const maximumAgeMs = 30 * 24 * 60 * 60 * 1_000;
+  const passed = Number.isFinite(parsed) && parsed <= Date.now() && Date.now() - parsed <= maximumAgeMs;
+  return { passed, message: passed
+    ? `Verification was completed at ${new Date(parsed).toISOString()}.`
+    : "Verification must be a valid timestamp from the last 30 days." };
+}
+
+function isSecureReleaseUrl(value: string | undefined): boolean {
+  if (!value) return false;
+  try { return new URL(value).protocol === "https:"; }
+  catch { return false; }
 }
 
 function item(
