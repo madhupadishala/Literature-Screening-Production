@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { saveSession, type ClinixSession } from "@/lib/session-manager";
 
 const TENANTS = [
+  { tenantId: "clinixai-prod", tenantName: "TheClinixAI Production" },
   { tenantId: "demo-tenant", tenantName: "Demo Tenant" },
-  { tenantId: "novartis-prod", tenantName: "Novartis Workspace" },
   { tenantId: "uat-tenant", tenantName: "UAT Workspace" },
   { tenantId: "training-tenant", tenantName: "Training Workspace" },
 ];
@@ -40,7 +40,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [environment, setEnvironment] = useState<"PROD" | "UAT" | "TRAINING">("PROD");
-  const [tenantId, setTenantId] = useState("demo-tenant");
+  const [tenantId, setTenantId] = useState("clinixai-prod");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -83,11 +83,6 @@ export default function LoginPage() {
         lastActivity: now,
         expiresAt: server.expiresAt,
         locked: false,
-        // Signed server token (HMAC, see lib/auth/token-service.ts). API
-        // calls that need to authenticate should send this as
-        // `Authorization: Bearer <accessToken>`. It is not yet wired into
-        // every API client call in this codebase -- that's a follow-up,
-        // not something this session object claims to solve on its own.
         accessToken: server.accessToken,
       };
 
