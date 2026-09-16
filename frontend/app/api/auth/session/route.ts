@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
 type LoginBody = {
   email: string;
   password: string;
-  tenantId: string; // tenant_key, e.g. "demo-tenant"
+  tenantId: string;
 };
 
 export async function POST(request: NextRequest) {
@@ -62,14 +62,11 @@ export async function POST(request: NextRequest) {
       no_active_membership: "This user has no active access to the selected tenant.",
     };
 
-    // Same 401 for every failure reason in the status code; the message is
-    // informative for the user without confirming which specific check
-    // failed to an attacker (except lockout, which is intentionally visible
-    // so a legitimate user knows to wait rather than keep retrying).
     return NextResponse.json({ error: messages[check.reason] }, { status: 401 });
   }
 
   const session = sessionManager.createSession({
+    userId: check.userId,
     email: check.email,
     name: check.displayName,
     tenantId: check.tenantId,
@@ -85,10 +82,6 @@ export async function POST(request: NextRequest) {
     { status: 201 },
   );
 
-  // Same-origin application APIs can authenticate automatically without
-  // exposing the bearer token to every client-side fetch call. The token is
-  // still HMAC-signed and authorization is re-read from PostgreSQL per
-  // protected request.
   response.cookies.set(ACCESS_TOKEN_COOKIE, session.accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -118,9 +111,6 @@ export async function DELETE(request: NextRequest) {
     return revokedResponse;
   }
 
-  // A serverless instance may not hold the in-memory session that created the
-  // token. Clearing the browser cookie still ends the browser session; the
-  // short-lived signed access token expires independently.
   clearAccessTokenCookie(response);
   return response;
 }
