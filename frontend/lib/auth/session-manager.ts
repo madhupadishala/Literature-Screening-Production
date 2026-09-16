@@ -60,7 +60,7 @@ class SessionManager {
     const provider = input.provider ?? "internal";
 
     const user: AuthUser = {
-      id: createId("user"),
+      id: input.userId ?? createId("user"),
       email: input.email,
       name: input.name ?? input.email,
       tenantId: input.tenantId,
