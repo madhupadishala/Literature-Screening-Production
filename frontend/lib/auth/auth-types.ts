@@ -48,6 +48,7 @@ export interface AuthSession {
 }
 
 export interface CreateSessionInput {
+  userId?: string;
   email: string;
   name?: string;
   tenantId: string;
