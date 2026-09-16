@@ -44,6 +44,9 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
+      - name: Print migration checksums
+        run: node scripts/print-migration-checksums.mjs
+
       - name: Run lint when configured
         shell: bash
         run: |
