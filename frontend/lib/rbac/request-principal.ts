@@ -5,6 +5,8 @@ import { getPostgresPool } from "@/lib/database/postgres";
 import { roleHasPermission, type Permission } from "@/lib/rbac/permissions";
 import { tokenService } from "@/lib/auth/token-service";
 
+const ACCESS_TOKEN_COOKIE = "clinixai_access_token";
+
 export interface RequestPrincipal {
   tenantId: string;
   tenantKey: string;
@@ -117,13 +119,16 @@ async function ensureDemoIdentity(input: {
   }
 }
 
-async function resolvePrincipalFromBearerToken(
+async function resolvePrincipalFromSignedToken(
   request: NextRequest,
 ): Promise<RequestPrincipal | null> {
   const header = request.headers.get("authorization");
-  if (!header?.startsWith("Bearer ")) return null;
+  const token = header?.startsWith("Bearer ")
+    ? header.slice("Bearer ".length)
+    : request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
 
-  const token = header.slice("Bearer ".length);
+  if (!token) return null;
+
   const payload = tokenService.validate(token);
   if (!payload) return null;
 
@@ -184,8 +189,8 @@ async function resolvePrincipalFromBearerToken(
 }
 
 export async function resolveRequestPrincipal(request: NextRequest): Promise<RequestPrincipal> {
-  const bearerPrincipal = await resolvePrincipalFromBearerToken(request);
-  if (bearerPrincipal) return bearerPrincipal;
+  const signedTokenPrincipal = await resolvePrincipalFromSignedToken(request);
+  if (signedTokenPrincipal) return signedTokenPrincipal;
 
   const identity = resolveIdentityHeaders(request);
 

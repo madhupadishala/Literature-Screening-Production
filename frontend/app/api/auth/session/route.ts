@@ -1,19 +1,32 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { sessionManager } from "@/lib/auth/session-manager";
 import { verifyCredentials } from "@/lib/auth/verify-credentials";
 
-function getBearerToken(request: Request) {
+const ACCESS_TOKEN_COOKIE = "clinixai_access_token";
+const ACCESS_TOKEN_MAX_AGE_SECONDS = 60 * 60;
+
+function getAccessToken(request: NextRequest) {
   const header = request.headers.get("authorization");
 
-  if (!header?.startsWith("Bearer ")) {
-    return null;
+  if (header?.startsWith("Bearer ")) {
+    return header.slice("Bearer ".length);
   }
 
-  return header.slice("Bearer ".length);
+  return request.cookies.get(ACCESS_TOKEN_COOKIE)?.value ?? null;
 }
 
-export async function GET(request: Request) {
-  const token = getBearerToken(request);
+function clearAccessTokenCookie(response: NextResponse) {
+  response.cookies.set(ACCESS_TOKEN_COOKIE, "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: 0,
+  });
+}
+
+export async function GET(request: NextRequest) {
+  const token = getAccessToken(request);
 
   return NextResponse.json(sessionManager.getCurrentSessionResponse(token));
 }
@@ -24,7 +37,7 @@ type LoginBody = {
   tenantId: string; // tenant_key, e.g. "demo-tenant"
 };
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   let body: Partial<LoginBody>;
 
   try {
@@ -64,29 +77,50 @@ export async function POST(request: Request) {
     provider: "internal",
   });
 
-  return NextResponse.json(
+  const response = NextResponse.json(
     {
       authenticated: true,
       session,
     },
     { status: 201 },
   );
+
+  // Same-origin application APIs can authenticate automatically without
+  // exposing the bearer token to every client-side fetch call. The token is
+  // still HMAC-signed and authorization is re-read from PostgreSQL per
+  // protected request.
+  response.cookies.set(ACCESS_TOKEN_COOKIE, session.accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: ACCESS_TOKEN_MAX_AGE_SECONDS,
+  });
+
+  return response;
 }
 
-export async function DELETE(request: Request) {
-  const token = getBearerToken(request);
+export async function DELETE(request: NextRequest) {
+  const token = getAccessToken(request);
   const current = sessionManager.getCurrentSessionResponse(token);
+  const response = NextResponse.json({
+    revoked: false,
+    session: current.session,
+  });
 
-  if (!current.session) {
-    return NextResponse.json({
-      revoked: false,
+  if (current.session) {
+    const revokedSession = sessionManager.revokeSession(current.session.id);
+    const revokedResponse = NextResponse.json({
+      revoked: Boolean(revokedSession),
+      session: revokedSession,
     });
+    clearAccessTokenCookie(revokedResponse);
+    return revokedResponse;
   }
 
-  const revokedSession = sessionManager.revokeSession(current.session.id);
-
-  return NextResponse.json({
-    revoked: Boolean(revokedSession),
-    session: revokedSession,
-  });
+  // A serverless instance may not hold the in-memory session that created the
+  // token. Clearing the browser cookie still ends the browser session; the
+  // short-lived signed access token expires independently.
+  clearAccessTokenCookie(response);
+  return response;
 }
