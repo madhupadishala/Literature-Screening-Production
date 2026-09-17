@@ -2,7 +2,7 @@ import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import { requirePermission } from "@/lib/rbac/guard";
-import { executeSearchToHits } from "@/lib/literature/hits/search-to-hits-service";
+import { executeProductionSearchToHits } from "@/lib/literature/hits/production-search-to-hits-service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       resultIds?: string[];
     };
 
-    const execution = await executeSearchToHits({
+    const execution = await executeProductionSearchToHits({
       principal,
       resultIds: Array.isArray(body.resultIds) ? body.resultIds : [],
     });
