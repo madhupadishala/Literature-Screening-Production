@@ -44,6 +44,7 @@ export interface ControlledKnowledgeSearchResponse {
   mode: ControlledKnowledgeSearchMode;
   repositoryId: string;
   repositoryVersion: string;
+  repositoryManifestSha256: string;
   embeddingModel: string;
   embeddingDimensions: number;
   results: ControlledKnowledgeSearchResult[];
