@@ -39,7 +39,7 @@ function resolveProvider(value: string | undefined): AIProviderType {
 export function getAISettings(): AISettings {
   const provider = resolveProvider(process.env.AI_PROVIDER);
   const defaultModel = provider === "groq"
-    ? "llama-3.3-70b-versatile"
+    ? "openai/gpt-oss-120b"
     : provider === "ollama"
       ? "llama3.1:8b"
       : "gpt-4.1-mini";
