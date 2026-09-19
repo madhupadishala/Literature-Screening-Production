@@ -37,6 +37,8 @@ type HitRecord = {
   review_status: "pending" | "approved" | "dismissed" | "flagged"; // Added workflow state tracking
   review_version: number;
   review_comments?: string;
+  execution_failed: boolean;
+  execution_error?: string;
 };
 
 type SortConfig = {
@@ -102,6 +104,8 @@ function normalizeHit(rawInput: unknown, packageId: string): HitRecord {
     review_status: raw.review_status || "pending", // Set sensible operational default
     review_version: Number(raw.review_version || 0),
     review_comments: raw.review_comments || "",
+    execution_failed: Boolean(raw.execution_failed),
+    execution_error: raw.execution_error || undefined,
   };
 }
 
@@ -113,6 +117,7 @@ export default function HitsReviewPage() {
   const [toast, setToast] = useState("");
   const [decisionReason, setDecisionReason] = useState("");
   const [savingDecision, setSavingDecision] = useState(false);
+  const [retryingHit, setRetryingHit] = useState(false);
 
   // Worklist Quick Filters state
   const [activeTab, setActiveTab] = useState<
@@ -209,6 +214,33 @@ export default function HitsReviewPage() {
       showToast(error instanceof Error ? error.message : "Failed to save Hits review decision.");
     } finally {
       setSavingDecision(false);
+    }
+  }
+
+  async function retryHitsExecution() {
+    if (!selectedHit?.execution_failed) return;
+
+    try {
+      setRetryingHit(true);
+      const response = await fetch("/api/literature/hits/retry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          packageId: selectedHit.database_package_id,
+        }),
+      });
+      const payload = await response.json();
+      if (!response.ok || !payload?.success) {
+        throw new Error(payload?.error || "Hits retry failed.");
+      }
+
+      showToast("Hits AI retry completed. Refreshing governed worklist.");
+      setSelectedHit(null);
+      await loadHits();
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : "Hits retry failed.");
+    } finally {
+      setRetryingHit(false);
     }
   }
 
@@ -515,6 +547,19 @@ export default function HitsReviewPage() {
           {/* New Active Workflow Action Row Bar components */}
           <div className="workflow-action-bar">
             <span>Commit Decision Audit:</span>
+            {selectedHit.execution_failed && (
+              <div className="technical-failure">
+                <strong>Technical Hits execution failure</strong>
+                <p>{selectedHit.execution_error || "The previous Hits AI execution failed."}</p>
+                <button
+                  className="btn-action retry"
+                  disabled={retryingHit}
+                  onClick={retryHitsExecution}
+                >
+                  {retryingHit ? "Retrying Hits AI..." : "Retry Hits AI"}
+                </button>
+              </div>
+            )}
             <textarea
               value={decisionReason}
               onChange={(event) => setDecisionReason(event.target.value)}
@@ -997,6 +1042,35 @@ export default function HitsReviewPage() {
         }
         .btn-action.dismiss:hover {
           background: #dc2626;
+        }
+
+        .technical-failure {
+          flex: 1 1 100%;
+          border: 1px solid #fecaca;
+          background: #fff7ed;
+          border-radius: 10px;
+          padding: 12px;
+        }
+
+        .technical-failure strong {
+          display: block;
+          color: #991b1b;
+          margin-bottom: 4px;
+        }
+
+        .technical-failure p {
+          margin: 0 0 10px;
+          color: #7c2d12;
+          font-size: 13px;
+        }
+
+        .btn-action.retry {
+          background: #1d4ed8;
+          color: white;
+        }
+
+        .btn-action.retry:hover {
+          background: #1e40af;
         }
 
         .review-grid {
