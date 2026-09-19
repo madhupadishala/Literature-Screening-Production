@@ -1,11 +1,12 @@
 import "server-only";
 
+import { XMLParser } from "fast-xml-parser";
+
 import {
   buildPubMedQuery,
 } from "@/lib/literature/adhoc-search/query-builder";
 import {
   buildDedupeKey,
-  fetchJson,
   normalizeDoi,
   parseIsoDate,
 } from "@/lib/literature/adhoc-search/http";
@@ -15,6 +16,10 @@ import type {
   LiteratureConnector,
   NormalizedLiteratureResult,
 } from "@/lib/literature/adhoc-search/types";
+import {
+  addNcbiIdentity,
+  ncbiFetch,
+} from "@/lib/literature/pubmed/ncbi-rate-limit";
 
 type PubMedSearchResponse = {
   esearchresult?: {
@@ -49,6 +54,11 @@ type PubMedSummaryResponse = {
   };
 };
 
+const xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: "@_",
+});
+
 function ncbiBaseUrl(configuredBaseUrl?: string): string {
   return (
     configuredBaseUrl?.trim() ||
@@ -57,14 +67,113 @@ function ncbiBaseUrl(configuredBaseUrl?: string): string {
   );
 }
 
-function addNcbiIdentity(url: URL): void {
-  const apiKey = process.env.NCBI_API_KEY?.trim();
-  const email = process.env.NCBI_EMAIL?.trim();
-  const tool = process.env.NCBI_TOOL?.trim() || "ClinixAI";
+async function fetchNcbiJson<T>(url: URL): Promise<T> {
+  const response = await ncbiFetch(url, {
+    headers: { Accept: "application/json" },
+  });
 
-  if (apiKey) url.searchParams.set("api_key", apiKey);
-  if (email) url.searchParams.set("email", email);
-  url.searchParams.set("tool", tool);
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(
+      `NCBI returned HTTP ${response.status}: ${body.slice(0, 300)}`,
+    );
+  }
+
+  return (await response.json()) as T;
+}
+
+function asArray<T>(value: T | T[] | undefined): T[] {
+  if (value === undefined) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function nodeText(value: unknown): string {
+  if (value === null || value === undefined) return "";
+  if (typeof value === "string" || typeof value === "number") {
+    return String(value).trim();
+  }
+  if (Array.isArray(value)) {
+    return value.map(nodeText).filter(Boolean).join(" ").trim();
+  }
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    if (record["#text"] !== undefined) {
+      return nodeText(record["#text"]);
+    }
+    return Object.entries(record)
+      .filter(([key]) => !key.startsWith("@_"))
+      .map(([, child]) => nodeText(child))
+      .filter(Boolean)
+      .join(" ")
+      .trim();
+  }
+  return "";
+}
+
+function abstractText(article: unknown): string | undefined {
+  if (!article || typeof article !== "object") return undefined;
+  const articleRecord = article as Record<string, unknown>;
+  const abstract = articleRecord.Abstract;
+  if (!abstract || typeof abstract !== "object") return undefined;
+
+  const parts = asArray(
+    (abstract as Record<string, unknown>).AbstractText as unknown,
+  )
+    .map((part) => {
+      const text = nodeText(part);
+      if (!text) return "";
+      const label =
+        part && typeof part === "object" && !Array.isArray(part)
+          ? String((part as Record<string, unknown>)["@_Label"] || "").trim()
+          : "";
+      return label ? `${label}: ${text}` : text;
+    })
+    .filter(Boolean);
+
+  const joined = parts.join("\n\n").trim();
+  return joined || undefined;
+}
+
+async function fetchPubMedAbstracts(
+  ids: string[],
+  configuredBaseUrl?: string,
+): Promise<Map<string, string | undefined>> {
+  const fetchUrl = new URL(`${ncbiBaseUrl(configuredBaseUrl)}/efetch.fcgi`);
+  fetchUrl.searchParams.set("db", "pubmed");
+  fetchUrl.searchParams.set("id", ids.join(","));
+  fetchUrl.searchParams.set("rettype", "abstract");
+  fetchUrl.searchParams.set("retmode", "xml");
+  addNcbiIdentity(fetchUrl);
+
+  const response = await ncbiFetch(fetchUrl, {
+    headers: { Accept: "application/xml,text/xml" },
+  });
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(
+      `NCBI efetch returned HTTP ${response.status}: ${body.slice(0, 300)}`,
+    );
+  }
+
+  const parsed = xmlParser.parse(await response.text()) as Record<string, unknown>;
+  const root = parsed.PubmedArticleSet;
+  const records =
+    root && typeof root === "object"
+      ? asArray((root as Record<string, unknown>).PubmedArticle as unknown)
+      : [];
+
+  const abstracts = new Map<string, string | undefined>();
+  for (const record of records) {
+    if (!record || typeof record !== "object") continue;
+    const medline = (record as Record<string, unknown>).MedlineCitation;
+    if (!medline || typeof medline !== "object") continue;
+    const medlineRecord = medline as Record<string, unknown>;
+    const pmid = nodeText(medlineRecord.PMID);
+    if (!pmid) continue;
+    abstracts.set(pmid, abstractText(medlineRecord.Article));
+  }
+
+  return abstracts;
 }
 
 async function searchPubMed(
@@ -84,7 +193,7 @@ async function searchPubMed(
   searchUrl.searchParams.set("term", translatedQuery);
   addNcbiIdentity(searchUrl);
 
-  const searchResponse = await fetchJson<PubMedSearchResponse>(searchUrl);
+  const searchResponse = await fetchNcbiJson<PubMedSearchResponse>(searchUrl);
   const ids = searchResponse.esearchresult?.idlist || [];
 
   if (ids.length === 0) {
@@ -102,7 +211,10 @@ async function searchPubMed(
   summaryUrl.searchParams.set("id", ids.join(","));
   addNcbiIdentity(summaryUrl);
 
-  const summary = await fetchJson<PubMedSummaryResponse>(summaryUrl);
+  const [summary, abstracts] = await Promise.all([
+    fetchNcbiJson<PubMedSummaryResponse>(summaryUrl),
+    fetchPubMedAbstracts(ids, input.source.baseUrl),
+  ]);
   const resultContainer = summary.result || {};
 
   const results: NormalizedLiteratureResult[] = ids.flatMap((id) => {
@@ -121,6 +233,7 @@ async function searchPubMed(
     const publicationDate = parseIsoDate(
       raw.sortpubdate || raw.pubdate,
     );
+    const abstract = abstracts.get(pmid);
 
     return [
       {
@@ -136,11 +249,14 @@ async function searchPubMed(
         publicationDate,
         language: raw.lang?.join(", "),
         publicationType: raw.pubtype?.join(", "),
+        abstractText: abstract,
         landingUrl: `https://pubmed.ncbi.nlm.nih.gov/${id}/`,
-        fullTextStatus: "abstract_only",
+        fullTextStatus: abstract ? "abstract_only" : "unavailable",
         matchMetadata: {
           productMatched: input.resolvedProduct.matched,
           resolvedProduct: input.resolvedProduct,
+          abstractSource: "NCBI_EFETCH",
+          abstractAvailable: Boolean(abstract),
         },
         dedupeKey: buildDedupeKey({
           doi,
