@@ -11,7 +11,7 @@ export interface AiProviderConfiguration {
   message: string;
 }
 
-const DEFAULT_SUPPORTED_PROVIDERS: AiProviderId[] = ["openai"];
+const DEFAULT_SUPPORTED_PROVIDERS: AiProviderId[] = ["openai", "groq"];
 
 export function getAiProviderConfiguration(): AiProviderConfiguration {
   const provider = normalizeProvider(
@@ -79,7 +79,7 @@ function providerConfiguration(provider: AiProviderId): {
         model:
           process.env.GROQ_MODEL?.trim() ||
           process.env.AI_MODEL?.trim() ||
-          "llama-3.3-70b-versatile",
+          "openai/gpt-oss-120b",
         endpoint:
           process.env.GROQ_BASE_URL?.trim() ||
           "https://api.groq.com/openai/v1",
