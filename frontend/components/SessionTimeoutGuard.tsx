@@ -1,26 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   clearSession,
   getRemainingSessionMs,
   getSession,
-  lockSession,
   refreshSessionActivity,
   WARNING_BEFORE_MS,
 } from "@/lib/session-manager";
 
 export default function SessionTimeoutGuard() {
   const [showWarning, setShowWarning] = useState(false);
-  const [locked, setLocked] = useState(false);
-  const [password, setPassword] = useState("");
   const [countdown, setCountdown] = useState(60);
+  const endingSessionRef = useRef(false);
 
   useEffect(() => {
-    // Nothing to time out if the user hasn't logged in yet (e.g. on
-    // /login itself) -- without this guard, getRemainingSessionMs()
-    // returns 0 for an unauthenticated visitor and the lock screen fires
-    // immediately.
     if (!getSession()) return;
 
     refreshSessionActivity();
@@ -28,17 +22,27 @@ export default function SessionTimeoutGuard() {
     const activityEvents = ["mousemove", "keydown", "click", "scroll"];
 
     function handleActivity() {
-      if (locked) return;
-      if (!getSession()) return;
+      if (endingSessionRef.current || !getSession()) return;
       refreshSessionActivity();
       setShowWarning(false);
       setCountdown(60);
     }
 
+    async function expireForInactivity() {
+      if (endingSessionRef.current) return;
+      endingSessionRef.current = true;
+
+      await auditSession("SESSION_EXPIRED", "Idle timeout reached.");
+      await clearBackendSession();
+
+      clearSession();
+      window.location.href = "/login";
+    }
+
     activityEvents.forEach((event) => window.addEventListener(event, handleActivity));
 
-    const interval = setInterval(() => {
-      if (!getSession()) return;
+    const interval = window.setInterval(() => {
+      if (endingSessionRef.current || !getSession()) return;
 
       const remaining = getRemainingSessionMs();
 
@@ -48,198 +52,114 @@ export default function SessionTimeoutGuard() {
       }
 
       if (remaining <= 0) {
-        lockSession();
-        auditSession("SESSION_LOCKED", "Idle timeout reached.");
-        setLocked(true);
-        setShowWarning(false);
-        setCountdown(0);
+        void expireForInactivity();
       }
     }, 1000);
 
     return () => {
       activityEvents.forEach((event) => window.removeEventListener(event, handleActivity));
-      clearInterval(interval);
+      window.clearInterval(interval);
     };
-  }, [locked]);
+  }, []);
 
   async function auditSession(action: string, reason: string) {
     const session = getSession();
     if (!session) return;
 
-    await fetch("/api/session/audit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        action,
-        reason,
-        sessionId: session.sessionId,
-        userName: session.userName,
-        role: session.role,
-        tenantId: session.tenantId,
-        environment: session.environment,
-      }),
-    });
+    try {
+      await fetch("/api/session/audit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "same-origin",
+        body: JSON.stringify({
+          action,
+          reason,
+          sessionId: session.sessionId,
+          userName: session.userName,
+          role: session.role,
+          tenantId: session.tenantId,
+          environment: session.environment,
+        }),
+      });
+    } catch {
+      // Session expiry/logout must continue even if audit delivery fails.
+    }
   }
 
-  function continueSession() {
-    refreshSessionActivity();
-    auditSession("SESSION_CONTINUED", "User continued before timeout.");
-    setShowWarning(false);
-    setCountdown(60);
+  async function clearBackendSession() {
+    try {
+      await fetch("/api/auth/session", {
+        method: "DELETE",
+        credentials: "same-origin",
+      });
+    } catch {
+      // Local cleanup still proceeds if the backend is already unreachable/expired.
+    }
   }
 
-  function unlockSession() {
-    if (!password.trim()) return;
+  async function continueSession() {
+    if (endingSessionRef.current) return;
 
-    refreshSessionActivity();
-    auditSession("SESSION_UNLOCKED", "User unlocked session.");
-    setLocked(false);
-    setPassword("");
+    try {
+      const response = await fetch("/api/context/current", {
+        method: "GET",
+        cache: "no-store",
+        credentials: "same-origin",
+      });
+
+      if (!response.ok) {
+        endingSessionRef.current = true;
+        await auditSession(
+          "SESSION_EXPIRED",
+          "Backend authentication expired before local idle timeout.",
+        );
+        await clearBackendSession();
+        clearSession();
+        window.location.href = "/login";
+        return;
+      }
+
+      refreshSessionActivity();
+      await auditSession("SESSION_CONTINUED", "User continued before idle timeout.");
+      setShowWarning(false);
+      setCountdown(60);
+    } catch {
+      endingSessionRef.current = true;
+      clearSession();
+      window.location.href = "/login";
+    }
   }
 
-  function logout() {
-    auditSession("LOGOUT", "User logged out manually.");
+  async function logout() {
+    if (endingSessionRef.current) return;
+    endingSessionRef.current = true;
+
+    await auditSession("LOGOUT", "User logged out manually.");
+    await clearBackendSession();
+
     clearSession();
-    window.location.href = "/";
+    window.location.href = "/login";
   }
 
-  if (locked) {
-    const session = getSession();
-    if (!session) return null;
+  if (!showWarning) return null;
 
-    return (
-      <div className="session-overlay">
-        <div className="session-card">
-          <h2>ClinixAI Session Locked</h2>
-          <p>Your session was locked after 5 minutes of inactivity.</p>
+  return (
+    <div className="session-warning">
+      <strong>Session expires in {countdown}s</strong>
+      <span>Continue working to keep your session active.</span>
+      <button onClick={() => void continueSession()}>Continue Working</button>
+      <button className="secondary" onClick={() => void logout()}>
+        Logout
+      </button>
 
-          <div className="session-meta">
-            <span>User</span>
-            <strong>{session.userName}</strong>
-          </div>
-
-          <div className="session-meta">
-            <span>Tenant</span>
-            <strong>{session.tenantName}</strong>
-          </div>
-
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="Enter password to unlock"
-          />
-
-          <div className="session-actions">
-            <button onClick={unlockSession}>Unlock</button>
-            <button className="secondary" onClick={logout}>
-              Logout
-            </button>
-          </div>
-        </div>
-
-        <style jsx>{styles}</style>
-      </div>
-    );
-  }
-
-  if (showWarning) {
-    return (
-      <div className="session-warning">
-        <strong>Session expires in {countdown}s</strong>
-        <span>Continue working to keep your session active.</span>
-        <button onClick={continueSession}>Continue Working</button>
-        <button className="secondary" onClick={logout}>
-          Logout
-        </button>
-
-        <style jsx>{styles}</style>
-      </div>
-    );
-  }
-
-  return null;
+      <style jsx>{styles}</style>
+    </div>
+  );
 }
 
 const styles = `
-  .session-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.78);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  }
-
-  .session-card {
-    width: 420px;
-    background: #ffffff;
-    border-radius: 22px;
-    padding: 28px;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
-  }
-
-  .session-card h2 {
-    margin: 0 0 8px;
-    color: #0f172a;
-  }
-
-  .session-card p {
-    margin: 0 0 18px;
-    color: #64748b;
-    line-height: 1.5;
-  }
-
-  .session-meta {
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 10px;
-  }
-
-  .session-meta span {
-    color: #64748b;
-    font-weight: 800;
-    font-size: 12px;
-    text-transform: uppercase;
-  }
-
-  input {
-    width: 100%;
-    border: 1px solid #cbd5e1;
-    background: #f8fafc;
-    border-radius: 12px;
-    padding: 12px 14px;
-    margin: 12px 0;
-    outline: none;
-  }
-
-  .session-actions {
-    display: flex;
-    gap: 10px;
-  }
-
-  button {
-    border: none;
-    border-radius: 12px;
-    background: #185a9d;
-    color: #ffffff;
-    padding: 11px 14px;
-    font-weight: 800;
-    cursor: pointer;
-  }
-
-  button.secondary {
-    background: #e2e8f0;
-    color: #334155;
-  }
-
   .session-warning {
     position: fixed;
     right: 24px;
@@ -258,5 +178,20 @@ const styles = `
   .session-warning span {
     color: #cbd5e1;
     font-size: 13px;
+  }
+
+  button {
+    border: none;
+    border-radius: 12px;
+    background: #185a9d;
+    color: #ffffff;
+    padding: 11px 14px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  button.secondary {
+    background: #e2e8f0;
+    color: #334155;
   }
 `;
