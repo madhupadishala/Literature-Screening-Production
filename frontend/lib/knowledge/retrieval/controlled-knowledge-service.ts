@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { getPostgresPool } from "@/lib/database/postgres";
 
 import { createKnowledgeQueryEmbedding } from "./knowledge-embedding-client";
+import { searchPlatformCoreKnowledge } from "./platform-core-knowledge";
 import type {
   AgentContextPack,
   ControlledKnowledgeSearchRequest,
@@ -65,7 +66,7 @@ function boundedNumber(
   return Number.isFinite(value) ? Math.min(maximum, Math.max(minimum, value as number)) : fallback;
 }
 
-async function activeRepository(tenantReference: string): Promise<ActiveRepositoryRow> {
+async function activeRepository(tenantReference: string): Promise<ActiveRepositoryRow | null> {
   const result = await getPostgresPool().query<ActiveRepositoryRow>(
     `SELECT
        t.id AS tenant_id,
@@ -84,9 +85,7 @@ async function activeRepository(tenantReference: string): Promise<ActiveReposito
      LIMIT 1`,
     [tenantReference],
   );
-  const row = result.rows[0];
-  if (!row) throw new Error(`No active controlled Knowledge Repository exists for tenant ${tenantReference}.`);
-  return row;
+  return result.rows[0] || null;
 }
 
 function toCitation(row: SearchRow, repository: ActiveRepositoryRow): GovernedKnowledgeCitation {
@@ -122,6 +121,10 @@ export async function searchControlledKnowledge(
   if (query.length > 20_000) throw new Error("Controlled knowledge query exceeds 20,000 characters.");
 
   const repository = await activeRepository(tenantReference);
+  if (!repository) {
+    return searchPlatformCoreKnowledge(request);
+  }
+
   const mode = normalizeMode(request.mode);
   const topK = Math.trunc(boundedNumber(request.topK, 10, 1, 30));
   const minScore = boundedNumber(request.minScore, 0, 0, 1);
@@ -240,6 +243,7 @@ export async function searchControlledKnowledge(
     mode,
     repositoryId: repository.repository_id,
     repositoryVersion: repository.repository_version,
+    repositoryManifestSha256: repository.manifest_sha256,
     embeddingModel: repository.embedding_model,
     embeddingDimensions: repository.embedding_dimensions,
     results,
@@ -251,23 +255,30 @@ export async function buildAgentContextPack(
   request: ControlledKnowledgeSearchRequest,
 ): Promise<AgentContextPack> {
   const response = await searchControlledKnowledge(request);
-  const manifest = response.results[0]?.citation.repositoryManifestSha256;
+  const manifest =
+    response.repositoryManifestSha256 ||
+    response.results[0]?.citation.repositoryManifestSha256;
+
   if (!manifest) {
-    const repository = await activeRepository(request.tenantId);
+    throw new Error("Controlled knowledge retrieval did not provide a repository manifest.");
+  }
+
+  if (response.results.length === 0) {
     return {
-      contextPackId: `acp_${sha256(`${repository.tenant_id}|${request.query}|${repository.manifest_sha256}`).slice(0, 24)}`,
-      tenantId: repository.tenant_id,
-      tenantKey: repository.tenant_key,
+      contextPackId: `acp_${sha256(`${response.tenantId}|${request.query}|${manifest}`).slice(0, 24)}`,
+      tenantId: response.tenantId,
+      tenantKey: response.tenantKey,
       query: response.query,
-      repositoryId: repository.repository_id,
-      repositoryVersion: repository.repository_version,
-      repositoryManifestSha256: repository.manifest_sha256,
+      repositoryId: response.repositoryId,
+      repositoryVersion: response.repositoryVersion,
+      repositoryManifestSha256: manifest,
       governedContext: "No approved controlled knowledge was retrieved for this query.",
       results: [],
       citations: [],
       generatedAt: response.generatedAt,
     };
   }
+
   const governedContext = response.results
     .map(
       (item, index) =>
