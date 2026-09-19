@@ -193,6 +193,8 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
     reviewed_at: row.reviewed_at || undefined,
     reviewed_by: row.reviewed_by || undefined,
     workflow_state: row.workflow_state,
+    execution_failed: stringValue(payload.status) === "HITS_EXECUTION_FAILED",
+    execution_error: stringValue(payload.error) || undefined,
   };
 }
 
