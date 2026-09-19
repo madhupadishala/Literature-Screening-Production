@@ -11,13 +11,10 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const isPublicPath = PUBLIC_PATHS.some((path) => pathname?.startsWith(path));
-  const [verified, setVerified] = useState(isPublicPath);
+  const [backendVerified, setBackendVerified] = useState(false);
 
   useEffect(() => {
-    if (isPublicPath) {
-      setVerified(true);
-      return;
-    }
+    if (isPublicPath) return;
 
     let cancelled = false;
 
@@ -25,7 +22,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
       if (!isAuthenticated()) {
         clearSession();
         if (!cancelled) {
-          setVerified(false);
+          setBackendVerified(false);
           router.replace("/login");
         }
         return;
@@ -41,23 +38,22 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
         if (!response.ok) {
           clearSession();
           if (!cancelled) {
-            setVerified(false);
+            setBackendVerified(false);
             router.replace("/login");
           }
           return;
         }
 
-        if (!cancelled) setVerified(true);
+        if (!cancelled) setBackendVerified(true);
       } catch {
         clearSession();
         if (!cancelled) {
-          setVerified(false);
+          setBackendVerified(false);
           router.replace("/login");
         }
       }
     }
 
-    setVerified(false);
     void verifyBackendSession();
 
     const interval = window.setInterval(
@@ -80,7 +76,8 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
     };
   }, [isPublicPath, pathname, router]);
 
-  if (!isPublicPath && !verified) return null;
+  if (isPublicPath) return <>{children}</>;
+  if (!backendVerified) return null;
 
   return <>{children}</>;
 }
