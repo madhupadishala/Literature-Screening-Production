@@ -46,6 +46,8 @@ export interface HitsWorklistRecord {
   reviewed_at?: string;
   reviewed_by?: string;
   workflow_state: string;
+  execution_failed: boolean;
+  execution_error?: string;
 }
 
 export interface SaveHitsReviewInput {
