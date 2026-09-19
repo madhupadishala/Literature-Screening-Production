@@ -780,3 +780,78 @@ export async function executeProductionSearchToHits(input: {
     packages,
   };
 }
+
+
+export async function retryProductionHits(input: {
+  principal: RequestPrincipal;
+  packageId: string;
+}) {
+  const packageId = input.packageId?.trim();
+  if (!packageId) throw new Error("packageId is required.");
+
+  const target = await getPostgresPool().query<{
+    id: string;
+    package_key: string;
+    status: string;
+    title: string;
+  }>(
+    `SELECT
+       package.id,
+       package.package_key,
+       package.status,
+       COALESCE(package.article_identity->>'title', package.external_reference, package.package_key) AS title
+     FROM literature_packages package
+     JOIN literature_workflow_state workflow
+       ON workflow.package_id = package.id
+      AND workflow.tenant_id = package.tenant_id
+     WHERE package.id = $1
+       AND package.tenant_id = $2
+       AND workflow.workflow_state = 'HITS_REVIEW'
+     LIMIT 1`,
+    [packageId, input.principal.tenantId],
+  );
+
+  const row = target.rows[0];
+  if (!row) {
+    throw new Error("The Evidence Package is not eligible for Hits retry in the active tenant.");
+  }
+
+  const latest = await getPostgresPool().query<{
+    result_payload: Record<string, unknown>;
+  }>(
+    `SELECT result_payload
+     FROM hits_results
+     WHERE tenant_id = $1 AND package_id = $2
+     ORDER BY result_version DESC, created_at DESC
+     LIMIT 1`,
+    [input.principal.tenantId, packageId],
+  );
+
+  const latestPayload = latest.rows[0]?.result_payload || {};
+  if (latestPayload.status !== "HITS_EXECUTION_FAILED") {
+    throw new Error("Hits retry is only allowed when the latest Hits execution failed technically.");
+  }
+
+  const retryInput: CreatedPackage = {
+    packageId: row.id,
+    packageKey: row.package_key,
+    title: row.title,
+    mergedSources: [],
+    duplicateMerged: false,
+    duplicateSignals: [],
+  };
+
+  await getPostgresPool().query(
+    `INSERT INTO audit_events (
+       tenant_id, package_id, actor_id, event_type, event_category, outcome, details)
+     VALUES ($1,$2,$3,'HITS_RETRY_REQUESTED','LITERATURE_HITS','started',$4::jsonb)`,
+    [
+      input.principal.tenantId,
+      packageId,
+      input.principal.userId,
+      JSON.stringify({ priorStatus: row.status, source: "HITS_REVIEW_UI" }),
+    ],
+  );
+
+  return processPackage({ principal: input.principal, createdPackage: retryInput });
+}
