@@ -19,6 +19,7 @@ interface Fixture {
     manualReviewRequired?: boolean;
     specialSituationReviewRequired?: boolean;
     preservedSalt?: string;
+    licenceStatus?: string;
   };
 }
 
@@ -73,6 +74,17 @@ const fixtures: Fixture[] = [
     productMaster: [activeIndia],
     expected: { conclusion: "NO_ACTIVE_LICENCE_IN_COI", companySuspect: false },
   },
+  {
+    id: "PPI-TST-008 Product Master not configured",
+    evidence: { reportedProduct: "Amoxicillin", role: "SUSPECT", countryOfInterest: "India", presentationQualifierRole: "NOT_REPORTED" },
+    productMaster: [],
+    expected: {
+      conclusion: "UNRESOLVED",
+      companySuspect: null,
+      manualReviewRequired: true,
+      licenceStatus: "NOT_CONFIGURED",
+    },
+  },
 ];
 
 assert.equal(PHARMACEUTICAL_KNOWLEDGE_VERSION, "PPI-KB-1.0.0");
@@ -100,6 +112,9 @@ const results = fixtures.map((fixture) => {
   }
   if (fixture.expected.preservedSalt !== undefined) {
     assert.equal(assessment.preservedSalt?.toLowerCase(), fixture.expected.preservedSalt, fixture.id);
+  }
+  if (fixture.expected.licenceStatus !== undefined) {
+    assert.equal(assessment.licenceStatus, fixture.expected.licenceStatus, fixture.id);
   }
   assert.ok(assessment.decisionTrail.length > 0, `${fixture.id} has no decision trail.`);
   assert.ok(assessment.appliedScenarioIds.length > 0, `${fixture.id} has no scenario provenance.`);
