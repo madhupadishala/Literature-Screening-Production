@@ -6,6 +6,7 @@ type ScreeningArticle = {
   product_name: string;
   pmid: string;
   confidence_score: number;
+  execution_status: "ready" | "completed" | "failed";
   qc_required: boolean;
   journal: string;
   publication_date: string;
@@ -319,28 +320,32 @@ export default function ScreeningWorkspace({
                 type="button"
                 onClick={() =>
                   setModal({
-                    title: "Reason required to re-run Screening AI",
+                    title:
+                      article.execution_status === "ready"
+                        ? "Reason required to run Screening AI"
+                        : "Reason required to re-run Screening AI",
                     action: "rerun",
                   })
                 }
               >
-                Re-run AI
+                {article.execution_status === "ready" ? "Run Screening AI" : "Re-run AI"}
               </button>
 
               <button
                 type="button"
                 className="primary-action"
                 disabled={
-                  article.screening_decision === "INCLUDE" &&
-                  (article.company_applicability !== "CONFIRMED" ||
-                    article.active_mah !== "ACTIVE")
+                  article.screening_decision !== "INCLUDE" ||
+                  article.company_applicability !== "CONFIRMED" ||
+                  article.active_mah !== "ACTIVE"
                 }
                 title={
-                  article.screening_decision === "INCLUDE" &&
-                  (article.company_applicability !== "CONFIRMED" ||
-                    article.active_mah !== "ACTIVE")
-                    ? "Final INCLUDE requires confirmed company product and active MAH/licence."
-                    : undefined
+                  article.screening_decision !== "INCLUDE"
+                    ? "Only an INCLUDE recommendation can be finalized as approved; REVIEW items must remain under review."
+                    : article.company_applicability !== "CONFIRMED" ||
+                        article.active_mah !== "ACTIVE"
+                      ? "Final INCLUDE requires confirmed company product and active MAH/licence."
+                      : undefined
                 }
                 onClick={() =>
                   setModal({
@@ -349,11 +354,12 @@ export default function ScreeningWorkspace({
                   })
                 }
               >
-                {article.screening_decision === "INCLUDE" &&
-                (article.company_applicability !== "CONFIRMED" ||
-                  article.active_mah !== "ACTIVE")
-                  ? "Await Product / MAH Confirmation"
-                  : "Approve Screening"}
+                {article.screening_decision !== "INCLUDE"
+                  ? "Keep Under Review"
+                  : article.company_applicability !== "CONFIRMED" ||
+                      article.active_mah !== "ACTIVE"
+                    ? "Await Product / MAH Confirmation"
+                    : "Approve Screening"}
               </button>
             </>
           )}
