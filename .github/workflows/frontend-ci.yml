@@ -62,6 +62,9 @@ jobs:
       - name: Verify governed Screening and Product/MAH logic
         run: npm run screening:verify
 
+      - name: Verify governed Screening-to-Intake handoff
+        run: npm run intake:verify
+
       - name: Build production application
         run: npm run build
 

@@ -30,6 +30,7 @@
     "pharmaceutical:verify": "node --import tsx scripts/verify-pharmaceutical-product-intelligence.ts",
     "pv:verify": "node --import tsx scripts/verify-pv-decision-architecture.ts",
     "screening:verify": "node --import tsx scripts/verify-governed-screening.ts",
+    "intake:verify": "node --import tsx scripts/verify-intake-input-governance.ts",
     "validate:e2e": "node scripts/validate-enterprise-e2e.mjs",
     "validate:e2e:offline": "node scripts/validate-enterprise-e2e.mjs --offline",
     "deployment:verify": "node scripts/verify-azure-deployment-foundation.mjs",

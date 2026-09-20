@@ -6,6 +6,11 @@ import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 import {
+  assertIntakeGenerationGate,
+  extractCompanyAssessmentsFromScreeningPayload,
+  validateIntakeGenerationReason,
+} from "./intake-input-governance";
+import {
   INTAKE_INPUT_SCHEMA_VERSION,
   type GenerateIntakeInputRequest,
   type IntakeInputDownload,
@@ -150,11 +155,8 @@ export async function generateIntakeInput(input: {
   request: GenerateIntakeInputRequest;
 }): Promise<IntakeInputExportSummary> {
   const packageId = input.request.packageId?.trim();
-  const reason = input.request.reason?.trim();
   if (!packageId) throw new Error("packageId is required.");
-  if (!reason || reason.length < 10) {
-    throw new Error("A generation reason of at least 10 characters is required.");
-  }
+  const reason = validateIntakeGenerationReason(input.request.reason);
 
   const client = await getPostgresPool().connect();
   try {
@@ -165,14 +167,16 @@ export async function generateIntakeInput(input: {
     ]);
     const row = selected.rows[0];
     if (!row) throw new Error("Screening package was not found in the active tenant.");
-    if (!["SCREENING_COMPLETE", "INTAKE_INPUT_CREATED"].includes(row.workflow_state)) {
-      throw new Error(
-        `Intake input cannot be generated from workflow state ${row.workflow_state}.`,
-      );
-    }
-    if (row.screening_review_status !== "approved" || row.screening_final_decision !== "INCLUDE") {
-      throw new Error("Intake input requires an approved INCLUDE screening decision.");
-    }
+    assertIntakeGenerationGate({
+      workflowState: row.workflow_state,
+      screeningReviewStatus: row.screening_review_status,
+      screeningFinalDecision: row.screening_final_decision,
+      hitsReviewStatus: row.hits_review_status,
+      hitsReviewDecision: row.hits_review_decision,
+      companyAssessments: extractCompanyAssessmentsFromScreeningPayload(
+        row.screening_payload,
+      ),
+    });
 
     const lineage = {
       package_id: row.package_id,
