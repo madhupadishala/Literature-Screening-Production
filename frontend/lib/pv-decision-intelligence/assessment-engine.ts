@@ -82,6 +82,7 @@ function reconciledPatientStatus(input: PVDecisionAssessmentInput): EvidenceStat
 function reconciledReporterStatus(input: PVDecisionAssessmentInput): EvidenceStatus {
   const status = input.safetyEvidence.reporterIdentifiable;
   if (status === "CONFLICTING") return "CONFLICTING";
+  if (status === "PRESENT") return "PRESENT";
 
   const hasReporterEvidence = Boolean(input.safetyEvidence.reporterEvidence?.trim());
   const hasPublicationReporter = (input.reporterIdentifiers || []).some(
