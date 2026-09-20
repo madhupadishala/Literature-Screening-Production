@@ -193,9 +193,19 @@ function reconcileSuspectEvidence(input: {
       reason:
         "AI product spelling was reconciled only because one near-match detected product is explicitly present in the supplied article text.",
     });
+    const correctedNormalized = normalizeProductText(corrected);
+    const reconcileOptionalIdentityField = (value: string | undefined) => {
+      if (!value || sourceContainsTerm(source, value)) return value;
+      return editDistance(normalizeProductText(value), correctedNormalized) <= 2
+        ? corrected
+        : value;
+    };
+
     return {
       ...item,
       reportedProduct: corrected,
+      reportedChemicalName: reconcileOptionalIdentityField(item.reportedChemicalName),
+      reportedComposition: reconcileOptionalIdentityField(item.reportedComposition),
     };
   });
 
