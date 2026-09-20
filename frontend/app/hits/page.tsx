@@ -5,6 +5,19 @@ import Navigation from "@/components/Navigation";
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import AdHocSearchWorkspace from "@/components/literature/AdHocSearchWorkspace";
 
+type HitProductAssessment = {
+  reported_product: string;
+  normalized_product: string;
+  matched_term: string;
+  relationship: string;
+  company_product_status: string;
+  mah_status: string;
+  country_of_interest: string;
+  product_id?: string;
+  preferred_name?: string;
+  manual_review_required: boolean;
+};
+
 // Enhanced type definition to track review workflow outcomes
 type HitRecord = {
   hit_id: string;
@@ -25,6 +38,7 @@ type HitRecord = {
   patient_safety_status: string;
   icsr_status: string;
   mah_status: string;
+  product_assessments: HitProductAssessment[];
   author_country: string;
   country_of_interest: string;
   mah_country_match: boolean;
@@ -93,6 +107,20 @@ function normalizeHit(rawInput: unknown, packageId: string): HitRecord {
     patient_safety_status: raw.patient_safety_status || "UNRESOLVED",
     icsr_status: raw.icsr_status || "UNRESOLVED",
     mah_status: raw.mah_status || "UNRESOLVED",
+    product_assessments: Array.isArray(raw.product_assessments)
+      ? raw.product_assessments.map((item) => ({
+          reported_product: item.reported_product || "Unknown Product",
+          normalized_product: item.normalized_product || "—",
+          matched_term: item.matched_term || "—",
+          relationship: item.relationship || "UNRESOLVED",
+          company_product_status: item.company_product_status || "UNRESOLVED",
+          mah_status: item.mah_status || "UNRESOLVED",
+          country_of_interest: item.country_of_interest || "—",
+          product_id: item.product_id || undefined,
+          preferred_name: item.preferred_name || undefined,
+          manual_review_required: Boolean(item.manual_review_required),
+        }))
+      : [],
     author_country: raw.author_country || "—",
     country_of_interest: raw.country_of_interest || "—",
     mah_country_match: Boolean(raw.mah_country_match),
@@ -618,7 +646,7 @@ export default function HitsReviewPage() {
             </div>
 
             <div>
-              <span>Identified Target Product</span>
+              <span>Identified Target Product(s)</span>
               <strong>{text(selectedHit.product_name)}</strong>
             </div>
 
@@ -643,12 +671,12 @@ export default function HitsReviewPage() {
             </div>
 
             <div>
-              <span>Company Applicability</span>
+              <span>Overall Company Applicability</span>
               <strong>{text(selectedHit.company_product_status)}</strong>
             </div>
 
             <div>
-              <span>MAH / Licence Status</span>
+              <span>Overall MAH / Licence Status</span>
               <strong>{text(selectedHit.mah_status)}</strong>
             </div>
 
@@ -657,6 +685,67 @@ export default function HitsReviewPage() {
               <strong>{percent(selectedHit.confidence_score)}</strong>
             </div>
           </div>
+
+          {selectedHit.product_assessments.length > 0 && (
+            <section className="product-assessment-section">
+              <div className="product-assessment-heading">
+                <div>
+                  <span>Governed multi-product assessment</span>
+                  <h3>Product / Company Applicability</h3>
+                </div>
+                <strong>{selectedHit.product_assessments.length} product(s)</strong>
+              </div>
+              <div className="product-assessment-grid">
+                {selectedHit.product_assessments.map((assessment, index) => (
+                  <article
+                    className="product-assessment-card"
+                    key={`${assessment.reported_product}-${index}`}
+                  >
+                    <div className="product-assessment-title">
+                      <strong>{assessment.reported_product}</strong>
+                      {assessment.manual_review_required && (
+                        <span className="review-needed">Manual review</span>
+                      )}
+                    </div>
+                    <dl>
+                      <div>
+                        <dt>Normalized identity</dt>
+                        <dd>{text(assessment.normalized_product)}</dd>
+                      </div>
+                      <div>
+                        <dt>Product Master match</dt>
+                        <dd>
+                          {assessment.preferred_name
+                            ? `${assessment.preferred_name}${assessment.product_id ? ` · ${assessment.product_id}` : ""}`
+                            : "No confirmed Product Master candidate"}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Matched term</dt>
+                        <dd>{text(assessment.matched_term)}</dd>
+                      </div>
+                      <div>
+                        <dt>Relationship</dt>
+                        <dd>{text(assessment.relationship)}</dd>
+                      </div>
+                      <div>
+                        <dt>Company applicability</dt>
+                        <dd>{text(assessment.company_product_status)}</dd>
+                      </div>
+                      <div>
+                        <dt>MAH / Licence</dt>
+                        <dd>{text(assessment.mah_status)}</dd>
+                      </div>
+                      <div>
+                        <dt>Country of incidence / interest</dt>
+                        <dd>{text(assessment.country_of_interest)}</dd>
+                      </div>
+                    </dl>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
 
           <div className="text-block">
             <h3>Article Title</h3>
@@ -1133,6 +1222,107 @@ export default function HitsReviewPage() {
 
         .review-grid strong {
           font-size: 14px;
+        }
+
+        .product-assessment-section {
+          margin: 0 24px 18px;
+          padding: 18px;
+          border: 1px solid #cbd5e1;
+          border-radius: 14px;
+          background: #ffffff;
+        }
+
+        .product-assessment-heading {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          margin-bottom: 14px;
+        }
+
+        .product-assessment-heading span {
+          display: block;
+          color: #64748b;
+          font-size: 11px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+
+        .product-assessment-heading h3 {
+          margin: 4px 0 0;
+          font-size: 17px;
+          color: #0f172a;
+        }
+
+        .product-assessment-heading > strong {
+          color: #1d4ed8;
+          font-size: 13px;
+        }
+
+        .product-assessment-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 12px;
+        }
+
+        .product-assessment-card {
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
+          background: #f8fafc;
+          padding: 14px;
+        }
+
+        .product-assessment-title {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 12px;
+        }
+
+        .product-assessment-title > strong {
+          font-size: 16px;
+          color: #0f172a;
+        }
+
+        .review-needed {
+          display: inline-flex;
+          padding: 4px 8px;
+          border-radius: 999px;
+          background: #ffedd5;
+          color: #9a3412;
+          font-size: 10px;
+          font-weight: 800;
+          text-transform: uppercase;
+        }
+
+        .product-assessment-card dl {
+          margin: 0;
+          display: grid;
+          gap: 8px;
+        }
+
+        .product-assessment-card dl > div {
+          display: grid;
+          grid-template-columns: minmax(120px, 0.8fr) minmax(0, 1.2fr);
+          gap: 10px;
+          border-top: 1px solid #e2e8f0;
+          padding-top: 8px;
+        }
+
+        .product-assessment-card dt {
+          color: #64748b;
+          font-size: 11px;
+          font-weight: 700;
+        }
+
+        .product-assessment-card dd {
+          margin: 0;
+          color: #0f172a;
+          font-size: 12px;
+          font-weight: 700;
+          overflow-wrap: anywhere;
         }
 
         .text-block {
