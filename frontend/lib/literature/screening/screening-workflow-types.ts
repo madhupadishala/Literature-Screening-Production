@@ -54,6 +54,7 @@ export interface ScreeningWorklistRecord {
 
 export interface ExecuteScreeningInput {
   packageId: string;
+  reason: string;
 }
 
 export interface SaveScreeningReviewInput {
