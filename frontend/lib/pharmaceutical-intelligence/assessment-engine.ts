@@ -283,14 +283,52 @@ export function assessCompanySuspect(input: {
     };
   }
 
-  const candidates = records(input.productMaster)
+  const productMasterRecords = records(input.productMaster);
+  const productMasterConfigured = productMasterRecords.length > 0;
+  const candidates = productMasterRecords
     .map((record, index) => productCandidate(record, index, identity.canonical))
     .filter((candidate): candidate is ProductMasterCandidate => Boolean(candidate));
   decisionTrail.push(trailStep(1, "PHARMACEUTICAL_IDENTITY_RESOLVED", identity.canonical ? "PASS" : "REVIEW", `Reported product resolved to ${identity.canonical || "an unresolved identity"}.`, [...applied], { reportedTerm, preservedSalt: saltResolution.salt }));
-  decisionTrail.push(trailStep(2, "PRODUCT_MASTER_CANDIDATES", candidates.length ? "PASS" : "FAIL", `${candidates.length} configured Product Master candidate(s) matched the governed product identity.`, ["PPI-SCN-001"]));
+  decisionTrail.push(trailStep(
+    2,
+    "PRODUCT_MASTER_CANDIDATES",
+    candidates.length ? "PASS" : productMasterConfigured ? "FAIL" : "REVIEW",
+    productMasterConfigured
+      ? `${candidates.length} configured Product Master candidate(s) matched the governed product identity.`
+      : "No active Product Master records are configured for this tenant; company ownership cannot be concluded.",
+    ["PPI-SCN-001"],
+    { productMasterConfigured, candidateCount: candidates.length },
+  ));
 
   if (!candidates.length) {
-    const possibleSpellingMatch = records(input.productMaster).some((record) =>
+    if (!productMasterConfigured) {
+      const appliedScenarioIds = [...applied];
+      return {
+        assessmentId: assessmentId(evidence),
+        knowledgeVersion: PHARMACEUTICAL_KNOWLEDGE_VERSION,
+        reportedProduct: evidence.reportedProduct,
+        normalizedProduct: identity.canonical,
+        preservedSalt: saltResolution.salt,
+        relationship: saltResolution.salt ? "COMMON_SALT_OF" : identity.relationship,
+        candidates: [],
+        productMatched: false,
+        presentationMatched: null,
+        countryOfInterest: evidence.countryOfInterest,
+        licenceStatus: "NOT_CONFIGURED",
+        companySuspect: null,
+        conclusion: "UNRESOLVED",
+        specialSituationReviewRequired: false,
+        manualReviewRequired: true,
+        appliedScenarioIds,
+        prohibitedConclusions: scenario(appliedScenarioIds).prohibited,
+        decisionTrail,
+        reportedRole,
+        roleSupportsSuspicion,
+        evidenceLocation: evidence.evidenceLocation,
+      };
+    }
+
+    const possibleSpellingMatch = productMasterRecords.some((record) =>
       namesFor(record).some((name) => editDistance(normalize(name), identity.canonical) <= 2),
     );
     if (possibleSpellingMatch) {
