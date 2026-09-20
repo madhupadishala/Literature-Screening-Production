@@ -37,8 +37,9 @@ Apply the governed screening sequence in separate layers:
 1. Extract medicinal products and their reported roles.
 2. Determine human patient-safety relevance from article evidence, independent of company ownership.
 3. Evaluate generic minimum literature ICSR evidence: identifiable patient, identifiable reporter, suspect product, and adverse event/reaction or special situation.
-4. Only after those layers, evaluate company-product and MAH applicability through deterministic governed logic.
-5. Apply duplicate, inclusion/exclusion and manual-review rules.
+4. Extract publication classification, clinical events, severity, seriousness evidence, patient PII status, and country-of-incidence evidence without guessing.
+5. Only after those layers, evaluate company-product and MAH applicability through deterministic governed logic.
+6. Apply duplicate, inclusion/exclusion and manual-review rules.
 
 Do not convert a missing Product Master into a non-company-product conclusion. Missing company configuration requires an UNRESOLVED company-applicability state and manual review while safety assessment continues.
 
@@ -48,6 +49,22 @@ Return strict JSON only:
   "confidence":0-100,
   "reason":"CASE_REPORT | ADVERSE_EVENT | PRODUCT_MENTION | HUMAN_STUDY | ANIMAL_STUDY | REVIEW_ARTICLE | NO_ADVERSE_EVENT | NON_MEDICAL | INSUFFICIENT_INFORMATION | NON_ENGLISH | DUPLICATE | UNKNOWN",
   "findings":[{"rule":"knowledge citation or tenant rule", "passed":true, "score":20, "comment":"evidence-based comment"}],
+  "regulatoryEvidence":{
+    "publicationClassification":"CASE_REPORT | CASE_SERIES | CLINICAL_TRIAL | OBSERVATIONAL_STUDY | REVIEW_ARTICLE | META_ANALYSIS | CONFERENCE_ABSTRACT | EDITORIAL | LETTER | ANIMAL_STUDY | IN_VITRO_STUDY | REGISTRY_STUDY | DATABASE_ANALYSIS | OTHER | UNRESOLVED",
+    "publicationClassificationEvidence":"short source span",
+    "clinicalEvents":[{
+      "event":"event term exactly as supported",
+      "evidence":"short source span",
+      "severity":"MILD | MODERATE | SEVERE | UNRESOLVED",
+      "seriousness":"SERIOUS | NON_SERIOUS | UNRESOLVED",
+      "seriousnessCriteria":["DEATH | LIFE_THREATENING | HOSPITALIZATION | DISABILITY | CONGENITAL_ANOMALY | OTHER_MEDICALLY_IMPORTANT | NONE_IDENTIFIED"]
+    }],
+    "patientPiiStatus":"PRESENT | ABSENT | UNRESOLVED | CONFLICTING",
+    "patientPiiEvidence":"direct patient identifier evidence only",
+    "countryOfIncidenceStatus":"PRESENT | ABSENT | UNRESOLVED | CONFLICTING",
+    "countryOfIncidence":"country only when supported by the article",
+    "countryOfIncidenceEvidence":"short source span"
+  },
   "safetyEvidence":{
     "populationType":"HUMAN | ANIMAL | MIXED | UNRESOLVED",
     "patientIdentifiable":"PRESENT | ABSENT | UNRESOLVED | CONFLICTING",
@@ -107,7 +124,13 @@ ${knowledgeContext(governance.ragContext)}
 knowledgeCitationIds may contain only citation identifiers supplied above and directly supporting the decision.
 Preserve every suspect exactly as reported and distinguish product formulation/presentation from the route by which an identified product was administered.
 
-For safetyEvidence, extract evidence only. Use PRESENT only when directly supported. Use ABSENT only when absence or inapplicability is explicitly supported; otherwise use UNRESOLVED. Patient safety is assessed before and independently of company ownership.
+For safetyEvidence and regulatoryEvidence, extract evidence only. Use PRESENT only when directly supported. Use ABSENT only when absence or inapplicability is explicitly supported; otherwise use UNRESOLVED. Patient safety is assessed before and independently of company ownership.
+
+Keep SEVERITY and SERIOUSNESS separate. Words such as "severe" describe severity and do not by themselves establish regulatory seriousness. Mark SERIOUS only when a recognized seriousness criterion is explicitly supported. If no criterion is established, use UNRESOLVED unless the article explicitly establishes a non-serious outcome.
+
+Patient identifiability for PV case validity is not the same as direct patient PII. Age/sex may support an identifiable patient under the controlled validity rule without establishing direct PII. Do not mark PII PRESENT unless direct identifying information is actually present.
+
+Do not infer Country of Incidence from journal, author affiliation, MAH country, or publication database. Use only article evidence that supports the patient's/event's country.
 
 Do not invent company ownership, pharmaceutical equivalence, COI, MAH, licence status, or dates. The deterministic Pharmaceutical Product Intelligence engine performs those conclusions after evidence extraction.
 `.trim();
