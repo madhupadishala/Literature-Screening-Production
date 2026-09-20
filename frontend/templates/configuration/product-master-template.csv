@@ -1,2 +1,2 @@
 clientProductId,brandName,genericName,inn,api,composition,chemicalNames,synonyms,saltForms,strength,dosageForm,formulation,route,country,lifecycleStatus,investigationalOrMarketed,mah,mahEffectiveFrom,mahEffectiveTo,whodrugId,active
-PRODUCT-001,Example Brand,Example Generic,Example INN,Example API,"Synonym One|Synonym Two","Salt One|Salt Two",100 mg,Tablet,Oral,India,MARKETED,Marketed,Example MAH,2026-01-01,,WHO-000001,true
+PRODUCT-001,Example Brand,Example Generic,Example INN,Example API,Example INN,"Example chemical name","Example synonym 1|Example synonym 2","Example salt",100 mg,Tablet,Immediate release tablet,Oral,India,MARKETED,Marketed,Example MAH,2026-01-01,,WHO-000001,true
