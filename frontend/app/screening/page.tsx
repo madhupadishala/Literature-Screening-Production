@@ -46,7 +46,7 @@ export type ScreeningArticle = {
   special_situations: string[];
   event_severity: string;
   seriousness: string;
-  patient_safety: "Yes" | "No";
+  patient_safety: "Yes" | "No" | "Uncertain";
   patient_identification_pii: "Yes" | "No";
   coi: "Yes" | "No" | "Uncertain";
   screening_decision: string;
@@ -85,6 +85,45 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     .filter((finding) => finding.passed === true)
     .map((finding) => stringValue(finding.rule))
     .filter(Boolean);
+  const safetyAssessment = isRecord(raw.patientSafetyAssessment)
+    ? raw.patientSafetyAssessment
+    : {};
+  const safetyEvidence = isRecord(raw.safetyEvidence)
+    ? raw.safetyEvidence
+    : {};
+  const icsrAssessment = isRecord(raw.icsrAssessment)
+    ? raw.icsrAssessment
+    : {};
+  const companyAssessments = Array.isArray(raw.companySuspectAssessments)
+    ? raw.companySuspectAssessments.filter(isRecord)
+    : [];
+  const confirmedCompanyProducts = companyAssessments
+    .filter((assessment) => assessment.conclusion === "CONFIRMED")
+    .map((assessment) => stringValue(assessment.reportedProduct))
+    .filter(Boolean);
+  const companyApplicabilityUnresolved = companyAssessments.some(
+    (assessment) => assessment.conclusion === "UNRESOLVED",
+  );
+  const licenceStatuses = companyAssessments
+    .map((assessment) => stringValue(assessment.licenceStatus))
+    .filter(Boolean);
+  const activeMah: ScreeningArticle["active_mah"] =
+    licenceStatuses.includes("ACTIVE")
+      ? "Yes"
+      : licenceStatuses.length > 0 &&
+          licenceStatuses.every((status) => status === "INACTIVE")
+        ? "No"
+        : "Unknown";
+  const patientSafety: ScreeningArticle["patient_safety"] =
+    safetyAssessment.relevance === "RELEVANT"
+      ? "Yes"
+      : safetyAssessment.relevance === "NOT_RELEVANT"
+        ? "No"
+        : "Uncertain";
+  const eventEvidence = stringValue(safetyEvidence.eventEvidence);
+  const specialSituationEvidence = stringValue(
+    safetyEvidence.specialSituationEvidence,
+  );
 
   return {
     hit_id: stringValue(raw.screeningResultId) || `SCR-${stringValue(raw.packageId)}`,
@@ -111,16 +150,32 @@ function normalizeArticle(input: unknown): ScreeningArticle {
           : "ready",
     intake_status: stringValue(raw.intakeExportId) ? "ready" : "pending",
     qc_required: Boolean(raw.qcRequired) || executionStatus === "failed",
-    company_suspect_drugs: [product],
-    active_mah: "Unknown",
-    co_suspect_drugs: ["None identified"],
-    concomitant_medications: ["Not reported"],
-    treatment_medications: ["Not reported"],
-    clinical_events: passedFindings.length ? passedFindings : ["Not identified"],
-    special_situations: ["None identified"],
-    event_severity: "Not mentioned",
-    seriousness: "Not mentioned",
-    patient_safety: decision === "INCLUDE" ? "Yes" : "No",
+    company_suspect_drugs:
+      confirmedCompanyProducts.length > 0
+        ? confirmedCompanyProducts
+        : companyApplicabilityUnresolved
+          ? ["Company applicability unresolved"]
+          : ["None confirmed"],
+    active_mah: activeMah,
+    co_suspect_drugs: ["Not yet classified"],
+    concomitant_medications: ["Not yet classified"],
+    treatment_medications: ["Not yet classified"],
+    clinical_events:
+      eventEvidence
+        ? [eventEvidence]
+        : passedFindings.length
+          ? passedFindings
+          : ["Not identified"],
+    special_situations:
+      safetyEvidence.specialSituation === "PRESENT"
+        ? [specialSituationEvidence || "Special situation identified"]
+        : safetyEvidence.specialSituation === "UNRESOLVED" ||
+            safetyEvidence.specialSituation === "CONFLICTING"
+          ? ["Unresolved"]
+          : ["None identified"],
+    event_severity: "Not yet assessed",
+    seriousness: "Not yet assessed",
+    patient_safety: patientSafety,
     patient_identification_pii: "No",
     coi: "Uncertain",
     screening_decision: decision,
@@ -132,6 +187,9 @@ function normalizeArticle(input: unknown): ScreeningArticle {
         .join(" ") || "—",
     flags: [
       ...(Boolean(raw.qcRequired) ? ["QC required"] : []),
+      ...(patientSafety === "Uncertain" ? ["Patient-safety relevance unresolved"] : []),
+      ...(companyApplicabilityUnresolved ? ["Company applicability unresolved"] : []),
+      ...(icsrAssessment.conclusion === "UNRESOLVED" ? ["Generic ICSR criteria unresolved"] : []),
       ...(executionStatus === "failed"
         ? [stringValue(raw.error, "Screening execution failed")]
         : []),
