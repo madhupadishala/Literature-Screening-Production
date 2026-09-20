@@ -81,11 +81,20 @@ function reconciledPatientStatus(input: PVDecisionAssessmentInput): EvidenceStat
 
 function reconciledReporterStatus(input: PVDecisionAssessmentInput): EvidenceStatus {
   const status = input.safetyEvidence.reporterIdentifiable;
-  if (status !== "UNRESOLVED") return status;
-  if (input.safetyEvidence.reporterEvidence?.trim()) return "PRESENT";
-  return (input.reporterIdentifiers || []).some((identifier) => identifier.trim())
-    ? "PRESENT"
-    : "UNRESOLVED";
+  if (status === "CONFLICTING") return "CONFLICTING";
+
+  const hasReporterEvidence = Boolean(input.safetyEvidence.reporterEvidence?.trim());
+  const hasPublicationReporter = (input.reporterIdentifiers || []).some(
+    (identifier) => identifier.trim(),
+  );
+
+  // In literature PV, a named publication author is an identifiable reporter
+  // under the controlled reporter rule. Model extraction may call the reporter
+  // absent when the abstract itself does not repeat the author name; publication
+  // metadata must reconcile that false negative deterministically.
+  if (hasReporterEvidence || hasPublicationReporter) return "PRESENT";
+
+  return status === "ABSENT" ? "ABSENT" : "UNRESOLVED";
 }
 
 function reporterEvidence(input: PVDecisionAssessmentInput): string | undefined {
