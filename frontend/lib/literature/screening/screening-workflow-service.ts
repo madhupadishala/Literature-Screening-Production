@@ -137,6 +137,13 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
   const icsrAssessment = isRecord(result.icsrAssessment)
     ? (result.icsrAssessment as unknown as NonNullable<ScreeningWorklistRecord["icsrAssessment"]>)
     : undefined;
+  const regulatoryEvidence = isRecord(result.regulatoryEvidence)
+    ? (result.regulatoryEvidence as unknown as NonNullable<ScreeningWorklistRecord["regulatoryEvidence"]>)
+    : undefined;
+  const extractedSuspectEvidence = Array.isArray(result.extractedSuspectEvidence)
+    ? (result.extractedSuspectEvidence
+        .filter(isRecord) as unknown as NonNullable<ScreeningWorklistRecord["extractedSuspectEvidence"]>)
+    : undefined;
   const companySuspectAssessments = Array.isArray(result.companySuspectAssessments)
     ? result.companySuspectAssessments
         .filter(isRecord) as unknown as NonNullable<ScreeningWorklistRecord["companySuspectAssessments"]>
@@ -165,6 +172,8 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
     safetyEvidence,
     patientSafetyAssessment,
     icsrAssessment,
+    regulatoryEvidence,
+    extractedSuspectEvidence,
     companySuspectAssessments,
     qcRequired:
       executionFailed ||
@@ -514,8 +523,11 @@ export async function saveScreeningReview(input: {
 
   try {
     await client.query("BEGIN");
-    const target = await client.query<{ id: string }>(
-      `SELECT result.id
+    const target = await client.query<{
+      id: string;
+      result_payload: Record<string, unknown>;
+    }>(
+      `SELECT result.id, result.result_payload
        FROM screening_results result
        JOIN literature_packages package ON package.id = result.package_id
        WHERE result.tenant_id = $1 AND package.id = $2 AND result.id = $3
@@ -523,6 +535,26 @@ export async function saveScreeningReview(input: {
       [input.principal.tenantId, review.packageId, review.screeningResultId],
     );
     if (!target.rows[0]) throw new Error("Screening result was not found in the active tenant.");
+
+    if (review.status === "approved" && review.finalDecision === "INCLUDE") {
+      const storedPayload = recordValue(target.rows[0].result_payload);
+      const storedResult = recordValue(storedPayload.result);
+      const companyAssessments = Array.isArray(storedResult.companySuspectAssessments)
+        ? storedResult.companySuspectAssessments.filter(isRecord)
+        : [];
+      const hasConfirmedActiveCompanyProduct = companyAssessments.some(
+        (assessment) =>
+          assessment.companySuspect === true &&
+          assessment.licenceStatus === "ACTIVE" &&
+          assessment.conclusion === "CONFIRMED" &&
+          assessment.manualReviewRequired === false,
+      );
+      if (!hasConfirmedActiveCompanyProduct) {
+        throw new Error(
+          "Screening INCLUDE cannot be finalized until an active company product/MAH is confirmed by governed Product Master data.",
+        );
+      }
+    }
 
     const existing = await client.query<{ review_version: number }>(
       `SELECT review_version FROM screening_reviews
