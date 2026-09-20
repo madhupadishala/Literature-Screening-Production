@@ -150,21 +150,21 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     .map((event) => stringValue(event.event))
     .filter(Boolean);
   const severitySummary = clinicalEventRecords
-    .map((event) => {
-      const event = stringValue(event.event);
-      const severity = stringValue(event.severity, "UNRESOLVED");
-      return event ? `${event}: ${severity}` : severity;
+    .map((eventRecord) => {
+      const eventName = stringValue(eventRecord.event);
+      const severity = stringValue(eventRecord.severity, "UNRESOLVED");
+      return eventName ? `${eventName}: ${severity}` : severity;
     })
     .filter(Boolean);
   const seriousnessSummary = clinicalEventRecords
-    .map((event) => {
-      const event = stringValue(event.event);
-      const seriousness = stringValue(event.seriousness, "UNRESOLVED");
-      const criteria = Array.isArray(event.seriousnessCriteria)
-        ? event.seriousnessCriteria.map((item) => stringValue(item)).filter(Boolean)
+    .map((eventRecord) => {
+      const eventName = stringValue(eventRecord.event);
+      const seriousness = stringValue(eventRecord.seriousness, "UNRESOLVED");
+      const criteria = Array.isArray(eventRecord.seriousnessCriteria)
+        ? eventRecord.seriousnessCriteria.map((item) => stringValue(item)).filter(Boolean)
         : [];
       const detail = criteria.length ? `${seriousness} [${criteria.join(", ")}]` : seriousness;
-      return event ? `${event}: ${detail}` : detail;
+      return eventName ? `${eventName}: ${detail}` : detail;
     })
     .filter(Boolean);
   const piiStatus = stringValue(regulatoryEvidence.patientPiiStatus, "UNRESOLVED");
