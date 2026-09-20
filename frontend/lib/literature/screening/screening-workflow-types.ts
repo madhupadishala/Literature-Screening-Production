@@ -1,3 +1,9 @@
+import type { CompanySuspectAssessment } from "@/lib/pharmaceutical-intelligence/types";
+import type {
+  IcsrCriteriaAssessment,
+  PatientSafetyAssessment,
+  SafetyEvidenceExtraction,
+} from "@/lib/pv-decision-intelligence/types";
 import type { ScreeningDecision, ScreeningFinding, ScreeningReason } from "./screening-types";
 
 export type ScreeningReviewStatus = "pending" | "approved" | "excluded" | "flagged";
@@ -22,6 +28,10 @@ export interface ScreeningWorklistRecord {
   confidence: number;
   reason: ScreeningReason;
   findings: ScreeningFinding[];
+  safetyEvidence?: SafetyEvidenceExtraction;
+  patientSafetyAssessment?: PatientSafetyAssessment;
+  icsrAssessment?: IcsrCriteriaAssessment;
+  companySuspectAssessments?: CompanySuspectAssessment[];
   qcRequired: boolean;
   reviewStatus: ScreeningReviewStatus;
   reviewVersion: number;

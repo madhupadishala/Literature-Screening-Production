@@ -12,6 +12,7 @@ import {
 } from "./hits-result-parser";
 import { aiProviderFactory } from "./provider-factory";
 import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
+import { assessPVDecisionArchitecture } from "@/lib/pv-decision-intelligence/assessment-engine";
 
 export interface HitsAgentRequest {
   tenantId: string;
@@ -101,6 +102,12 @@ export class HitsAgent {
       });
 
       const aiResult = parseHitsAIResult(aiResponse.content);
+      const pvDecision = assessPVDecisionArchitecture({
+        safetyEvidence: aiResult.safetyEvidence,
+        detectedEvents: aiResult.detectedEvents,
+        detectedSpecialSituations: aiResult.detectedSpecialSituations,
+        suspectEvidence: aiResult.extractedSuspectEvidence,
+      });
       const companySuspectAssessments = aiResult.extractedSuspectEvidence.map((evidence) =>
         assessCompanySuspect({
           evidence,
@@ -110,14 +117,32 @@ export class HitsAgent {
       const requiresProductReview = companySuspectAssessments.some(
         (assessment) => assessment.manualReviewRequired,
       );
+      const requiresSafetyReview = pvDecision.patientSafety.manualReviewRequired;
+      const safetyRelevantButAiRejected =
+        pvDecision.patientSafety.relevance === "RELEVANT" &&
+        aiResult.classification === "no_hit";
+      const requiresManualReview =
+        requiresProductReview ||
+        requiresSafetyReview ||
+        safetyRelevantButAiRejected;
       const result: HitsAIResult = {
         ...aiResult,
+        isHit:
+          pvDecision.patientSafety.relevance === "RELEVANT"
+            ? true
+            : pvDecision.patientSafety.relevance === "NOT_RELEVANT"
+              ? false
+              : aiResult.isHit,
+        patientSafetyAssessment: pvDecision.patientSafety,
+        icsrAssessment: pvDecision.icsr,
         companySuspectAssessments,
-        classification: requiresProductReview ? "needs_manual_review" : aiResult.classification,
-        recommendedNextStep: requiresProductReview ? "manual_review" : aiResult.recommendedNextStep,
-        qcRequired: requiresProductReview || aiResult.qcRequired,
+        classification: requiresManualReview ? "needs_manual_review" : aiResult.classification,
+        recommendedNextStep: requiresManualReview ? "manual_review" : aiResult.recommendedNextStep,
+        qcRequired: requiresManualReview || aiResult.qcRequired,
         reasons: [
           ...aiResult.reasons,
+          `Patient safety: ${pvDecision.patientSafety.relevance}`,
+          `Generic ICSR: ${pvDecision.icsr.conclusion}`,
           ...companySuspectAssessments.map(
             (assessment) =>
               `${assessment.reportedProduct}: ${assessment.conclusion} (${assessment.assessmentId})`,
@@ -162,6 +187,8 @@ export class HitsAgent {
           configurationSnapshot: runtimeConfiguration.snapshot,
           pharmaceuticalKnowledgeVersion:
             companySuspectAssessments[0]?.knowledgeVersion || null,
+          patientSafetyAssessment: pvDecision.patientSafety,
+          icsrAssessment: pvDecision.icsr,
           companySuspectAssessments,
         },
       });

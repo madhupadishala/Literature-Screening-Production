@@ -125,6 +125,9 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
     ? result.companySuspectAssessments.filter(isRecord)
     : [];
   const assessment = assessments[0] || {};
+  const patientSafety = recordValue(result, "patientSafetyAssessment");
+  const icsr = recordValue(result, "icsrAssessment");
+  const safetyEvidence = recordValue(patientSafety, "evidence");
   const selectedCandidate = recordValue(assessment, "selectedCandidate");
   const decisionTrail = Array.isArray(assessment.decisionTrail)
     ? assessment.decisionTrail.filter(isRecord)
@@ -167,6 +170,9 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
     company_product_status:
       stringValue(assessment.conclusion) ||
       stringValue(result.classification, "needs_manual_review"),
+    patient_safety_status: stringValue(patientSafety.relevance, "UNRESOLVED"),
+    icsr_status: stringValue(icsr.conclusion, "UNRESOLVED"),
+    mah_status: stringValue(assessment.licenceStatus, "UNRESOLVED"),
     author_country: stringValue(identity.authorCountry, "—"),
     country_of_interest:
       stringValue(assessment.countryOfInterest) ||
@@ -182,6 +188,9 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
     duplicate_confidence: numberValue(row.duplicate_confidence),
     duplicate_signals: stringArray(row.duplicate_signals),
     evidence_sentence:
+      stringValue(safetyEvidence.event) ||
+      stringValue(safetyEvidence.specialSituation) ||
+      stringValue(safetyEvidence.patient) ||
       stringValue(decisionTrail[0]?.explanation) ||
       reasons[0] ||
       "No evidence rationale was returned.",
