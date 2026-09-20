@@ -15,6 +15,7 @@ import { parseScreeningAIResult } from "./screening-result-parser";
 import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
 import type { CompanySuspectAssessment } from "@/lib/pharmaceutical-intelligence/types";
 import { assessPVDecisionArchitecture } from "@/lib/pv-decision-intelligence/assessment-engine";
+import { deriveGovernedScreeningDecision } from "@/lib/literature/screening/governed-decision";
 
 export interface ScreeningAgentResponse extends ScreeningResponse {
   ragContext: RAGMergedContext;
@@ -94,36 +95,12 @@ export class ScreeningAgent {
           productMaster: runtimeConfiguration.productMaster,
         }),
       );
-      const productReviewRequired = companySuspectAssessments.some(
-        (assessment) => assessment.manualReviewRequired,
-      );
-      const hasConfirmedActiveCompanyProduct = companySuspectAssessments.some(
-        (assessment) =>
-          assessment.companySuspect === true &&
-          assessment.licenceStatus === "ACTIVE" &&
-          assessment.conclusion === "CONFIRMED",
-      );
-      const companyApplicabilityResolvedNegative =
-        companySuspectAssessments.length > 0 &&
-        companySuspectAssessments.every(
-          (assessment) =>
-            assessment.manualReviewRequired === false &&
-            assessment.companySuspect === false,
-        );
-      const decisionReviewRequired =
-        productReviewRequired ||
-        pvDecision.patientSafety.manualReviewRequired ||
-        pvDecision.icsr.manualReviewRequired;
-      const governedDecision =
-        pvDecision.patientSafety.relevance === "NOT_RELEVANT"
-          ? "EXCLUDE"
-          : decisionReviewRequired
-            ? "REVIEW"
-            : companyApplicabilityResolvedNegative
-              ? "EXCLUDE"
-              : hasConfirmedActiveCompanyProduct
-                ? parsed.decision
-                : "REVIEW";
+      const governedDecision = deriveGovernedScreeningDecision({
+        aiDecision: parsed.decision,
+        patientSafety: pvDecision.patientSafety,
+        icsr: pvDecision.icsr,
+        companyAssessments: companySuspectAssessments,
+      });
 
       recordAIMetric({
         operation: "screening",
