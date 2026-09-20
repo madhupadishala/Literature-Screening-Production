@@ -420,9 +420,11 @@ export async function transitionConfigurationVersion(input: {
       }
       newStatus = "approved";
     } else if (input.action === "ACTIVATE") {
-      if (!["approved", "active"].includes(previousStatus)) {
+      if (previousStatus !== "approved") {
         throw new Error(
-          "Only an approved configuration version can be activated.",
+          previousStatus === "active"
+            ? "Configuration version is already active."
+            : "Only an approved configuration version can be activated.",
         );
       }
       newStatus = "active";

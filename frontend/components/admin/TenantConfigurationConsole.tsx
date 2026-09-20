@@ -430,26 +430,36 @@ export default function TenantConfigurationConsole() {
             </button>
           )}
 
-        {permissions.activate &&
-          ["approved", "active"].includes(version.lifecycleStatus) && (
-            <button
-              type="button"
-              className="primary"
-              onClick={() => void transition(version, "ACTIVATE")}
-            >
-              Activate
-            </button>
-          )}
+        {permissions.activate && version.lifecycleStatus === "approved" && (
+          <button
+            type="button"
+            className="primary"
+            onClick={() => void transition(version, "ACTIVATE")}
+          >
+            Activate
+          </button>
+        )}
 
-        {permissions.retire &&
-          version.lifecycleStatus === "active" && (
-            <button
-              type="button"
-              onClick={() => void transition(version, "RETIRE")}
-            >
-              Retire
-            </button>
-          )}
+        {version.lifecycleStatus === "active" && (
+          <button
+            type="button"
+            className="active-state"
+            disabled
+            aria-label="Configuration is active"
+          >
+            Active
+          </button>
+        )}
+
+        {permissions.retire && version.lifecycleStatus === "active" && (
+          <button
+            type="button"
+            className="retire-action"
+            onClick={() => void transition(version, "RETIRE")}
+          >
+            Retire
+          </button>
+        )}
       </div>
     );
   }
@@ -891,6 +901,24 @@ export default function TenantConfigurationConsole() {
         button:disabled {
           cursor: not-allowed;
           opacity: 0.45;
+        }
+
+        button.active-state:disabled {
+          border-color: #94a3b8;
+          color: #64748b;
+          background: #e2e8f0;
+          opacity: 1;
+        }
+
+        button.retire-action {
+          border-color: #dc2626;
+          color: #b91c1c;
+          background: #ffffff;
+        }
+
+        button.retire-action:hover {
+          color: #ffffff;
+          background: #dc2626;
         }
 
         .message {
