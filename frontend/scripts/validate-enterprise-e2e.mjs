@@ -26,7 +26,7 @@ for (const file of [
 checks.push(pass("production-files", "Required Search-to-release production files exist."));
 
 const registry = await readFile(path.join(root, "lib/database/migration-registry.ts"), "utf8");
-for (let migration = 1; migration <= 13; migration += 1) {
+for (let migration = 1; migration <= 16; migration += 1) {
   const id = String(migration).padStart(3, "0");
   if (!registry.includes(`id: "${id}"`))
     throw new Error(`Migration ${id} is missing from the required registry.`);

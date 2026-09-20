@@ -425,6 +425,13 @@ try {
               comment: "Synthetic evidence created exclusively for product demonstration.",
             },
           ],
+          safetyEvidence: governedSafetyEvidence(item),
+          patientSafetyAssessment: governedPatientSafetyAssessment(item),
+          icsrAssessment: governedIcsrAssessment(item),
+          regulatoryEvidence: governedRegulatoryEvidence(item),
+          extractedSuspectEvidence: [governedSuspectEvidence(item)],
+          companySuspectAssessments: [governedCompanyAssessment(item)],
+          syntheticDemo: true,
         },
         article: item.identity,
         generatedAt: new Date().toISOString(),
@@ -480,7 +487,36 @@ try {
     package: { package_id: ids.packages[0], package_key: "DEMO-PKG-001" },
     article: first.identity,
     product_context: { productName: first.product, countryOfInterest: "United States" },
-    screening_assessment: { final_decision: "INCLUDE", review_status: "approved" },
+    hits_assessment: {
+      review_status: "approved",
+      review_decision: "accept_ai",
+    },
+    screening_assessment: {
+      result: {
+        decision: "INCLUDE",
+        patientSafetyAssessment: governedPatientSafetyAssessment(first),
+        icsrAssessment: governedIcsrAssessment(first),
+        companySuspectAssessments: [governedCompanyAssessment(first)],
+      },
+      final_decision: "INCLUDE",
+      review_status: "approved",
+    },
+    governance: {
+      configuration_snapshot: {
+        syntheticDemo: true,
+        productMasterVersion: "DEMO-PM-1",
+        guidelineVersion: "DEMO-SOP-1",
+      },
+      generation_reason:
+        "Synthetic governed golden-path output generated after completed human review.",
+      source_lineage: {
+        package_id: ids.packages[0],
+        screening_result_id: ids.screenings[0],
+        screening_review_id: ids.screeningReviews[0],
+        hits_result_id: ids.hits[0],
+        hits_review_id: ids.hitReviews[0],
+      },
+    },
   };
   const content = JSON.stringify(intakePayload);
   const payloadHash = sha256(content);
@@ -568,6 +604,162 @@ try {
   await pool.end();
 }
 
+function governedSuspectEvidence(item) {
+  return {
+    reportedProduct: item.product,
+    countryOfInterest: "United States",
+    sourceEvidence: `${item.product} exposure is described in this entirely synthetic case.`,
+    role: "SUSPECT",
+    roleEvidence: "Synthetic product is explicitly represented as the suspect medicinal product.",
+    evidenceLocation: "ABSTRACT",
+  };
+}
+
+function governedSafetyEvidence(item) {
+  const resolved = item.decision !== "REVIEW";
+  return {
+    populationType: "HUMAN",
+    patientIdentifiable: resolved ? "PRESENT" : "UNRESOLVED",
+    reporterIdentifiable: "PRESENT",
+    medicinalProductExposure: "PRESENT",
+    adverseEventOrReaction: resolved ? "PRESENT" : "UNRESOLVED",
+    specialSituation: "ABSENT",
+    patientEvidence: resolved
+      ? "Synthetic patient is identifiable by case-level descriptors."
+      : "Synthetic patient evidence intentionally remains incomplete for review scenario.",
+    reporterEvidence: "Synthetic Author Group is the identifiable literature reporter.",
+    productEvidence: `${item.product} exposure is explicitly stated.`,
+    eventEvidence: resolved
+      ? item.event
+      : "Synthetic event evidence intentionally remains unresolved.",
+  };
+}
+
+function governedPatientSafetyAssessment(item) {
+  const resolved = item.decision !== "REVIEW";
+  return {
+    relevance: resolved ? "RELEVANT" : "UNRESOLVED",
+    humanSafetyInformation: resolved ? true : null,
+    populationType: "HUMAN",
+    medicinalProductExposure: "PRESENT",
+    adverseEventOrReaction: resolved ? "PRESENT" : "UNRESOLVED",
+    specialSituation: "ABSENT",
+    manualReviewRequired: !resolved,
+    reasons: resolved
+      ? ["Synthetic human safety information with medicinal product exposure and an adverse event."]
+      : ["Synthetic evidence intentionally requires human review."],
+    evidence: {
+      patient: resolved
+        ? "Synthetic case-level patient descriptors are present."
+        : "Patient evidence unresolved for synthetic review scenario.",
+      product: `${item.product} exposure is explicitly stated.`,
+      event: resolved ? item.event : "Event evidence unresolved.",
+    },
+    appliedKnowledgeObjectIds: ["DEMO-PV-SAFETY-1"],
+  };
+}
+
+function governedIcsrAssessment(item) {
+  const resolved = item.decision !== "REVIEW";
+  return {
+    identifiablePatient: resolved ? "PRESENT" : "UNRESOLVED",
+    identifiableReporter: "PRESENT",
+    suspectProduct: "PRESENT",
+    adverseEventOrSpecialSituation: resolved ? "PRESENT" : "UNRESOLVED",
+    minimumCriteriaSatisfied: resolved ? true : null,
+    conclusion: resolved ? "POTENTIAL_ICSR" : "UNRESOLVED",
+    manualReviewRequired: !resolved,
+    missingOrUnresolvedCriteria: resolved ? [] : ["identifiablePatient", "adverseEventOrSpecialSituation"],
+    reasons: resolved
+      ? ["Synthetic minimum ICSR validity elements are present."]
+      : ["Synthetic minimum ICSR validity elements remain unresolved."],
+    evidence: {
+      patient: resolved
+        ? "Synthetic patient descriptors are present."
+        : "Patient evidence unresolved.",
+      reporter: "Synthetic Author Group is an identifiable literature reporter.",
+      suspectProduct: `${item.product} is the synthetic suspect product.`,
+      eventOrSpecialSituation: resolved ? item.event : "Event evidence unresolved.",
+    },
+    appliedKnowledgeObjectIds: ["DEMO-ICSR-VALIDITY-1"],
+  };
+}
+
+function governedRegulatoryEvidence(item) {
+  const resolved = item.decision !== "REVIEW";
+  return {
+    publicationClassification: "CASE_REPORT",
+    publicationClassificationEvidence: "Synthetic case-report fixture.",
+    clinicalEvents: [
+      {
+        event: item.event,
+        evidence: resolved ? item.event : "Synthetic event under review.",
+        severity: "UNRESOLVED",
+        seriousness: "UNRESOLVED",
+        seriousnessCriteria: ["NONE_IDENTIFIED"],
+      },
+    ],
+    patientPiiStatus: resolved ? "PRESENT" : "UNRESOLVED",
+    patientPiiEvidence: resolved
+      ? "Synthetic case-level patient descriptors are present."
+      : "Synthetic patient evidence unresolved.",
+    countryOfIncidenceStatus: "PRESENT",
+    countryOfIncidence: "United States",
+    countryOfIncidenceEvidence: "Synthetic country of incidence fixture.",
+  };
+}
+
+function governedCompanyAssessment(item) {
+  const candidate = {
+    recordIndex: 0,
+    productId: `DEMO-${item.product.toUpperCase()}`,
+    preferredName: item.product,
+    matchedName: item.product,
+    relationship: "EXACT_NAME",
+    country: "United States",
+    mah: "Synthetic Demo MAH",
+    active: true,
+    sourceRecord: {
+      syntheticDemo: true,
+      productMasterVersion: "DEMO-PM-1",
+    },
+  };
+
+  return {
+    assessmentId: `demo-company-${item.pmid}`,
+    knowledgeVersion: "DEMO-PM-1",
+    reportedProduct: item.product,
+    normalizedProduct: item.product,
+    relationship: "EXACT_NAME",
+    candidates: [candidate],
+    selectedCandidate: candidate,
+    productMatched: true,
+    presentationMatched: true,
+    countryOfInterest: "United States",
+    licenceStatus: "ACTIVE",
+    companySuspect: true,
+    conclusion: "CONFIRMED",
+    specialSituationReviewRequired: false,
+    manualReviewRequired: false,
+    appliedScenarioIds: ["DEMO-SCENARIO-COMPANY-PRODUCT"],
+    prohibitedConclusions: [],
+    decisionTrail: [
+      {
+        sequence: 1,
+        code: "DEMO_PRODUCT_MASTER_CONFIRMED",
+        outcome: "PASS",
+        explanation:
+          "Synthetic governed Product Master match confirms an active company product in the country of interest.",
+        evidence: { syntheticDemo: true, productMasterVersion: "DEMO-PM-1" },
+        scenarioIds: ["DEMO-SCENARIO-COMPANY-PRODUCT"],
+      },
+    ],
+    reportedRole: "SUSPECT",
+    roleSupportsSuspicion: true,
+    evidenceLocation: "ABSTRACT",
+  };
+}
+
 function article(pmid, doi, title, product, decision, state) {
   return {
     pmid,
@@ -595,11 +787,11 @@ async function assertMigrations(database) {
   const result = await database.query(
     `SELECT migration_id FROM clinixai_schema_migrations
      WHERE migration_id = ANY($1::text[])`,
-    [["001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "011", "012", "013"]],
+    [["001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "011", "012", "013", "014", "015", "016"]],
   );
-  if (result.rowCount !== 13)
+  if (result.rowCount !== 16)
     throw new Error(
-      `All migrations 001-013 are required before seeding; found ${result.rowCount}.`,
+      `All migrations 001-016 are required before seeding; found ${result.rowCount}.`,
     );
 }
 
