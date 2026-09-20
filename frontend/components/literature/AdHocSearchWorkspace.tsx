@@ -72,7 +72,9 @@ export default function AdHocSearchWorkspace({
   >([]);
   const [loading, setLoading] = useState(true);
   const [running, setRunning] = useState(false);
-  const [creatingPackages, setCreatingPackages] = useState(false);
+  const [packageAction, setPackageAction] = useState<
+    "VALIDATION_ONLY" | "HANDOFF_WITH_VALIDATION" | null
+  >(null);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -181,8 +183,10 @@ export default function AdHocSearchWorkspace({
     );
   }
 
-  async function createEvidencePackages() {
-    setCreatingPackages(true);
+  async function executePackageAction(
+    action: "VALIDATION_ONLY" | "HANDOFF_WITH_VALIDATION",
+  ) {
+    setPackageAction(action);
     setMessage("");
 
     try {
@@ -191,19 +195,29 @@ export default function AdHocSearchWorkspace({
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ resultIds: selectedResults }),
+          body: JSON.stringify({ resultIds: selectedResults, action }),
         },
       );
 
       const payload = await response.json();
       if (!response.ok || !payload.success) {
         throw new Error(
-          payload.error || "Evidence Package creation failed.",
+          payload.error ||
+            (action === "VALIDATION_ONLY"
+              ? "Validation Package creation failed."
+              : "Validation Package and Hits handoff failed."),
         );
       }
 
+      if (action === "VALIDATION_ONLY") {
+        setMessage(
+          `${payload.data.validationPackageCount} Validation Package(s) ready · ${payload.data.createdCount} created · ${payload.data.reusedCount} reused. No Hits workflow was started.`,
+        );
+        return;
+      }
+
       setMessage(
-        `${payload.data.createdCount} governed Evidence Package(s) created. Hits worklist refreshed.`,
+        `${payload.data.validationPackageCount} Validation Package(s) ready · ${payload.data.createdCount} governed Evidence Package(s) handed off to Hits · ${payload.data.alreadyHandedOffCount} already handed off.`,
       );
       setSelectedResults([]);
       if (onEvidencePackagesCreated) {
@@ -212,7 +226,7 @@ export default function AdHocSearchWorkspace({
     } catch (error) {
       setMessage(error instanceof Error ? error.message : String(error));
     } finally {
-      setCreatingPackages(false);
+      setPackageAction(null);
     }
   }
 
@@ -487,15 +501,26 @@ export default function AdHocSearchWorkspace({
               </button>
               <button
                 type="button"
-                className="primary"
-                disabled={
-                  selectedResults.length === 0 || creatingPackages
-                }
-                onClick={() => void createEvidencePackages()}
+                disabled={selectedResults.length === 0 || packageAction !== null}
+                onClick={() => void executePackageAction("VALIDATION_ONLY")}
+                title="Create an immutable validation snapshot only. This does not start the Hits workflow."
               >
-                {creatingPackages
-                  ? "Creating…"
-                  : `Create Evidence Package (${selectedResults.length})`}
+                {packageAction === "VALIDATION_ONLY"
+                  ? "Creating Validation Package…"
+                  : `Create Validation Package (${selectedResults.length})`}
+              </button>
+              <button
+                type="button"
+                className="primary"
+                disabled={selectedResults.length === 0 || packageAction !== null}
+                onClick={() =>
+                  void executePackageAction("HANDOFF_WITH_VALIDATION")
+                }
+                title="Create or reuse the Validation Package and hand the governed article to Hits in the same action."
+              >
+                {packageAction === "HANDOFF_WITH_VALIDATION"
+                  ? "Creating & Handing Off…"
+                  : `Handoff & Create Validation Package (${selectedResults.length})`}
               </button>
             </div>
           </div>

@@ -787,11 +787,11 @@ async function assertMigrations(database) {
   const result = await database.query(
     `SELECT migration_id FROM clinixai_schema_migrations
      WHERE migration_id = ANY($1::text[])`,
-    [["001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "011", "012", "013", "014", "015", "016"]],
+    [["001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "011", "012", "013", "014", "015", "016", "017"]],
   );
-  if (result.rowCount !== 16)
+  if (result.rowCount !== 17)
     throw new Error(
-      `All migrations 001-016 are required before seeding; found ${result.rowCount}.`,
+      `All migrations 001-017 are required before seeding; found ${result.rowCount}.`,
     );
 }
 
