@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { parseScreeningAIResult } from "../lib/ai/screening-result-parser";
+import { validateAuditReason } from "../lib/audit/reason";
 import { validateConfigurationPayload } from "../lib/configuration/validation";
 import { assessCompanySuspect } from "../lib/pharmaceutical-intelligence/assessment-engine";
 import { assessPVDecisionArchitecture } from "../lib/pv-decision-intelligence/assessment-engine";
@@ -64,6 +65,41 @@ const raw = JSON.stringify({
     },
   ],
 });
+
+const missingCountryParsed = parseScreeningAIResult(
+  JSON.stringify({
+    decision: "REVIEW",
+    confidence: 80,
+    reason: "INSUFFICIENT_INFORMATION",
+    findings: [],
+    safetyEvidence: {
+      populationType: "HUMAN",
+      patientIdentifiable: "PRESENT",
+      reporterIdentifiable: "ABSENT",
+      medicinalProductExposure: "PRESENT",
+      adverseEventOrReaction: "PRESENT",
+      specialSituation: "ABSENT"
+    },
+    regulatoryEvidence: {
+      publicationClassification: "CASE_REPORT",
+      clinicalEvents: [],
+      patientPiiStatus: "ABSENT",
+      countryOfIncidenceStatus: "ABSENT",
+      countryOfIncidenceEvidence: "no country provided"
+    },
+    extractedSuspectEvidence: []
+  }),
+);
+assert.equal(
+  missingCountryParsed.regulatoryEvidence.countryOfIncidenceStatus,
+  "UNRESOLVED",
+  "Missing COI evidence must not be treated as a proven negative.",
+);
+assert.equal(validateAuditReason("Not applicable").valid, false);
+assert.equal(
+  validateAuditReason("Sprint 3 governed Screening validation rerun").valid,
+  true,
+);
 
 const parsed = parseScreeningAIResult(raw);
 assert.equal(parsed.regulatoryEvidence.publicationClassification, "CASE_REPORT");

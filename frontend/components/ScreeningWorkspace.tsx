@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { validateAuditReason } from "@/lib/audit/reason";
 
 type ScreeningArticle = {
   product_name: string;
@@ -692,14 +693,18 @@ function ReasonModal({
   onSubmit: (reason: string) => void;
 }) {
   const [reason, setReason] = useState("");
-  const valid = reason.trim().length >= 10;
+  const reasonValidation = validateAuditReason(reason);
+  const valid = reasonValidation.valid;
 
   return (
     <div className="modal-backdrop">
       <div className="reason-modal">
         <span>GxP-controlled action</span>
         <h3>{title}</h3>
-        <p>The reason is mandatory and will be captured in the audit trail.</p>
+        <p>
+          The reason is mandatory and will be captured in the audit trail.
+          Generic entries such as &quot;Not applicable&quot; are not accepted.
+        </p>
 
         <textarea
           value={reason}
@@ -707,6 +712,10 @@ function ReasonModal({
           placeholder="Enter a clear, reviewable business reason."
           autoFocus
         />
+
+        {!valid && reason.trim().length > 0 && (
+          <p className="reason-error">{reasonValidation.message}</p>
+        )}
 
         <div className="modal-actions">
           <button type="button" onClick={onCancel}>
@@ -778,6 +787,13 @@ function ReasonModal({
         textarea:focus {
           border-color: #1d4ed8;
           box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+        }
+
+        .reason-error {
+          margin: 8px 0 0;
+          color: #b91c1c;
+          font-size: 10px;
+          font-weight: 700;
         }
 
         .modal-actions {

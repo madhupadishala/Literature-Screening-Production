@@ -113,7 +113,7 @@ const fixtures: Array<{
     expectedMinimumCriteria: null,
   },
   {
-    id: "PV-ARCH-005 reporter metadata cannot override explicit reporter absence",
+    id: "PV-ARCH-005 named publication author reconciles reporter false-negative",
     input: {
       safetyEvidence: safety({
         populationType: "HUMAN",
@@ -130,8 +130,8 @@ const fixtures: Array<{
       reporterIdentifiers: ["Named Author"],
     },
     expectedSafety: "RELEVANT",
-    expectedIcsr: "NOT_ICSR",
-    expectedMinimumCriteria: false,
+    expectedIcsr: "POTENTIAL_ICSR",
+    expectedMinimumCriteria: true,
   },
   {
     id: "PV-ARCH-006 special situation supports patient safety",

@@ -4,6 +4,7 @@ import { createHash, randomUUID } from "node:crypto";
 
 import { screeningAgent } from "@/lib/ai/screening-agent";
 import { screeningValidator } from "@/lib/ai/screening-validator";
+import { validateAuditReason } from "@/lib/audit/reason";
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
@@ -343,6 +344,11 @@ export async function executeScreening(input: {
   principal: RequestPrincipal;
   request: ExecuteScreeningInput;
 }): Promise<ScreeningWorklistRecord> {
+  const auditReason = validateAuditReason(input.request.reason);
+  if (!auditReason.valid) {
+    throw new Error(auditReason.message || "A specific audit reason is required.");
+  }
+
   const row = await queueRow({ principal: input.principal, packageId: input.request.packageId });
   if (row.workflow_state !== "HITS_COMPLETE" && row.workflow_state !== "SCREENING_REVIEW") {
     throw new Error(`Screening cannot run from workflow state ${row.workflow_state}.`);
@@ -352,7 +358,11 @@ export async function executeScreening(input: {
     principal: input.principal,
     packageId: row.package_id,
     state: "SCREENING_RUNNING",
-    payload: { screeningStartedAt: new Date().toISOString(), correlationId },
+    payload: {
+      screeningStartedAt: new Date().toISOString(),
+      correlationId,
+      reason: auditReason.reason,
+    },
     eventType: "SCREENING_EXECUTION_STARTED",
     outcome: "started",
   });
@@ -445,6 +455,7 @@ export async function executeScreening(input: {
             screeningResultId: stored.rows[0].id,
             screeningResultVersion: nextVersion,
             screeningDecision: validated.decision,
+            screeningExecutionReason: auditReason.reason,
             screeningCompletedAt: validated.screenedAt,
             screeningExecutionFailed: false,
             error: null,
