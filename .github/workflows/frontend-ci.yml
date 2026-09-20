@@ -53,6 +53,12 @@ jobs:
             echo "No lint script is currently configured."
           fi
 
+      - name: Verify pharmaceutical product intelligence
+        run: npm run pharmaceutical:verify
+
+      - name: Verify PV decision architecture
+        run: npm run pv:verify
+
       - name: Build production application
         run: npm run build
 
