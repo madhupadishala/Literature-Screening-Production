@@ -133,11 +133,51 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
     ? assessment.decisionTrail.filter(isRecord)
     : [];
   const reasons = stringArray(result.reasons);
+  const productAssessments = assessments.map((item) => {
+    const candidate = recordValue(item, "selectedCandidate");
+    return {
+      reported_product: stringValue(item.reportedProduct, "Unknown Product"),
+      normalized_product: stringValue(item.normalizedProduct, "—"),
+      matched_term: stringValue(candidate.matchedName, "—"),
+      relationship: stringValue(item.relationship, "UNRESOLVED"),
+      company_product_status: stringValue(item.conclusion, "UNRESOLVED"),
+      mah_status: stringValue(item.licenceStatus, "UNRESOLVED"),
+      country_of_interest: stringValue(item.countryOfInterest, "—"),
+      product_id: stringValue(candidate.productId) || undefined,
+      preferred_name: stringValue(candidate.preferredName) || undefined,
+      manual_review_required: booleanValue(item.manualReviewRequired),
+    };
+  });
   const productName =
-    detectedProducts[0] ||
-    stringValue(resolvedProduct.preferredName) ||
-    stringValue(product.productName) ||
-    "Unknown Product";
+    detectedProducts.length > 0
+      ? detectedProducts.join(", ")
+      : stringValue(resolvedProduct.preferredName) ||
+        stringValue(product.productName) ||
+        "Unknown Product";
+  const uniqueNormalized = [
+    ...new Set(
+      productAssessments
+        .map((item) => item.normalized_product)
+        .filter((value) => value && value !== "—"),
+    ),
+  ];
+  const uniqueMatchedTerms = [
+    ...new Set(
+      productAssessments
+        .map((item) => item.matched_term)
+        .filter((value) => value && value !== "—"),
+    ),
+  ];
+  const uniqueRelationships = [
+    ...new Set(productAssessments.map((item) => item.relationship).filter(Boolean)),
+  ];
+  const uniqueCountries = [
+    ...new Set(
+      productAssessments
+        .map((item) => item.country_of_interest)
+        .filter((value) => value && value !== "—"),
+    ),
+  ];
 
   return {
     hit_id: row.hit_id,
@@ -155,26 +195,35 @@ function mapWorklistRow(row: HitsWorklistRow): HitsWorklistRecord {
     publication_date: stringValue(identity.publicationDate, "—"),
     product_name: productName,
     normalized_identity:
-      stringValue(assessment.normalizedProduct) ||
+      uniqueNormalized.join(", ") ||
       stringValue(resolvedProduct.preferredName) ||
       productName,
     matched_term:
+      uniqueMatchedTerms.join(", ") ||
       stringValue(selectedCandidate.matchedName) ||
       stringValue(product.matchedTerm, "—"),
     match_type:
+      uniqueRelationships.join(", ") ||
       stringValue(assessment.relationship) ||
       stringValue(product.matchType, "—"),
     match_source: assessments.length
       ? `PPI ${stringValue(assessment.knowledgeVersion, "governed")}`
       : stringValue(product.matchSource, "GOVERNED_PRODUCT_CONTEXT"),
     company_product_status:
-      stringValue(assessment.conclusion) ||
-      stringValue(result.classification, "needs_manual_review"),
+      assessments.length > 1
+        ? "MULTI_PRODUCT"
+        : stringValue(assessment.conclusion) ||
+          stringValue(result.classification, "needs_manual_review"),
     patient_safety_status: stringValue(patientSafety.relevance, "UNRESOLVED"),
     icsr_status: stringValue(icsr.conclusion, "UNRESOLVED"),
-    mah_status: stringValue(assessment.licenceStatus, "UNRESOLVED"),
+    mah_status:
+      assessments.length > 1
+        ? "MULTI_PRODUCT"
+        : stringValue(assessment.licenceStatus, "UNRESOLVED"),
+    product_assessments: productAssessments,
     author_country: stringValue(identity.authorCountry, "—"),
     country_of_interest:
+      uniqueCountries.join(", ") ||
       stringValue(assessment.countryOfInterest) ||
       stringValue(product.countryOfInterest, "—"),
     mah_country_match: assessment.companySuspect === true
