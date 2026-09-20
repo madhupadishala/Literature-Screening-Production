@@ -128,6 +128,19 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
   const statePayload = row.state_payload || {};
   const executionFailed = statePayload.screeningExecutionFailed === true;
   const hasResult = Boolean(row.result_id);
+  const safetyEvidence = isRecord(result.safetyEvidence)
+    ? (result.safetyEvidence as unknown as NonNullable<ScreeningWorklistRecord["safetyEvidence"]>)
+    : undefined;
+  const patientSafetyAssessment = isRecord(result.patientSafetyAssessment)
+    ? (result.patientSafetyAssessment as unknown as NonNullable<ScreeningWorklistRecord["patientSafetyAssessment"]>)
+    : undefined;
+  const icsrAssessment = isRecord(result.icsrAssessment)
+    ? (result.icsrAssessment as unknown as NonNullable<ScreeningWorklistRecord["icsrAssessment"]>)
+    : undefined;
+  const companySuspectAssessments = Array.isArray(result.companySuspectAssessments)
+    ? result.companySuspectAssessments
+        .filter(isRecord) as unknown as NonNullable<ScreeningWorklistRecord["companySuspectAssessments"]>
+    : undefined;
 
   return {
     packageId: row.package_id,
@@ -149,6 +162,10 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
     confidence: confidence(row.confidence ?? result.confidence),
     reason: reason(result.reason),
     findings: findings(result.findings),
+    safetyEvidence,
+    patientSafetyAssessment,
+    icsrAssessment,
+    companySuspectAssessments,
     qcRequired:
       executionFailed ||
       decision(result.decision) === "REVIEW" ||
