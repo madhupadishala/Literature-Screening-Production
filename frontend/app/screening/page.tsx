@@ -38,7 +38,10 @@ export type ScreeningArticle = {
   intake_status: "pending" | "ready";
   qc_required: boolean;
   company_suspect_drugs: string[];
-  active_mah: "Yes" | "No" | "Unknown";
+  active_mah: string;
+  publication_classification: string;
+  generic_icsr_status: string;
+  company_applicability: string;
   co_suspect_drugs: string[];
   concomitant_medications: string[];
   treatment_medications: string[];
@@ -47,7 +50,7 @@ export type ScreeningArticle = {
   event_severity: string;
   seriousness: string;
   patient_safety: "Yes" | "No" | "Uncertain";
-  patient_identification_pii: "Yes" | "No";
+  patient_identification_pii: "Yes" | "No" | "Uncertain";
   coi: "Yes" | "No" | "Uncertain";
   screening_decision: string;
   screening_reasoning: string;
@@ -97,6 +100,15 @@ function normalizeArticle(input: unknown): ScreeningArticle {
   const companyAssessments = Array.isArray(raw.companySuspectAssessments)
     ? raw.companySuspectAssessments.filter(isRecord)
     : [];
+  const extractedProducts = Array.isArray(raw.extractedSuspectEvidence)
+    ? raw.extractedSuspectEvidence.filter(isRecord)
+    : [];
+  const regulatoryEvidence = isRecord(raw.regulatoryEvidence)
+    ? raw.regulatoryEvidence
+    : {};
+  const clinicalEventRecords = Array.isArray(regulatoryEvidence.clinicalEvents)
+    ? regulatoryEvidence.clinicalEvents.filter(isRecord)
+    : [];
   const confirmedCompanyProducts = companyAssessments
     .filter((assessment) => assessment.conclusion === "CONFIRMED")
     .map((assessment) => stringValue(assessment.reportedProduct))
@@ -109,11 +121,58 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     .filter(Boolean);
   const activeMah: ScreeningArticle["active_mah"] =
     licenceStatuses.includes("ACTIVE")
-      ? "Yes"
-      : licenceStatuses.length > 0 &&
-          licenceStatuses.every((status) => status === "INACTIVE")
-        ? "No"
-        : "Unknown";
+      ? "ACTIVE"
+      : licenceStatuses.includes("NOT_CONFIGURED")
+        ? "NOT_CONFIGURED"
+        : licenceStatuses.length > 0 &&
+            licenceStatuses.every((status) => status === "INACTIVE")
+          ? "INACTIVE"
+          : "UNRESOLVED";
+  const companyApplicability =
+    companyAssessments.some((assessment) => assessment.conclusion === "CONFIRMED")
+      ? "CONFIRMED"
+      : companyAssessments.some((assessment) => assessment.conclusion === "UNRESOLVED")
+        ? "UNRESOLVED"
+        : companyAssessments.length > 0
+          ? companyAssessments.map((assessment) => stringValue(assessment.conclusion)).filter(Boolean).join(", ")
+          : "UNRESOLVED";
+  const productRole = (role: string) =>
+    extractedProducts
+      .filter((item) => stringValue(item.role) === role)
+      .map((item) => stringValue(item.reportedProduct))
+      .filter(Boolean);
+  const allSuspects = productRole("SUSPECT");
+  const confirmedCompanySet = new Set(confirmedCompanyProducts.map((value) => value.toLowerCase()));
+  const coSuspects = allSuspects.filter(
+    (value) => !confirmedCompanySet.has(value.toLowerCase()),
+  );
+  const clinicalEvents = clinicalEventRecords
+    .map((event) => stringValue(event.event))
+    .filter(Boolean);
+  const severitySummary = clinicalEventRecords
+    .map((event) => {
+      const event = stringValue(event.event);
+      const severity = stringValue(event.severity, "UNRESOLVED");
+      return event ? `${event}: ${severity}` : severity;
+    })
+    .filter(Boolean);
+  const seriousnessSummary = clinicalEventRecords
+    .map((event) => {
+      const event = stringValue(event.event);
+      const seriousness = stringValue(event.seriousness, "UNRESOLVED");
+      const criteria = Array.isArray(event.seriousnessCriteria)
+        ? event.seriousnessCriteria.map((item) => stringValue(item)).filter(Boolean)
+        : [];
+      const detail = criteria.length ? `${seriousness} [${criteria.join(", ")}]` : seriousness;
+      return event ? `${event}: ${detail}` : detail;
+    })
+    .filter(Boolean);
+  const piiStatus = stringValue(regulatoryEvidence.patientPiiStatus, "UNRESOLVED");
+  const coiStatus = stringValue(regulatoryEvidence.countryOfIncidenceStatus, "UNRESOLVED");
+  const coiValue =
+    coiStatus === "PRESENT"
+      ? stringValue(regulatoryEvidence.countryOfIncidence, "Uncertain")
+      : stringValue(raw.countryOfInterest, "Uncertain");
   const patientSafety: ScreeningArticle["patient_safety"] =
     safetyAssessment.relevance === "RELEVANT"
       ? "Yes"
@@ -137,7 +196,7 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     journal: stringValue(raw.journal, "—"),
     publication_date: stringValue(raw.publicationDate, "—"),
     product_name: product,
-    country_of_interest: stringValue(raw.countryOfInterest, "Uncertain"),
+    country_of_interest: coiValue,
     primary_author:
       Array.isArray(raw.authors) && raw.authors.length > 0 ? stringValue(raw.authors[0], "—") : "—",
     confidence_score: Number(raw.confidence || 0) / 100,
@@ -157,15 +216,27 @@ function normalizeArticle(input: unknown): ScreeningArticle {
           ? ["Company applicability unresolved"]
           : ["None confirmed"],
     active_mah: activeMah,
-    co_suspect_drugs: ["Not yet classified"],
-    concomitant_medications: ["Not yet classified"],
-    treatment_medications: ["Not yet classified"],
+    publication_classification: stringValue(
+      regulatoryEvidence.publicationClassification,
+      "UNRESOLVED",
+    ),
+    generic_icsr_status: stringValue(icsrAssessment.conclusion, "UNRESOLVED"),
+    company_applicability: companyApplicability,
+    co_suspect_drugs: coSuspects.length ? coSuspects : ["None identified"],
+    concomitant_medications: productRole("CONCOMITANT").length
+      ? productRole("CONCOMITANT")
+      : ["None identified"],
+    treatment_medications: productRole("TREATMENT").length
+      ? productRole("TREATMENT")
+      : ["None identified"],
     clinical_events:
-      eventEvidence
-        ? [eventEvidence]
-        : passedFindings.length
-          ? passedFindings
-          : ["Not identified"],
+      clinicalEvents.length
+        ? clinicalEvents
+        : eventEvidence
+          ? [eventEvidence]
+          : passedFindings.length
+            ? passedFindings
+            : ["Not identified"],
     special_situations:
       safetyEvidence.specialSituation === "PRESENT"
         ? [specialSituationEvidence || "Special situation identified"]
@@ -173,11 +244,12 @@ function normalizeArticle(input: unknown): ScreeningArticle {
             safetyEvidence.specialSituation === "CONFLICTING"
           ? ["Unresolved"]
           : ["None identified"],
-    event_severity: "Not yet assessed",
-    seriousness: "Not yet assessed",
+    event_severity: severitySummary.length ? severitySummary.join("; ") : "UNRESOLVED",
+    seriousness: seriousnessSummary.length ? seriousnessSummary.join("; ") : "UNRESOLVED",
     patient_safety: patientSafety,
-    patient_identification_pii: "No",
-    coi: "Uncertain",
+    patient_identification_pii:
+      piiStatus === "PRESENT" ? "Yes" : piiStatus === "ABSENT" ? "No" : "Uncertain",
+    coi: coiStatus === "PRESENT" ? "Yes" : coiStatus === "ABSENT" ? "No" : "Uncertain",
     screening_decision: decision,
     screening_reasoning: stringValue(raw.reason, "Manual review required."),
     evidence_sentence:
@@ -189,7 +261,10 @@ function normalizeArticle(input: unknown): ScreeningArticle {
       ...(Boolean(raw.qcRequired) ? ["QC required"] : []),
       ...(patientSafety === "Uncertain" ? ["Patient-safety relevance unresolved"] : []),
       ...(companyApplicabilityUnresolved ? ["Company applicability unresolved"] : []),
+      ...(activeMah === "NOT_CONFIGURED" ? ["MAH / licence configuration not available"] : []),
       ...(icsrAssessment.conclusion === "UNRESOLVED" ? ["Generic ICSR criteria unresolved"] : []),
+      ...(piiStatus === "CONFLICTING" ? ["Patient PII evidence conflicting"] : []),
+      ...(coiStatus === "CONFLICTING" ? ["Country-of-incidence evidence conflicting"] : []),
       ...(executionStatus === "failed"
         ? [stringValue(raw.error, "Screening execution failed")]
         : []),
