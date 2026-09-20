@@ -83,4 +83,5 @@ export interface PVDecisionAssessmentInput {
   detectedEvents: string[];
   detectedSpecialSituations: string[];
   suspectEvidence: SuspectProductEvidence[];
+  reporterIdentifiers?: string[];
 }
