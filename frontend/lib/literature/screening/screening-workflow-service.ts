@@ -515,6 +515,18 @@ export async function saveScreeningReview(input: {
   if (!["pending", "approved", "excluded", "flagged"].includes(review.status)) {
     throw new Error("Invalid screening review status.");
   }
+  if (review.status === "approved" && review.finalDecision !== "INCLUDE") {
+    throw new Error("Only an INCLUDE Screening decision can be finalized as approved.");
+  }
+  if (review.status === "excluded" && review.finalDecision !== "EXCLUDE") {
+    throw new Error("Excluded Screening review must carry a final EXCLUDE decision.");
+  }
+  if (
+    (review.status === "flagged" || review.status === "pending") &&
+    review.finalDecision !== "REVIEW"
+  ) {
+    throw new Error("Pending or flagged Screening review must remain REVIEW.");
+  }
   const workflowState =
     review.status === "approved" || review.status === "excluded"
       ? "SCREENING_COMPLETE"
