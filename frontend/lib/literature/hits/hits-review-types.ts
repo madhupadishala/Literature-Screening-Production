@@ -27,6 +27,9 @@ export interface HitsWorklistRecord {
   match_type: string;
   match_source: string;
   company_product_status: string;
+  patient_safety_status: string;
+  icsr_status: string;
+  mah_status: string;
   author_country: string;
   country_of_interest: string;
   mah_country_match: boolean;
