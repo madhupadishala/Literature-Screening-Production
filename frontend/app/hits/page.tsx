@@ -22,6 +22,9 @@ type HitRecord = {
   match_type: string;
   match_source: string;
   company_product_status: string;
+  patient_safety_status: string;
+  icsr_status: string;
+  mah_status: string;
   author_country: string;
   country_of_interest: string;
   mah_country_match: boolean;
@@ -86,7 +89,10 @@ function normalizeHit(rawInput: unknown, packageId: string): HitRecord {
     matched_term: raw.matched_term || "—",
     match_type: raw.match_type || "—",
     match_source: raw.match_source || "—",
-    company_product_status: raw.company_product_status || "—",
+    company_product_status: raw.company_product_status || "UNRESOLVED",
+    patient_safety_status: raw.patient_safety_status || "UNRESOLVED",
+    icsr_status: raw.icsr_status || "UNRESOLVED",
+    mah_status: raw.mah_status || "UNRESOLVED",
     author_country: raw.author_country || "—",
     country_of_interest: raw.country_of_interest || "—",
     mah_country_match: Boolean(raw.mah_country_match),
@@ -613,8 +619,23 @@ export default function HitsReviewPage() {
             </div>
 
             <div>
-              <span>MAH Status Match</span>
-              <strong>{selectedHit.mah_country_match ? "Yes" : "No"}</strong>
+              <span>Patient Safety Relevance</span>
+              <strong>{text(selectedHit.patient_safety_status)}</strong>
+            </div>
+
+            <div>
+              <span>Generic ICSR Status</span>
+              <strong>{text(selectedHit.icsr_status)}</strong>
+            </div>
+
+            <div>
+              <span>Company Applicability</span>
+              <strong>{text(selectedHit.company_product_status)}</strong>
+            </div>
+
+            <div>
+              <span>MAH / Licence Status</span>
+              <strong>{text(selectedHit.mah_status)}</strong>
             </div>
 
             <div>
