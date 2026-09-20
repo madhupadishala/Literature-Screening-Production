@@ -12,6 +12,7 @@ import {
 } from "./hits-result-parser";
 import { aiProviderFactory } from "./provider-factory";
 import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
+import type { SuspectProductEvidence } from "@/lib/pharmaceutical-intelligence/types";
 import { assessPVDecisionArchitecture } from "@/lib/pv-decision-intelligence/assessment-engine";
 
 export interface HitsAgentRequest {
@@ -60,6 +61,94 @@ function buildRAGQuery(request: HitsAgentRequest): string {
     .join(" ");
 }
 
+function normalizeProductText(value: string | undefined): string {
+  return (value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function editDistance(left: string, right: string): number {
+  if (!left || !right) return Math.max(left.length, right.length);
+  const row = Array.from({ length: right.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= left.length; i += 1) {
+    let previous = row[0];
+    row[0] = i;
+    for (let j = 1; j <= right.length; j += 1) {
+      const current = row[j];
+      row[j] = Math.min(
+        row[j] + 1,
+        row[j - 1] + 1,
+        previous + (left[i - 1] === right[j - 1] ? 0 : 1),
+      );
+      previous = current;
+    }
+  }
+  return row[right.length];
+}
+
+function sourceContainsTerm(source: string, term: string): boolean {
+  const normalizedSource = ` ${normalizeProductText(source)} `;
+  const normalizedTerm = normalizeProductText(term);
+  return Boolean(normalizedTerm) && normalizedSource.includes(` ${normalizedTerm} `);
+}
+
+function reconcileSuspectEvidence(input: {
+  aiResult: HitsAIResult;
+  request: HitsAgentRequest;
+}): {
+  evidence: SuspectProductEvidence[];
+  corrections: Array<{ from: string; to: string; reason: string }>;
+} {
+  const source = [
+    input.request.articleTitle,
+    input.request.abstractText,
+    input.request.fullTextSnippet,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const detectedProducts = [
+    ...new Set(
+      input.aiResult.detectedProducts
+        .map((product) => product.trim())
+        .filter(Boolean),
+    ),
+  ];
+  const corrections: Array<{ from: string; to: string; reason: string }> = [];
+
+  const evidence = input.aiResult.extractedSuspectEvidence.map((item) => {
+    if (sourceContainsTerm(source, item.reportedProduct)) {
+      return item;
+    }
+
+    const reported = normalizeProductText(item.reportedProduct);
+    const candidates = detectedProducts.filter(
+      (candidate) =>
+        sourceContainsTerm(source, candidate) &&
+        editDistance(normalizeProductText(candidate), reported) <= 2,
+    );
+
+    if (candidates.length !== 1) {
+      return item;
+    }
+
+    const corrected = candidates[0];
+    corrections.push({
+      from: item.reportedProduct,
+      to: corrected,
+      reason:
+        "AI product spelling was reconciled only because one near-match detected product is explicitly present in the supplied article text.",
+    });
+    return {
+      ...item,
+      reportedProduct: corrected,
+    };
+  });
+
+  return { evidence, corrections };
+}
+
 export class HitsAgent {
   async evaluate(request: HitsAgentRequest): Promise<HitsAgentResponse> {
     if (!request.tenantId?.trim()) {
@@ -104,14 +193,15 @@ export class HitsAgent {
       });
 
       const aiResult = parseHitsAIResult(aiResponse.content);
+      const productReconciliation = reconcileSuspectEvidence({ aiResult, request });
       const pvDecision = assessPVDecisionArchitecture({
         safetyEvidence: aiResult.safetyEvidence,
         detectedEvents: aiResult.detectedEvents,
         detectedSpecialSituations: aiResult.detectedSpecialSituations,
-        suspectEvidence: aiResult.extractedSuspectEvidence,
+        suspectEvidence: productReconciliation.evidence,
         reporterIdentifiers: request.articleAuthors,
       });
-      const companySuspectAssessments = aiResult.extractedSuspectEvidence.map((evidence) =>
+      const companySuspectAssessments = productReconciliation.evidence.map((evidence) =>
         assessCompanySuspect({
           evidence,
           productMaster: runtimeConfiguration.productMaster,
@@ -136,6 +226,7 @@ export class HitsAgent {
             : pvDecision.patientSafety.relevance === "NOT_RELEVANT"
               ? false
               : aiResult.isHit,
+        extractedSuspectEvidence: productReconciliation.evidence,
         patientSafetyAssessment: pvDecision.patientSafety,
         icsrAssessment: pvDecision.icsr,
         companySuspectAssessments,
@@ -146,6 +237,10 @@ export class HitsAgent {
           ...aiResult.reasons,
           `Patient safety: ${pvDecision.patientSafety.relevance}`,
           `Generic ICSR: ${pvDecision.icsr.conclusion}`,
+          ...productReconciliation.corrections.map(
+            (correction) =>
+              `Product spelling reconciled from "${correction.from}" to source-exact "${correction.to}".`,
+          ),
           ...companySuspectAssessments.map(
             (assessment) =>
               `${assessment.reportedProduct}: ${assessment.conclusion} (${assessment.assessmentId})`,
@@ -193,6 +288,7 @@ export class HitsAgent {
           patientSafetyAssessment: pvDecision.patientSafety,
           icsrAssessment: pvDecision.icsr,
           companySuspectAssessments,
+          productReconciliations: productReconciliation.corrections,
         },
       });
 
