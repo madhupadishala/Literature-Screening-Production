@@ -18,6 +18,9 @@ type ScreeningArticle = {
   evidence_sentence: string;
   company_suspect_drugs: string[];
   active_mah: string;
+  publication_classification: string;
+  generic_icsr_status: string;
+  company_applicability: string;
   co_suspect_drugs: string[];
   concomitant_medications: string[];
   treatment_medications: string[];
@@ -119,9 +122,18 @@ export default function ScreeningWorkspace({
         </header>
 
         <div className="boundary-note">
-          Approval finalizes the governed Screening decision. The downstream
-          <strong> intake_input.json</strong> is generated only by the separate next-stage action.
-          No Intake workspace exists inside Literature Intelligence.
+          {article.company_applicability === "CONFIRMED" && article.active_mah === "ACTIVE" ? (
+            <>
+              Approval finalizes the governed Screening decision. The downstream
+              <strong> intake_input.json</strong> is generated only by the separate next-stage action.
+            </>
+          ) : (
+            <>
+              Company / MAH applicability is not fully confirmed. A final
+              <strong> INCLUDE</strong> cannot be approved until governed Product Master data
+              confirms an active company product for the applicable country.
+            </>
+          )}
         </div>
 
         <nav className="tabs" aria-label="Screening review sections">
@@ -146,8 +158,11 @@ export default function ScreeningWorkspace({
               />
               <Row label="Journal" value={article.journal} />
               <Row label="Publication Date" value={article.publication_date} />
-              <Row label="Country of Interest" value={article.country_of_interest} />
+              <Row label="Publication Classification" value={article.publication_classification} />
+              <Row label="Country of Incidence" value={article.country_of_interest} />
               <Row label="Primary Reporter" value={article.primary_author} />
+              <Row label="Patient Safety" value={article.patient_safety} />
+              <Row label="Generic ICSR" value={article.generic_icsr_status} />
               <Row label="Hits Status" value={article.hits_status} />
               <Row label="Screening Status" value={article.screening_status} />
               <div className="evidence">
@@ -161,7 +176,8 @@ export default function ScreeningWorkspace({
             <Section title="Product Assessment">
               <Row label="Detected Product" value={article.product_name} />
               <Row label="Company Suspect Drugs" value={list(article.company_suspect_drugs)} />
-              <Row label="Active MAH" value={article.active_mah} />
+              <Row label="Company Applicability" value={article.company_applicability} />
+              <Row label="MAH / Licence Status" value={article.active_mah} />
               <Row label="Co-suspect Drugs" value={list(article.co_suspect_drugs)} />
               <Row label="Concomitant Medications" value={list(article.concomitant_medications)} />
               <Row label="Treatment Medications" value={list(article.treatment_medications)} />
@@ -189,9 +205,11 @@ export default function ScreeningWorkspace({
 
           {activeTab === "Regulatory Assessment" && (
             <Section title="Regulatory Assessment">
-              <Row label="Country of Interest" value={article.country_of_interest} />
-              <Row label="COI Assessment" value={article.coi} />
-              <Row label="Active MAH" value={article.active_mah} />
+              <Row label="Country of Incidence" value={article.country_of_interest} />
+              <Row label="COI Evidence" value={article.coi} />
+              <Row label="Company Applicability" value={article.company_applicability} />
+              <Row label="MAH / Licence Status" value={article.active_mah} />
+              <Row label="Generic ICSR" value={article.generic_icsr_status} />
               <Row label="Screening Decision" value={article.screening_decision} />
               <p className="support-note">
                 Literature Intelligence records the evidence and screening decision. Booking and
@@ -312,6 +330,18 @@ export default function ScreeningWorkspace({
               <button
                 type="button"
                 className="primary-action"
+                disabled={
+                  article.screening_decision === "INCLUDE" &&
+                  (article.company_applicability !== "CONFIRMED" ||
+                    article.active_mah !== "ACTIVE")
+                }
+                title={
+                  article.screening_decision === "INCLUDE" &&
+                  (article.company_applicability !== "CONFIRMED" ||
+                    article.active_mah !== "ACTIVE")
+                    ? "Final INCLUDE requires confirmed company product and active MAH/licence."
+                    : undefined
+                }
                 onClick={() =>
                   setModal({
                     title: "Reason required to approve the Screening decision",
@@ -319,7 +349,11 @@ export default function ScreeningWorkspace({
                   })
                 }
               >
-                Approve Screening
+                {article.screening_decision === "INCLUDE" &&
+                (article.company_applicability !== "CONFIRMED" ||
+                  article.active_mah !== "ACTIVE")
+                  ? "Await Product / MAH Confirmation"
+                  : "Approve Screening"}
               </button>
             </>
           )}
