@@ -1,3 +1,9 @@
+import type {
+  IcsrCriteriaAssessment,
+  PatientSafetyAssessment,
+  SafetyEvidenceExtraction,
+} from "@/lib/pv-decision-intelligence/types";
+
 export type ScreeningDecision =
   | "INCLUDE"
   | "EXCLUDE"
@@ -50,6 +56,9 @@ export interface ScreeningResponse {
   confidence: number;
   reason: ScreeningReason;
   findings: ScreeningFinding[];
+  safetyEvidence: SafetyEvidenceExtraction;
+  patientSafetyAssessment: PatientSafetyAssessment;
+  icsrAssessment: IcsrCriteriaAssessment;
   screenedAt: string;
   workflowStage: "SCREENING_COMPLETED";
 }
