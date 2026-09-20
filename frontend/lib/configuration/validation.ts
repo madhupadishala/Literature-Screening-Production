@@ -122,6 +122,52 @@ export function validateConfigurationPayload(
         );
       }
 
+      const activeValue =
+        value.active ?? value.authorizationActive ?? value.licenceActive;
+      const normalizedActive = String(activeValue ?? "").trim().toLowerCase();
+      if (
+        activeValue !== undefined &&
+        !["true", "false", "yes", "no", "1", "0", "active", "inactive", "withdrawn", "expired"].includes(normalizedActive)
+      ) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].active`,
+            "Licence active status must be a controlled boolean/active-state value.",
+          ),
+        );
+      }
+
+      if (!String(value.mah || value.marketingAuthorizationHolder || value.marketing_authorization_holder || "").trim()) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].mah`,
+            "Marketing Authorisation Holder is required for company/MAH applicability assessment.",
+          ),
+        );
+      }
+
+      if (!String(value.lifecycleStatus || value.investigationalOrMarketed || value.productLifecycle || "").trim()) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].lifecycleStatus`,
+            "Product lifecycle classification is required to distinguish marketed and investigational pathways.",
+          ),
+        );
+      }
+
+      if (!String(value.mahEffectiveFrom || value.licenceEffectiveFrom || value.effectiveFrom || "").trim()) {
+        warnings.push(
+          issue(
+            "warning",
+            `records[${index}].mahEffectiveFrom`,
+            "No MAH/licence effective-from date is configured; historical applicability may require manual review.",
+          ),
+        );
+      }
+
       if (!String(value.dosageForm || value.formulation || value.presentation || "").trim()) {
         warnings.push(
           issue(
