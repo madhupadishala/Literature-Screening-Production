@@ -94,9 +94,48 @@ function sourceContainsTerm(source: string, term: string): boolean {
   return Boolean(normalizedTerm) && normalizedSource.includes(` ${normalizedTerm} `);
 }
 
+function productMasterSourceTerms(productMaster: unknown): string[] {
+  if (!productMaster || typeof productMaster !== "object" || Array.isArray(productMaster)) {
+    return [];
+  }
+  const payload = productMaster as Record<string, unknown>;
+  const records = Array.isArray(payload.records) ? payload.records : [];
+  const terms = new Set<string>();
+
+  for (const item of records) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) continue;
+    const record = item as Record<string, unknown>;
+    for (const key of [
+      "brandName",
+      "genericName",
+      "inn",
+      "api",
+      "composition",
+      "chemicalNames",
+      "saltForms",
+      "synonyms",
+    ]) {
+      const value = record[key];
+      if (typeof value === "string") {
+        for (const part of value.split(/[|,;]+/)) {
+          const cleaned = part.trim();
+          if (cleaned) terms.add(cleaned);
+        }
+      } else if (Array.isArray(value)) {
+        for (const entry of value) {
+          if (typeof entry === "string" && entry.trim()) terms.add(entry.trim());
+        }
+      }
+    }
+  }
+
+  return [...terms];
+}
+
 function reconcileSuspectEvidence(input: {
   aiResult: HitsAIResult;
   request: HitsAgentRequest;
+  productMaster: unknown;
 }): {
   evidence: SuspectProductEvidence[];
   corrections: Array<{ from: string; to: string; reason: string }>;
@@ -115,6 +154,9 @@ function reconcileSuspectEvidence(input: {
         .filter(Boolean),
     ),
   ];
+  const configuredSourceTerms = productMasterSourceTerms(input.productMaster).filter((term) =>
+    sourceContainsTerm(source, term),
+  );
   const corrections: Array<{ from: string; to: string; reason: string }> = [];
 
   const evidence = input.aiResult.extractedSuspectEvidence.map((item) => {
@@ -123,17 +165,28 @@ function reconcileSuspectEvidence(input: {
     }
 
     const reported = normalizeProductText(item.reportedProduct);
-    const candidates = detectedProducts.filter(
-      (candidate) =>
-        sourceContainsTerm(source, candidate) &&
-        editDistance(normalizeProductText(candidate), reported) <= 2,
-    );
+    const candidates = [
+      ...detectedProducts.filter(
+        (candidate) =>
+          sourceContainsTerm(source, candidate) &&
+          editDistance(normalizeProductText(candidate), reported) <= 2,
+      ),
+      ...configuredSourceTerms.filter(
+        (candidate) =>
+          editDistance(normalizeProductText(candidate), reported) <= 2,
+      ),
+    ];
+    const uniqueCandidates = [
+      ...new Map(
+        candidates.map((candidate) => [normalizeProductText(candidate), candidate]),
+      ).values(),
+    ];
 
-    if (candidates.length !== 1) {
+    if (uniqueCandidates.length !== 1) {
       return item;
     }
 
-    const corrected = candidates[0];
+    const corrected = uniqueCandidates[0];
     corrections.push({
       from: item.reportedProduct,
       to: corrected,
@@ -193,7 +246,11 @@ export class HitsAgent {
       });
 
       const aiResult = parseHitsAIResult(aiResponse.content);
-      const productReconciliation = reconcileSuspectEvidence({ aiResult, request });
+      const productReconciliation = reconcileSuspectEvidence({
+        aiResult,
+        request,
+        productMaster: runtimeConfiguration.productMaster,
+      });
       const pvDecision = assessPVDecisionArchitecture({
         safetyEvidence: aiResult.safetyEvidence,
         detectedEvents: aiResult.detectedEvents,
