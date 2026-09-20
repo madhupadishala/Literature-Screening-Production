@@ -56,9 +56,9 @@ export interface ScreeningResponse {
   confidence: number;
   reason: ScreeningReason;
   findings: ScreeningFinding[];
-  safetyEvidence: SafetyEvidenceExtraction;
-  patientSafetyAssessment: PatientSafetyAssessment;
-  icsrAssessment: IcsrCriteriaAssessment;
+  safetyEvidence?: SafetyEvidenceExtraction;
+  patientSafetyAssessment?: PatientSafetyAssessment;
+  icsrAssessment?: IcsrCriteriaAssessment;
   screenedAt: string;
   workflowStage: "SCREENING_COMPLETED";
 }
