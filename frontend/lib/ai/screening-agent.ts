@@ -15,6 +15,7 @@ import { parseScreeningAIResult } from "./screening-result-parser";
 import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
 import type { CompanySuspectAssessment } from "@/lib/pharmaceutical-intelligence/types";
 import { assessPVDecisionArchitecture } from "@/lib/pv-decision-intelligence/assessment-engine";
+import { deriveGovernedScreeningDecision } from "@/lib/literature/screening/governed-decision";
 
 export interface ScreeningAgentResponse extends ScreeningResponse {
   ragContext: RAGMergedContext;
@@ -70,32 +71,36 @@ export class ScreeningAgent {
       });
 
       const parsed = parseScreeningAIResult(completion.content);
+      const countryOfIncidence =
+        parsed.regulatoryEvidence.countryOfIncidenceStatus === "PRESENT"
+          ? parsed.regulatoryEvidence.countryOfIncidence
+          : undefined;
+      const governedSuspectEvidence = parsed.extractedSuspectEvidence.map((evidence) => ({
+        ...evidence,
+        countryOfInterest: evidence.countryOfInterest || countryOfIncidence,
+      }));
       const pvDecision = assessPVDecisionArchitecture({
         safetyEvidence: parsed.safetyEvidence,
-        detectedEvents: [],
-        detectedSpecialSituations: [],
-        suspectEvidence: parsed.extractedSuspectEvidence,
+        detectedEvents: parsed.regulatoryEvidence.clinicalEvents.map((event) => event.event),
+        detectedSpecialSituations:
+          parsed.safetyEvidence.specialSituation === "PRESENT"
+            ? [parsed.safetyEvidence.specialSituationEvidence || "PV special situation"]
+            : [],
+        suspectEvidence: governedSuspectEvidence,
         reporterIdentifiers: request.article.authors,
       });
-      const companySuspectAssessments = parsed.extractedSuspectEvidence.map((evidence) =>
+      const companySuspectAssessments = governedSuspectEvidence.map((evidence) =>
         assessCompanySuspect({
           evidence,
           productMaster: runtimeConfiguration.productMaster,
         }),
       );
-      const productReviewRequired = companySuspectAssessments.some(
-        (assessment) => assessment.manualReviewRequired,
-      );
-      const decisionReviewRequired =
-        productReviewRequired ||
-        pvDecision.patientSafety.manualReviewRequired ||
-        pvDecision.icsr.manualReviewRequired;
-      const governedDecision =
-        pvDecision.patientSafety.relevance === "NOT_RELEVANT"
-          ? "EXCLUDE"
-          : decisionReviewRequired
-            ? "REVIEW"
-            : parsed.decision;
+      const governedDecision = deriveGovernedScreeningDecision({
+        aiDecision: parsed.decision,
+        patientSafety: pvDecision.patientSafety,
+        icsr: pvDecision.icsr,
+        companyAssessments: companySuspectAssessments,
+      });
 
       recordAIMetric({
         operation: "screening",
@@ -134,6 +139,8 @@ export class ScreeningAgent {
             companySuspectAssessments[0]?.knowledgeVersion || null,
           patientSafetyAssessment: pvDecision.patientSafety,
           icsrAssessment: pvDecision.icsr,
+          regulatoryEvidence: parsed.regulatoryEvidence,
+          extractedSuspectEvidence: governedSuspectEvidence,
           companySuspectAssessments,
         },
       });
@@ -148,6 +155,8 @@ export class ScreeningAgent {
         safetyEvidence: parsed.safetyEvidence,
         patientSafetyAssessment: pvDecision.patientSafety,
         icsrAssessment: pvDecision.icsr,
+        regulatoryEvidence: parsed.regulatoryEvidence,
+        extractedSuspectEvidence: governedSuspectEvidence,
         screenedAt: new Date().toISOString(),
         workflowStage: "SCREENING_COMPLETED",
         ragContext: ragResponse.context,

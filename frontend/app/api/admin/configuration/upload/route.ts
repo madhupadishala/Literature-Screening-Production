@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
 import {
@@ -9,11 +10,7 @@ import {
   CONFIGURATION_RESOURCE_TYPES,
   type ConfigurationResourceType,
 } from "@/lib/configuration/types";
-import {
-  quarantineConfigurationUpload,
-  storeConfigurationUpload,
-} from "@/lib/configuration/storage";
-import { parseConfigurationUpload } from "@/lib/configuration/parser";
+import { parseConfigurationFile } from "@/lib/configuration/parser";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import { requirePermission } from "@/lib/rbac/guard";
 
@@ -34,19 +31,13 @@ function resourceTypeFrom(value: FormDataEntryValue | null) {
 
 export async function POST(request: NextRequest): Promise<Response> {
   let uploadId: string | null = null;
-  let stored:
-    | Awaited<ReturnType<typeof storeConfigurationUpload>>
-    | null = null;
   let resourceType: ConfigurationResourceType | null = null;
-  let tenantKey = "";
 
   try {
     const principal = await requirePermission(
       request,
       PERMISSIONS.CONFIG_UPLOAD,
     );
-    tenantKey = principal.tenantKey;
-
     const form = await request.formData();
     resourceType = resourceTypeFrom(form.get("resourceType"));
 
@@ -79,26 +70,23 @@ export async function POST(request: NextRequest): Promise<Response> {
       );
     }
 
-    stored = await storeConfigurationUpload({
-      tenantKey,
-      resourceType,
-      file,
-    });
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const sha256 = createHash("sha256").update(buffer).digest("hex");
+    const sourceStorageKey = `postgresql:configuration-payload/${principal.tenantKey}/${resourceType.toLowerCase()}/${sha256}`;
 
     uploadId = await recordConfigurationUpload({
       principal,
       resourceType,
-      originalFilename: stored.originalFilename,
-      mediaType: stored.mediaType,
-      sizeBytes: stored.sizeBytes,
-      sha256: stored.sha256,
-      storageKey: stored.storageKey,
+      originalFilename: file.name,
+      mediaType: file.type || "application/octet-stream",
+      sizeBytes: buffer.length,
+      sha256,
+      storageKey: sourceStorageKey,
     });
 
-    const payload = await parseConfigurationUpload({
+    const payload = await parseConfigurationFile({
       resourceType,
-      absolutePath: stored.absolutePath,
-      originalFilename: stored.originalFilename,
+      file,
     });
 
     await updateConfigurationUploadStatus({
@@ -123,9 +111,9 @@ export async function POST(request: NextRequest): Promise<Response> {
         "Configuration uploaded through tenant Admin Console.",
       upload: {
         uploadId,
-        sourceFilename: stored.originalFilename,
-        sourceMediaType: stored.mediaType,
-        sourceStorageKey: stored.storageKey,
+        sourceFilename: file.name,
+        sourceMediaType: file.type || "application/octet-stream",
+        sourceStorageKey,
       },
     });
 
@@ -145,18 +133,10 @@ export async function POST(request: NextRequest): Promise<Response> {
     if (uploadId) {
       await updateConfigurationUploadStatus({
         uploadId,
-        status: stored && resourceType ? "quarantined" : "failed",
+        status: "failed",
         failureCode: "CONFIGURATION_PARSE_FAILED",
         failureReason:
           error instanceof Error ? error.message : String(error),
-        storageKey:
-          stored && resourceType
-            ? await quarantineConfigurationUpload({
-                tenantKey,
-                resourceType,
-                stored,
-              }).catch(() => stored?.storageKey)
-            : undefined,
       }).catch(() => undefined);
     }
 

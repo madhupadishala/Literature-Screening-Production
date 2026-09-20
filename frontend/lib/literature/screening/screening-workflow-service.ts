@@ -7,6 +7,7 @@ import { screeningValidator } from "@/lib/ai/screening-validator";
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
+import { finalIncludeEligibility } from "./governed-decision";
 import type {
   ScreeningDecision,
   ScreeningFinding,
@@ -137,6 +138,13 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
   const icsrAssessment = isRecord(result.icsrAssessment)
     ? (result.icsrAssessment as unknown as NonNullable<ScreeningWorklistRecord["icsrAssessment"]>)
     : undefined;
+  const regulatoryEvidence = isRecord(result.regulatoryEvidence)
+    ? (result.regulatoryEvidence as unknown as NonNullable<ScreeningWorklistRecord["regulatoryEvidence"]>)
+    : undefined;
+  const extractedSuspectEvidence = Array.isArray(result.extractedSuspectEvidence)
+    ? (result.extractedSuspectEvidence
+        .filter(isRecord) as unknown as NonNullable<ScreeningWorklistRecord["extractedSuspectEvidence"]>)
+    : undefined;
   const companySuspectAssessments = Array.isArray(result.companySuspectAssessments)
     ? result.companySuspectAssessments
         .filter(isRecord) as unknown as NonNullable<ScreeningWorklistRecord["companySuspectAssessments"]>
@@ -165,6 +173,8 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
     safetyEvidence,
     patientSafetyAssessment,
     icsrAssessment,
+    regulatoryEvidence,
+    extractedSuspectEvidence,
     companySuspectAssessments,
     qcRequired:
       executionFailed ||
@@ -506,6 +516,18 @@ export async function saveScreeningReview(input: {
   if (!["pending", "approved", "excluded", "flagged"].includes(review.status)) {
     throw new Error("Invalid screening review status.");
   }
+  if (review.status === "approved" && review.finalDecision !== "INCLUDE") {
+    throw new Error("Only an INCLUDE Screening decision can be finalized as approved.");
+  }
+  if (review.status === "excluded" && review.finalDecision !== "EXCLUDE") {
+    throw new Error("Excluded Screening review must carry a final EXCLUDE decision.");
+  }
+  if (
+    (review.status === "flagged" || review.status === "pending") &&
+    review.finalDecision !== "REVIEW"
+  ) {
+    throw new Error("Pending or flagged Screening review must remain REVIEW.");
+  }
   const workflowState =
     review.status === "approved" || review.status === "excluded"
       ? "SCREENING_COMPLETE"
@@ -514,8 +536,11 @@ export async function saveScreeningReview(input: {
 
   try {
     await client.query("BEGIN");
-    const target = await client.query<{ id: string }>(
-      `SELECT result.id
+    const target = await client.query<{
+      id: string;
+      result_payload: Record<string, unknown>;
+    }>(
+      `SELECT result.id, result.result_payload
        FROM screening_results result
        JOIN literature_packages package ON package.id = result.package_id
        WHERE result.tenant_id = $1 AND package.id = $2 AND result.id = $3
@@ -523,6 +548,20 @@ export async function saveScreeningReview(input: {
       [input.principal.tenantId, review.packageId, review.screeningResultId],
     );
     if (!target.rows[0]) throw new Error("Screening result was not found in the active tenant.");
+
+    if (review.status === "approved" && review.finalDecision === "INCLUDE") {
+      const storedPayload = recordValue(target.rows[0].result_payload);
+      const storedResult = recordValue(storedPayload.result);
+      const companyAssessments = Array.isArray(storedResult.companySuspectAssessments)
+        ? (storedResult.companySuspectAssessments.filter(isRecord) as unknown as Parameters<typeof finalIncludeEligibility>[0])
+        : [];
+      const eligibility = finalIncludeEligibility(companyAssessments);
+      if (!eligibility.eligible) {
+        throw new Error(
+          `Screening INCLUDE cannot be finalized: ${eligibility.reason}`,
+        );
+      }
+    }
 
     const existing = await client.query<{ review_version: number }>(
       `SELECT review_version FROM screening_reviews
