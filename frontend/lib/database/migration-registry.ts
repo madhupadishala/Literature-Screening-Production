@@ -102,4 +102,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "016_report_definitions.sql",
     required: true,
   },
+  {
+    id: "017",
+    name: "Validation Packages",
+    filename: "017_validation_packages.sql",
+    required: true,
+  },
 ] as const;
