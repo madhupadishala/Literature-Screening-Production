@@ -474,7 +474,7 @@ export default function ScreeningPage() {
         <Metric label="Downstream Outputs" value={outputCount} tone="primary" />
         <Metric
           label="Serious Findings"
-          value={articles.filter((article) => article.seriousness === "Serious").length}
+          value={articles.filter((article) => article.seriousness.includes("SERIOUS")).length}
           tone="critical"
         />
       </section>
@@ -503,9 +503,31 @@ export default function ScreeningPage() {
               Refresh
             </button>
 
-            <a href="/api/screening/export" download="clinixai-screening-report.csv">
-              Export Screening CSV
-            </a>
+            <button
+              type="button"
+              onClick={async () => {
+                const response = await fetch("/api/reports/hits-screening", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({}),
+                });
+                if (!response.ok) {
+                  showToast("Governed screening report could not be generated.");
+                  return;
+                }
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = "clinixai-literature-line-listing.xlsx";
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                URL.revokeObjectURL(url);
+              }}
+            >
+              Export Governed XLSX
+            </button>
           </div>
         </div>
 
