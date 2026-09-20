@@ -14,6 +14,7 @@ import { screeningPromptBuilder } from "./screening-prompt-builder";
 import { parseScreeningAIResult } from "./screening-result-parser";
 import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
 import type { CompanySuspectAssessment } from "@/lib/pharmaceutical-intelligence/types";
+import { assessPVDecisionArchitecture } from "@/lib/pv-decision-intelligence/assessment-engine";
 
 export interface ScreeningAgentResponse extends ScreeningResponse {
   ragContext: RAGMergedContext;
@@ -69,6 +70,12 @@ export class ScreeningAgent {
       });
 
       const parsed = parseScreeningAIResult(completion.content);
+      const pvDecision = assessPVDecisionArchitecture({
+        safetyEvidence: parsed.safetyEvidence,
+        detectedEvents: [],
+        detectedSpecialSituations: [],
+        suspectEvidence: parsed.extractedSuspectEvidence,
+      });
       const companySuspectAssessments = parsed.extractedSuspectEvidence.map((evidence) =>
         assessCompanySuspect({
           evidence,
@@ -78,7 +85,16 @@ export class ScreeningAgent {
       const productReviewRequired = companySuspectAssessments.some(
         (assessment) => assessment.manualReviewRequired,
       );
-      const governedDecision = productReviewRequired ? "REVIEW" : parsed.decision;
+      const decisionReviewRequired =
+        productReviewRequired ||
+        pvDecision.patientSafety.manualReviewRequired ||
+        pvDecision.icsr.manualReviewRequired;
+      const governedDecision =
+        pvDecision.patientSafety.relevance === "NOT_RELEVANT"
+          ? "EXCLUDE"
+          : decisionReviewRequired
+            ? "REVIEW"
+            : parsed.decision;
 
       recordAIMetric({
         operation: "screening",
@@ -115,6 +131,8 @@ export class ScreeningAgent {
           configurationSnapshot: runtimeConfiguration.snapshot,
           pharmaceuticalKnowledgeVersion:
             companySuspectAssessments[0]?.knowledgeVersion || null,
+          patientSafetyAssessment: pvDecision.patientSafety,
+          icsrAssessment: pvDecision.icsr,
           companySuspectAssessments,
         },
       });
@@ -126,6 +144,9 @@ export class ScreeningAgent {
         confidence: parsed.confidence,
         reason: parsed.reason,
         findings: parsed.findings,
+        safetyEvidence: parsed.safetyEvidence,
+        patientSafetyAssessment: pvDecision.patientSafety,
+        icsrAssessment: pvDecision.icsr,
         screenedAt: new Date().toISOString(),
         workflowStage: "SCREENING_COMPLETED",
         ragContext: ragResponse.context,
