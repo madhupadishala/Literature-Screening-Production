@@ -7,6 +7,7 @@ import { screeningValidator } from "@/lib/ai/screening-validator";
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
+import { finalIncludeEligibility } from "./governed-decision";
 import type {
   ScreeningDecision,
   ScreeningFinding,
@@ -552,18 +553,12 @@ export async function saveScreeningReview(input: {
       const storedPayload = recordValue(target.rows[0].result_payload);
       const storedResult = recordValue(storedPayload.result);
       const companyAssessments = Array.isArray(storedResult.companySuspectAssessments)
-        ? storedResult.companySuspectAssessments.filter(isRecord)
+        ? (storedResult.companySuspectAssessments.filter(isRecord) as unknown as Parameters<typeof finalIncludeEligibility>[0])
         : [];
-      const hasConfirmedActiveCompanyProduct = companyAssessments.some(
-        (assessment) =>
-          assessment.companySuspect === true &&
-          assessment.licenceStatus === "ACTIVE" &&
-          assessment.conclusion === "CONFIRMED" &&
-          assessment.manualReviewRequired === false,
-      );
-      if (!hasConfirmedActiveCompanyProduct) {
+      const eligibility = finalIncludeEligibility(companyAssessments);
+      if (!eligibility.eligible) {
         throw new Error(
-          "Screening INCLUDE cannot be finalized until an active company product/MAH is confirmed by governed Product Master data.",
+          `Screening INCLUDE cannot be finalized: ${eligibility.reason}`,
         );
       }
     }
