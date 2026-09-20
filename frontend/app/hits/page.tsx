@@ -137,12 +137,20 @@ export default function HitsReviewPage() {
   });
 
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const queueRef = useRef<HTMLElement | null>(null);
 
   const showToast = useCallback((message: string) => {
     if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
     setToast(message);
     toastTimeoutRef.current = setTimeout(() => setToast(""), 3000);
   }, []);
+
+  function backToHitsQueue() {
+    setSelectedHit(null);
+    window.requestAnimationFrame(() => {
+      queueRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
 
   const loadHits = useCallback(async () => {
     try {
@@ -423,7 +431,7 @@ export default function HitsReviewPage() {
         </button>
       </div>
 
-      <section className="panel">
+      <section className="panel" ref={queueRef}>
         <div className="panel-header">
           <div>
             <h2>Review Execution Queue</h2>
@@ -551,8 +559,8 @@ export default function HitsReviewPage() {
               <h2>Interactive Workflow Decision</h2>
               <p>ID Context mapping: {selectedHit.package_id}</p>
             </div>
-            <button className="close-panel-btn" onClick={() => setSelectedHit(null)}>
-              Close View
+            <button className="close-panel-btn" onClick={backToHitsQueue}>
+              ← Back to Hits Queue
             </button>
           </div>
 
