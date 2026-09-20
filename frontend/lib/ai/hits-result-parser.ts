@@ -129,6 +129,19 @@ function optionalString(record: Record<string, unknown>, key: string): string | 
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
 }
 
+function optionalEvidenceValue(
+  record: Record<string, unknown>,
+  key: string,
+): string | undefined {
+  const value = optionalString(record, key);
+  if (!value) return undefined;
+  const sentinel = value.toUpperCase().replace(/[\s-]+/g, "_");
+  if (["UNRESOLVED", "UNKNOWN", "NOT_AVAILABLE", "N/A", "NA"].includes(sentinel)) {
+    return undefined;
+  }
+  return value;
+}
+
 function evidenceStatus(value: unknown): EvidenceStatus {
   return ["PRESENT", "ABSENT", "UNRESOLVED", "CONFLICTING"].includes(String(value))
     ? (value as EvidenceStatus)
@@ -208,7 +221,7 @@ export function normalizeSuspectEvidence(value: unknown): SuspectProductEvidence
       reportedFormulation: optional("reportedFormulation"),
       reportedAdministrationRoute: optional("reportedAdministrationRoute"),
       presentationQualifierRole: role,
-      countryOfInterest: optional("countryOfInterest"),
+      countryOfInterest: optionalEvidenceValue(record, "countryOfInterest"),
       relevantDate: optional("relevantDate"),
       sourceEvidence: optional("sourceEvidence"),
       role: productRole,
