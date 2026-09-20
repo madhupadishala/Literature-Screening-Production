@@ -194,3 +194,108 @@ export async function parseConfigurationUpload(input: {
     `${input.resourceType} supports JSON, CSV, and XLSX uploads.`,
   );
 }
+
+
+async function parseExcelBuffer(
+  buffer: Buffer,
+): Promise<Record<string, unknown>[]> {
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(buffer as unknown as ArrayBuffer);
+  const worksheet = workbook.worksheets[0];
+  if (!worksheet) return [];
+
+  const headerRow = worksheet.getRow(1);
+  const rawHeaders = Array.isArray(headerRow.values)
+    ? headerRow.values.slice(1)
+    : Object.values(headerRow.values);
+  const headers = rawHeaders.map((value) => normalizeHeader(value));
+  const records: Record<string, unknown>[] = [];
+
+  worksheet.eachRow((row, rowNumber) => {
+    if (rowNumber === 1) return;
+    const values = Array.isArray(row.values)
+      ? row.values.slice(1)
+      : Object.values(row.values);
+    const record = Object.fromEntries(
+      headers.map((header, index) => {
+        const cell = values[index];
+        const value =
+          cell && typeof cell === "object" && "text" in cell
+            ? String((cell as { text: unknown }).text)
+            : cell ?? "";
+        return [header, value];
+      }),
+    );
+    if (Object.values(record).some((value) => String(value).trim())) {
+      records.push(record);
+    }
+  });
+
+  return records;
+}
+
+export async function parseConfigurationFile(input: {
+  resourceType: ConfigurationResourceType;
+  file: File;
+}): Promise<unknown> {
+  const extension = path.extname(input.file.name).toLowerCase();
+  const buffer = Buffer.from(await input.file.arrayBuffer());
+
+  if (input.resourceType === "CLIENT_GUIDELINE") {
+    if (extension === ".txt" || extension === ".md") {
+      return {
+        documentType: "client_guideline",
+        content: buffer.toString("utf8"),
+        extractionMethod: "plain_text",
+      };
+    }
+
+    if (extension === ".docx") {
+      const result = await mammoth.extractRawText({ buffer });
+      return {
+        documentType: "client_guideline",
+        content: result.value,
+        extractionMethod: "mammoth_docx",
+        extractionMessages: result.messages,
+      };
+    }
+
+    if (extension === ".pdf") {
+      const result = await extractText(new Uint8Array(buffer), {
+        mergePages: true,
+      });
+      return {
+        documentType: "client_guideline",
+        content: result.text,
+        pageCount: result.totalPages,
+        extractionMethod: "unpdf",
+      };
+    }
+
+    throw new Error(
+      "Client Guidelines support PDF, DOCX, TXT, and Markdown files.",
+    );
+  }
+
+  if (extension === ".json") {
+    return JSON.parse(buffer.toString("utf8"));
+  }
+
+  if (extension === ".csv") {
+    return normalizeRecordPayload(
+      input.resourceType,
+      parseCsv(buffer.toString("utf8")),
+    );
+  }
+
+  if (extension === ".xlsx") {
+    return normalizeRecordPayload(
+      input.resourceType,
+      await parseExcelBuffer(buffer),
+    );
+  }
+
+  throw new Error(
+    `${input.resourceType} supports JSON, CSV, and XLSX uploads.`,
+  );
+}
