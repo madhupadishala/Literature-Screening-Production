@@ -60,13 +60,19 @@ When the evidence is absent, conflicting, or insufficient, choose needs_manual_r
 
 OBJECTIVE
 
-Determine whether the publication should proceed to Literature Screening.
+Determine whether the publication contains potential human patient-safety information and should proceed to Literature Screening. Patient-safety relevance is assessed before any company-product or MAH applicability decision.
 
 --------------------------------------------------
 
 EVALUATION CHECKLIST
 
-Evaluate company suspect product, generic or brand name, active ingredient, adverse event, seriousness, special situation, human patient, literature case report, safety relevance, country of interest, duplicate indication, signal relevance, and medical relevance only when supported by the supplied evidence.
+Evaluate, in this order:
+1. Medicinal products and their exact reported roles.
+2. Human patient-safety evidence: human/animal population, medicinal-product exposure, adverse event/reaction, and PV special situations.
+3. Generic literature ICSR evidence: identifiable patient, identifiable reporter, suspect product, and adverse event/reaction or special situation.
+4. Duplicate indication and other medical relevance.
+
+Do not decide company ownership, Product Master membership, MAH status, licence status, or final client applicability. Those are deterministic downstream decisions.
 
 --------------------------------------------------
 
@@ -94,7 +100,7 @@ ${buildEnterpriseContext(input.ragContext)}
 
 ACTIVE TENANT CONFIGURATION
 
-The following Product Master, Literature Calendar, client guidelines, outcome template, and literature-source records are effective for this tenant. Use them as deterministic tenant rules. Do not treat an unlisted product as a company product.
+The following tenant configuration may include Product Master, Literature Calendar, client guidelines, outcome template, and literature-source records. Use it only as contextual governed configuration. Do not decide company ownership in the AI response. If Product Master is absent, that means company applicability is unresolved, not that a reported medicine is a non-company product.
 
 ${governedConfiguration(input.runtimeConfiguration)}
 
@@ -112,6 +118,19 @@ Return strict JSON only, without markdown, explanation, or additional text.
   "detectedProducts": [],
   "detectedEvents": [],
   "detectedSpecialSituations": [],
+  "safetyEvidence": {
+    "populationType": "HUMAN | ANIMAL | MIXED | UNRESOLVED",
+    "patientIdentifiable": "PRESENT | ABSENT | UNRESOLVED | CONFLICTING",
+    "reporterIdentifiable": "PRESENT | ABSENT | UNRESOLVED | CONFLICTING",
+    "medicinalProductExposure": "PRESENT | ABSENT | UNRESOLVED | CONFLICTING",
+    "adverseEventOrReaction": "PRESENT | ABSENT | UNRESOLVED | CONFLICTING",
+    "specialSituation": "PRESENT | ABSENT | UNRESOLVED | CONFLICTING",
+    "patientEvidence": "short source span supporting patient status",
+    "reporterEvidence": "short source span supporting reporter status",
+    "productEvidence": "short source span supporting medicinal-product exposure",
+    "eventEvidence": "short source span supporting adverse event/reaction",
+    "specialSituationEvidence": "short source span supporting special situation"
+  },
   "extractedSuspectEvidence": [
     {
       "reportedProduct": "exact suspect wording from the source",
@@ -138,6 +157,10 @@ Return strict JSON only, without markdown, explanation, or additional text.
 classification must be one of: hit, no_hit, needs_manual_review.
 recommendedNextStep must be one of: send_to_screening, reject, manual_review.
 knowledgeCitationIds must contain only citation IDs explicitly supplied above and directly supporting the decision.
-Extract every medicinal product separately, including multiple suspects, concomitants, treatment products, exposures, and product mentions. Preserve exact source wording and location. Treat a fixed combination as one reported suspect entity while preserving its components. Record contradictions without resolving them silently. Distinguish a formulation/presentation qualifier from an administration circumstance. Do not decide company ownership, licence status, or pharmaceutical equivalence; deterministic governed assessment occurs after extraction.
+Extract every medicinal product separately, including multiple suspects, concomitants, treatment products, exposures, and product mentions. Preserve exact source wording and location. Treat a fixed combination as one reported suspect entity while preserving its components. Record contradictions without resolving them silently. Distinguish a formulation/presentation qualifier from an administration circumstance.
+
+For safetyEvidence, extract evidence only. "PRESENT" requires explicit support in the supplied article; "ABSENT" requires evidence that the element is absent or clearly inapplicable; otherwise use "UNRESOLVED". Do not convert silence into ABSENT. Patient safety is independent of company ownership. A medicine may be safety relevant even when company applicability cannot yet be determined.
+
+Do not decide company ownership, licence status, MAH status, or pharmaceutical equivalence; deterministic governed assessment occurs after extraction.
 `.trim();
 }
