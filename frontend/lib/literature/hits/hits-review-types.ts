@@ -10,6 +10,19 @@ export type HitsReviewDecision =
   | "reject_hit"
   | "needs_second_review";
 
+export interface HitsProductAssessment {
+  reported_product: string;
+  normalized_product: string;
+  matched_term: string;
+  relationship: string;
+  company_product_status: string;
+  mah_status: string;
+  country_of_interest: string;
+  product_id?: string;
+  preferred_name?: string;
+  manual_review_required: boolean;
+}
+
 export interface HitsWorklistRecord {
   hit_id: string;
   hits_result_id: string;
@@ -30,6 +43,7 @@ export interface HitsWorklistRecord {
   patient_safety_status: string;
   icsr_status: string;
   mah_status: string;
+  product_assessments: HitsProductAssessment[];
   author_country: string;
   country_of_interest: string;
   mah_country_match: boolean;
