@@ -354,7 +354,13 @@ export default function HitsReviewPage() {
           <em>Open / Collapse</em>
         </summary>
         <div className="enterprise-search-body">
-          <AdHocSearchWorkspace />
+          <AdHocSearchWorkspace
+            onEvidencePackagesCreated={async () => {
+              setSelectedHit(null);
+              await loadHits();
+              showToast("Governed Hits worklist refreshed with the latest result version.");
+            }}
+          />
         </div>
       </details>
 

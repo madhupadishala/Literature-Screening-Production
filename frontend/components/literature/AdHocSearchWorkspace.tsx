@@ -57,7 +57,11 @@ function csvCell(value: unknown): string {
   return `"${text.replaceAll('"', '""')}"`;
 }
 
-export default function AdHocSearchWorkspace() {
+export default function AdHocSearchWorkspace({
+  onEvidencePackagesCreated,
+}: {
+  onEvidencePackagesCreated?: () => void | Promise<void>;
+}) {
   const [form, setForm] = useState(EMPTY_FORM);
   const [sources, setSources] = useState<Source[]>([]);
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
@@ -199,9 +203,12 @@ export default function AdHocSearchWorkspace() {
       }
 
       setMessage(
-        `${payload.data.createdCount} governed Evidence Package(s) created. Open Workflow to continue to Hits.`,
+        `${payload.data.createdCount} governed Evidence Package(s) created. Hits worklist refreshed.`,
       );
       setSelectedResults([]);
+      if (onEvidencePackagesCreated) {
+        await onEvidencePackagesCreated();
+      }
     } catch (error) {
       setMessage(error instanceof Error ? error.message : String(error));
     } finally {
