@@ -308,11 +308,15 @@ export async function listHitsForReview(input: {
         ON reviewer.id = review.reviewed_by
       LEFT JOIN LATERAL (
         SELECT
-          count(*) FILTER (WHERE assessment.classification = 'duplicate')
-            AS duplicate_source_count,
-          max(assessment.confidence) FILTER (
-            WHERE assessment.classification = 'duplicate'
-          ) AS duplicate_confidence,
+          GREATEST(
+            count(DISTINCT (source.source_key, source.source_record_id)) - 1,
+            0
+          ) AS duplicate_source_count,
+          CASE
+            WHEN count(DISTINCT (source.source_key, source.source_record_id)) > 1
+              THEN 1::numeric
+            ELSE NULL
+          END AS duplicate_confidence,
           (
             SELECT jsonb_agg(DISTINCT signal)
             FROM duplicate_assessments signal_assessment
@@ -323,9 +327,9 @@ export async function listHitsForReview(input: {
               AND signal_assessment.canonical_package_id = latest.package_id
               AND signal_assessment.classification = 'duplicate'
           ) AS duplicate_signals
-        FROM duplicate_assessments assessment
-        WHERE assessment.tenant_id = latest.tenant_id
-          AND assessment.canonical_package_id = latest.package_id
+        FROM literature_package_sources source
+        WHERE source.tenant_id = latest.tenant_id
+          AND source.package_id = latest.package_id
       ) duplicates ON true
       WHERE latest.tenant_id = $1
         AND ($2::text IS NULL OR COALESCE(review.review_status, 'pending') = $2)
