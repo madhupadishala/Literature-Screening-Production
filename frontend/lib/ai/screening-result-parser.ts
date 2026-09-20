@@ -133,6 +133,16 @@ function normalizeRegulatoryEvidence(value: unknown): ScreeningRegulatoryEvidenc
       ? (candidate as SafetyEvidenceExtraction["patientIdentifiable"])
       : "UNRESOLVED";
 
+  const countryOfIncidence =
+    typeof record.countryOfIncidence === "string" && record.countryOfIncidence.trim()
+      ? record.countryOfIncidence.trim()
+      : undefined;
+  const rawCountryStatus = status(record.countryOfIncidenceStatus);
+  const countryOfIncidenceStatus =
+    rawCountryStatus === "ABSENT" && !countryOfIncidence
+      ? "UNRESOLVED"
+      : rawCountryStatus;
+
   return {
     publicationClassification,
     publicationClassificationEvidence:
@@ -146,11 +156,8 @@ function normalizeRegulatoryEvidence(value: unknown): ScreeningRegulatoryEvidenc
       typeof record.patientPiiEvidence === "string" && record.patientPiiEvidence.trim()
         ? record.patientPiiEvidence.trim()
         : undefined,
-    countryOfIncidenceStatus: status(record.countryOfIncidenceStatus),
-    countryOfIncidence:
-      typeof record.countryOfIncidence === "string" && record.countryOfIncidence.trim()
-        ? record.countryOfIncidence.trim()
-        : undefined,
+    countryOfIncidenceStatus,
+    countryOfIncidence,
     countryOfIncidenceEvidence:
       typeof record.countryOfIncidenceEvidence === "string" &&
       record.countryOfIncidenceEvidence.trim()
