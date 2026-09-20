@@ -114,12 +114,16 @@ export async function createValidationPackagesFromSearch(input: {
     const rows = [...groupRows].sort((a, b) => richness(b) - richness(a));
     const primary = rows[0];
     const sourceResultIds = rows.map((row) => row.id).sort();
+    const stableConfigurationSnapshot = {
+      ...configurationSnapshot,
+      capturedAt: undefined,
+    };
     const fingerprint = sha256(
       JSON.stringify({
         searchId: primary.search_id,
         identityKey: primary.dedupe_key,
         sourceResultIds,
-        configurationSnapshot,
+        configurationSnapshot: stableConfigurationSnapshot,
       }),
     );
     const validationKey = `VAL-${fingerprint.slice(0, 24)}`;
@@ -179,62 +183,101 @@ export async function createValidationPackagesFromSearch(input: {
     const serialized = JSON.stringify(payload);
     const contentHash = sha256(serialized);
 
-    const inserted = await pool.query<{
+    const compatibleExisting = await pool.query<{
       id: string;
+      validation_key: string;
+      content_sha256: string;
       handoff_package_id: string | null;
     }>(
-      `INSERT INTO literature_validation_packages (
-         tenant_id,
-         validation_key,
-         search_id,
-         identity_key,
-         selected_result_ids,
-         payload,
-         content_sha256,
-         created_by
-       )
-       VALUES ($1,$2,$3,$4,$5::jsonb,$6::jsonb,$7,$8)
-       ON CONFLICT (tenant_id, validation_key) DO NOTHING
-       RETURNING id, handoff_package_id`,
+      `SELECT id, validation_key, content_sha256, handoff_package_id
+       FROM literature_validation_packages
+       WHERE tenant_id = $1
+         AND search_id = $2
+         AND identity_key = $3
+         AND selected_result_ids = $4::jsonb
+         AND (payload->'configuration_snapshot' - 'capturedAt')
+           = ($5::jsonb - 'capturedAt')
+       ORDER BY (handoff_package_id IS NOT NULL) DESC, created_at ASC
+       LIMIT 1`,
       [
         input.principal.tenantId,
-        validationKey,
         primary.search_id,
         primary.dedupe_key,
         JSON.stringify(sourceResultIds),
-        serialized,
-        contentHash,
-        input.principal.userId,
+        JSON.stringify(configurationSnapshot),
       ],
     );
 
     let validationPackageId: string;
+    let effectiveValidationKey = validationKey;
+    let effectiveContentHash = contentHash;
     let handoffPackageId: string | null;
     let reused = false;
 
-    if (inserted.rows[0]) {
-      validationPackageId = inserted.rows[0].id;
-      handoffPackageId = inserted.rows[0].handoff_package_id;
-    } else {
+    if (compatibleExisting.rows[0]) {
       reused = true;
-      const existing = await pool.query<{
+      validationPackageId = compatibleExisting.rows[0].id;
+      effectiveValidationKey = compatibleExisting.rows[0].validation_key;
+      effectiveContentHash = compatibleExisting.rows[0].content_sha256;
+      handoffPackageId = compatibleExisting.rows[0].handoff_package_id;
+    } else {
+      const inserted = await pool.query<{
         id: string;
+        validation_key: string;
         content_sha256: string;
         handoff_package_id: string | null;
       }>(
-        `SELECT id, content_sha256, handoff_package_id
-         FROM literature_validation_packages
-         WHERE tenant_id = $1 AND validation_key = $2
-         LIMIT 1`,
-        [input.principal.tenantId, validationKey],
+        `INSERT INTO literature_validation_packages (
+           tenant_id,
+           validation_key,
+           search_id,
+           identity_key,
+           selected_result_ids,
+           payload,
+           content_sha256,
+           created_by
+         )
+         VALUES ($1,$2,$3,$4,$5::jsonb,$6::jsonb,$7,$8)
+         ON CONFLICT (tenant_id, validation_key) DO NOTHING
+         RETURNING id, validation_key, content_sha256, handoff_package_id`,
+        [
+          input.principal.tenantId,
+          effectiveValidationKey,
+          primary.search_id,
+          primary.dedupe_key,
+          JSON.stringify(sourceResultIds),
+          serialized,
+          contentHash,
+          input.principal.userId,
+        ],
       );
-      if (!existing.rows[0]) {
-        throw new Error("Existing Validation Package could not be resolved.");
-      }
-      validationPackageId = existing.rows[0].id;
-      handoffPackageId = existing.rows[0].handoff_package_id;
-      if (existing.rows[0].content_sha256 !== contentHash) {
-        throw new Error("Validation Package fingerprint collision detected.");
+
+      if (inserted.rows[0]) {
+        validationPackageId = inserted.rows[0].id;
+        effectiveValidationKey = inserted.rows[0].validation_key;
+        effectiveContentHash = inserted.rows[0].content_sha256;
+        handoffPackageId = inserted.rows[0].handoff_package_id;
+      } else {
+        reused = true;
+        const existing = await pool.query<{
+          id: string;
+          validation_key: string;
+          content_sha256: string;
+          handoff_package_id: string | null;
+        }>(
+          `SELECT id, validation_key, content_sha256, handoff_package_id
+           FROM literature_validation_packages
+           WHERE tenant_id = $1 AND validation_key = $2
+           LIMIT 1`,
+          [input.principal.tenantId, validationKey],
+        );
+        if (!existing.rows[0]) {
+          throw new Error("Existing Validation Package could not be resolved.");
+        }
+        validationPackageId = existing.rows[0].id;
+        effectiveValidationKey = existing.rows[0].validation_key;
+        effectiveContentHash = existing.rows[0].content_sha256;
+        handoffPackageId = existing.rows[0].handoff_package_id;
       }
     }
 
@@ -263,11 +306,11 @@ export async function createValidationPackagesFromSearch(input: {
         reused ? "VALIDATION_PACKAGE_REUSED" : "VALIDATION_PACKAGE_CREATED",
         JSON.stringify({
           validationPackageId,
-          validationKey,
+          validationKey: effectiveValidationKey,
           searchId: primary.search_id,
           identityKey: primary.dedupe_key,
           sourceResultIds,
-          contentSha256: contentHash,
+          contentSha256: effectiveContentHash,
           workflowEffect: "NONE",
         }),
       ],
@@ -275,14 +318,14 @@ export async function createValidationPackagesFromSearch(input: {
 
     output.push({
       validationPackageId,
-      validationKey,
+      validationKey: effectiveValidationKey,
       identityKey: primary.dedupe_key,
       title: primary.title,
       pmid: primary.pmid,
       doi: primary.doi,
       sourceResultIds,
       mergedSources: [...new Set(rows.map((row) => row.source_key))],
-      sha256: contentHash,
+      sha256: effectiveContentHash,
       reused,
       handoffPackageId,
     });
