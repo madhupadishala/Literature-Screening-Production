@@ -84,6 +84,46 @@ try {
     if (stateMap[state] !== 1) throw new Error(`Expected exactly one synthetic ${state} package.`);
   }
 
+  const goldenPath = await pool.query(
+    `SELECT count(DISTINCT screening.id)::integer AS count
+     FROM screening_results screening
+     JOIN screening_reviews screening_review
+       ON screening_review.tenant_id = screening.tenant_id
+      AND screening_review.package_id = screening.package_id
+      AND screening_review.screening_result_id = screening.id
+     JOIN hits_results hits
+       ON hits.tenant_id = screening.tenant_id
+      AND hits.package_id = screening.package_id
+     JOIN hits_reviews hits_review
+       ON hits_review.tenant_id = hits.tenant_id
+      AND hits_review.package_id = hits.package_id
+      AND hits_review.hits_result_id = hits.id
+     CROSS JOIN LATERAL jsonb_array_elements(
+       COALESCE(
+         screening.result_payload->'result'->'companySuspectAssessments',
+         '[]'::jsonb
+       )
+     ) assessment
+     WHERE screening.tenant_id = $1
+       AND screening.decision = 'INCLUDE'
+       AND screening_review.review_status = 'approved'
+       AND screening_review.final_decision = 'INCLUDE'
+       AND hits_review.review_status = 'approved'
+       AND hits_review.decision = 'accept_ai'
+       AND screening.result_payload->'result'->'patientSafetyAssessment'->>'relevance' = 'RELEVANT'
+       AND screening.result_payload->'result'->'icsrAssessment'->>'conclusion' = 'POTENTIAL_ICSR'
+       AND assessment->>'conclusion' = 'CONFIRMED'
+       AND assessment->>'licenceStatus' = 'ACTIVE'
+       AND assessment->>'companySuspect' = 'true'
+       AND assessment->>'manualReviewRequired' = 'false'`,
+    [tenantId],
+  );
+  if (Number(goldenPath.rows[0].count) < 2) {
+    throw new Error(
+      `Expected at least two governed synthetic INCLUDE cases ready for Screening-to-Intake handoff; found ${goldenPath.rows[0].count}.`,
+    );
+  }
+
   const exported = await pool.query(
     `SELECT content, sha256 FROM intake_input_exports
      WHERE tenant_id = $1 AND payload->>'synthetic_demo' = 'true'`,
@@ -92,6 +132,26 @@ try {
   const digest = createHash("sha256").update(exported.rows[0].content, "utf8").digest("hex");
   if (digest !== exported.rows[0].sha256)
     throw new Error("Synthetic intake_input.json integrity check failed.");
+  const exportedPayload = JSON.parse(exported.rows[0].content);
+  if (
+    exportedPayload?.hits_assessment?.review_status !== "approved" ||
+    exportedPayload?.hits_assessment?.review_decision !== "accept_ai"
+  ) {
+    throw new Error("Synthetic intake_input.json is missing the completed human Hits review.");
+  }
+  const exportedCompanyAssessment =
+    exportedPayload?.screening_assessment?.result?.companySuspectAssessments?.[0];
+  if (
+    exportedPayload?.screening_assessment?.final_decision !== "INCLUDE" ||
+    exportedPayload?.screening_assessment?.review_status !== "approved" ||
+    exportedCompanyAssessment?.conclusion !== "CONFIRMED" ||
+    exportedCompanyAssessment?.licenceStatus !== "ACTIVE" ||
+    exportedCompanyAssessment?.companySuspect !== true
+  ) {
+    throw new Error(
+      "Synthetic intake_input.json is missing the governed Screening/Product-Master handoff evidence.",
+    );
+  }
 
   const prohibited = await pool.query(
     `SELECT count(*)::integer AS count FROM ad_hoc_literature_results
@@ -108,6 +168,7 @@ try {
       tenant: tenantKey,
       ...actual,
       workflow_states: JSON.stringify(stateMap),
+      governed_golden_path_cases: Number(goldenPath.rows[0].count),
       intake_sha256: digest,
     },
   ]);
