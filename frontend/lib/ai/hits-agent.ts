@@ -18,6 +18,7 @@ export interface HitsAgentRequest {
   tenantId: string;
   articleId?: string;
   articleTitle?: string;
+  articleAuthors?: string[];
   abstractText?: string;
   fullTextSnippet?: string;
   productName?: string;
@@ -84,6 +85,7 @@ export class HitsAgent {
         tenantId: request.tenantId,
         articleId: request.articleId,
         articleTitle: request.articleTitle,
+        articleAuthors: request.articleAuthors,
         abstractText: request.abstractText,
         fullTextSnippet: request.fullTextSnippet,
         productName: request.productName,
@@ -107,6 +109,7 @@ export class HitsAgent {
         detectedEvents: aiResult.detectedEvents,
         detectedSpecialSituations: aiResult.detectedSpecialSituations,
         suspectEvidence: aiResult.extractedSuspectEvidence,
+        reporterIdentifiers: request.articleAuthors,
       });
       const companySuspectAssessments = aiResult.extractedSuspectEvidence.map((evidence) =>
         assessCompanySuspect({
