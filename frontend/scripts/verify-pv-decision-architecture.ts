@@ -32,8 +32,8 @@ const fixtures: Array<{
     input: {
       safetyEvidence: safety({
         populationType: "HUMAN",
-        patientIdentifiable: "PRESENT",
-        reporterIdentifiable: "PRESENT",
+        patientIdentifiable: "UNRESOLVED",
+        reporterIdentifiable: "UNRESOLVED",
         medicinalProductExposure: "PRESENT",
         adverseEventOrReaction: "PRESENT",
         specialSituation: "ABSENT",
@@ -52,6 +52,7 @@ const fixtures: Array<{
           evidenceLocation: "ABSTRACT",
         },
       ],
+      reporterIdentifiers: ["da Fonseca MA"],
     },
     expectedSafety: "RELEVANT",
     expectedIcsr: "POTENTIAL_ICSR",
@@ -112,7 +113,28 @@ const fixtures: Array<{
     expectedMinimumCriteria: null,
   },
   {
-    id: "PV-ARCH-005 special situation supports patient safety",
+    id: "PV-ARCH-005 reporter metadata cannot override explicit reporter absence",
+    input: {
+      safetyEvidence: safety({
+        populationType: "HUMAN",
+        patientIdentifiable: "PRESENT",
+        reporterIdentifiable: "ABSENT",
+        medicinalProductExposure: "PRESENT",
+        adverseEventOrReaction: "PRESENT",
+        specialSituation: "ABSENT",
+        patientEvidence: "adult female",
+      }),
+      detectedEvents: ["rash"],
+      detectedSpecialSituations: [],
+      suspectEvidence: [{ reportedProduct: "medicine A", role: "SUSPECT" }],
+      reporterIdentifiers: ["Named Author"],
+    },
+    expectedSafety: "RELEVANT",
+    expectedIcsr: "NOT_ICSR",
+    expectedMinimumCriteria: false,
+  },
+  {
+    id: "PV-ARCH-006 special situation supports patient safety",
     input: {
       safetyEvidence: safety({
         populationType: "HUMAN",

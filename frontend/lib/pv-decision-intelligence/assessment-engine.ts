@@ -60,6 +60,39 @@ function firstSuspectEvidence(input: PVDecisionAssessmentInput): string | undefi
     ?.sourceEvidence;
 }
 
+function patientEvidenceSupportsIdentifier(value?: string): boolean {
+  const text = String(value ?? "").trim().toLowerCase();
+  if (!text) return false;
+  return (
+    /\b\d{1,3}\s*(?:year|yr|month|mo|week|wk|day|d)(?:s)?(?:[-\s]old)?\b/.test(text) ||
+    /\b(?:neonate|newborn|infant|child|adolescent|adult|elderly|geriatric|pediatric|paediatric)\b/.test(text) ||
+    /\b(?:female|male|woman|man|girl|boy|pregnan(?:t|cy)|she|her|he|him)\b/.test(text) ||
+    /\b(?:date of birth|dob|height|weight|initials?)\b/.test(text)
+  );
+}
+
+function reconciledPatientStatus(input: PVDecisionAssessmentInput): EvidenceStatus {
+  const status = input.safetyEvidence.patientIdentifiable;
+  if (status !== "UNRESOLVED") return status;
+  return patientEvidenceSupportsIdentifier(input.safetyEvidence.patientEvidence)
+    ? "PRESENT"
+    : "UNRESOLVED";
+}
+
+function reconciledReporterStatus(input: PVDecisionAssessmentInput): EvidenceStatus {
+  const status = input.safetyEvidence.reporterIdentifiable;
+  if (status !== "UNRESOLVED") return status;
+  if (input.safetyEvidence.reporterEvidence?.trim()) return "PRESENT";
+  return (input.reporterIdentifiers || []).some((identifier) => identifier.trim())
+    ? "PRESENT"
+    : "UNRESOLVED";
+}
+
+function reporterEvidence(input: PVDecisionAssessmentInput): string | undefined {
+  return input.safetyEvidence.reporterEvidence ||
+    (input.reporterIdentifiers || []).find((identifier) => identifier.trim());
+}
+
 function patientSafetyAssessment(
   input: PVDecisionAssessmentInput,
 ): PatientSafetyAssessment {
@@ -151,8 +184,8 @@ function icsrAssessment(
   input: PVDecisionAssessmentInput,
 ): IcsrCriteriaAssessment {
   const extraction = input.safetyEvidence;
-  const identifiablePatient = extraction.patientIdentifiable;
-  const identifiableReporter = extraction.reporterIdentifiable;
+  const identifiablePatient = reconciledPatientStatus(input);
+  const identifiableReporter = reconciledReporterStatus(input);
   const suspectProduct = suspectProductStatus(input);
   const adverseEvent = presentWhenDetected(
     extraction.adverseEventOrReaction,
@@ -217,7 +250,7 @@ function icsrAssessment(
     reasons,
     evidence: {
       patient: extraction.patientEvidence,
-      reporter: extraction.reporterEvidence,
+      reporter: reporterEvidence(input),
       suspectProduct:
         extraction.productEvidence ||
         firstSuspectEvidence(input),

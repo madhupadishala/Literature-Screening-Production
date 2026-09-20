@@ -4,6 +4,7 @@ export interface HitsPromptInput {
   tenantId: string;
   articleId?: string;
   articleTitle?: string;
+  articleAuthors?: string[];
   abstractText?: string;
   fullTextSnippet?: string;
   productName?: string;
@@ -83,6 +84,7 @@ Article ID: ${input.articleId ?? "Not Available"}
 Product: ${input.productName ?? "Not Available"}
 Country: ${input.country ?? "Not Available"}
 Title: ${input.articleTitle ?? "Not Available"}
+Authors: ${(input.articleAuthors ?? []).join(", ") || "Not Available"}
 Abstract: ${input.abstractText ?? "Not Available"}
 Full Text Snippet: ${input.fullTextSnippet ?? "Not Available"}
 

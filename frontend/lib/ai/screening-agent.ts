@@ -75,6 +75,7 @@ export class ScreeningAgent {
         detectedEvents: [],
         detectedSpecialSituations: [],
         suspectEvidence: parsed.extractedSuspectEvidence,
+        reporterIdentifiers: request.article.authors,
       });
       const companySuspectAssessments = parsed.extractedSuspectEvidence.map((evidence) =>
         assessCompanySuspect({

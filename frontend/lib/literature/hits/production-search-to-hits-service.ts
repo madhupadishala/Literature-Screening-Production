@@ -49,6 +49,7 @@ type PackageInputRow = {
   pmid: string | null;
   doi: string | null;
   title: string;
+  authors: unknown;
   abstract_text: string | null;
   language: string | null;
   publication_type: string | null;
@@ -483,7 +484,7 @@ async function loadPackageInput(input: {
   const result = await getPostgresPool().query<PackageInputRow>(
     `SELECT package.id AS package_id, package.package_key, package.product_context,
        search_result.id AS result_id, search_result.pmid, search_result.doi,
-       search_result.title, search_result.abstract_text, search_result.language,
+       search_result.title, search_result.authors, search_result.abstract_text, search_result.language,
        search_result.publication_type, search_result.match_metadata
      FROM literature_packages package
      JOIN ad_hoc_literature_results search_result
@@ -715,6 +716,9 @@ async function processPackage(input: {
       tenantId: input.principal.tenantId,
       articleId: row.package_key,
       articleTitle: row.title,
+      articleAuthors: Array.isArray(row.authors)
+        ? row.authors.filter((author): author is string => typeof author === "string")
+        : [],
       abstractText: row.abstract_text || undefined,
       productName: resolveProductName(row),
       country: resolveCountry(row),
