@@ -195,7 +195,7 @@ export async function createValidationPackagesFromSearch(input: {
          AND search_id = $2
          AND identity_key = $3
          AND selected_result_ids = $4::jsonb
-         AND (payload->'configuration_snapshot' - 'capturedAt')
+         AND ((payload->'configuration_snapshot') - 'capturedAt')
            = ($5::jsonb - 'capturedAt')
        ORDER BY (handoff_package_id IS NOT NULL) DESC, created_at ASC
        LIMIT 1`,
