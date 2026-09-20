@@ -131,7 +131,7 @@ export async function createValidationPackagesFromSearch(input: {
 
     const payload = {
       schema_version: "clinixai.literature.validation-package.v1",
-      validation_key: effectiveValidationKey,
+      validation_key: validationKey,
       package_purpose: "SEARCH_RESULT_VALIDATION",
       workflow_effect: "NONE",
       operational_handoff: false,
@@ -306,7 +306,7 @@ export async function createValidationPackagesFromSearch(input: {
         reused ? "VALIDATION_PACKAGE_REUSED" : "VALIDATION_PACKAGE_CREATED",
         JSON.stringify({
           validationPackageId,
-          effectiveValidationKey,
+          validationKey: effectiveValidationKey,
           searchId: primary.search_id,
           identityKey: primary.dedupe_key,
           sourceResultIds,
@@ -318,7 +318,7 @@ export async function createValidationPackagesFromSearch(input: {
 
     output.push({
       validationPackageId,
-      effectiveValidationKey,
+      validationKey: effectiveValidationKey,
       identityKey: primary.dedupe_key,
       title: primary.title,
       pmid: primary.pmid,
@@ -380,7 +380,7 @@ export async function linkValidationPackagesToHits(input: {
         input.principal.userId,
         JSON.stringify({
           validationPackageId: validationPackage.validationPackageId,
-          validationKey: validationPackage.effectiveValidationKey,
+          validationKey: validationPackage.validationKey,
           identityKey: validationPackage.identityKey,
         }),
       ],
