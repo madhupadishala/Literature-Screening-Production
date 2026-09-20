@@ -9,7 +9,7 @@ export default function LiteratureSearchPage() {
       <InvestorDemoHeader
         eyebrow="RBAC-CONTROLLED LITERATURE UTILITY"
         title="Enterprise Literature Search"
-        subtitle="Search by exact PMID, DOI, Brand, Generic, INN, API, Salt, Company Product ID, WHODrug ID, or Boolean query. Apply publication dates and source controls, select required articles, and create governed Evidence Packages for Hits."
+        subtitle="Search by exact PMID, DOI, Brand, Generic, INN, API, Salt, Company Product ID, WHODrug ID, or Boolean query. Preserve selected results as standalone Validation Packages, or create the Validation Package and hand the governed article to Hits in one action."
         status="Available to Authorized Users"
       />
       <AdHocSearchWorkspace />
