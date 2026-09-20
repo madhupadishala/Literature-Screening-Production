@@ -327,7 +327,7 @@ async function persistHitsSuccess(input: {
         SET
           workflow_state = 'HITS_REVIEW',
           state_version = state_version + 1,
-          state_payload = state_payload || $3::jsonb,
+          state_payload = (state_payload - 'hitsFailedAt' - 'failureReason') || $3::jsonb,
           updated_by = $4,
           updated_at = now()
         WHERE package_id = $1 AND tenant_id = $2
@@ -337,6 +337,7 @@ async function persistHitsSuccess(input: {
         input.principal.tenantId,
         JSON.stringify({
           hitsCompletedAt: new Date().toISOString(),
+          hitsExecutionFailed: false,
           hitsResultVersion: nextVersion,
           classification: input.response.result.classification,
           qcRequired: input.response.result.qcRequired,
