@@ -32,6 +32,7 @@ type ValidationSearchRow = {
   full_text_status: string;
   match_metadata: Record<string, unknown>;
   dedupe_key: string;
+  evidence_package_id: string | null;
 };
 
 export type ValidationPackageResult = {
@@ -235,6 +236,20 @@ export async function createValidationPackagesFromSearch(input: {
       if (existing.rows[0].content_sha256 !== contentHash) {
         throw new Error("Validation Package fingerprint collision detected.");
       }
+    }
+
+    const existingHandoffPackageId =
+      rows.map((row) => row.evidence_package_id).find((value) => Boolean(value)) || null;
+    if (!handoffPackageId && existingHandoffPackageId) {
+      handoffPackageId = existingHandoffPackageId;
+      await pool.query(
+        `UPDATE literature_validation_packages
+         SET
+           handoff_package_id = COALESCE(handoff_package_id, $3),
+           handed_off_at = COALESCE(handed_off_at, now())
+         WHERE tenant_id = $1 AND id = $2`,
+        [input.principal.tenantId, validationPackageId, existingHandoffPackageId],
+      );
     }
 
     await pool.query(
