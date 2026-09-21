@@ -21,6 +21,10 @@ type IntakeRow = {
   validityStatus: string;
   duplicateStatus: string;
   seriousnessStatus: string;
+  triageStatus: string;
+  triageOutcome: string | null;
+  followUpRequired: boolean;
+  specialSituations: string[];
   updatedAt: string;
 };
 
@@ -175,6 +179,8 @@ export default function IntakePage() {
         record.countryCode || "",
         record.status,
         record.sourceReviewStatus,
+        record.triageStatus,
+        record.triageOutcome || "",
       ]
         .join(" ")
         .toLowerCase()
@@ -340,6 +346,7 @@ export default function IntakePage() {
                   <th>Source</th>
                   <th>Review</th>
                   <th>Extraction</th>
+                  <th>Triage</th>
                   <th>Pending</th>
                 </tr>
               </thead>
@@ -366,12 +373,18 @@ export default function IntakePage() {
                     <td>
                       <Status value={record.extractionStatus || "N/A"} />
                     </td>
+                    <td>
+                      <Status value={record.triageStatus || "NOT_STARTED"} />
+                      {record.triageOutcome ? (
+                        <small>{record.triageOutcome.replaceAll("_", " ")}</small>
+                      ) : null}
+                    </td>
                     <td>{record.pendingSuggestionCount}</td>
                   </tr>
                 ))}
                 {!loading && filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className={styles.empty}>
+                    <td colSpan={6} className={styles.empty}>
                       No Intake records found.
                     </td>
                   </tr>
