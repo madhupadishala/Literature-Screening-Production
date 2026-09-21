@@ -80,21 +80,22 @@ function productDrafts(screeningAssessment: Record<string, unknown>): SafetyProd
   const result = record(screeningAssessment.result);
   const screening = record(result.result);
   const assessments = array(screening.companySuspectAssessments);
+  const products: SafetyProductDraft[] = [];
 
-  return assessments
-    .map((value, index) => {
-      const assessment = record(value);
-      const name = text(assessment.reportedProduct);
-      if (!name) return null;
+  assessments.forEach((value, index) => {
+    const assessment = record(value);
+    const name = text(assessment.reportedProduct);
+    if (!name) return;
 
-      return {
-        productKey: `product-${index + 1}`,
-        reportedName: name,
-        roleCharacterization: productRole(assessment.role || assessment.characterization),
-        e2bG: assessment,
-      } satisfies SafetyProductDraft;
-    })
-    .filter((value): value is SafetyProductDraft => Boolean(value));
+    products.push({
+      productKey: `product-${index + 1}`,
+      reportedName: name,
+      roleCharacterization: productRole(assessment.role || assessment.characterization),
+      e2bG: assessment,
+    });
+  });
+
+  return products;
 }
 
 function eventDrafts(screeningAssessment: Record<string, unknown>): SafetyEventDraft[] {
@@ -104,12 +105,12 @@ function eventDrafts(screeningAssessment: Record<string, unknown>): SafetyEventD
   const clinicalEvents = array(regulatoryEvidence.clinicalEvents);
   const eventNames =
     clinicalEvents.length > 0
-      ? clinicalEvents.map((value) => text(record(value).event)).filter(Boolean)
-      : array(screening.detectedEvents).map(text).filter(Boolean);
+      ? clinicalEvents.map((value) => text(record(value).event)).filter((value): value is string => Boolean(value))
+      : array(screening.detectedEvents).map(text).filter((value): value is string => Boolean(value));
 
   return eventNames.map((event, index) => ({
     eventKey: `event-${index + 1}`,
-    reportedTerm: event!,
+    reportedTerm: event,
     e2bE: {
       source: "LITERATURE_SCREENING",
       reportedTerm: event,
