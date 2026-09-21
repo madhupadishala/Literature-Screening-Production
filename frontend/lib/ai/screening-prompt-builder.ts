@@ -107,7 +107,7 @@ DOI: ${request.article.doi ?? ""}
 Journal: ${request.article.journal ?? ""}
 Publication Date: ${request.article.publicationDate ?? ""}
 Language: ${request.article.language ?? ""}
-Country: ${request.article.country ?? ""}
+Existing governed COI context (may be blank; do not infer from this label alone): ${request.article.country ?? ""}
 Keywords: ${(request.article.keywords ?? []).join(", ")}
 MeSH Terms: ${(request.article.meshTerms ?? []).join(", ")}
 
@@ -130,7 +130,9 @@ Keep SEVERITY and SERIOUSNESS separate. Words such as "severe" describe severity
 
 Patient identifiability for PV case validity is not the same as direct patient PII. Age/sex may support an identifiable patient under the controlled validity rule without establishing direct PII. Do not mark PII PRESENT unless direct identifying information is actually present.
 
-Do not infer Country of Incidence from journal, author affiliation, MAH country, or publication database. Use only article evidence that supports the patient's/event's country.
+Do not infer Country of Incidence from journal, author affiliation, MAH country, publication database, patient nationality, ethnicity, residence, or a demonym such as "Indian female". Country of Incidence requires evidence that the patient/event actually occurred in that country. If the source only establishes nationality or demographic origin, return countryOfIncidenceStatus="UNRESOLVED" and leave countryOfIncidence empty.
+
+Publication author metadata is supplied separately from the abstract. Under the governed literature reporter rule, a named publication author may satisfy identifiable-reporter evidence even when the abstract body does not repeat that person's name. Do not mark the reporter absent merely because the abstract text omits the author name.
 
 Do not invent company ownership, pharmaceutical equivalence, COI, MAH, licence status, or dates. The deterministic Pharmaceutical Product Intelligence engine performs those conclusions after evidence extraction.
 `.trim();
