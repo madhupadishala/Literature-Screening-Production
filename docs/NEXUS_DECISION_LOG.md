@@ -74,3 +74,23 @@ The internal case snapshot preserves explicit C/D/E/F/G/H regulatory sections wh
 **Status:** Approved
 
 The common safety layer records source lineage and evidence links back to governed upstream artifacts. Derived records must retain the originating source/export identifiers and hashes needed for traceability.
+
+## DEC-016 — All Intake sources converge on one persistence path
+**Status:** Approved
+
+Manual, Document, structured API, and governed Literature handoffs are normalized into the Sprint 2 `IntakeDraft` contract and persisted through the same common safety transaction boundary.
+
+## DEC-017 — Regulated source documents cannot use the legacy in-memory registry
+**Status:** Approved
+
+Document Intake stores immutable source bytes, SHA-256, metadata and evidence linkage in persistent PostgreSQL storage for development/UAT. The older memory-only document manager is not a regulated Intake evidence store.
+
+## DEC-018 — Extraction is separate from ingestion
+**Status:** Approved
+
+Sprint 3 records the original source and creates the Intake. OCR, parsing, extraction, confidence, evidence spans and human verification belong to Sprint 4 and must not be hidden inside source ingestion.
+
+## DEC-019 — Intake source idempotency fails closed on content mismatch
+**Status:** Approved
+
+Replaying the same source/request identity with identical content reuses the existing Intake. Reusing that identity with materially different safety content is rejected instead of overwriting or silently forking the regulated record.
