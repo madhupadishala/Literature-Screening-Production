@@ -90,3 +90,15 @@ CREATE INDEX IF NOT EXISTS idx_safety_case_finalization_checks_case
   ON safety_case_finalization_checks (
     tenant_id, case_id, check_version DESC
   );
+
+DROP TRIGGER IF EXISTS safety_case_review_actions_immutable
+  ON safety_case_review_actions;
+CREATE TRIGGER safety_case_review_actions_immutable
+BEFORE UPDATE OR DELETE ON safety_case_review_actions
+FOR EACH ROW EXECUTE FUNCTION prevent_nexus_case_history_mutation();
+
+DROP TRIGGER IF EXISTS safety_case_finalization_checks_immutable
+  ON safety_case_finalization_checks;
+CREATE TRIGGER safety_case_finalization_checks_immutable
+BEFORE UPDATE OR DELETE ON safety_case_finalization_checks
+FOR EACH ROW EXECUTE FUNCTION prevent_nexus_case_history_mutation();
