@@ -8,6 +8,7 @@ import {
   PHARMACEUTICAL_KNOWLEDGE_VERSION,
 } from "../lib/pharmaceutical-intelligence/scenario-registry";
 import type { SuspectProductEvidence } from "../lib/pharmaceutical-intelligence/types";
+import { stripTrailingStrengthQualifier } from "../lib/literature/hits/product-identity-reconciliation";
 
 interface Fixture {
   id: string;
@@ -163,6 +164,53 @@ for (const check of point1Checks) {
   assert.equal(check.assessment.conclusion, check.conclusion, check.id);
   assert.equal(check.assessment.manualReviewRequired, check.manual, check.id);
 }
+const strengthQualifierChecks = [
+  {
+    id: "PPI-ID-001 strength suffix",
+    actual: stripTrailingStrengthQualifier({
+      reportedProduct: "paracetamol 500 mg",
+      sourceExactTerms: ["Paracetamol"],
+    }),
+    expected: "Paracetamol",
+  },
+  {
+    id: "PPI-ID-002 exact identity unchanged",
+    actual: stripTrailingStrengthQualifier({
+      reportedProduct: "Paracetamol",
+      sourceExactTerms: ["Paracetamol"],
+    }),
+    expected: undefined,
+  },
+  {
+    id: "PPI-ID-003 formulation text must not be stripped",
+    actual: stripTrailingStrengthQualifier({
+      reportedProduct: "Paracetamol extended release",
+      sourceExactTerms: ["Paracetamol"],
+    }),
+    expected: undefined,
+  },
+  {
+    id: "PPI-ID-004 strength plus formulation must not be stripped",
+    actual: stripTrailingStrengthQualifier({
+      reportedProduct: "Paracetamol 500 mg tablet",
+      sourceExactTerms: ["Paracetamol"],
+    }),
+    expected: undefined,
+  },
+  {
+    id: "PPI-ID-005 unique equivalent source term",
+    actual: stripTrailingStrengthQualifier({
+      reportedProduct: "Acetaminophen 500 mg",
+      sourceExactTerms: ["Acetaminophen"],
+    }),
+    expected: "Acetaminophen",
+  },
+];
+
+for (const check of strengthQualifierChecks) {
+  assert.equal(check.actual, check.expected, check.id);
+}
+
 const multiple = assessCompanySuspects({
   evidence: [
     { reportedProduct: "Paracetamol", role: "SUSPECT", countryOfInterest: "India" },
@@ -176,4 +224,12 @@ assert.ok(multiple.every((item) => item.companySuspect === true), "P1-SCN-005 mu
 console.log("ClinixAI Pharmaceutical Product Intelligence verification passed.");
 console.table(results);
 console.table(point1Checks.map((check) => ({ scenario: check.id, conclusion: check.assessment.conclusion, status: "PASS" })));
+console.table(
+  strengthQualifierChecks.map((check) => ({
+    scenario: check.id,
+    resolvedIdentity: check.actual ?? "UNCHANGED",
+    status: "PASS",
+  })),
+);
 console.log("Point 1 company-suspect scenarios: 12/12 governed; extended executable checks passed.");
+console.log("Source-exact product identity strength-qualifier regression checks passed.");
