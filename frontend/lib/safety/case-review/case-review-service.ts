@@ -936,6 +936,47 @@ async function finalizationContext(
   };
 }
 
+export async function previewCaseFinalization(input: {
+  principal: RequestPrincipal;
+  caseId: string;
+}): Promise<{
+  ready: boolean;
+  checks: Array<{ key: string; passed: boolean; message: string }>;
+}> {
+  const client = await getPostgresPool().connect();
+  try {
+    const context = await finalizationContext(
+      client,
+      input.principal.tenantId,
+      input.caseId,
+    );
+
+    return evaluateCaseFinalization({
+      draft: context.draft,
+      assessments: context.assessments.map((item) => ({
+        productKey: item.product_key,
+        eventKey: item.event_key,
+        assessmentType: item.assessment_type,
+        result: item.result,
+      })),
+      narrative: context.narrative
+        ? {
+            narrativeVersion: Number(context.narrative.narrative_version),
+            narrativeStage: String(context.narrative.narrative_stage),
+            narrativeText: String(context.narrative.narrative_text),
+          }
+        : null,
+      review: {
+        qcApproved: context.qcApproved,
+        medicalReviewApproved: context.medicalReviewApproved,
+        openQueryCount: context.openQueryCount,
+      },
+    });
+  } finally {
+    client.release();
+  }
+}
+
 export async function runCaseFinalizationCheck(input: {
   principal: RequestPrincipal;
   caseId: string;
