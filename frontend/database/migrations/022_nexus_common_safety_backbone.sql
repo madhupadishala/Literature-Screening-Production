@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS safety_sources (
     CHECK (status IN ('RECEIVED', 'NORMALIZED', 'REJECTED', 'ARCHIVED')),
   created_by uuid REFERENCES application_users(id) ON DELETE SET NULL,
   created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT safety_sources_country_code_chk
     CHECK (country_code IS NULL OR country_code ~ '^[A-Z]{2}$'),
   CONSTRAINT safety_sources_language_code_chk
