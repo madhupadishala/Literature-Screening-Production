@@ -14,6 +14,7 @@ import { aiProviderFactory } from "./provider-factory";
 import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
 import type { SuspectProductEvidence } from "@/lib/pharmaceutical-intelligence/types";
 import { assessPVDecisionArchitecture } from "@/lib/pv-decision-intelligence/assessment-engine";
+import { stripTrailingStrengthQualifier } from "@/lib/literature/hits/product-identity-reconciliation";
 
 export interface HitsAgentRequest {
   tenantId: string;
@@ -94,6 +95,7 @@ function sourceContainsTerm(source: string, term: string): boolean {
   return Boolean(normalizedTerm) && normalizedSource.includes(` ${normalizedTerm} `);
 }
 
+
 function productMasterSourceTerms(productMaster: unknown): string[] {
   if (!productMaster || typeof productMaster !== "object" || Array.isArray(productMaster)) {
     return [];
@@ -161,6 +163,22 @@ function reconcileSuspectEvidence(input: {
 
   const evidence = input.aiResult.extractedSuspectEvidence.map((item) => {
     if (sourceContainsTerm(source, item.reportedProduct)) {
+      const identityWithoutStrength = stripTrailingStrengthQualifier({
+        reportedProduct: item.reportedProduct,
+        sourceExactTerms: configuredSourceTerms,
+      });
+      if (identityWithoutStrength) {
+        corrections.push({
+          from: item.reportedProduct,
+          to: identityWithoutStrength,
+          reason:
+            "Source-exact product identity was separated from a trailing strength qualifier for Product Master matching; the original phrase remains preserved in source evidence.",
+        });
+        return {
+          ...item,
+          reportedProduct: identityWithoutStrength,
+        };
+      }
       return item;
     }
 
