@@ -4,24 +4,41 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const modules = [
+type ModuleKey =
+  | "LITERATURE"
+  | "INTAKE"
+  | "CASE_PROCESSING"
+  | "MEDICAL_REVIEW"
+  | "SIGNAL_MANAGEMENT"
+  | "AGGREGATE_REPORTING"
+  | "GOVERNANCE";
+
+const modules: Array<{ label: string; path: string; moduleKey?: ModuleKey }> = [
   { label: "Dashboard", path: "/" },
-  { label: "Search", path: "/literature-search" },
-  { label: "Workflow", path: "/workflow" },
-  { label: "Hits", path: "/hits" },
-  { label: "Screening", path: "/screening" },
-  { label: "Review / MR", path: "/review" },
-  { label: "Reports", path: "/reports" },
+  { label: "Search", path: "/literature-search", moduleKey: "LITERATURE" },
+  { label: "Workflow", path: "/workflow", moduleKey: "LITERATURE" },
+  { label: "Hits", path: "/hits", moduleKey: "LITERATURE" },
+  { label: "Screening", path: "/screening", moduleKey: "LITERATURE" },
+  { label: "Review / MR", path: "/review", moduleKey: "LITERATURE" },
+  { label: "Reports", path: "/reports", moduleKey: "LITERATURE" },
   { label: "Administration", path: "/admin" },
 ];
 
 export default function Navigation() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [context, setContext] = useState({
+  const [context, setContext] = useState<{
+    tenantKey: string;
+    environment: string;
+    displayName: string;
+    roleKey: string;
+    enabledModules: string[];
+  }>({
     tenantKey: "Active tenant",
+    environment: "—",
     displayName: "Authenticated user",
     roleKey: "Loading role",
+    enabledModules: [],
   });
 
   useEffect(() => {
@@ -41,6 +58,10 @@ export default function Navigation() {
     return path === "/" ? pathname === "/" : pathname === path || pathname.startsWith(`${path}/`);
   }
 
+  const visibleModules = modules.filter(
+    (module) => !module.moduleKey || context.enabledModules.includes(module.moduleKey),
+  );
+
   return (
     <div className="shell-header">
       <a className="skip-link" href="#main-content">
@@ -53,17 +74,21 @@ export default function Navigation() {
           </span>
           <span className="brand-copy">
             <strong>ClinixAI</strong>
-            <small>Literature Intelligence</small>
+            <small>Nexus Safety Platform</small>
           </span>
         </Link>
         <div className="application-title">
           <span>Safety Operations</span>
-          <strong>Literature Review Console</strong>
+          <strong>Nexus Workspace</strong>
         </div>
         <div className="identity">
           <div>
             <span>Tenant</span>
             <strong>{context.tenantKey}</strong>
+          </div>
+          <div>
+            <span>Environment</span>
+            <strong>{context.environment}</strong>
           </div>
           <div>
             <span>User</span>
@@ -94,7 +119,7 @@ export default function Navigation() {
         aria-label="Primary navigation"
       >
         <div className="module-links">
-          {modules.map((module) => (
+          {visibleModules.map((module) => (
             <Link
               key={module.path}
               href={module.path}
@@ -107,13 +132,13 @@ export default function Navigation() {
           ))}
         </div>
         <div className="boundary">
-          <span>Validated boundary</span>
-          <strong>Search/Retrieval → Hits → Screening → Review/MR → Intake</strong>
+          <span>Licensed Nexus modules</span>
+          <strong>{context.enabledModules.length ? context.enabledModules.join(" · ") : "Core only"}</strong>
         </div>
       </nav>
       <div className="validation">
         <span aria-hidden="true" />
-        Demonstration environment · Synthetic data only · Tenant and RBAC controls active
+        Controlled environment · Tenant, module entitlement and RBAC controls active
       </div>
       <style jsx>{`
         .shell-header {
