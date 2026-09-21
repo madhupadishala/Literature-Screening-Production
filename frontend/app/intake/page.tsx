@@ -270,6 +270,13 @@ export default function IntakePage() {
 
   const pendingSuggestions =
     workspace?.suggestions.filter((item) => item.status === "PENDING") ?? [];
+  const documentExtractionStatus = primaryDocument
+    ? display(primaryDocument.extraction_status, "PENDING")
+    : "N/A";
+  const originalSourceUrl =
+    selectedId && primaryDocument?.id
+      ? `/api/safety/intake/${selectedId}/documents/${String(primaryDocument.id)}`
+      : "";
 
   return (
     <main className="app-shell" id="main-content">
@@ -419,6 +426,8 @@ export default function IntakePage() {
                   disabled={
                     busy !== "" ||
                     pendingSuggestions.length > 0 ||
+                    documentExtractionStatus === "PENDING" ||
+                    documentExtractionStatus === "IN_PROGRESS" ||
                     display(workspace.intake.source_review_status) === "VERIFIED"
                   }
                 >
@@ -441,6 +450,7 @@ export default function IntakePage() {
                   </div>
 
                   {primaryDocument ? (
+                    <>
                     <dl className={styles.metadata}>
                       <div>
                         <dt>File</dt>
@@ -457,6 +467,22 @@ export default function IntakePage() {
                         </dd>
                       </div>
                     </dl>
+                    <a
+                      className={styles.sourceLink}
+                      href={originalSourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open original source
+                    </a>
+                    {display(primaryDocument.content_type) === "application/pdf" ? (
+                      <iframe
+                        className={styles.sourceFrame}
+                        src={originalSourceUrl}
+                        title={`Original source ${display(primaryDocument.file_name)}`}
+                      />
+                    ) : null}
+                    </>
                   ) : (
                     <p className={styles.note}>
                       Structured source. Review the source payload and existing
