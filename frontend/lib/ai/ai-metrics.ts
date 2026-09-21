@@ -2,7 +2,7 @@ import type { AIProviderType } from "./ai-types";
 
 export interface AIMetricRecord {
   id: string;
-  operation: "hits" | "screening" | "health" | "self_test";
+  operation: "hits" | "screening" | "review_patient_extraction" | "health" | "self_test";
   provider: AIProviderType;
   model: string;
   success: boolean;
