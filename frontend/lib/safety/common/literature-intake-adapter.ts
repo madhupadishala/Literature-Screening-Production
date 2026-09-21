@@ -161,7 +161,7 @@ export function literatureIntakeToSafetyDraft(
 
   const draft: IntakeDraft = {
     source: {
-      sourceKey: `literature:${packageId}`,
+      sourceKey: `literature:${packageId}:export:${input.exportId}`,
       sourceType: "LITERATURE",
       sourceSystem: "CLINIXAI_LITERATURE_INTELLIGENCE",
       externalReference,
@@ -170,7 +170,7 @@ export function literatureIntakeToSafetyDraft(
       sourceSha256: input.exportSha256,
     },
     intake: {
-      intakeKey: `LIT-${safeKey(packageKey, packageId)}`,
+      intakeKey: `LIT-${safeKey(packageKey, packageId)}-E${input.exportVersion}`,
       sourceRecordKey: input.exportId,
       intakeChannel: "LITERATURE_HANDOFF",
       status: "RECEIVED",
