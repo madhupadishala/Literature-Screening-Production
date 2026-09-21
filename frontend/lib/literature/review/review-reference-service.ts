@@ -63,7 +63,7 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
   const active = await resolveActiveConfigurations(tenantId);
 
   const labelReferences = active.labelReferences.flatMap((configuration) => {
-    const payloadScope =
+    const payloadScope: ReviewReferenceUsageScope =
       isRecord(configuration.payload) &&
       configuration.payload.usageScope === "VALIDATION_ONLY"
         ? "VALIDATION_ONLY"
@@ -81,10 +81,11 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
       effectiveTo: text(record.effectiveTo || record.labelEffectiveTo) || undefined,
       eventTerms: stringList(record.eventTerms),
       sourceDocument: text(record.sourceDocument || record.sourceFilename) || undefined,
-      usageScope:
+      usageScope: (
         record.usageScope === "VALIDATION_ONLY"
           ? "VALIDATION_ONLY"
-          : payloadScope,
+          : payloadScope
+      ) as ReviewReferenceUsageScope,
     })).filter((record) =>
       Boolean(
         record.labelKey &&
