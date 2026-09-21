@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { literatureWorkflowService } from "@/lib/literature/workflow/literature-workflow-service";
-import { requirePermission } from "@/lib/rbac/guard";
+import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
-import { routeErrorResponse } from "@/lib/api/route-error";
+import { routeErrorResponse } from "@/lib/api/route-error";\nimport { NEXUS_MODULES } from "@/lib/nexus/modules";
 
 const TENANT_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
 
@@ -67,9 +67,7 @@ export async function POST(
   request: NextRequest,
 ): Promise<Response> {
   try {
-    const principal = await requirePermission(
-      request,
-      PERMISSIONS.PACKAGE_ACTION_EXECUTE,
+    const principal = await requireModulePermission(\n      request,\n      NEXUS_MODULES.LITERATURE,\n      PERMISSIONS.PACKAGE_ACTION_EXECUTE,
     );
 
     const body =
@@ -176,7 +174,7 @@ export async function POST(
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    await requirePermission(request, PERMISSIONS.PACKAGE_ACTION_EXECUTE);
+    await requireModulePermission(\n      request,\n      NEXUS_MODULES.LITERATURE,\n      PERMISSIONS.PACKAGE_ACTION_EXECUTE);
 
     return NextResponse.json(
       {
