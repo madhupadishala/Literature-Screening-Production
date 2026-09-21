@@ -168,4 +168,22 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "027_nexus_intake_disposition.sql",
     required: true,
   },
+  {
+    id: "028",
+    name: "Nexus L2A Case Processing",
+    filename: "028_nexus_l2a_case_processing.sql",
+    required: true,
+  },
+  {
+    id: "029",
+    name: "Nexus Case Review and Finalization",
+    filename: "029_nexus_case_review_finalization.sql",
+    required: true,
+  },
+  {
+    id: "030",
+    name: "Nexus Case Evidence and Export",
+    filename: "030_nexus_case_evidence_export.sql",
+    required: true,
+  },
 ] as const;
