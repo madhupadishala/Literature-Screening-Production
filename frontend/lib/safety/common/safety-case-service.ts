@@ -140,6 +140,23 @@ export async function createSafetyCaseShellInTransaction(input: {
   );
 
   await input.client.query(
+    `INSERT INTO safety_review_tasks (
+       tenant_id, task_key, entity_type, entity_id, task_type,
+       status, created_by
+     ) VALUES (
+       $1,$2,'CASE',$3,'CASE_PROCESSING','OPEN',$4
+     )
+     ON CONFLICT (tenant_id, task_key)
+     DO NOTHING`,
+    [
+      input.principal.tenantId,
+      `case-processing:${caseId}`,
+      caseId,
+      input.principal.userId,
+    ],
+  );
+
+  await input.client.query(
     `INSERT INTO audit_events (
        tenant_id, actor_id, event_type, event_category, outcome, details
      ) VALUES (
@@ -161,7 +178,7 @@ export async function createSafetyCaseShellInTransaction(input: {
     caseId,
     caseKey,
     intakeRecordId,
-    caseStatus: "OPEN",
+    caseStatus: "NEW",
     currentVersion: 0,
     initialReceiptDate: input.request.initialReceiptDate,
     latestReceiptDate: input.request.latestReceiptDate,
