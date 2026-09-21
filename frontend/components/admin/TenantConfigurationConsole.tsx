@@ -7,6 +7,7 @@ import { useDeferredLoad } from "@/hooks/use-deferred-load";
 type ResourceType =
   | "PRODUCT_MASTER"
   | "LITERATURE_CALENDAR"
+  | "SEARCH_PROFILE"
   | "CLIENT_GUIDELINE"
   | "OUTCOME_TEMPLATE"
   | "LITERATURE_SOURCE"
@@ -61,6 +62,11 @@ const RESOURCE_TABS: Array<{
     description: "Products, synonyms, salts, lifecycle, MAH, and WHODrug mappings.",
   },
   {
+    type: "SEARCH_PROFILE",
+    label: "Search Profiles",
+    description: "Approved versioned database strategy, product linkage, sources, and lookback windows.",
+  },
+  {
     type: "LITERATURE_CALENDAR",
     label: "Literature Calendar",
     description: "Daily, weekly, monthly, or custom surveillance schedules.",
@@ -90,6 +96,7 @@ const RESOURCE_TABS: Array<{
 const ACCEPT: Record<ResourceType, string> = {
   PRODUCT_MASTER: ".csv,.xlsx,.json",
   LITERATURE_CALENDAR: ".csv,.xlsx,.json",
+  SEARCH_PROFILE: ".csv,.xlsx,.json",
   CLIENT_GUIDELINE: ".pdf,.docx,.txt,.md",
   OUTCOME_TEMPLATE: ".json",
   LITERATURE_SOURCE: ".json",
@@ -127,17 +134,36 @@ const DEFAULT_JSON: Record<ResourceType, string> = {
     null,
     2,
   ),
+  SEARCH_PROFILE: JSON.stringify(
+    {
+      records: [
+        {
+          profileKey: "SEARCH-PROFILE-001",
+          productId: "PRODUCT-001",
+          searchString: "adverse event OR adverse reaction OR safety",
+          sourceKeys: ["PUBMED", "EUROPE_PMC"],
+          lookbackDays: 7,
+          limit: 100,
+          status: "ACTIVE",
+        },
+      ],
+    },
+    null,
+    2,
+  ),
   LITERATURE_CALENDAR: JSON.stringify(
     {
       records: [
         {
           calendarId: "CAL-001",
           productId: "PRODUCT-001",
-          sourceKeys: ["PUBMED", "EUROPE_PMC"],
+          searchProfileKey: "SEARCH-PROFILE-001",
           frequency: "WEEKLY",
           executionDay: "MONDAY",
           executionTime: "09:00",
           timezone: "Asia/Kolkata",
+          graceMinutes: 90,
+          catchUpHours: 72,
           missedSearchDetection: true,
           status: "ACTIVE",
         },

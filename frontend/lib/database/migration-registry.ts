@@ -126,4 +126,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "020_patient_extraction_runs.sql",
     required: true,
   },
+  {
+    id: "021",
+    name: "Search Profiles and Scheduled Production Searches",
+    filename: "021_search_profiles_scheduled_production.sql",
+    required: true,
+  },
 ] as const;

@@ -16,6 +16,12 @@ export async function buildTenantRuntimeConfigurationContext(
     productMaster: active.productMaster?.payload || null,
     pharmaceuticalProductIntelligence: pharmaceuticalScenarioContext(),
     literatureCalendar: active.literatureCalendar?.payload || null,
+    searchProfiles: active.searchProfiles.map((record) => ({
+      id: record.id,
+      key: record.configKey,
+      version: record.versionLabel,
+      payload: record.payload,
+    })),
     clientGuidelines: active.clientGuidelines.map((record) => ({
       id: record.id,
       key: record.configKey,
