@@ -32,8 +32,10 @@ export interface ManualIntakeSubmission
   sourceSystem?: "NEXUS_MANUAL";
 }
 
-export interface ApiIntakeSubmission
-  extends Omit<StructuredIntakeSubmission, "intakeChannel"> {}
+export type ApiIntakeSubmission = Omit<
+  StructuredIntakeSubmission,
+  "intakeChannel"
+>;
 
 export const INTAKE_DOCUMENT_CONTENT_TYPES = [
   "application/pdf",
