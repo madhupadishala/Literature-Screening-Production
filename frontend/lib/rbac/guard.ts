@@ -6,6 +6,11 @@ import { evaluateNexusAuthorization } from "@/lib/nexus/authorization-policy";
 import { getModuleEntitlementAccessState } from "@/lib/nexus/entitlement-service";
 import type { NexusModuleKey } from "@/lib/nexus/modules";
 import {
+  getPlatformAccess,
+  platformRoleHasPermission,
+  type PlatformPermission,
+} from "@/lib/nexus/platform-rbac";
+import {
   AuthorizationError,
   resolveRequestPrincipal,
   type RequestPrincipal,
@@ -46,6 +51,50 @@ export async function requirePermission(
   return principal;
 }
 
+
+export async function requirePlatformPermission(
+  request: NextRequest,
+  permission: PlatformPermission,
+): Promise<RequestPrincipal> {
+  const principal = await resolveRequestPrincipal(request);
+  const platformAccess = await getPlatformAccess(principal.userId);
+
+  if (
+    !platformAccess ||
+    !platformRoleHasPermission(platformAccess.roleKey, permission)
+  ) {
+    await getPostgresPool()
+      .query(
+        `INSERT INTO audit_events (
+           tenant_id, actor_id, event_type, event_category, outcome,
+           request_id, source_ip, details
+         ) VALUES ($1, $2, 'AUTHORIZATION_DENIED', 'SECURITY_PLATFORM_RBAC', 'denied',
+           $3, $4, $5::jsonb)`,
+        [
+          principal.tenantId,
+          principal.userId,
+          request.headers.get("x-request-id")?.trim() || null,
+          request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null,
+          JSON.stringify({
+            permission,
+            platformRoleKey: platformAccess?.roleKey ?? null,
+            tenantRoleKey: principal.roleKey,
+            environment: principal.environment,
+            method: request.method,
+            pathname: request.nextUrl.pathname,
+          }),
+        ],
+      )
+      .catch(() => undefined);
+
+    throw new AuthorizationError(
+      `Platform permission denied: ${permission}`,
+      403,
+    );
+  }
+
+  return principal;
+}
 
 export async function requireModulePermission(
   request: NextRequest,
