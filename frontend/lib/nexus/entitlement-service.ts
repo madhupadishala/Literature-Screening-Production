@@ -83,23 +83,60 @@ export async function getTenantEntitlements(
   return result.rows.map(mapRow).filter((row): row is TenantModuleEntitlement => Boolean(row));
 }
 
+export interface ModuleEntitlementAccessState {
+  moduleEnabled: boolean;
+  dependenciesEnabled: boolean;
+  missingDependencies: NexusModuleKey[];
+}
+
+export async function getModuleEntitlementAccessState(
+  tenantId: string,
+  environment: NexusEnvironment,
+  moduleKey: NexusModuleKey,
+): Promise<ModuleEntitlementAccessState> {
+  const entitlements = await getTenantEntitlements(tenantId, environment);
+  const byModule = new Map(entitlements.map((item) => [item.moduleKey, item]));
+
+  const current = byModule.get(moduleKey);
+  const moduleEnabled = Boolean(current && entitlementIsActive(current));
+
+  const missingDependencies = getModuleDependencies(moduleKey).filter((dependency) => {
+    const dependencyEntitlement = byModule.get(dependency);
+    return !dependencyEntitlement || !entitlementIsActive(dependencyEntitlement);
+  });
+
+  return {
+    moduleEnabled,
+    dependenciesEnabled: missingDependencies.length === 0,
+    missingDependencies,
+  };
+}
+
 export async function moduleIsEffectivelyEnabled(
   tenantId: string,
   environment: NexusEnvironment,
   moduleKey: NexusModuleKey,
 ): Promise<boolean> {
+  const state = await getModuleEntitlementAccessState(tenantId, environment, moduleKey);
+  return state.moduleEnabled && state.dependenciesEnabled;
+}
+
+export async function getEffectiveEnabledModules(
+  tenantId: string,
+  environment: NexusEnvironment,
+): Promise<NexusModuleKey[]> {
   const entitlements = await getTenantEntitlements(tenantId, environment);
   const byModule = new Map(entitlements.map((item) => [item.moduleKey, item]));
 
-  const current = byModule.get(moduleKey);
-  if (!current || !entitlementIsActive(current)) return false;
-
-  for (const dependency of getModuleDependencies(moduleKey)) {
-    const dependencyEntitlement = byModule.get(dependency);
-    if (!dependencyEntitlement || !entitlementIsActive(dependencyEntitlement)) return false;
-  }
-
-  return true;
+  return entitlements
+    .filter((item) => entitlementIsActive(item))
+    .filter((item) =>
+      getModuleDependencies(item.moduleKey).every((dependency) => {
+        const dependencyEntitlement = byModule.get(dependency);
+        return Boolean(dependencyEntitlement && entitlementIsActive(dependencyEntitlement));
+      }),
+    )
+    .map((item) => item.moduleKey);
 }
 
 export interface UpdateEntitlementInput {
