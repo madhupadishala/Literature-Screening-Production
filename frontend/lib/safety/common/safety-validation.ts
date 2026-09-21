@@ -48,6 +48,12 @@ function assertProduct(product: SafetyProductDraft): void {
   if (!product.reportedName.trim()) throw new Error("Product reportedName is required.");
 }
 
+function assertDate(value: string | undefined, fieldName: string): void {
+  if (value && !Number.isFinite(new Date(value).getTime())) {
+    throw new Error(`${fieldName} must be a valid date/time.`);
+  }
+}
+
 function assertEvent(event: SafetyEventDraft): void {
   if (!event.reportedTerm.trim()) throw new Error("Event reportedTerm is required.");
   if (event.onsetDate && event.endDate) {
@@ -69,6 +75,25 @@ export function validateIntakeDraft(draft: IntakeDraft): IntakeDraft {
   assertIsoCountryCode(draft.intake.countryCode, "intake.countryCode");
   assertLanguageCode(draft.source.languageCode, "source.languageCode");
   assertLanguageCode(draft.intake.languageCode, "intake.languageCode");
+  assertDate(draft.source.receivedAt, "source.receivedAt");
+  assertDate(draft.intake.initialReceiptDate, "intake.initialReceiptDate");
+  assertDate(draft.intake.latestReceiptDate, "intake.latestReceiptDate");
+
+  if (
+    draft.intake.initialReceiptDate &&
+    draft.intake.latestReceiptDate &&
+    new Date(draft.intake.latestReceiptDate).getTime() <
+      new Date(draft.intake.initialReceiptDate).getTime()
+  ) {
+    throw new Error("intake.latestReceiptDate cannot precede intake.initialReceiptDate.");
+  }
+
+  draft.reporters.forEach((reporter, index) =>
+    assertIsoCountryCode(reporter.countryCode, `reporters[${index}].countryCode`),
+  );
+  draft.events.forEach((event, index) =>
+    assertIsoCountryCode(event.countryCode, `events[${index}].countryCode`),
+  );
 
   assertUniqueKeys("patient", draft.patients, "patientKey");
   assertUniqueKeys("reporter", draft.reporters, "reporterKey");
