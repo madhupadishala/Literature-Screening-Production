@@ -6,6 +6,7 @@ import type { PoolClient } from "pg";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { moduleIsEffectivelyEnabled } from "@/lib/nexus/entitlement-service";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 import { canonicalSha256 } from "@/lib/safety/common/canonical-json";
 import {
@@ -130,6 +131,29 @@ async function loadIntake(
     throw new Error("Safety Intake was not found in the active tenant.");
   }
   return result.rows[0];
+}
+
+function applyPermissionFilter(
+  principal: RequestPrincipal,
+  dispositions: IntakeDispositionType[],
+): IntakeDispositionType[] {
+  if (!principal.hasPermission(PERMISSIONS.INTAKE_PROCESS)) return [];
+
+  return dispositions.filter((disposition) => {
+    if (
+      disposition === "CREATE_NEXUS_CASE" &&
+      !principal.hasPermission(PERMISSIONS.CASE_CREATE)
+    ) {
+      return false;
+    }
+    if (
+      disposition === "EXPORT_EXTERNAL" &&
+      !principal.hasPermission(PERMISSIONS.INTAKE_EXPORT)
+    ) {
+      return false;
+    }
+    return true;
+  });
 }
 
 async function buildHandoffPayload(
@@ -306,17 +330,20 @@ export async function getDispositionWorkspace(input: {
     return {
       intake,
       caseProcessingEnabled,
-      allowedDispositions: deriveAllowedDispositions(
-        {
-          validityStatus: String(intake.validity_status || ""),
-          triageOutcome: String(intake.triage_outcome || ""),
-          followUpRequired: intake.follow_up_required === true,
-          duplicateReviewStatus: String(
-            intake.duplicate_review_status || "NOT_STARTED",
-          ),
-          caseRelationship: String(intake.case_relationship || ""),
-        },
-        caseProcessingEnabled,
+      allowedDispositions: applyPermissionFilter(
+        input.principal,
+        deriveAllowedDispositions(
+          {
+            validityStatus: String(intake.validity_status || ""),
+            triageOutcome: String(intake.triage_outcome || ""),
+            followUpRequired: intake.follow_up_required === true,
+            duplicateReviewStatus: String(
+              intake.duplicate_review_status || "NOT_STARTED",
+            ),
+            caseRelationship: String(intake.case_relationship || ""),
+          },
+          caseProcessingEnabled,
+        ),
       ),
       latestDisposition: disposition.rows[0]
         ? mapDisposition(disposition.rows[0])
@@ -414,7 +441,9 @@ export async function finalizeIntakeDisposition(input: {
       input.principal.environment,
       NEXUS_MODULES.CASE_PROCESSING,
     );
-    const allowed = deriveAllowedDispositions(
+    const allowed = applyPermissionFilter(
+      input.principal,
+      deriveAllowedDispositions(
         {
           validityStatus: String(intake.validity_status || ""),
           triageOutcome: String(intake.triage_outcome || ""),
@@ -425,7 +454,8 @@ export async function finalizeIntakeDisposition(input: {
           caseRelationship: String(intake.case_relationship || ""),
         },
         caseProcessingEnabled,
-      );
+      ),
+    );
     if (!allowed.includes(input.request.dispositionType)) {
       throw new Error(
         `Disposition ${input.request.dispositionType} is not allowed for the current Intake state.`,
