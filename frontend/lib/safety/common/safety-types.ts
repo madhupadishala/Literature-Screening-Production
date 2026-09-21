@@ -46,7 +46,14 @@ export type SafetyCaseStatus =
   | "FINALIZED"
   | "SUBMITTED"
   | "CLOSED"
-  | "VOID";
+  | "VOID"
+  | "NEW"
+  | "ASSIGNED"
+  | "PROCESSING"
+  | "READY_FOR_QC"
+  | "QC_RETURNED"
+  | "QC_APPROVED"
+  | "FINAL";
 
 export type ProductRole =
   | "SUSPECT"
