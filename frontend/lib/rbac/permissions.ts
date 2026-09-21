@@ -45,7 +45,6 @@ export const PERMISSIONS = {
   PERFORMANCE_VIEW: "platform.performance.view",
 
   ENTITLEMENT_VIEW: "platform.entitlement.view",
-  ENTITLEMENT_MANAGE: "platform.entitlement.manage",
   SUPER_USER_CONSOLE_MANAGE: "platform.super_user.manage",
   ADMIN_SETTINGS_MANAGE: "platform.admin.settings.manage",
   PACKAGE_ACTION_EXECUTE: "literature.package.action.execute",
@@ -61,12 +60,7 @@ export const PERMISSIONS = {
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
 
-function allPermissionsExcept(...excluded: Permission[]): readonly Permission[] {
-  const denied = new Set<Permission>(excluded);
-  return (Object.values(PERMISSIONS) as Permission[]).filter((permission) => !denied.has(permission));
-}
-
-const CLIENT_FULL_PERMISSIONS = allPermissionsExcept(PERMISSIONS.ENTITLEMENT_MANAGE);
+const CLIENT_FULL_PERMISSIONS = Object.values(PERMISSIONS);
 
 export const ROLE_PERMISSIONS: Record<string, readonly Permission[]> = {
   CLINIXAI_SUPER_ADMIN: Object.values(PERMISSIONS),
