@@ -44,6 +44,7 @@ const TABS = [
   "Narrative",
   "Attachments",
   "Reviews",
+  "Evidence & Export",
   "Audit",
 ] as const;
 
@@ -96,6 +97,10 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
     ready: boolean;
     checks: Array<{ key: string; passed: boolean; message: string }>;
   } | null>(null);
+  const [releaseArtifacts, setReleaseArtifacts] = useState<{
+    evidencePackages: Array<Record<string, unknown>>;
+    exports: Array<Record<string, unknown>>;
+  }>({ evidencePackages: [], exports: [] });
 
   const hydrate = useCallback((data: Workspace) => {
     setWorkspace(data);
@@ -160,6 +165,39 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
     const timer = window.setTimeout(() => void load(), 0);
     return () => window.clearTimeout(timer);
   }, [load]);
+  const loadReleaseArtifacts = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `/api/safety/cases/${caseId}/evidence`,
+        { cache: "no-store" },
+      );
+      const payload = await response.json();
+      if (!response.ok || !payload?.success) {
+        throw new Error(payload?.error || "Unable to load release artifacts.");
+      }
+      setReleaseArtifacts({
+        evidencePackages: Array.isArray(payload.data?.evidencePackages)
+          ? payload.data.evidencePackages
+          : [],
+        exports: Array.isArray(payload.data?.exports)
+          ? payload.data.exports
+          : [],
+      });
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Unable to load release artifacts.",
+      );
+    }
+  }, [caseId]);
+
+  useEffect(() => {
+    if (tab !== "Evidence & Export") return;
+    const timer = window.setTimeout(() => void loadReleaseArtifacts(), 0);
+    return () => window.clearTimeout(timer);
+  }, [tab, loadReleaseArtifacts]);
+
 
   const draftPayload = workspace?.draft.payload as
     | Record<string, unknown>
@@ -419,6 +457,55 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
     }
   }
 
+  async function generateEvidence() {
+    setBusy("evidence");
+    try {
+      const response = await fetch(
+        `/api/safety/cases/${caseId}/evidence`,
+        { method: "POST" },
+      );
+      await refreshAfter(response, "Case Evidence Package generated.");
+      await loadReleaseArtifacts();
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "Evidence generation failed.",
+      );
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function generateExport(
+    format:
+      | "NEXUS_CASE_JSON"
+      | "E2B_R3_MAPPING_JSON"
+      | "HUMAN_READABLE_HTML",
+  ) {
+    setBusy(`export-${format}`);
+    try {
+      const response = await fetch(
+        `/api/safety/cases/${caseId}/exports`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ format }),
+        },
+      );
+      const payload = await response.json();
+      if (!response.ok || !payload?.success) {
+        throw new Error(payload?.error || "Case export generation failed.");
+      }
+      await loadReleaseArtifacts();
+      setMessage(`${format.replaceAll("_", " ")} generated.`);
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "Case export generation failed.",
+      );
+    } finally {
+      setBusy("");
+    }
+  }
+
   if (!workspace) {
     return (
       <main className="app-shell" id="main-content">
@@ -657,6 +744,99 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
 
             <h3>Review History</h3>
             <DataCards records={workspace.reviewActions} empty="No review actions yet." />
+          </div>
+        ) : null}
+
+        {tab === "Evidence & Export" ? (
+          <div className={styles.stack}>
+            <section className={styles.reviewBox}>
+              <h3>Case Evidence Package</h3>
+              <p className={styles.muted}>
+                Generates a hash-locked package containing source/Intake lineage,
+                draft history, human assessments, QC/MR actions, finalization checks
+                and the immutable final case version. Raw uploaded file bytes are not embedded.
+              </p>
+              <button
+                className={styles.primary}
+                type="button"
+                onClick={() => void generateEvidence()}
+                disabled={busy !== "" || !isFinal}
+              >
+                Generate Case Evidence Package
+              </button>
+            </section>
+
+            <section className={styles.reviewBox}>
+              <h3>Controlled Exports</h3>
+              <div className={styles.actionRow}>
+                <button
+                  type="button"
+                  onClick={() => void generateExport("NEXUS_CASE_JSON")}
+                  disabled={busy !== "" || !isFinal}
+                >
+                  Generate Nexus JSON
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void generateExport("E2B_R3_MAPPING_JSON")}
+                  disabled={busy !== "" || !isFinal}
+                >
+                  Generate E2B(R3) Mapping JSON
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void generateExport("HUMAN_READABLE_HTML")}
+                  disabled={busy !== "" || !isFinal}
+                >
+                  Generate Human-readable Report
+                </button>
+              </div>
+              <p className={styles.muted}>
+                E2B(R3) mapping JSON is an internal structured representation, not
+                regulatory XML transmission and not a gateway acknowledgement workflow.
+              </p>
+            </section>
+
+            <section className={styles.reviewBox}>
+              <h3>Evidence Packages</h3>
+              {releaseArtifacts.evidencePackages.map((item) => (
+                <div className={styles.query} key={display(item.id)}>
+                  <strong>
+                    Package v{display(item.package_version)} · {display(item.package_sha256)}
+                  </strong>
+                  <p>{display(item.generated_at)}</p>
+                  <a
+                    href={`/api/safety/cases/${caseId}/evidence/${display(item.id)}`}
+                  >
+                    Download evidence JSON
+                  </a>
+                </div>
+              ))}
+              {!releaseArtifacts.evidencePackages.length ? (
+                <p className={styles.muted}>No case evidence package generated yet.</p>
+              ) : null}
+            </section>
+
+            <section className={styles.reviewBox}>
+              <h3>Exports</h3>
+              {releaseArtifacts.exports.map((item) => (
+                <div className={styles.query} key={display(item.id)}>
+                  <strong>
+                    {display(item.export_format).replaceAll("_", " ")} · v
+                    {display(item.export_version)}
+                  </strong>
+                  <p>SHA-256: {display(item.content_sha256)}</p>
+                  <a
+                    href={`/api/safety/cases/${caseId}/exports/${display(item.id)}`}
+                  >
+                    Download export
+                  </a>
+                </div>
+              ))}
+              {!releaseArtifacts.exports.length ? (
+                <p className={styles.muted}>No exports generated yet.</p>
+              ) : null}
+            </section>
           </div>
         ) : null}
 
