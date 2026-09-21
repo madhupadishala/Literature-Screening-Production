@@ -40,6 +40,10 @@ export interface SafetyIntakeSummary {
   status: string;
   validityStatus: string;
   duplicateStatus: string;
+  duplicateReviewStatus: string;
+  caseRelationship: string | null;
+  dispositionStatus: string;
+  dispositionType: string | null;
   seriousnessStatus: string;
   triageStatus: string;
   triageOutcome: string | null;
@@ -75,6 +79,10 @@ function summary(row: Record<string, unknown>, reused: boolean): SafetyIntakeSum
     status: String(row.status),
     validityStatus: String(row.validity_status),
     duplicateStatus: String(row.duplicate_status),
+    duplicateReviewStatus: String(row.duplicate_review_status || "NOT_STARTED"),
+    caseRelationship: row.case_relationship ? String(row.case_relationship) : null,
+    dispositionStatus: String(row.disposition_status || "NOT_STARTED"),
+    dispositionType: row.disposition_type ? String(row.disposition_type) : null,
     seriousnessStatus: String(row.seriousness_status),
     triageStatus: String(row.triage_status || "NOT_STARTED"),
     triageOutcome: row.triage_outcome ? String(row.triage_outcome) : null,
