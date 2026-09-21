@@ -36,8 +36,14 @@ export function normalizeSearchCriteria(
   }
 
   const limit = Math.max(1, Math.min(Number(input.limit || 50), 500));
+  const executionPurpose =
+    input.executionPurpose === "MANUAL_PRODUCTION" ||
+    input.executionPurpose === "SCHEDULED_PRODUCTION"
+      ? input.executionPurpose
+      : "TEST_VALIDATION";
 
   return {
+    executionPurpose,
     searchString: clean(input.searchString) || undefined,
     pmid: clean(input.pmid) || undefined,
     doi: clean(input.doi).replace(/^https?:\/\/(dx\.)?doi\.org\//i, "") || undefined,
