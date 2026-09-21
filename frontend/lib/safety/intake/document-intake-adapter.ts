@@ -50,8 +50,6 @@ export function documentSubmissionToIntakeDraft(
   const sourceIdentity = {
     channel: "DOCUMENT",
     requestId,
-    fileName,
-    contentSha256,
   };
   const sourceIdentityHash = canonicalSha256(sourceIdentity);
   const lineage = {
@@ -111,6 +109,6 @@ export function documentSubmissionToIntakeDraft(
     draft: validateIntakeDraft(draft),
     bytes,
     contentSha256,
-    documentKey: `source-document:${sourceIdentityHash}`,
+    documentKey: `source-document:${sourceIdentityHash}:${contentSha256.slice(0, 16)}`,
   };
 }
