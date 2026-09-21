@@ -144,4 +144,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "023_nexus_intake_sources.sql",
     required: true,
   },
+  {
+    id: "024",
+    name: "Nexus Intake Review and Extraction",
+    filename: "024_nexus_intake_review_extraction.sql",
+    required: true,
+  },
 ] as const;
