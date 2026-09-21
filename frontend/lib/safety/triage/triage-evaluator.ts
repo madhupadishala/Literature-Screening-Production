@@ -53,7 +53,7 @@ function patientCriterion(
         typeof item.age_value === "number" ||
         text(item.age_group) ||
         item.date_of_birth ||
-        text(item.patient_key),
+        nonEmptyObject(item.e2b_d_payload),
     );
   });
 
@@ -166,9 +166,40 @@ function seriousness(
           ? (event.seriousness_criteria as Record<string, unknown>)
           : {};
 
+      const aliases: Record<SeriousnessCriterion, string[]> = {
+        DEATH: ["DEATH", "death"],
+        LIFE_THREATENING: ["LIFE_THREATENING", "lifeThreatening", "life_threatening"],
+        HOSPITALIZATION_OR_PROLONGATION: [
+          "HOSPITALIZATION_OR_PROLONGATION",
+          "hospitalization",
+          "hospitalisation",
+          "prolongedHospitalization",
+          "prolonged_hospitalization",
+        ],
+        DISABILITY_OR_INCAPACITY: [
+          "DISABILITY_OR_INCAPACITY",
+          "disability",
+          "incapacity",
+        ],
+        CONGENITAL_ANOMALY_OR_BIRTH_DEFECT: [
+          "CONGENITAL_ANOMALY_OR_BIRTH_DEFECT",
+          "congenitalAnomaly",
+          "congenital_anomaly",
+          "birthDefect",
+          "birth_defect",
+        ],
+        IMPORTANT_MEDICAL_EVENT: [
+          "IMPORTANT_MEDICAL_EVENT",
+          "importantMedicalEvent",
+          "important_medical_event",
+          "medicallyImportant",
+          "medically_important",
+        ],
+      };
+
       let mapped = false;
       for (const key of SERIOUSNESS_CRITERIA) {
-        if (criteria[key] === true) {
+        if (aliases[key].some((alias) => criteria[alias] === true)) {
           evidence[key] = [...(evidence[key] ?? []), term];
           mapped = true;
         }
@@ -195,15 +226,31 @@ function seriousness(
   return { recommendation: "UNRESOLVED", evidence };
 }
 
+function collectStringValues(value: unknown, output: string[]): void {
+  if (typeof value === "string") {
+    if (value.trim()) output.push(value.trim());
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectStringValues(item, output));
+    return;
+  }
+  if (value && typeof value === "object") {
+    Object.values(value as Record<string, unknown>).forEach((item) =>
+      collectStringValues(item, output),
+    );
+  }
+}
+
 function corpus(snapshot: SafetyEntitySnapshot): string {
-  return JSON.stringify({
-    patients: snapshot.patients,
-    reporters: snapshot.reporters,
-    products: snapshot.products,
-    events: snapshot.events,
-    sourcePayload: snapshot.sourcePayload ?? {},
-    intakePayload: snapshot.intakePayload ?? {},
-  }).toLowerCase();
+  const values: string[] = [];
+  collectStringValues(snapshot.patients, values);
+  collectStringValues(snapshot.reporters, values);
+  collectStringValues(snapshot.products, values);
+  collectStringValues(snapshot.events, values);
+  collectStringValues(snapshot.sourcePayload ?? {}, values);
+  collectStringValues(snapshot.intakePayload ?? {}, values);
+  return values.join(" ").toLowerCase();
 }
 
 function detectSpecialSituations(
