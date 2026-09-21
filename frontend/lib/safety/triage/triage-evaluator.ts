@@ -29,6 +29,12 @@ function nonEmptyObject(value: unknown): boolean {
   );
 }
 
+function objectValues(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+}
+
 function numberValue(value: unknown): number | null {
   if (typeof value === "number" && Number.isFinite(value)) return value;
   if (typeof value === "string" && value.trim()) {
@@ -90,14 +96,23 @@ function reporterCriterion(
   reporters: Array<Record<string, unknown>>,
 ): MinimumCriterionAssessment {
   const reporter = reporters.find((item) => {
-    const hasExistenceEvidence = Boolean(
+    const payload = {
+      ...objectValues(item.reporter_payload),
+      ...objectValues(item.e2b_c2_payload),
+    };
+
+    return Boolean(
       text(item.qualification) ||
         text(item.organization) ||
-        nonEmptyObject(item.reporter_payload) ||
-        nonEmptyObject(item.e2b_c2_payload),
+        text(payload.name) ||
+        text(payload.initials) ||
+        text(payload.email) ||
+        text(payload.phone) ||
+        text(payload.address) ||
+        text(payload.city) ||
+        text(payload.region) ||
+        text(payload.country),
     );
-    const hasCountry = Boolean(text(item.country_code));
-    return hasExistenceEvidence && hasCountry;
   });
 
   return criterion(
@@ -114,8 +129,8 @@ function reporterCriterion(
         ].filter(Boolean) as string[]
       : [],
     reporter
-      ? "At least one reporter contains existence evidence and a country."
-      : "No reporter currently contains sufficient existence evidence plus country.",
+      ? "At least one reporter contains a qualifying identifiable characteristic."
+      : "No reporter currently contains a qualifying identifiable characteristic.",
   );
 }
 
@@ -348,6 +363,15 @@ export function evaluateTriageSnapshot(
 
   if (serious.recommendation === "UNRESOLVED" && snapshot.events.length > 0) {
     followUpReasons.push("Seriousness remains unresolved for one or more events.");
+  }
+
+  if (
+    snapshot.reporters.length > 0 &&
+    !snapshot.reporters.some((item) => Boolean(text(item.country_code)))
+  ) {
+    followUpReasons.push(
+      "Reporter country is not captured; obtain it when feasible for downstream regional/E2B completeness.",
+    );
   }
 
   const followUpRecommended = followUpReasons.length > 0;
