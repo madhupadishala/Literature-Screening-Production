@@ -93,7 +93,7 @@ async function currentNarrative(
        FROM safety_case_narrative_versions
       WHERE tenant_id = $1 AND case_id = $2
         AND narrative_stage IN (
-          'PROCESSOR', 'QC', 'MEDICAL_REVIEW', 'FINAL', 'SYSTEM_DRAFT'
+          'PROCESSOR', 'QC', 'MEDICAL_REVIEW', 'FINAL'
         )
       ORDER BY narrative_version DESC
       LIMIT 1`,
