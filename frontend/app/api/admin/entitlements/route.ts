@@ -11,7 +11,8 @@ import {
   type EntitlementStatus,
 } from "@/lib/nexus/entitlement-types";
 import { isNexusModuleKey } from "@/lib/nexus/modules";
-import { requirePermission } from "@/lib/rbac/guard";
+import { PLATFORM_PERMISSIONS } from "@/lib/nexus/platform-rbac";
+import { requirePermission, requirePlatformPermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export const runtime = "nodejs";
@@ -51,7 +52,10 @@ interface UpdateBody {
 
 export async function PUT(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(request, PERMISSIONS.ENTITLEMENT_MANAGE);
+    const principal = await requirePlatformPermission(
+      request,
+      PLATFORM_PERMISSIONS.ENTITLEMENT_MANAGE,
+    );
     const body = (await request.json()) as UpdateBody;
 
     if (typeof body.moduleKey !== "string" || !isNexusModuleKey(body.moduleKey)) {
