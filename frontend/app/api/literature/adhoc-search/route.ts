@@ -1,7 +1,7 @@
 import { type NextRequest } from "next/server";
-import { routeErrorResponse } from "@/lib/api/route-error";
+import { routeErrorResponse } from "@/lib/api/route-error";\nimport { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
-import { requirePermission } from "@/lib/rbac/guard";
+import { requireModulePermission } from "@/lib/rbac/guard";
 import {
   listLiteratureSources,
   listRecentSearches,
@@ -14,9 +14,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(
-      request,
-      PERMISSIONS.SEARCH_EXECUTE,
+    const principal = await requireModulePermission(\n      request,\n      NEXUS_MODULES.LITERATURE,\n      PERMISSIONS.SEARCH_EXECUTE,
     );
 
     const [sources, recentSearches] = await Promise.all([
@@ -45,9 +43,7 @@ export async function GET(request: NextRequest): Promise<Response> {
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(
-      request,
-      PERMISSIONS.SEARCH_EXECUTE,
+    const principal = await requireModulePermission(\n      request,\n      NEXUS_MODULES.LITERATURE,\n      PERMISSIONS.SEARCH_EXECUTE,
     );
 
     const body = (await request.json()) as {
