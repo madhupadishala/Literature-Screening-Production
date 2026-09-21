@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { PoolClient } from "pg";
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 import {
@@ -112,7 +113,7 @@ async function storeDocument(input: {
   principal: RequestPrincipal;
   normalized: NormalizedDocumentIntake;
   intake: SafetyIntakeSummary;
-  client: Awaited<ReturnType<typeof getPostgresPool>["connect"]>;
+  client: PoolClient;
 }): Promise<IntakeDocumentSummary> {
   const inserted = await input.client.query<{
     id: string;
