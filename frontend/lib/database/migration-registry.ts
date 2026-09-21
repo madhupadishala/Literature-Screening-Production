@@ -126,4 +126,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "020_patient_extraction_runs.sql",
     required: true,
   },
+  {
+    id: "021",
+    name: "Nexus Module Entitlements",
+    filename: "021_nexus_module_entitlements.sql",
+    required: true,
+  },
 ] as const;
