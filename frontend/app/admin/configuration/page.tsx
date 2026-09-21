@@ -9,7 +9,7 @@ export default function TenantConfigurationPage() {
       <InvestorDemoHeader
         eyebrow="TENANT-CONTROLLED ADMINISTRATION"
         title="Configuration & Source Governance"
-        subtitle="Authorized Client Owners, IT administrators, PV administrators, and Quality Approvers can maintain Product Master, Literature Calendar, Client Guidelines, Outcome Templates, and enabled literature databases without changing backend code."
+        subtitle="Authorized users can maintain Product Master, Literature Calendar, Client Guidelines, Label / RSI Master, approved Causality Methods, Outcome Templates, and literature sources without changing backend code."
         status="RBAC · Versioned · Auditable"
       />
       <TenantConfigurationConsole />
