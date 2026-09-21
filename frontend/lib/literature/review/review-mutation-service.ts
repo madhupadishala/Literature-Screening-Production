@@ -64,7 +64,7 @@ async function getWorkspaceForUpdate(input: {
   client: PoolClient;
 }) {
   const result = await input.client.query(
-    `SELECT workspace.*, package.package_key
+    `SELECT workspace.*, package.package_key, package.product_context
      FROM literature_review_workspaces workspace
      JOIN literature_packages package
        ON package.id = workspace.package_id
