@@ -83,6 +83,7 @@ async function ensureIntake(
   client: PoolClient,
   tenantId: string,
   intakeRecordId: string,
+  forUpdate = false,
 ): Promise<Record<string, unknown>> {
   const selected = await client.query<Record<string, unknown>>(
     `SELECT intake.*, source.source_type, source.source_system,
@@ -94,7 +95,8 @@ async function ensureIntake(
         AND source.tenant_id = intake.tenant_id
       WHERE intake.tenant_id = $1
         AND intake.id = $2
-      LIMIT 1`,
+      LIMIT 1
+      ${forUpdate ? "FOR UPDATE OF intake" : ""}`,
     [tenantId, intakeRecordId],
   );
   if (!selected.rows[0]) {
@@ -255,6 +257,7 @@ export async function runIntakeExtraction(input: {
       client,
       input.principal.tenantId,
       intakeRecordId,
+      true,
     );
     if (String(intake.source_review_status) === "VERIFIED") {
       throw new Error(
@@ -464,6 +467,25 @@ export async function runIntakeExtraction(input: {
         )
         .catch(() => undefined);
     }
+    await pool
+      .query(
+        `INSERT INTO audit_events (
+           tenant_id, actor_id, event_type, event_category, outcome, details
+         ) VALUES ($1,$2,'INTAKE_EXTRACTION_FAILED',
+           'NEXUS_INTAKE_REVIEW','failed',$3::jsonb)`,
+        [
+          input.principal.tenantId,
+          input.principal.userId,
+          JSON.stringify({
+            intakeRecordId,
+            extractionRunId: runId || null,
+            documentId: documentId || null,
+            error: error instanceof Error ? error.message : "Extraction failed.",
+            reason: changeReason,
+          }),
+        ],
+      )
+      .catch(() => undefined);
     throw error;
   } finally {
     client.release();
@@ -674,6 +696,7 @@ export async function reviewExtractionSuggestion(input: {
       client,
       input.principal.tenantId,
       intakeRecordId,
+      true,
     );
     if (String(intake.source_review_status) === "VERIFIED") {
       throw new Error("Verified source review cannot be modified.");
@@ -794,6 +817,7 @@ export async function completeIntakeSourceReview(input: {
       client,
       input.principal.tenantId,
       intakeRecordId,
+      true,
     );
     if (String(intake.source_review_status) === "VERIFIED") {
       await client.query("COMMIT");
