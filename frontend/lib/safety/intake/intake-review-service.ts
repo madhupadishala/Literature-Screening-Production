@@ -803,6 +803,22 @@ export async function completeIntakeSourceReview(input: {
       });
     }
 
+    const documentState = await client.query<{ extraction_status: string }>(
+      `SELECT extraction_status
+         FROM safety_source_documents
+        WHERE tenant_id = $1
+          AND intake_record_id = $2
+        ORDER BY created_at DESC
+        LIMIT 1`,
+      [input.principal.tenantId, intakeRecordId],
+    );
+    const extractionStatus = documentState.rows[0]?.extraction_status;
+    if (extractionStatus === "PENDING" || extractionStatus === "IN_PROGRESS") {
+      throw new Error(
+        "Document extraction must complete or fail before source review can be verified.",
+      );
+    }
+
     const pending = await client.query<{ count: string }>(
       `SELECT COUNT(*)::text AS count
          FROM safety_extraction_suggestions suggestion
