@@ -83,6 +83,8 @@ assert.equal(
   true,
 );
 assert.equal(reviewService.includes("INTAKE_SOURCE_REVIEW_VERIFIED"), true);
+assert.equal(reviewService.includes("INTAKE_EXTRACTION_FAILED"), true);
+assert.equal(reviewService.includes("FOR UPDATE OF intake"), true);
 assert.equal(
   reviewService.includes("UPDATE safety_review_tasks"),
   false,
