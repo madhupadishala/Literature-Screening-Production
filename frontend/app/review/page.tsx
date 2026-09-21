@@ -93,34 +93,6 @@ function commaList(value: string): string[] {
   return [...new Set(value.split(",").map((item) => item.trim()).filter(Boolean))];
 }
 
-function buildLabelRows(patients: PatientSegment[]): LabelAssessment[] {
-  return patients.flatMap((patient) =>
-    patient.products.flatMap((product) =>
-      patient.events.map((event) => ({
-        patientSegmentKey: patient.patientSegmentKey,
-        reportedProduct: product,
-        clinicalEvent: event,
-        conclusion: "UNRESOLVED" as const,
-        rationale: "Reference label assessment pending.",
-      })),
-    ),
-  );
-}
-
-function buildCausalityRows(patients: PatientSegment[]): CausalityAssessment[] {
-  return patients.flatMap((patient) =>
-    patient.products.flatMap((product) =>
-      patient.events.map((event) => ({
-        patientSegmentKey: patient.patientSegmentKey,
-        reportedProduct: product,
-        clinicalEvent: event,
-        conclusion: "UNRESOLVED",
-        rationale: "Approved causality method assessment pending.",
-      })),
-    ),
-  );
-}
-
 export default function ReviewPage() {
   const [records, setRecords] = useState<ReviewRecord[]>([]);
   const [selected, setSelected] = useState<ReviewDetail | null>(null);
@@ -172,16 +144,8 @@ export default function ReviewPage() {
       const detail = payload.data.detail as ReviewDetail;
       setSelected(detail);
       setPatients(Array.isArray(detail.patientSegments) ? detail.patientSegments : []);
-      setLabels(
-        detail.labelAssessments?.length
-          ? detail.labelAssessments
-          : buildLabelRows(detail.patientSegments || []),
-      );
-      setCausality(
-        detail.causalityAssessments?.length
-          ? detail.causalityAssessments
-          : buildCausalityRows(detail.patientSegments || []),
-      );
+      setLabels(detail.labelAssessments?.length ? detail.labelAssessments : []);
+      setCausality(detail.causalityAssessments?.length ? detail.causalityAssessments : []);
       setMrStatus(
         detail.medicalReview?.reviewStatus === "APPROVED" ||
           detail.medicalReview?.reviewStatus === "EXCLUDED"
@@ -249,9 +213,44 @@ export default function ReviewPage() {
     );
   }
 
-  function refreshAssessmentRows() {
-    setLabels(buildLabelRows(patients));
-    setCausality(buildCausalityRows(patients));
+  function addLabelAssessment() {
+    const patient = patients[0];
+    if (!patient || patient.products.length === 0 || patient.events.length === 0) {
+      setMessage("Save at least one patient with a product and event before adding expectedness.");
+      return;
+    }
+    setLabels((current) => [
+      ...current,
+      {
+        patientSegmentKey: patient.patientSegmentKey,
+        reportedProduct: patient.products[0],
+        clinicalEvent: patient.events[0],
+        conclusion: "UNRESOLVED",
+        rationale: "Reference label assessment pending.",
+      },
+    ]);
+  }
+
+  function addCausalityAssessment() {
+    const patient = patients[0];
+    if (!patient || patient.products.length === 0 || patient.events.length === 0) {
+      setMessage("Save at least one patient with a product and event before adding causality.");
+      return;
+    }
+    setCausality((current) => [
+      ...current,
+      {
+        patientSegmentKey: patient.patientSegmentKey,
+        reportedProduct: patient.products[0],
+        clinicalEvent: patient.events[0],
+        conclusion: "UNRESOLVED",
+        rationale: "Approved causality method assessment pending.",
+      },
+    ]);
+  }
+
+  function patientForSegment(key: string): PatientSegment | undefined {
+    return patients.find((patient) => patient.patientSegmentKey === key);
   }
 
   const metrics = useMemo(
@@ -390,17 +389,44 @@ export default function ReviewPage() {
                 <button type="button" disabled={Boolean(saving)} onClick={() => void mutate("/api/literature/review/patient-segmentation", { patients }, "Patient segmentation")}>
                   {saving === "Patient segmentation" ? "Saving…" : "Save Segmentation"}
                 </button>
-                <button type="button" className="secondary" onClick={refreshAssessmentRows}>Build Product × Event Assessments</button>
+                <span className="hint">Add only source-supported product-event relationships; the system will not create a Cartesian product automatically.</span>
               </div>
             </section>
 
             <section className="step">
               <span>2 · Labeling / Expectedness</span>
               <h3>{selected.labelingStatus}</h3>
-              <p>EXPECTED or UNEXPECTED requires an approved reference label key, version and effective date. Otherwise retain UNRESOLVED.</p>
+              <div className="step-head">
+                <p>EXPECTED or UNEXPECTED requires an approved reference label key, version and effective date. Otherwise retain UNRESOLVED.</p>
+                <button type="button" onClick={addLabelAssessment}>+ Add Assessment</button>
+              </div>
               {labels.map((row, index) => (
                 <div className="assessment-card" key={`label-${row.patientSegmentKey}-${row.reportedProduct}-${row.clinicalEvent}-${index}`}>
-                  <strong>{row.patientSegmentKey} · {row.reportedProduct} → {row.clinicalEvent}</strong>
+                  <div className="grid-3">
+                    <label><span>Patient segment</span>
+                      <select value={row.patientSegmentKey} onChange={(event) => {
+                        const patient = patientForSegment(event.target.value);
+                        setLabels((current) => current.map((item, i) => i === index ? {
+                          ...item,
+                          patientSegmentKey: event.target.value,
+                          reportedProduct: patient?.products[0] || "",
+                          clinicalEvent: patient?.events[0] || "",
+                        } : item));
+                      }}>
+                        {patients.map((patient) => <option key={patient.patientSegmentKey} value={patient.patientSegmentKey}>{patient.patientSegmentKey}</option>)}
+                      </select>
+                    </label>
+                    <label><span>Product</span>
+                      <select value={row.reportedProduct} onChange={(event) => setLabels((current) => current.map((item, i) => i === index ? { ...item, reportedProduct: event.target.value } : item))}>
+                        {(patientForSegment(row.patientSegmentKey)?.products || []).map((product) => <option key={product} value={product}>{product}</option>)}
+                      </select>
+                    </label>
+                    <label><span>Event</span>
+                      <select value={row.clinicalEvent} onChange={(event) => setLabels((current) => current.map((item, i) => i === index ? { ...item, clinicalEvent: event.target.value } : item))}>
+                        {(patientForSegment(row.patientSegmentKey)?.events || []).map((eventName) => <option key={eventName} value={eventName}>{eventName}</option>)}
+                      </select>
+                    </label>
+                  </div>
                   <div className="grid-3">
                     <label><span>Expectedness</span>
                       <select value={row.conclusion} onChange={(event) => setLabels((current) => current.map((item, i) => i === index ? { ...item, conclusion: event.target.value as LabelAssessment["conclusion"] } : item))}>
@@ -415,6 +441,7 @@ export default function ReviewPage() {
                     <Field label="Label evidence" value={row.evidence || ""} onChange={(value) => setLabels((current) => current.map((item, i) => i === index ? { ...item, evidence: value } : item))} />
                   </div>
                   <Field label="Expectedness rationale" value={row.rationale || ""} onChange={(value) => setLabels((current) => current.map((item, i) => i === index ? { ...item, rationale: value } : item))} />
+                  <button type="button" className="danger" onClick={() => setLabels((current) => current.filter((_, i) => i !== index))}>Remove Assessment</button>
                 </div>
               ))}
               <button type="button" disabled={Boolean(saving) || labels.length === 0} onClick={() => void mutate("/api/literature/review/labeling", { assessments: labels }, "Labeling assessment")}>
@@ -425,10 +452,37 @@ export default function ReviewPage() {
             <section className="step">
               <span>3 · Causality</span>
               <h3>{selected.causalityStatus}</h3>
-              <p>A non-UNRESOLVED conclusion requires the approved causality method key and version. AI or temporal association alone must not create causality.</p>
+              <div className="step-head">
+                <p>A non-UNRESOLVED conclusion requires the approved causality method key and version. AI or temporal association alone must not create causality.</p>
+                <button type="button" onClick={addCausalityAssessment}>+ Add Assessment</button>
+              </div>
               {causality.map((row, index) => (
                 <div className="assessment-card" key={`cause-${row.patientSegmentKey}-${row.reportedProduct}-${row.clinicalEvent}-${index}`}>
-                  <strong>{row.patientSegmentKey} · {row.reportedProduct} → {row.clinicalEvent}</strong>
+                  <div className="grid-3">
+                    <label><span>Patient segment</span>
+                      <select value={row.patientSegmentKey} onChange={(event) => {
+                        const patient = patientForSegment(event.target.value);
+                        setCausality((current) => current.map((item, i) => i === index ? {
+                          ...item,
+                          patientSegmentKey: event.target.value,
+                          reportedProduct: patient?.products[0] || "",
+                          clinicalEvent: patient?.events[0] || "",
+                        } : item));
+                      }}>
+                        {patients.map((patient) => <option key={patient.patientSegmentKey} value={patient.patientSegmentKey}>{patient.patientSegmentKey}</option>)}
+                      </select>
+                    </label>
+                    <label><span>Product</span>
+                      <select value={row.reportedProduct} onChange={(event) => setCausality((current) => current.map((item, i) => i === index ? { ...item, reportedProduct: event.target.value } : item))}>
+                        {(patientForSegment(row.patientSegmentKey)?.products || []).map((product) => <option key={product} value={product}>{product}</option>)}
+                      </select>
+                    </label>
+                    <label><span>Event</span>
+                      <select value={row.clinicalEvent} onChange={(event) => setCausality((current) => current.map((item, i) => i === index ? { ...item, clinicalEvent: event.target.value } : item))}>
+                        {(patientForSegment(row.patientSegmentKey)?.events || []).map((eventName) => <option key={eventName} value={eventName}>{eventName}</option>)}
+                      </select>
+                    </label>
+                  </div>
                   <div className="grid-3">
                     <Field label="Conclusion" value={row.conclusion} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, conclusion: value } : item))} />
                     <Field label="Method key" value={row.methodKey || ""} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, methodKey: value } : item))} />
@@ -436,6 +490,7 @@ export default function ReviewPage() {
                   </div>
                   <Field label="Causality evidence" value={row.evidence || ""} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, evidence: value } : item))} />
                   <Field label="Causality rationale" value={row.rationale || ""} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, rationale: value } : item))} />
+                  <button type="button" className="danger" onClick={() => setCausality((current) => current.filter((_, i) => i !== index))}>Remove Assessment</button>
                 </div>
               ))}
               <button type="button" disabled={Boolean(saving) || causality.length === 0} onClick={() => void mutate("/api/literature/review/causality", { assessments: causality }, "Causality assessment")}>
@@ -496,7 +551,7 @@ export default function ReviewPage() {
         .step{margin:14px 18px 0;padding:16px;border:1px solid #dbe4ef;border-radius:12px;background:#fff}.step-head{display:flex;justify-content:space-between;gap:12px;align-items:center}
         .step h3{margin:6px 0;font-size:15px}.step p{margin:0 0 12px;color:#64748b;font-size:11px;line-height:1.6}
         .patient-card,.assessment-card{margin:12px 0;padding:12px;border:1px solid #e2e8f0;border-radius:10px;background:#f8fafc}.assessment-card strong{display:block;margin-bottom:10px;font-size:11px}
-        .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.actions{display:flex;gap:8px;flex-wrap:wrap}
+        .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.actions{display:flex;gap:8px;flex-wrap:wrap}.hint{align-self:center;color:#64748b;font-size:9px}
         label{display:block;margin-bottom:9px}label span{display:block;margin-bottom:4px;color:#475569;font-size:8px;font-weight:800;text-transform:uppercase}
         input,select{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:7px;padding:8px 9px;background:#fff;color:#0f172a;font:inherit;font-size:10px}
         .gate{margin:14px 18px 22px;padding:13px 15px;border:1px solid #fed7aa;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:11px;font-weight:700}.history{margin-top:10px!important}
