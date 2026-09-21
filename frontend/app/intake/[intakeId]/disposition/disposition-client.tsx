@@ -131,7 +131,8 @@ export default function DispositionClient({
     return () => window.clearTimeout(timer);
   }, [load]);
 
-  const complete = Boolean(workspace?.latestDisposition);
+  const complete =
+    display(workspace?.intake.disposition_status, "NOT_STARTED") === "COMPLETE";
   const selectedAllowed =
     selected !== "" && workspace?.allowedDispositions.includes(selected);
 
