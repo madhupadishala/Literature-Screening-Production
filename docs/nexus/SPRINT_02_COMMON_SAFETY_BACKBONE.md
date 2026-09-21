@@ -45,3 +45,6 @@ A governed Literature `intake_input_export` is mapped into the common safety mod
 - Intake/Case records remain tenant-isolated.
 - Verification tests cover mapping, validation, deterministic hashing and case-version rules.
 - Existing Literature and Sprint 1 verification suites remain green.
+
+## Implementation candidate
+This branch contains the complete Sprint 2 candidate for CI verification. Production release remains gated behind controlled application of migrations 021 and 022; no schema migration is executed by CI.
