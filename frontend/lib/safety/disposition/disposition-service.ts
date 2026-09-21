@@ -12,6 +12,7 @@ import {
   createSafetyCaseShellInTransaction,
   type SafetyCaseSummary,
 } from "@/lib/safety/common/safety-case-service";
+import { deriveAllowedDispositions } from "./disposition-policy";
 import {
   INTAKE_DISPOSITION_TYPES,
   type IntakeDispositionRequest,
@@ -129,59 +130,6 @@ async function loadIntake(
     throw new Error("Safety Intake was not found in the active tenant.");
   }
   return result.rows[0];
-}
-
-function allowedForIntake(
-  intake: Record<string, unknown>,
-  caseProcessingEnabled: boolean,
-): IntakeDispositionType[] {
-  const allowed = new Set<IntakeDispositionType>(["HOLD"]);
-  const validity = String(intake.validity_status || "");
-  const triageOutcome = String(intake.triage_outcome || "");
-  const duplicateComplete = String(intake.duplicate_review_status) === "COMPLETE";
-  const relationship = String(intake.case_relationship || "");
-
-  if (
-    validity === "VALID" &&
-    duplicateComplete &&
-    ["NEW_CASE", "NOT_MATCH"].includes(relationship)
-  ) {
-    allowed.add("EXPORT_EXTERNAL");
-    if (caseProcessingEnabled) allowed.add("CREATE_NEXUS_CASE");
-  }
-
-  if (
-    validity === "VALID" &&
-    duplicateComplete &&
-    relationship === "FOLLOW_UP"
-  ) {
-    allowed.add("FOLLOW_UP_EXISTING_CASE");
-    allowed.add("EXPORT_EXTERNAL");
-  }
-
-  if (
-    validity === "VALID" &&
-    duplicateComplete &&
-    relationship === "DUPLICATE"
-  ) {
-    allowed.add("DUPLICATE");
-  }
-
-  if (
-    triageOutcome === "FOLLOW_UP_REQUIRED" ||
-    intake.follow_up_required === true
-  ) {
-    allowed.add("INCOMPLETE_FOLLOW_UP");
-  }
-
-  if (
-    validity === "INVALID" ||
-    triageOutcome === "NOT_VALID_ICSR"
-  ) {
-    allowed.add("NON_CASE");
-  }
-
-  return INTAKE_DISPOSITION_TYPES.filter((item) => allowed.has(item));
 }
 
 async function buildHandoffPayload(
@@ -358,7 +306,18 @@ export async function getDispositionWorkspace(input: {
     return {
       intake,
       caseProcessingEnabled,
-      allowedDispositions: allowedForIntake(intake, caseProcessingEnabled),
+      allowedDispositions: deriveAllowedDispositions(
+        {
+          validityStatus: String(intake.validity_status || ""),
+          triageOutcome: String(intake.triage_outcome || ""),
+          followUpRequired: intake.follow_up_required === true,
+          duplicateReviewStatus: String(
+            intake.duplicate_review_status || "NOT_STARTED",
+          ),
+          caseRelationship: String(intake.case_relationship || ""),
+        },
+        caseProcessingEnabled,
+      ),
       latestDisposition: disposition.rows[0]
         ? mapDisposition(disposition.rows[0])
         : null,
@@ -455,7 +414,18 @@ export async function finalizeIntakeDisposition(input: {
       input.principal.environment,
       NEXUS_MODULES.CASE_PROCESSING,
     );
-    const allowed = allowedForIntake(intake, caseProcessingEnabled);
+    const allowed = deriveAllowedDispositions(
+        {
+          validityStatus: String(intake.validity_status || ""),
+          triageOutcome: String(intake.triage_outcome || ""),
+          followUpRequired: intake.follow_up_required === true,
+          duplicateReviewStatus: String(
+            intake.duplicate_review_status || "NOT_STARTED",
+          ),
+          caseRelationship: String(intake.case_relationship || ""),
+        },
+        caseProcessingEnabled,
+      );
     if (!allowed.includes(input.request.dispositionType)) {
       throw new Error(
         `Disposition ${input.request.dispositionType} is not allowed for the current Intake state.`,
