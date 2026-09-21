@@ -82,12 +82,6 @@ export interface ConnectorSearchOutput {
   translatedQuery: string;
   results: NormalizedLiteratureResult[];
   durationMs: number;
-  executionPurpose: SearchExecutionPurpose;
-  searchEvidencePackage?: {
-    packageId: string;
-    packageKey: string;
-    sha256: string;
-  };
 }
 
 export interface LiteratureConnector {
@@ -105,4 +99,10 @@ export interface AdHocSearchExecution {
   connectorErrors: Record<string, string>;
   results: Array<NormalizedLiteratureResult & { id: string }>;
   durationMs: number;
+  executionPurpose: SearchExecutionPurpose;
+  searchEvidencePackage?: {
+    packageId: string;
+    packageKey: string;
+    sha256: string;
+  };
 }
