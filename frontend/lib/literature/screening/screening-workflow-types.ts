@@ -29,6 +29,9 @@ export interface ScreeningWorklistRecord {
   productName: string;
   countryOfInterest: string;
   workflowState: string;
+  contextStage: "HITS_APPROVED" | "SCREENING_AI";
+  upstreamHitsResultVersion?: number;
+  upstreamHitsDetectedEvents?: string[];
   executionStatus: "ready" | "completed" | "failed";
   decision: ScreeningDecision;
   confidence: number;
