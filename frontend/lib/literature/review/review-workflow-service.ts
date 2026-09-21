@@ -200,6 +200,7 @@ export async function getReviewWorkspaceDetail(input: {
     `SELECT
        workspace.patient_segments,
        package.article_identity,
+       package.product_context,
        screening.result_payload,
        medical_review.review_status,
        medical_review.final_decision,
@@ -257,6 +258,12 @@ export async function getReviewWorkspaceDetail(input: {
   const row = detail.rows[0];
   const payload = isRecord(row.result_payload) ? row.result_payload : {};
   const screeningResult = isRecord(payload.result) ? payload.result : {};
+  const productContext = isRecord(row.product_context) ? row.product_context : {};
+  const articleIdentity = isRecord(row.article_identity) ? row.article_identity : {};
+  const validationFixture =
+    productContext.validationFixture === true ||
+    articleIdentity.validationFixture === true;
+  const allowedUsageScope = validationFixture ? "VALIDATION_ONLY" : "PRODUCTION";
   const evidenceText = (value: unknown) => {
     if (!isRecord(value)) return undefined;
     return text(value.sourceText) || undefined;
@@ -265,7 +272,7 @@ export async function getReviewWorkspaceDetail(input: {
   return {
     ...base,
     patientSegments: Array.isArray(row.patient_segments) ? row.patient_segments : [],
-    article: isRecord(row.article_identity) ? row.article_identity : {},
+    article: articleIdentity,
     screeningResult,
     labelAssessments: labels.rows.map((label) => ({
       id: String(label.id),
@@ -290,8 +297,12 @@ export async function getReviewWorkspaceDetail(input: {
       evidence: evidenceText(assessment.evidence),
       rationale: text(assessment.rationale) || undefined,
     })),
-    labelReferences: referenceData.labelReferences,
-    causalityMethods: referenceData.causalityMethods,
+    labelReferences: referenceData.labelReferences.filter(
+      (reference) => reference.usageScope === allowedUsageScope,
+    ),
+    causalityMethods: referenceData.causalityMethods.filter(
+      (method) => method.usageScope === allowedUsageScope,
+    ),
     latestPatientExtraction: (() => {
       const extractionRow = extraction.rows[0];
       if (!extractionRow) return undefined;
