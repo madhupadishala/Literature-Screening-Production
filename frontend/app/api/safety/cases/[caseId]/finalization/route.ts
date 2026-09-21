@@ -6,7 +6,7 @@ import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import {
   finalizeSafetyCase,
-  runCaseFinalizationCheck,
+  previewCaseFinalization,
 } from "@/lib/safety/case-review/case-review-service";
 
 export const runtime = "nodejs";
@@ -23,7 +23,7 @@ export async function GET(
       PERMISSIONS.CASE_VIEW,
     );
     const { caseId } = await context.params;
-    const result = await runCaseFinalizationCheck({ principal, caseId });
+    const result = await previewCaseFinalization({ principal, caseId });
     return Response.json({ success: true, data: result });
   } catch (error) {
     return routeErrorResponse(error);
