@@ -60,6 +60,26 @@ type CausalityAssessment = {
   rationale?: string;
 };
 
+type ActiveLabelReference = {
+  labelKey: string;
+  clientProductId: string;
+  country: string;
+  labelType: string;
+  version: string;
+  effectiveFrom: string;
+  effectiveTo?: string;
+  eventTerms: string[];
+  sourceDocument?: string;
+};
+
+type ActiveCausalityMethod = {
+  methodKey: string;
+  methodName: string;
+  version: string;
+  allowedConclusions: string[];
+  methodology?: string;
+};
+
 type ReviewDetail = ReviewRecord & {
   patientSegments: PatientSegment[];
   labelAssessments: LabelAssessment[];
@@ -74,6 +94,8 @@ type ReviewDetail = ReviewRecord & {
   };
   article: Record<string, unknown>;
   screeningResult: Record<string, unknown>;
+  labelReferences: ActiveLabelReference[];
+  causalityMethods: ActiveCausalityMethod[];
 };
 
 function list(values: string[]): string {
@@ -91,6 +113,69 @@ function statusClass(value: string): string {
 
 function commaList(value: string): string[] {
   return [...new Set(value.split(",").map((item) => item.trim()).filter(Boolean))];
+}
+
+
+function normalizeTerm(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFKC")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function screeningAssessmentForProduct(
+  detail: ReviewDetail,
+  reportedProduct: string,
+): Record<string, unknown> | undefined {
+  const assessments = Array.isArray(detail.screeningResult.companySuspectAssessments)
+    ? detail.screeningResult.companySuspectAssessments
+    : [];
+  return assessments.find(
+    (value) =>
+      typeof value === "object" &&
+      value !== null &&
+      !Array.isArray(value) &&
+      String((value as Record<string, unknown>).reportedProduct || "") === reportedProduct,
+  ) as Record<string, unknown> | undefined;
+}
+
+function candidateProductId(
+  detail: ReviewDetail,
+  reportedProduct: string,
+): string | undefined {
+  const assessment = screeningAssessmentForProduct(detail, reportedProduct);
+  const candidate =
+    assessment &&
+    typeof assessment.selectedCandidate === "object" &&
+    assessment.selectedCandidate !== null &&
+    !Array.isArray(assessment.selectedCandidate)
+      ? (assessment.selectedCandidate as Record<string, unknown>)
+      : undefined;
+  const productId = candidate ? String(candidate.productId || "").trim() : "";
+  return productId || undefined;
+}
+
+function governedCountry(
+  detail: ReviewDetail,
+  reportedProduct: string,
+): string | undefined {
+  const assessment = screeningAssessmentForProduct(detail, reportedProduct);
+  const country = assessment ? String(assessment.countryOfInterest || "").trim() : "";
+  return country || undefined;
+}
+
+function availableLabels(
+  detail: ReviewDetail,
+  reportedProduct: string,
+): ActiveLabelReference[] {
+  const productId = candidateProductId(detail, reportedProduct);
+  const country = governedCountry(detail, reportedProduct);
+  return detail.labelReferences.filter(
+    (reference) =>
+      (!productId || reference.clientProductId === productId) &&
+      (!country || reference.country.toLowerCase() === country.toLowerCase()),
+  );
 }
 
 export default function ReviewPage() {
@@ -397,7 +482,9 @@ export default function ReviewPage() {
               <span>2 · Labeling / Expectedness</span>
               <h3>{selected.labelingStatus}</h3>
               <div className="step-head">
-                <p>EXPECTED or UNEXPECTED requires an approved reference label key, version and effective date. Otherwise retain UNRESOLVED.</p>
+                <p>{selected.labelReferences.length
+                  ? `${selected.labelReferences.length} active governed Label / RSI reference(s) available. Expectedness is calculated from the selected reference.`
+                  : "No active Label / RSI configuration is available; expectedness must remain UNRESOLVED."}</p>
                 <button type="button" onClick={addLabelAssessment}>+ Add Assessment</button>
               </div>
               {labels.map((row, index) => (
@@ -433,8 +520,38 @@ export default function ReviewPage() {
                         <option value="UNRESOLVED">UNRESOLVED</option><option value="EXPECTED">EXPECTED</option><option value="UNEXPECTED">UNEXPECTED</option>
                       </select>
                     </label>
-                    <Field label="Label / RSI key" value={row.referenceLabelKey || ""} onChange={(value) => setLabels((current) => current.map((item, i) => i === index ? { ...item, referenceLabelKey: value } : item))} />
-                    <Field label="Version" value={row.referenceLabelVersion || ""} onChange={(value) => setLabels((current) => current.map((item, i) => i === index ? { ...item, referenceLabelVersion: value } : item))} />
+                    <label><span>Active Label / RSI</span>
+                      <select
+                        value={row.referenceLabelKey || ""}
+                        onChange={(event) => {
+                          const reference = availableLabels(selected, row.reportedProduct).find(
+                            (item) => item.labelKey === event.target.value,
+                          );
+                          setLabels((current) => current.map((item, i) => i === index ? {
+                            ...item,
+                            referenceLabelKey: reference?.labelKey,
+                            referenceLabelVersion: reference?.version,
+                            referenceEffectiveDate: reference?.effectiveFrom?.slice(0, 10),
+                            conclusion: reference
+                              ? reference.eventTerms.map(normalizeTerm).includes(normalizeTerm(item.clinicalEvent))
+                                ? "EXPECTED"
+                                : "UNEXPECTED"
+                              : "UNRESOLVED",
+                            rationale: reference
+                              ? `Expectedness resolved against active ${reference.labelType} ${reference.labelKey} v${reference.version}.`
+                              : item.rationale,
+                          } : item));
+                        }}
+                      >
+                        <option value="">No governed reference selected</option>
+                        {availableLabels(selected, row.reportedProduct).map((reference) => (
+                          <option key={reference.labelKey + reference.version} value={reference.labelKey}>
+                            {reference.labelKey} · {reference.labelType} · v{reference.version} · {reference.country}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <Field label="Version" value={row.referenceLabelVersion || ""} onChange={() => undefined} />
                   </div>
                   <div className="grid-2">
                     <Field label="Effective date (YYYY-MM-DD)" value={row.referenceEffectiveDate || ""} onChange={(value) => setLabels((current) => current.map((item, i) => i === index ? { ...item, referenceEffectiveDate: value } : item))} />
@@ -453,7 +570,9 @@ export default function ReviewPage() {
               <span>3 · Causality</span>
               <h3>{selected.causalityStatus}</h3>
               <div className="step-head">
-                <p>A non-UNRESOLVED conclusion requires the approved causality method key and version. AI or temporal association alone must not create causality.</p>
+                <p>{selected.causalityMethods.length
+                  ? `${selected.causalityMethods.length} active governed causality method(s) available. Conclusions are restricted to the selected method.`
+                  : "No active causality method is configured; causality must remain UNRESOLVED."}</p>
                 <button type="button" onClick={addCausalityAssessment}>+ Add Assessment</button>
               </div>
               {causality.map((row, index) => (
@@ -484,9 +603,45 @@ export default function ReviewPage() {
                     </label>
                   </div>
                   <div className="grid-3">
-                    <Field label="Conclusion" value={row.conclusion} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, conclusion: value } : item))} />
-                    <Field label="Method key" value={row.methodKey || ""} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, methodKey: value } : item))} />
-                    <Field label="Method version" value={row.methodVersion || ""} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, methodVersion: value } : item))} />
+                    <label><span>Conclusion</span>
+                      <select value={row.conclusion} onChange={(event) => setCausality((current) => current.map((item, i) => i === index ? { ...item, conclusion: event.target.value } : item))}>
+                        <option value="UNRESOLVED">UNRESOLVED</option>
+                        {(selected.causalityMethods.find((method) => method.methodKey === row.methodKey && method.version === row.methodVersion)?.allowedConclusions || [])
+                          .filter((value) => value !== "UNRESOLVED")
+                          .map((value) => <option key={value} value={value}>{value}</option>)}
+                      </select>
+                    </label>
+                    <label><span>Approved causality method</span>
+                      <select
+                        value={row.methodKey ? `${row.methodKey}::${row.methodVersion || ""}` : ""}
+                        onChange={(event) => {
+                          const [methodKey, version] = event.target.value.split("::");
+                          const method = selected.causalityMethods.find(
+                            (item) => item.methodKey === methodKey && item.version === version,
+                          );
+                          setCausality((current) => current.map((item, i) => i === index ? {
+                            ...item,
+                            methodKey: method?.methodKey,
+                            methodVersion: method?.version,
+                            conclusion:
+                              method && method.allowedConclusions.includes(item.conclusion)
+                                ? item.conclusion
+                                : "UNRESOLVED",
+                            rationale: method
+                              ? `Causality assessed using governed method ${method.methodName} v${method.version}.`
+                              : item.rationale,
+                          } : item));
+                        }}
+                      >
+                        <option value="">No governed method selected</option>
+                        {selected.causalityMethods.map((method) => (
+                          <option key={method.methodKey + method.version} value={`${method.methodKey}::${method.version}`}>
+                            {method.methodName} · {method.methodKey} · v{method.version}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <Field label="Method version" value={row.methodVersion || ""} onChange={() => undefined} />
                   </div>
                   <Field label="Causality evidence" value={row.evidence || ""} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, evidence: value } : item))} />
                   <Field label="Causality rationale" value={row.rationale || ""} onChange={(value) => setCausality((current) => current.map((item, i) => i === index ? { ...item, rationale: value } : item))} />
