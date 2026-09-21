@@ -46,6 +46,17 @@ interface GenerationRow {
   hits_review_version: number | null;
   source_records: unknown;
   duplicate_assessments: unknown;
+  review_workspace_id: string | null;
+  review_workspace_status: string | null;
+  patient_segmentation_status: string | null;
+  patient_segments: unknown;
+  labeling_status: string | null;
+  causality_status: string | null;
+  mr_review_status: string | null;
+  mr_final_decision: string | null;
+  mr_review_comments: string | null;
+  mr_reviewed_at: string | null;
+  mr_reviewer: string | null;
 }
 
 interface ExportRow {
@@ -124,6 +135,14 @@ function generationSql(): string {
     LEFT JOIN hits_reviews hits_review
       ON hits_review.tenant_id = package.tenant_id
      AND hits_review.package_id = package.id AND hits_review.hits_result_id = hits.id
+    LEFT JOIN literature_review_workspaces review_workspace
+      ON review_workspace.tenant_id = package.tenant_id
+     AND review_workspace.package_id = package.id
+     AND review_workspace.screening_result_id = screening.id
+    LEFT JOIN literature_medical_reviews medical_review
+      ON medical_review.tenant_id = package.tenant_id
+     AND medical_review.review_workspace_id = review_workspace.id
+    LEFT JOIN application_users mr_reviewer ON mr_reviewer.id = medical_review.reviewed_by
     LEFT JOIN package_configuration_snapshots snapshot
       ON snapshot.package_id = package.id AND snapshot.tenant_id = package.tenant_id
     LEFT JOIN LATERAL (
@@ -176,6 +195,11 @@ export async function generateIntakeInput(input: {
       companyAssessments: extractCompanyAssessmentsFromScreeningPayload(
         row.screening_payload,
       ),
+      reviewWorkspaceStatus: row.review_workspace_status,
+      patientSegmentationStatus: row.patient_segmentation_status,
+      labelingStatus: row.labeling_status,
+      causalityStatus: row.causality_status,
+      mrReviewStatus: row.mr_review_status,
     });
 
     const lineage = {
@@ -190,6 +214,9 @@ export async function generateIntakeInput(input: {
       hits_review_id: row.hits_review_id,
       hits_review_version:
         row.hits_review_version === null ? null : Number(row.hits_review_version),
+      review_workspace_id: row.review_workspace_id,
+      mr_review_status: row.mr_review_status,
+      mr_final_decision: row.mr_final_decision,
     };
     const lineageHash = sha256(JSON.stringify(lineage));
     const existing = await client.query<ExportRow>(
@@ -244,6 +271,19 @@ export async function generateIntakeInput(input: {
         review_comments: row.screening_review_comments,
         reviewed_at: row.screening_reviewed_at,
         reviewed_by: row.screening_reviewer,
+      },
+      review_assessment: {
+        review_workspace_id: row.review_workspace_id,
+        workspace_status: row.review_workspace_status,
+        patient_segmentation_status: row.patient_segmentation_status,
+        patient_segments: row.patient_segments || [],
+        labeling_status: row.labeling_status,
+        causality_status: row.causality_status,
+        medical_review_status: row.mr_review_status,
+        medical_review_decision: row.mr_final_decision,
+        medical_review_comments: row.mr_review_comments,
+        medical_reviewed_at: row.mr_reviewed_at,
+        medical_reviewer: row.mr_reviewer,
       },
       duplicate_intelligence: row.duplicate_assessments,
       governance: {
