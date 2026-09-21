@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
-import { routeErrorResponse } from "@/lib/api/route-error";\nimport { NEXUS_MODULES } from "@/lib/nexus/modules";
+import { routeErrorResponse } from "@/lib/api/route-error";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import {
   getReviewWorkspaceDetail,
   listReviewWorklist,
@@ -13,7 +14,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requireModulePermission(\n      request,\n      NEXUS_MODULES.LITERATURE,\n      PERMISSIONS.REVIEW_VIEW,
+    const principal = await requireModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.REVIEW_VIEW,
     );
     const workspaceId = request.nextUrl.searchParams.get("workspaceId")?.trim();
     if (workspaceId) {
