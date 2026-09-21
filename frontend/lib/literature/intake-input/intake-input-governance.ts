@@ -34,12 +34,17 @@ export interface IntakeGenerationGateInput {
   hitsReviewStatus: string | null;
   hitsReviewDecision: string | null;
   companyAssessments: CompanySuspectAssessment[];
+  reviewWorkspaceStatus: string | null;
+  patientSegmentationStatus: string | null;
+  labelingStatus: string | null;
+  causalityStatus: string | null;
+  mrReviewStatus: string | null;
 }
 
 export function assertIntakeGenerationGate(input: IntakeGenerationGateInput): void {
-  if (!["SCREENING_COMPLETE", "INTAKE_INPUT_CREATED"].includes(input.workflowState)) {
+  if (!["REVIEW_COMPLETE", "INTAKE_INPUT_CREATED"].includes(input.workflowState)) {
     throw new Error(
-      `Intake input cannot be generated from workflow state ${input.workflowState}.`,
+      `Intake input cannot be generated from workflow state ${input.workflowState}. Review / MR must be completed first.`,
     );
   }
 
@@ -63,6 +68,18 @@ export function assertIntakeGenerationGate(input: IntakeGenerationGateInput): vo
   if (!eligibility.eligible) {
     throw new Error(
       `Intake input cannot be generated: ${eligibility.reason}`,
+    );
+  }
+
+  if (
+    input.reviewWorkspaceStatus !== "REVIEW_COMPLETE" ||
+    input.patientSegmentationStatus !== "COMPLETE" ||
+    !["COMPLETE", "UNRESOLVED"].includes(input.labelingStatus || "") ||
+    !["COMPLETE", "UNRESOLVED"].includes(input.causalityStatus || "") ||
+    input.mrReviewStatus !== "APPROVED"
+  ) {
+    throw new Error(
+      "Intake input requires completed patient segmentation, governed labeling / expectedness and causality assessment, and an approved Medical Review decision.",
     );
   }
 }
