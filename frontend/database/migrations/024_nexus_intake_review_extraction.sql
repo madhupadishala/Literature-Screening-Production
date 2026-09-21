@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS safety_extraction_suggestions (
   evidence_text text NOT NULL,
   source_locator jsonb NOT NULL DEFAULT '{}'::jsonb,
   status text NOT NULL DEFAULT 'PENDING' CHECK (
-    status IN ('PENDING', 'ACCEPTED', 'REJECTED', 'EDITED')
+    status IN ('PENDING', 'ACCEPTED', 'REJECTED', 'EDITED', 'SUPERSEDED')
   ),
   final_payload jsonb,
   reviewed_by uuid REFERENCES application_users(id) ON DELETE SET NULL,
