@@ -2,6 +2,7 @@ import "server-only";
 
 import { getPostgresPool } from "@/lib/database/postgres";
 import { activeReviewReferenceData } from "@/lib/literature/review/review-reference-service";
+import type { PatientExtractionExecution } from "@/lib/literature/review/patient-extraction-types";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -182,6 +183,7 @@ export interface ReviewWorkspaceDetail extends ReviewWorklistRecord {
   screeningResult: Record<string, unknown>;
   labelReferences: Awaited<ReturnType<typeof activeReviewReferenceData>>["labelReferences"];
   causalityMethods: Awaited<ReturnType<typeof activeReviewReferenceData>>["causalityMethods"];
+  latestPatientExtraction?: PatientExtractionExecution;
 }
 
 export async function getReviewWorkspaceDetail(input: {
@@ -242,6 +244,16 @@ export async function getReviewWorkspaceDetail(input: {
     [input.principal.tenantId, input.workspaceId],
   );
 
+  const extraction = await pool.query<Record<string, unknown>>(
+    `SELECT id, run_version, extraction_payload, source_sha256,
+            provider, model, request_id, created_at::text AS created_at
+     FROM literature_patient_extraction_runs
+     WHERE tenant_id = $1 AND review_workspace_id = $2
+     ORDER BY run_version DESC, created_at DESC
+     LIMIT 1`,
+    [input.principal.tenantId, input.workspaceId],
+  );
+
   const row = detail.rows[0];
   const payload = isRecord(row.result_payload) ? row.result_payload : {};
   const screeningResult = isRecord(payload.result) ? payload.result : {};
@@ -280,6 +292,35 @@ export async function getReviewWorkspaceDetail(input: {
     })),
     labelReferences: referenceData.labelReferences,
     causalityMethods: referenceData.causalityMethods,
+    latestPatientExtraction: (() => {
+      const extractionRow = extraction.rows[0];
+      if (!extractionRow) return undefined;
+      const payload = isRecord(extractionRow.extraction_payload)
+        ? extractionRow.extraction_payload
+        : {};
+      const result = isRecord(payload.result) ? payload.result : {};
+      return {
+        runId: String(extractionRow.id),
+        runVersion: Number(extractionRow.run_version || 0),
+        sourceSha256: text(extractionRow.source_sha256),
+        provider: text(extractionRow.provider),
+        model: text(extractionRow.model),
+        requestId: text(extractionRow.request_id),
+        createdAt: text(extractionRow.created_at),
+        classification: text(result.classification, "UNRESOLVED") as PatientExtractionExecution["classification"],
+        confidence: Number(result.confidence || 0),
+        rationale: text(result.rationale),
+        patients: Array.isArray(result.patients)
+          ? (result.patients as PatientExtractionExecution["patients"])
+          : [],
+        warnings: Array.isArray(result.warnings)
+          ? result.warnings.map((value) => text(value)).filter(Boolean)
+          : [],
+        sourceGovernanceCorrections: Array.isArray(result.sourceGovernanceCorrections)
+          ? result.sourceGovernanceCorrections.map((value) => text(value)).filter(Boolean)
+          : [],
+      };
+    })(),
     medicalReview: row.review_status
       ? {
           reviewStatus: text(row.review_status),
