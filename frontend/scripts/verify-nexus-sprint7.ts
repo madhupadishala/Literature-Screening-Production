@@ -92,6 +92,9 @@ const service = readFileSync(
   "utf8",
 );
 assert.equal(service.includes("moduleIsEffectivelyEnabled"), true);
+assert.equal(service.includes("PERMISSIONS.INTAKE_PROCESS"), true);
+assert.equal(service.includes("PERMISSIONS.CASE_CREATE"), true);
+assert.equal(service.includes("PERMISSIONS.INTAKE_EXPORT"), true);
 assert.equal(service.includes("createSafetyCaseShellInTransaction"), true);
 assert.equal(service.includes("rawSourceBytesIncluded: false"), true);
 assert.equal(service.includes("canonicalSha256(payload)"), true);
