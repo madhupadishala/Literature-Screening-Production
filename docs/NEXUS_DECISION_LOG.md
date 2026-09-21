@@ -94,3 +94,28 @@ Sprint 3 records the original source and creates the Intake. OCR, parsing, extra
 **Status:** Approved
 
 Replaying the same source/request identity with identical content reuses the existing Intake. Reusing that identity with materially different safety content is rejected instead of overwriting or silently forking the regulated record.
+
+## DEC-020 — Original Intake source evidence is immutable
+**Status:** Approved
+
+Source documents remain immutable evidence. Extracted text is a derived artifact with its own hash and never replaces or mutates the original uploaded bytes.
+
+## DEC-021 — Extraction is assistive, not authoritative
+**Status:** Approved
+
+Parser/extractor output is stored as suggestions with confidence and evidence. Suggestions do not become regulated structured safety data until a human accepts or edits them.
+
+## DEC-022 — Human extraction decisions are individually auditable
+**Status:** Approved
+
+Every accept, edit or reject action records the suggestion, final payload where applicable, reviewer, reason and timestamp. Accepted/edited data is materialized into the common Sprint 2 safety entities.
+
+## DEC-023 — Source Review and formal Triage are separate controls
+**Status:** Approved
+
+Sprint 4 verifies that source evidence has been reviewed and structured appropriately. It does not decide formal ICSR validity, seriousness/priority triage or disposition; those remain Sprint 5 responsibilities.
+
+## DEC-024 — Nexus Intake extraction has a zero-cost baseline
+**Status:** Approved
+
+TXT, DOCX and PDF text extraction use local/open-source libraries already in the Nexus stack. Legacy DOC is preserved and fails closed for automated parsing rather than requiring a paid parser.
