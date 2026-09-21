@@ -576,3 +576,21 @@
   border-radius: 12px;
   background: #ffffff;
 }
+
+.triageLink {
+  display: inline-flex;
+  height: 36px;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid #1d4ed8;
+  border-radius: 9px;
+  color: #ffffff;
+  background: #1d4ed8;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.triageLink:hover {
+  background: #1e40af;
+}
