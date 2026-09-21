@@ -226,7 +226,7 @@ export default function AdHocSearchWorkspace({
       }
 
       setMessage(
-        `${payload.data.validationPackageCount} Validation Package(s) ready · ${payload.data.createdCount} governed Evidence Package(s) handed off to Hits · ${payload.data.alreadyHandedOffCount} already handed off.`,
+        `${payload.data.validationPackageCount} Validation Package(s) ready · ${payload.data.createdCount} article package(s) promoted into the PV workflow at Hits · ${payload.data.alreadyHandedOffCount} already promoted.`,
       );
       setSelectedResults([]);
       if (onEvidencePackagesCreated) {
