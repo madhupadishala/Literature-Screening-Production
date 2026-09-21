@@ -165,7 +165,7 @@ function latestScheduledLocalDate(
   let year = local.year;
   let month = local.month;
   let day = Math.min(requestedDay, daysInMonth(year, month));
-  let candidate = zonedLocalToUtc({
+  const candidate = zonedLocalToUtc({
     year,
     month,
     day,

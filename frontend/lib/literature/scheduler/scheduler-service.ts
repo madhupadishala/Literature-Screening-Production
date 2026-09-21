@@ -3,6 +3,9 @@ import "server-only";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { resolveActiveConfigurations } from "@/lib/configuration/active-resolver";
 import { executeAdHocSearch } from "@/lib/literature/adhoc-search/search-service";
+import type {
+  NormalizedLiteratureResult,
+} from "@/lib/literature/adhoc-search/types";
 import { executeProductionSearchToHits } from "@/lib/literature/hits/production-search-to-hits-service";
 import {
   assessScheduleOccurrence,
@@ -56,7 +59,11 @@ async function ensureSchedulerPrincipal(input: {
   try {
     await client.query("BEGIN");
 
-    const user = await client.query<{ id: string; email: string; display_name: string }>(
+    const user = await client.query<{
+      id: string;
+      email: string;
+      display_name: string;
+    }>(
       `INSERT INTO application_users (
          external_subject, email, display_name, status
        ) VALUES ($1,$2,'ClinixAI Literature Scheduler','active')
@@ -108,16 +115,30 @@ async function createAlert(input: {
   tenantId: string;
   runId?: string;
   scheduleKey: string;
-  alertType: "MISSED_SEARCH" | "FAILED_SEARCH" | "PARTIAL_SEARCH" | "CONFIGURATION_ERROR";
+  alertType:
+    | "MISSED_SEARCH"
+    | "FAILED_SEARCH"
+    | "PARTIAL_SEARCH"
+    | "CONFIGURATION_ERROR";
   severity: "INFO" | "WARNING" | "CRITICAL";
   message: string;
   details?: Record<string, unknown>;
-}) {
+}): Promise<void> {
   await getPostgresPool().query(
     `INSERT INTO literature_search_schedule_alerts (
        tenant_id, scheduled_run_id, schedule_key, alert_type,
        severity, message, details
-     ) VALUES ($1,$2,$3,$4,$5,$6,$7::jsonb)`,
+     )
+     SELECT $1,$2,$3,$4,$5,$6,$7::jsonb
+     WHERE NOT EXISTS (
+       SELECT 1
+       FROM literature_search_schedule_alerts existing
+       WHERE existing.tenant_id = $1
+         AND existing.schedule_key = $3
+         AND existing.alert_type = $4
+         AND existing.status <> 'RESOLVED'
+         AND existing.scheduled_run_id IS NOT DISTINCT FROM $2::uuid
+     )`,
     [
       input.tenantId,
       input.runId || null,
@@ -163,20 +184,99 @@ async function claimRun(input: {
 function findProfile(
   active: Awaited<ReturnType<typeof resolveActiveConfigurations>>,
   profileKey: string,
-): { versionId: string; record: Record<string, unknown> } | null {
+): {
+  versionId: string;
+  effectiveFrom: Date | null;
+  record: Record<string, unknown>;
+} | null {
   for (const version of active.searchProfiles) {
     const record = recordsFromPayload(version.payload).find(
       (candidate) =>
         text(candidate.profileKey || candidate.searchProfileKey) === profileKey &&
         text(candidate.status || "ACTIVE").toUpperCase() === "ACTIVE",
     );
-    if (record) return { versionId: version.id, record };
+    if (record) {
+      return {
+        versionId: version.id,
+        effectiveFrom: version.effectiveFrom
+          ? new Date(version.effectiveFrom)
+          : null,
+        record,
+      };
+    }
   }
   return null;
 }
 
+function hitsBatches(
+  results: Array<NormalizedLiteratureResult & { id: string }>,
+): string[][] {
+  const groups = new Map<string, string[]>();
+
+  for (const result of results) {
+    const key = result.duplicateGroup || result.dedupeKey || result.id;
+    const group = groups.get(key) || [];
+    group.push(result.id);
+    groups.set(key, group);
+  }
+
+  const batches: string[][] = [];
+  let current: string[] = [];
+
+  for (const group of groups.values()) {
+    if (group.length > 100) {
+      throw new Error(
+        "A single duplicate article group exceeds the governed 100-result Hits handoff limit.",
+      );
+    }
+
+    if (current.length > 0 && current.length + group.length > 100) {
+      batches.push(current);
+      current = [];
+    }
+    current.push(...group);
+  }
+
+  if (current.length > 0) batches.push(current);
+  return batches;
+}
+
+async function executeHitsForResults(input: {
+  principal: RequestPrincipal;
+  results: Array<NormalizedLiteratureResult & { id: string }>;
+}) {
+  const batches = hitsBatches(input.results);
+  const packages: Array<Record<string, unknown>> = [];
+  let failedCount = 0;
+  let partial = false;
+
+  for (const resultIds of batches) {
+    const execution = await executeProductionSearchToHits({
+      principal: input.principal,
+      resultIds,
+    });
+    packages.push(...(execution.packages as Array<Record<string, unknown>>));
+    failedCount += execution.failedCount;
+    if (execution.status !== "completed") partial = true;
+  }
+
+  return {
+    status:
+      packages.length > 0 && failedCount === packages.length
+        ? "failed"
+        : partial || failedCount > 0
+          ? "partial"
+          : "completed",
+    packages,
+    failedCount,
+    batchCount: batches.length,
+  };
+}
+
 async function runSchedule(input: {
   principal: RequestPrincipal;
+  calendarVersionId: string;
+  profileVersionId: string;
   record: LiteratureCalendarRecord;
   profile: Record<string, unknown>;
   runId: string;
@@ -202,7 +302,30 @@ async function runSchedule(input: {
     ],
   );
 
-  if (input.missedThresholdExceeded && input.record.missedSearchDetection !== false) {
+  await pool.query(
+    `INSERT INTO audit_events (
+       tenant_id, actor_id, event_type, event_category, outcome, details
+     ) VALUES ($1,$2,'SCHEDULED_PRODUCTION_SEARCH_STARTED',
+       'LITERATURE_SEARCH','started',$3::jsonb)`,
+    [
+      input.principal.tenantId,
+      input.principal.userId,
+      JSON.stringify({
+        scheduledRunId: input.runId,
+        scheduleKey: input.record.calendarId,
+        scheduledFor: input.scheduledFor.toISOString(),
+        calendarVersionId: input.calendarVersionId,
+        searchProfileKey: input.record.searchProfileKey,
+        searchProfileVersionId: input.profileVersionId,
+        latenessMinutes: input.latenessMinutes,
+      }),
+    ],
+  );
+
+  if (
+    input.missedThresholdExceeded &&
+    input.record.missedSearchDetection !== false
+  ) {
     await createAlert({
       tenantId: input.principal.tenantId,
       runId: input.runId,
@@ -215,7 +338,10 @@ async function runSchedule(input: {
   }
 
   try {
-    const lookbackDays = Math.max(1, Number(input.profile.lookbackDays || 7));
+    const lookbackDays = Math.max(
+      1,
+      Number(input.profile.lookbackDays || 7),
+    );
     const window = profileDateWindow({
       scheduledFor: input.scheduledFor,
       lookbackDays,
@@ -227,7 +353,9 @@ async function runSchedule(input: {
         executionPurpose: "SCHEDULED_PRODUCTION",
         searchString: text(input.profile.searchString) || undefined,
         product: text(input.profile.product) || undefined,
-        productId: text(input.profile.productId || input.profile.clientProductId) || undefined,
+        productId:
+          text(input.profile.productId || input.profile.clientProductId) ||
+          undefined,
         whodrugId: text(input.profile.whodrugId) || undefined,
         sourceKeys: Array.isArray(input.profile.sourceKeys)
           ? input.profile.sourceKeys.map(String)
@@ -237,10 +365,22 @@ async function runSchedule(input: {
         limit: Math.max(
           1,
           Math.min(
-            Number(input.profile.limit || input.profile.maxResults || 100),
+            Number(
+              input.profile.limit ||
+                input.profile.maxResults ||
+                100,
+            ),
             500,
           ),
         ),
+      },
+      scheduleContext: {
+        scheduleKey: input.record.calendarId,
+        scheduledRunId: input.runId,
+        scheduledFor: input.scheduledFor.toISOString(),
+        calendarVersionId: input.calendarVersionId,
+        searchProfileKey: input.record.searchProfileKey,
+        searchProfileVersionId: input.profileVersionId,
       },
     });
 
@@ -252,18 +392,22 @@ async function runSchedule(input: {
 
     const hits =
       execution.results.length > 0
-        ? await executeProductionSearchToHits({
+        ? await executeHitsForResults({
             principal: input.principal,
-            resultIds: execution.results.map((result) => result.id),
+            results: execution.results,
           })
         : null;
 
     const hitsFailedCount = hits?.failedCount || 0;
     const finalStatus =
       execution.status === "failed" ||
-      (hits && hits.packages.length > 0 && hits.failedCount === hits.packages.length)
+      (hits &&
+        hits.packages.length > 0 &&
+        hits.failedCount === hits.packages.length)
         ? "FAILED"
-        : execution.status === "partial" || hitsFailedCount > 0
+        : execution.status === "partial" ||
+            hits?.status === "partial" ||
+            hitsFailedCount > 0
           ? "PARTIAL"
           : "COMPLETED";
 
@@ -292,9 +436,12 @@ async function runSchedule(input: {
         JSON.stringify(execution.connectorErrors),
         JSON.stringify({
           searchKey: execution.searchKey,
-          searchEvidencePackageKey: execution.searchEvidencePackage.packageKey,
-          searchEvidencePackageSha256: execution.searchEvidencePackage.sha256,
+          searchEvidencePackageKey:
+            execution.searchEvidencePackage.packageKey,
+          searchEvidencePackageSha256:
+            execution.searchEvidencePackage.sha256,
           hitsStatus: hits?.status || "NOT_APPLICABLE_ZERO_RESULTS",
+          hitsBatchCount: hits?.batchCount || 0,
         }),
       ],
     );
@@ -346,13 +493,19 @@ async function runSchedule(input: {
           scheduledRunId: input.runId,
           scheduleKey: input.record.calendarId,
           scheduledFor: input.scheduledFor.toISOString(),
+          calendarVersionId: input.calendarVersionId,
+          searchProfileKey: input.record.searchProfileKey,
+          searchProfileVersionId: input.profileVersionId,
           searchId: execution.searchId,
           searchKey: execution.searchKey,
           resultCount: execution.resultCount,
-          searchEvidencePackageId: execution.searchEvidencePackage.packageId,
-          searchEvidencePackageKey: execution.searchEvidencePackage.packageKey,
+          searchEvidencePackageId:
+            execution.searchEvidencePackage.packageId,
+          searchEvidencePackageKey:
+            execution.searchEvidencePackage.packageKey,
           hitsPackageCount: hits?.packages.length || 0,
           hitsFailedCount,
+          hitsBatchCount: hits?.batchCount || 0,
         }),
       ],
     );
@@ -360,6 +513,7 @@ async function runSchedule(input: {
     return { runId: input.runId, status: finalStatus };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
+
     await pool.query(
       `UPDATE literature_scheduled_search_runs
        SET status='FAILED',
@@ -372,6 +526,7 @@ async function runSchedule(input: {
         JSON.stringify({ error: message }),
       ],
     );
+
     await createAlert({
       tenantId: input.principal.tenantId,
       runId: input.runId,
@@ -380,6 +535,24 @@ async function runSchedule(input: {
       severity: "CRITICAL",
       message,
     });
+
+    await pool.query(
+      `INSERT INTO audit_events (
+         tenant_id, actor_id, event_type, event_category, outcome, details
+       ) VALUES ($1,$2,'SCHEDULED_PRODUCTION_SEARCH_FAILED',
+         'LITERATURE_SEARCH','failure',$3::jsonb)`,
+      [
+        input.principal.tenantId,
+        input.principal.userId,
+        JSON.stringify({
+          scheduledRunId: input.runId,
+          scheduleKey: input.record.calendarId,
+          scheduledFor: input.scheduledFor.toISOString(),
+          error: message,
+        }),
+      ],
+    );
+
     throw error;
   }
 }
@@ -389,7 +562,10 @@ export async function executeDueScheduledSearches(input?: {
   now?: Date;
 }) {
   const pool = getPostgresPool();
-  const tenants = await pool.query<{ id: string; tenant_key: string }>(
+  const tenants = await pool.query<{
+    id: string;
+    tenant_key: string;
+  }>(
     `SELECT id, tenant_key
      FROM tenants
      WHERE status='active'
@@ -402,10 +578,6 @@ export async function executeDueScheduledSearches(input?: {
   const summary: Array<Record<string, unknown>> = [];
 
   for (const tenant of tenants.rows) {
-    const principal = await ensureSchedulerPrincipal({
-      tenantId: tenant.id,
-      tenantKey: tenant.tenant_key,
-    });
     const active = await resolveActiveConfigurations(tenant.id);
     const calendarVersion = active.literatureCalendar;
 
@@ -416,6 +588,11 @@ export async function executeDueScheduledSearches(input?: {
       });
       continue;
     }
+
+    const principal = await ensureSchedulerPrincipal({
+      tenantId: tenant.id,
+      tenantKey: tenant.tenant_key,
+    });
 
     for (const value of recordsFromPayload(calendarVersion.payload)) {
       const record = calendarRecord(value);
@@ -439,7 +616,31 @@ export async function executeDueScheduledSearches(input?: {
       }
 
       const assessment = assessScheduleOccurrence(record, now);
-      if (assessment.action === "NOT_DUE" || !assessment.scheduledFor) continue;
+      if (
+        assessment.action === "NOT_DUE" ||
+        !assessment.scheduledFor
+      ) {
+        continue;
+      }
+
+      const calendarEffectiveFrom = calendarVersion.effectiveFrom
+        ? new Date(calendarVersion.effectiveFrom)
+        : null;
+
+      if (
+        (calendarEffectiveFrom &&
+          assessment.scheduledFor < calendarEffectiveFrom) ||
+        (profile.effectiveFrom &&
+          assessment.scheduledFor < profile.effectiveFrom)
+      ) {
+        summary.push({
+          tenantKey: tenant.tenant_key,
+          scheduleKey: record.calendarId,
+          status: "PRE_ACTIVATION_OCCURRENCE_SKIPPED",
+          scheduledFor: assessment.scheduledFor.toISOString(),
+        });
+        continue;
+      }
 
       const runId = await claimRun({
         principal,
@@ -447,7 +648,8 @@ export async function executeDueScheduledSearches(input?: {
         profileVersionId: profile.versionId,
         scheduleKey: record.calendarId,
         scheduledFor: assessment.scheduledFor,
-        status: assessment.action === "MISSED" ? "MISSED" : "QUEUED",
+        status:
+          assessment.action === "MISSED" ? "MISSED" : "QUEUED",
         details: {
           assessment: assessment.action,
           latenessMinutes: assessment.latenessMinutes,
@@ -469,6 +671,27 @@ export async function executeDueScheduledSearches(input?: {
             latenessMinutes: assessment.latenessMinutes,
           },
         });
+
+        await pool.query(
+          `INSERT INTO audit_events (
+             tenant_id, actor_id, event_type, event_category, outcome, details
+           ) VALUES ($1,$2,'SCHEDULED_PRODUCTION_SEARCH_MISSED',
+             'LITERATURE_SEARCH','failure',$3::jsonb)`,
+          [
+            tenant.id,
+            principal.userId,
+            JSON.stringify({
+              scheduledRunId: runId,
+              scheduleKey: record.calendarId,
+              scheduledFor: assessment.scheduledFor.toISOString(),
+              latenessMinutes: assessment.latenessMinutes,
+              calendarVersionId: calendarVersion.id,
+              searchProfileKey: record.searchProfileKey,
+              searchProfileVersionId: profile.versionId,
+            }),
+          ],
+        );
+
         summary.push({
           tenantKey: tenant.tenant_key,
           scheduleKey: record.calendarId,
@@ -481,12 +704,16 @@ export async function executeDueScheduledSearches(input?: {
       try {
         const result = await runSchedule({
           principal,
+          calendarVersionId: calendarVersion.id,
+          profileVersionId: profile.versionId,
           record,
           profile: profile.record,
           runId,
           scheduledFor: assessment.scheduledFor,
           latenessMinutes: assessment.latenessMinutes || 0,
-          missedThresholdExceeded: Boolean(assessment.missedThresholdExceeded),
+          missedThresholdExceeded: Boolean(
+            assessment.missedThresholdExceeded,
+          ),
         });
         summary.push({
           tenantKey: tenant.tenant_key,
@@ -499,7 +726,10 @@ export async function executeDueScheduledSearches(input?: {
           scheduleKey: record.calendarId,
           runId,
           status: "FAILED",
-          error: error instanceof Error ? error.message : String(error),
+          error:
+            error instanceof Error
+              ? error.message
+              : String(error),
         });
       }
     }
@@ -516,7 +746,10 @@ export async function listScheduledSearchOperations(input: {
   tenantId: string;
   limit?: number;
 }) {
-  const limit = Math.max(1, Math.min(input.limit || 50, 200));
+  const limit = Math.max(
+    1,
+    Math.min(input.limit || 50, 200),
+  );
   const [runs, alerts] = await Promise.all([
     getPostgresPool().query<Record<string, unknown>>(
       `SELECT *

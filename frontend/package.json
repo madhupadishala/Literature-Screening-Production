@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run scheduler:verify && next build",
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "node scripts/run-database-migrations.mjs",
