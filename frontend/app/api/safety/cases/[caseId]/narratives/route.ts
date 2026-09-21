@@ -8,10 +8,7 @@ import {
   generateSystemNarrative,
   saveNarrativeVersion,
 } from "@/lib/safety/case-processing/case-processing-service";
-import {
-  CASE_NARRATIVE_STAGES,
-  type CaseNarrativeStage,
-} from "@/lib/safety/case-processing/case-processing-types";
+import type { CaseNarrativeStage } from "@/lib/safety/case-processing/case-processing-types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -48,13 +45,7 @@ export async function POST(
         : await saveNarrativeVersion({
             principal,
             caseId,
-            narrativeStage:
-              typeof body.narrativeStage === "string" &&
-              (CASE_NARRATIVE_STAGES as readonly string[]).includes(
-                body.narrativeStage,
-              )
-                ? (body.narrativeStage as CaseNarrativeStage)
-                : "PROCESSOR",
+            narrativeStage: "PROCESSOR" as CaseNarrativeStage,
             narrativeText:
               typeof body.narrativeText === "string"
                 ? body.narrativeText
