@@ -59,6 +59,7 @@ export interface TriageSystemSnapshot {
 }
 
 export interface FinalTriageDecision {
+  minimumCriteria: MinimumCriterionAssessment[];
   humanValidityDecision: "VALID" | "INVALID" | "UNRESOLVED";
   seriousnessStatus: "SERIOUS" | "NON_SERIOUS" | "UNRESOLVED";
   seriousnessCriteria: Partial<Record<SeriousnessCriterion, boolean>>;
@@ -66,6 +67,5 @@ export interface FinalTriageDecision {
   priority: "LOW" | "NORMAL" | "HIGH" | "URGENT";
   followUpRequired: boolean;
   followUpReasons: string[];
-  triageOutcome: TriageOutcome;
   rationale: string;
 }
