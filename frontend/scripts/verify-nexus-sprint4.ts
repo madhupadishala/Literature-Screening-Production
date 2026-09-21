@@ -5,7 +5,8 @@ import path from "node:path";
 import { extractDocumentText } from "../lib/safety/intake/document-text-extractor";
 import { extractPvSuggestions } from "../lib/safety/intake/pv-suggestion-extractor";
 
-async function main() {\nconst migration = readFileSync(
+async function main() {
+const migration = readFileSync(
   path.join(
     process.cwd(),
     "database/migrations/024_nexus_intake_review_extraction.sql",
@@ -111,4 +112,7 @@ const extractorSource = readFileSync(
 assert.equal(extractorSource.includes("openai"), false);
 assert.equal(extractorSource.includes("anthropic"), false);
 
-console.log("Nexus Sprint 4 intake review and extraction verification passed.");\n}\n\nvoid main();
+console.log("Nexus Sprint 4 intake review and extraction verification passed.");
+}
+
+void main();
