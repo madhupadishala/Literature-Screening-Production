@@ -252,7 +252,7 @@ async function buildHandoffPayload(
     ),
   ]);
 
-  return {
+  const payload = {
     profile: "NEXUS_SAFETY_INTAKE_HANDOFF",
     schemaVersion: "1.0.0",
     generatedAt: new Date().toISOString(),
@@ -294,6 +294,8 @@ async function buildHandoffPayload(
       generatedFromTenantScopedRecords: true,
     },
   };
+
+  return JSON.parse(JSON.stringify(payload)) as Record<string, unknown>;
 }
 
 function autoCaseKey(): string {
@@ -594,19 +596,26 @@ export async function finalizeIntakeDisposition(input: {
       HOLD: "HOLD",
     };
 
+    const dispositionStatus =
+      input.request.dispositionType === "INCOMPLETE_FOLLOW_UP" ||
+      input.request.dispositionType === "HOLD"
+        ? "ON_HOLD"
+        : "COMPLETE";
+
     await client.query(
       `UPDATE safety_intake_records
-          SET disposition_status = 'COMPLETE',
-              disposition_type = $3,
+          SET disposition_status = $3,
+              disposition_type = $4,
               disposed_at = now(),
-              disposed_by = $4,
-              status = $5,
-              updated_by = $4,
+              disposed_by = $5,
+              status = $6,
+              updated_by = $5,
               updated_at = now()
         WHERE tenant_id = $1 AND id = $2`,
       [
         input.principal.tenantId,
         intakeRecordId,
+        dispositionStatus,
         input.request.dispositionType,
         input.principal.userId,
         nextStatus[input.request.dispositionType],
@@ -627,6 +636,7 @@ export async function finalizeIntakeDisposition(input: {
           intakeRecordId,
           dispositionId,
           dispositionType: input.request.dispositionType,
+          dispositionStatus,
           targetCaseId,
           targetIntakeRecordId,
           externalSystem,
