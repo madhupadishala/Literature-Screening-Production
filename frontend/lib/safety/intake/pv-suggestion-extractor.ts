@@ -73,7 +73,7 @@ export function extractPvSuggestions(text: string): PvExtractionSuggestion[] {
   }
 
   const reporterQualification =
-    /\b(physician|doctor|pharmacist|nurse|consumer|patient|lawyer)\b/gi;
+    /\b(?:reported\s+by|reporter(?:\s+qualification)?\s*[:\-]?)\s*(physician|doctor|pharmacist|nurse|consumer|patient|lawyer)\b/gi;
   for (const match of text.matchAll(reporterQualification)) {
     const start = match.index ?? 0;
     addUnique(output, {
