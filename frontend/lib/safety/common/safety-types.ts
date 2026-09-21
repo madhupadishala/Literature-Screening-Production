@@ -10,16 +10,23 @@ export const E2B_R3_SECTIONS = {
   NARRATIVE_AND_FURTHER_INFORMATION: "H",
 } as const;
 
-export type SafetySourceType =
-  | "LITERATURE"
-  | "SPONTANEOUS"
-  | "SOLICITED"
-  | "CLINICAL_TRIAL"
-  | "REGISTRY"
-  | "PARTNER"
-  | "REGULATORY_AUTHORITY"
-  | "DIGITAL"
-  | "OTHER";
+export const SAFETY_SOURCE_TYPES = [
+  "LITERATURE",
+  "SPONTANEOUS",
+  "SOLICITED",
+  "CLINICAL_TRIAL",
+  "REGISTRY",
+  "PARTNER",
+  "REGULATORY_AUTHORITY",
+  "DIGITAL",
+  "OTHER",
+] as const;
+
+export type SafetySourceType = (typeof SAFETY_SOURCE_TYPES)[number];
+
+export function isSafetySourceType(value: string): value is SafetySourceType {
+  return (SAFETY_SOURCE_TYPES as readonly string[]).includes(value);
+}
 
 export type IntakeStatus =
   | "RECEIVED"
