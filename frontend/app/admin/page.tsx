@@ -47,6 +47,12 @@ const modules = [
     action: "/admin/audit-logs",
   },
   {
+    title: "Validation Lab",
+    description:
+      "Run controlled synthetic end-to-end fixtures without treating validation data as real literature or production regulatory reference data.",
+    action: "/admin/validation-lab",
+  },
+  {
     title: "System Reliability",
     description: "View database, AI provider, evidence storage, monitoring, and release health.",
     action: "/admin/reliability",
@@ -86,8 +92,8 @@ export default function AdminPage() {
       <section className="boundary">
         <strong>Literature product boundary</strong>
         <p>
-          Administration supports Search, Evidence Package, Hits, Screening, and governed downstream
-          output. No additional Literature workspace is introduced after governed output.
+          Administration governs Search, Hits, Screening, Review / Medical Review, and Intake.
+          Validation Lab data is synthetic, explicitly scoped, and segregated from production regulatory references.
         </p>
       </section>
 
