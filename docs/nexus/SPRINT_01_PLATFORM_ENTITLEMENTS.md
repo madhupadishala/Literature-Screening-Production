@@ -41,3 +41,9 @@ A regulated module action is allowed only when:
 - Case Processing is denied when Intake dependency is absent.
 - Entitlement changes require reason, history and audit.
 - Verification script passes.
+
+## Platform / tenant separation
+- Tenant-facing entitlement API is read-only.
+- Commercial entitlement mutation is exposed only through the platform Control Plane API.
+- Platform roles are stored independently from tenant memberships.
+- The Control Plane may target a customer tenant without granting the platform operator an operational role in that tenant.
