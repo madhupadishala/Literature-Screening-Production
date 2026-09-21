@@ -388,11 +388,11 @@ export async function saveLabelAssessments(input: {
 
       if (assessment.conclusion === "UNRESOLVED") continue;
 
-      const productContext = isRecord(workspace.product_context)
+      const workspaceProductContext = isRecord(workspace.product_context)
         ? workspace.product_context
         : {};
       const allowedScope =
-        productContext.validationFixture === true
+        workspaceProductContext.validationFixture === true
           ? "VALIDATION_ONLY"
           : "PRODUCTION";
       const reference = referenceData.labelReferences.find(
