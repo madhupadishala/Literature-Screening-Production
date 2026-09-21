@@ -125,6 +125,16 @@ async function ensureDemoIdentity(input: {
       [tenant.rows[0].id, user.rows[0].id, input.roleKey || "CLINIXAI_SUPER_ADMIN"],
     );
 
+    if ((input.roleKey || "CLINIXAI_SUPER_ADMIN") === "CLINIXAI_SUPER_ADMIN") {
+      await client.query(
+        `INSERT INTO platform_role_assignments (user_id, role_key, status)
+         VALUES ($1, 'PLATFORM_SUPER_ADMIN', 'active')
+         ON CONFLICT (user_id)
+         DO UPDATE SET role_key = EXCLUDED.role_key, status = 'active', updated_at = now()`,
+        [user.rows[0].id],
+      );
+    }
+
     await client.query("COMMIT");
   } catch (error) {
     await client.query("ROLLBACK");
