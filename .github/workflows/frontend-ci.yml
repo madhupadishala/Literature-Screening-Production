@@ -86,6 +86,15 @@ jobs:
       - name: Verify Nexus Sprint 7 intake disposition
         run: npm run nexus:sprint7:verify
 
+      - name: Verify Nexus Sprint 8 L2A case processing
+        run: npm run nexus:sprint8:verify
+
+      - name: Verify Nexus Sprint 9 QC medical review and finalization
+        run: npm run nexus:sprint9:verify
+
+      - name: Verify Nexus Sprint 10 evidence export and release hardening
+        run: npm run nexus:sprint10:verify
+
       - name: Build production application
         run: npm run build
 
