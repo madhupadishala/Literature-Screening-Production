@@ -131,7 +131,7 @@ function extractSourceIdentifiers(payload: unknown): string[] {
   }
 
   walk(payload);
-  return Array.from(result);
+  return Array.from(result).sort((left, right) => left.localeCompare(right));
 }
 
 function mapDuplicateRun(row: Record<string, unknown>): DuplicateReviewRunRecord {
@@ -264,28 +264,32 @@ async function loadFingerprints(
               age_value, age_unit
          FROM safety_patients
         WHERE tenant_id = $1
-          AND intake_record_id = ANY($2::uuid[])`,
+          AND intake_record_id = ANY($2::uuid[])
+        ORDER BY intake_record_id, created_at`,
       [tenantId, intakeRecordIds],
     ),
     client.query<Record<string, unknown>>(
       `SELECT intake_record_id, qualification, organization, country_code
          FROM safety_reporters
         WHERE tenant_id = $1
-          AND intake_record_id = ANY($2::uuid[])`,
+          AND intake_record_id = ANY($2::uuid[])
+        ORDER BY intake_record_id, created_at`,
       [tenantId, intakeRecordIds],
     ),
     client.query<Record<string, unknown>>(
       `SELECT intake_record_id, reported_name, role_characterization
          FROM safety_products
         WHERE tenant_id = $1
-          AND intake_record_id = ANY($2::uuid[])`,
+          AND intake_record_id = ANY($2::uuid[])
+        ORDER BY intake_record_id, created_at`,
       [tenantId, intakeRecordIds],
     ),
     client.query<Record<string, unknown>>(
       `SELECT intake_record_id, reported_term, onset_date::text
          FROM safety_events
         WHERE tenant_id = $1
-          AND intake_record_id = ANY($2::uuid[])`,
+          AND intake_record_id = ANY($2::uuid[])
+        ORDER BY intake_record_id, created_at`,
       [tenantId, intakeRecordIds],
     ),
   ]);
