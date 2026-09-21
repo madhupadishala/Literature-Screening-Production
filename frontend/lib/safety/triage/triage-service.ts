@@ -140,6 +140,9 @@ function validateHumanCriteria(
 
   const seen = new Set<string>();
   for (const item of criteria) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      throw new Error("Each minimum ICSR criterion must be an object.");
+    }
     if (!REQUIRED_CRITERIA.includes(item.key)) {
       throw new Error(`Unsupported minimum criterion: ${String(item.key)}.`);
     }
@@ -177,6 +180,26 @@ function validateDecision(
   decision: FinalTriageDecision;
   outcome: TriageOutcome;
 } {
+  if (!decision || typeof decision !== "object" || Array.isArray(decision)) {
+    throw new Error("A triage decision object is required.");
+  }
+  if (!["VALID", "INVALID", "UNRESOLVED"].includes(decision.humanValidityDecision)) {
+    throw new Error("A valid humanValidityDecision is required.");
+  }
+  if (
+    !["SERIOUS", "NON_SERIOUS", "UNRESOLVED"].includes(
+      decision.seriousnessStatus,
+    )
+  ) {
+    throw new Error("A valid seriousnessStatus is required.");
+  }
+  if (!["LOW", "NORMAL", "HIGH", "URGENT"].includes(decision.priority)) {
+    throw new Error("A valid triage priority is required.");
+  }
+  if (typeof decision.followUpRequired !== "boolean") {
+    throw new Error("followUpRequired must be boolean.");
+  }
+
   const minimumCriteria = validateHumanCriteria(decision.minimumCriteria);
   const allMet = minimumCriteria.every((item) => item.status === "MET");
   const anyMissing = minimumCriteria.some((item) => item.status === "MISSING");
@@ -217,17 +240,27 @@ function validateDecision(
     );
   }
 
+  if (!Array.isArray(decision.specialSituations)) {
+    throw new Error("specialSituations must be an array.");
+  }
+  if (!Array.isArray(decision.followUpReasons)) {
+    throw new Error("followUpReasons must be an array.");
+  }
+
   const specialSituations = Array.from(
     new Set(
-      (decision.specialSituations ?? []).filter((item): item is SpecialSituation =>
-        (SPECIAL_SITUATIONS as readonly string[]).includes(item),
+      decision.specialSituations.filter(
+        (item): item is SpecialSituation =>
+          typeof item === "string" &&
+          (SPECIAL_SITUATIONS as readonly string[]).includes(item),
       ),
     ),
   );
 
   const followUpReasons = Array.from(
     new Set(
-      (decision.followUpReasons ?? [])
+      decision.followUpReasons
+        .filter((item): item is string => typeof item === "string")
         .map((item) => item.trim())
         .filter((item) => item.length >= 3),
     ),
@@ -244,6 +277,9 @@ function validateDecision(
     );
   }
 
+  if (typeof decision.rationale !== "string") {
+    throw new Error("Triage rationale is required.");
+  }
   const rationale = decision.rationale.trim();
   if (rationale.length < 10) {
     throw new Error("Triage rationale must contain at least 10 characters.");
