@@ -142,3 +142,147 @@ export async function listReviewWorklist(input: {
     };
   });
 }
+
+
+export interface ReviewWorkspaceDetail extends ReviewWorklistRecord {
+  patientSegments: unknown[];
+  labelAssessments: Array<{
+    id: string;
+    patientSegmentKey: string;
+    reportedProduct: string;
+    clinicalEvent: string;
+    conclusion: string;
+    referenceLabelKey?: string;
+    referenceLabelVersion?: string;
+    referenceEffectiveDate?: string;
+    evidence?: string;
+    rationale?: string;
+  }>;
+  causalityAssessments: Array<{
+    id: string;
+    patientSegmentKey: string;
+    reportedProduct: string;
+    clinicalEvent: string;
+    methodKey?: string;
+    methodVersion?: string;
+    conclusion: string;
+    evidence?: string;
+    rationale?: string;
+  }>;
+  medicalReview?: {
+    reviewStatus: string;
+    finalDecision?: string;
+    comments?: string;
+    reviewedBy?: string;
+    reviewedAt?: string;
+    reviewVersion: number;
+  };
+  article: Record<string, unknown>;
+  screeningResult: Record<string, unknown>;
+}
+
+export async function getReviewWorkspaceDetail(input: {
+  principal: RequestPrincipal;
+  workspaceId: string;
+}): Promise<ReviewWorkspaceDetail> {
+  const worklist = await listReviewWorklist({ principal: input.principal, limit: 500 });
+  const base = worklist.find((record) => record.workspaceId === input.workspaceId);
+  if (!base) throw new Error("Review workspace was not found in the active tenant.");
+
+  const pool = getPostgresPool();
+  const detail = await pool.query<Record<string, unknown>>(
+    `SELECT
+       workspace.patient_segments,
+       package.article_identity,
+       screening.result_payload,
+       medical_review.review_status,
+       medical_review.final_decision,
+       medical_review.comments,
+       medical_review.review_version,
+       medical_review.reviewed_at::text AS medical_reviewed_at,
+       mr.display_name AS medical_reviewer
+     FROM literature_review_workspaces workspace
+     JOIN literature_packages package
+       ON package.id = workspace.package_id
+      AND package.tenant_id = workspace.tenant_id
+     JOIN screening_results screening
+       ON screening.id = workspace.screening_result_id
+      AND screening.tenant_id = workspace.tenant_id
+     LEFT JOIN literature_medical_reviews medical_review
+       ON medical_review.tenant_id = workspace.tenant_id
+      AND medical_review.review_workspace_id = workspace.id
+     LEFT JOIN application_users mr ON mr.id = medical_review.reviewed_by
+     WHERE workspace.tenant_id = $1 AND workspace.id = $2
+     LIMIT 1`,
+    [input.principal.tenantId, input.workspaceId],
+  );
+  if (!detail.rows[0]) throw new Error("Review workspace detail was not found.");
+
+  const labels = await pool.query<Record<string, unknown>>(
+    `SELECT id, patient_segment_key, reported_product, clinical_event,
+            conclusion, reference_label_key, reference_label_version,
+            reference_effective_date::text AS reference_effective_date,
+            evidence, rationale
+     FROM literature_label_assessments
+     WHERE tenant_id = $1 AND review_workspace_id = $2
+     ORDER BY assessed_at, id`,
+    [input.principal.tenantId, input.workspaceId],
+  );
+
+  const causality = await pool.query<Record<string, unknown>>(
+    `SELECT id, patient_segment_key, reported_product, clinical_event,
+            method_key, method_version, conclusion, evidence, rationale
+     FROM literature_causality_assessments
+     WHERE tenant_id = $1 AND review_workspace_id = $2
+     ORDER BY assessed_at, id`,
+    [input.principal.tenantId, input.workspaceId],
+  );
+
+  const row = detail.rows[0];
+  const payload = isRecord(row.result_payload) ? row.result_payload : {};
+  const screeningResult = isRecord(payload.result) ? payload.result : {};
+  const evidenceText = (value: unknown) => {
+    if (!isRecord(value)) return undefined;
+    return text(value.sourceText) || undefined;
+  };
+
+  return {
+    ...base,
+    patientSegments: Array.isArray(row.patient_segments) ? row.patient_segments : [],
+    article: isRecord(row.article_identity) ? row.article_identity : {},
+    screeningResult,
+    labelAssessments: labels.rows.map((label) => ({
+      id: String(label.id),
+      patientSegmentKey: text(label.patient_segment_key),
+      reportedProduct: text(label.reported_product),
+      clinicalEvent: text(label.clinical_event),
+      conclusion: text(label.conclusion, "UNRESOLVED"),
+      referenceLabelKey: text(label.reference_label_key) || undefined,
+      referenceLabelVersion: text(label.reference_label_version) || undefined,
+      referenceEffectiveDate: text(label.reference_effective_date) || undefined,
+      evidence: evidenceText(label.evidence),
+      rationale: text(label.rationale) || undefined,
+    })),
+    causalityAssessments: causality.rows.map((assessment) => ({
+      id: String(assessment.id),
+      patientSegmentKey: text(assessment.patient_segment_key),
+      reportedProduct: text(assessment.reported_product),
+      clinicalEvent: text(assessment.clinical_event),
+      methodKey: text(assessment.method_key) || undefined,
+      methodVersion: text(assessment.method_version) || undefined,
+      conclusion: text(assessment.conclusion, "UNRESOLVED"),
+      evidence: evidenceText(assessment.evidence),
+      rationale: text(assessment.rationale) || undefined,
+    })),
+    medicalReview: row.review_status
+      ? {
+          reviewStatus: text(row.review_status),
+          finalDecision: text(row.final_decision) || undefined,
+          comments: text(row.comments) || undefined,
+          reviewedBy: text(row.medical_reviewer) || undefined,
+          reviewedAt: text(row.medical_reviewed_at) || undefined,
+          reviewVersion: Number(row.review_version || 0),
+        }
+      : undefined,
+  };
+}
