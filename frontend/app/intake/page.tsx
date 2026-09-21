@@ -149,11 +149,17 @@ export default function IntakePage() {
   }, []);
 
   useEffect(() => {
-    void loadRecords();
+    const initialLoad = window.setTimeout(() => void loadRecords(), 0);
+    return () => window.clearTimeout(initialLoad);
   }, [loadRecords]);
 
   useEffect(() => {
-    if (selectedId) void loadWorkspace(selectedId);
+    if (!selectedId) return;
+    const workspaceLoad = window.setTimeout(
+      () => void loadWorkspace(selectedId),
+      0,
+    );
+    return () => window.clearTimeout(workspaceLoad);
   }, [selectedId, loadWorkspace]);
 
   const filtered = useMemo(() => {
