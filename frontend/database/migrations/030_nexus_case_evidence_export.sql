@@ -57,3 +57,15 @@ CREATE INDEX IF NOT EXISTS idx_safety_case_exports_case
   ON safety_case_exports (
     tenant_id, case_id, export_format, export_version DESC
   );
+
+DROP TRIGGER IF EXISTS safety_case_evidence_packages_immutable
+  ON safety_case_evidence_packages;
+CREATE TRIGGER safety_case_evidence_packages_immutable
+BEFORE UPDATE OR DELETE ON safety_case_evidence_packages
+FOR EACH ROW EXECUTE FUNCTION prevent_nexus_case_history_mutation();
+
+DROP TRIGGER IF EXISTS safety_case_exports_immutable
+  ON safety_case_exports;
+CREATE TRIGGER safety_case_exports_immutable
+BEFORE UPDATE OR DELETE ON safety_case_exports
+FOR EACH ROW EXECUTE FUNCTION prevent_nexus_case_history_mutation();
