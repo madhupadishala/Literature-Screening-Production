@@ -20,6 +20,10 @@ type IntakeRow = {
   status: string;
   validityStatus: string;
   duplicateStatus: string;
+  duplicateReviewStatus: string;
+  caseRelationship: string | null;
+  dispositionStatus: string;
+  dispositionType: string | null;
   seriousnessStatus: string;
   triageStatus: string;
   triageOutcome: string | null;
@@ -181,6 +185,10 @@ export default function IntakePage() {
         record.sourceReviewStatus,
         record.triageStatus,
         record.triageOutcome || "",
+        record.duplicateReviewStatus,
+        record.caseRelationship || "",
+        record.dispositionStatus,
+        record.dispositionType || "",
       ]
         .join(" ")
         .toLowerCase()
@@ -347,6 +355,8 @@ export default function IntakePage() {
                   <th>Review</th>
                   <th>Extraction</th>
                   <th>Triage</th>
+                  <th>Duplicate</th>
+                  <th>Disposition</th>
                   <th>Pending</th>
                 </tr>
               </thead>
@@ -379,12 +389,26 @@ export default function IntakePage() {
                         <small>{record.triageOutcome.replaceAll("_", " ")}</small>
                       ) : null}
                     </td>
+                    <td>
+                      <Status
+                        value={record.duplicateReviewStatus || "NOT_STARTED"}
+                      />
+                      {record.caseRelationship ? (
+                        <small>{record.caseRelationship.replaceAll("_", " ")}</small>
+                      ) : null}
+                    </td>
+                    <td>
+                      <Status value={record.dispositionStatus || "NOT_STARTED"} />
+                      {record.dispositionType ? (
+                        <small>{record.dispositionType.replaceAll("_", " ")}</small>
+                      ) : null}
+                    </td>
                     <td>{record.pendingSuggestionCount}</td>
                   </tr>
                 ))}
                 {!loading && filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className={styles.empty}>
+                    <td colSpan={8} className={styles.empty}>
                       No Intake records found.
                     </td>
                   </tr>
@@ -460,6 +484,25 @@ export default function IntakePage() {
                     href={`/intake/${selectedId}/triage`}
                   >
                     Open ICSR triage
+                  </Link>
+                ) : null}
+                {selectedId &&
+                display(workspace.intake.triage_status) === "COMPLETE" &&
+                display(workspace.intake.validity_status) === "VALID" ? (
+                  <Link
+                    className={styles.triageLink}
+                    href={`/intake/${selectedId}/duplicate-review`}
+                  >
+                    Duplicate / follow-up
+                  </Link>
+                ) : null}
+                {selectedId &&
+                display(workspace.intake.duplicate_review_status) === "COMPLETE" ? (
+                  <Link
+                    className={styles.triageLink}
+                    href={`/intake/${selectedId}/disposition`}
+                  >
+                    Open disposition
                   </Link>
                 ) : null}
               </div>
