@@ -138,4 +138,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "022_nexus_common_safety_backbone.sql",
     required: true,
   },
+  {
+    id: "023",
+    name: "Nexus Intake Sources",
+    filename: "023_nexus_intake_sources.sql",
+    required: true,
+  },
 ] as const;
