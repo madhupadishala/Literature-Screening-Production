@@ -94,6 +94,52 @@ function sourceContainsTerm(source: string, term: string): boolean {
   return Boolean(normalizedTerm) && normalizedSource.includes(` ${normalizedTerm} `);
 }
 
+
+function stripTrailingStrengthQualifier(input: {
+  reportedProduct: string;
+  sourceExactTerms: string[];
+}): string | undefined {
+  const reportedNormalized = normalizeProductText(input.reportedProduct);
+  if (!reportedNormalized) return undefined;
+
+  const candidates = input.sourceExactTerms.flatMap((term) => {
+    const normalizedTerm = normalizeProductText(term);
+    if (
+      !normalizedTerm ||
+      reportedNormalized === normalizedTerm ||
+      !reportedNormalized.startsWith(normalizedTerm + " ")
+    ) {
+      return [];
+    }
+
+    const remainder = reportedNormalized.slice(normalizedTerm.length).trim();
+    const tokens = remainder.split(" ").filter(Boolean);
+    if (tokens.length === 0 || tokens.length > 6) return [];
+
+    const strengthUnit = /^(?:mg|g|mcg|ug|µg|ml|l|iu|unit|units|meq|mmol|mol|%|percent)$/i;
+    const numberToken = /^\d+(?:[.,]\d+)?(?:\/\d+(?:[.,]\d+)?)?$/;
+    const connector = /^(?:per|\/|x)$/i;
+
+    const strengthLike =
+      tokens.some((token) => numberToken.test(token)) &&
+      tokens.every(
+        (token) =>
+          numberToken.test(token) ||
+          strengthUnit.test(token) ||
+          connector.test(token),
+      );
+
+    return strengthLike ? [term] : [];
+  });
+
+  const unique = [
+    ...new Map(
+      candidates.map((candidate) => [normalizeProductText(candidate), candidate]),
+    ).values(),
+  ];
+  return unique.length === 1 ? unique[0] : undefined;
+}
+
 function productMasterSourceTerms(productMaster: unknown): string[] {
   if (!productMaster || typeof productMaster !== "object" || Array.isArray(productMaster)) {
     return [];
@@ -161,6 +207,22 @@ function reconcileSuspectEvidence(input: {
 
   const evidence = input.aiResult.extractedSuspectEvidence.map((item) => {
     if (sourceContainsTerm(source, item.reportedProduct)) {
+      const identityWithoutStrength = stripTrailingStrengthQualifier({
+        reportedProduct: item.reportedProduct,
+        sourceExactTerms: configuredSourceTerms,
+      });
+      if (identityWithoutStrength) {
+        corrections.push({
+          from: item.reportedProduct,
+          to: identityWithoutStrength,
+          reason:
+            "Source-exact product identity was separated from a trailing strength qualifier for Product Master matching; the original phrase remains preserved in source evidence.",
+        });
+        return {
+          ...item,
+          reportedProduct: identityWithoutStrength,
+        };
+      }
       return item;
     }
 
