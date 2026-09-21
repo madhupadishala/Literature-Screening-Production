@@ -8,6 +8,12 @@ import { draftPatientSegmentation as runPatientSegmentationAI } from "@/lib/ai/p
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
+import {
+  assertCausalityAssessment,
+  assertConfirmedPatientSegmentation,
+  assertExpectednessAssessment,
+  assertMedicalReviewGate,
+} from "./review-governance";
 import type {
   CausalityAssessmentInput,
   LabelAssessmentInput,
@@ -546,13 +552,8 @@ export async function savePatientSegmentation(input: {
   if (input.complete && segments.length === 0 && reason.length < 20) {
     throw new Error("Confirming zero reportable patients requires a specific rationale.");
   }
-  if (
-    input.complete &&
-    segments.some((segment) => segment.relationships.length === 0)
-  ) {
-    throw new Error(
-      "Each confirmed patient segment requires at least one evidence-supported product-event relationship.",
-    );
+  if (input.complete) {
+    assertConfirmedPatientSegmentation(segments);
   }
 
   const client = await getPostgresPool().connect();
@@ -660,21 +661,9 @@ export async function saveLabelAssessment(input: {
   assessment: LabelAssessmentInput;
 }): Promise<ReviewWorkspaceDetail> {
   const assessment = input.assessment;
+  assertExpectednessAssessment(assessment);
   const conclusion = text(assessment.conclusion).toUpperCase();
-  if (!["EXPECTED", "UNEXPECTED", "UNRESOLVED"].includes(conclusion)) {
-    throw new Error("Expectedness must be EXPECTED, UNEXPECTED, or UNRESOLVED.");
-  }
   const rationale = auditReason(assessment.rationale);
-  if (
-    conclusion !== "UNRESOLVED" &&
-    (!text(assessment.referenceLabelKey) ||
-      !text(assessment.referenceLabelVersion) ||
-      !text(assessment.referenceEffectiveDate))
-  ) {
-    throw new Error(
-      "EXPECTED or UNEXPECTED requires the controlled Label / RSI key, version and effective date.",
-    );
-  }
 
   const client = await getPostgresPool().connect();
   try {
@@ -790,16 +779,9 @@ export async function saveCausalityAssessment(input: {
   assessment: CausalityAssessmentInput;
 }): Promise<ReviewWorkspaceDetail> {
   const assessment = input.assessment;
+  assertCausalityAssessment(assessment);
   const conclusion = text(assessment.conclusion, "UNRESOLVED").toUpperCase();
   const rationale = auditReason(assessment.rationale);
-  if (
-    conclusion !== "UNRESOLVED" &&
-    (!text(assessment.methodKey) || !text(assessment.methodVersion))
-  ) {
-    throw new Error(
-      "A causality conclusion requires the approved method key and method version. Use UNRESOLVED when no controlled method is configured.",
-    );
-  }
 
   const client = await getPostgresPool().connect();
   try {
@@ -931,27 +913,15 @@ export async function saveMedicalReview(input: {
     const labelingStatus = text(row.labeling_status);
     const causalityStatus = text(row.causality_status);
 
-    if (decision === "APPROVE_FOR_INTAKE") {
-      if (segmentationStatus !== "COMPLETE" || segments.length === 0 || pairCount === 0) {
-        throw new Error(
-          "Medical Review approval requires confirmed patient segmentation with at least one governed product-event relationship.",
-        );
-      }
-      if (!["COMPLETE", "UNRESOLVED"].includes(labelingStatus)) {
-        throw new Error("Complete the labeling / expectedness assessment before Medical Review approval.");
-      }
-      if (!["COMPLETE", "UNRESOLVED"].includes(causalityStatus)) {
-        throw new Error("Complete the causality assessment before Medical Review approval.");
-      }
-      if (
-        (labelingStatus === "UNRESOLVED" || causalityStatus === "UNRESOLVED") &&
-        input.review.unresolvedAcknowledged !== true
-      ) {
-        throw new Error(
-          "Medical Reviewer acknowledgement is required when expectedness or causality remains unresolved.",
-        );
-      }
-    }
+    assertMedicalReviewGate({
+      decision,
+      patientSegmentationStatus: segmentationStatus,
+      patientCount: segments.length,
+      governedPairCount: pairCount,
+      labelingStatus,
+      causalityStatus,
+      unresolvedAcknowledged: input.review.unresolvedAcknowledged === true,
+    });
 
     const status =
       decision === "APPROVE_FOR_INTAKE"
