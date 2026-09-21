@@ -200,3 +200,31 @@ ALTER TABLE safety_cases
     FOREIGN KEY (final_version_id)
     REFERENCES safety_case_versions(id)
     ON DELETE SET NULL;
+
+CREATE OR REPLACE FUNCTION prevent_nexus_case_history_mutation()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RAISE EXCEPTION '% is immutable; % is prohibited', TG_TABLE_NAME, TG_OP
+    USING ERRCODE = '55000';
+END;
+$$;
+
+DROP TRIGGER IF EXISTS safety_case_drafts_immutable
+  ON safety_case_draft_versions;
+CREATE TRIGGER safety_case_drafts_immutable
+BEFORE UPDATE OR DELETE ON safety_case_draft_versions
+FOR EACH ROW EXECUTE FUNCTION prevent_nexus_case_history_mutation();
+
+DROP TRIGGER IF EXISTS safety_case_assessments_immutable
+  ON safety_case_assessments;
+CREATE TRIGGER safety_case_assessments_immutable
+BEFORE UPDATE OR DELETE ON safety_case_assessments
+FOR EACH ROW EXECUTE FUNCTION prevent_nexus_case_history_mutation();
+
+DROP TRIGGER IF EXISTS safety_case_narratives_immutable
+  ON safety_case_narrative_versions;
+CREATE TRIGGER safety_case_narratives_immutable
+BEFORE UPDATE OR DELETE ON safety_case_narrative_versions
+FOR EACH ROW EXECUTE FUNCTION prevent_nexus_case_history_mutation();
