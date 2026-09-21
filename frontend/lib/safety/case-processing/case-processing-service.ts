@@ -87,6 +87,9 @@ export interface CaseWorkspace {
   assistSuggestions: CaseAssistRecord[];
   reviewTasks: Array<Record<string, unknown>>;
   followUps: Array<Record<string, unknown>>;
+  sourceDocuments: Array<Record<string, unknown>>;
+  caseVersions: Array<Record<string, unknown>>;
+  auditEvents: Array<Record<string, unknown>>;
 }
 
 function text(value: unknown): string | undefined {
@@ -656,6 +659,9 @@ export async function getCaseWorkspace(input: {
       assist,
       reviewTasks,
       followUps,
+      sourceDocuments,
+      caseVersions,
+      auditEvents,
     ] = await Promise.all([
       client.query<Record<string, unknown>>(
         `SELECT * FROM safety_intake_records
@@ -716,6 +722,40 @@ export async function getCaseWorkspace(input: {
           ORDER BY sequence_number DESC`,
         [input.principal.tenantId, caseId],
       ),
+      client.query<Record<string, unknown>>(
+        `SELECT id, document_key, file_name, content_type, size_bytes,
+                content_sha256, extraction_status, extracted_text_sha256,
+                created_at
+           FROM safety_source_documents
+          WHERE tenant_id = $1 AND intake_record_id = $2
+          ORDER BY created_at DESC`,
+        [input.principal.tenantId, String(caseRow.intake_record_id)],
+      ),
+      client.query<Record<string, unknown>>(
+        `SELECT id, version, version_type, e2b_profile, schema_version,
+                case_sha256, change_reason, created_at
+           FROM safety_case_versions
+          WHERE tenant_id = $1 AND case_id = $2
+          ORDER BY version DESC`,
+        [input.principal.tenantId, caseId],
+      ),
+      client.query<Record<string, unknown>>(
+        `SELECT id, actor_id, event_type, event_category, outcome,
+                details, occurred_at
+           FROM audit_events
+          WHERE tenant_id = $1
+            AND (
+              details->>'caseId' = $2
+              OR details->>'intakeRecordId' = $3
+            )
+          ORDER BY occurred_at DESC
+          LIMIT 200`,
+        [
+          input.principal.tenantId,
+          caseId,
+          String(caseRow.intake_record_id),
+        ],
+      ),
     ]);
 
     if (!draft.rows[0]) {
@@ -732,6 +772,9 @@ export async function getCaseWorkspace(input: {
       assistSuggestions: assist.rows.map(mapAssist),
       reviewTasks: reviewTasks.rows,
       followUps: followUps.rows,
+      sourceDocuments: sourceDocuments.rows,
+      caseVersions: caseVersions.rows,
+      auditEvents: auditEvents.rows,
     };
   } catch (error) {
     await client.query("ROLLBACK").catch(() => undefined);
