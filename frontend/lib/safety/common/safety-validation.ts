@@ -11,6 +11,7 @@ import {
 
 const COUNTRY_CODE = /^[A-Z]{2}$/;
 const LANGUAGE_CODE = /^[a-z]{2}(-[A-Z]{2})?$/;
+const SHA256 = /^[a-f0-9]{64}$/;
 
 export function assertIsoCountryCode(
   value: string | undefined,
@@ -66,10 +67,14 @@ function assertEvent(event: SafetyEventDraft): void {
 export function validateIntakeDraft(draft: IntakeDraft): IntakeDraft {
   if (!draft.source.sourceKey.trim()) throw new Error("sourceKey is required.");
   if (!draft.source.sourceSystem.trim()) throw new Error("sourceSystem is required.");
-  if (!draft.source.sourceSha256.trim()) throw new Error("sourceSha256 is required.");
+  if (!SHA256.test(draft.source.sourceSha256)) {
+    throw new Error("sourceSha256 must be a lowercase SHA-256 hash.");
+  }
   if (!draft.intake.intakeKey.trim()) throw new Error("intakeKey is required.");
   if (!draft.intake.sourceRecordKey.trim()) throw new Error("sourceRecordKey is required.");
-  if (!draft.intake.lineageSha256.trim()) throw new Error("lineageSha256 is required.");
+  if (!SHA256.test(draft.intake.lineageSha256)) {
+    throw new Error("lineageSha256 must be a lowercase SHA-256 hash.");
+  }
 
   assertIsoCountryCode(draft.source.countryCode, "source.countryCode");
   assertIsoCountryCode(draft.intake.countryCode, "intake.countryCode");
