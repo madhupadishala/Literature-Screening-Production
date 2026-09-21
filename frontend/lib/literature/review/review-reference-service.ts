@@ -26,6 +26,8 @@ function stringList(value: unknown): string[] {
       : [];
 }
 
+export type ReviewReferenceUsageScope = "PRODUCTION" | "VALIDATION_ONLY";
+
 export interface ActiveLabelReference {
   configurationVersionId: string;
   configurationKey: string;
@@ -39,6 +41,7 @@ export interface ActiveLabelReference {
   effectiveTo?: string;
   eventTerms: string[];
   sourceDocument?: string;
+  usageScope: ReviewReferenceUsageScope;
 }
 
 export interface ActiveCausalityMethod {
@@ -50,6 +53,7 @@ export interface ActiveCausalityMethod {
   version: string;
   allowedConclusions: string[];
   methodology?: string;
+  usageScope: ReviewReferenceUsageScope;
 }
 
 export async function activeReviewReferenceData(tenantId: string): Promise<{
@@ -58,8 +62,13 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
 }> {
   const active = await resolveActiveConfigurations(tenantId);
 
-  const labelReferences = active.labelReferences.flatMap((configuration) =>
-    recordsFromPayload(configuration.payload).map((record) => ({
+  const labelReferences = active.labelReferences.flatMap((configuration) => {
+    const payloadScope: ReviewReferenceUsageScope =
+      isRecord(configuration.payload) &&
+      configuration.payload.usageScope === "VALIDATION_ONLY"
+        ? "VALIDATION_ONLY"
+        : "PRODUCTION";
+    return recordsFromPayload(configuration.payload).map((record) => ({
       configurationVersionId: configuration.id,
       configurationKey: configuration.configKey,
       configurationVersion: configuration.versionLabel,
@@ -72,6 +81,11 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
       effectiveTo: text(record.effectiveTo || record.labelEffectiveTo) || undefined,
       eventTerms: stringList(record.eventTerms),
       sourceDocument: text(record.sourceDocument || record.sourceFilename) || undefined,
+      usageScope: (
+        record.usageScope === "VALIDATION_ONLY"
+          ? "VALIDATION_ONLY"
+          : payloadScope
+      ) as ReviewReferenceUsageScope,
     })).filter((record) =>
       Boolean(
         record.labelKey &&
@@ -81,11 +95,16 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
           record.version &&
           record.effectiveFrom,
       ),
-    ),
-  );
+    );
+  });
 
-  const causalityMethods = active.causalityMethods.flatMap((configuration) =>
-    recordsFromPayload(configuration.payload).map((record) => ({
+  const causalityMethods = active.causalityMethods.flatMap((configuration) => {
+    const payloadScope: ReviewReferenceUsageScope =
+      isRecord(configuration.payload) &&
+      configuration.payload.usageScope === "VALIDATION_ONLY"
+        ? "VALIDATION_ONLY"
+        : "PRODUCTION";
+    return recordsFromPayload(configuration.payload).map((record) => ({
       configurationVersionId: configuration.id,
       configurationKey: configuration.configKey,
       configurationVersion: configuration.versionLabel,
@@ -96,6 +115,11 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
         value.toUpperCase(),
       ),
       methodology: text(record.methodology || record.description) || undefined,
+      usageScope: (
+        record.usageScope === "VALIDATION_ONLY"
+          ? "VALIDATION_ONLY"
+          : payloadScope
+      ) as ReviewReferenceUsageScope,
     })).filter((record) =>
       Boolean(
         record.methodKey &&
@@ -103,8 +127,8 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
           record.version &&
           record.allowedConclusions.length,
       ),
-    ),
-  );
+    );
+  });
 
   return { labelReferences, causalityMethods };
 }

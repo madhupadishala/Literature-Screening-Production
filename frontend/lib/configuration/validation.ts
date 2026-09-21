@@ -282,7 +282,21 @@ export function validateConfigurationPayload(
       const eventTerms = Array.isArray(value.eventTerms)
         ? value.eventTerms.map((term) => String(term || "").trim()).filter(Boolean)
         : [];
+      const usageScope = String(
+        value.usageScope ||
+          (isRecord(payload) ? payload.usageScope : "") ||
+          "PRODUCTION",
+      ).trim().toUpperCase();
 
+      if (!["PRODUCTION", "VALIDATION_ONLY"].includes(usageScope)) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].usageScope`,
+            "usageScope must be PRODUCTION or VALIDATION_ONLY.",
+          ),
+        );
+      }
       if (!labelKey) {
         errors.push(issue("error", `records[${index}].labelKey`, "A unique labelKey is required."));
       }
@@ -355,7 +369,21 @@ export function validateConfigurationPayload(
       const conclusions = Array.isArray(value.allowedConclusions)
         ? value.allowedConclusions.map((entry) => String(entry || "").trim()).filter(Boolean)
         : [];
+      const usageScope = String(
+        value.usageScope ||
+          (isRecord(payload) ? payload.usageScope : "") ||
+          "PRODUCTION",
+      ).trim().toUpperCase();
 
+      if (!["PRODUCTION", "VALIDATION_ONLY"].includes(usageScope)) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].usageScope`,
+            "usageScope must be PRODUCTION or VALIDATION_ONLY.",
+          ),
+        );
+      }
       if (!methodKey) {
         errors.push(issue("error", `records[${index}].methodKey`, "A causality methodKey is required."));
       }

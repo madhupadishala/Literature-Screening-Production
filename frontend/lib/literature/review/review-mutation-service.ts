@@ -64,7 +64,7 @@ async function getWorkspaceForUpdate(input: {
   client: PoolClient;
 }) {
   const result = await input.client.query(
-    `SELECT workspace.*, package.package_key
+    `SELECT workspace.*, package.package_key, package.product_context
      FROM literature_review_workspaces workspace
      JOIN literature_packages package
        ON package.id = workspace.package_id
@@ -89,6 +89,7 @@ async function getWorkspaceForUpdate(input: {
     mr_review_status: string;
     patient_segments: unknown;
     package_key: string;
+    product_context: unknown;
   };
 }
 
@@ -387,8 +388,16 @@ export async function saveLabelAssessments(input: {
 
       if (assessment.conclusion === "UNRESOLVED") continue;
 
+      const workspaceProductContext = isRecord(workspace.product_context)
+        ? workspace.product_context
+        : {};
+      const allowedScope =
+        workspaceProductContext.validationFixture === true
+          ? "VALIDATION_ONLY"
+          : "PRODUCTION";
       const reference = referenceData.labelReferences.find(
         (candidate) =>
+          candidate.usageScope === allowedScope &&
           candidate.labelKey === assessment.referenceLabelKey &&
           candidate.version === assessment.referenceLabelVersion,
       );
@@ -573,8 +582,16 @@ export async function saveCausalityAssessments(input: {
 
       if (assessment.conclusion === "UNRESOLVED" && !assessment.methodKey) continue;
 
+      const productContext = isRecord(workspace.product_context)
+        ? workspace.product_context
+        : {};
+      const allowedScope =
+        productContext.validationFixture === true
+          ? "VALIDATION_ONLY"
+          : "PRODUCTION";
       const method = referenceData.causalityMethods.find(
         (candidate) =>
+          candidate.usageScope === allowedScope &&
           candidate.methodKey === assessment.methodKey &&
           candidate.version === assessment.methodVersion,
       );
