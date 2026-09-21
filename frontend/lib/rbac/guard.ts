@@ -71,11 +71,11 @@ export async function requireModulePermission(
   if (!decision.allowed) {
     await getPostgresPool()
       .query(
-        \`INSERT INTO audit_events (
+        `INSERT INTO audit_events (
            tenant_id, actor_id, event_type, event_category, outcome,
            request_id, source_ip, details
          ) VALUES ($1, $2, 'AUTHORIZATION_DENIED', 'SECURITY_ENTITLEMENT', 'denied',
-           $3, $4, $5::jsonb)\`,
+           $3, $4, $5::jsonb)`,
         [
           principal.tenantId,
           principal.userId,
@@ -96,7 +96,7 @@ export async function requireModulePermission(
       .catch(() => undefined);
 
     throw new AuthorizationError(
-      \`Module access denied for \${moduleKey}: \${decision.reason}\`,
+      `Module access denied for ${moduleKey}: ${decision.reason}`,
       403,
     );
   }
