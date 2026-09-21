@@ -8,9 +8,25 @@ import {
   createSafetyCaseShell,
   type CreateSafetyCaseInput,
 } from "@/lib/safety/common/safety-case-service";
+import { listCaseWorklist } from "@/lib/safety/case-processing/case-processing-service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+export async function GET(request: NextRequest): Promise<Response> {
+  try {
+    const principal = await requireModulePermission(
+      request,
+      NEXUS_MODULES.CASE_PROCESSING,
+      PERMISSIONS.CASE_VIEW,
+    );
+    const limit = Number(request.nextUrl.searchParams.get("limit") || "200");
+    const records = await listCaseWorklist({ principal, limit });
+    return Response.json({ success: true, data: { records } });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
+}
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
