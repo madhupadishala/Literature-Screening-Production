@@ -11,7 +11,7 @@ import {
   type EntitlementStatus,
 } from "@/lib/nexus/entitlement-types";
 import { isNexusModuleKey } from "@/lib/nexus/modules";
-import { PLATFORM_PERMISSIONS } from "@/lib/nexus/platform-rbac";
+import { PLATFORM_PERMISSIONS } from "@/lib/nexus/platform-permissions";
 import { requirePermission, requirePlatformPermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 
