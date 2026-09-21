@@ -99,7 +99,7 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
   });
 
   const causalityMethods = active.causalityMethods.flatMap((configuration) => {
-    const payloadScope =
+    const payloadScope: ReviewReferenceUsageScope =
       isRecord(configuration.payload) &&
       configuration.payload.usageScope === "VALIDATION_ONLY"
         ? "VALIDATION_ONLY"
@@ -115,10 +115,11 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
         value.toUpperCase(),
       ),
       methodology: text(record.methodology || record.description) || undefined,
-      usageScope:
+      usageScope: (
         record.usageScope === "VALIDATION_ONLY"
           ? "VALIDATION_ONLY"
-          : payloadScope,
+          : payloadScope
+      ) as ReviewReferenceUsageScope,
     })).filter((record) =>
       Boolean(
         record.methodKey &&
