@@ -248,14 +248,15 @@ async function insertTest(
   );
 }
 
-async function persistDraft(input: {
+export async function persistSafetyIntakeDraftInTransaction(input: {
   client: PoolClient;
   principal: RequestPrincipal;
   draft: IntakeDraft;
   reason: string;
 }): Promise<SafetyIntakeSummary> {
+  const reason = requireReason(input.reason);
   const sourceId = randomUUID();
-  const source = await input.client.query<{ id: string }>(
+  const source = await input.client.query<{ id: string; source_sha256: string }>(
     `INSERT INTO safety_sources (
        id, tenant_id, source_key, source_type, source_system,
        external_reference, received_at, country_code, language_code,
@@ -265,9 +266,8 @@ async function persistDraft(input: {
      )
      ON CONFLICT (tenant_id, source_key)
      DO UPDATE SET
-       status = 'NORMALIZED',
-       updated_at = now()
-     RETURNING id`,
+       updated_at = safety_sources.updated_at
+     RETURNING id, source_sha256`,
     [
       sourceId,
       input.principal.tenantId,
@@ -285,6 +285,12 @@ async function persistDraft(input: {
   );
 
   const persistedSourceId = source.rows[0].id;
+  if (source.rows[0].source_sha256 !== input.draft.source.sourceSha256) {
+    throw new Error(
+      "The idempotency key/source identity was already used with different source content.",
+    );
+  }
+
   const intakeId = randomUUID();
   const intake = await input.client.query<{ id: string }>(
     `INSERT INTO safety_intake_records (
@@ -364,7 +370,7 @@ async function persistDraft(input: {
           sourceType: input.draft.source.sourceType,
           sourceRecordKey: input.draft.intake.sourceRecordKey,
           lineageSha256: input.draft.intake.lineageSha256,
-          reason: input.reason,
+          reason,
         }),
       ],
     );
@@ -376,6 +382,32 @@ async function persistDraft(input: {
     persistedIntakeId,
     !newlyCreated,
   );
+}
+
+export async function ingestSafetyIntakeDraft(input: {
+  principal: RequestPrincipal;
+  draft: IntakeDraft;
+  reason: string;
+}): Promise<SafetyIntakeSummary> {
+  const reason = requireReason(input.reason);
+  const client = await getPostgresPool().connect();
+
+  try {
+    await client.query("BEGIN");
+    const persisted = await persistSafetyIntakeDraftInTransaction({
+      client,
+      principal: input.principal,
+      draft: input.draft,
+      reason,
+    });
+    await client.query("COMMIT");
+    return persisted;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 
 export async function importLiteratureIntakeExport(input: {
@@ -425,7 +457,7 @@ export async function importLiteratureIntakeExport(input: {
       payload: row.payload,
     });
 
-    const persisted = await persistDraft({
+    const persisted = await persistSafetyIntakeDraftInTransaction({
       client,
       principal: input.principal,
       draft,
