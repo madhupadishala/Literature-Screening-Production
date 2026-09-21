@@ -7,10 +7,10 @@ export default function LiteratureSearchPage() {
     <main className="app-shell">
       <Navigation />
       <InvestorDemoHeader
-        eyebrow="RBAC-CONTROLLED LITERATURE UTILITY"
+        eyebrow="RBAC-CONTROLLED SEARCH UTILITY"
         title="Enterprise Literature Search"
-        subtitle="Search by exact PMID, DOI, Brand, Generic, INN, API, Salt, Company Product ID, WHODrug ID, or Boolean query. Preserve selected results as standalone Validation Packages, or create the Validation Package and hand the governed article to Hits in one action."
-        status="Available to Authorized Users"
+        subtitle="Use this surface either for non-production testing / validation or for an explicitly declared manual production search. Test searches remain outside the PV workflow unless a selected article is deliberately promoted to Hits."
+        status="Execution purpose must be explicit"
       />
       <AdHocSearchWorkspace />
 
