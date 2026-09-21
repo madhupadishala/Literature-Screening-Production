@@ -231,12 +231,27 @@ export async function savePatientSegmentation(input: {
     }
 
     await client.query(
+      `DELETE FROM literature_label_assessments
+       WHERE tenant_id = $1 AND review_workspace_id = $2`,
+      [input.principal.tenantId, workspace.id],
+    );
+    await client.query(
+      `DELETE FROM literature_causality_assessments
+       WHERE tenant_id = $1 AND review_workspace_id = $2`,
+      [input.principal.tenantId, workspace.id],
+    );
+
+    const downstreamStatus = patients.length === 0 ? "NOT_APPLICABLE" : "PENDING";
+
+    await client.query(
       `UPDATE literature_review_workspaces
        SET patient_segments = $3::jsonb,
            patient_count = $4,
            patient_segmentation_status = 'COMPLETE',
+           labeling_status = $5,
+           causality_status = $5,
            status = 'IN_REVIEW',
-           updated_by = $5,
+           updated_by = $6,
            updated_at = now()
        WHERE id = $1 AND tenant_id = $2`,
       [
@@ -244,6 +259,7 @@ export async function savePatientSegmentation(input: {
         input.principal.tenantId,
         JSON.stringify(patients),
         patients.length,
+        downstreamStatus,
         input.principal.userId,
       ],
     );
@@ -281,6 +297,8 @@ export async function savePatientSegmentation(input: {
           reviewWorkspaceId: workspace.id,
           patientCount: patients.length,
           patientSegmentKeys: patients.map((patient) => patient.patientSegmentKey),
+          downstreamAssessmentsReset: true,
+          downstreamStatus,
           reason: audit.reason,
         }),
       ],
@@ -678,16 +696,31 @@ export async function saveMedicalReview(input: {
     if (workspace.patient_segmentation_status !== "COMPLETE") {
       throw new Error("Medical Review requires completed patient segmentation.");
     }
-    if (
-      ["NOT_CONFIGURED", "PENDING"].includes(workspace.labeling_status) ||
-      ["NOT_CONFIGURED", "PENDING"].includes(workspace.causality_status)
-    ) {
-      throw new Error(
-        "Medical Review requires governed labeling and causality assessment before finalization.",
-      );
+    const patientCount = workspace.patient_count || 0;
+
+    if (input.status === "APPROVED") {
+      if (patientCount < 1) {
+        throw new Error("APPROVED Medical Review requires at least one patient segment.");
+      }
+      if (
+        ["NOT_CONFIGURED", "PENDING", "NOT_APPLICABLE"].includes(workspace.labeling_status) ||
+        ["NOT_CONFIGURED", "PENDING", "NOT_APPLICABLE"].includes(workspace.causality_status)
+      ) {
+        throw new Error(
+          "APPROVED Medical Review requires governed labeling and causality assessment.",
+        );
+      }
     }
-    if (input.status === "APPROVED" && (workspace.patient_count || 0) < 1) {
-      throw new Error("APPROVED Medical Review requires at least one patient segment.");
+
+    if (input.status === "EXCLUDED" && patientCount === 0) {
+      if (
+        workspace.labeling_status !== "NOT_APPLICABLE" ||
+        workspace.causality_status !== "NOT_APPLICABLE"
+      ) {
+        throw new Error(
+          "Zero-patient Review exclusion requires labeling and causality to be NOT_APPLICABLE.",
+        );
+      }
     }
 
     const existing = await client.query<{ review_version: number }>(
