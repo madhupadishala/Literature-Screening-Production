@@ -16,6 +16,7 @@ import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessme
 import type { CompanySuspectAssessment } from "@/lib/pharmaceutical-intelligence/types";
 import { assessPVDecisionArchitecture } from "@/lib/pv-decision-intelligence/assessment-engine";
 import { deriveGovernedScreeningDecision } from "@/lib/literature/screening/governed-decision";
+import { governScreeningEvidence } from "@/lib/literature/screening/screening-evidence-governance";
 
 export interface ScreeningAgentResponse extends ScreeningResponse {
   ragContext: RAGMergedContext;
@@ -71,20 +72,25 @@ export class ScreeningAgent {
       });
 
       const parsed = parseScreeningAIResult(completion.content);
-      const countryOfIncidence =
-        parsed.regulatoryEvidence.countryOfIncidenceStatus === "PRESENT"
-          ? parsed.regulatoryEvidence.countryOfIncidence
-          : undefined;
-      const governedSuspectEvidence = parsed.extractedSuspectEvidence.map((evidence) => ({
-        ...evidence,
-        countryOfInterest: evidence.countryOfInterest || countryOfIncidence,
-      }));
-      const pvDecision = assessPVDecisionArchitecture({
+      const governedEvidence = governScreeningEvidence({
+        regulatoryEvidence: parsed.regulatoryEvidence,
         safetyEvidence: parsed.safetyEvidence,
-        detectedEvents: parsed.regulatoryEvidence.clinicalEvents.map((event) => event.event),
+        suspectEvidence: parsed.extractedSuspectEvidence,
+        findings: parsed.findings,
+        reporterIdentifiers: request.article.authors,
+      });
+      const governedSuspectEvidence = governedEvidence.suspectEvidence;
+      const pvDecision = assessPVDecisionArchitecture({
+        safetyEvidence: governedEvidence.safetyEvidence,
+        detectedEvents: governedEvidence.regulatoryEvidence.clinicalEvents.map(
+          (event) => event.event,
+        ),
         detectedSpecialSituations:
-          parsed.safetyEvidence.specialSituation === "PRESENT"
-            ? [parsed.safetyEvidence.specialSituationEvidence || "PV special situation"]
+          governedEvidence.safetyEvidence.specialSituation === "PRESENT"
+            ? [
+                governedEvidence.safetyEvidence.specialSituationEvidence ||
+                  "PV special situation",
+              ]
             : [],
         suspectEvidence: governedSuspectEvidence,
         reporterIdentifiers: request.article.authors,
@@ -131,7 +137,7 @@ export class ScreeningAgent {
         confidence: parsed.confidence,
         metadata: {
           reason: parsed.reason,
-          findingsCount: parsed.findings.length,
+          findingsCount: governedEvidence.findings.length,
           knowledgeContextPackId: ragResponse.context.contextPackId,
           knowledgeCitationIds: ragResponse.context.citations?.map((citation) => citation.citationId) || [],
           configurationSnapshot: runtimeConfiguration.snapshot,
@@ -139,8 +145,12 @@ export class ScreeningAgent {
             companySuspectAssessments[0]?.knowledgeVersion || null,
           patientSafetyAssessment: pvDecision.patientSafety,
           icsrAssessment: pvDecision.icsr,
-          regulatoryEvidence: parsed.regulatoryEvidence,
+          rawRegulatoryEvidence: parsed.regulatoryEvidence,
+          rawSafetyEvidence: parsed.safetyEvidence,
+          regulatoryEvidence: governedEvidence.regulatoryEvidence,
+          safetyEvidence: governedEvidence.safetyEvidence,
           extractedSuspectEvidence: governedSuspectEvidence,
+          evidenceGovernanceCorrections: governedEvidence.corrections,
           companySuspectAssessments,
         },
       });
@@ -151,11 +161,11 @@ export class ScreeningAgent {
         decision: governedDecision,
         confidence: parsed.confidence,
         reason: parsed.reason,
-        findings: parsed.findings,
-        safetyEvidence: parsed.safetyEvidence,
+        findings: governedEvidence.findings,
+        safetyEvidence: governedEvidence.safetyEvidence,
         patientSafetyAssessment: pvDecision.patientSafety,
         icsrAssessment: pvDecision.icsr,
-        regulatoryEvidence: parsed.regulatoryEvidence,
+        regulatoryEvidence: governedEvidence.regulatoryEvidence,
         extractedSuspectEvidence: governedSuspectEvidence,
         screenedAt: new Date().toISOString(),
         workflowStage: "SCREENING_COMPLETED",
