@@ -42,15 +42,16 @@ export function buildE2BR3CasePayload(
     C: {
       ...input.identification,
       primarySources: input.reporters.map((reporter) => ({
+        ...reporter.e2bC2,
         reporterKey: reporter.reporterKey,
         primarySource: reporter.primarySource,
         qualification: reporter.qualification,
         organization: reporter.organization,
         countryCode: reporter.countryCode,
-        ...reporter.e2bC2,
       })),
     },
     D: {
+      ...input.patient.e2bD,
       patientKey: input.patient.patientKey,
       patientReference: input.patient.patientReference,
       sex: input.patient.sex,
@@ -64,9 +65,9 @@ export function buildE2BR3CasePayload(
       pregnancyStatus: input.patient.pregnancyStatus,
       medicalHistory: input.patient.medicalHistory ?? [],
       parentInformation: input.patient.parentInformation ?? {},
-      ...input.patient.e2bD,
     },
     E: input.events.map((event) => ({
+      ...event.e2bE,
       eventKey: event.eventKey,
       reportedTerm: event.reportedTerm,
       meddraTerm: event.meddraTerm,
@@ -79,9 +80,9 @@ export function buildE2BR3CasePayload(
       seriousnessCriteria: event.seriousnessCriteria ?? {},
       medicallyConfirmed: event.medicallyConfirmed,
       countryCode: event.countryCode,
-      ...event.e2bE,
     })),
     F: input.tests.map((test) => ({
+      ...test.e2bF,
       testKey: test.testKey,
       testName: test.testName,
       testDate: test.testDate,
@@ -89,9 +90,9 @@ export function buildE2BR3CasePayload(
       resultUnit: test.resultUnit,
       referenceRange: test.referenceRange,
       comments: test.comments,
-      ...test.e2bF,
     })),
     G: input.products.map((product) => ({
+      ...product.e2bG,
       productKey: product.productKey,
       reportedName: product.reportedName,
       roleCharacterization: product.roleCharacterization,
@@ -104,7 +105,6 @@ export function buildE2BR3CasePayload(
       batchLotNumber: product.batchLotNumber,
       actionTaken: product.actionTaken,
       rechallenge: product.rechallenge ?? {},
-      ...product.e2bG,
     })),
     H: input.narrative,
     nexus: {
