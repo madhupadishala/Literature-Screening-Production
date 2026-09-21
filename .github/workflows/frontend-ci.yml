@@ -68,6 +68,9 @@ jobs:
       - name: Verify Nexus Sprint 1 authorization foundation
         run: npm run nexus:sprint1:verify
 
+      - name: Verify Nexus Sprint 2 common safety backbone
+        run: npm run nexus:sprint2:verify
+
       - name: Build production application
         run: npm run build
 
