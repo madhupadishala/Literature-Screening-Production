@@ -65,6 +65,7 @@ export async function resolveActiveConfigurations(
   return {
     productMaster: first("PRODUCT_MASTER"),
     literatureCalendar: first("LITERATURE_CALENDAR"),
+    searchProfiles: all("SEARCH_PROFILE"),
     clientGuidelines: all("CLIENT_GUIDELINE"),
     outcomeTemplate: first("OUTCOME_TEMPLATE"),
     literatureSources: all("LITERATURE_SOURCE"),
@@ -93,6 +94,11 @@ export function configurationSnapshotPayload(
           version: active.literatureCalendar.versionLabel,
         }
       : null,
+    searchProfiles: active.searchProfiles.map((record) => ({
+      id: record.id,
+      key: record.configKey,
+      version: record.versionLabel,
+    })),
     clientGuidelines: active.clientGuidelines.map((record) => ({
       id: record.id,
       key: record.configKey,

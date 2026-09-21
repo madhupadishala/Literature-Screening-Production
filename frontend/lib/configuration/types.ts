@@ -1,6 +1,7 @@
 export const CONFIGURATION_RESOURCE_TYPES = [
   "PRODUCT_MASTER",
   "LITERATURE_CALENDAR",
+  "SEARCH_PROFILE",
   "CLIENT_GUIDELINE",
   "OUTCOME_TEMPLATE",
   "LITERATURE_SOURCE",
@@ -59,6 +60,7 @@ export interface ConfigurationVersionRecord {
 export interface ActiveTenantConfiguration {
   productMaster: ConfigurationVersionRecord | null;
   literatureCalendar: ConfigurationVersionRecord | null;
+  searchProfiles: ConfigurationVersionRecord[];
   clientGuidelines: ConfigurationVersionRecord[];
   outcomeTemplate: ConfigurationVersionRecord | null;
   literatureSources: ConfigurationVersionRecord[];
