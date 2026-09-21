@@ -141,7 +141,7 @@ function list(values: string[]): string {
 
 function statusClass(value: string): string {
   const normalized = value.toUpperCase();
-  if (["COMPLETE", "APPROVED"].includes(normalized)) return "ok";
+  if (["COMPLETE", "APPROVED", "NOT_APPLICABLE"].includes(normalized)) return "ok";
   if (["NOT_CONFIGURED", "UNRESOLVED", "REVIEW_REQUIRED", "BLOCKED"].includes(normalized)) {
     return "warn";
   }
@@ -465,7 +465,7 @@ export default function ReviewPage() {
       <section className="boundary-note">
         <strong>Governance boundary</strong>
         <span>
-          Screening is article-level. Review / MR is patient-product-event level. Intake remains blocked until Review is complete.
+          Screening is article-level. Review / MR is patient-product-event level. Zero-patient articles make labeling and causality not applicable; Intake remains blocked until an approved Review is complete.
         </span>
       </section>
 
