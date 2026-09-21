@@ -189,3 +189,68 @@ HOLD and INCOMPLETE_FOLLOW_UP create a versioned disposition action but leave `d
 **Status:** Approved
 
 The governed external package contains structured safety data, lineage, document metadata/hashes and assessment evidence. Original uploaded document bytes remain in the controlled source-document store and are not embedded in the handoff JSON.
+
+## DEC-039 — Case Processing owns a separate draft from Intake
+**Status:** Approved
+
+Once a Nexus case is created, processors work on case-owned immutable draft revisions. The original Intake remains the governed source, extraction, triage and disposition record and is not silently rewritten by L2A processing.
+
+## DEC-040 — No proprietary safety dictionary content is fabricated
+**Status:** Approved
+
+The zero-cost Nexus baseline does not embed MedDRA or WHODrug content. Reported terms remain verbatim until an authorised coding source is connected. Missing licensed coding produces a governed coding-review requirement rather than a fabricated code.
+
+## DEC-041 — Case intelligence remains assistive
+**Status:** Approved
+
+Completeness, seriousness support, coding review, causality support, expectedness support and narrative drafting may be suggested by Nexus. Human users create the regulated assessment and narrative decisions.
+
+## DEC-042 — Case draft, assessment and narrative history is append-only
+**Status:** Approved
+
+Every material case edit creates a new case-draft revision or assessment/narrative version. Database triggers prohibit update/delete of regulated case history rows.
+
+## DEC-043 — QC and Medical Review approvals are bound to draft revision
+**Status:** Approved
+
+A QC or Medical Review approval applies only to the exact case draft revision reviewed. Any subsequent material case revision requires a new review cycle before finalization.
+
+## DEC-044 — A system narrative is not a final human narrative
+**Status:** Approved
+
+SOURCE_FACTS and SYSTEM_DRAFT narratives are assistive history. QC submission and finalization require a human-authored/reviewed narrative stage such as PROCESSOR, QC or MEDICAL_REVIEW.
+
+## DEC-045 — Finalization is an atomic immutable version transition
+**Status:** Approved
+
+Finalization evaluates the current case, creates an immutable E2B(R3)-aware safety_case_version and marks the operational case FINAL within one transaction. Partial finalization is not permitted.
+
+## DEC-046 — Follow-up reopens processing without rewriting prior case versions
+**Status:** Approved
+
+A follow-up Intake linked to an existing Nexus case may reopen operational processing. Previous immutable case versions remain unchanged; later finalization creates a FOLLOW_UP case version.
+
+## DEC-047 — Case Evidence Packages preserve the complete governed decision chain
+**Status:** Approved
+
+The Case Evidence Package combines source/Intake history, extraction, validity/triage, duplicate review, disposition, draft revisions, assessments, narrative versions, review actions, queries, finalization checks, workflow and final case version hashes.
+
+## DEC-048 — Raw uploaded files are referenced by metadata and hashes, not embedded in evidence JSON
+**Status:** Approved
+
+Original controlled source files remain in their source-document storage. Case Evidence Packages contain document metadata and cryptographic hashes but not raw uploaded file bytes.
+
+## DEC-049 — E2B(R3) mapping output is not a regulatory submission gateway
+**Status:** Approved
+
+Nexus may generate an E2B(R3)-aware structured mapping representation. Sprint 10 does not claim validated regional XML transmission, gateway connectivity or acknowledgement handling.
+
+## DEC-050 — Evidence packages and release exports are append-only
+**Status:** Approved
+
+Generated evidence packages and case exports cannot be edited or deleted in place. Corrections produce new controlled versions/artifacts.
+
+## DEC-051 — Sprint 10 is a functional release-candidate boundary, not validation approval
+**Status:** Approved
+
+Passing the Sprint 10 build and golden-case quality gate completes the planned functional Nexus implementation. Formal regulated production hand-off remains subject to validation, security, infrastructure qualification, UAT and controlled release evidence.
