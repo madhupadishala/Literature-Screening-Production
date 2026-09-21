@@ -305,7 +305,7 @@ export default function IntakePage() {
 
       <section className={styles.hero}>
         <div>
-          <span className={styles.kicker}>Nexus Intake · Sprint 4</span>
+          <span className={styles.kicker}>Nexus Intake · Safety Operations</span>
           <h1>Source Review & Extraction Workspace</h1>
           <p>
             Review the original safety source beside structured Nexus data. Extraction
