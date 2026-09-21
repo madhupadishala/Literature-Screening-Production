@@ -27,6 +27,14 @@ function safeKey(value: string, fallback: string): string {
   return normalized || fallback;
 }
 
+function patientSex(value: unknown): SafetyPatientDraft["sex"] | undefined {
+  const sex = text(value)?.toUpperCase();
+  if (sex === "MALE" || sex === "FEMALE" || sex === "UNKNOWN" || sex === "NOT_SPECIFIED") {
+    return sex;
+  }
+  return undefined;
+}
+
 function patientDrafts(reviewAssessment: Record<string, unknown>): SafetyPatientDraft[] {
   const segments = array(reviewAssessment.patient_segments);
   return segments.map((segmentValue, index) => {
@@ -40,7 +48,7 @@ function patientDrafts(reviewAssessment: Record<string, unknown>): SafetyPatient
     return {
       patientKey: safeKey(key, `patient-${index + 1}`),
       patientReference: text(segment.patientReference) || text(segment.patient_reference),
-      sex: text(segment.sex)?.toUpperCase() as SafetyPatientDraft["sex"],
+      sex: patientSex(segment.sex),
       ageValue:
         typeof segment.age === "number"
           ? segment.age
@@ -57,7 +65,14 @@ function patientDrafts(reviewAssessment: Record<string, unknown>): SafetyPatient
 
 function productRole(value: unknown): ProductRole {
   const role = text(value)?.toUpperCase();
-  if (role === "SUSPECT" || role === "INTERACTING" || role === "CONCOMITANT") return role;
+  if (
+    role === "SUSPECT" ||
+    role === "INTERACTING" ||
+    role === "CONCOMITANT" ||
+    role === "DRUG_NOT_ADMINISTERED"
+  ) {
+    return role;
+  }
   return "UNSPECIFIED";
 }
 
