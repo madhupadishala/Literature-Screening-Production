@@ -66,6 +66,12 @@ export async function createSafetyCaseVersion(input: {
     if (!safetyCase) throw new Error("Safety case was not found in the active tenant.");
 
     const nextVersion = Number(safetyCase.current_version) + 1;
+    if (nextVersion === 1 && input.versionType !== "INITIAL") {
+      throw new Error("The first case version must use versionType INITIAL.");
+    }
+    if (nextVersion > 1 && input.versionType === "INITIAL") {
+      throw new Error("INITIAL may only be used for the first case version.");
+    }
     if (payload.nexus.version !== nextVersion) {
       throw new Error(
         "Case payload version does not match the next immutable case version.",
