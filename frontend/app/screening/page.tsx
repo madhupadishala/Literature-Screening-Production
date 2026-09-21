@@ -25,6 +25,7 @@ export type ScreeningArticle = {
   intake_export_id?: string;
   review_version: number;
   execution_status: "ready" | "completed" | "failed";
+  context_stage: "HITS_APPROVED" | "SCREENING_AI";
   pmid: string;
   title: string;
   journal: string;
@@ -83,6 +84,10 @@ function normalizeArticle(input: unknown): ScreeningArticle {
   const reviewStatus = stringValue(raw.reviewStatus, "pending");
   const executionStatus = stringValue(raw.executionStatus, "ready") as
     "ready" | "completed" | "failed";
+  const contextStage =
+    stringValue(raw.contextStage) === "SCREENING_AI"
+      ? "SCREENING_AI"
+      : "HITS_APPROVED";
   const product = stringValue(raw.productName, "Not identified");
   const passedFindings = findings
     .filter((finding) => finding.passed === true)
@@ -111,6 +116,10 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     : [];
   const confirmedCompanyProducts = companyAssessments
     .filter((assessment) => assessment.conclusion === "CONFIRMED")
+    .map((assessment) => stringValue(assessment.reportedProduct))
+    .filter(Boolean);
+  const matchedCompanyProducts = companyAssessments
+    .filter((assessment) => assessment.productMatched === true)
     .map((assessment) => stringValue(assessment.reportedProduct))
     .filter(Boolean);
   const companyApplicabilityUnresolved = companyAssessments.some(
@@ -146,6 +155,9 @@ function normalizeArticle(input: unknown): ScreeningArticle {
   const coSuspects = allSuspects.filter(
     (value) => !confirmedCompanySet.has(value.toLowerCase()),
   );
+  const upstreamHitsDetectedEvents = Array.isArray(raw.upstreamHitsDetectedEvents)
+    ? raw.upstreamHitsDetectedEvents.map((event) => stringValue(event)).filter(Boolean)
+    : [];
   const clinicalEvents = clinicalEventRecords
     .map((event) => stringValue(event.event))
     .filter(Boolean);
@@ -191,6 +203,7 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     intake_export_id: stringValue(raw.intakeExportId) || undefined,
     review_version: Number(raw.reviewVersion || 0),
     execution_status: executionStatus,
+    context_stage: contextStage,
     pmid: stringValue(raw.pmid, "—"),
     title: stringValue(raw.title, "—"),
     journal: stringValue(raw.journal, "—"),
@@ -200,7 +213,10 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     primary_author:
       Array.isArray(raw.authors) && raw.authors.length > 0 ? stringValue(raw.authors[0], "—") : "—",
     confidence_score: Number(raw.confidence || 0) / 100,
-    hits_status: "completed",
+    hits_status:
+      contextStage === "HITS_APPROVED"
+        ? "Approved Hits context"
+        : "Screening AI completed",
     screening_status:
       reviewStatus === "approved"
         ? "completed"
@@ -212,9 +228,13 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     company_suspect_drugs:
       confirmedCompanyProducts.length > 0
         ? confirmedCompanyProducts
-        : companyApplicabilityUnresolved
-          ? ["Company applicability unresolved"]
-          : ["None confirmed"],
+        : matchedCompanyProducts.length > 0 && companyApplicabilityUnresolved
+          ? matchedCompanyProducts.map(
+              (productName) => `${productName} (Product Master matched; COI unresolved)`,
+            )
+          : companyApplicabilityUnresolved
+            ? ["Company applicability unresolved"]
+            : ["None confirmed"],
     active_mah: activeMah,
     publication_classification: stringValue(
       regulatoryEvidence.publicationClassification,
@@ -232,11 +252,13 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     clinical_events:
       clinicalEvents.length
         ? clinicalEvents
-        : eventEvidence
-          ? [eventEvidence]
-          : passedFindings.length
-            ? passedFindings
-            : ["Not identified"],
+        : contextStage === "HITS_APPROVED" && upstreamHitsDetectedEvents.length
+          ? upstreamHitsDetectedEvents
+          : eventEvidence
+            ? [eventEvidence]
+            : passedFindings.length
+              ? passedFindings
+              : ["Not identified"],
     special_situations:
       safetyEvidence.specialSituation === "PRESENT"
         ? [specialSituationEvidence || "Special situation identified"]
@@ -250,8 +272,14 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     patient_identification_pii:
       piiStatus === "PRESENT" ? "Yes" : piiStatus === "ABSENT" ? "No" : "Uncertain",
     coi: coiStatus === "PRESENT" ? "Yes" : coiStatus === "ABSENT" ? "No" : "Uncertain",
-    screening_decision: decision,
-    screening_reasoning: stringValue(raw.reason, "Manual review required."),
+    screening_decision:
+      contextStage === "HITS_APPROVED" && executionStatus === "ready"
+        ? "AWAITING_AI"
+        : decision,
+    screening_reasoning:
+      contextStage === "HITS_APPROVED" && executionStatus === "ready"
+        ? "Approved Hits evidence is carried forward for context. Screening AI has not run yet."
+        : stringValue(raw.reason, "Manual review required."),
     evidence_sentence:
       findings
         .map((finding) => stringValue(finding.comment))
@@ -343,8 +371,13 @@ export default function ScreeningPage() {
     });
   }, [articles, search]);
 
+  const awaitingAiCount = articles.filter(
+    (article) => article.execution_status === "ready",
+  ).length;
   const awaitingReviewCount = articles.filter(
-    (article) => article.screening_status === "ready",
+    (article) =>
+      article.execution_status === "completed" &&
+      article.screening_status === "ready",
   ).length;
 
   async function generateDownstreamOutput(reason: string) {
@@ -468,7 +501,8 @@ export default function ScreeningPage() {
       />
 
       <section className="metrics-grid">
-        <Metric label="Total Screening Results" value={articles.length} />
+        <Metric label="Screening Worklist Items" value={articles.length} />
+        <Metric label="Awaiting Screening AI" value={awaitingAiCount} tone="warning" />
         <Metric label="Awaiting Human Review" value={awaitingReviewCount} tone="warning" />
         <Metric label="Completed Reviews" value={completedCount} tone="success" />
         <Metric label="Downstream Outputs" value={outputCount} tone="primary" />
@@ -487,7 +521,7 @@ export default function ScreeningPage() {
             <p>
               {loading
                 ? "Loading governed screening results…"
-                : `${awaitingReviewCount} article(s) awaiting review; ${outputCount} downstream output(s) ready`}
+                : `${awaitingAiCount} awaiting Screening AI; ${awaitingReviewCount} awaiting human review; ${outputCount} downstream output(s) ready`}
             </p>
           </div>
 
@@ -548,7 +582,7 @@ export default function ScreeningPage() {
                 <th>Product</th>
                 <th>Country</th>
                 <th>Reporter</th>
-                <th>Company Suspect</th>
+                <th>Company Product Context</th>
                 <th>Active MAH</th>
                 <th>Clinical Event</th>
                 <th>Seriousness</th>
