@@ -65,6 +65,9 @@ jobs:
       - name: Verify governed Screening-to-Intake handoff
         run: npm run intake:verify
 
+      - name: Verify Nexus Sprint 1 authorization foundation
+        run: npm run nexus:sprint1:verify
+
       - name: Build production application
         run: npm run build
 
