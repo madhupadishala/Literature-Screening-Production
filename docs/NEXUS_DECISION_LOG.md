@@ -49,3 +49,28 @@ TheClinixAI Control Plane authority is stored in `platform_role_assignments`, in
 **Status:** Approved
 
 Clients may read their own licensed modules. TheClinixAI platform-authorized users may inspect and change a target tenant's entitlements through the platform API with a mandatory change reason and audit history. Platform administrators do not need to become operational members of every client tenant to manage licensing.
+
+## DEC-011 — Literature is an upstream safety source
+**Status:** Approved
+
+Literature produces governed source evidence and downstream Intake exports. The common safety backbone owns Intake and Case Processing records; Literature tables are not repurposed as the case database.
+
+## DEC-012 — Patient identity is scoped to the intake/case context
+**Status:** Approved
+
+Nexus does not infer a global patient identity across unrelated safety cases. Patient records remain scoped to the regulated source/intake/case lineage unless a later governed process explicitly establishes a relationship.
+
+## DEC-013 — Safety case versions are immutable
+**Status:** Approved
+
+A case update creates a new `safety_case_versions` snapshot with deterministic SHA-256 content hashing and a mandatory change reason. Prior versions are never overwritten.
+
+## DEC-014 — E2B(R3) sections remain explicit inside the internal case snapshot
+**Status:** Approved
+
+The internal case snapshot preserves explicit C/D/E/F/G/H regulatory sections while Nexus workflow state, assignments and review-task metadata remain outside the immutable E2B-oriented payload.
+
+## DEC-015 — Safety evidence is linked, not silently copied
+**Status:** Approved
+
+The common safety layer records source lineage and evidence links back to governed upstream artifacts. Derived records must retain the originating source/export identifiers and hashes needed for traceability.
