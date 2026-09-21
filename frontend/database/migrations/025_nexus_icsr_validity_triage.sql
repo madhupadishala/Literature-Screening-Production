@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS safety_triage_assessments (
 
   UNIQUE (tenant_id, intake_record_id, assessment_version),
 
-  CONSTRAINT safety_triage_minimum_criteria_object
-    CHECK (jsonb_typeof(minimum_criteria) = 'object'),
+  CONSTRAINT safety_triage_minimum_criteria_array
+    CHECK (jsonb_typeof(minimum_criteria) = 'array'),
   CONSTRAINT safety_triage_human_minimum_criteria_array
     CHECK (jsonb_typeof(human_minimum_criteria) = 'array'),
   CONSTRAINT safety_triage_system_snapshot_object
