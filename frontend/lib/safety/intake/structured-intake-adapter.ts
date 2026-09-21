@@ -1,5 +1,5 @@
 import { canonicalSha256 } from "../common/canonical-json";
-import type { IntakeDraft } from "../common/safety-types";
+import { isSafetySourceType, type IntakeDraft } from "../common/safety-types";
 import { validateIntakeDraft } from "../common/safety-validation";
 import type { StructuredIntakeSubmission } from "./source-submission-types";
 
@@ -22,6 +22,9 @@ export function structuredSubmissionToIntakeDraft(
 ): IntakeDraft {
   const idempotencyKey = requiredText(submission.idempotencyKey, "idempotencyKey");
   const sourceSystem = requiredText(submission.sourceSystem, "sourceSystem");
+  if (!isSafetySourceType(submission.sourceType)) {
+    throw new Error("A valid sourceType is required.");
+  }
   const receivedAt = requiredText(submission.receivedAt, "receivedAt");
   if (!Number.isFinite(new Date(receivedAt).getTime())) {
     throw new Error("receivedAt must be a valid ISO date/time.");
