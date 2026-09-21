@@ -149,3 +149,43 @@ A valid finalised triage routes the Intake to DUPLICATE_REVIEW. Duplicate/follow
 **Status:** Approved
 
 Every finalised triage creates a new immutable assessment version. Reassessment after new information preserves prior decisions and rationale.
+
+## DEC-031 — Every valid ICSR enters duplicate/follow-up review
+**Status:** Approved
+
+A valid finalised triage outcome routes to a dedicated DUPLICATE_REVIEW task. Duplicate/follow-up review must complete before a valid Intake can reach final disposition.
+
+## DEC-032 — Duplicate scores are explainable suggestions, never final decisions
+**Status:** Approved
+
+The deterministic matcher stores score factors and evidence. A score may rank a candidate but cannot automatically classify an Intake as DUPLICATE or FOLLOW_UP.
+
+## DEC-033 — Follow-up and duplicate are distinct regulated relationships
+**Status:** Approved
+
+FOLLOW_UP represents new information related to an existing case. DUPLICATE represents repeated reporting of the same case information. Nexus stores `case_relationship` separately from `duplicate_status`.
+
+## DEC-034 — Intake disposition is server-policy controlled
+**Status:** Approved
+
+Allowed dispositions are derived from validity, triage, duplicate-review state, case relationship and tenant entitlements. The client cannot enable CREATE_NEXUS_CASE or EXPORT_EXTERNAL by presentation logic alone.
+
+## DEC-035 — Nexus Intake standalone ends at governed external handoff
+**Status:** Approved
+
+Tenants without Case Processing may complete Intake/Triage/Duplicate review and generate a hash-locked Nexus Safety JSON handoff package. This does not represent live transmission to a third-party safety database.
+
+## DEC-036 — Case creation and disposition are atomic
+**Status:** Approved
+
+CREATE_NEXUS_CASE uses the same transaction as the final Intake disposition. Failure in either operation rolls back the entire action.
+
+## DEC-037 — HOLD is non-terminal
+**Status:** Approved
+
+HOLD and INCOMPLETE_FOLLOW_UP create a versioned disposition action but leave `disposition_status = ON_HOLD`. The workflow may continue after new information is received.
+
+## DEC-038 — External handoff packages exclude raw source bytes
+**Status:** Approved
+
+The governed external package contains structured safety data, lineage, document metadata/hashes and assessment evidence. Original uploaded document bytes remain in the controlled source-document store and are not embedded in the handoff JSON.
