@@ -16,6 +16,7 @@ type ModuleKey =
 const modules: Array<{ label: string; path: string; moduleKey?: ModuleKey }> = [
   { label: "Dashboard", path: "/" },
   { label: "Intake", path: "/intake", moduleKey: "INTAKE" },
+  { label: "Cases", path: "/cases", moduleKey: "CASE_PROCESSING" },
   { label: "Search", path: "/literature-search", moduleKey: "LITERATURE" },
   { label: "Workflow", path: "/workflow", moduleKey: "LITERATURE" },
   { label: "Hits", path: "/hits", moduleKey: "LITERATURE" },
