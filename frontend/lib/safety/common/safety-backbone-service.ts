@@ -30,6 +30,13 @@ export interface SafetyIntakeSummary {
   intakeKey: string;
   sourceId: string;
   sourceType: string;
+  sourceSystem: string;
+  intakeChannel: string;
+  priority: string;
+  countryCode: string | null;
+  sourceReviewStatus: string;
+  extractionStatus: string | null;
+  pendingSuggestionCount: number;
   status: string;
   validityStatus: string;
   duplicateStatus: string;
@@ -54,6 +61,13 @@ function summary(row: Record<string, unknown>, reused: boolean): SafetyIntakeSum
     intakeKey: String(row.intake_key),
     sourceId: String(row.source_id),
     sourceType: String(row.source_type),
+    sourceSystem: String(row.source_system || ""),
+    intakeChannel: String(row.intake_channel || ""),
+    priority: String(row.priority || "NORMAL"),
+    countryCode: row.country_code ? String(row.country_code) : null,
+    sourceReviewStatus: String(row.source_review_status || "NOT_STARTED"),
+    extractionStatus: row.extraction_status ? String(row.extraction_status) : null,
+    pendingSuggestionCount: Number(row.pending_suggestion_count || 0),
     status: String(row.status),
     validityStatus: String(row.validity_status),
     duplicateStatus: String(row.duplicate_status),
@@ -72,7 +86,22 @@ async function fetchSummary(
   reused: boolean,
 ): Promise<SafetyIntakeSummary> {
   const result = await client.query<Record<string, unknown>>(
-    `SELECT intake.*, source.source_type
+    `SELECT intake.*, source.source_type, source.source_system,
+            (
+              SELECT document.extraction_status
+                FROM safety_source_documents document
+               WHERE document.tenant_id = intake.tenant_id
+                 AND document.intake_record_id = intake.id
+               ORDER BY document.created_at DESC
+               LIMIT 1
+            ) AS extraction_status,
+            (
+              SELECT COUNT(*)
+                FROM safety_extraction_suggestions suggestion
+               WHERE suggestion.tenant_id = intake.tenant_id
+                 AND suggestion.intake_record_id = intake.id
+                 AND suggestion.status = 'PENDING'
+            ) AS pending_suggestion_count
        FROM safety_intake_records intake
        JOIN safety_sources source
          ON source.id = intake.source_id
@@ -515,7 +544,22 @@ export async function listSafetyIntakes(input: {
 }): Promise<SafetyIntakeSummary[]> {
   const limit = Math.max(1, Math.min(input.limit ?? 100, 500));
   const result = await getPostgresPool().query<Record<string, unknown>>(
-    `SELECT intake.*, source.source_type
+    `SELECT intake.*, source.source_type, source.source_system,
+            (
+              SELECT document.extraction_status
+                FROM safety_source_documents document
+               WHERE document.tenant_id = intake.tenant_id
+                 AND document.intake_record_id = intake.id
+               ORDER BY document.created_at DESC
+               LIMIT 1
+            ) AS extraction_status,
+            (
+              SELECT COUNT(*)
+                FROM safety_extraction_suggestions suggestion
+               WHERE suggestion.tenant_id = intake.tenant_id
+                 AND suggestion.intake_record_id = intake.id
+                 AND suggestion.status = 'PENDING'
+            ) AS pending_suggestion_count
        FROM safety_intake_records intake
        JOIN safety_sources source
          ON source.id = intake.source_id
