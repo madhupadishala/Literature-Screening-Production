@@ -74,7 +74,7 @@ assert.doesNotThrow(() =>
 assert.throws(
   () =>
     assertIntakeGenerationGate({
-      workflowState: "SCREENING_COMPLETE",
+      workflowState: "REVIEW_COMPLETE",
       screeningReviewStatus: "approved",
       screeningFinalDecision: "INCLUDE",
       hitsReviewStatus: null,
@@ -88,7 +88,7 @@ assert.throws(
 assert.throws(
   () =>
     assertIntakeGenerationGate({
-      workflowState: "SCREENING_COMPLETE",
+      workflowState: "REVIEW_COMPLETE",
       screeningReviewStatus: "approved",
       screeningFinalDecision: "INCLUDE",
       hitsReviewStatus: "approved",
