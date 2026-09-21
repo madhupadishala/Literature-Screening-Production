@@ -473,8 +473,8 @@ export async function finalizeIntakeDisposition(input: {
     let targetIntakeRecordId: string | null = text(
       intake.matched_intake_record_id,
     );
-    let externalSystem = text(input.request.destinationSystem);
-    let externalCaseReference =
+    const externalSystem = text(input.request.destinationSystem);
+    const externalCaseReference =
       text(input.request.externalCaseReference) ??
       text(intake.matched_external_reference);
     let createdCase: SafetyCaseSummary | null = null;
