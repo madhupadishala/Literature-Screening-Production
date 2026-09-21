@@ -544,6 +544,61 @@ export async function finalizeIntakeDisposition(input: {
       }
     }
 
+    if (
+      input.request.dispositionType === "FOLLOW_UP_EXISTING_CASE" &&
+      targetCaseId
+    ) {
+      const sequence = await client.query<{ next_sequence: number }>(
+        `SELECT COALESCE(MAX(sequence_number), 0) + 1 AS next_sequence
+           FROM safety_case_followup_links
+          WHERE tenant_id = $1 AND case_id = $2`,
+        [input.principal.tenantId, targetCaseId],
+      );
+
+      await client.query(
+        `INSERT INTO safety_case_followup_links (
+           tenant_id, case_id, intake_record_id, sequence_number,
+           status, attached_by
+         ) VALUES ($1,$2,$3,$4,'ATTACHED',$5)
+         ON CONFLICT (tenant_id, intake_record_id)
+         DO NOTHING`,
+        [
+          input.principal.tenantId,
+          targetCaseId,
+          intakeRecordId,
+          Number(sequence.rows[0].next_sequence),
+          input.principal.userId,
+        ],
+      );
+
+      await client.query(
+        `UPDATE safety_cases
+            SET case_status = 'PROCESSING',
+                locked_at = NULL,
+                locked_by = NULL,
+                updated_by = $3,
+                updated_at = now()
+          WHERE tenant_id = $1 AND id = $2`,
+        [input.principal.tenantId, targetCaseId, input.principal.userId],
+      );
+
+      await client.query(
+        `INSERT INTO safety_review_tasks (
+           tenant_id, task_key, entity_type, entity_id, task_type,
+           status, created_by
+         ) VALUES (
+           $1,$2,'CASE',$3,'CASE_PROCESSING','OPEN',$4
+         )
+         ON CONFLICT (tenant_id, task_key) DO NOTHING`,
+        [
+          input.principal.tenantId,
+          `case-followup-processing:${targetCaseId}:${intakeRecordId}`,
+          targetCaseId,
+          input.principal.userId,
+        ],
+      );
+    }
+
     const disposition = await client.query<Record<string, unknown>>(
       `INSERT INTO safety_intake_dispositions (
          tenant_id, intake_record_id, disposition_version, disposition_type,
