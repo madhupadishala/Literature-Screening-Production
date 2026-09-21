@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getPostgresPool } from "@/lib/database/postgres";
+import { activeReviewReferenceData } from "@/lib/literature/review/review-reference-service";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -179,6 +180,8 @@ export interface ReviewWorkspaceDetail extends ReviewWorklistRecord {
   };
   article: Record<string, unknown>;
   screeningResult: Record<string, unknown>;
+  labelReferences: Awaited<ReturnType<typeof activeReviewReferenceData>>["labelReferences"];
+  causalityMethods: Awaited<ReturnType<typeof activeReviewReferenceData>>["causalityMethods"];
 }
 
 export async function getReviewWorkspaceDetail(input: {
@@ -190,6 +193,7 @@ export async function getReviewWorkspaceDetail(input: {
   if (!base) throw new Error("Review workspace was not found in the active tenant.");
 
   const pool = getPostgresPool();
+  const referenceData = await activeReviewReferenceData(input.principal.tenantId);
   const detail = await pool.query<Record<string, unknown>>(
     `SELECT
        workspace.patient_segments,
@@ -274,6 +278,8 @@ export async function getReviewWorkspaceDetail(input: {
       evidence: evidenceText(assessment.evidence),
       rationale: text(assessment.rationale) || undefined,
     })),
+    labelReferences: referenceData.labelReferences,
+    causalityMethods: referenceData.causalityMethods,
     medicalReview: row.review_status
       ? {
           reviewStatus: text(row.review_status),
