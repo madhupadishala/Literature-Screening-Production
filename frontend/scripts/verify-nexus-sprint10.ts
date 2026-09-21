@@ -219,7 +219,8 @@ const workspace = readFileSync(
 assert.equal(workspace.includes('"Evidence & Export"'), true);
 assert.equal(workspace.includes("Generate Case Evidence Package"), true);
 assert.equal(workspace.includes("Generate E2B(R3) Mapping JSON"), true);
-assert.equal(workspace.includes("not regulatory XML transmission"), true);
+assert.equal(workspace.includes("regulatory XML transmission"), true);
+assert.equal(workspace.includes("gateway acknowledgement workflow"), true);
 
 const migrationRegistry = readFileSync(
   path.join(process.cwd(), "lib/database/migration-registry.ts"),
