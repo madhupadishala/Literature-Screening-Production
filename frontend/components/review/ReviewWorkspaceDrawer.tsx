@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type {
   CausalityAssessmentInput,
@@ -90,7 +90,7 @@ export default function ReviewWorkspaceDrawer({ workspaceId, onClose, onUpdated 
   const [mrComments, setMrComments] = useState("");
   const [ackUnresolved, setAckUnresolved] = useState(false);
 
-  async function load() {
+  const load = useCallback(async () => {
     setBusy("load");
     try {
       const response = await fetch("/api/literature/review/" + workspaceId, {
@@ -110,23 +110,14 @@ export default function ReviewWorkspaceDrawer({ workspaceId, onClose, onUpdated 
     } finally {
       setBusy("");
     }
-  }
+  }, [workspaceId]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => void load(), 0);
     return () => window.clearTimeout(timer);
-  }, [workspaceId]);
+  }, [load]);
 
   const pairs = useMemo(() => requiredPairs(segments), [segments]);
-
-  useEffect(() => {
-    if (!labelPair && pairs[0]) {
-      setLabelPair(pairKey(pairs[0].segmentKey, pairs[0].product, pairs[0].event));
-    }
-    if (!causalityPair && pairs[0]) {
-      setCausalityPair(pairKey(pairs[0].segmentKey, pairs[0].product, pairs[0].event));
-    }
-  }, [pairs, labelPair, causalityPair]);
 
   async function post(path: string, body: unknown, key: string) {
     setBusy(key);
@@ -223,11 +214,17 @@ export default function ReviewWorkspaceDrawer({ workspaceId, onClose, onUpdated 
     );
   }
 
+  const effectiveLabelPair =
+    labelPair ||
+    (pairs[0] ? pairKey(pairs[0].segmentKey, pairs[0].product, pairs[0].event) : "");
+  const effectiveCausalityPair =
+    causalityPair ||
+    (pairs[0] ? pairKey(pairs[0].segmentKey, pairs[0].product, pairs[0].event) : "");
   const selectedLabelPair = pairs.find(
-    (pair) => pairKey(pair.segmentKey, pair.product, pair.event) === labelPair,
+    (pair) => pairKey(pair.segmentKey, pair.product, pair.event) === effectiveLabelPair,
   );
   const selectedCausalityPair = pairs.find(
-    (pair) => pairKey(pair.segmentKey, pair.product, pair.event) === causalityPair,
+    (pair) => pairKey(pair.segmentKey, pair.product, pair.event) === effectiveCausalityPair,
   );
 
   if (!detail) {
@@ -479,7 +476,7 @@ export default function ReviewWorkspaceDrawer({ workspaceId, onClose, onUpdated 
           </div>
           <label>
             <span>Patient / Product / Event</span>
-            <select value={labelPair} onChange={(event) => setLabelPair(event.target.value)}>
+            <select value={effectiveLabelPair} onChange={(event) => setLabelPair(event.target.value)}>
               {pairs.map((pair) => (
                 <option
                   key={pairKey(pair.segmentKey, pair.product, pair.event)}
@@ -548,7 +545,7 @@ export default function ReviewWorkspaceDrawer({ workspaceId, onClose, onUpdated 
           </div>
           <label>
             <span>Patient / Product / Event</span>
-            <select value={causalityPair} onChange={(event) => setCausalityPair(event.target.value)}>
+            <select value={effectiveCausalityPair} onChange={(event) => setCausalityPair(event.target.value)}>
               {pairs.map((pair) => (
                 <option
                   key={pairKey(pair.segmentKey, pair.product, pair.event)}
