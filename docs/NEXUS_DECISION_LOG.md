@@ -119,3 +119,33 @@ Sprint 4 verifies that source evidence has been reviewed and structured appropri
 **Status:** Approved
 
 TXT, DOCX and PDF text extraction use local/open-source libraries already in the Nexus stack. Legacy DOC is preserved and fails closed for automated parsing rather than requiring a paid parser.
+
+## DEC-025 — Formal ICSR validity is a human-confirmed decision
+**Status:** Approved
+
+Nexus may recommend whether the four minimum ICSR criteria are present, but a processor explicitly confirms each criterion and the overall validity decision. System and human results are both retained.
+
+## DEC-026 — ICH E2D(R1) minimum-criteria semantics govern Sprint 5
+**Status:** Approved
+
+The Sprint 5 validity gate uses the current ICH E2D(R1) four-minimum-criteria model. An interacting medicinal product is treated as suspect for minimum-criteria purposes. Reporter identifiability is based on qualifying identifiable characteristics rather than hard-coding reporter country as a minimum criterion.
+
+## DEC-027 — Missing minimum criteria route to due-diligence follow-up
+**Status:** Approved
+
+A report missing one or more minimum criteria is not silently discarded. The triage record may remain UNRESOLVED with follow-up required. A true INVALID decision is a separate explicit human decision.
+
+## DEC-028 — Triage outcome is derived from internally consistent human decisions
+**Status:** Approved
+
+The processor confirms evidence, validity, seriousness, special situations, priority and follow-up need. Nexus derives the next triage outcome so contradictory combinations cannot be saved.
+
+## DEC-029 — Sprint 5 completes TRIAGE but does not perform duplicate matching
+**Status:** Approved
+
+A valid finalised triage routes the Intake to DUPLICATE_REVIEW. Duplicate/follow-up matching belongs to Sprint 6. Sprint 5 cannot create a Nexus Case or perform final Intake disposition.
+
+## DEC-030 — Triage assessments are versioned, not overwritten
+**Status:** Approved
+
+Every finalised triage creates a new immutable assessment version. Reassessment after new information preserves prior decisions and rationale.
