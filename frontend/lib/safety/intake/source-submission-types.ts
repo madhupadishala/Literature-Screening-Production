@@ -35,16 +35,28 @@ export interface ManualIntakeSubmission
 export interface ApiIntakeSubmission
   extends Omit<StructuredIntakeSubmission, "intakeChannel"> {}
 
+export const INTAKE_DOCUMENT_CONTENT_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/plain",
+] as const;
+
+export type IntakeDocumentContentType =
+  (typeof INTAKE_DOCUMENT_CONTENT_TYPES)[number];
+
+export function isIntakeDocumentContentType(
+  value: string,
+): value is IntakeDocumentContentType {
+  return (INTAKE_DOCUMENT_CONTENT_TYPES as readonly string[]).includes(value);
+}
+
 export interface DocumentIntakeSubmission {
   requestId: string;
   sourceType: SafetySourceType;
   receivedAt: string;
   fileName: string;
-  contentType:
-    | "application/pdf"
-    | "application/msword"
-    | "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    | "text/plain";
+  contentType: IntakeDocumentContentType;
   contentBase64: string;
   externalReference?: string;
   countryCode?: string;
