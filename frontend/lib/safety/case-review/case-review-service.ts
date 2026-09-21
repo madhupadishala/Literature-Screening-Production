@@ -149,6 +149,51 @@ async function reviewCycle(
   return Number(result.rows[0].cycle || 0);
 }
 
+async function insertReviewerNarrative(input: {
+  client: PoolClient;
+  principal: RequestPrincipal;
+  caseId: string;
+  stage: "QC" | "MEDICAL_REVIEW";
+  narrativeText: string;
+  changeReason: string;
+  sourceRevision: number;
+}): Promise<number> {
+  const narrativeText = input.narrativeText.trim();
+  if (narrativeText.length < 10) {
+    throw new Error("Reviewer narrative must contain at least 10 characters.");
+  }
+
+  const next = await input.client.query<{ next_version: number }>(
+    `SELECT COALESCE(MAX(narrative_version), 0) + 1 AS next_version
+       FROM safety_case_narrative_versions
+      WHERE tenant_id = $1 AND case_id = $2`,
+    [input.principal.tenantId, input.caseId],
+  );
+  const version = Number(next.rows[0].next_version);
+  const sha256 = canonicalSha256({ narrativeText });
+
+  await input.client.query(
+    `INSERT INTO safety_case_narrative_versions (
+       tenant_id, case_id, narrative_version, narrative_stage,
+       narrative_text, source_revision, change_reason,
+       narrative_sha256, created_by
+     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+    [
+      input.principal.tenantId,
+      input.caseId,
+      version,
+      input.stage,
+      narrativeText,
+      input.sourceRevision,
+      input.changeReason,
+      sha256,
+      input.principal.userId,
+    ],
+  );
+
+  return version;
+}
+
 async function insertAction(input: {
   client: PoolClient;
   principal: RequestPrincipal;
@@ -349,6 +394,7 @@ export async function recordQcAction(input: {
   comments: string;
   fieldPath?: string;
   queryText?: string;
+  narrativeText?: string;
 }): Promise<{ reviewCycle: number; caseStatus: string }> {
   const comments = reason(input.comments, "QC comments");
   const client = await getPostgresPool().connect();
@@ -381,6 +427,18 @@ export async function recordQcAction(input: {
       input.caseId,
     );
 
+    const reviewerNarrativeVersion = input.narrativeText
+      ? await insertReviewerNarrative({
+          client,
+          principal: input.principal,
+          caseId: input.caseId,
+          stage: "QC",
+          narrativeText: input.narrativeText,
+          changeReason: comments,
+          sourceRevision: Number(caseRow.current_draft_revision),
+        })
+      : narrative?.narrative_version ?? null;
+
     if (input.action === "QUERY" && (!input.queryText || input.queryText.trim().length < 5)) {
       throw new Error("QC queryText must contain at least 5 characters.");
     }
@@ -393,7 +451,7 @@ export async function recordQcAction(input: {
       reviewCycle: cycle,
       actionType: input.action,
       draftRevision: Number(caseRow.current_draft_revision),
-      narrativeVersion: narrative?.narrative_version ?? null,
+      narrativeVersion: reviewerNarrativeVersion,
       fieldPath: input.fieldPath ?? null,
       comments,
     });
@@ -537,6 +595,7 @@ export async function recordMedicalReviewAction(input: {
   comments: string;
   fieldPath?: string;
   queryText?: string;
+  narrativeText?: string;
 }): Promise<{ reviewCycle: number; caseStatus: string }> {
   const comments = reason(input.comments, "Medical Review comments");
   const client = await getPostgresPool().connect();
@@ -590,6 +649,18 @@ export async function recordMedicalReviewAction(input: {
       input.caseId,
     );
 
+    const reviewerNarrativeVersion = input.narrativeText
+      ? await insertReviewerNarrative({
+          client,
+          principal: input.principal,
+          caseId: input.caseId,
+          stage: "MEDICAL_REVIEW",
+          narrativeText: input.narrativeText,
+          changeReason: comments,
+          sourceRevision: Number(caseRow.current_draft_revision),
+        })
+      : narrative?.narrative_version ?? null;
+
     if (input.action === "QUERY" && (!input.queryText || input.queryText.trim().length < 5)) {
       throw new Error("Medical Review queryText must contain at least 5 characters.");
     }
@@ -602,7 +673,7 @@ export async function recordMedicalReviewAction(input: {
       reviewCycle: cycle,
       actionType: input.action,
       draftRevision: Number(caseRow.current_draft_revision),
-      narrativeVersion: narrative?.narrative_version ?? null,
+      narrativeVersion: reviewerNarrativeVersion,
       fieldPath: input.fieldPath ?? null,
       comments,
     });
