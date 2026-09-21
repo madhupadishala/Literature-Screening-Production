@@ -1,3 +1,42 @@
+CREATE TABLE IF NOT EXISTS platform_role_assignments (
+  user_id uuid PRIMARY KEY REFERENCES application_users(id) ON DELETE CASCADE,
+  role_key text NOT NULL CHECK (role_key IN (
+    'PLATFORM_SUPER_ADMIN',
+    'PLATFORM_SECURITY_ADMIN',
+    'PLATFORM_QA_ADMIN',
+    'PLATFORM_SUPPORT',
+    'PLATFORM_AUDITOR'
+  )),
+  status text NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'disabled')),
+  version integer NOT NULL DEFAULT 1 CHECK (version > 0),
+  updated_by uuid REFERENCES application_users(id) ON DELETE SET NULL,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS platform_role_assignment_history (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL REFERENCES application_users(id) ON DELETE CASCADE,
+  role_key text NOT NULL,
+  status text NOT NULL CHECK (status IN ('active', 'disabled')),
+  version integer NOT NULL CHECK (version > 0),
+  changed_by uuid REFERENCES application_users(id) ON DELETE SET NULL,
+  change_reason text NOT NULL CHECK (length(trim(change_reason)) > 0),
+  changed_at timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (user_id, version)
+);
+
+CREATE INDEX IF NOT EXISTS idx_platform_role_assignments_role_status
+  ON platform_role_assignments (role_key, status);
+
+-- Migrate existing ClinixAI Super Admin identities into the platform scope.
+-- Client roles remain tenant-scoped and receive no platform authority.
+INSERT INTO platform_role_assignments (user_id, role_key, status)
+SELECT DISTINCT m.user_id, 'PLATFORM_SUPER_ADMIN', 'active'
+FROM tenant_memberships m
+WHERE m.role_key = 'CLINIXAI_SUPER_ADMIN'
+ON CONFLICT (user_id) DO NOTHING;
+
 CREATE TABLE IF NOT EXISTS tenant_module_entitlements (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   tenant_id uuid NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
