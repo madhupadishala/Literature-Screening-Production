@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS safety_triage_assessments (
   system_validity_recommendation text NOT NULL
     CHECK (system_validity_recommendation IN ('VALID', 'UNRESOLVED')),
   minimum_criteria jsonb NOT NULL,
+  human_minimum_criteria jsonb NOT NULL,
   system_snapshot jsonb NOT NULL,
 
   human_validity_decision text NOT NULL
@@ -70,6 +71,8 @@ CREATE TABLE IF NOT EXISTS safety_triage_assessments (
 
   CONSTRAINT safety_triage_minimum_criteria_object
     CHECK (jsonb_typeof(minimum_criteria) = 'object'),
+  CONSTRAINT safety_triage_human_minimum_criteria_array
+    CHECK (jsonb_typeof(human_minimum_criteria) = 'array'),
   CONSTRAINT safety_triage_system_snapshot_object
     CHECK (jsonb_typeof(system_snapshot) = 'object'),
   CONSTRAINT safety_triage_seriousness_object
