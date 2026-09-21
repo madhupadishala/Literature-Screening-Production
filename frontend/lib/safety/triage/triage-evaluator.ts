@@ -29,6 +29,15 @@ function nonEmptyObject(value: unknown): boolean {
   );
 }
 
+function numberValue(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string" && value.trim()) {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+}
+
 function criterion(
   key: MinimumCriterionAssessment["key"],
   met: boolean,
@@ -50,10 +59,12 @@ function patientCriterion(
     return Boolean(
       text(item.patient_reference) ||
         text(item.sex) ||
-        typeof item.age_value === "number" ||
+        numberValue(item.age_value) !== null ||
         text(item.age_group) ||
         item.date_of_birth ||
-        nonEmptyObject(item.e2b_d_payload),
+        item.death_date ||
+        numberValue(item.weight_kg) !== null ||
+        numberValue(item.height_cm) !== null,
     );
   });
 
@@ -64,9 +75,8 @@ function patientCriterion(
       ? [
           text(patient.patient_reference) && `Reference: ${text(patient.patient_reference)}`,
           text(patient.sex) && `Sex: ${text(patient.sex)}`,
-          patient.age_value !== null &&
-            patient.age_value !== undefined &&
-            `Age: ${String(patient.age_value)} ${text(patient.age_unit)}`.trim(),
+          numberValue(patient.age_value) !== null &&
+            `Age: ${String(numberValue(patient.age_value))} ${text(patient.age_unit)}`.trim(),
           text(patient.age_group) && `Age group: ${text(patient.age_group)}`,
         ].filter(Boolean) as string[]
       : [],
@@ -260,7 +270,10 @@ function detectSpecialSituations(
   const found = new Set<SpecialSituation>();
 
   const rules: Array<[SpecialSituation, RegExp]> = [
-    ["PREGNANCY", /\bpregnan(?:cy|t)|in[- ]utero\b/i],
+    [
+      "PREGNANCY",
+      /\b(?:pregnant (?:patient|woman|female)|during pregnancy|pregnancy exposure|exposed during pregnancy|in[- ]utero)\b/i,
+    ],
     ["BREASTFEEDING", /\bbreast[- ]?feed(?:ing)?|lactat(?:ion|ing)\b/i],
     ["OVERDOSE", /\boverdos(?:e|ed|ing)\b/i],
     ["OFF_LABEL_USE", /\boff[- ]?label\b/i],
@@ -277,7 +290,7 @@ function detectSpecialSituations(
   }
 
   for (const patient of snapshot.patients) {
-    const age = typeof patient.age_value === "number" ? patient.age_value : null;
+    const age = numberValue(patient.age_value);
     const unit = text(patient.age_unit).toLowerCase();
     const ageGroup = text(patient.age_group).toLowerCase();
 
@@ -297,7 +310,12 @@ function detectSpecialSituations(
       found.add("ELDERLY");
     }
 
-    if (text(patient.pregnancy_status)) {
+    const pregnancyStatus = text(patient.pregnancy_status).toUpperCase();
+    if (
+      ["PREGNANT", "YES", "EXPOSED", "ONGOING_PREGNANCY"].includes(
+        pregnancyStatus,
+      )
+    ) {
       found.add("PREGNANCY");
     }
   }
