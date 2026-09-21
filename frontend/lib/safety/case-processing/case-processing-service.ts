@@ -90,6 +90,9 @@ export interface CaseWorkspace {
   sourceDocuments: Array<Record<string, unknown>>;
   caseVersions: Array<Record<string, unknown>>;
   auditEvents: Array<Record<string, unknown>>;
+  reviewActions: Array<Record<string, unknown>>;
+  queries: Array<Record<string, unknown>>;
+  finalizationChecks: Array<Record<string, unknown>>;
 }
 
 function text(value: unknown): string | undefined {
@@ -662,6 +665,9 @@ export async function getCaseWorkspace(input: {
       sourceDocuments,
       caseVersions,
       auditEvents,
+      reviewActions,
+      queries,
+      finalizationChecks,
     ] = await Promise.all([
       client.query<Record<string, unknown>>(
         `SELECT * FROM safety_intake_records
@@ -756,6 +762,25 @@ export async function getCaseWorkspace(input: {
           String(caseRow.intake_record_id),
         ],
       ),
+      client.query<Record<string, unknown>>(
+        `SELECT * FROM safety_case_review_actions
+          WHERE tenant_id = $1 AND case_id = $2
+          ORDER BY acted_at DESC`,
+        [input.principal.tenantId, caseId],
+      ),
+      client.query<Record<string, unknown>>(
+        `SELECT * FROM safety_case_queries
+          WHERE tenant_id = $1 AND case_id = $2
+          ORDER BY raised_at DESC`,
+        [input.principal.tenantId, caseId],
+      ),
+      client.query<Record<string, unknown>>(
+        `SELECT * FROM safety_case_finalization_checks
+          WHERE tenant_id = $1 AND case_id = $2
+          ORDER BY check_version DESC
+          LIMIT 20`,
+        [input.principal.tenantId, caseId],
+      ),
     ]);
 
     if (!draft.rows[0]) {
@@ -775,6 +800,9 @@ export async function getCaseWorkspace(input: {
       sourceDocuments: sourceDocuments.rows,
       caseVersions: caseVersions.rows,
       auditEvents: auditEvents.rows,
+      reviewActions: reviewActions.rows,
+      queries: queries.rows,
+      finalizationChecks: finalizationChecks.rows,
     };
   } catch (error) {
     await client.query("ROLLBACK").catch(() => undefined);
