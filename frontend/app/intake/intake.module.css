@@ -550,3 +550,29 @@
     min-width: 0;
   }
 }
+
+.sourceLink {
+  display: inline-flex;
+  margin: 0 0 12px;
+  padding: 7px 10px;
+  border: 1px solid #bfdbfe;
+  border-radius: 9px;
+  color: #1d4ed8;
+  background: #eff6ff;
+  font-size: 10px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.sourceLink:hover {
+  background: #dbeafe;
+}
+
+.sourceFrame {
+  width: 100%;
+  height: 360px;
+  margin-bottom: 12px;
+  border: 1px solid #dbe4ef;
+  border-radius: 12px;
+  background: #ffffff;
+}
