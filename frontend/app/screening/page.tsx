@@ -125,13 +125,21 @@ function normalizeArticle(input: unknown): ScreeningArticle {
   const companyApplicabilityUnresolved = companyAssessments.some(
     (assessment) => assessment.conclusion === "UNRESOLVED",
   );
-  const licenceStatuses = companyAssessments
+  const matchedCompanyAssessments = companyAssessments.filter(
+    (assessment) => assessment.productMatched === true,
+  );
+  const licenceAssessmentScope =
+    matchedCompanyAssessments.length > 0
+      ? matchedCompanyAssessments
+      : companyAssessments;
+  const licenceStatuses = licenceAssessmentScope
     .map((assessment) => stringValue(assessment.licenceStatus))
     .filter(Boolean);
   const activeMah: ScreeningArticle["active_mah"] =
     licenceStatuses.includes("ACTIVE")
       ? "ACTIVE"
-      : licenceStatuses.includes("NOT_CONFIGURED")
+      : licenceStatuses.length > 0 &&
+          licenceStatuses.every((status) => status === "NOT_CONFIGURED")
         ? "NOT_CONFIGURED"
         : licenceStatuses.length > 0 &&
             licenceStatuses.every((status) => status === "INACTIVE")
@@ -597,8 +605,20 @@ export default function ScreeningPage() {
               {visibleArticles.map((article) => (
                 <tr key={article.hit_id}>
                   <td>
-                    <span className={`qc-badge ${article.qc_required ? "required" : ""}`}>
-                      {article.qc_required ? "QC" : "Pass"}
+                    <span
+                      className={`qc-badge ${
+                        article.execution_status === "ready"
+                          ? "pending"
+                          : article.qc_required
+                            ? "required"
+                            : ""
+                      }`}
+                    >
+                      {article.execution_status === "ready"
+                        ? "Pending"
+                        : article.qc_required
+                          ? "QC"
+                          : "Pass"}
                     </span>
                   </td>
                   <td className="mono">{article.pmid}</td>
@@ -851,6 +871,11 @@ export default function ScreeningPage() {
         .qc-badge.required {
           color: #92400e;
           background: #fef3c7;
+        }
+
+        .qc-badge.pending {
+          color: #1e40af;
+          background: #dbeafe;
         }
 
         .decision {
