@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
-import { routeErrorResponse } from "@/lib/api/route-error";\nimport { NEXUS_MODULES } from "@/lib/nexus/modules";
+import { routeErrorResponse } from "@/lib/api/route-error";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { listHitsForReview } from "@/lib/literature/hits/hits-review-repository";
 import type { HitsReviewStatus } from "@/lib/literature/hits/hits-review-types";
 import { requireModulePermission } from "@/lib/rbac/guard";
@@ -17,7 +18,10 @@ function reviewStatus(value: string | null): HitsReviewStatus | undefined {
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requireModulePermission(\n      request,\n      NEXUS_MODULES.LITERATURE,\n      PERMISSIONS.SEARCH_HISTORY_VIEW,
+    const principal = await requireModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SEARCH_HISTORY_VIEW,
     );
     const rawLimit = Number(request.nextUrl.searchParams.get("limit") || 250);
     const hits = await listHitsForReview({
