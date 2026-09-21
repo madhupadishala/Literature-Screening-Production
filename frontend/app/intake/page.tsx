@@ -497,7 +497,10 @@ export default function IntakePage() {
                   </Link>
                 ) : null}
                 {selectedId &&
-                display(workspace.intake.duplicate_review_status) === "COMPLETE" ? (
+                (display(workspace.intake.duplicate_review_status) === "COMPLETE" ||
+                  ["FOLLOW_UP_REQUIRED", "NOT_VALID_ICSR", "HOLD_FOR_CLARIFICATION"].includes(
+                    display(workspace.intake.triage_outcome, ""),
+                  )) ? (
                   <Link
                     className={styles.triageLink}
                     href={`/intake/${selectedId}/disposition`}
