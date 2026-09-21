@@ -395,7 +395,7 @@ export default function ScreeningPage() {
       return;
     }
     if (await saveReviewMutation("approved", selected.screening_decision, reason)) {
-      showToast("Screening decision approved. Intake input remains a separate next-stage action.");
+      showToast("Screening decision approved and routed to the Review / MR workspace.");
     }
   }
 
@@ -441,28 +441,6 @@ export default function ScreeningPage() {
     showToast("Screening AI execution completed and routed to human review.");
   }
 
-  async function generateIntakeInput(reason: string) {
-    if (!selected) return;
-    const response = await fetch("/api/literature/intake-input", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ packageId: selected.database_package_id, reason }),
-    });
-    const payload = await response.json();
-    if (!response.ok || !payload?.success) {
-      showToast(payload?.error || "intake_input.json could not be generated.");
-      return;
-    }
-    await loadScreeningArticles();
-    setSelected(null);
-    window.location.assign(`/api/literature/intake-input/${payload.data.exportId}`);
-    showToast(
-      payload.data.reused
-        ? "Existing governed intake_input.json downloaded."
-        : "Governed intake_input.json generated and downloaded.",
-    );
-  }
-
   async function saveReviewMutation(
     status: "approved" | "excluded" | "flagged",
     finalDecision: string,
@@ -498,14 +476,18 @@ export default function ScreeningPage() {
     (article) => article.screening_status === "completed",
   ).length;
 
-  const outputCount = articles.filter((article) => article.intake_status === "ready").length;
+  const reviewReadyCount = articles.filter(
+    (article) =>
+      article.screening_status === "completed" &&
+      article.screening_decision === "INCLUDE",
+  ).length;
 
   return (
     <main className="app-shell">
       <Navigation />
       <InvestorDemoHeader
         title="Human-Governed Screening Intelligence"
-        subtitle="Review medically meaningful evidence, verify regulated decision factors and generate a traceable downstream output without hiding the human decision."
+        subtitle="Complete article-level Screening with a governed human decision. Approved INCLUDE articles move to the separate Review / MR workspace for patient segmentation, labeling / expectedness, causality and Medical Review."
       />
 
       <section className="metrics-grid">
@@ -513,7 +495,7 @@ export default function ScreeningPage() {
         <Metric label="Awaiting Screening AI" value={awaitingAiCount} tone="warning" />
         <Metric label="Awaiting Human Review" value={awaitingReviewCount} tone="warning" />
         <Metric label="Completed Reviews" value={completedCount} tone="success" />
-        <Metric label="Downstream Outputs" value={outputCount} tone="primary" />
+        <Metric label="Ready for Review / MR" value={reviewReadyCount} tone="primary" />
         <Metric
           label="Serious Findings"
           value={articles.filter((article) => article.seriousness.includes("SERIOUS")).length}
@@ -529,7 +511,7 @@ export default function ScreeningPage() {
             <p>
               {loading
                 ? "Loading governed screening results…"
-                : `${awaitingAiCount} awaiting Screening AI; ${awaitingReviewCount} awaiting human review; ${outputCount} downstream output(s) ready`}
+                : `${awaitingAiCount} awaiting Screening AI; ${awaitingReviewCount} awaiting human review; ${reviewReadyCount} ready for Review / MR`}
             </p>
           </div>
 
@@ -646,11 +628,9 @@ export default function ScreeningPage() {
                         setActiveTab("Overview");
                       }}
                     >
-                      {article.intake_status === "ready"
-                        ? "Download"
-                        : article.screening_status === "completed"
-                          ? "Generate"
-                          : "Review"}
+                      {article.screening_status === "completed"
+                        ? "Open Review"
+                        : "Review"}
                     </button>
                   </td>
                 </tr>
@@ -678,7 +658,6 @@ export default function ScreeningPage() {
           onExclude={excludeArticle}
           onSave={saveReview}
           onRerunAI={rerunAI}
-          onGenerateIntakeInput={generateIntakeInput}
         />
       )}
 
