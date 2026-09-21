@@ -327,20 +327,20 @@ export async function listRecentSearches(
   const result = await getPostgresPool().query<Record<string, unknown>>(
     `
       SELECT
-        id,
-        search_key,
-        criteria,
-        selected_sources,
-        translated_queries,
-        status,
-        result_count,
-        selected_count,
-        duration_ms,
-        connector_errors,
-        COALESCE(criteria->>'executionPurpose', 'TEST_VALIDATION') AS execution_purpose,
+        search.id,
+        search.search_key,
+        search.criteria,
+        search.selected_sources,
+        search.translated_queries,
+        search.status,
+        search.result_count,
+        search.selected_count,
+        search.duration_ms,
+        search.connector_errors,
+        COALESCE(search.criteria->>'executionPurpose', 'TEST_VALIDATION') AS execution_purpose,
         evidence.package_key AS search_evidence_package_key,
-        created_at,
-        completed_at
+        search.created_at,
+        search.completed_at
       FROM ad_hoc_literature_searches search
       LEFT JOIN literature_search_evidence_packages evidence
         ON evidence.tenant_id = search.tenant_id
