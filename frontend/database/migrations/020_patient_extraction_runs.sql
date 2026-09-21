@@ -26,3 +26,18 @@ CREATE INDEX IF NOT EXISTS idx_patient_extraction_workspace_version
 
 CREATE INDEX IF NOT EXISTS idx_patient_extraction_package_time
   ON literature_patient_extraction_runs (tenant_id, package_id, created_at DESC);
+
+-- Review-stage not-applicable semantics for articles with zero patient/case segments.
+ALTER TABLE literature_review_workspaces
+  DROP CONSTRAINT IF EXISTS literature_review_label_status_chk;
+
+ALTER TABLE literature_review_workspaces
+  ADD CONSTRAINT literature_review_label_status_chk
+  CHECK (labeling_status IN ('NOT_CONFIGURED', 'PENDING', 'COMPLETE', 'UNRESOLVED', 'NOT_APPLICABLE'));
+
+ALTER TABLE literature_review_workspaces
+  DROP CONSTRAINT IF EXISTS literature_review_causality_status_chk;
+
+ALTER TABLE literature_review_workspaces
+  ADD CONSTRAINT literature_review_causality_status_chk
+  CHECK (causality_status IN ('NOT_CONFIGURED', 'PENDING', 'COMPLETE', 'UNRESOLVED', 'NOT_APPLICABLE'));
