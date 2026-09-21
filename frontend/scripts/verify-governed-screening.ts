@@ -11,6 +11,7 @@ import {
   deriveGovernedScreeningDecision,
   finalIncludeEligibility,
 } from "../lib/literature/screening/governed-decision";
+import { governScreeningEvidence } from "../lib/literature/screening/screening-evidence-governance";
 
 const raw = JSON.stringify({
   decision: "INCLUDE",
@@ -111,6 +112,79 @@ assert.equal(
   "Severity must not be promoted to regulatory seriousness.",
 );
 assert.equal(parsed.regulatoryEvidence.patientPiiStatus, "ABSENT");
+
+const nationalityOnlyGovernance = governScreeningEvidence({
+  regulatoryEvidence: {
+    ...parsed.regulatoryEvidence,
+    countryOfIncidenceStatus: "PRESENT",
+    countryOfIncidence: "India",
+    countryOfIncidenceEvidence: "young Indian female",
+  },
+  safetyEvidence: {
+    ...parsed.safetyEvidence,
+    reporterIdentifiable: "ABSENT",
+    reporterEvidence: undefined,
+  },
+  suspectEvidence: parsed.extractedSuspectEvidence.map((evidence) => ({
+    ...evidence,
+    countryOfInterest: "India",
+  })),
+  findings: [
+    {
+      rule: "K2 Core Validity Principle",
+      passed: false,
+      score: 20,
+      comment: "Reporter not identifiable in article",
+    },
+  ],
+  reporterIdentifiers: ["Desai MR"],
+});
+assert.equal(
+  nationalityOnlyGovernance.regulatoryEvidence.countryOfIncidenceStatus,
+  "UNRESOLVED",
+  "Nationality or demonym evidence must not establish Country of Incidence.",
+);
+assert.equal(
+  nationalityOnlyGovernance.regulatoryEvidence.countryOfIncidence,
+  undefined,
+);
+assert.equal(
+  nationalityOnlyGovernance.suspectEvidence[0].countryOfInterest,
+  undefined,
+  "Unaccepted COI must not leak into Product Master/MAH assessment.",
+);
+assert.equal(
+  nationalityOnlyGovernance.safetyEvidence.reporterIdentifiable,
+  "PRESENT",
+  "Publication author metadata must reconcile an abstract-only reporter false negative.",
+);
+assert.equal(
+  nationalityOnlyGovernance.findings[0].passed,
+  true,
+  "Reporter validity finding must be reconciled consistently with publication metadata.",
+);
+
+const directLocationGovernance = governScreeningEvidence({
+  regulatoryEvidence: {
+    ...parsed.regulatoryEvidence,
+    countryOfIncidenceStatus: "PRESENT",
+    countryOfIncidence: "India",
+    countryOfIncidenceEvidence: "The patient was treated in India after the reaction developed.",
+  },
+  safetyEvidence: parsed.safetyEvidence,
+  suspectEvidence: parsed.extractedSuspectEvidence,
+  findings: [],
+  reporterIdentifiers: ["Desai MR"],
+});
+assert.equal(
+  directLocationGovernance.regulatoryEvidence.countryOfIncidenceStatus,
+  "PRESENT",
+  "Direct patient/event location evidence may establish Country of Incidence.",
+);
+assert.equal(
+  directLocationGovernance.suspectEvidence[0].countryOfInterest,
+  "India",
+);
 
 const pv = assessPVDecisionArchitecture({
   safetyEvidence: parsed.safetyEvidence,
