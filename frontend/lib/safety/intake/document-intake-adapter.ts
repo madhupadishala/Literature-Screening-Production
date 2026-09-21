@@ -3,7 +3,10 @@ import { createHash } from "node:crypto";
 import { canonicalSha256 } from "../common/canonical-json";
 import type { IntakeDraft } from "../common/safety-types";
 import { validateIntakeDraft } from "../common/safety-validation";
-import type { DocumentIntakeSubmission } from "./source-submission-types";
+import {
+  isIntakeDocumentContentType,
+  type DocumentIntakeSubmission,
+} from "./source-submission-types";
 
 export const MAX_INTAKE_DOCUMENT_BYTES = 10 * 1024 * 1024;
 
@@ -40,6 +43,9 @@ export function documentSubmissionToIntakeDraft(
 ): NormalizedDocumentIntake {
   const requestId = requiredText(submission.requestId, "requestId");
   const fileName = requiredText(submission.fileName, "fileName");
+  if (!isIntakeDocumentContentType(submission.contentType)) {
+    throw new Error("Unsupported document contentType.");
+  }
   const receivedAt = requiredText(submission.receivedAt, "receivedAt");
   if (!Number.isFinite(new Date(receivedAt).getTime())) {
     throw new Error("receivedAt must be a valid ISO date/time.");
