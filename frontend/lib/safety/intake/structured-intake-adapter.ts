@@ -65,7 +65,15 @@ export function structuredSubmissionToIntakeDraft(
       countryCode: submission.countryCode,
       languageCode: submission.languageCode,
       sourcePayload,
-      sourceSha256: canonicalSha256(normalizedSource),
+      sourceSha256: canonicalSha256({
+        source: normalizedSource,
+        intakePayload: submission.intakePayload ?? {},
+        patients: submission.patients ?? [],
+        reporters: submission.reporters ?? [],
+        products: submission.products ?? [],
+        events: submission.events ?? [],
+        tests: submission.tests ?? [],
+      }),
     },
     intake: {
       intakeKey: `${submission.intakeChannel === "MANUAL" ? "MAN" : "API"}-${normalizedId}-${stableHash.slice(0, 8)}`,
