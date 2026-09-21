@@ -251,6 +251,12 @@ export default function TriageClient({ intakeId }: { intakeId: string }) {
               Duplicate Review
             </Link>
           ) : null}
+          {workspace?.latestAssessment &&
+          display(intake?.intake.validity_status) !== "VALID" ? (
+            <Link href={`/intake/${intakeId}/disposition`}>
+              Open Disposition
+            </Link>
+          ) : null}
           <button type="button" onClick={() => void load()} disabled={loading}>
             Refresh evidence
           </button>
