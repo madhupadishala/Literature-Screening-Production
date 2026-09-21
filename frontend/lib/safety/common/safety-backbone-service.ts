@@ -41,6 +41,10 @@ export interface SafetyIntakeSummary {
   validityStatus: string;
   duplicateStatus: string;
   seriousnessStatus: string;
+  triageStatus: string;
+  triageOutcome: string | null;
+  followUpRequired: boolean;
+  specialSituations: string[];
   sourceRecordKey: string;
   createdAt: string;
   updatedAt: string;
@@ -72,6 +76,12 @@ function summary(row: Record<string, unknown>, reused: boolean): SafetyIntakeSum
     validityStatus: String(row.validity_status),
     duplicateStatus: String(row.duplicate_status),
     seriousnessStatus: String(row.seriousness_status),
+    triageStatus: String(row.triage_status || "NOT_STARTED"),
+    triageOutcome: row.triage_outcome ? String(row.triage_outcome) : null,
+    followUpRequired: row.follow_up_required === true,
+    specialSituations: Array.isArray(row.special_situations)
+      ? row.special_situations.map(String)
+      : [],
     sourceRecordKey: String(row.source_record_key),
     createdAt: new Date(String(row.created_at)).toISOString(),
     updatedAt: new Date(String(row.updated_at)).toISOString(),
