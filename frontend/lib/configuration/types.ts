@@ -4,6 +4,8 @@ export const CONFIGURATION_RESOURCE_TYPES = [
   "CLIENT_GUIDELINE",
   "OUTCOME_TEMPLATE",
   "LITERATURE_SOURCE",
+  "LABEL_REFERENCE",
+  "CAUSALITY_METHOD",
 ] as const;
 
 export type ConfigurationResourceType =
@@ -60,5 +62,7 @@ export interface ActiveTenantConfiguration {
   clientGuidelines: ConfigurationVersionRecord[];
   outcomeTemplate: ConfigurationVersionRecord | null;
   literatureSources: ConfigurationVersionRecord[];
+  labelReferences: ConfigurationVersionRecord[];
+  causalityMethods: ConfigurationVersionRecord[];
   capturedAt: string;
 }

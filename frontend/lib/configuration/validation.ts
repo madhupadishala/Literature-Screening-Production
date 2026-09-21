@@ -254,6 +254,138 @@ export function validateConfigurationPayload(
     }
   }
 
+
+  if (resourceType === "LABEL_REFERENCE") {
+    const records = recordsFromPayload(payload);
+    if (records.length === 0) {
+      errors.push(
+        issue(
+          "error",
+          "records",
+          "Label / RSI configuration must contain at least one governed reference record.",
+        ),
+      );
+    }
+
+    records.forEach((value, index) => {
+      if (!isRecord(value)) {
+        errors.push(issue("error", `records[${index}]`, "Label reference row must be an object."));
+        return;
+      }
+
+      const labelKey = String(value.labelKey || value.referenceLabelKey || "").trim();
+      const productId = String(value.clientProductId || value.productId || "").trim();
+      const country = String(value.country || value.market || "").trim();
+      const labelType = String(value.labelType || value.referenceType || "").trim();
+      const version = String(value.version || value.labelVersion || "").trim();
+      const effectiveFrom = String(value.effectiveFrom || value.labelEffectiveFrom || "").trim();
+      const eventTerms = Array.isArray(value.eventTerms)
+        ? value.eventTerms.map((term) => String(term || "").trim()).filter(Boolean)
+        : [];
+
+      if (!labelKey) {
+        errors.push(issue("error", `records[${index}].labelKey`, "A unique labelKey is required."));
+      }
+      if (!productId) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].clientProductId`,
+            "Label / RSI must be linked to a governed clientProductId or productId.",
+          ),
+        );
+      }
+      if (!country) {
+        errors.push(issue("error", `records[${index}].country`, "Country/market is required."));
+      }
+      if (!labelType) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].labelType`,
+            "Label type is required, for example CCSI, CCDS, SmPC, USPI, or RSI.",
+          ),
+        );
+      }
+      if (!version) {
+        errors.push(issue("error", `records[${index}].version`, "Label version is required."));
+      }
+      if (!effectiveFrom) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].effectiveFrom`,
+            "Label effective-from date is required for date-specific expectedness.",
+          ),
+        );
+      }
+      if (eventTerms.length === 0) {
+        warnings.push(
+          issue(
+            "warning",
+            `records[${index}].eventTerms`,
+            "No expected event terms are configured; automated expectedness will remain UNRESOLVED.",
+          ),
+        );
+      }
+    });
+  }
+
+  if (resourceType === "CAUSALITY_METHOD") {
+    const records = recordsFromPayload(payload);
+    if (records.length === 0) {
+      errors.push(
+        issue(
+          "error",
+          "records",
+          "Causality Method configuration must contain at least one approved method.",
+        ),
+      );
+    }
+
+    records.forEach((value, index) => {
+      if (!isRecord(value)) {
+        errors.push(issue("error", `records[${index}]`, "Causality method row must be an object."));
+        return;
+      }
+
+      const methodKey = String(value.methodKey || "").trim();
+      const methodName = String(value.methodName || value.name || "").trim();
+      const version = String(value.version || value.methodVersion || "").trim();
+      const conclusions = Array.isArray(value.allowedConclusions)
+        ? value.allowedConclusions.map((entry) => String(entry || "").trim()).filter(Boolean)
+        : [];
+
+      if (!methodKey) {
+        errors.push(issue("error", `records[${index}].methodKey`, "A causality methodKey is required."));
+      }
+      if (!methodName) {
+        errors.push(issue("error", `records[${index}].methodName`, "A causality method name is required."));
+      }
+      if (!version) {
+        errors.push(issue("error", `records[${index}].version`, "Causality method version is required."));
+      }
+      if (conclusions.length === 0) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].allowedConclusions`,
+            "At least one controlled causality conclusion is required.",
+          ),
+        );
+      }
+      if (!String(value.methodology || value.description || "").trim()) {
+        warnings.push(
+          issue(
+            "warning",
+            `records[${index}].methodology`,
+            "No method description is configured; reviewer guidance will be limited.",
+          ),
+        );
+      }
+    });
+  }
+
   if (resourceType === "LITERATURE_SOURCE") {
     const records = recordsFromPayload(payload);
     if (records.length === 0) {

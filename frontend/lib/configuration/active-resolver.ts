@@ -68,6 +68,8 @@ export async function resolveActiveConfigurations(
     clientGuidelines: all("CLIENT_GUIDELINE"),
     outcomeTemplate: first("OUTCOME_TEMPLATE"),
     literatureSources: all("LITERATURE_SOURCE"),
+    labelReferences: all("LABEL_REFERENCE"),
+    causalityMethods: all("CAUSALITY_METHOD"),
     capturedAt: new Date().toISOString(),
   };
 }
@@ -104,6 +106,16 @@ export function configurationSnapshotPayload(
         }
       : null,
     literatureSources: active.literatureSources.map((record) => ({
+      id: record.id,
+      key: record.configKey,
+      version: record.versionLabel,
+    })),
+    labelReferences: active.labelReferences.map((record) => ({
+      id: record.id,
+      key: record.configKey,
+      version: record.versionLabel,
+    })),
+    causalityMethods: active.causalityMethods.map((record) => ({
       id: record.id,
       key: record.configKey,
       version: record.versionLabel,
