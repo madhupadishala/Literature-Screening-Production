@@ -35,6 +35,11 @@ interface ScreeningQueueRow {
   result_version: number | null;
   result_payload: Record<string, unknown> | null;
   confidence: string | number | null;
+  hits_result_id: string | null;
+  hits_result_version: number | null;
+  hits_result_payload: Record<string, unknown> | null;
+  hits_confidence: string | number | null;
+  hits_review_status: string | null;
   review_status: ScreeningReviewStatus | null;
   final_decision: ScreeningDecision | null;
   review_version: number | null;
@@ -112,7 +117,13 @@ function reason(value: unknown): ScreeningReason {
     : "UNKNOWN";
 }
 
-function productName(row: ScreeningQueueRow): string {
+function productName(
+  row: ScreeningQueueRow,
+  effectiveResult: Record<string, unknown>,
+): string {
+  const detectedProducts = list(effectiveResult.detectedProducts);
+  if (detectedProducts.length > 0) return detectedProducts.join(", ");
+
   const context = row.product_context || {};
   const resolved = recordValue(context.resolvedProduct);
   return (
@@ -124,12 +135,18 @@ function productName(row: ScreeningQueueRow): string {
 }
 
 function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
-  const payload = recordValue(row.result_payload);
-  const result = recordValue(payload.result);
+  const screeningPayload = recordValue(row.result_payload);
+  const hitsPayload = recordValue(row.hits_result_payload);
+  const screeningResult = recordValue(screeningPayload.result);
+  const hitsResult = recordValue(hitsPayload.result);
   const identity = row.article_identity || {};
   const statePayload = row.state_payload || {};
   const executionFailed = statePayload.screeningExecutionFailed === true;
   const hasResult = Boolean(row.result_id);
+  const result = hasResult ? screeningResult : hitsResult;
+  const effectiveConfidence = hasResult
+    ? row.confidence ?? screeningResult.confidence
+    : row.hits_confidence ?? hitsResult.confidence;
   const safetyEvidence = isRecord(result.safetyEvidence)
     ? (result.safetyEvidence as unknown as NonNullable<ScreeningWorklistRecord["safetyEvidence"]>)
     : undefined;
@@ -163,12 +180,15 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
     publicationDate: row.source_publication_date || text(identity.publicationDate, "—"),
     authors: list(row.source_authors),
     abstractText: row.source_abstract || "",
-    productName: productName(row),
+    productName: productName(row, result),
     countryOfInterest: text(row.product_context?.countryOfInterest, "Uncertain"),
     workflowState: row.workflow_state,
+    contextStage: hasResult ? "SCREENING_AI" : "HITS_APPROVED",
+    upstreamHitsResultVersion: row.hits_result_version || undefined,
+    upstreamHitsDetectedEvents: hasResult ? undefined : list(hitsResult.detectedEvents),
     executionStatus: executionFailed ? "failed" : hasResult ? "completed" : "ready",
     decision: row.final_decision || decision(result.decision),
-    confidence: confidence(row.confidence ?? result.confidence),
+    confidence: confidence(effectiveConfidence),
     reason: reason(result.reason),
     findings: findings(result.findings),
     safetyEvidence,
@@ -179,8 +199,8 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
     companySuspectAssessments,
     qcRequired:
       executionFailed ||
-      decision(result.decision) === "REVIEW" ||
-      confidence(row.confidence ?? result.confidence) < 80,
+      (hasResult && decision(result.decision) === "REVIEW") ||
+      confidence(effectiveConfidence) < 80,
     reviewStatus: row.review_status || "pending",
     reviewVersion: row.review_version || 0,
     intakeExportId: row.intake_export_id || undefined,
@@ -188,7 +208,9 @@ function mapQueueRow(row: ScreeningQueueRow): ScreeningWorklistRecord {
     reviewComments: row.comments || undefined,
     reviewedAt: row.reviewed_at || undefined,
     reviewedBy: row.reviewed_by || undefined,
-    aiExecution: isRecord(payload.aiExecution) ? payload.aiExecution : undefined,
+    aiExecution: isRecord(screeningPayload.aiExecution)
+      ? screeningPayload.aiExecution
+      : undefined,
     error: text(statePayload.error) || undefined,
   };
 }
@@ -214,6 +236,13 @@ function queueSql(): string {
       FROM screening_results
       WHERE tenant_id = $1
       ORDER BY package_id, result_version DESC, created_at DESC
+    ), latest_hits AS (
+      SELECT DISTINCT ON (package_id)
+        id, tenant_id, package_id, result_version,
+        result_payload, confidence, created_at
+      FROM hits_results
+      WHERE tenant_id = $1
+      ORDER BY package_id, result_version DESC, created_at DESC
     ), latest_intake AS (
       SELECT DISTINCT ON (package_id) id, tenant_id, package_id, export_version
       FROM intake_input_exports
@@ -232,6 +261,11 @@ function queueSql(): string {
       screening.result_version,
       screening.result_payload,
       screening.confidence,
+      hits.id AS hits_result_id,
+      hits.result_version AS hits_result_version,
+      hits.result_payload AS hits_result_payload,
+      hits.confidence AS hits_confidence,
+      hits_review.review_status AS hits_review_status,
       review.review_status,
       review.final_decision,
       review.review_version,
@@ -252,6 +286,12 @@ function queueSql(): string {
       ON workflow.package_id = package.id AND workflow.tenant_id = package.tenant_id
     LEFT JOIN latest_screening screening
       ON screening.package_id = package.id AND screening.tenant_id = package.tenant_id
+    LEFT JOIN latest_hits hits
+      ON hits.package_id = package.id AND hits.tenant_id = package.tenant_id
+    LEFT JOIN hits_reviews hits_review
+      ON hits_review.tenant_id = package.tenant_id
+     AND hits_review.package_id = package.id
+     AND hits_review.hits_result_id = hits.id
     LEFT JOIN screening_reviews review
       ON review.tenant_id = package.tenant_id
      AND review.package_id = package.id
@@ -268,6 +308,10 @@ function queueSql(): string {
       LIMIT 1
     ) source ON true
     WHERE package.tenant_id = $1
+      AND (
+        workflow.workflow_state <> 'HITS_COMPLETE'
+        OR hits_review.review_status = 'approved'
+      )
       AND workflow.workflow_state IN (
         'HITS_COMPLETE', 'SCREENING_RUNNING', 'SCREENING_REVIEW',
         'SCREENING_COMPLETE', 'INTAKE_INPUT_CREATED'
