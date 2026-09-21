@@ -8,6 +8,7 @@ type ScreeningArticle = {
   pmid: string;
   confidence_score: number;
   execution_status: "ready" | "completed" | "failed";
+  context_stage: "HITS_APPROVED" | "SCREENING_AI";
   qc_required: boolean;
   journal: string;
   publication_date: string;
@@ -111,10 +112,15 @@ export default function ScreeningWorkspace({
       <aside className="review-drawer" aria-label="Screening review workspace">
         <header className="drawer-header">
           <div>
-            <span className="eyebrow">Human-governed screening review</span>
+            <span className="eyebrow">
+              {article.context_stage === "HITS_APPROVED"
+                ? "Approved Hits context · Screening AI pending"
+                : "Human-governed screening review"}
+            </span>
             <h2>{article.product_name}</h2>
             <p>
-              PMID {article.pmid} · AI confidence {percent(article.confidence_score)}
+              PMID {article.pmid} · {article.context_stage === "HITS_APPROVED" ? "Hits" : "Screening"} confidence{" "}
+              {percent(article.confidence_score)}
             </p>
           </div>
 
@@ -124,7 +130,12 @@ export default function ScreeningWorkspace({
         </header>
 
         <div className="boundary-note">
-          {article.company_applicability === "CONFIRMED" && article.active_mah === "ACTIVE" ? (
+          {article.context_stage === "HITS_APPROVED" && article.execution_status === "ready" ? (
+            <>
+              This view is carrying forward the <strong>approved Hits evidence</strong> for continuity.
+              Screening AI has not run yet; these values are upstream context, not a Screening conclusion.
+            </>
+          ) : article.company_applicability === "CONFIRMED" && article.active_mah === "ACTIVE" ? (
             <>
               Approval finalizes the governed Screening decision. The downstream
               <strong> intake_input.json</strong> is generated only by the separate next-stage action.
@@ -166,7 +177,14 @@ export default function ScreeningWorkspace({
               <Row label="Patient Safety" value={article.patient_safety} />
               <Row label="Generic ICSR" value={article.generic_icsr_status} />
               <Row label="Hits Status" value={article.hits_status} />
-              <Row label="Screening Status" value={article.screening_status} />
+              <Row
+                label="Screening Status"
+                value={
+                  article.context_stage === "HITS_APPROVED" && article.execution_status === "ready"
+                    ? "Awaiting Screening AI"
+                    : article.screening_status
+                }
+              />
               <div className="evidence">
                 <span>Evidence sentence</span>
                 <p>{clean(article.evidence_sentence)}</p>
@@ -221,9 +239,21 @@ export default function ScreeningWorkspace({
           )}
 
           {activeTab === "AI Assessment" && (
-            <Section title="AI Assessment">
-              <Row label="Confidence" value={percent(article.confidence_score)} />
-              <Row label="Decision" value={article.screening_decision} />
+            <Section
+              title={
+                article.context_stage === "HITS_APPROVED"
+                  ? "Approved Hits Assessment"
+                  : "AI Assessment"
+              }
+            >
+              <Row
+                label={article.context_stage === "HITS_APPROVED" ? "Hits Confidence" : "Confidence"}
+                value={percent(article.confidence_score)}
+              />
+              <Row
+                label={article.context_stage === "HITS_APPROVED" ? "Screening State" : "Decision"}
+                value={article.screening_decision}
+              />
               <div className="evidence">
                 <span>Reasoning</span>
                 <p>{clean(article.screening_reasoning)}</p>
