@@ -71,6 +71,9 @@ jobs:
       - name: Verify Nexus Sprint 2 common safety backbone
         run: npm run nexus:sprint2:verify
 
+      - name: Verify Nexus Sprint 3 canonical intake sources
+        run: npm run nexus:sprint3:verify
+
       - name: Build production application
         run: npm run build
 
