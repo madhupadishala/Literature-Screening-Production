@@ -120,4 +120,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "019_label_rsi_causality_configuration.sql",
     required: true,
   },
+  {
+    id: "020",
+    name: "Source-linked Patient Extraction",
+    filename: "020_patient_extraction_runs.sql",
+    required: true,
+  },
 ] as const;
