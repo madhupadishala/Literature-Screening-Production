@@ -9,7 +9,9 @@ type ResourceType =
   | "LITERATURE_CALENDAR"
   | "CLIENT_GUIDELINE"
   | "OUTCOME_TEMPLATE"
-  | "LITERATURE_SOURCE";
+  | "LITERATURE_SOURCE"
+  | "LABEL_REFERENCE"
+  | "CAUSALITY_METHOD";
 
 type Version = {
   id: string;
@@ -73,6 +75,16 @@ const RESOURCE_TABS: Array<{
     label: "Outcome Templates",
     description: "Client-controlled JSON, CSV, Excel, report, and API mappings.",
   },
+  {
+    type: "LABEL_REFERENCE",
+    label: "Label / RSI Master",
+    description: "Versioned expectedness references linked to product, market, and effective date.",
+  },
+  {
+    type: "CAUSALITY_METHOD",
+    label: "Causality Methods",
+    description: "Approved causality methods, versions, controlled conclusions, and reviewer guidance.",
+  },
 ];
 
 const ACCEPT: Record<ResourceType, string> = {
@@ -81,6 +93,8 @@ const ACCEPT: Record<ResourceType, string> = {
   CLIENT_GUIDELINE: ".pdf,.docx,.txt,.md",
   OUTCOME_TEMPLATE: ".json",
   LITERATURE_SOURCE: ".json",
+  LABEL_REFERENCE: ".csv,.xlsx,.json",
+  CAUSALITY_METHOD: ".csv,.xlsx,.json",
 };
 
 const DEFAULT_JSON: Record<ResourceType, string> = {
@@ -163,6 +177,40 @@ const DEFAULT_JSON: Record<ResourceType, string> = {
     2,
   ),
   LITERATURE_SOURCE: JSON.stringify({ records: [] }, null, 2),
+  LABEL_REFERENCE: JSON.stringify(
+    {
+      records: [
+        {
+          labelKey: "DEMO-PROD-001-IN-CCSI",
+          clientProductId: "DEMO-PROD-001",
+          country: "India",
+          labelType: "CCSI",
+          version: "1.0",
+          effectiveFrom: "2026-01-01",
+          effectiveTo: null,
+          eventTerms: ["Example expected event"],
+          sourceDocument: "Controlled label reference",
+        },
+      ],
+    },
+    null,
+    2,
+  ),
+  CAUSALITY_METHOD: JSON.stringify(
+    {
+      records: [
+        {
+          methodKey: "GLOBAL-CLINICAL-JUDGEMENT",
+          methodName: "Structured Clinical Judgement",
+          version: "1.0",
+          allowedConclusions: ["RELATED", "POSSIBLY_RELATED", "NOT_RELATED", "UNRESOLVED"],
+          methodology: "Assess chronology, dechallenge/rechallenge, alternative causes, biological plausibility, concomitants and reporter assessment.",
+        },
+      ],
+    },
+    null,
+    2,
+  ),
 };
 
 function formatDate(value: string | null | undefined): string {
