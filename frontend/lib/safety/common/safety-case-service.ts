@@ -110,7 +110,7 @@ export async function createSafetyCaseShellInTransaction(input: {
        latest_receipt_date, seriousness_status, expedited_reporting_required,
        current_version, created_by, updated_by
      ) VALUES (
-       $1,$2,$3,$4,'OPEN',$5,$6,$7,$8,$9,$10,$11,0,$12,$12
+       $1,$2,$3,$4,'NEW',$5,$6,$7,$8,$9,$10,$11,0,$12,$12
      )
      RETURNING created_at::text`,
     [
