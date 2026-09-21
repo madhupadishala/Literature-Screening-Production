@@ -3,6 +3,10 @@ import "server-only";
 import type { PoolClient } from "pg";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { validateAuditReason } from "@/lib/audit/reason";
+import {
+  activeReviewReferenceData,
+  expectednessFromReference,
+} from "@/lib/literature/review/review-reference-service";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 function cleanText(value: unknown): string {
@@ -88,6 +92,51 @@ async function getWorkspaceForUpdate(input: {
   };
 }
 
+
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+async function screeningProductContext(input: {
+  client: PoolClient;
+  tenantId: string;
+  screeningResultId: string;
+}): Promise<Map<string, { productId?: string; countryOfInterest?: string }>> {
+  const result = await input.client.query<{ result_payload: unknown }>(
+    `SELECT result_payload
+     FROM screening_results
+     WHERE id = $1 AND tenant_id = $2
+     LIMIT 1`,
+    [input.screeningResultId, input.tenantId],
+  );
+  const payload = isRecord(result.rows[0]?.result_payload)
+    ? result.rows[0].result_payload
+    : {};
+  const screening = isRecord(payload.result) ? payload.result : {};
+  const assessments = Array.isArray(screening.companySuspectAssessments)
+    ? screening.companySuspectAssessments.filter(isRecord)
+    : [];
+
+  const map = new Map<string, { productId?: string; countryOfInterest?: string }>();
+  for (const assessment of assessments) {
+    const reportedProduct = cleanText(assessment.reportedProduct);
+    if (!reportedProduct) continue;
+    const candidate = isRecord(assessment.selectedCandidate)
+      ? assessment.selectedCandidate
+      : undefined;
+    map.set(reportedProduct, {
+      productId: candidate ? cleanOptional(candidate.productId) : undefined,
+      countryOfInterest: cleanOptional(assessment.countryOfInterest),
+    });
+  }
+  return map;
+}
+
+function sameDate(left: string | undefined, right: string | undefined): boolean {
+  if (!left || !right) return false;
+  return left.slice(0, 10) === right.slice(0, 10);
+}
 
 function patientSegmentMap(value: unknown): Map<string, { products: string[]; events: string[] }> {
   const map = new Map<string, { products: string[]; events: string[] }>();
@@ -293,6 +342,7 @@ export async function saveLabelAssessments(input: {
     };
   });
 
+  const referenceData = await activeReviewReferenceData(input.principal.tenantId);
   const pool = getPostgresPool();
   const client = await pool.connect();
   try {
@@ -308,8 +358,68 @@ export async function saveLabelAssessments(input: {
     if (workspace.status === "REVIEW_COMPLETE") {
       throw new Error("Completed Review workspace cannot be edited.");
     }
+    const productContext = await screeningProductContext({
+      client,
+      tenantId: input.principal.tenantId,
+      screeningResultId: workspace.screening_result_id,
+    });
+
     for (const assessment of assessments) {
       assertAssessmentPairInPatient(workspace.patient_segments, assessment);
+
+      if (assessment.conclusion === "UNRESOLVED") continue;
+
+      const reference = referenceData.labelReferences.find(
+        (candidate) =>
+          candidate.labelKey === assessment.referenceLabelKey &&
+          candidate.version === assessment.referenceLabelVersion,
+      );
+      if (!reference) {
+        throw new Error(
+          `Label reference ${assessment.referenceLabelKey || "—"} ${assessment.referenceLabelVersion || ""} is not an active governed Label / RSI configuration.`,
+        );
+      }
+
+      if (!sameDate(reference.effectiveFrom, assessment.referenceEffectiveDate)) {
+        throw new Error(
+          "Label effective date must match the active governed reference version.",
+        );
+      }
+
+      const context = productContext.get(assessment.reportedProduct);
+      if (!context?.productId) {
+        throw new Error(
+          `Expectedness for ${assessment.reportedProduct} cannot be finalized without a governed Product Master match.`,
+        );
+      }
+      if (context.productId !== reference.clientProductId) {
+        throw new Error(
+          `Label reference ${reference.labelKey} belongs to ${reference.clientProductId}, not the matched product ${context.productId}.`,
+        );
+      }
+      if (!context.countryOfInterest) {
+        throw new Error(
+          "Expectedness cannot be finalized while Country of Incidence / applicable market is unresolved.",
+        );
+      }
+      if (
+        context.countryOfInterest.trim().toLowerCase() !==
+        reference.country.trim().toLowerCase()
+      ) {
+        throw new Error(
+          `Label reference market ${reference.country} does not match the governed country ${context.countryOfInterest}.`,
+        );
+      }
+
+      const governedExpectedness = expectednessFromReference({
+        clinicalEvent: assessment.clinicalEvent,
+        reference,
+      });
+      if (governedExpectedness !== assessment.conclusion) {
+        throw new Error(
+          `Expectedness mismatch for ${assessment.clinicalEvent}: active Label / RSI resolves to ${governedExpectedness}, not ${assessment.conclusion}.`,
+        );
+      }
     }
 
     await client.query(
@@ -424,6 +534,7 @@ export async function saveCausalityAssessments(input: {
     };
   });
 
+  const referenceData = await activeReviewReferenceData(input.principal.tenantId);
   const pool = getPostgresPool();
   const client = await pool.connect();
   try {
@@ -441,6 +552,27 @@ export async function saveCausalityAssessments(input: {
     }
     for (const assessment of assessments) {
       assertAssessmentPairInPatient(workspace.patient_segments, assessment);
+
+      if (assessment.conclusion === "UNRESOLVED" && !assessment.methodKey) continue;
+
+      const method = referenceData.causalityMethods.find(
+        (candidate) =>
+          candidate.methodKey === assessment.methodKey &&
+          candidate.version === assessment.methodVersion,
+      );
+      if (!method) {
+        throw new Error(
+          `Causality method ${assessment.methodKey || "—"} ${assessment.methodVersion || ""} is not an active governed method.`,
+        );
+      }
+      if (
+        assessment.conclusion !== "UNRESOLVED" &&
+        !method.allowedConclusions.includes(assessment.conclusion)
+      ) {
+        throw new Error(
+          `Causality conclusion ${assessment.conclusion} is not allowed by ${method.methodKey} ${method.version}.`,
+        );
+      }
     }
 
     await client.query(
