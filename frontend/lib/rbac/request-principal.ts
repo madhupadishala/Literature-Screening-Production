@@ -2,6 +2,7 @@ import "server-only";
 
 import type { NextRequest } from "next/server";
 import { getPostgresPool } from "@/lib/database/postgres";
+import { isNexusEnvironment, type NexusEnvironment } from "@/lib/nexus/entitlement-types";
 import { roleHasPermission, type Permission } from "@/lib/rbac/permissions";
 import { tokenService } from "@/lib/auth/token-service";
 
@@ -10,6 +11,7 @@ const ACCESS_TOKEN_COOKIE = "clinixai_access_token";
 export interface RequestPrincipal {
   tenantId: string;
   tenantKey: string;
+  environment: NexusEnvironment;
   userId: string;
   email: string;
   displayName: string;
@@ -30,6 +32,19 @@ export class AuthorizationError extends Error {
 
 function allowDemoPrincipal(): boolean {
   return process.env.ALLOW_DEMO_PRINCIPAL?.trim().toLowerCase() === "true";
+}
+
+function resolveRequestEnvironment(request: NextRequest): NexusEnvironment {
+  const raw =
+    request.headers.get("x-nexus-environment")?.trim().toUpperCase() ||
+    process.env.NEXUS_DEFAULT_ENVIRONMENT?.trim().toUpperCase() ||
+    "PROD";
+
+  if (!isNexusEnvironment(raw)) {
+    throw new AuthorizationError(`Unsupported Nexus environment: ${raw}`, 403);
+  }
+
+  return raw;
 }
 
 function resolveIdentityHeaders(request: NextRequest) {
@@ -179,6 +194,7 @@ async function resolvePrincipalFromSignedToken(
   return {
     tenantId: row.tenant_id,
     tenantKey: row.tenant_key,
+    environment: resolveRequestEnvironment(request),
     userId: row.user_id,
     email: row.email,
     displayName: row.display_name,
@@ -242,6 +258,7 @@ export async function resolveRequestPrincipal(request: NextRequest): Promise<Req
   return {
     tenantId: row.tenant_id,
     tenantKey: row.tenant_key,
+    environment: resolveRequestEnvironment(request),
     userId: row.user_id,
     email: row.email,
     displayName: row.display_name,
