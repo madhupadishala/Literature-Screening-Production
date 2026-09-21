@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 
 import { canonicalSha256 } from "../lib/safety/common/canonical-json";
 import { buildE2BR3CasePayload } from "../lib/safety/common/case-payload-builder";
@@ -12,6 +14,36 @@ import {
   validateE2BR3CasePayload,
   validateIntakeDraft,
 } from "../lib/safety/common/safety-validation";
+
+const migration = readFileSync(
+  path.join(process.cwd(), "database/migrations/022_nexus_common_safety_backbone.sql"),
+  "utf8",
+);
+for (const requiredTable of [
+  "safety_sources",
+  "safety_intake_records",
+  "safety_patients",
+  "safety_reporters",
+  "safety_products",
+  "safety_events",
+  "safety_tests",
+  "safety_cases",
+  "safety_case_versions",
+  "safety_product_event_assessments",
+  "safety_review_tasks",
+  "safety_evidence_links",
+]) {
+  assert.equal(
+    migration.includes(`CREATE TABLE IF NOT EXISTS ${requiredTable}`),
+    true,
+    `Migration 022 is missing ${requiredTable}.`,
+  );
+  assert.equal(
+    migration.split(`CREATE TABLE IF NOT EXISTS ${requiredTable}`).length - 1,
+    1,
+    `Migration 022 defines ${requiredTable} more than once.`,
+  );
+}
 
 assert.equal(E2B_PROFILE, "ICH_E2B_R3");
 assert.equal(E2B_R3_SECTIONS.CASE_IDENTIFICATION_AND_SOURCE, "C");
