@@ -72,7 +72,7 @@ export interface SaveScreeningReviewInput {
 export interface ScreeningWorkflowMutation {
   packageId: string;
   screeningResultId: string;
-  workflowState: "SCREENING_REVIEW" | "SCREENING_COMPLETE";
+  workflowState: "SCREENING_REVIEW" | "SCREENING_COMPLETE" | "REVIEW_READY";
   reviewStatus: ScreeningReviewStatus;
   finalDecision: ScreeningDecision;
   reviewVersion: number;
