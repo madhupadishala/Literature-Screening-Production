@@ -676,7 +676,7 @@ export default function ScreeningPage() {
 
         .metrics-grid {
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
+          grid-template-columns: repeat(6, 1fr);
           gap: 12px;
           margin-bottom: 18px;
         }
