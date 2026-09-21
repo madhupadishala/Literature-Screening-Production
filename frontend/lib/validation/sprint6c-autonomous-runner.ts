@@ -67,9 +67,9 @@ export interface Sprint6CAutonomousReport {
   };
   validationReportArtifactSha256: string;
   automationDisclosure: {
-    syntheticValidationOnly: true;
-    automatedReviewerSimulation: true;
-    productionHumanGatesUnchanged: true;
+    syntheticValidationOnly: boolean;
+    automatedReviewerSimulation: boolean;
+    productionHumanGatesUnchanged: boolean;
   };
 }
 
