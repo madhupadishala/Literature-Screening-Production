@@ -38,13 +38,13 @@ export default function WorkflowMetrics({
 }: WorkflowMetricsProps) {
   return (
     <section className="metrics" aria-label="Workflow metrics">
-      <MetricCard label="Evidence Packages" value={total} />
+      <MetricCard label="Article Packages" value={total} />
       <MetricCard label="Completed" value={completed} tone="success" />
-      <MetricCard label="Pending Review" value={pending} tone="warning" />
+      <MetricCard label="In Governed Workflow" value={pending} tone="warning" />
       <MetricCard label="Running" value={running} tone="primary" />
       <MetricCard label="Hits Identified" value={hits} tone="cyan" />
       <MetricCard label="Screening Results" value={screening} tone="primary" />
-      <MetricCard label="Downstream Outputs" value={output} tone="success" />
+      <MetricCard label="Intake Outputs" value={output} tone="success" />
 
       <style jsx>{`
         .metrics {

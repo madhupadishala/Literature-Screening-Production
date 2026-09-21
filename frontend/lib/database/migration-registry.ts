@@ -108,4 +108,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "017_validation_packages.sql",
     required: true,
   },
+  {
+    id: "018",
+    name: "Search Evidence and Medical Review",
+    filename: "018_search_evidence_and_medical_review.sql",
+    required: true,
+  },
 ] as const;

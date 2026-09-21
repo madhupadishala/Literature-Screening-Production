@@ -10,6 +10,7 @@ const modules = [
   { label: "Workflow", path: "/workflow" },
   { label: "Hits", path: "/hits" },
   { label: "Screening", path: "/screening" },
+  { label: "Review / MR", path: "/review" },
   { label: "Reports", path: "/reports" },
   { label: "Administration", path: "/admin" },
 ];
@@ -107,7 +108,7 @@ export default function Navigation() {
         </div>
         <div className="boundary">
           <span>Validated boundary</span>
-          <strong>Search → Hits → Screening → Output</strong>
+          <strong>Search/Retrieval → Hits → Screening → Review/MR → Intake</strong>
         </div>
       </nav>
       <div className="validation">

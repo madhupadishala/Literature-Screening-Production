@@ -7,7 +7,13 @@ export const SUPPORTED_SOURCE_KEYS = [
 export type SupportedSourceKey =
   (typeof SUPPORTED_SOURCE_KEYS)[number];
 
+export type SearchExecutionPurpose =
+  | "TEST_VALIDATION"
+  | "MANUAL_PRODUCTION"
+  | "SCHEDULED_PRODUCTION";
+
 export interface AdHocSearchCriteria {
+  executionPurpose?: SearchExecutionPurpose;
   searchString?: string;
   pmid?: string;
   doi?: string;
@@ -93,4 +99,10 @@ export interface AdHocSearchExecution {
   connectorErrors: Record<string, string>;
   results: Array<NormalizedLiteratureResult & { id: string }>;
   durationMs: number;
+  executionPurpose: SearchExecutionPurpose;
+  searchEvidencePackage?: {
+    packageId: string;
+    packageKey: string;
+    sha256: string;
+  };
 }

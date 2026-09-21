@@ -12,9 +12,7 @@ export type WorkflowPackage = {
 
 type WorkflowTableProps = {
   packages: WorkflowPackage[];
-  runningPackage: string | null;
   onOpenPackage: (packageId: string) => void;
-  onRunWorkflow: (packageId: string) => void;
 };
 
 const STATUS_LABELS: Record<string, string> = {
@@ -23,7 +21,10 @@ const STATUS_LABELS: Record<string, string> = {
   HITS_COMPLETE: "Hits Complete",
   SCREENING_RUNNING: "Screening Running",
   SCREENING_COMPLETE: "Screening Complete",
-  INTAKE_INPUT_CREATED: "Downstream Output Ready",
+  REVIEW_READY: "Review Ready",
+  REVIEW_IN_PROGRESS: "Review In Progress",
+  REVIEW_COMPLETE: "Review Complete",
+  INTAKE_INPUT_CREATED: "Intake Ready",
 };
 
 function progressFor(pkg: WorkflowPackage) {
@@ -34,18 +35,14 @@ function progressFor(pkg: WorkflowPackage) {
     HITS_RUNNING: 28,
     HITS_COMPLETE: 48,
     SCREENING_RUNNING: 67,
-    SCREENING_COMPLETE: 84,
+    SCREENING_COMPLETE: 72,
+    REVIEW_READY: 78,
+    REVIEW_IN_PROGRESS: 86,
+    REVIEW_COMPLETE: 94,
     INTAKE_INPUT_CREATED: 100,
   };
 
   return states[pkg.status] ?? 0;
-}
-
-function actionLabel(status: string, running: boolean) {
-  if (running) return "Running…";
-  if (status === "INTAKE_INPUT_CREATED") return "View Output";
-  if (status === "SCREENING_COMPLETE") return "Generate Output";
-  return "Run Workflow";
 }
 
 function formatDate(value?: string) {
@@ -65,9 +62,7 @@ function formatDate(value?: string) {
 
 export default function WorkflowTable({
   packages,
-  runningPackage,
   onOpenPackage,
-  onRunWorkflow,
 }: WorkflowTableProps) {
   return (
     <div className="table-wrap">
@@ -81,7 +76,7 @@ export default function WorkflowTable({
             <th>Progress</th>
             <th>Hits</th>
             <th>Screening</th>
-            <th>Output</th>
+            <th>Intake</th>
             <th>Updated</th>
             <th aria-label="Workflow action">Action</th>
           </tr>
@@ -89,7 +84,6 @@ export default function WorkflowTable({
 
         <tbody>
           {packages.map((pkg) => {
-            const running = runningPackage === pkg.package_id;
             const progress = progressFor(pkg);
 
             return (
@@ -118,19 +112,12 @@ export default function WorkflowTable({
                 <td>
                   <button
                     type="button"
-                    disabled={running}
                     onClick={(event) => {
                       event.stopPropagation();
-
-                      if (pkg.status === "INTAKE_INPUT_CREATED") {
-                        onOpenPackage(pkg.package_id);
-                        return;
-                      }
-
-                      onRunWorkflow(pkg.package_id);
+                      onOpenPackage(pkg.package_id);
                     }}
                   >
-                    {actionLabel(pkg.status, running)}
+                    Open Package
                   </button>
                 </td>
               </tr>
@@ -245,9 +232,16 @@ export default function WorkflowTable({
           background: #cffafe;
         }
 
-        .status.screening_complete {
+        .status.screening_complete,
+        .status.review_ready,
+        .status.review_in_progress {
           color: #6b21a8;
           background: #f3e8ff;
+        }
+
+        .status.review_complete {
+          color: #0f766e;
+          background: #ccfbf1;
         }
 
         .status.intake_input_created {

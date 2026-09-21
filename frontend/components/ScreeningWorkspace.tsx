@@ -54,7 +54,6 @@ type Props = {
   onExclude: (reason: string) => void;
   onSave: (reason: string) => void;
   onRerunAI: (reason: string) => void;
-  onGenerateIntakeInput: (reason: string) => void;
 };
 
 const tabs = [
@@ -88,11 +87,10 @@ export default function ScreeningWorkspace({
   onExclude,
   onSave,
   onRerunAI,
-  onGenerateIntakeInput,
 }: Props) {
   const [modal, setModal] = useState<null | {
     title: string;
-    action: "approve" | "exclude" | "save" | "rerun" | "generate";
+    action: "approve" | "exclude" | "save" | "rerun";
   }>(null);
 
   function submitReason(reason: string) {
@@ -102,8 +100,6 @@ export default function ScreeningWorkspace({
     if (modal.action === "exclude") onExclude(reason);
     if (modal.action === "save") onSave(reason);
     if (modal.action === "rerun") onRerunAI(reason);
-    if (modal.action === "generate") onGenerateIntakeInput(reason);
-
     setModal(null);
   }
 
@@ -137,8 +133,9 @@ export default function ScreeningWorkspace({
             </>
           ) : article.company_applicability === "CONFIRMED" && article.active_mah === "ACTIVE" ? (
             <>
-              Approval finalizes the governed Screening decision. The downstream
-              <strong> intake_input.json</strong> is generated only by the separate next-stage action.
+              Approval finalizes the governed Screening decision and creates a
+              <strong> Review / MR workspace</strong>. Patient segmentation, labeling / expectedness,
+              causality and Medical Review occur before any Intake output can be generated.
             </>
           ) : (
             <>
@@ -308,22 +305,9 @@ export default function ScreeningWorkspace({
             <button
               type="button"
               className="primary-action"
-              onClick={() => {
-                if (article.intake_export_id) {
-                  window.location.assign(
-                    `/api/literature/intake-input/${article.intake_export_id}`,
-                  );
-                  return;
-                }
-                setModal({
-                  title: "Reason required to generate governed intake_input.json",
-                  action: "generate",
-                });
-              }}
+              onClick={() => window.location.assign("/review")}
             >
-              {article.intake_export_id
-                ? "Download intake_input.json"
-                : "Generate intake_input.json"}
+              Continue to Review / MR
             </button>
           )}
 

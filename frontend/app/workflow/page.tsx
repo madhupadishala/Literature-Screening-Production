@@ -12,10 +12,6 @@ import WorkflowPagination from "@/components/workflow/WorkflowPagination";
 
 const PAGE_SIZE_DEFAULT = 10;
 
-function isWorkflowRunnable(status: string) {
-  return status !== "INTAKE_INPUT_CREATED" && !status.includes("RUNNING");
-}
-
 function normalize(value: unknown) {
   return String(value || "").toLowerCase();
 }
@@ -25,7 +21,6 @@ export default function WorkflowPage() {
 
   const [packages, setPackages] = useState<WorkflowPackage[]>([]);
   const [loading, setLoading] = useState(true);
-  const [runningPackage, setRunningPackage] = useState<string | null>(null);
   const [toast, setToast] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -132,60 +127,8 @@ export default function WorkflowPage() {
   const startItem = filteredPackages.length === 0 ? 0 : startIndex + 1;
   const endItem = Math.min(endIndex, filteredPackages.length);
 
-  async function runWorkflow(packageId: string) {
-    try {
-      setRunningPackage(packageId);
-
-      const response = await fetch("/api/workflow/run", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          tenant_id: "demo-tenant",
-          package_id: packageId,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        showToast(data.error || "Workflow execution failed.");
-        return;
-      }
-
-      showToast(
-        `Workflow completed · Hits ${data.hits_count || 0} · Screening ${
-          data.screening_count || 0
-        } · Downstream outputs ${data.intake_input_count || 0}`,
-      );
-
-      await loadPackages();
-    } catch {
-      showToast("Workflow execution failed.");
-    } finally {
-      setRunningPackage(null);
-    }
-  }
-
   function openPackage(packageId: string) {
     router.push(`/workflow/${encodeURIComponent(packageId)}`);
-  }
-
-  function handleRunWorkflow(packageId: string) {
-    const selectedPackage = packages.find((item) => item.package_id === packageId);
-
-    if (!selectedPackage) {
-      showToast("Evidence package not found.");
-      return;
-    }
-
-    if (!isWorkflowRunnable(selectedPackage.status)) {
-      openPackage(packageId);
-      return;
-    }
-
-    void runWorkflow(packageId);
   }
 
   function clearFilters() {
@@ -200,15 +143,15 @@ export default function WorkflowPage() {
       <Navigation />
       <InvestorDemoHeader
         title="Literature Workflow Control Center"
-        subtitle="Track every evidence package through product-aware Hits, medically governed Screening, human review and a traceable downstream output."
+        subtitle="Track each governed article package through Hits, article-level Screening, Review / Medical Review and controlled Intake preparation. Stage-specific actions remain inside their owning workspaces."
       />
 
       <section className="scope-strip">
         <div>
           <span>Controlled boundary</span>
-          <strong>Evidence → Hits → Screening → Downstream Output</strong>
+          <strong>Hits → Screening → Review / MR → Intake</strong>
         </div>
-        <p>Case processing and submission are outside this Literature workspace.</p>
+        <p>Search testing stays outside this workflow until explicit promotion. Case processing and submission remain downstream.</p>
       </section>
 
       <WorkflowToolbar
@@ -264,9 +207,7 @@ export default function WorkflowPage() {
 
         <WorkflowTable
           packages={paginatedPackages}
-          runningPackage={runningPackage}
           onOpenPackage={openPackage}
-          onRunWorkflow={handleRunWorkflow}
         />
 
         <WorkflowPagination

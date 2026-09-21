@@ -11,8 +11,10 @@ import {
   completeSearchExecution,
   createSearchExecution,
   listLiteratureSources,
+  recordSearchAuditEvent,
   storeSearchResults,
 } from "@/lib/literature/adhoc-search/search-repository";
+import { createSearchEvidencePackage } from "@/lib/literature/adhoc-search/search-evidence-package-service";
 import type {
   AdHocSearchCriteria,
   AdHocSearchExecution,
@@ -60,7 +62,9 @@ export async function executeAdHocSearch(input: {
   criteria: AdHocSearchCriteria;
 }): Promise<AdHocSearchExecution> {
   const started = Date.now();
+  const startedAt = new Date(started).toISOString();
   const criteria = normalizeSearchCriteria(input.criteria);
+  const executionPurpose = criteria.executionPurpose || "TEST_VALIDATION";
   const allSources = await listLiteratureSources(input.principal);
 
   const requestedSourceKeys = criteria.sourceKeys || [];
@@ -102,6 +106,19 @@ export async function executeAdHocSearch(input: {
     principal: input.principal,
     criteria,
     selectedSources: executableSources.map((source) => source.sourceKey),
+  });
+
+  await recordSearchAuditEvent({
+    principal: input.principal,
+    searchId: search.id,
+    searchKey: search.searchKey,
+    executionPurpose,
+    phase: "STARTED",
+    outcome: "started",
+    details: {
+      criteria,
+      selectedSources: executableSources.map((source) => source.sourceKey),
+    },
   });
 
   const connectorOutputs = await Promise.allSettled(
@@ -163,6 +180,43 @@ export async function executeAdHocSearch(input: {
     connectorErrors,
   });
 
+  const completedAt = new Date().toISOString();
+  const searchEvidencePackage = await createSearchEvidencePackage({
+    principal: input.principal,
+    searchId: search.id,
+    searchKey: search.searchKey,
+    executionPurpose,
+    criteria,
+    selectedSources: executableSources.map((source) => source.sourceKey),
+    translatedQueries,
+    connectorErrors,
+    resultCount: storedResults.length,
+    status,
+    durationMs,
+    startedAt,
+    completedAt,
+  });
+
+  await recordSearchAuditEvent({
+    principal: input.principal,
+    searchId: search.id,
+    searchKey: search.searchKey,
+    executionPurpose,
+    phase: "COMPLETED",
+    outcome:
+      status === "completed"
+        ? "success"
+        : status === "partial"
+          ? "partial"
+          : "failure",
+    details: {
+      resultCount: storedResults.length,
+      durationMs,
+      connectorErrors,
+      searchEvidencePackageKey: searchEvidencePackage?.packageKey || null,
+    },
+  });
+
   return {
     searchId: search.id,
     searchKey: search.searchKey,
@@ -173,5 +227,7 @@ export async function executeAdHocSearch(input: {
     connectorErrors,
     results: storedResults,
     durationMs,
+    executionPurpose,
+    searchEvidencePackage,
   };
 }
