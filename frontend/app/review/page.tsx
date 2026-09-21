@@ -80,6 +80,42 @@ type ActiveCausalityMethod = {
   methodology?: string;
 };
 
+type SourceEvidence = {
+  location: "TITLE" | "ABSTRACT";
+  quote: string;
+};
+
+type PatientExtractionSuggestion = {
+  suggestionKey: string;
+  patientLabel: string;
+  identifiablePatientStatus: "PRESENT" | "ABSENT" | "UNRESOLVED";
+  patientEvidence: SourceEvidence;
+  age?: string;
+  ageEvidence?: SourceEvidence;
+  sex?: string;
+  sexEvidence?: SourceEvidence;
+  country?: string;
+  countryEvidence?: SourceEvidence;
+  products: Array<{ name: string; evidence: SourceEvidence }>;
+  events: Array<{ name: string; evidence: SourceEvidence }>;
+};
+
+type PatientExtractionExecution = {
+  runId: string;
+  runVersion: number;
+  sourceSha256: string;
+  provider: string;
+  model: string;
+  requestId: string;
+  createdAt: string;
+  classification: "SINGLE_PATIENT" | "MULTIPLE_PATIENTS" | "NO_PATIENT" | "UNRESOLVED";
+  confidence: number;
+  rationale: string;
+  patients: PatientExtractionSuggestion[];
+  warnings: string[];
+  sourceGovernanceCorrections: string[];
+};
+
 type ReviewDetail = ReviewRecord & {
   patientSegments: PatientSegment[];
   labelAssessments: LabelAssessment[];
@@ -96,6 +132,7 @@ type ReviewDetail = ReviewRecord & {
   screeningResult: Record<string, unknown>;
   labelReferences: ActiveLabelReference[];
   causalityMethods: ActiveCausalityMethod[];
+  latestPatientExtraction?: PatientExtractionExecution;
 };
 
 function list(values: string[]): string {
@@ -104,7 +141,7 @@ function list(values: string[]): string {
 
 function statusClass(value: string): string {
   const normalized = value.toUpperCase();
-  if (["COMPLETE", "APPROVED"].includes(normalized)) return "ok";
+  if (["COMPLETE", "APPROVED", "NOT_APPLICABLE"].includes(normalized)) return "ok";
   if (["NOT_CONFIGURED", "UNRESOLVED", "REVIEW_REQUIRED", "BLOCKED"].includes(normalized)) {
     return "warn";
   }
@@ -184,6 +221,7 @@ export default function ReviewPage() {
   const [patients, setPatients] = useState<PatientSegment[]>([]);
   const [labels, setLabels] = useState<LabelAssessment[]>([]);
   const [causality, setCausality] = useState<CausalityAssessment[]>([]);
+  const [patientExtraction, setPatientExtraction] = useState<PatientExtractionExecution | undefined>();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState("");
   const [message, setMessage] = useState("");
@@ -231,6 +269,7 @@ export default function ReviewPage() {
       setPatients(Array.isArray(detail.patientSegments) ? detail.patientSegments : []);
       setLabels(detail.labelAssessments?.length ? detail.labelAssessments : []);
       setCausality(detail.causalityAssessments?.length ? detail.causalityAssessments : []);
+      setPatientExtraction(detail.latestPatientExtraction);
       setMrStatus(
         detail.medicalReview?.reviewStatus === "APPROVED" ||
           detail.medicalReview?.reviewStatus === "EXCLUDED"
@@ -273,6 +312,70 @@ export default function ReviewPage() {
     } finally {
       setSaving("");
     }
+  }
+
+  async function runPatientExtraction() {
+    if (!selected) return;
+    if (auditReason.trim().length < 8) {
+      setMessage("Enter a specific audit reason before running governed patient extraction.");
+      return;
+    }
+    setSaving("Patient extraction");
+    try {
+      const response = await fetch("/api/literature/review/patient-extraction", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          workspaceId: selected.workspaceId,
+          reason: auditReason,
+        }),
+      });
+      const payload = await response.json();
+      if (!response.ok || !payload?.success) {
+        throw new Error(payload?.error || "Patient extraction failed.");
+      }
+      const extraction = payload.data.extraction as PatientExtractionExecution;
+      setPatientExtraction(extraction);
+      setMessage(
+        `AI proposed ${extraction.patients.length} patient segment(s). Review the source-linked evidence before applying suggestions.`,
+      );
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : String(error));
+    } finally {
+      setSaving("");
+    }
+  }
+
+  function applyPatientExtractionSuggestions() {
+    if (!patientExtraction) return;
+    const suggestions: PatientSegment[] = patientExtraction.patients.map((suggestion) => {
+      const evidenceLines = [
+        `Patient evidence [${suggestion.patientEvidence.location}]: ${suggestion.patientEvidence.quote}`,
+        ...suggestion.products.map(
+          (product) =>
+            `Product ${product.name} [${product.evidence.location}]: ${product.evidence.quote}`,
+        ),
+        ...suggestion.events.map(
+          (event) =>
+            `Event ${event.name} [${event.evidence.location}]: ${event.evidence.quote}`,
+        ),
+      ];
+      return {
+        patientSegmentKey: suggestion.suggestionKey,
+        patientLabel: suggestion.patientLabel,
+        identifiablePatientStatus: suggestion.identifiablePatientStatus,
+        age: suggestion.age,
+        sex: suggestion.sex,
+        country: suggestion.country,
+        evidence: evidenceLines.join("\n"),
+        products: suggestion.products.map((product) => product.name),
+        events: suggestion.events.map((event) => event.name),
+      };
+    });
+    setPatients(suggestions);
+    setMessage(
+      "AI suggestions copied into the editable segmentation form. Nothing is governed until you review and click Save Segmentation.",
+    );
   }
 
   function addPatient() {
@@ -362,7 +465,7 @@ export default function ReviewPage() {
       <section className="boundary-note">
         <strong>Governance boundary</strong>
         <span>
-          Screening is article-level. Review / MR is patient-product-event level. Intake remains blocked until Review is complete.
+          Screening is article-level. Review / MR is patient-product-event level. Zero-patient articles make labeling and causality not applicable; Intake remains blocked until an approved Review is complete.
         </span>
       </section>
 
@@ -448,6 +551,97 @@ export default function ReviewPage() {
                 <button type="button" onClick={addPatient}>+ Add Patient</button>
               </div>
               <p>Use internal segment keys only. Do not invent patient identifiers that are not present in source evidence.</p>
+
+              <div className="extraction-panel">
+                <div className="step-head">
+                  <div>
+                    <strong>Source-linked AI Patient Extraction</strong>
+                    <small>Suggestions only · human confirmation required</small>
+                  </div>
+                  <button type="button" disabled={Boolean(saving)} onClick={() => void runPatientExtraction()}>
+                    {saving === "Patient extraction" ? "Extracting…" : "Run AI Extraction"}
+                  </button>
+                </div>
+
+                {patientExtraction ? (
+                  <>
+                    <div className="extraction-meta">
+                      <span>{patientExtraction.classification.replaceAll("_", " ")}</span>
+                      <span>{Math.round(patientExtraction.confidence)}% confidence</span>
+                      <span>Run v{patientExtraction.runVersion}</span>
+                      <span>{patientExtraction.provider} · {patientExtraction.model}</span>
+                    </div>
+                    <p>{patientExtraction.rationale || "No extraction rationale provided."}</p>
+
+                    {patientExtraction.patients.map((suggestion) => (
+                      <article className="suggestion-card" key={suggestion.suggestionKey}>
+                        <div className="suggestion-title">
+                          <strong>{suggestion.suggestionKey} · {suggestion.patientLabel}</strong>
+                          <Status value={suggestion.identifiablePatientStatus} />
+                        </div>
+                        <blockquote>
+                          <b>{suggestion.patientEvidence.location}</b> · “{suggestion.patientEvidence.quote}”
+                        </blockquote>
+                        <div className="suggestion-facts">
+                          <span>Age: {suggestion.age || "—"}</span>
+                          <span>Sex: {suggestion.sex || "—"}</span>
+                          <span>Country: {suggestion.country || "UNRESOLVED"}</span>
+                        </div>
+                        <div className="evidence-grid">
+                          <div>
+                            <b>Products</b>
+                            {suggestion.products.map((product) => (
+                              <p key={product.name + product.evidence.quote}>
+                                <strong>{product.name}</strong><br />
+                                {product.evidence.location}: “{product.evidence.quote}”
+                              </p>
+                            ))}
+                          </div>
+                          <div>
+                            <b>Events</b>
+                            {suggestion.events.map((event) => (
+                              <p key={event.name + event.evidence.quote}>
+                                <strong>{event.name}</strong><br />
+                                {event.evidence.location}: “{event.evidence.quote}”
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+
+                    {patientExtraction.warnings.length > 0 && (
+                      <div className="extraction-warning">
+                        <strong>AI extraction warnings</strong>
+                        <ul>{patientExtraction.warnings.map((warning) => <li key={warning}>{warning}</li>)}</ul>
+                      </div>
+                    )}
+
+                    {patientExtraction.sourceGovernanceCorrections.length > 0 && (
+                      <div className="extraction-warning">
+                        <strong>Deterministic source-governance corrections</strong>
+                        <ul>{patientExtraction.sourceGovernanceCorrections.map((correction) => <li key={correction}>{correction}</li>)}</ul>
+                      </div>
+                    )}
+
+                    <button
+                      type="button"
+                      className="secondary"
+                      disabled={patientExtraction.patients.length === 0}
+                      onClick={applyPatientExtractionSuggestions}
+                    >
+                      Apply Suggestions to Editable Form
+                    </button>
+                    <small className="source-hash">Source SHA-256: {patientExtraction.sourceSha256}</small>
+                  </>
+                ) : (
+                  <p>
+                    Run extraction to propose single- or multi-patient segments using only article title/abstract evidence.
+                    No suggestion becomes a governed patient record automatically.
+                  </p>
+                )}
+              </div>
+
               {patients.map((patient, index) => (
                 <div className="patient-card" key={patient.patientSegmentKey + index}>
                   <div className="grid-3">
@@ -706,6 +900,7 @@ export default function ReviewPage() {
         .step{margin:14px 18px 0;padding:16px;border:1px solid #dbe4ef;border-radius:12px;background:#fff}.step-head{display:flex;justify-content:space-between;gap:12px;align-items:center}
         .step h3{margin:6px 0;font-size:15px}.step p{margin:0 0 12px;color:#64748b;font-size:11px;line-height:1.6}
         .patient-card,.assessment-card{margin:12px 0;padding:12px;border:1px solid #e2e8f0;border-radius:10px;background:#f8fafc}.assessment-card strong{display:block;margin-bottom:10px;font-size:11px}
+        .extraction-panel{margin:12px 0;padding:14px;border:1px solid #bfdbfe;border-radius:10px;background:#eff6ff}.extraction-panel small{display:block;margin-top:3px;color:#64748b;font-size:8px}.extraction-meta{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.extraction-meta span{padding:4px 7px;border-radius:999px;background:#dbeafe;color:#1e3a8a;font-size:8px;font-weight:800}.suggestion-card{margin:10px 0;padding:12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff}.suggestion-title{display:flex;justify-content:space-between;gap:10px;align-items:center}.suggestion-title strong{font-size:11px}.suggestion-card blockquote{margin:9px 0;padding:8px 10px;border-left:3px solid #2563eb;background:#f8fafc;color:#334155;font-size:9px;line-height:1.5}.suggestion-facts{display:flex;gap:12px;flex-wrap:wrap;color:#475569;font-size:9px}.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.evidence-grid>div{padding:9px;border:1px solid #e2e8f0;border-radius:7px;background:#f8fafc}.evidence-grid b{font-size:9px}.evidence-grid p{margin:7px 0 0!important;font-size:8px!important;line-height:1.5!important}.extraction-warning{margin:9px 0;padding:9px;border:1px solid #fde68a;border-radius:7px;background:#fffbeb;color:#92400e;font-size:8px}.extraction-warning ul{margin:5px 0 0;padding-left:16px}.source-hash{margin-top:8px!important;word-break:break-all}
         .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.actions{display:flex;gap:8px;flex-wrap:wrap}.hint{align-self:center;color:#64748b;font-size:9px}
         label{display:block;margin-bottom:9px}label span{display:block;margin-bottom:4px;color:#475569;font-size:8px;font-weight:800;text-transform:uppercase}
         input,select{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:7px;padding:8px 9px;background:#fff;color:#0f172a;font:inherit;font-size:10px}

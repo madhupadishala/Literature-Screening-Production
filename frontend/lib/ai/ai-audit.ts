@@ -7,7 +7,7 @@ export type AIAuditStatus = "SUCCESS" | "FAILED" | "FALLBACK";
 
 export interface AIAuditRecord {
   id: string;
-  operation: "hits" | "screening" | "health" | "self_test";
+  operation: "hits" | "screening" | "review_patient_extraction" | "health" | "self_test";
   status: AIAuditStatus;
   tenantId?: string;
   articleId?: string;
