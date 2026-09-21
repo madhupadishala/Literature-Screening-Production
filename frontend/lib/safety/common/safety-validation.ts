@@ -30,15 +30,15 @@ export function assertLanguageCode(
   }
 }
 
-function assertUniqueKeys(
+function assertUniqueKeys<T extends object>(
   label: string,
-  values: Array<{ [key: string]: unknown }>,
-  key: string,
+  values: readonly T[],
+  key: keyof T,
 ): void {
   const seen = new Set<string>();
   for (const value of values) {
-    const current = String(value[key] || "").trim();
-    if (!current) throw new Error(`${label} requires ${key}.`);
+    const current = String(value[key] ?? "").trim();
+    if (!current) throw new Error(`${label} requires ${String(key)}.`);
     if (seen.has(current)) throw new Error(`Duplicate ${label} key: ${current}.`);
     seen.add(current);
   }
