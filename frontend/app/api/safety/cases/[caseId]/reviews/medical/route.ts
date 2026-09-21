@@ -39,6 +39,10 @@ export async function POST(
       comments: body.comments,
       fieldPath: typeof body.fieldPath === "string" ? body.fieldPath : undefined,
       queryText: typeof body.queryText === "string" ? body.queryText : undefined,
+      narrativeText:
+        typeof body.narrativeText === "string" && body.narrativeText.trim()
+          ? body.narrativeText
+          : undefined,
     });
 
     return Response.json({ success: true, data: result });
