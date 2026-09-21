@@ -80,6 +80,12 @@ jobs:
       - name: Verify Nexus Sprint 5 ICSR validity and triage
         run: npm run nexus:sprint5:verify
 
+      - name: Verify Nexus Sprint 6 duplicate and follow-up
+        run: npm run nexus:sprint6:verify
+
+      - name: Verify Nexus Sprint 7 intake disposition
+        run: npm run nexus:sprint7:verify
+
       - name: Build production application
         run: npm run build
 
