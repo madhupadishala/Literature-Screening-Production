@@ -133,16 +133,17 @@ export async function getIntakeWorkspace(input: {
   if (!intakeRecordId) throw new Error("intakeRecordId is required.");
 
   const pool = getPostgresPool();
-  const intake = await ensureIntake(
-    await (async () => {
-      const client = await pool.connect();
-      return client;
-    })(),
-    input.principal.tenantId,
-    intakeRecordId,
-  ).catch((error) => {
-    throw error;
-  });
+  const verificationClient = await pool.connect();
+  let intake: Record<string, unknown>;
+  try {
+    intake = await ensureIntake(
+      verificationClient,
+      input.principal.tenantId,
+      intakeRecordId,
+    );
+  } finally {
+    verificationClient.release();
+  }
 
   // Use pool queries after tenant existence is established; every query remains tenant-scoped.
   const [
@@ -833,29 +834,6 @@ export async function completeIntakeSourceReview(input: {
               updated_at = now()
         WHERE tenant_id = $1 AND id = $2`,
       [input.principal.tenantId, intakeRecordId, input.principal.userId],
-    );
-
-    await client.query(
-      `UPDATE safety_review_tasks
-          SET status = 'COMPLETED',
-              completed_at = now(),
-              outcome = $3::jsonb,
-              updated_at = now()
-        WHERE tenant_id = $1
-          AND entity_type = 'INTAKE_RECORD'
-          AND entity_id = $2
-          AND task_type = 'TRIAGE'
-          AND status IN ('OPEN', 'ASSIGNED', 'IN_PROGRESS')`,
-      [
-        input.principal.tenantId,
-        intakeRecordId,
-        JSON.stringify({
-          sourceReviewVerified: true,
-          verifiedBy: input.principal.userId,
-          reason: reviewReason,
-          note: "Source verification completed. Formal ICSR validity/triage occurs in Sprint 5.",
-        }),
-      ],
     );
 
     await client.query(
