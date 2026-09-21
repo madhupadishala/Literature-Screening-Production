@@ -314,7 +314,8 @@ function queueSql(): string {
       )
       AND workflow.workflow_state IN (
         'HITS_COMPLETE', 'SCREENING_RUNNING', 'SCREENING_REVIEW',
-        'SCREENING_COMPLETE', 'INTAKE_INPUT_CREATED'
+        'SCREENING_COMPLETE', 'REVIEW_READY', 'REVIEW_IN_PROGRESS',
+        'REVIEW_COMPLETE', 'INTAKE_INPUT_CREATED'
       )
   `;
 }
@@ -584,9 +585,11 @@ export async function saveScreeningReview(input: {
     throw new Error("Pending or flagged Screening review must remain REVIEW.");
   }
   const workflowState =
-    review.status === "approved" || review.status === "excluded"
-      ? "SCREENING_COMPLETE"
-      : "SCREENING_REVIEW";
+    review.status === "approved"
+      ? "REVIEW_READY"
+      : review.status === "excluded"
+        ? "SCREENING_COMPLETE"
+        : "SCREENING_REVIEW";
   const client = await getPostgresPool().connect();
 
   try {
@@ -679,6 +682,47 @@ export async function saveScreeningReview(input: {
         input.principal.userId,
       ],
     );
+    if (review.status === "approved" && review.finalDecision === "INCLUDE") {
+      const workspace = await client.query<{ id: string }>(
+        `INSERT INTO literature_review_workspaces (
+           tenant_id, package_id, screening_result_id, status,
+           patient_segmentation_status, labeling_status, causality_status,
+           mr_review_status, created_by, updated_by
+         ) VALUES ($1, $2, $3, 'READY', 'PENDING', 'NOT_CONFIGURED',
+           'NOT_CONFIGURED', 'PENDING', $4, $4)
+         ON CONFLICT (tenant_id, package_id, screening_result_id)
+         DO UPDATE SET updated_by = EXCLUDED.updated_by, updated_at = now()
+         RETURNING id`,
+        [
+          input.principal.tenantId,
+          review.packageId,
+          review.screeningResultId,
+          input.principal.userId,
+        ],
+      );
+      await client.query(
+        `INSERT INTO audit_events (
+           tenant_id, package_id, actor_id, event_type,
+           event_category, outcome, details
+         ) VALUES ($1, $2, $3, 'REVIEW_WORKSPACE_CREATED',
+           'LITERATURE_REVIEW', 'success', $4::jsonb)`,
+        [
+          input.principal.tenantId,
+          review.packageId,
+          input.principal.userId,
+          JSON.stringify({
+            reviewWorkspaceId: workspace.rows[0].id,
+            screeningResultId: review.screeningResultId,
+            workflowState: "REVIEW_READY",
+            patientSegmentationStatus: "PENDING",
+            labelingStatus: "NOT_CONFIGURED",
+            causalityStatus: "NOT_CONFIGURED",
+            mrReviewStatus: "PENDING",
+          }),
+        ],
+      );
+    }
+
     await client.query(
       `INSERT INTO audit_events (
          tenant_id, package_id, actor_id, event_type,
