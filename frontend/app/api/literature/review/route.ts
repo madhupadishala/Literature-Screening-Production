@@ -12,7 +12,7 @@ export async function GET(request: NextRequest): Promise<Response> {
   try {
     const principal = await requirePermission(
       request,
-      PERMISSIONS.SCREENING_REVIEW,
+      PERMISSIONS.REVIEW_VIEW,
     );
     const rawLimit = Number(request.nextUrl.searchParams.get("limit") || 250);
     const records = await listReviewWorklist({

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import Navigation from "@/components/Navigation";
+import ReviewWorkspaceDrawer from "@/components/review/ReviewWorkspaceDrawer";
 
 type ReviewRecord = {
   workspaceId: string;
@@ -88,13 +89,13 @@ export default function ReviewPage() {
         eyebrow="POST-SCREENING GOVERNED REVIEW"
         title="Review & Medical Review Workspace"
         subtitle="Case-level review begins only after an approved Screening INCLUDE. Patient segmentation, labeling / expectedness, causality and Medical Reviewer decisions are controlled separately from article-level Screening."
-        status="Architecture boundary active"
+        status="Operational Review / MR workflow"
       />
 
       <section className="boundary-note">
         <strong>Review boundary</strong>
         <span>
-          Screening approval does not create an Intake output. Review / MR must be completed first.
+          Screening approval creates this governed Review workspace. Patient segmentation is confirmed first, then product-event expectedness, causality and Medical Review are completed before Intake.
         </span>
       </section>
 
@@ -180,63 +181,11 @@ export default function ReviewPage() {
       </section>
 
       {selected && (
-        <div className="drawer-backdrop">
-          <aside className="drawer" aria-label="Medical Review workspace">
-            <header className="drawer-header">
-              <div>
-                <span>Review / MR workspace</span>
-                <h2>{selected.title}</h2>
-                <p>PMID {selected.pmid} · {selected.workflowState}</p>
-              </div>
-              <button type="button" onClick={() => setSelected(null)} aria-label="Close">
-                ×
-              </button>
-            </header>
-
-            <section className="step">
-              <span>1 · Patient / Case Segmentation</span>
-              <h3>{selected.patientSegmentationStatus}</h3>
-              <p>
-                The reviewer must determine whether the article contains zero, one or multiple
-                potentially reportable patients before product-event assessment is finalized.
-              </p>
-            </section>
-
-            <section className="step">
-              <span>2 · Labeling / Expectedness</span>
-              <h3>{selected.labelingStatus}</h3>
-              <p>
-                Expectedness is case-product-event specific. The engine must use an approved,
-                effective Label / RSI reference for the applicable product, country and date.
-                No label reference means no invented EXPECTED or UNEXPECTED conclusion.
-              </p>
-            </section>
-
-            <section className="step">
-              <span>3 · Causality</span>
-              <h3>{selected.causalityStatus}</h3>
-              <p>
-                Causality is case-product-event specific. AI may extract chronology,
-                dechallenge / rechallenge and alternative causes, but the final assessment
-                requires the approved client causality method and governed reviewer oversight.
-              </p>
-            </section>
-
-            <section className="step">
-              <span>4 · Medical Reviewer Decision</span>
-              <h3>{selected.mrReviewStatus}</h3>
-              <p>
-                MR finalization remains blocked until the required case segmentation,
-                labeling and causality evidence is complete or explicitly governed as unresolved.
-              </p>
-            </section>
-
-            <div className="gate">
-              Intake generation is intentionally unavailable from this workspace until the
-              complete Review / MR workflow and configuration gates are implemented.
-            </div>
-          </aside>
-        </div>
+        <ReviewWorkspaceDrawer
+          workspaceId={selected.workspaceId}
+          onClose={() => setSelected(null)}
+          onUpdated={() => void load()}
+        />
       )}
 
       <style jsx>{`
