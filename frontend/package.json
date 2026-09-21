@@ -35,6 +35,7 @@
     "nexus:sprint1:verify": "node --import tsx scripts/verify-nexus-sprint1.ts",
     "nexus:sprint2:verify": "node --import tsx scripts/verify-nexus-sprint2.ts",
     "nexus:sprint3:verify": "node --import tsx scripts/verify-nexus-sprint3.ts",
+    "nexus:sprint4:verify": "node --import tsx scripts/verify-nexus-sprint4.ts",
     "validate:e2e": "node scripts/validate-enterprise-e2e.mjs",
     "validate:e2e:offline": "node scripts/validate-enterprise-e2e.mjs --offline",
     "deployment:verify": "node scripts/verify-azure-deployment-foundation.mjs",
