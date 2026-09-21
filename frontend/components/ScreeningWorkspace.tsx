@@ -167,7 +167,13 @@ export default function ScreeningWorkspace({
             <Section title="Review Overview">
               <Row
                 label="QC Requirement"
-                value={article.qc_required ? "Required" : "Not required"}
+                value={
+                  article.execution_status === "ready"
+                    ? "Not evaluated — Screening AI pending"
+                    : article.qc_required
+                      ? "Required"
+                      : "Not required"
+                }
               />
               <Row label="Journal" value={article.journal} />
               <Row label="Publication Date" value={article.publication_date} />
