@@ -5,6 +5,7 @@ import type { PoolClient } from "pg";
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 import { buildE2BR3CasePayload } from "@/lib/safety/common/case-payload-builder";
+import { canonicalSha256 } from "@/lib/safety/common/canonical-json";
 import {
   createSafetyCaseVersionInTransaction,
   type CaseVersionSummary,
@@ -1101,14 +1102,16 @@ export async function finalizeSafetyCase(input: {
       [input.principal.tenantId, input.caseId],
     );
 
+    const finalNarrativeSha256 = canonicalSha256({
+      narrativeText: context.narrative.narrative_text,
+    });
+
     await client.query(
       `INSERT INTO safety_case_narrative_versions (
          tenant_id, case_id, narrative_version, narrative_stage,
          narrative_text, source_revision, change_reason,
          narrative_sha256, created_by
-       )
-       SELECT $1,$2,$3,'FINAL',$4,$5,$6,
-              encode(digest(convert_to($4, 'UTF8'), 'sha256'), 'hex'),$7`,
+       ) VALUES ($1,$2,$3,'FINAL',$4,$5,$6,$7,$8)`,
       [
         input.principal.tenantId,
         input.caseId,
@@ -1116,6 +1119,7 @@ export async function finalizeSafetyCase(input: {
         context.narrative.narrative_text,
         Number(context.caseRow.current_draft_revision),
         finalReason,
+        finalNarrativeSha256,
         input.principal.userId,
       ],
     );
