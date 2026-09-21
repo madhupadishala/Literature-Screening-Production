@@ -45,6 +45,13 @@ assert.throws(
 );
 
 const companyAssessment = confirmedAssessment();
+const completeReviewGate = {
+  reviewWorkspaceStatus: "REVIEW_COMPLETE",
+  patientSegmentationStatus: "COMPLETE",
+  labelingStatus: "COMPLETE",
+  causalityStatus: "COMPLETE",
+  mrReviewStatus: "APPROVED",
+} as const;
 assert.equal(
   extractCompanyAssessmentsFromScreeningPayload({
     result: { companySuspectAssessments: [companyAssessment] },
@@ -54,12 +61,13 @@ assert.equal(
 
 assert.doesNotThrow(() =>
   assertIntakeGenerationGate({
-    workflowState: "SCREENING_COMPLETE",
+    workflowState: "REVIEW_COMPLETE",
     screeningReviewStatus: "approved",
     screeningFinalDecision: "INCLUDE",
     hitsReviewStatus: "approved",
     hitsReviewDecision: "accept_ai",
     companyAssessments: [companyAssessment],
+    ...completeReviewGate,
   }),
 );
 
@@ -72,6 +80,7 @@ assert.throws(
       hitsReviewStatus: null,
       hitsReviewDecision: null,
       companyAssessments: [companyAssessment],
+      ...completeReviewGate,
     }),
   /completed human Hits review/i,
 );
@@ -93,6 +102,7 @@ assert.throws(
           manualReviewRequired: true,
         },
       ],
+      ...completeReviewGate,
     }),
   /cannot be generated/i,
 );
@@ -106,8 +116,38 @@ assert.throws(
       hitsReviewStatus: "approved",
       hitsReviewDecision: "accept_ai",
       companyAssessments: [companyAssessment],
+      ...completeReviewGate,
     }),
   /workflow state/i,
 );
 
-console.log("Sprint 4 intake-input governance verification passed.");
+assert.throws(
+  () =>
+    assertIntakeGenerationGate({
+      workflowState: "SCREENING_COMPLETE",
+      screeningReviewStatus: "approved",
+      screeningFinalDecision: "INCLUDE",
+      hitsReviewStatus: "approved",
+      hitsReviewDecision: "accept_ai",
+      companyAssessments: [companyAssessment],
+      ...completeReviewGate,
+    }),
+  /Review \/ MR must be completed first/i,
+);
+
+assert.throws(
+  () =>
+    assertIntakeGenerationGate({
+      workflowState: "REVIEW_COMPLETE",
+      screeningReviewStatus: "approved",
+      screeningFinalDecision: "INCLUDE",
+      hitsReviewStatus: "approved",
+      hitsReviewDecision: "accept_ai",
+      companyAssessments: [companyAssessment],
+      ...completeReviewGate,
+      mrReviewStatus: "PENDING",
+    }),
+  /completed patient segmentation.*Medical Review decision/i,
+);
+
+console.log("Sprint 4 Screening → Review\/MR → Intake governance verification passed.");
