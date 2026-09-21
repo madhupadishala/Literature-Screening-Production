@@ -22,7 +22,7 @@ ALTER TABLE safety_intake_records
 
 ALTER TABLE safety_intake_records
   ADD COLUMN IF NOT EXISTS disposition_status text NOT NULL DEFAULT 'NOT_STARTED'
-    CHECK (disposition_status IN ('NOT_STARTED', 'COMPLETE'));
+    CHECK (disposition_status IN ('NOT_STARTED', 'ON_HOLD', 'COMPLETE'));
 
 ALTER TABLE safety_intake_records
   ADD COLUMN IF NOT EXISTS disposition_type text
