@@ -7,6 +7,7 @@ import type {
   AdHocSearchCriteria,
   LiteratureSource,
   NormalizedLiteratureResult,
+  SearchExecutionPurpose,
 } from "@/lib/literature/adhoc-search/types";
 
 const DEFAULT_SOURCES = [
@@ -212,6 +213,40 @@ export async function completeSearchExecution(input: {
   );
 }
 
+export async function recordSearchAuditEvent(input: {
+  principal: RequestPrincipal;
+  searchId: string;
+  searchKey: string;
+  executionPurpose: SearchExecutionPurpose;
+  phase: "STARTED" | "COMPLETED";
+  outcome: "started" | "success" | "partial" | "failure";
+  details?: Record<string, unknown>;
+}): Promise<void> {
+  const testMode = input.executionPurpose === "TEST_VALIDATION";
+  const eventType = testMode
+    ? `TEST_SEARCH_EXECUTION_${input.phase}`
+    : `PRODUCTION_SEARCH_EXECUTION_${input.phase}`;
+  await getPostgresPool().query(
+    `INSERT INTO audit_events (
+       tenant_id, actor_id, event_type, event_category, outcome, details
+     ) VALUES ($1, $2, $3, $4, $5, $6::jsonb)`,
+    [
+      input.principal.tenantId,
+      input.principal.userId,
+      eventType,
+      testMode ? "LITERATURE_SEARCH_TEST" : "LITERATURE_SEARCH",
+      input.outcome,
+      JSON.stringify({
+        searchId: input.searchId,
+        searchKey: input.searchKey,
+        executionPurpose: input.executionPurpose,
+        entersPvWorkflow: false,
+        ...(input.details || {}),
+      }),
+    ],
+  );
+}
+
 export async function storeSearchResults(input: {
   principal: RequestPrincipal;
   searchId: string;
@@ -302,11 +337,16 @@ export async function listRecentSearches(
         selected_count,
         duration_ms,
         connector_errors,
+        COALESCE(criteria->>'executionPurpose', 'TEST_VALIDATION') AS execution_purpose,
+        evidence.package_key AS search_evidence_package_key,
         created_at,
         completed_at
-      FROM ad_hoc_literature_searches
-      WHERE tenant_id = $1
-      ORDER BY created_at DESC
+      FROM ad_hoc_literature_searches search
+      LEFT JOIN literature_search_evidence_packages evidence
+        ON evidence.tenant_id = search.tenant_id
+       AND evidence.search_id = search.id
+      WHERE search.tenant_id = $1
+      ORDER BY search.created_at DESC
       LIMIT $2
     `,
     [principal.tenantId, Math.max(1, Math.min(limit, 100))],
