@@ -29,6 +29,18 @@ export async function buildTenantRuntimeConfigurationContext(
       version: record.versionLabel,
       payload: record.payload,
     })),
+    labelReferences: active.labelReferences.map((record) => ({
+      id: record.id,
+      key: record.configKey,
+      version: record.versionLabel,
+      payload: record.payload,
+    })),
+    causalityMethods: active.causalityMethods.map((record) => ({
+      id: record.id,
+      key: record.configKey,
+      version: record.versionLabel,
+      payload: record.payload,
+    })),
     resolvedAt: new Date().toISOString(),
   };
 }
