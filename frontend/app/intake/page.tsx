@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import Navigation from "@/components/Navigation";
@@ -439,6 +440,15 @@ export default function IntakePage() {
                 >
                   {busy === "verify" ? "Verifying…" : "Verify source review"}
                 </button>
+                {selectedId &&
+                display(workspace.intake.source_review_status) === "VERIFIED" ? (
+                  <Link
+                    className={styles.triageLink}
+                    href={`/intake/${selectedId}/triage`}
+                  >
+                    Open ICSR triage
+                  </Link>
+                ) : null}
               </div>
 
               {message ? <div className={styles.message}>{message}</div> : null}
