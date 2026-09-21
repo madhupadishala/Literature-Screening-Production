@@ -37,9 +37,16 @@ type SearchExecution = {
   connectorErrors: Record<string, string>;
   results: SearchResult[];
   durationMs: number;
+  executionPurpose: "TEST_VALIDATION" | "MANUAL_PRODUCTION" | "SCHEDULED_PRODUCTION";
+  searchEvidencePackage?: {
+    packageId: string;
+    packageKey: string;
+    sha256: string;
+  };
 };
 
 const EMPTY_FORM = {
+  executionPurpose: "TEST_VALIDATION",
   searchString: "",
   pmid: "",
   doi: "",
@@ -147,7 +154,9 @@ export default function AdHocSearchWorkspace({
 
       setExecution(payload.data);
       setMessage(
-        `Search ${payload.data.searchKey} completed with ${payload.data.resultCount} normalized result(s).`,
+        payload.data.executionPurpose === "TEST_VALIDATION"
+          ? `Test / validation search ${payload.data.searchKey} completed with ${payload.data.resultCount} result(s). Audit trail recorded; no PV workflow was started.`
+          : `Manual production search ${payload.data.searchKey} completed with ${payload.data.resultCount} result(s). Search Evidence Package ${payload.data.searchEvidencePackage?.packageKey || "created"} is retained for audit.`,
       );
       await loadRecentOnly();
     } catch (error) {
@@ -305,6 +314,22 @@ export default function AdHocSearchWorkspace({
         </div>
 
         <div className="form-grid">
+          <label className="wide purpose-field">
+            <span>Execution Purpose</span>
+            <select
+              value={form.executionPurpose}
+              onChange={(event) =>
+                updateForm("executionPurpose", event.target.value)
+              }
+            >
+              <option value="TEST_VALIDATION">Test / Validation Search — outside PV workflow</option>
+              <option value="MANUAL_PRODUCTION">Manual Production Search — governed production execution</option>
+            </select>
+            <small>
+              Test / validation searches are always audit-logged but do not create a production Search Evidence Package or enter the PV workflow. Manual production searches create an immutable Search Evidence Package automatically.
+            </small>
+          </label>
+
           <label className="wide">
             <span>Search String / Boolean Query</span>
             <textarea
@@ -438,7 +463,10 @@ export default function AdHocSearchWorkspace({
 
         <div className="command-row">
           <span>
-            {selectedSourceRecords.length} database(s) selected
+            {selectedSourceRecords.length} database(s) selected ·{" "}
+            {form.executionPurpose === "TEST_VALIDATION"
+              ? "Test / Validation"
+              : "Manual Production"}
           </span>
           <button
             type="button"
@@ -467,7 +495,15 @@ export default function AdHocSearchWorkspace({
             <article key={String(search.id)}>
               <strong>{String(search.search_key || "Search")}</strong>
               <span>{String(search.status || "unknown")}</span>
-              <p>{Number(search.result_count || 0)} result(s)</p>
+              <p>
+                {Number(search.result_count || 0)} result(s) ·{" "}
+                {String(search.execution_purpose || "TEST_VALIDATION").replaceAll("_", " ")}
+              </p>
+              {search.search_evidence_package_key ? (
+                <small>SEP {String(search.search_evidence_package_key)}</small>
+              ) : (
+                <small>Audit only · no production Search Evidence Package</small>
+              )}
               <small>{String(search.created_at || "")}</small>
             </article>
           ))}
@@ -484,11 +520,18 @@ export default function AdHocSearchWorkspace({
         <section className="results-panel">
           <div className="results-command">
             <div>
-              <span>Search execution</span>
+              <span>
+                {execution.executionPurpose === "TEST_VALIDATION"
+                  ? "Test / validation execution"
+                  : "Production search execution"}
+              </span>
               <h2>{execution.searchKey}</h2>
               <p>
                 {execution.resultCount} result(s) · {execution.durationMs} ms ·{" "}
                 {execution.status}
+                {execution.searchEvidencePackage
+                  ? ` · Search Evidence Package ${execution.searchEvidencePackage.packageKey}`
+                  : " · Audit trail only"}
               </p>
             </div>
 
@@ -516,11 +559,11 @@ export default function AdHocSearchWorkspace({
                 onClick={() =>
                   void executePackageAction("HANDOFF_WITH_VALIDATION")
                 }
-                title="Create or reuse the Validation Package and hand the governed article to Hits in the same action."
+                title="Create or reuse the Validation Package and deliberately promote the selected article into the governed PV workflow at Hits."
               >
                 {packageAction === "HANDOFF_WITH_VALIDATION"
                   ? "Creating & Handing Off…"
-                  : `Handoff & Create Validation Package (${selectedResults.length})`}
+                  : `Promote to PV Workflow & Create Validation Package (${selectedResults.length})`}
               </button>
             </div>
           </div>
@@ -692,7 +735,8 @@ export default function AdHocSearchWorkspace({
 
         button,
         input,
-        textarea {
+        textarea,
+        select {
           font: inherit;
         }
 
@@ -743,7 +787,8 @@ export default function AdHocSearchWorkspace({
         }
 
         input,
-        textarea {
+        textarea,
+        select {
           width: 100%;
           box-sizing: border-box;
           border: 1px solid #b8c4d3;
@@ -758,6 +803,12 @@ export default function AdHocSearchWorkspace({
         textarea {
           min-height: 70px;
           resize: vertical;
+        }
+
+        .purpose-field small {
+          color: #64748b;
+          font-size: 9px;
+          line-height: 1.5;
         }
 
         input:focus,
