@@ -83,8 +83,47 @@ async function getWorkspaceForUpdate(input: {
     labeling_status: string;
     causality_status: string;
     mr_review_status: string;
+    patient_segments: unknown;
     package_key: string;
   };
+}
+
+
+function patientSegmentMap(value: unknown): Map<string, { products: string[]; events: string[] }> {
+  const map = new Map<string, { products: string[]; events: string[] }>();
+  if (!Array.isArray(value)) return map;
+  for (const item of value) {
+    if (typeof item !== "object" || item === null || Array.isArray(item)) continue;
+    const row = item as Record<string, unknown>;
+    const key = cleanText(row.patientSegmentKey);
+    if (!key) continue;
+    map.set(key, {
+      products: unique(row.products),
+      events: unique(row.events),
+    });
+  }
+  return map;
+}
+
+function assertAssessmentPairInPatient(
+  patientSegments: unknown,
+  assessment: { patientSegmentKey: string; reportedProduct: string; clinicalEvent: string },
+): void {
+  const map = patientSegmentMap(patientSegments);
+  const patient = map.get(assessment.patientSegmentKey);
+  if (!patient) {
+    throw new Error(`Patient segment ${assessment.patientSegmentKey} does not exist in the governed segmentation.`);
+  }
+  if (!patient.products.includes(assessment.reportedProduct)) {
+    throw new Error(
+      `Product "${assessment.reportedProduct}" is not assigned to patient segment ${assessment.patientSegmentKey}.`,
+    );
+  }
+  if (!patient.events.includes(assessment.clinicalEvent)) {
+    throw new Error(
+      `Event "${assessment.clinicalEvent}" is not assigned to patient segment ${assessment.patientSegmentKey}.`,
+    );
+  }
 }
 
 export async function savePatientSegmentation(input: {
@@ -269,6 +308,9 @@ export async function saveLabelAssessments(input: {
     if (workspace.status === "REVIEW_COMPLETE") {
       throw new Error("Completed Review workspace cannot be edited.");
     }
+    for (const assessment of assessments) {
+      assertAssessmentPairInPatient(workspace.patient_segments, assessment);
+    }
 
     await client.query(
       `DELETE FROM literature_label_assessments
@@ -397,6 +439,9 @@ export async function saveCausalityAssessments(input: {
     if (workspace.status === "REVIEW_COMPLETE") {
       throw new Error("Completed Review workspace cannot be edited.");
     }
+    for (const assessment of assessments) {
+      assertAssessmentPairInPatient(workspace.patient_segments, assessment);
+    }
 
     await client.query(
       `DELETE FROM literature_causality_assessments
@@ -478,6 +523,9 @@ export async function saveMedicalReview(input: {
 }): Promise<void> {
   const audit = validateAuditReason(input.reason);
   if (!audit.valid) throw new Error(audit.message || "A specific audit reason is required.");
+  if (!["APPROVED", "REVIEW_REQUIRED", "EXCLUDED"].includes(input.status)) {
+    throw new Error("Invalid Medical Review status.");
+  }
   const comments = cleanText(input.comments);
   const finalDecision = cleanText(input.finalDecision).toUpperCase();
   if (!comments || comments.length < 5) {
