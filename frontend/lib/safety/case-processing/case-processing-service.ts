@@ -99,6 +99,21 @@ function text(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
 }
 
+function dateValue(
+  value: unknown,
+  options?: { dateOnly?: boolean },
+): string | undefined {
+  if (value === null || value === undefined || value === "") return undefined;
+  const date =
+    value instanceof Date
+      ? value
+      : new Date(typeof value === "string" ? value : String(value));
+  if (!Number.isFinite(date.getTime())) return undefined;
+  return options?.dateOnly
+    ? date.toISOString().slice(0, 10)
+    : date.toISOString();
+}
+
 function numberValue(value: unknown): number | undefined {
   if (typeof value === "number" && Number.isFinite(value)) return value;
   if (typeof value === "string" && value.trim()) {
@@ -313,8 +328,8 @@ async function buildSeedDraft(
     ageValue: numberValue(patientRow.age_value),
     ageUnit: text(patientRow.age_unit),
     ageGroup: text(patientRow.age_group),
-    dateOfBirth: text(patientRow.date_of_birth),
-    deathDate: text(patientRow.death_date),
+    dateOfBirth: dateValue(patientRow.date_of_birth, { dateOnly: true }),
+    deathDate: dateValue(patientRow.death_date, { dateOnly: true }),
     weightKg: numberValue(patientRow.weight_kg),
     heightCm: numberValue(patientRow.height_cm),
     pregnancyStatus: text(patientRow.pregnancy_status),
@@ -355,8 +370,8 @@ async function buildSeedDraft(
       meddraTerm: text(row.meddra_term),
       meddraCode: text(row.meddra_code),
       meddraVersion: text(row.meddra_version),
-      onsetDate: text(row.onset_date),
-      endDate: text(row.end_date),
+      onsetDate: dateValue(row.onset_date),
+      endDate: dateValue(row.end_date),
       outcome: text(row.outcome),
       seriousness:
         typeof row.seriousness === "boolean" ? row.seriousness : undefined,
@@ -373,7 +388,7 @@ async function buildSeedDraft(
     tests: tests.rows.map((row) => ({
       testKey: String(row.test_key),
       testName: String(row.test_name),
-      testDate: text(row.test_date),
+      testDate: dateValue(row.test_date),
       resultValue: text(row.result_value),
       resultUnit: text(row.result_unit),
       referenceRange: text(row.reference_range),
