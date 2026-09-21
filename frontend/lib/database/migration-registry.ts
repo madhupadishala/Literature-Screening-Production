@@ -150,4 +150,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "024_nexus_intake_review_extraction.sql",
     required: true,
   },
+  {
+    id: "025",
+    name: "Nexus ICSR Validity and Triage",
+    filename: "025_nexus_icsr_validity_triage.sql",
+    required: true,
+  },
 ] as const;
