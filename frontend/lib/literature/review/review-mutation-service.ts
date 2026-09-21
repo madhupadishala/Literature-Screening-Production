@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { PoolClient } from "pg";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { validateAuditReason } from "@/lib/audit/reason";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
@@ -56,7 +57,7 @@ export interface CausalityAssessmentInput {
 async function getWorkspaceForUpdate(input: {
   principal: RequestPrincipal;
   workspaceId: string;
-  client: Awaited<ReturnType<typeof getPostgresPool>> extends never ? never : any;
+  client: PoolClient;
 }) {
   const result = await input.client.query(
     `SELECT workspace.*, package.package_key
