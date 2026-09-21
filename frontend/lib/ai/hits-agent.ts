@@ -14,6 +14,7 @@ import { aiProviderFactory } from "./provider-factory";
 import { assessCompanySuspect } from "@/lib/pharmaceutical-intelligence/assessment-engine";
 import type { SuspectProductEvidence } from "@/lib/pharmaceutical-intelligence/types";
 import { assessPVDecisionArchitecture } from "@/lib/pv-decision-intelligence/assessment-engine";
+import { stripTrailingStrengthQualifier } from "@/lib/literature/hits/product-identity-reconciliation";
 
 export interface HitsAgentRequest {
   tenantId: string;
@@ -94,51 +95,6 @@ function sourceContainsTerm(source: string, term: string): boolean {
   return Boolean(normalizedTerm) && normalizedSource.includes(` ${normalizedTerm} `);
 }
 
-
-function stripTrailingStrengthQualifier(input: {
-  reportedProduct: string;
-  sourceExactTerms: string[];
-}): string | undefined {
-  const reportedNormalized = normalizeProductText(input.reportedProduct);
-  if (!reportedNormalized) return undefined;
-
-  const candidates = input.sourceExactTerms.flatMap((term) => {
-    const normalizedTerm = normalizeProductText(term);
-    if (
-      !normalizedTerm ||
-      reportedNormalized === normalizedTerm ||
-      !reportedNormalized.startsWith(normalizedTerm + " ")
-    ) {
-      return [];
-    }
-
-    const remainder = reportedNormalized.slice(normalizedTerm.length).trim();
-    const tokens = remainder.split(" ").filter(Boolean);
-    if (tokens.length === 0 || tokens.length > 6) return [];
-
-    const strengthUnit = /^(?:mg|g|mcg|ug|µg|ml|l|iu|unit|units|meq|mmol|mol|%|percent)$/i;
-    const numberToken = /^\d+(?:[.,]\d+)?(?:\/\d+(?:[.,]\d+)?)?$/;
-    const connector = /^(?:per|\/|x)$/i;
-
-    const strengthLike =
-      tokens.some((token) => numberToken.test(token)) &&
-      tokens.every(
-        (token) =>
-          numberToken.test(token) ||
-          strengthUnit.test(token) ||
-          connector.test(token),
-      );
-
-    return strengthLike ? [term] : [];
-  });
-
-  const unique = [
-    ...new Map(
-      candidates.map((candidate) => [normalizeProductText(candidate), candidate]),
-    ).values(),
-  ];
-  return unique.length === 1 ? unique[0] : undefined;
-}
 
 function productMasterSourceTerms(productMaster: unknown): string[] {
   if (!productMaster || typeof productMaster !== "object" || Array.isArray(productMaster)) {
