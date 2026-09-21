@@ -245,6 +245,12 @@ export default function TriageClient({ intakeId }: { intakeId: string }) {
         </div>
         <div className={styles.actions}>
           <Link href="/intake">Back to Intake</Link>
+          {workspace?.latestAssessment &&
+          display(intake?.intake.validity_status) === "VALID" ? (
+            <Link href={`/intake/${intakeId}/duplicate-review`}>
+              Duplicate Review
+            </Link>
+          ) : null}
           <button type="button" onClick={() => void load()} disabled={loading}>
             Refresh evidence
           </button>
