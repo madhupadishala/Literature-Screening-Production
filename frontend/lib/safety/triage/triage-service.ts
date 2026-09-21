@@ -532,6 +532,25 @@ export async function finalizeTriageAssessment(input: {
       ],
     );
 
+    if (validated.outcome === "READY_FOR_DUPLICATE_REVIEW") {
+      await client.query(
+        `INSERT INTO safety_review_tasks (
+           tenant_id, task_key, entity_type, entity_id, task_type,
+           status, created_by
+         ) VALUES (
+           $1,$2,'INTAKE_RECORD',$3,'DUPLICATE_REVIEW','OPEN',$4
+         )
+         ON CONFLICT (tenant_id, task_key)
+         DO NOTHING`,
+        [
+          input.principal.tenantId,
+          `duplicate-review:${intakeRecordId}`,
+          intakeRecordId,
+          input.principal.userId,
+        ],
+      );
+    }
+
     await client.query(
       `INSERT INTO audit_events (
          tenant_id, actor_id, event_type, event_category, outcome, details
