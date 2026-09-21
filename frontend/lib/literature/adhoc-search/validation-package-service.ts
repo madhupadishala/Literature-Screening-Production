@@ -342,13 +342,24 @@ export async function linkValidationPackagesToHits(input: {
   const linked: ValidationPackageResult[] = [];
 
   for (const validationPackage of input.validationPackages) {
-    const handoff = await pool.query<{ package_id: string }>(
-      `SELECT evidence_package_id AS package_id
-       FROM ad_hoc_literature_results
-       WHERE tenant_id = $1
-         AND dedupe_key = $2
-         AND evidence_package_id IS NOT NULL
-       ORDER BY created_at DESC
+    const handoff = await pool.query<{
+      package_id: string;
+      execution_purpose: string;
+      search_id: string;
+      search_key: string;
+    }>(
+      `SELECT result.evidence_package_id AS package_id,
+         COALESCE(search.criteria->>'executionPurpose', 'TEST_VALIDATION') AS execution_purpose,
+         search.id::text AS search_id,
+         search.search_key
+       FROM ad_hoc_literature_results result
+       JOIN ad_hoc_literature_searches search
+         ON search.id = result.search_id
+        AND search.tenant_id = result.tenant_id
+       WHERE result.tenant_id = $1
+         AND result.dedupe_key = $2
+         AND result.evidence_package_id IS NOT NULL
+       ORDER BY result.created_at DESC
        LIMIT 1`,
       [input.principal.tenantId, validationPackage.identityKey],
     );
@@ -372,16 +383,26 @@ export async function linkValidationPackagesToHits(input: {
       `INSERT INTO audit_events (
          tenant_id, package_id, actor_id, event_type, event_category, outcome, details
        )
-       VALUES ($1,$2,$3,'VALIDATION_PACKAGE_LINKED_TO_HITS',
-         'LITERATURE_HANDOFF','success',$4::jsonb)`,
+       VALUES ($1,$2,$3,$4,
+         'LITERATURE_HANDOFF','success',$5::jsonb)`,
       [
         input.principal.tenantId,
         packageId,
         input.principal.userId,
+        handoff.rows[0].execution_purpose === "TEST_VALIDATION"
+          ? "TEST_SEARCH_RESULT_PROMOTED_TO_PV_WORKFLOW"
+          : "PRODUCTION_SEARCH_RESULT_PROMOTED_TO_HITS",
         JSON.stringify({
           validationPackageId: validationPackage.validationPackageId,
           validationKey: validationPackage.validationKey,
           identityKey: validationPackage.identityKey,
+          sourceSearchId: handoff.rows[0].search_id,
+          sourceSearchKey: handoff.rows[0].search_key,
+          sourceExecutionPurpose: handoff.rows[0].execution_purpose,
+          promotionBoundary:
+            handoff.rows[0].execution_purpose === "TEST_VALIDATION"
+              ? "TEST_SEARCH_TO_PV_WORKFLOW"
+              : "PRODUCTION_SEARCH_TO_HITS",
         }),
       ],
     );
