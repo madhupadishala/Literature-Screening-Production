@@ -58,6 +58,7 @@ async function validationPrincipal(): Promise<RequestPrincipal> {
     : [];
 
   return {
+    environment: "PROD",
     tenantId: row.tenant_id,
     tenantKey: row.tenant_key,
     userId: row.user_id,
