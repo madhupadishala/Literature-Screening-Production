@@ -402,7 +402,7 @@ async function buildSeedDraft(
         row.role_characterization,
       ) as CaseDraftPayload["products"][number]["roleCharacterization"],
       activeSubstances: array(row.active_substances),
-      authorization: object(row.authorization),
+      authorization: object(row.authorization_payload),
       indication: object(row.indication),
       dosage: array(row.dosage),
       route: object(row.route),
