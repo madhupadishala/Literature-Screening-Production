@@ -245,4 +245,26 @@ for (const route of [
   assert.equal(source.includes("NEXUS_MODULES.CASE_PROCESSING"), true);
 }
 
+const releaseChecklist = readFileSync(
+  path.join(process.cwd(), "lib/release/release-checklist.ts"),
+  "utf8",
+);
+assert.equal(releaseChecklist.includes("Required migrations 001-031"), true);
+assert.equal(releaseChecklist.includes("Nexus safety-workflow scenarios"), true);
+
+const uatCatalog = readFileSync(
+  path.join(process.cwd(), "lib/release/uat-catalog.ts"),
+  "utf8",
+);
+for (const id of [
+  "UAT-NEXUS-001",
+  "UAT-NEXUS-002",
+  "UAT-NEXUS-003",
+  "UAT-NEXUS-004",
+  "UAT-NEXUS-005",
+  "UAT-NEXUS-006",
+]) {
+  assert.equal(uatCatalog.includes(`"${id}"`), true, `Missing Nexus UAT scenario ${id}`);
+}
+
 console.log("Nexus Sprint 10 evidence/export/release and eight golden cases verification passed.");
