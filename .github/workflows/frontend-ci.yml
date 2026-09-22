@@ -101,6 +101,9 @@ jobs:
       - name: Verify Nexus Sprint 10 evidence export and release hardening
         run: npm run nexus:sprint10:verify
 
+      - name: Verify Nexus tenant integrity hardening
+        run: npm run nexus:tenant-integrity:verify
+
       - name: Build production application
         run: npm run build
 
