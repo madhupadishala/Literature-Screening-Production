@@ -68,7 +68,8 @@
     "nexus:sprint8:verify": "node --import tsx scripts/verify-nexus-sprint8.ts",
     "nexus:sprint9:verify": "node --import tsx scripts/verify-nexus-sprint9.ts",
     "nexus:sprint10:verify": "node --import tsx scripts/verify-nexus-sprint10.ts",
-    "security:audit": "npm audit --audit-level=high"
+    "security:audit": "npm audit --audit-level=high",
+    "nexus:tenant-integrity:verify": "node --import tsx scripts/verify-nexus-tenant-integrity.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.18.0",
