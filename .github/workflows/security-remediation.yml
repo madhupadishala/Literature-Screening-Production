@@ -27,19 +27,22 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - name: Refresh lockfile to patched compatible versions
         run: npm install --package-lock-only --ignore-scripts
-      - name: Audit production dependencies
+      - name: Audit dependencies after remediation
         shell: bash
         run: |
           npm audit --omit=dev --json > audit-prod-after.json || true
+          npm audit --json > audit-full-after.json || true
           node <<'NODE'
           const fs=require('fs');
-          const d=JSON.parse(fs.readFileSync('audit-prod-after.json','utf8'));
-          console.log('PROD_AUDIT_METADATA', JSON.stringify(d.metadata?.vulnerabilities || {}));
-          for (const [name,v] of Object.entries(d.vulnerabilities || {})) {
-            console.log('PROD_VULN', JSON.stringify({
-              name,severity:v.severity,isDirect:v.isDirect,range:v.range,
-              nodes:v.nodes,fixAvailable:v.fixAvailable,via:v.via
-            }));
+          for (const [label,file] of [['PROD','audit-prod-after.json'],['FULL','audit-full-after.json']]) {
+            const d=JSON.parse(fs.readFileSync(file,'utf8'));
+            console.log(label+'_AUDIT_METADATA', JSON.stringify(d.metadata?.vulnerabilities || {}));
+            for (const [name,v] of Object.entries(d.vulnerabilities || {})) {
+              console.log(label+'_VULN', JSON.stringify({
+                name,severity:v.severity,isDirect:v.isDirect,range:v.range,
+                nodes:v.nodes,fixAvailable:v.fixAvailable,via:v.via
+              }));
+            }
           }
           NODE
       - name: Commit refreshed dependency lock
