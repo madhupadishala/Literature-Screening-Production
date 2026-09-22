@@ -7,7 +7,7 @@ import type { CaseDraftPayload } from "../lib/safety/case-processing/case-proces
 import { deriveAllowedDispositions } from "../lib/safety/disposition/disposition-policy";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/030_nexus_case_evidence_export.sql"),
+  path.join(process.cwd(), "database/migrations/031_nexus_case_evidence_export.sql"),
   "utf8",
 );
 assert.equal(
@@ -228,7 +228,7 @@ const migrationRegistry = readFileSync(
   path.join(process.cwd(), "lib/database/migration-registry.ts"),
   "utf8",
 );
-for (const id of ["028", "029", "030"]) {
+for (const id of ["029", "030", "031"]) {
   assert.equal(migrationRegistry.includes(`id: "${id}"`), true);
 }
 

@@ -58,4 +58,4 @@ A channel request identity resolves to one SafetySource. Replaying identical con
 - Literature still uses its governed handoff and does not bypass MR/source lineage.
 - All Intake source endpoints enforce the Intake entitlement and `intake.create` permission.
 - Idempotency is deterministic and rejects changed content under a reused identity.
-- Migration 023 and Sprint 3 verification pass.
+- Migration 024 and Sprint 3 verification pass.

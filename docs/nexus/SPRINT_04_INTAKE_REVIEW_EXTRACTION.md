@@ -85,4 +85,4 @@ Source Review verification does **not** complete the formal TRIAGE task. Formal 
 - Accepted/edited suggestions update the common safety entities.
 - Source Review cannot be verified with pending current suggestions.
 - Sprint 5 TRIAGE tasks remain untouched.
-- Migration 024 and Sprint 4 verification pass.
+- Migration 025 and Sprint 4 verification pass.

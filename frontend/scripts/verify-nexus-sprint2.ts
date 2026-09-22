@@ -16,7 +16,7 @@ import {
 } from "../lib/safety/common/safety-validation";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/022_nexus_common_safety_backbone.sql"),
+  path.join(process.cwd(), "database/migrations/023_nexus_common_safety_backbone.sql"),
   "utf8",
 );
 for (const requiredTable of [
@@ -36,12 +36,12 @@ for (const requiredTable of [
   assert.equal(
     migration.includes(`CREATE TABLE IF NOT EXISTS ${requiredTable}`),
     true,
-    `Migration 022 is missing ${requiredTable}.`,
+    `Migration 023 is missing ${requiredTable}.`,
   );
   assert.equal(
     migration.split(`CREATE TABLE IF NOT EXISTS ${requiredTable}`).length - 1,
     1,
-    `Migration 022 defines ${requiredTable} more than once.`,
+    `Migration 023 defines ${requiredTable} more than once.`,
   );
 }
 

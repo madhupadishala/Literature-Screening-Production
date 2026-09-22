@@ -9,7 +9,7 @@ async function main() {
 const migration = readFileSync(
   path.join(
     process.cwd(),
-    "database/migrations/024_nexus_intake_review_extraction.sql",
+    "database/migrations/025_nexus_intake_review_extraction.sql",
   ),
   "utf8",
 );

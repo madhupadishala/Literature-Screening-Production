@@ -37,7 +37,7 @@ Create the shared regulated safety data layer used by Nexus Intake, Case Process
 A governed Literature `intake_input_export` is mapped into the common safety model through a deterministic adapter. The original Literature export remains immutable and receives only a nullable link to the downstream Intake record.
 
 ## Sprint 2 exit criteria
-- Migration 022 defines the common safety relational backbone.
+- Migration 023 defines the common safety relational backbone.
 - Literature handoff can be normalized into a validated common Intake draft.
 - Intake persistence is idempotent for the same governed Literature export.
 - Case version snapshots support ICH E2B(R3)-aware C/D/E/F/G/H sections.
@@ -47,4 +47,4 @@ A governed Literature `intake_input_export` is mapped into the common safety mod
 - Existing Literature and Sprint 1 verification suites remain green.
 
 ## Implementation candidate
-This branch contains the complete Sprint 2 candidate for CI verification. Production release remains gated behind controlled application of migrations 021 and 022; no schema migration is executed by CI.
+This branch contains the complete Sprint 2 candidate for CI verification. Production release remains gated behind controlled application of scheduled-search migration 021 followed by Nexus migrations 022 and 023; no schema migration is executed by CI.

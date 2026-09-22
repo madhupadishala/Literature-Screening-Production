@@ -11,7 +11,7 @@ import type { DuplicateFingerprint } from "../lib/safety/duplicate/duplicate-typ
 const migration = readFileSync(
   path.join(
     process.cwd(),
-    "database/migrations/026_nexus_duplicate_followup_review.sql",
+    "database/migrations/027_nexus_duplicate_followup_review.sql",
   ),
   "utf8",
 );
@@ -24,7 +24,7 @@ for (const table of [
   assert.equal(
     migration.split(`CREATE TABLE IF NOT EXISTS ${table}`).length - 1,
     1,
-    `Migration 026 must define ${table} exactly once.`,
+    `Migration 027 must define ${table} exactly once.`,
   );
 }
 

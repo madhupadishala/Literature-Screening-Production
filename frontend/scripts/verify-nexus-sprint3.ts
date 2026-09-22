@@ -14,7 +14,7 @@ import {
 import { validateIntakeDraft } from "../lib/safety/common/safety-validation";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/023_nexus_intake_sources.sql"),
+  path.join(process.cwd(), "database/migrations/024_nexus_intake_sources.sql"),
   "utf8",
 );
 assert.equal(

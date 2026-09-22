@@ -90,4 +90,4 @@ Each finalised triage assessment receives an increasing assessment version. Hist
 - Triage outcome is consistency-derived.
 - Valid cases route to DUPLICATE_REVIEW for Sprint 6.
 - TRIAGE review task is completed only on formal finalisation.
-- Migration 025 and Sprint 5 verification pass.
+- Migration 026 and Sprint 5 verification pass.

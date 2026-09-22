@@ -6,7 +6,7 @@ import { evaluateCaseFinalization } from "../lib/safety/case-review/case-finaliz
 import type { CaseDraftPayload } from "../lib/safety/case-processing/case-processing-types";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/029_nexus_case_review_finalization.sql"),
+  path.join(process.cwd(), "database/migrations/030_nexus_case_review_finalization.sql"),
   "utf8",
 );
 
@@ -18,7 +18,7 @@ for (const table of [
   assert.equal(
     migration.split(`CREATE TABLE IF NOT EXISTS ${table}`).length - 1,
     1,
-    `Migration 029 must define ${table} exactly once.`,
+    `Migration 030 must define ${table} exactly once.`,
   );
 }
 assert.equal(migration.includes("safety_case_review_actions_immutable"), true);

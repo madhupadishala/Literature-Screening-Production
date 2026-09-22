@@ -7,7 +7,7 @@ import { deriveAllowedDispositions } from "../lib/safety/disposition/disposition
 const migration = readFileSync(
   path.join(
     process.cwd(),
-    "database/migrations/027_nexus_intake_disposition.sql",
+    "database/migrations/028_nexus_intake_disposition.sql",
   ),
   "utf8",
 );
@@ -19,7 +19,7 @@ for (const table of [
   assert.equal(
     migration.split(`CREATE TABLE IF NOT EXISTS ${table}`).length - 1,
     1,
-    `Migration 027 must define ${table} exactly once.`,
+    `Migration 028 must define ${table} exactly once.`,
   );
 }
 
