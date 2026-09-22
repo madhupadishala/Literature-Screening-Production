@@ -43,7 +43,7 @@ assert.equal(
   true,
 );
 assert.equal(
-  migration.includes("ON DELETE"),
+  migration.includes("REFERENCES %I (tenant_id, id)\\n           ON DELETE"),
   false,
   "Composite tenant FKs must not replace the existing FK delete semantics.",
 );
