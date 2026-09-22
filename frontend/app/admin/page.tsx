@@ -59,6 +59,12 @@ const modules = [
     action: "/admin/validation-lab",
   },
   {
+    title: "System Validation & Release Readiness",
+    description:
+      "Generate build-scoped validation evidence, review automated controls, and record controlled Validation, Quality, and Release sign-off.",
+    action: "/admin/system-validation",
+  },
+  {
     title: "System Reliability",
     description: "View database, AI provider, evidence storage, monitoring, and release health.",
     action: "/admin/reliability",

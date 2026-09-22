@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { executeDueScheduledSearches } from "@/lib/literature/scheduler/scheduler-service";
+import { runReliabilitySweepsForAllTenants } from "@/lib/enterprise/reliability-sweep-service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,9 +23,12 @@ export async function GET(request: NextRequest): Promise<Response> {
     );
   }
 
-  const result = await executeDueScheduledSearches();
+  const [scheduler, reliability] = await Promise.all([
+    executeDueScheduledSearches(),
+    runReliabilitySweepsForAllTenants(),
+  ]);
   return Response.json(
-    { success: true, data: result },
+    { success: true, data: { scheduler, reliability } },
     { headers: { "cache-control": "no-store" } },
   );
 }

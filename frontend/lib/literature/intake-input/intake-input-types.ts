@@ -1,4 +1,4 @@
-export const INTAKE_INPUT_SCHEMA_VERSION = "clinixai.literature.intake-input.v1";
+export const INTAKE_INPUT_SCHEMA_VERSION = "clinixai.literature.intake-input.v2";
 
 export interface GenerateIntakeInputRequest {
   packageId: string;

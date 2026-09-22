@@ -132,4 +132,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "021_search_profiles_scheduled_production.sql",
     required: true,
   },
+  {
+    id: "022",
+    name: "Sprint 8-10 Release Readiness",
+    filename: "022_sprint8_10_release_readiness.sql",
+    required: true,
+  },
 ] as const;
