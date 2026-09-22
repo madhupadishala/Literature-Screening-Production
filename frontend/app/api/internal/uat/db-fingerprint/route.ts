@@ -20,41 +20,61 @@ export async function GET(): Promise<Response> {
     return new Response("Not Found", { status: 404 });
   }
 
-  const result = await getPostgresPool().query<FingerprintRow>(`
-    WITH state AS (
-      SELECT
-        current_database() AS current_database,
-        current_setting('neon.branch_id', true) AS neon_branch_id,
-        current_setting('neon.project_id', true) AS neon_project_id,
-        to_regclass('public.clinixai_schema_migrations') IS NOT NULL
-          AS migration_ledger_present,
-        to_regclass('public.tenants') IS NOT NULL AS tenants_present
-    )
+  const pool = getPostgresPool();
+
+  const base = await pool.query<{
+    current_database: string;
+    neon_branch_id: string | null;
+    neon_project_id: string | null;
+    migration_ledger_present: boolean;
+    tenants_present: boolean;
+  }>(`
     SELECT
-      state.current_database,
-      state.neon_branch_id,
-      state.neon_project_id,
-      state.migration_ledger_present,
-      CASE WHEN state.migration_ledger_present THEN
-        (SELECT max(migration_id) FROM clinixai_schema_migrations)
-      ELSE NULL END AS migration_id,
-      CASE WHEN state.migration_ledger_present THEN
-        (SELECT count(*)::text FROM clinixai_schema_migrations)
-      ELSE '0' END AS migration_count,
-      CASE WHEN state.migration_ledger_present THEN
-        (
-          SELECT count(*)::text
-          FROM clinixai_schema_migrations
+      current_database() AS current_database,
+      current_setting('neon.branch_id', true) AS neon_branch_id,
+      current_setting('neon.project_id', true) AS neon_project_id,
+      to_regclass('public.clinixai_schema_migrations') IS NOT NULL
+        AS migration_ledger_present,
+      to_regclass('public.tenants') IS NOT NULL AS tenants_present
+  `);
+
+  const baseRow = base.rows[0];
+
+  let migrationId: string | null = null;
+  let migrationCount = 0;
+  let nexusMigrationCount = 0;
+
+  if (baseRow.migration_ledger_present) {
+    const ledger = await pool.query<{
+      migration_id: string | null;
+      migration_count: string;
+      nexus_migration_count: string;
+    }>(`
+      SELECT
+        max(migration_id) AS migration_id,
+        count(*)::text AS migration_count,
+        count(*) FILTER (
           WHERE migration_id BETWEEN '022' AND '032'
-        )
-      ELSE '0' END AS nexus_migration_count,
+        )::text AS nexus_migration_count
+      FROM clinixai_schema_migrations
+    `);
+    migrationId = ledger.rows[0].migration_id;
+    migrationCount = Number(ledger.rows[0].migration_count);
+    nexusMigrationCount = Number(ledger.rows[0].nexus_migration_count);
+  }
+
+  const schema = await pool.query<{
+    safety_table_count: string;
+    uat_tenant_count: string;
+  }>(`
+    SELECT
       (
         SELECT count(*)::text
         FROM information_schema.tables
         WHERE table_schema = 'public'
           AND table_name LIKE 'safety_%'
       ) AS safety_table_count,
-      CASE WHEN state.tenants_present THEN
+      CASE WHEN $1::boolean THEN
         (
           SELECT count(*)::text
           FROM tenants
@@ -62,10 +82,8 @@ export async function GET(): Promise<Response> {
             AND status = 'active'
         )
       ELSE '0' END AS uat_tenant_count
-    FROM state
-  `);
+  `, [baseRow.tenants_present]);
 
-  const row = result.rows[0];
   const previewBranch =
     process.env.VERCEL_GIT_COMMIT_REF?.trim() ||
     process.env.GITHUB_HEAD_REF?.trim() ||
@@ -82,15 +100,15 @@ export async function GET(): Promise<Response> {
     vercelEnvironment: process.env.VERCEL_ENV ?? "unknown",
     gitBranch: previewBranch || "unknown",
     nexusEnvironment,
-    database: row.current_database,
-    neonProjectId: row.neon_project_id,
-    neonBranchId: row.neon_branch_id,
-    migrationLedgerPresent: row.migration_ledger_present,
-    maxMigration: row.migration_id,
-    migrationCount: Number(row.migration_count),
-    nexusMigrationCount: Number(row.nexus_migration_count),
-    safetyTableCount: Number(row.safety_table_count),
-    uatTenantCount: Number(row.uat_tenant_count),
+    database: baseRow.current_database,
+    neonProjectId: baseRow.neon_project_id,
+    neonBranchId: baseRow.neon_branch_id,
+    migrationLedgerPresent: baseRow.migration_ledger_present,
+    maxMigration: migrationId,
+    migrationCount,
+    nexusMigrationCount,
+    safetyTableCount: Number(schema.rows[0].safety_table_count),
+    uatTenantCount: Number(schema.rows[0].uat_tenant_count),
   };
 
   const ready =
@@ -118,3 +136,4 @@ export async function GET(): Promise<Response> {
     },
   );
 }
+
