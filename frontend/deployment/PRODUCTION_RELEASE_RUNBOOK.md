@@ -14,7 +14,7 @@ The release manager coordinates Engineering, Database Operations, Security, PV P
 2. Validate the environment against `deployment/production-environment.schema.json` without printing secret values.
 3. Confirm `ALLOW_DEMO_PRINCIPAL=false`, HTTPS is enforced, database TLS is enabled, and the monitoring token contains at least 32 characters.
 4. Create and verify a restorable PostgreSQL backup. Record its protected location and retention policy outside the application repository.
-5. Verify the existing migration ledger and apply migrations `001` through `031` in order using `npm run db:migrate` from one controlled migration job. Migration checksums must match the immutable release artifact. Do not run migrations concurrently from application replicas.
+5. Verify the existing migration ledger and apply migrations `001` through `032` in order using `npm run db:migrate` from one controlled migration job. Migration checksums must match the immutable release artifact. Do not run migrations concurrently from application replicas.
 6. Run `npm run seed:demo` only in an explicitly approved synthetic demonstration tenant. Never seed a client production tenant.
 7. Run `npm run validate:e2e`. Authoritative validation requires both `DATABASE_URL` and `RELEASE_BASE_URL`; skipped checks are not release evidence.
 8. Run `npm run release:gate`. The command must complete the production build and report all release gates ready.
