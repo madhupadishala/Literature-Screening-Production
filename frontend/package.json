@@ -36,7 +36,17 @@
     "validate:e2e:offline": "node scripts/validate-enterprise-e2e.mjs --offline",
     "deployment:verify": "node scripts/verify-azure-deployment-foundation.mjs",
     "release:gate": "node scripts/production-release-gate.mjs",
-    "scheduler:verify": "node --import tsx scripts/verify-literature-scheduler.ts"
+    "scheduler:verify": "node --import tsx scripts/verify-literature-scheduler.ts",
+    "nexus:sprint1:verify": "node --import tsx scripts/verify-nexus-sprint1.ts",
+    "nexus:sprint2:verify": "node --import tsx scripts/verify-nexus-sprint2.ts",
+    "nexus:sprint3:verify": "node --import tsx scripts/verify-nexus-sprint3.ts",
+    "nexus:sprint4:verify": "node --import tsx scripts/verify-nexus-sprint4.ts",
+    "nexus:sprint5:verify": "node --import tsx scripts/verify-nexus-sprint5.ts",
+    "nexus:sprint6:verify": "node --import tsx scripts/verify-nexus-sprint6.ts",
+    "nexus:sprint7:verify": "node --import tsx scripts/verify-nexus-sprint7.ts",
+    "nexus:sprint8:verify": "node --import tsx scripts/verify-nexus-sprint8.ts",
+    "nexus:sprint9:verify": "node --import tsx scripts/verify-nexus-sprint9.ts",
+    "nexus:sprint10:verify": "node --import tsx scripts/verify-nexus-sprint10.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.18.0",
