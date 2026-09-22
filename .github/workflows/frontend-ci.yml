@@ -65,6 +65,36 @@ jobs:
       - name: Verify governed Screening-to-Intake handoff
         run: npm run intake:verify
 
+      - name: Verify Nexus Sprint 1 authorization foundation
+        run: npm run nexus:sprint1:verify
+
+      - name: Verify Nexus Sprint 2 common safety backbone
+        run: npm run nexus:sprint2:verify
+
+      - name: Verify Nexus Sprint 3 canonical intake sources
+        run: npm run nexus:sprint3:verify
+
+      - name: Verify Nexus Sprint 4 intake review and extraction
+        run: npm run nexus:sprint4:verify
+
+      - name: Verify Nexus Sprint 5 ICSR validity and triage
+        run: npm run nexus:sprint5:verify
+
+      - name: Verify Nexus Sprint 6 duplicate and follow-up
+        run: npm run nexus:sprint6:verify
+
+      - name: Verify Nexus Sprint 7 intake disposition
+        run: npm run nexus:sprint7:verify
+
+      - name: Verify Nexus Sprint 8 L2A case processing
+        run: npm run nexus:sprint8:verify
+
+      - name: Verify Nexus Sprint 9 QC medical review and finalization
+        run: npm run nexus:sprint9:verify
+
+      - name: Verify Nexus Sprint 10 evidence export and release hardening
+        run: npm run nexus:sprint10:verify
+
       - name: Build production application
         run: npm run build
 
