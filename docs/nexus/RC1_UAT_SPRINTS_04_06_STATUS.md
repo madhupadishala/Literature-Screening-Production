@@ -8,7 +8,7 @@ This record covers release-preparation Sprints 4–6:
 
 ## Sprint 4 — Isolated UAT environment
 
-**Infrastructure status: COMPLETE**
+**Infrastructure status: COMPLETE — DEPLOYED BINDING VERIFIED**
 
 Completed:
 - RC1 preview deployments are generated from `release/nexus-integrated-rc1`.
@@ -23,18 +23,33 @@ Completed:
 - A fail-closed preview database fingerprint endpoint is implemented.
 - `UAT-AUTO-007` makes database/environment binding a mandatory automated UAT gate.
 
-### Platform deployment binding gate
-The Vercel preview connection observed before hardening pointed to a database without
-`clinixai_schema_migrations`, so it was correctly rejected as a UAT target.
+### Platform deployment binding gate — PASS
+The earlier preview binding was correctly rejected because its database did not
+contain the controlled migration ledger.
 
-The connected Vercel interface can inspect deployments/logs but does not provide
-preview environment-variable mutation in this session. Deployment Protection was
-not weakened and database credentials were not committed to source control.
+RC1 now uses a preview-branch-only derived database target:
+- Vercel retains the protected database credential material;
+- Nexus replaces only the non-secret Neon UAT host/database identifiers;
+- the override activates only when `VERCEL_ENV=preview` and the Git branch is
+  `release/nexus-integrated-rc1`;
+- production execution is unaffected.
 
-A safe build-time fingerprint probe was prepared to identify the preview database
-without transmitting credentials. At the time of this evidence record, Vercel had
-not created a new preview deployment for the probe commit, so deployed
-Next.js-preview → isolated-Neon binding remains a release BLOCK.
+Verified deployed preview:
+- deployment: `dpl_8U6TKgbmYGX5izCRUozr9UpE7vFx`
+- URL: `literature-screening-production-lq7e-8kb3z0aec.vercel.app`
+- fingerprint endpoint: HTTP 200
+- `ready: true`
+- environment: `UAT`
+- database: `literature_screening_prod`
+- Neon project: `old-mountain-48148190`
+- Neon branch: `br-square-breeze-b3yxypxx`
+- migration head: `032`
+- Nexus migrations: 11
+- safety tables: 31
+- controlled UAT tenants: 2
+
+Vercel Deployment Protection remains enabled. No database credential was committed
+to source control.
 
 ## Sprint 5 — Migrations 022–032
 
@@ -125,20 +140,33 @@ Negative evidence:
    - probe cases: 0
    - probe drafts: 0
 
-### Deployment-backed UI/API execution — BLOCKED BY PLATFORM BINDING
-The final browser/API walkthrough cannot be signed off until a protected RC1
-preview is connected to the qualified UAT database and `UAT-AUTO-007` returns
-HTTP 200.
+### Deployment-backed runtime execution — PASS
+The protected RC1 Vercel preview is now connected to the qualified UAT database.
+`UAT-AUTO-007` returns HTTP 200 with `ready: true`.
 
-This is not waived. It is the remaining external-platform gate between the
-verified RC1 application artifact and the verified UAT database.
+Deployment Protection was also confirmed to remain active on normal UI/API routes:
+unauthenticated requests are intercepted by Vercel SSO rather than exposed
+publicly.
+
+Together with:
+- Sprints 1–10 verification and eight golden scenarios;
+- database-backed Tenant A/Tenant B entitlement checks;
+- cross-tenant FK rejection;
+- immutable-history rewrite rejection;
+- zero probe residue;
+- 58 validated tenant-bound foreign keys;
+- zero-vulnerability dependency gate;
+- production Next.js build;
+
+the Sprint 4–6 UAT release-preparation scope is complete.
 
 ## Release interpretation
 
-Sprint 5 is fully complete.
+Sprints 4, 5 and 6 are complete for RC1 release preparation.
 
-Sprint 4 infrastructure and Sprint 6 code/database security verification are
-complete. The final **deployed preview binding + HTTP walkthrough** remains a
-release BLOCK and is deliberately kept separate from application correctness.
+This means the isolated UAT infrastructure, migration/schema qualification,
+functional/golden-case verification, database-backed negative/security controls,
+and deployed preview-to-UAT binding gate have all passed.
 
-No production release approval is implied by this record.
+No production release approval is implied by this record. Formal validation,
+controlled release approval and production deployment remain separate activities.
