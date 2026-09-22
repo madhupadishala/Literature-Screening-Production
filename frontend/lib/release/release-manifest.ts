@@ -4,25 +4,25 @@ import { getReleaseConfig } from "./release-config";
 import type { ReleaseManifest } from "./types";
 
 const INCLUDED_CAPABILITIES = [
-  "Evidence Package",
-  "Hits AI",
-  "Duplicate Detection",
-  "Screening AI",
-  "Human Review",
-  "Intake Input Builder",
-  "Governed intake_input.json export",
-  "Enterprise monitoring and security",
-  "Immutable audit trail and governed RBAC",
-  "Reliability and performance governance",
-  "Verified synthetic demonstration dataset",
+  "Literature Search, Evidence, Hits and Screening",
+  "Governed Literature-to-Intake handoff",
+  "Environment-scoped Nexus module entitlements and RBAC",
+  "Canonical Intake sources, source review and human-confirmed extraction",
+  "ICSR validity, seriousness and triage",
+  "Duplicate and follow-up review",
+  "Governed Intake disposition",
+  "L2A Nexus Case Processing",
+  "QC and Medical Review",
+  "Immutable case finalization and version history",
+  "Case Evidence Packages",
+  "Controlled Nexus JSON, E2B(R3) mapping JSON and human-readable exports",
+  "Enterprise monitoring, security and immutable audit trail",
 ];
 
 const EXCLUDED_CAPABILITIES = [
-  "Intake workspace",
-  "Case processing",
-  "Case QC",
-  "Regulatory submission",
-  "PV Nexus case-management functions",
+  "Validated regional E2B XML generation",
+  "Regulatory gateway transmission and acknowledgement handling",
+  "Embedded proprietary MedDRA or WHODrug dictionary content",
 ];
 
 export function buildReleaseManifest(now = new Date()): ReleaseManifest {
@@ -37,7 +37,7 @@ export function buildReleaseManifest(now = new Date()): ReleaseManifest {
     region: runtime.region,
     generatedAt: now.toISOString(),
     architectureBoundary:
-      "Literature Screening terminates at governed intake_input.json generation.",
+      "Nexus RC1 integrates Literature, Intake and Case Processing in one governed platform; Literature remains an upstream safety source and regulated submission gateway transmission remains outside this release.",
     includedCapabilities: INCLUDED_CAPABILITIES,
     excludedCapabilities: EXCLUDED_CAPABILITIES,
   };

@@ -267,4 +267,21 @@ for (const id of [
   assert.equal(uatCatalog.includes(`"${id}"`), true, `Missing Nexus UAT scenario ${id}`);
 }
 
+const releaseManifest = readFileSync(
+  path.join(process.cwd(), "lib/release/release-manifest.ts"),
+  "utf8",
+);
+assert.equal(releaseManifest.includes("L2A Nexus Case Processing"), true);
+assert.equal(releaseManifest.includes("QC and Medical Review"), true);
+assert.equal(releaseManifest.includes("Regulatory gateway transmission and acknowledgement handling"), true);
+assert.equal(releaseManifest.includes("PV Nexus case-management functions"), false);
+
+const releaseRunbook = readFileSync(
+  path.join(process.cwd(), "deployment/PRODUCTION_RELEASE_RUNBOOK.md"),
+  "utf8",
+);
+assert.equal(releaseRunbook.includes("migrations `001` through `031`"), true);
+assert.equal(releaseRunbook.includes("Literature → Intake"), true);
+assert.equal(releaseRunbook.includes("validated regional E2B XML transmission"), false);
+
 console.log("Nexus Sprint 10 evidence/export/release and eight golden cases verification passed.");
