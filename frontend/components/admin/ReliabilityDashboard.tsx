@@ -44,6 +44,20 @@ interface MonitoringSummary {
   security: {
     retainedEvents: number;
   };
+  findings: {
+    available: boolean;
+    openTotal: number;
+    openCritical: number;
+    openWarning: number;
+    recent: Array<{
+      id: string;
+      findingType: string;
+      severity: string;
+      status: string;
+      summary: string;
+      lastSeenAt: string;
+    }>;
+  };
   operations: {
     available: boolean;
     auditEvents24h: number;
@@ -139,6 +153,8 @@ export default function ReliabilityDashboard(): React.ReactElement {
         <MetricCard label="Uptime" value={formatDuration(summary.process.uptimeSeconds)} />
         <MetricCard label="Heap utilization" value={`${memoryPercentage}%`} />
         <MetricCard label="Security events" value={String(summary.security.retainedEvents)} />
+        <MetricCard label="Open reliability findings" value={String(summary.findings.openTotal)} />
+        <MetricCard label="Critical findings" value={String(summary.findings.openCritical)} />
       </section>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -219,6 +235,41 @@ export default function ReliabilityDashboard(): React.ReactElement {
               : [["Status", "No circuit breakers have been activated yet."]]
           }
         />
+      </section>
+
+      <section className="rounded-xl border bg-white p-6 shadow-sm">
+        <div>
+          <h2 className="text-lg font-semibold text-slate-950">Durable reliability findings</h2>
+          <p className="mt-1 text-sm text-slate-500">
+            Findings are produced by the hourly reliability sweep and remain open until the condition clears.
+          </p>
+        </div>
+        <div className="mt-4 divide-y divide-slate-100">
+          {summary.findings.recent.length ? (
+            summary.findings.recent.map((finding) => (
+              <article key={finding.id} className="py-3 text-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <strong className="text-slate-900">{finding.findingType.replaceAll("_", " ")}</strong>
+                  <span className={
+                    finding.severity === "CRITICAL"
+                      ? "rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-800"
+                      : finding.severity === "WARNING"
+                        ? "rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800"
+                        : "rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700"
+                  }>
+                    {finding.severity}
+                  </span>
+                </div>
+                <p className="mt-1 text-slate-600">{finding.summary}</p>
+                <small className="mt-1 block text-slate-400">
+                  Last observed {new Date(finding.lastSeenAt).toLocaleString()}
+                </small>
+              </article>
+            ))
+          ) : (
+            <p className="py-3 text-sm text-slate-500">No open reliability findings.</p>
+          )}
+        </div>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">

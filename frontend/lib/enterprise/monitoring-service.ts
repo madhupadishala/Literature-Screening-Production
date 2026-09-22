@@ -37,6 +37,20 @@ export interface MonitoringSummary {
   circuits: CircuitBreakerStatus[];
   metrics: MetricsSnapshot;
   security: { retainedEvents: number };
+  findings: {
+    available: boolean;
+    openTotal: number;
+    openCritical: number;
+    openWarning: number;
+    recent: Array<{
+      id: string;
+      findingType: string;
+      severity: string;
+      status: string;
+      summary: string;
+      lastSeenAt: string;
+    }>;
+  };
   operations: {
     available: boolean;
     auditEvents24h: number;
@@ -68,15 +82,24 @@ export async function getMonitoringSummary(tenantId: string): Promise<Monitoring
   metrics.setGauge("process_uptime_seconds", process.uptime());
   metrics.setGauge("security_events_retained", securityAudit.count());
 
-  const operations = await getOperationalReliability(tenantId).catch(() => ({
-    available: false,
-    auditEvents24h: 0,
-    failures24h: 0,
-    authorizationDenials24h: 0,
-    packagesTotal: 0,
-    workflowStates: {},
-    recentIncidents: [],
-  }));
+  const [operations, findings] = await Promise.all([
+    getOperationalReliability(tenantId).catch(() => ({
+      available: false,
+      auditEvents24h: 0,
+      failures24h: 0,
+      authorizationDenials24h: 0,
+      packagesTotal: 0,
+      workflowStates: {},
+      recentIncidents: [],
+    })),
+    getReliabilityFindingSummary(tenantId).catch(() => ({
+      available: false,
+      openTotal: 0,
+      openCritical: 0,
+      openWarning: 0,
+      recent: [],
+    })),
+  ]);
   const summary: MonitoringSummary = {
     service: {
       name: config.appName,
@@ -99,11 +122,64 @@ export async function getMonitoringSummary(tenantId: string): Promise<Monitoring
     circuits: listCircuitBreakers(),
     metrics: metrics.snapshot(),
     security: { retainedEvents: securityAudit.count() },
+    findings,
     operations,
     generatedAt: new Date().toISOString(),
   };
   await persistSnapshot(tenantId, summary).catch(() => undefined);
   return summary;
+}
+
+async function getReliabilityFindingSummary(
+  tenantId: string,
+): Promise<MonitoringSummary["findings"]> {
+  const pool = getPostgresPool();
+  const [counts, recent] = await Promise.all([
+    pool.query<{ severity: string; count: string }>(
+      `SELECT severity, count(*)::text AS count
+       FROM reliability_findings
+       WHERE tenant_id=$1 AND status <> 'RESOLVED'
+       GROUP BY severity`,
+      [tenantId],
+    ),
+    pool.query<{
+      id: string;
+      finding_type: string;
+      severity: string;
+      status: string;
+      summary: string;
+      last_seen_at: string;
+    }>(
+      `SELECT id, finding_type, severity, status, summary, last_seen_at::text
+       FROM reliability_findings
+       WHERE tenant_id=$1 AND status <> 'RESOLVED'
+       ORDER BY
+         CASE severity WHEN 'CRITICAL' THEN 0 WHEN 'WARNING' THEN 1 ELSE 2 END,
+         last_seen_at DESC
+       LIMIT 10`,
+      [tenantId],
+    ),
+  ]);
+
+  const map = new Map(counts.rows.map((row) => [row.severity, Number(row.count)]));
+  const openCritical = map.get("CRITICAL") || 0;
+  const openWarning = map.get("WARNING") || 0;
+  const openInfo = map.get("INFO") || 0;
+
+  return {
+    available: true,
+    openTotal: openCritical + openWarning + openInfo,
+    openCritical,
+    openWarning,
+    recent: recent.rows.map((row) => ({
+      id: row.id,
+      findingType: row.finding_type,
+      severity: row.severity,
+      status: row.status,
+      summary: row.summary,
+      lastSeenAt: new Date(row.last_seen_at).toISOString(),
+    })),
+  };
 }
 
 async function getOperationalReliability(
@@ -182,6 +258,7 @@ async function persistSnapshot(tenantId: string, summary: MonitoringSummary): Pr
       JSON.stringify({
         health: summary.health,
         operations: summary.operations,
+        findings: summary.findings,
         circuits: summary.circuits,
         service: summary.service,
       }),

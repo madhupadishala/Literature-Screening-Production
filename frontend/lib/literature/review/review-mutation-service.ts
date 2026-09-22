@@ -7,6 +7,7 @@ import {
   activeReviewReferenceData,
   expectednessFromReference,
 } from "@/lib/literature/review/review-reference-service";
+import { buildGovernedPatientCaseCandidates } from "@/lib/literature/intake-input/intake-case-governance";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 function cleanText(value: unknown): string {
@@ -727,6 +728,32 @@ export async function saveMedicalReview(input: {
           "APPROVED Medical Review requires governed labeling and causality assessment.",
         );
       }
+
+      const [labelRows, causalityRows] = await Promise.all([
+        client.query<Record<string, unknown>>(
+          `SELECT id, patient_segment_key, reported_product, clinical_event,
+                  conclusion, reference_label_key, reference_label_version,
+                  reference_effective_date, evidence, rationale
+           FROM literature_label_assessments
+           WHERE tenant_id = $1 AND review_workspace_id = $2
+           ORDER BY patient_segment_key, reported_product, clinical_event, id`,
+          [input.principal.tenantId, workspace.id],
+        ),
+        client.query<Record<string, unknown>>(
+          `SELECT id, patient_segment_key, reported_product, clinical_event,
+                  method_key, method_version, conclusion, evidence, rationale
+           FROM literature_causality_assessments
+           WHERE tenant_id = $1 AND review_workspace_id = $2
+           ORDER BY patient_segment_key, reported_product, clinical_event, id`,
+          [input.principal.tenantId, workspace.id],
+        ),
+      ]);
+
+      buildGovernedPatientCaseCandidates({
+        patientSegments: workspace.patient_segments,
+        labelAssessments: labelRows.rows,
+        causalityAssessments: causalityRows.rows,
+      });
     }
 
     if (input.status === "EXCLUDED" && patientCount === 0) {

@@ -3,6 +3,7 @@ import "server-only";
 import { createHash, randomUUID } from "node:crypto";
 
 import { getPostgresPool } from "@/lib/database/postgres";
+import { canonicalJson } from "@/lib/enterprise/canonical-json";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 import {
@@ -10,6 +11,7 @@ import {
   extractCompanyAssessmentsFromScreeningPayload,
   validateIntakeGenerationReason,
 } from "./intake-input-governance";
+import { buildGovernedPatientCaseCandidates } from "./intake-case-governance";
 import {
   INTAKE_INPUT_SCHEMA_VERSION,
   type GenerateIntakeInputRequest,
@@ -47,15 +49,23 @@ interface GenerationRow {
   source_records: unknown;
   duplicate_assessments: unknown;
   review_workspace_id: string | null;
+  review_workspace_version: number | null;
   review_workspace_status: string | null;
+  patient_count: number | null;
   patient_segmentation_status: string | null;
   patient_segments: unknown;
   labeling_status: string | null;
   causality_status: string | null;
+  label_assessments: unknown;
+  causality_assessments: unknown;
+  latest_patient_extraction_id: string | null;
+  latest_patient_extraction_version: number | null;
+  latest_patient_extraction_source_sha256: string | null;
   mr_review_status: string | null;
   mr_final_decision: string | null;
   mr_review_comments: string | null;
   mr_reviewed_at: string | null;
+  mr_review_version: number | null;
   mr_reviewer: string | null;
 }
 
@@ -119,6 +129,25 @@ function generationSql(): string {
       hits_review.review_status AS hits_review_status,
       hits_review.decision AS hits_review_decision,
       hits_review.review_version AS hits_review_version,
+      review_workspace.id AS review_workspace_id,
+      review_workspace.workspace_version AS review_workspace_version,
+      review_workspace.status AS review_workspace_status,
+      review_workspace.patient_count,
+      review_workspace.patient_segmentation_status,
+      review_workspace.patient_segments,
+      review_workspace.labeling_status,
+      review_workspace.causality_status,
+      medical_review.review_status AS mr_review_status,
+      medical_review.final_decision AS mr_final_decision,
+      medical_review.comments AS mr_review_comments,
+      medical_review.reviewed_at::text AS mr_reviewed_at,
+      medical_review.review_version AS mr_review_version,
+      mr_reviewer.display_name AS mr_reviewer,
+      COALESCE(labels.assessments, '[]'::jsonb) AS label_assessments,
+      COALESCE(causality.assessments, '[]'::jsonb) AS causality_assessments,
+      extraction.id AS latest_patient_extraction_id,
+      extraction.run_version AS latest_patient_extraction_version,
+      extraction.source_sha256 AS latest_patient_extraction_source_sha256,
       COALESCE(sources.records, '[]'::jsonb) AS source_records,
       COALESCE(duplicates.assessments, '[]'::jsonb) AS duplicate_assessments
     FROM literature_packages package
@@ -143,6 +172,49 @@ function generationSql(): string {
       ON medical_review.tenant_id = package.tenant_id
      AND medical_review.review_workspace_id = review_workspace.id
     LEFT JOIN application_users mr_reviewer ON mr_reviewer.id = medical_review.reviewed_by
+    LEFT JOIN LATERAL (
+      SELECT jsonb_agg(jsonb_build_object(
+        'id', label.id,
+        'patient_segment_key', label.patient_segment_key,
+        'reported_product', label.reported_product,
+        'clinical_event', label.clinical_event,
+        'conclusion', label.conclusion,
+        'reference_label_key', label.reference_label_key,
+        'reference_label_version', label.reference_label_version,
+        'reference_effective_date', label.reference_effective_date,
+        'evidence', label.evidence,
+        'rationale', label.rationale,
+        'assessed_at', label.assessed_at
+      ) ORDER BY label.patient_segment_key, label.reported_product, label.clinical_event, label.id) AS assessments
+      FROM literature_label_assessments label
+      WHERE label.tenant_id = package.tenant_id
+        AND label.review_workspace_id = review_workspace.id
+    ) labels ON true
+    LEFT JOIN LATERAL (
+      SELECT jsonb_agg(jsonb_build_object(
+        'id', assessment.id,
+        'patient_segment_key', assessment.patient_segment_key,
+        'reported_product', assessment.reported_product,
+        'clinical_event', assessment.clinical_event,
+        'method_key', assessment.method_key,
+        'method_version', assessment.method_version,
+        'conclusion', assessment.conclusion,
+        'evidence', assessment.evidence,
+        'rationale', assessment.rationale,
+        'assessed_at', assessment.assessed_at
+      ) ORDER BY assessment.patient_segment_key, assessment.reported_product, assessment.clinical_event, assessment.id) AS assessments
+      FROM literature_causality_assessments assessment
+      WHERE assessment.tenant_id = package.tenant_id
+        AND assessment.review_workspace_id = review_workspace.id
+    ) causality ON true
+    LEFT JOIN LATERAL (
+      SELECT extraction.id, extraction.run_version, extraction.source_sha256
+      FROM literature_patient_extraction_runs extraction
+      WHERE extraction.tenant_id = package.tenant_id
+        AND extraction.review_workspace_id = review_workspace.id
+      ORDER BY extraction.run_version DESC, extraction.created_at DESC
+      LIMIT 1
+    ) extraction ON true
     LEFT JOIN package_configuration_snapshots snapshot
       ON snapshot.package_id = package.id AND snapshot.tenant_id = package.tenant_id
     LEFT JOIN LATERAL (
@@ -202,6 +274,12 @@ export async function generateIntakeInput(input: {
       mrReviewStatus: row.mr_review_status,
     });
 
+    const caseCandidates = buildGovernedPatientCaseCandidates({
+      patientSegments: row.patient_segments,
+      labelAssessments: row.label_assessments,
+      causalityAssessments: row.causality_assessments,
+    });
+
     const lineage = {
       package_id: row.package_id,
       screening_result_id: row.screening_result_id,
@@ -215,10 +293,33 @@ export async function generateIntakeInput(input: {
       hits_review_version:
         row.hits_review_version === null ? null : Number(row.hits_review_version),
       review_workspace_id: row.review_workspace_id,
+      review_workspace_version:
+        row.review_workspace_version === null
+          ? null
+          : Number(row.review_workspace_version),
+      patient_segmentation_sha256: sha256(canonicalJson(row.patient_segments || [])),
+      label_assessments_sha256: sha256(canonicalJson(row.label_assessments || [])),
+      causality_assessments_sha256: sha256(
+        canonicalJson(row.causality_assessments || []),
+      ),
+      patient_extraction: {
+        run_id: row.latest_patient_extraction_id,
+        run_version:
+          row.latest_patient_extraction_version === null
+            ? null
+            : Number(row.latest_patient_extraction_version),
+        source_sha256: row.latest_patient_extraction_source_sha256,
+      },
+      medical_review_version:
+        row.mr_review_version === null ? null : Number(row.mr_review_version),
       mr_review_status: row.mr_review_status,
       mr_final_decision: row.mr_final_decision,
+      configuration_snapshot_sha256: sha256(
+        canonicalJson(row.configuration_snapshot || {}),
+      ),
+      case_candidate_count: caseCandidates.length,
     };
-    const lineageHash = sha256(JSON.stringify(lineage));
+    const lineageHash = sha256(canonicalJson(lineage));
     const existing = await client.query<ExportRow>(
       `SELECT export.*, generator.display_name AS generated_by_name
        FROM intake_input_exports export
@@ -276,9 +377,13 @@ export async function generateIntakeInput(input: {
         review_workspace_id: row.review_workspace_id,
         workspace_status: row.review_workspace_status,
         patient_segmentation_status: row.patient_segmentation_status,
+        patient_count: row.patient_count,
         patient_segments: row.patient_segments || [],
+        explicit_case_candidates: caseCandidates,
         labeling_status: row.labeling_status,
+        label_assessments: row.label_assessments || [],
         causality_status: row.causality_status,
+        causality_assessments: row.causality_assessments || [],
         medical_review_status: row.mr_review_status,
         medical_review_decision: row.mr_final_decision,
         medical_review_comments: row.mr_review_comments,
@@ -297,7 +402,7 @@ export async function generateIntakeInput(input: {
         },
       },
     };
-    const serialized = JSON.stringify(payload);
+    const serialized = canonicalJson(payload);
     const payloadHash = sha256(serialized);
     const fileName = "intake_input.json";
     const stored = await client.query<ExportRow>(
@@ -325,6 +430,40 @@ export async function generateIntakeInput(input: {
         input.principal.displayName,
       ],
     );
+    for (const candidate of caseCandidates) {
+      const candidatePayload = {
+        case_candidate_key: `${row.package_key}::${candidate.patient.patientSegmentKey}`,
+        patient: candidate.patient,
+        explicit_product_event_relations: candidate.relations,
+      };
+      const candidateContent = canonicalJson(candidatePayload);
+      await client.query(
+        `INSERT INTO literature_intake_case_candidates (
+           tenant_id, intake_export_id, package_id, patient_segment_key,
+           case_candidate_key, patient_payload, assessment_payload,
+           source_lineage_sha256, content_sha256
+         ) VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7::jsonb,$8,$9)
+         ON CONFLICT (tenant_id, intake_export_id, patient_segment_key)
+         DO UPDATE SET
+           case_candidate_key = EXCLUDED.case_candidate_key,
+           patient_payload = EXCLUDED.patient_payload,
+           assessment_payload = EXCLUDED.assessment_payload,
+           source_lineage_sha256 = EXCLUDED.source_lineage_sha256,
+           content_sha256 = EXCLUDED.content_sha256`,
+        [
+          input.principal.tenantId,
+          exportId,
+          packageId,
+          candidate.patient.patientSegmentKey,
+          `${row.package_key}::${candidate.patient.patientSegmentKey}`,
+          JSON.stringify(candidate.patient),
+          JSON.stringify(candidate.relations),
+          lineageHash,
+          sha256(candidateContent),
+        ],
+      );
+    }
+
     await client.query(
       `INSERT INTO evidence_artifacts (
          tenant_id, package_id, artifact_type, storage_backend, storage_key,
@@ -377,6 +516,11 @@ export async function generateIntakeInput(input: {
           schemaVersion: INTAKE_INPUT_SCHEMA_VERSION,
           sha256: payloadHash,
           sourceLineageSha256: lineageHash,
+          caseCandidateCount: caseCandidates.length,
+          relationCount: caseCandidates.reduce(
+            (count, candidate) => count + candidate.relations.length,
+            0,
+          ),
           reason,
         }),
       ],
