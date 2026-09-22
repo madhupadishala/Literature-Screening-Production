@@ -36,7 +36,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/probe-uat-preview-binding.mjs && npm run scheduler:verify && next build",
+    "build": "npm run scheduler:verify && next build",
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "node scripts/run-database-migrations.mjs",
