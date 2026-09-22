@@ -1,0 +1,57 @@
+name: Nexus RC1 Security Remediation
+
+on:
+  push:
+    branches:
+      - "security/nexus-rc1-remediation"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-lock:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: security/nexus-rc1-remediation
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Refresh lockfile to patched compatible versions
+        run: npm install --package-lock-only --ignore-scripts
+      - name: Audit production dependencies
+        shell: bash
+        run: |
+          npm audit --omit=dev --json > audit-prod-after.json || true
+          node <<'NODE'
+          const fs=require('fs');
+          const d=JSON.parse(fs.readFileSync('audit-prod-after.json','utf8'));
+          console.log('PROD_AUDIT_METADATA', JSON.stringify(d.metadata?.vulnerabilities || {}));
+          for (const [name,v] of Object.entries(d.vulnerabilities || {})) {
+            console.log('PROD_VULN', JSON.stringify({
+              name,severity:v.severity,isDirect:v.isDirect,range:v.range,
+              nodes:v.nodes,fixAvailable:v.fixAvailable,via:v.via
+            }));
+          }
+          NODE
+      - name: Commit refreshed dependency lock
+        shell: bash
+        run: |
+          cd ..
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontend/package.json frontend/package-lock.json
+          if git diff --cached --quiet; then
+            echo "No dependency lock changes to commit."
+          else
+            git commit -m "chore(security): refresh patched dependency lock"
+            git push origin HEAD:security/nexus-rc1-remediation
+          fi
