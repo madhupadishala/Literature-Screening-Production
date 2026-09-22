@@ -20,7 +20,7 @@ for (const table of [
   assert.equal(
     migration.split(`CREATE TABLE IF NOT EXISTS ${table}`).length - 1,
     1,
-    `Migration 028 must define ${table} exactly once.`,
+    `Migration 029 must define ${table} exactly once.`,
   );
 }
 

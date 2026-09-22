@@ -36,12 +36,12 @@ for (const requiredTable of [
   assert.equal(
     migration.includes(`CREATE TABLE IF NOT EXISTS ${requiredTable}`),
     true,
-    `Migration 022 is missing ${requiredTable}.`,
+    `Migration 023 is missing ${requiredTable}.`,
   );
   assert.equal(
     migration.split(`CREATE TABLE IF NOT EXISTS ${requiredTable}`).length - 1,
     1,
-    `Migration 022 defines ${requiredTable} more than once.`,
+    `Migration 023 defines ${requiredTable} more than once.`,
   );
 }
 

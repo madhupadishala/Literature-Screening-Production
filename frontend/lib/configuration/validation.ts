@@ -180,6 +180,108 @@ export function validateConfigurationPayload(
     });
   }
 
+  if (resourceType === "SEARCH_PROFILE") {
+    const records = recordsFromPayload(payload);
+    if (records.length === 0) {
+      errors.push(
+        issue(
+          "error",
+          "records",
+          "Search Profile configuration must contain at least one governed profile.",
+        ),
+      );
+    }
+
+    const profileKeys = new Set<string>();
+
+    records.forEach((value, index) => {
+      if (!isRecord(value)) {
+        errors.push(issue("error", `records[${index}]`, "Search Profile row must be an object."));
+        return;
+      }
+
+      const profileKey = String(value.profileKey || value.searchProfileKey || "").trim();
+      const productId = String(value.productId || value.clientProductId || "").trim();
+      const sourceKeys = Array.isArray(value.sourceKeys)
+        ? value.sourceKeys.map((entry) => String(entry || "").trim()).filter(Boolean)
+        : [];
+      const limit = Number(value.limit || value.maxResults || 100);
+      const lookbackDays = Number(value.lookbackDays || 7);
+      const status = String(value.status || "ACTIVE").trim().toUpperCase();
+
+      if (!profileKey) {
+        errors.push(issue("error", `records[${index}].profileKey`, "A unique profileKey is required."));
+      } else if (profileKeys.has(profileKey)) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].profileKey`,
+            "profileKey values must be unique within the Search Profile configuration.",
+          ),
+        );
+      } else {
+        profileKeys.add(profileKey);
+      }
+      if (!productId) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].productId`,
+            "A governed productId/clientProductId is required for scheduled production surveillance.",
+          ),
+        );
+      }
+      if (sourceKeys.length === 0) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].sourceKeys`,
+            "Search Profile requires at least one approved literature source.",
+          ),
+        );
+      }
+      const invalidSources = sourceKeys.filter(
+        (sourceKey) => !["PUBMED", "EUROPE_PMC", "CROSSREF"].includes(sourceKey),
+      );
+      if (invalidSources.length > 0) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].sourceKeys`,
+            `Unsupported literature source(s): ${invalidSources.join(", ")}.`,
+          ),
+        );
+      }
+      if (!Number.isFinite(limit) || limit < 1 || limit > 500) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].limit`,
+            "Search Profile result limit must be between 1 and 500.",
+          ),
+        );
+      }
+      if (!Number.isFinite(lookbackDays) || lookbackDays < 1 || lookbackDays > 90) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].lookbackDays`,
+            "Search Profile lookbackDays must be between 1 and 90.",
+          ),
+        );
+      }
+      if (!["ACTIVE", "INACTIVE"].includes(status)) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].status`,
+            "Search Profile status must be ACTIVE or INACTIVE.",
+          ),
+        );
+      }
+    });
+  }
+
   if (resourceType === "LITERATURE_CALENDAR") {
     const records = recordsFromPayload(payload);
     if (records.length === 0) {
@@ -192,25 +294,141 @@ export function validateConfigurationPayload(
       );
     }
 
+    const calendarIds = new Set<string>();
+
     records.forEach((value, index) => {
-      if (!isRecord(value)) return;
-      if (!String(value.frequency || "").trim()) {
+      if (!isRecord(value)) {
+        errors.push(issue("error", `records[${index}]`, "Calendar row must be an object."));
+        return;
+      }
+      const calendarId = String(value.calendarId || value.scheduleKey || "").trim();
+      const searchProfileKey = String(value.searchProfileKey || value.profileKey || "").trim();
+      const frequency = String(value.frequency || "").trim().toUpperCase();
+      const executionTime = String(value.executionTime || "").trim();
+      const timezone = String(value.timezone || "").trim();
+
+      if (!calendarId) {
+        errors.push(
+          issue("error", `records[${index}].calendarId`, "A unique calendarId is required."),
+        );
+      } else if (calendarIds.has(calendarId)) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].calendarId`,
+            "calendarId values must be unique within the Literature Calendar.",
+          ),
+        );
+      } else {
+        calendarIds.add(calendarId);
+      }
+      if (!searchProfileKey) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].searchProfileKey`,
+            "Calendar record must reference an approved Search Profile.",
+          ),
+        );
+      }
+      if (!["DAILY", "WEEKLY", "MONTHLY"].includes(frequency)) {
         errors.push(
           issue(
             "error",
             `records[${index}].frequency`,
-            "Calendar frequency is required.",
+            "Calendar frequency must be DAILY, WEEKLY, or MONTHLY.",
           ),
         );
       }
-      if (!String(value.timezone || "").trim()) {
-        warnings.push(
+      if (!/^([01]\\d|2[0-3]):[0-5]\\d$/.test(executionTime)) {
+        errors.push(
           issue(
-            "warning",
-            `records[${index}].timezone`,
-            "Timezone is missing; tenant default will be used.",
+            "error",
+            `records[${index}].executionTime`,
+            "Calendar executionTime must use 24-hour HH:MM format.",
           ),
         );
+      }
+      if (!timezone) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].timezone`,
+            "Timezone is required for reproducible scheduled search execution.",
+          ),
+        );
+      } else {
+        try {
+          new Intl.DateTimeFormat("en-US", { timeZone: timezone }).format(new Date());
+        } catch {
+          errors.push(
+            issue(
+              "error",
+              `records[${index}].timezone`,
+              "Timezone must be a valid IANA timezone identifier.",
+            ),
+          );
+        }
+      }
+
+      const calendarStatus = String(value.status || "ACTIVE").trim().toUpperCase();
+      if (!["ACTIVE", "INACTIVE"].includes(calendarStatus)) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].status`,
+            "Calendar status must be ACTIVE or INACTIVE.",
+          ),
+        );
+      }
+
+      const graceMinutes = Number(value.graceMinutes || 90);
+      const catchUpHours = Number(value.catchUpHours || 72);
+      if (!Number.isFinite(graceMinutes) || graceMinutes < 5 || graceMinutes > 1440) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].graceMinutes`,
+            "graceMinutes must be between 5 and 1440.",
+          ),
+        );
+      }
+      if (!Number.isFinite(catchUpHours) || catchUpHours < 1 || catchUpHours > 168) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].catchUpHours`,
+            "catchUpHours must be between 1 and 168.",
+          ),
+        );
+      }
+
+      const executionDay = String(value.executionDay || "").trim().toUpperCase();
+      if (
+        frequency === "WEEKLY" &&
+        !["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"].includes(
+          executionDay,
+        )
+      ) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].executionDay`,
+            "Weekly calendars require a valid executionDay.",
+          ),
+        );
+      }
+      if (frequency === "MONTHLY") {
+        const dayOfMonth = Number(value.dayOfMonth || 0);
+        if (!Number.isInteger(dayOfMonth) || dayOfMonth < 1 || dayOfMonth > 31) {
+          errors.push(
+            issue(
+              "error",
+              `records[${index}].dayOfMonth`,
+              "Monthly calendars require dayOfMonth between 1 and 31.",
+            ),
+          );
+        }
       }
     });
   }

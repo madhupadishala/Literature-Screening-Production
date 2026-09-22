@@ -19,6 +19,7 @@ import type {
   AdHocSearchCriteria,
   AdHocSearchExecution,
   NormalizedLiteratureResult,
+  ScheduledSearchContext,
 } from "@/lib/literature/adhoc-search/types";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
@@ -60,10 +61,14 @@ function markDuplicateGroups(
 export async function executeAdHocSearch(input: {
   principal: RequestPrincipal;
   criteria: AdHocSearchCriteria;
+  scheduleContext?: ScheduledSearchContext;
 }): Promise<AdHocSearchExecution> {
   const started = Date.now();
   const startedAt = new Date(started).toISOString();
-  const criteria = normalizeSearchCriteria(input.criteria);
+  const normalizedCriteria = normalizeSearchCriteria(input.criteria);
+  const criteria: AdHocSearchCriteria = input.scheduleContext
+    ? { ...normalizedCriteria, scheduleContext: input.scheduleContext }
+    : normalizedCriteria;
   const executionPurpose = criteria.executionPurpose || "TEST_VALIDATION";
   const allSources = await listLiteratureSources(input.principal);
 

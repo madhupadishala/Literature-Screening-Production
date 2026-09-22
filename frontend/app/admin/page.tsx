@@ -18,6 +18,12 @@ const modules = [
     action: "/admin/configuration",
   },
   {
+    title: "Scheduled Literature Operations",
+    description:
+      "Monitor governed Search Profile executions, Search Evidence Packages, Hits handoff, missed searches, and scheduler alerts.",
+    action: "/admin/literature-scheduler",
+  },
+  {
     title: "Client Guidelines",
     description:
       "Upload governed SOPs, work instructions, screening rules, and country-specific guidance.",

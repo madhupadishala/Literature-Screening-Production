@@ -12,8 +12,18 @@ export type SearchExecutionPurpose =
   | "MANUAL_PRODUCTION"
   | "SCHEDULED_PRODUCTION";
 
+export interface ScheduledSearchContext {
+  scheduleKey: string;
+  scheduledRunId: string;
+  scheduledFor: string;
+  calendarVersionId: string;
+  searchProfileKey: string;
+  searchProfileVersionId: string;
+}
+
 export interface AdHocSearchCriteria {
   executionPurpose?: SearchExecutionPurpose;
+  scheduleContext?: ScheduledSearchContext;
   searchString?: string;
   pmid?: string;
   doi?: string;

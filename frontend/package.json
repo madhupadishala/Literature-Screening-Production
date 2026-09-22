@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run scheduler:verify && next build",
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "node scripts/run-database-migrations.mjs",
@@ -45,7 +45,8 @@
     "validate:e2e": "node scripts/validate-enterprise-e2e.mjs",
     "validate:e2e:offline": "node scripts/validate-enterprise-e2e.mjs --offline",
     "deployment:verify": "node scripts/verify-azure-deployment-foundation.mjs",
-    "release:gate": "node scripts/production-release-gate.mjs"
+    "release:gate": "node scripts/production-release-gate.mjs",
+    "scheduler:verify": "node --import tsx scripts/verify-literature-scheduler.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.18.0",

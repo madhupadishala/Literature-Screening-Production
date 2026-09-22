@@ -228,7 +228,7 @@ const migrationRegistry = readFileSync(
   path.join(process.cwd(), "lib/database/migration-registry.ts"),
   "utf8",
 );
-for (const id of ["028", "029", "030"]) {
+for (const id of ["029", "030", "031"]) {
   assert.equal(migrationRegistry.includes(`id: "${id}"`), true);
 }
 
