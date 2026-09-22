@@ -93,6 +93,7 @@ async function ensureSchedulerPrincipal(input: {
 
     const customPermissions: string[] = [];
     return {
+      environment: "PROD",
       tenantId: input.tenantId,
       tenantKey: input.tenantKey,
       userId: user.rows[0].id,

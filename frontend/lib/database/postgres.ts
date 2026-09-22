@@ -31,12 +31,37 @@ function buildSslConfiguration(): PoolConfig["ssl"] {
   );
 }
 
+const RC1_UAT_PREVIEW_BRANCH = "release/nexus-integrated-rc1";
+const RC1_UAT_NEON_HOST =
+  "ep-dry-grass-b3qv8phi-pooler.c-4.ap-southeast-1.aws.neon.tech";
+const RC1_UAT_DATABASE = "literature_screening_prod";
+
+function resolveRc1PreviewDatabaseUrl(databaseUrl: string): string {
+  const isRc1Preview =
+    process.env.VERCEL_ENV?.trim().toLowerCase() === "preview" &&
+    process.env.VERCEL_GIT_COMMIT_REF?.trim() === RC1_UAT_PREVIEW_BRANCH;
+
+  if (!isRc1Preview) return databaseUrl;
+
+  const parsed = new URL(databaseUrl);
+  if (parsed.protocol !== "postgres:" && parsed.protocol !== "postgresql:") {
+    throw new Error("RC1 UAT preview requires a PostgreSQL DATABASE_URL.");
+  }
+
+  // Reuse only the protected Vercel credential material. The target host and
+  // database are non-secret identifiers for the isolated Neon UAT branch.
+  parsed.hostname = RC1_UAT_NEON_HOST;
+  parsed.pathname = `/${RC1_UAT_DATABASE}`;
+  parsed.searchParams.set("sslmode", "require");
+  return parsed.toString();
+}
+
 export function getDatabaseUrl(): string {
   const databaseUrl = process.env.DATABASE_URL?.trim();
   if (!databaseUrl) {
     throw new Error("DATABASE_URL is not configured.");
   }
-  return databaseUrl;
+  return resolveRc1PreviewDatabaseUrl(databaseUrl);
 }
 
 export function getPostgresPool(): Pool {

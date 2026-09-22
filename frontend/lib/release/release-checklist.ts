@@ -12,7 +12,7 @@ export const RELEASE_CHECKLIST: ReleaseChecklistDefinition[] = [
   {
     id: "migrations-verified",
     title: "Database migrations verified",
-    description: "Required migrations 001-016 are applied and database readiness reports no drift.",
+    description: "Required migrations 001-032 are applied in order, checksums match the release artifact, and database readiness reports no drift.",
     mandatory: true,
     ownerRole: "Engineering / Database Operations",
   },
@@ -52,7 +52,7 @@ export const RELEASE_CHECKLIST: ReleaseChecklistDefinition[] = [
     id: "uat-signoff",
     title: "PV and QA UAT sign-off completed",
     description:
-      "Mandatory automated and manual Literature Screening scenarios passed with governed evidence.",
+      "Mandatory automated and manual Literature Screening and Nexus safety-workflow scenarios passed with governed evidence.",
     mandatory: true,
     ownerRole: "PV Product / QA",
   },

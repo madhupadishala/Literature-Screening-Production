@@ -30,8 +30,12 @@ export function runReleaseSelfTest(): ReleaseSelfTestReport {
     {
       name: "architecture-boundary",
       passed:
-        manifest.excludedCapabilities.includes("Intake workspace") &&
-        manifest.includedCapabilities.includes("Governed intake_input.json export"),
+        manifest.includedCapabilities.includes("Canonical Intake sources, source review and human-confirmed extraction") &&
+        manifest.includedCapabilities.includes("L2A Nexus Case Processing") &&
+        manifest.includedCapabilities.includes("QC and Medical Review") &&
+        manifest.excludedCapabilities.includes("Regulatory gateway transmission and acknowledgement handling") &&
+        manifest.excludedCapabilities.includes("Embedded proprietary MedDRA or WHODrug dictionary content") &&
+        !manifest.excludedCapabilities.includes("Case processing"),
       details: {
         included: manifest.includedCapabilities,
         excluded: manifest.excludedCapabilities,
@@ -53,10 +57,19 @@ export function runReleaseSelfTest(): ReleaseSelfTestReport {
       details: { count: checklistIds.length },
     },
     {
-      name: "mandatory-pv-uat-present",
-      passed: UAT_SCENARIOS.filter(
-        (scenario) => scenario.mode === "manual" && scenario.mandatory,
-      ).length >= 8,
+      name: "mandatory-pv-and-nexus-uat-present",
+      passed:
+        UAT_SCENARIOS.filter(
+          (scenario) => scenario.mode === "manual" && scenario.mandatory,
+        ).length >= 14 &&
+        [
+          "UAT-NEXUS-001",
+          "UAT-NEXUS-002",
+          "UAT-NEXUS-003",
+          "UAT-NEXUS-004",
+          "UAT-NEXUS-005",
+          "UAT-NEXUS-006",
+        ].every((id) => scenarioIds.includes(id)),
       details: {
         count: UAT_SCENARIOS.filter(
           (scenario) => scenario.mode === "manual" && scenario.mandatory,

@@ -1,0 +1,47 @@
+name: Nexus UAT Standalone Runtime
+
+on:
+  push:
+    branches:
+      - "release/nexus-integrated-rc1"
+
+permissions:
+  contents: read
+
+jobs:
+  build-standalone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build RC1 standalone runtime
+        env:
+          BUILD_SHA: ${{ github.sha }}
+        run: npm run build
+      - name: Assemble runtime assets
+        shell: bash
+        run: |
+          mkdir -p .next/standalone/frontend/.next
+          cp -R .next/static .next/standalone/frontend/.next/static
+          if [ -d public ]; then
+            cp -R public .next/standalone/frontend/public
+          fi
+      - name: Package standalone runtime
+        working-directory: .
+        run: tar -C frontend/.next/standalone -czf /tmp/nexus-uat-standalone.tgz .
+      - name: Upload standalone runtime
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexus-uat-standalone
+          path: /tmp/nexus-uat-standalone.tgz
+          retention-days: 2

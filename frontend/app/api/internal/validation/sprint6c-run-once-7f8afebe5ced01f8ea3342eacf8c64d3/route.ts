@@ -53,6 +53,7 @@ async function validationPrincipal(): Promise<RequestPrincipal> {
   return {
     tenantId: row.tenant_id,
     tenantKey: row.tenant_key,
+    environment: "PROD",
     userId: row.user_id,
     email: row.email,
     displayName: row.display_name,

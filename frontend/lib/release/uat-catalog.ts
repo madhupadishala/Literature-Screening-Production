@@ -43,6 +43,13 @@ export const UAT_SCENARIOS: UatScenario[] = [
     "Workflow",
     "/api/workflow/list",
   ),
+  automated(
+    "UAT-AUTO-007",
+    "UAT database binding fingerprint",
+    "The deployed preview can identify its isolated UAT database, migration state and safety schema before regulated workflow testing.",
+    "Nexus UAT Infrastructure",
+    "/api/internal/uat/db-fingerprint",
+  ),
   manual(
     "UAT-PV-001",
     "Product identity and MAH validation",
@@ -114,6 +121,72 @@ export const UAT_SCENARIOS: UatScenario[] = [
     [
       "Request, package, tenant, actor and timestamp context are retained.",
       "Overrides and final decisions include reasons and evidence references.",
+    ],
+  ),
+  manual(
+    "UAT-NEXUS-001",
+    "Nexus module entitlement and dependency enforcement",
+    "Verify environment-scoped module licensing, fail-closed access, and the Case Processing dependency on Intake.",
+    "Nexus Authorization",
+    [
+      "A UAT tenant with Literature, Intake and Case Processing enabled can access the licensed Nexus modules.",
+      "A UAT tenant with Intake and Case Processing disabled is denied direct UI and API access to those modules.",
+      "Case Processing is not effectively enabled when its Intake dependency is unavailable.",
+    ],
+  ),
+  manual(
+    "UAT-NEXUS-002",
+    "Canonical Intake and source-review flow",
+    "Exercise manual, document and governed Literature Intake paths through source review and human-confirmed extraction.",
+    "Nexus Intake",
+    [
+      "All supported source channels converge on one tenant-scoped Intake record and preserve immutable source lineage.",
+      "Extraction suggestions remain assistive until a human accepts, edits or rejects them.",
+      "Every material human extraction decision is auditable with evidence and rationale.",
+    ],
+  ),
+  manual(
+    "UAT-NEXUS-003",
+    "ICSR validity and triage",
+    "Validate the four minimum ICSR criteria, due-diligence follow-up, seriousness, special situations and triage routing.",
+    "Nexus Triage",
+    [
+      "Valid and unresolved/invalid scenarios produce the expected governed triage outcome.",
+      "Missing minimum criteria route to explicit follow-up rather than silent discard.",
+      "Finalised valid triage proceeds to duplicate/follow-up review and does not create a case prematurely.",
+    ],
+  ),
+  manual(
+    "UAT-NEXUS-004",
+    "Duplicate, follow-up and disposition controls",
+    "Verify explainable candidate matching and human-controlled duplicate/follow-up/disposition decisions.",
+    "Nexus Disposition",
+    [
+      "Duplicate scoring is advisory and cannot make the final regulated relationship decision automatically.",
+      "Confirmed duplicates cannot create a new Nexus case.",
+      "Follow-up information routes to the existing case; a valid new case may create a Nexus case only when Case Processing is entitled.",
+    ],
+  ),
+  manual(
+    "UAT-NEXUS-005",
+    "Case processing, QC, Medical Review and finalization",
+    "Run an end-to-end synthetic case through versioned processing, QC, Medical Review and immutable finalization.",
+    "Nexus Case Processing",
+    [
+      "Material edits create new draft/narrative/assessment versions without rewriting prior regulated history.",
+      "QC and Medical Review approvals are bound to the reviewed draft revision and open queries block finalization.",
+      "Successful finalization creates an immutable case version and the operational case reaches FINAL only atomically.",
+    ],
+  ),
+  manual(
+    "UAT-NEXUS-006",
+    "Evidence package and controlled export",
+    "Verify the finalized-case evidence chain and controlled Nexus/E2B mapping exports.",
+    "Nexus Evidence",
+    [
+      "The evidence package contains source-to-final-decision lineage and cryptographic hashes without embedding raw uploaded bytes.",
+      "Generated exports are append-only, versioned and hash-locked.",
+      "E2B(R3) mapping output is clearly identified as mapping data and not represented as validated gateway transmission.",
     ],
   ),
   manual(

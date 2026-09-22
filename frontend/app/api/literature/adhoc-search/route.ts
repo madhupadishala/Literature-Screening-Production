@@ -1,7 +1,8 @@
 import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
-import { requirePermission } from "@/lib/rbac/guard";
+import { requireModulePermission } from "@/lib/rbac/guard";
 import {
   listLiteratureSources,
   listRecentSearches,
@@ -14,8 +15,9 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(
+    const principal = await requireModulePermission(
       request,
+      NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_EXECUTE,
     );
 
@@ -45,8 +47,9 @@ export async function GET(request: NextRequest): Promise<Response> {
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(
+    const principal = await requireModulePermission(
       request,
+      NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_EXECUTE,
     );
 

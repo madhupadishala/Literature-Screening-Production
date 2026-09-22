@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import {
   executeScreening,
   listScreeningWorklist,
@@ -10,7 +11,7 @@ import type {
   ExecuteScreeningInput,
   SaveScreeningReviewInput,
 } from "@/lib/literature/screening/screening-workflow-types";
-import { requirePermission } from "@/lib/rbac/guard";
+import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export const runtime = "nodejs";
@@ -22,8 +23,9 @@ type ScreeningActionRequest =
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(
+    const principal = await requireModulePermission(
       request,
+      NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_HISTORY_VIEW,
     );
     const rawLimit = Number(request.nextUrl.searchParams.get("limit") || 250);
@@ -46,18 +48,20 @@ export async function POST(request: NextRequest): Promise<Response> {
     const body = (await request.json()) as ScreeningActionRequest;
 
     if (body.action === "execute") {
-      const principal = await requirePermission(
-        request,
-        PERMISSIONS.SCREENING_EXECUTE,
+      const principal = await requireModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SCREENING_EXECUTE,
       );
       const record = await executeScreening({ principal, request: body.input });
       return Response.json({ success: true, data: record }, { status: 201 });
     }
 
     if (body.action === "review") {
-      const principal = await requirePermission(
-        request,
-        PERMISSIONS.SCREENING_REVIEW,
+      const principal = await requireModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SCREENING_REVIEW,
       );
       const mutation = await saveScreeningReview({
         principal,
