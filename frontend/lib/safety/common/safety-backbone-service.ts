@@ -207,7 +207,7 @@ async function insertProduct(
   await client.query(
     `INSERT INTO safety_products (
        tenant_id, intake_record_id, product_key, reported_name,
-       role_characterization, active_substances, authorization, indication,
+       role_characterization, active_substances, authorization_payload, indication,
        dosage, route, therapy_dates, batch_lot_number, action_taken,
        rechallenge, e2b_g_payload
      ) VALUES (
