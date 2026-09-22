@@ -44,6 +44,9 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
+      - name: Enforce dependency security gate
+        run: npm run security:audit
+
       - name: Run lint when configured
         shell: bash
         run: |
