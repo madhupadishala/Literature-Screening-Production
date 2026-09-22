@@ -45,7 +45,7 @@ export async function GET(): Promise<Response> {
         (
           SELECT count(*)::text
           FROM clinixai_schema_migrations
-          WHERE migration_id BETWEEN '022' AND '031'
+          WHERE migration_id BETWEEN '022' AND '032'
         )
       ELSE '0' END AS nexus_migration_count,
       (
@@ -97,8 +97,8 @@ export async function GET(): Promise<Response> {
     fingerprint.vercelEnvironment === "preview" &&
     fingerprint.nexusEnvironment === "UAT" &&
     fingerprint.migrationLedgerPresent &&
-    fingerprint.maxMigration === "031" &&
-    fingerprint.nexusMigrationCount === 10 &&
+    fingerprint.maxMigration === "032" &&
+    fingerprint.nexusMigrationCount === 11 &&
     fingerprint.safetyTableCount >= 31 &&
     fingerprint.uatTenantCount === 2 &&
     Boolean(fingerprint.neonProjectId) &&
