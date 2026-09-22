@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS safety_products (
     'SUSPECT', 'INTERACTING', 'CONCOMITANT', 'DRUG_NOT_ADMINISTERED', 'UNSPECIFIED'
   )),
   active_substances jsonb NOT NULL DEFAULT '[]'::jsonb,
-  authorization jsonb NOT NULL DEFAULT '{}'::jsonb,
+  authorization_payload jsonb NOT NULL DEFAULT '{}'::jsonb,
   indication jsonb NOT NULL DEFAULT '{}'::jsonb,
   dosage jsonb NOT NULL DEFAULT '[]'::jsonb,
   route jsonb NOT NULL DEFAULT '{}'::jsonb,
