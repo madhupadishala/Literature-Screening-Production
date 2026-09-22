@@ -7,7 +7,7 @@ import type { CaseDraftPayload } from "../lib/safety/case-processing/case-proces
 import { deriveAllowedDispositions } from "../lib/safety/disposition/disposition-policy";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/030_nexus_case_evidence_export.sql"),
+  path.join(process.cwd(), "database/migrations/031_nexus_case_evidence_export.sql"),
   "utf8",
 );
 assert.equal(

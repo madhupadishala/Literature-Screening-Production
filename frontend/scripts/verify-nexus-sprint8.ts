@@ -6,7 +6,7 @@ import { evaluateCaseAssist } from "../lib/safety/case-processing/case-assist";
 import type { CaseDraftPayload } from "../lib/safety/case-processing/case-processing-types";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/028_nexus_l2a_case_processing.sql"),
+  path.join(process.cwd(), "database/migrations/029_nexus_l2a_case_processing.sql"),
   "utf8",
 );
 

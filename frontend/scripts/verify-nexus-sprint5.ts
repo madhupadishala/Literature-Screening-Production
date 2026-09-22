@@ -5,7 +5,7 @@ import path from "node:path";
 import { evaluateTriageSnapshot } from "../lib/safety/triage/triage-evaluator";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/025_nexus_icsr_validity_triage.sql"),
+  path.join(process.cwd(), "database/migrations/026_nexus_icsr_validity_triage.sql"),
   "utf8",
 );
 

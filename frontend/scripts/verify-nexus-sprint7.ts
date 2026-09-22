@@ -7,7 +7,7 @@ import { deriveAllowedDispositions } from "../lib/safety/disposition/disposition
 const migration = readFileSync(
   path.join(
     process.cwd(),
-    "database/migrations/027_nexus_intake_disposition.sql",
+    "database/migrations/028_nexus_intake_disposition.sql",
   ),
   "utf8",
 );

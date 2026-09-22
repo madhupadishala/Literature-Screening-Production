@@ -6,7 +6,7 @@ import { evaluateCaseFinalization } from "../lib/safety/case-review/case-finaliz
 import type { CaseDraftPayload } from "../lib/safety/case-processing/case-processing-types";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/029_nexus_case_review_finalization.sql"),
+  path.join(process.cwd(), "database/migrations/030_nexus_case_review_finalization.sql"),
   "utf8",
 );
 

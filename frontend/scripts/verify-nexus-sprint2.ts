@@ -16,7 +16,7 @@ import {
 } from "../lib/safety/common/safety-validation";
 
 const migration = readFileSync(
-  path.join(process.cwd(), "database/migrations/022_nexus_common_safety_backbone.sql"),
+  path.join(process.cwd(), "database/migrations/023_nexus_common_safety_backbone.sql"),
   "utf8",
 );
 for (const requiredTable of [
