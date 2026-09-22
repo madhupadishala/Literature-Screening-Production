@@ -1,0 +1,63 @@
+name: Nexus RC1 Dependency Audit
+
+on:
+  push:
+    branches:
+      - "security/nexus-rc1-audit"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Capture production dependency audit
+        shell: bash
+        run: npm audit --omit=dev --json > audit-prod.json || true
+      - name: Capture complete dependency audit
+        shell: bash
+        run: npm audit --json > audit-full.json || true
+      - name: Print audit summary
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          for (const file of ['audit-prod.json','audit-full.json']) {
+            const data = JSON.parse(fs.readFileSync(file,'utf8'));
+            console.log('\n=== '+file+' ===');
+            console.log('metadata', JSON.stringify(data.metadata?.vulnerabilities || {}));
+            for (const [name, v] of Object.entries(data.vulnerabilities || {})) {
+              console.log(JSON.stringify({
+                name,
+                severity: v.severity,
+                isDirect: v.isDirect,
+                range: v.range,
+                nodes: v.nodes,
+                via: v.via,
+                effects: v.effects,
+                fixAvailable: v.fixAvailable
+              }));
+            }
+          }
+          NODE
+      - name: Upload audit JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexus-rc1-dependency-audit
+          path: |
+            frontend/audit-prod.json
+            frontend/audit-full.json
+          retention-days: 7
