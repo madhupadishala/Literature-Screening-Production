@@ -15,10 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Package RC1 source
-        run: tar --exclude=.git -czf nexus-uat-source.tgz .
+        run: tar --exclude=.git -czf /tmp/nexus-uat-source.tgz .
       - name: Upload RC1 source
         uses: actions/upload-artifact@v4
         with:
           name: nexus-uat-source
-          path: nexus-uat-source.tgz
+          path: /tmp/nexus-uat-source.tgz
           retention-days: 2
