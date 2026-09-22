@@ -43,6 +43,13 @@ export const UAT_SCENARIOS: UatScenario[] = [
     "Workflow",
     "/api/workflow/list",
   ),
+  automated(
+    "UAT-AUTO-007",
+    "UAT database binding fingerprint",
+    "The deployed preview can identify its isolated UAT database, migration state and safety schema before regulated workflow testing.",
+    "Nexus UAT Infrastructure",
+    "/api/internal/uat/db-fingerprint",
+  ),
   manual(
     "UAT-PV-001",
     "Product identity and MAH validation",
