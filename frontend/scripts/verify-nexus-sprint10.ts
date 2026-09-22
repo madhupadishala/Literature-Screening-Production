@@ -39,7 +39,9 @@ function baseDraft(options?: {
     reportedTerm: `Event ${index + 1}`,
     seriousness: options?.serious === true,
     seriousnessCriteria:
-      options?.serious === true ? { LIFE_THREATENING: true } : {},
+      options?.serious === true
+        ? ({ LIFE_THREATENING: true } as Record<string, boolean>)
+        : ({} as Record<string, boolean>),
   }));
 
   return {
