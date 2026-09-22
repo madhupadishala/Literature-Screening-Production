@@ -1,11 +1,12 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import {
   getReviewWorkspaceDetail,
   listReviewWorklist,
 } from "@/lib/literature/review/review-workflow-service";
-import { requirePermission } from "@/lib/rbac/guard";
+import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 
 export const runtime = "nodejs";
@@ -13,8 +14,9 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(
+    const principal = await requireModulePermission(
       request,
+      NEXUS_MODULES.LITERATURE,
       PERMISSIONS.REVIEW_VIEW,
     );
     const workspaceId = request.nextUrl.searchParams.get("workspaceId")?.trim();

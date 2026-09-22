@@ -95,6 +95,7 @@ async function ensureSchedulerPrincipal(input: {
     return {
       tenantId: input.tenantId,
       tenantKey: input.tenantKey,
+      environment: "PROD",
       userId: user.rows[0].id,
       email: user.rows[0].email,
       displayName: user.rows[0].display_name,
