@@ -276,6 +276,14 @@ assert.equal(releaseManifest.includes("QC and Medical Review"), true);
 assert.equal(releaseManifest.includes("Regulatory gateway transmission and acknowledgement handling"), true);
 assert.equal(releaseManifest.includes("PV Nexus case-management functions"), false);
 
+const releaseSelfTest = readFileSync(
+  path.join(process.cwd(), "lib/release/release-self-test.ts"),
+  "utf8",
+);
+assert.equal(releaseSelfTest.includes('manifest.excludedCapabilities.includes("Intake workspace")'), false);
+assert.equal(releaseSelfTest.includes('manifest.includedCapabilities.includes("L2A Nexus Case Processing")'), true);
+assert.equal(releaseSelfTest.includes('"mandatory-pv-and-nexus-uat-present"'), true);
+
 const releaseRunbook = readFileSync(
   path.join(process.cwd(), "deployment/PRODUCTION_RELEASE_RUNBOOK.md"),
   "utf8",
