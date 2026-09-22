@@ -192,4 +192,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "031_nexus_case_evidence_export.sql",
     required: true,
   },
+  {
+    id: "032",
+    name: "Nexus Tenant Integrity Hardening",
+    filename: "032_nexus_tenant_integrity_hardening.sql",
+    required: true,
+  },
 ] as const;
