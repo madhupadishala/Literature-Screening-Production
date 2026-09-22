@@ -249,7 +249,7 @@ const releaseChecklist = readFileSync(
   path.join(process.cwd(), "lib/release/release-checklist.ts"),
   "utf8",
 );
-assert.equal(releaseChecklist.includes("Required migrations 001-031"), true);
+assert.equal(releaseChecklist.includes("Required migrations 001-032"), true);
 assert.equal(releaseChecklist.includes("Nexus safety-workflow scenarios"), true);
 
 const uatCatalog = readFileSync(
@@ -288,7 +288,7 @@ const releaseRunbook = readFileSync(
   path.join(process.cwd(), "deployment/PRODUCTION_RELEASE_RUNBOOK.md"),
   "utf8",
 );
-assert.equal(releaseRunbook.includes("migrations `001` through `031`"), true);
+assert.equal(releaseRunbook.includes("migrations `001` through `032`"), true);
 assert.equal(releaseRunbook.includes("Literature → Intake"), true);
 assert.equal(releaseRunbook.includes("validated regional E2B XML transmission"), false);
 
