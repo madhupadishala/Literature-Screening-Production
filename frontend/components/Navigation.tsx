@@ -75,11 +75,12 @@ const caseSecondary: SecondaryItem[] = [
 ];
 
 const literatureSecondary: SecondaryItem[] = [
-  { label: "Search", path: "/literature-search" },
-  { label: "Workflow", path: "/workflow" },
+  { label: "Search", path: "/literature-search", exact: true },
+  { label: "Duplicate Check", path: "/literature-search/duplicate-check" },
   { label: "Hits", path: "/hits" },
   { label: "Screening", path: "/screening" },
-  { label: "Review Queue", path: "/review" },
+  { label: "Review / MR", path: "/review" },
+  { label: "Workflow", path: "/workflow" },
 ];
 
 export default function Navigation() {
@@ -146,9 +147,7 @@ export default function Navigation() {
 
   return (
     <div className="nexus-shell-header">
-      <a className="nexus-skip" href="#main-content">
-        Skip to main content
-      </a>
+      <a className="nexus-skip" href="#main-content">Skip to main content</a>
 
       <header className="nexus-command-bar">
         <Link className="nexus-brand" href="/" aria-label="TheClinixAI Nexus home">
@@ -207,9 +206,7 @@ export default function Navigation() {
             ),
           )}
         </div>
-        <Link className="nexus-health" href="/admin/reliability">
-          System Health
-        </Link>
+        <Link className="nexus-health" href="/admin/reliability">System Health</Link>
       </nav>
 
       {secondaryItems.length ? (
@@ -226,174 +223,12 @@ export default function Navigation() {
               </Link>
             ))}
           </div>
-          <span className="nexus-control-state">
-            Controlled environment · RBAC + entitlement active
-          </span>
+          <span className="nexus-control-state">Controlled environment · RBAC + entitlement active</span>
         </nav>
       ) : null}
 
       <style jsx>{`
-        .nexus-shell-header {
-          position: sticky;
-          top: 0;
-          z-index: 80;
-          margin: -18px -18px 16px;
-          border-bottom: 1px solid #d8e0ea;
-          background: #ffffff;
-          box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
-        .nexus-skip {
-          position: fixed;
-          top: 6px;
-          left: 6px;
-          z-index: 200;
-          transform: translateY(-150%);
-          padding: 8px 10px;
-          background: #0f5fa8;
-          color: #fff;
-          text-decoration: none;
-          border-radius: 4px;
-        }
-        .nexus-skip:focus { transform: translateY(0); }
-        .nexus-command-bar {
-          min-height: 58px;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 0 22px;
-          border-bottom: 1px solid #e8edf3;
-          background: #fff;
-        }
-        .nexus-brand {
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          min-width: 178px;
-          color: #102a43;
-          text-decoration: none;
-        }
-        .nexus-mark {
-          display: grid;
-          width: 31px;
-          height: 31px;
-          place-items: center;
-          border-radius: 7px;
-          color: #fff;
-          background: linear-gradient(135deg, #0f6db7, #16a394);
-          font-size: 16px;
-          font-weight: 900;
-        }
-        .nexus-brand-copy { display: grid; line-height: 1.05; }
-        .nexus-brand-copy strong { font-size: 14px; letter-spacing: -0.02em; }
-        .nexus-brand-copy small { margin-top: 3px; color: #718096; font-size: 8px; font-weight: 700; }
-        .nexus-product {
-          display: grid;
-          padding-left: 16px;
-          border-left: 1px solid #dce4ed;
-          line-height: 1.08;
-        }
-        .nexus-product strong { color: #0f5fa8; font-size: 15px; }
-        .nexus-product span { margin-top: 3px; color: #718096; font-size: 9px; }
-        .nexus-spacer { flex: 1; }
-        .nexus-context { display: flex; align-items: center; gap: 16px; min-width: 0; }
-        .nexus-env {
-          display: inline-flex;
-          align-items: center;
-          height: 27px;
-          padding: 0 9px;
-          border-radius: 5px;
-          color: #1e40af;
-          background: #dbeafe;
-          font-size: 9px;
-          font-weight: 900;
-        }
-        .nexus-env.prod { color: #065f46; background: #d1fae5; }
-        .nexus-tenant, .nexus-user { display: grid; min-width: 0; }
-        .nexus-tenant span, .nexus-user span { color: #718096; font-size: 8px; text-transform: uppercase; font-weight: 800; letter-spacing: .04em; }
-        .nexus-tenant strong, .nexus-user strong { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #172b4d; font-size: 10px; }
-        .nexus-user small { color: #718096; font-size: 8px; }
-        .nexus-primary {
-          display: flex;
-          min-height: 43px;
-          align-items: stretch;
-          justify-content: space-between;
-          padding: 0 18px;
-          background: #fff;
-        }
-        .nexus-primary-scroll, .nexus-secondary-scroll { display: flex; align-items: stretch; overflow-x: auto; scrollbar-width: none; }
-        .nexus-primary-scroll::-webkit-scrollbar, .nexus-secondary-scroll::-webkit-scrollbar { display: none; }
-        .nexus-primary-link {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
-          padding: 0 15px;
-          color: #42526e;
-          text-decoration: none;
-          white-space: nowrap;
-          font-size: 10px;
-          font-weight: 700;
-          border-bottom: 3px solid transparent;
-        }
-        .nexus-primary-link:hover { color: #0f5fa8; background: #f7fafc; }
-        .nexus-primary-link.active { color: #0f5fa8; border-bottom-color: #0f6db7; background: #f5faff; }
-        .nexus-primary-link.disabled { cursor: not-allowed; color: #a0aec0; }
-        .nexus-primary-link.disabled small { font-size: 7px; font-weight: 800; color: #b7791f; text-transform: uppercase; }
-        .nexus-health {
-          display: inline-flex;
-          align-items: center;
-          padding: 0 8px 0 16px;
-          color: #0f5fa8;
-          text-decoration: none;
-          white-space: nowrap;
-          font-size: 9px;
-          font-weight: 800;
-        }
-        .nexus-secondary {
-          display: flex;
-          min-height: 38px;
-          align-items: stretch;
-          justify-content: space-between;
-          padding: 0 18px;
-          border-top: 1px solid #edf1f5;
-          background: #f8fafc;
-        }
-        .nexus-secondary a {
-          display: inline-flex;
-          align-items: center;
-          padding: 0 14px;
-          border-bottom: 2px solid transparent;
-          color: #526579;
-          text-decoration: none;
-          white-space: nowrap;
-          font-size: 9px;
-          font-weight: 700;
-        }
-        .nexus-secondary a:hover { color: #0f5fa8; background: #fff; }
-        .nexus-secondary a.active { color: #0f5fa8; border-bottom-color: #0f6db7; background: #fff; }
-        .nexus-control-state {
-          display: inline-flex;
-          align-items: center;
-          padding-left: 14px;
-          color: #718096;
-          white-space: nowrap;
-          font-size: 8px;
-        }
-        @media (max-width: 980px) {
-          .nexus-command-bar { padding: 0 14px; gap: 10px; }
-          .nexus-product { display: none; }
-          .nexus-tenant { display: none; }
-          .nexus-primary, .nexus-secondary { padding: 0 8px; }
-          .nexus-control-state, .nexus-health { display: none; }
-        }
-        @media (max-width: 620px) {
-          .nexus-brand-copy small, .nexus-user span, .nexus-user small { display: none; }
-          .nexus-brand { min-width: auto; }
-          .nexus-user strong { max-width: 100px; }
-          .nexus-primary-link { padding-inline: 11px; }
-          .nexus-secondary a { padding-inline: 11px; }
-        }
+        .nexus-shell-header{position:sticky;top:0;z-index:80;margin:-18px -18px 16px;border-bottom:1px solid #d8e0ea;background:#fff;box-shadow:0 4px 16px rgba(15,23,42,.06);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.nexus-skip{position:fixed;top:6px;left:6px;z-index:200;transform:translateY(-150%);padding:8px 10px;background:#0f5fa8;color:#fff;text-decoration:none;border-radius:4px}.nexus-skip:focus{transform:translateY(0)}.nexus-command-bar{min-height:58px;display:flex;align-items:center;gap:16px;padding:0 22px;border-bottom:1px solid #e8edf3;background:#fff}.nexus-brand{display:flex;align-items:center;gap:9px;min-width:178px;color:#102a43;text-decoration:none}.nexus-mark{display:grid;width:31px;height:31px;place-items:center;border-radius:7px;color:#fff;background:linear-gradient(135deg,#0f6db7,#16a394);font-size:16px;font-weight:900}.nexus-brand-copy{display:grid;line-height:1.05}.nexus-brand-copy strong{font-size:14px;letter-spacing:-.02em}.nexus-brand-copy small{margin-top:3px;color:#718096;font-size:8px;font-weight:700}.nexus-product{display:grid;padding-left:16px;border-left:1px solid #dce4ed;line-height:1.08}.nexus-product strong{color:#0f5fa8;font-size:15px}.nexus-product span{margin-top:3px;color:#718096;font-size:9px}.nexus-spacer{flex:1}.nexus-context{display:flex;align-items:center;gap:16px;min-width:0}.nexus-env{display:inline-flex;align-items:center;height:27px;padding:0 9px;border-radius:5px;color:#1e40af;background:#dbeafe;font-size:9px;font-weight:900}.nexus-env.prod{color:#065f46;background:#d1fae5}.nexus-tenant,.nexus-user{display:grid;min-width:0}.nexus-tenant span,.nexus-user span{color:#718096;font-size:8px;text-transform:uppercase;font-weight:800;letter-spacing:.04em}.nexus-tenant strong,.nexus-user strong{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#172b4d;font-size:10px}.nexus-user small{color:#718096;font-size:8px}.nexus-primary{display:flex;min-height:43px;align-items:stretch;justify-content:space-between;padding:0 18px;background:#fff}.nexus-primary-scroll,.nexus-secondary-scroll{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}.nexus-primary-scroll::-webkit-scrollbar,.nexus-secondary-scroll::-webkit-scrollbar{display:none}.nexus-primary-link{position:relative;display:inline-flex;align-items:center;gap:5px;padding:0 15px;color:#42526e;text-decoration:none;white-space:nowrap;font-size:10px;font-weight:700;border-bottom:3px solid transparent}.nexus-primary-link:hover{color:#0f5fa8;background:#f7fafc}.nexus-primary-link.active{color:#0f5fa8;border-bottom-color:#0f6db7;background:#f5faff}.nexus-primary-link.disabled{cursor:not-allowed;color:#a0aec0}.nexus-primary-link.disabled small{font-size:7px;font-weight:800;color:#b7791f;text-transform:uppercase}.nexus-health{display:inline-flex;align-items:center;padding:0 8px 0 16px;color:#0f5fa8;text-decoration:none;white-space:nowrap;font-size:9px;font-weight:800}.nexus-secondary{display:flex;min-height:38px;align-items:stretch;justify-content:space-between;padding:0 18px;border-top:1px solid #edf1f5;background:#f8fafc}.nexus-secondary a{display:inline-flex;align-items:center;padding:0 14px;border-bottom:2px solid transparent;color:#526579;text-decoration:none;white-space:nowrap;font-size:9px;font-weight:700}.nexus-secondary a:hover{color:#0f5fa8;background:#fff}.nexus-secondary a.active{color:#0f5fa8;border-bottom-color:#0f6db7;background:#fff}.nexus-control-state{display:inline-flex;align-items:center;padding-left:14px;color:#718096;white-space:nowrap;font-size:8px}@media(max-width:980px){.nexus-command-bar{padding:0 14px;gap:10px}.nexus-product{display:none}.nexus-tenant{display:none}.nexus-primary,.nexus-secondary{padding:0 8px}.nexus-control-state,.nexus-health{display:none}}@media(max-width:620px){.nexus-brand-copy small,.nexus-user span,.nexus-user small{display:none}.nexus-brand{min-width:auto}.nexus-user strong{max-width:100px}.nexus-primary-link{padding-inline:11px}.nexus-secondary a{padding-inline:11px}}
       `}</style>
     </div>
   );
