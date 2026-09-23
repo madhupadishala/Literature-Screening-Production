@@ -13,11 +13,7 @@ type Candidate = {
   candidateReference: string;
   score: number;
   confidenceBand: "LOW" | "MEDIUM" | "HIGH";
-  matchedFactors: Array<{
-    key?: unknown;
-    weight?: unknown;
-    evidence?: unknown;
-  }>;
+  matchedFactors: Array<{ key?: unknown; weight?: unknown; evidence?: unknown }>;
   candidateSnapshot: {
     intakeKey?: string;
     caseKey?: string | null;
@@ -61,6 +57,8 @@ type Workspace = {
     topCandidateScore: number | null;
     humanDecision: string;
     selectedCandidateId: string | null;
+    selectedCandidateCaseId?: string | null;
+    selectedCandidateIntakeRecordId?: string | null;
     rationale: string;
     assessedAt: string;
   } | null;
@@ -88,11 +86,7 @@ function candidateSummary(candidate: Candidate): string {
   return [products, events].filter(Boolean).join(" · ") || "No summary available";
 }
 
-export default function DuplicateReviewClient({
-  intakeId,
-}: {
-  intakeId: string;
-}) {
+export default function DuplicateReviewClient({ intakeId }: { intakeId: string }) {
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [reason, setReason] = useState(
     "Processor reviewed duplicate and follow-up candidate evidence.",
@@ -107,10 +101,9 @@ export default function DuplicateReviewClient({
   const load = useCallback(async () => {
     setMessage("");
     try {
-      const response = await fetch(
-        `/api/safety/intake/${intakeId}/duplicate-review`,
-        { cache: "no-store" },
-      );
+      const response = await fetch(`/api/safety/intake/${intakeId}/duplicate-review`, {
+        cache: "no-store",
+      });
       const payload = await response.json();
       if (!response.ok || !payload?.success) {
         throw new Error(payload?.error || "Unable to load duplicate review.");
@@ -118,10 +111,12 @@ export default function DuplicateReviewClient({
       setWorkspace(payload.data as Workspace);
       const selected = payload.data?.latestAssessment?.selectedCandidateId;
       if (typeof selected === "string") setSelectedCandidateId(selected);
+      const finalDecision = payload.data?.latestAssessment?.humanDecision;
+      if (["NEW_CASE", "FOLLOW_UP", "DUPLICATE", "NOT_MATCH"].includes(finalDecision)) {
+        setDecision(finalDecision);
+      }
     } catch (error) {
-      setMessage(
-        error instanceof Error ? error.message : "Unable to load duplicate review.",
-      );
+      setMessage(error instanceof Error ? error.message : "Unable to load duplicate review.");
     }
   }, [intakeId]);
 
@@ -134,24 +129,19 @@ export default function DuplicateReviewClient({
     setBusy("search");
     setMessage("");
     try {
-      const response = await fetch(
-        `/api/safety/intake/${intakeId}/duplicate-review`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ reason }),
-        },
-      );
+      const response = await fetch(`/api/safety/intake/${intakeId}/duplicate-review`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reason }),
+      });
       const payload = await response.json();
       if (!response.ok || !payload?.success) {
         throw new Error(payload?.error || "Duplicate search failed.");
       }
       setWorkspace(payload.data as Workspace);
-      setDecision(
-        payload.data?.candidates?.length ? "NOT_MATCH" : "NEW_CASE",
-      );
+      setDecision(payload.data?.candidates?.length ? "NOT_MATCH" : "NEW_CASE");
       setSelectedCandidateId("");
-      setMessage("Duplicate search completed. Human review is required.");
+      setMessage("Duplicate search completed. A human relationship decision is required before triage.");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Duplicate search failed.");
     } finally {
@@ -181,20 +171,21 @@ export default function DuplicateReviewClient({
       }
       setWorkspace(payload.data as Workspace);
       setMessage(
-        "Duplicate/follow-up assessment finalized and routed to disposition.",
+        decision === "DUPLICATE"
+          ? "Duplicate confirmed. The record will not enter triage and can be closed through duplicate disposition."
+          : decision === "FOLLOW_UP"
+            ? "Follow-up confirmed and linked to the existing case. The new follow-up now enters Intake & Triage."
+            : "Duplicate gate cleared. The record is now ready for formal ICSR triage.",
       );
     } catch (error) {
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Unable to finalize duplicate review.",
-      );
+      setMessage(error instanceof Error ? error.message : "Unable to finalize duplicate review.");
     } finally {
       setBusy("");
     }
   }
 
   const complete = Boolean(workspace?.latestAssessment);
+  const finalDecision = workspace?.latestAssessment?.humanDecision;
   const requiresCandidate = decision === "FOLLOW_UP" || decision === "DUPLICATE";
 
   return (
@@ -203,20 +194,21 @@ export default function DuplicateReviewClient({
 
       <section className={styles.hero}>
         <div>
-          <span className={styles.kicker}>Nexus Intake · Sprint 6</span>
-          <h1>Duplicate & Follow-up Review</h1>
+          <span className={styles.kicker}>Intake & Triage · Entry Gate</span>
+          <h1>Duplicate & Follow-up Check</h1>
           <p>
-            Nexus ranks possible matches using explainable patient, product, event,
-            source-ID and date factors. The score is assistive; the processor makes
-            the final duplicate/follow-up decision.
+            Every verified incoming report is checked before formal triage. Nexus ranks
+            possible matches using explainable patient, product, event, source-ID and
+            date factors; the human reviewer makes the final relationship decision.
           </p>
         </div>
         <div className={styles.actions}>
-          <Link href="/intake">Back to Intake</Link>
-          {complete ? (
-            <Link href={`/intake/${intakeId}/disposition`}>
-              Open Disposition
-            </Link>
+          <Link href="/intake/duplicate-check">Back to Duplicate Queue</Link>
+          {complete && finalDecision === "DUPLICATE" ? (
+            <Link href={`/intake/${intakeId}/disposition`}>Close Duplicate</Link>
+          ) : null}
+          {complete && finalDecision !== "DUPLICATE" ? (
+            <Link href={`/intake/${intakeId}/triage`}>Open ICSR Triage</Link>
           ) : null}
         </div>
       </section>
@@ -229,14 +221,8 @@ export default function DuplicateReviewClient({
           label="Search run"
           value={workspace?.latestRun ? `Run ${workspace.latestRun.runNumber}` : "Not run"}
         />
-        <Summary
-          label="Candidates"
-          value={String(workspace?.candidates.length ?? 0)}
-        />
-        <Summary
-          label="Final decision"
-          value={workspace?.latestAssessment?.humanDecision ?? "Pending"}
-        />
+        <Summary label="Candidates" value={String(workspace?.candidates.length ?? 0)} />
+        <Summary label="Gate decision" value={finalDecision ?? "Pending"} />
       </section>
 
       <section className={styles.controls}>
@@ -244,11 +230,7 @@ export default function DuplicateReviewClient({
           <span>Audit rationale</span>
           <textarea value={reason} onChange={(event) => setReason(event.target.value)} />
         </label>
-        <button
-          type="button"
-          onClick={() => void runSearch()}
-          disabled={busy !== "" || complete}
-        >
+        <button type="button" onClick={() => void runSearch()} disabled={busy !== "" || complete}>
           {busy === "search" ? "Searching…" : "Run duplicate search"}
         </button>
       </section>
@@ -287,7 +269,7 @@ export default function DuplicateReviewClient({
 
               <dl>
                 <div>
-                  <dt>Case</dt>
+                  <dt>Existing case</dt>
                   <dd>{display(candidate.candidateSnapshot.caseKey)}</dd>
                 </div>
                 <div>
@@ -317,15 +299,16 @@ export default function DuplicateReviewClient({
                   onChange={() => setSelectedCandidateId(candidate.id)}
                   disabled={complete}
                 />
-                <span>Select this candidate</span>
+                <span>
+                  Select this candidate
+                  {candidate.candidateCaseId ? " · existing case available" : ""}
+                </span>
               </label>
             </article>
           ))}
 
           {workspace?.latestRun && workspace.candidates.length === 0 ? (
-            <div className={styles.empty}>
-              No candidate met the configured duplicate-review threshold.
-            </div>
+            <div className={styles.empty}>No candidate met the configured duplicate-review threshold.</div>
           ) : null}
         </div>
       </section>
@@ -335,8 +318,9 @@ export default function DuplicateReviewClient({
           <span className={styles.kicker}>Human authority</span>
           <h2>Final Relationship Decision</h2>
           <p>
-            FOLLOW UP and DUPLICATE require a selected candidate. NEW CASE or NOT
-            MATCH records that no existing candidate is being linked.
+            A FOLLOW-UP must link to an existing case. A confirmed DUPLICATE stops here
+            and does not enter triage. NEW CASE and NOT MATCH continue into the Intake
+            & Triage lifecycle.
           </p>
         </div>
 
@@ -346,11 +330,7 @@ export default function DuplicateReviewClient({
             value={decision}
             onChange={(event) =>
               setDecision(
-                event.target.value as
-                  | "NEW_CASE"
-                  | "FOLLOW_UP"
-                  | "DUPLICATE"
-                  | "NOT_MATCH",
+                event.target.value as "NEW_CASE" | "FOLLOW_UP" | "DUPLICATE" | "NOT_MATCH",
               )
             }
             disabled={complete}
@@ -366,20 +346,17 @@ export default function DuplicateReviewClient({
           type="button"
           onClick={() => void finalize()}
           disabled={
-            busy !== "" ||
-            complete ||
-            !workspace?.latestRun ||
-            (requiresCandidate && !selectedCandidateId)
+            busy !== "" || complete || !workspace?.latestRun || (requiresCandidate && !selectedCandidateId)
           }
         >
-          {busy === "finalize" ? "Finalizing…" : "Finalize duplicate review"}
+          {busy === "finalize" ? "Finalizing…" : "Finalize duplicate gate"}
         </button>
       </section>
 
       {workspace?.latestAssessment ? (
         <section className={styles.history}>
           <span className={styles.kicker}>Immutable decision</span>
-          <h2>Finalized Assessment</h2>
+          <h2>Finalized Gate Assessment</h2>
           <pre>{JSON.stringify(workspace.latestAssessment, null, 2)}</pre>
         </section>
       ) : null}

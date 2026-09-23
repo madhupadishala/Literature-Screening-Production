@@ -5,9 +5,9 @@ import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import {
-  getDuplicateWorkspace,
-  runDuplicateSearch,
-} from "@/lib/safety/duplicate/duplicate-service";
+  getDuplicateGateWorkspace,
+  runDuplicateGateSearch,
+} from "@/lib/safety/duplicate/duplicate-gate-service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,7 +23,7 @@ export async function GET(
       PERMISSIONS.INTAKE_VIEW,
     );
     const { intakeId } = await context.params;
-    const workspace = await getDuplicateWorkspace({
+    const workspace = await getDuplicateGateWorkspace({
       principal,
       intakeRecordId: intakeId,
     });
@@ -49,7 +49,7 @@ export async function POST(
       throw new Error("reason is required.");
     }
 
-    const workspace = await runDuplicateSearch({
+    const workspace = await runDuplicateGateSearch({
       principal,
       intakeRecordId: intakeId,
       reason: body.reason,

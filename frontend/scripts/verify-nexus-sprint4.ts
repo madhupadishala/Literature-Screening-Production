@@ -89,21 +89,33 @@ assert.equal(reviewService.includes("FOR UPDATE OF intake"), true);
 assert.equal(
   reviewService.includes("UPDATE safety_review_tasks"),
   false,
-  "Sprint 4 must not complete Sprint 5 formal TRIAGE tasks.",
+  "The extraction service itself must not complete downstream lifecycle tasks.",
 );
 assert.equal(
   reviewService.includes("All current extraction suggestions must be accepted"),
   true,
 );
 
+const lifecycleService = readFileSync(
+  path.join(
+    process.cwd(),
+    "lib/safety/intake/intake-source-lifecycle-service.ts",
+  ),
+  "utf8",
+);
+assert.equal(lifecycleService.includes("INTAKE_DUPLICATE_GATE_OPENED"), true);
+assert.equal(lifecycleService.includes("DUPLICATE_REVIEW"), true);
+
 const page = readFileSync(
   path.join(process.cwd(), "app/intake/page.tsx"),
   "utf8",
 );
-assert.equal(page.includes("Source Review & Extraction Workspace"), true);
+assert.equal(page.includes("Booking Queue"), true);
+assert.equal(page.includes("Original Evidence"), true);
 assert.equal(page.includes("Open original source"), true);
-assert.equal(page.includes("Accept edited"), true);
-assert.equal(page.includes("Verify source review"), true);
+assert.equal(page.includes("Accept Edited"), true);
+assert.equal(page.includes("Verify Source Review"), true);
+assert.equal(page.includes("Duplicate / Follow-up Check"), true);
 
 const extractorSource = readFileSync(
   path.join(process.cwd(), "lib/safety/intake/pv-suggestion-extractor.ts"),

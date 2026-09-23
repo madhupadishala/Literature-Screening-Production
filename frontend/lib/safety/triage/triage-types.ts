@@ -42,6 +42,7 @@ export const SPECIAL_SITUATIONS = [
 export type SpecialSituation = (typeof SPECIAL_SITUATIONS)[number];
 
 export type TriageOutcome =
+  | "READY_FOR_QC"
   | "READY_FOR_DUPLICATE_REVIEW"
   | "FOLLOW_UP_REQUIRED"
   | "NOT_VALID_ICSR"

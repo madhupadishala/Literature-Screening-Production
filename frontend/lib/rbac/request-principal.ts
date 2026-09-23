@@ -7,6 +7,9 @@ import { roleHasPermission, type Permission } from "@/lib/rbac/permissions";
 import { tokenService } from "@/lib/auth/token-service";
 
 const ACCESS_TOKEN_COOKIE = "clinixai_access_token";
+const REVIEW_BRANCH = "feat/nexus-horizontal-operations-shell";
+const REVIEW_TENANT_KEY = "nexus-uat-rc1-a";
+const REVIEW_EMAIL = "nexus.review@theclinixai.local";
 
 export interface RequestPrincipal {
   tenantId: string;
@@ -30,11 +33,26 @@ export class AuthorizationError extends Error {
   }
 }
 
+function controlledPreviewReview(): boolean {
+  return (
+    process.env.VERCEL_ENV === "preview" &&
+    process.env.VERCEL_GIT_COMMIT_REF === REVIEW_BRANCH
+  );
+}
+
 function allowDemoPrincipal(): boolean {
-  return process.env.ALLOW_DEMO_PRINCIPAL?.trim().toLowerCase() === "true";
+  return (
+    controlledPreviewReview() ||
+    process.env.ALLOW_DEMO_PRINCIPAL?.trim().toLowerCase() === "true"
+  );
 }
 
 function resolveRequestEnvironment(request: NextRequest): NexusEnvironment {
+  // The controlled design-review branch must never accidentally operate in
+  // PROD even if a caller sends an environment header or a project-level
+  // default is misconfigured.
+  if (controlledPreviewReview()) return "UAT";
+
   const raw =
     request.headers.get("x-nexus-environment")?.trim().toUpperCase() ||
     process.env.NEXUS_DEFAULT_ENVIRONMENT?.trim().toUpperCase() ||
@@ -63,6 +81,16 @@ function resolveIdentityHeaders(request: NextRequest) {
 
   if (!allowDemoPrincipal()) {
     throw new AuthorizationError("Authenticated tenant and user context is required.", 401);
+  }
+
+  if (controlledPreviewReview()) {
+    return {
+      tenantKey: REVIEW_TENANT_KEY,
+      email: REVIEW_EMAIL,
+      roleKey: "CLINIXAI_SUPER_ADMIN",
+      displayName: "Nexus UAT Reviewer",
+      demoFallback: true,
+    };
   }
 
   return {
@@ -96,7 +124,7 @@ async function ensureDemoIdentity(input: {
         DO UPDATE SET updated_at = now()
         RETURNING id
       `,
-      [input.tenantKey, "ClinixAI Investor Demonstration"],
+      [input.tenantKey, controlledPreviewReview() ? "Nexus RC1 UAT Review" : "ClinixAI Investor Demonstration"],
     );
 
     const user = await client.query<{ id: string }>(
@@ -120,7 +148,9 @@ async function ensureDemoIdentity(input: {
         )
         VALUES ($1, $2, $3, '[]'::jsonb)
         ON CONFLICT (tenant_id, user_id)
-        DO UPDATE SET role_key = EXCLUDED.role_key
+        DO UPDATE SET role_key = EXCLUDED.role_key,
+                      membership_status = 'active',
+                      updated_at = now()
       `,
       [tenant.rows[0].id, user.rows[0].id, input.roleKey || "CLINIXAI_SUPER_ADMIN"],
     );
@@ -157,12 +187,6 @@ async function resolvePrincipalFromSignedToken(
   const payload = tokenService.validate(token);
   if (!payload) return null;
 
-  // The token proves who issued it (its HMAC signature can't be forged
-  // without SESSION_SECRET) and when it was issued, but role/permissions
-  // are re-read from the database on every request rather than trusted
-  // from the token payload -- an admin who gets demoted or deactivated
-  // mid-session loses access on their very next request, not just when
-  // their token expires.
   const pool = getPostgresPool();
   const result = await pool.query<{
     tenant_id: string;
@@ -215,8 +239,15 @@ async function resolvePrincipalFromSignedToken(
 }
 
 export async function resolveRequestPrincipal(request: NextRequest): Promise<RequestPrincipal> {
-  const signedTokenPrincipal = await resolvePrincipalFromSignedToken(request);
-  if (signedTokenPrincipal) return signedTokenPrincipal;
+  // The controlled preview review branch deliberately does not require the
+  // normal signed-session path. This avoids coupling design review access to
+  // production authentication secrets while keeping the exception both
+  // environment- and branch-scoped. Every other environment still prefers
+  // and requires the normal signed-token/identity path.
+  if (!controlledPreviewReview()) {
+    const signedTokenPrincipal = await resolvePrincipalFromSignedToken(request);
+    if (signedTokenPrincipal) return signedTokenPrincipal;
+  }
 
   const identity = resolveIdentityHeaders(request);
 
@@ -262,7 +293,6 @@ export async function resolveRequestPrincipal(request: NextRequest): Promise<Req
   }
 
   const customPermissions = Array.isArray(row.permissions) ? row.permissions.map(String) : [];
-
   const roleKey = row.role_key;
 
   return {

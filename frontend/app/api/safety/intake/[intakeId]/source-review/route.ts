@@ -4,7 +4,7 @@ import { routeErrorResponse } from "@/lib/api/route-error";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
-import { completeIntakeSourceReview } from "@/lib/safety/intake/intake-review-service";
+import { completeIntakeSourceReviewAndOpenDuplicateGate } from "@/lib/safety/intake/intake-source-lifecycle-service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -29,7 +29,7 @@ export async function POST(
       throw new Error("reason is required.");
     }
 
-    const workspace = await completeIntakeSourceReview({
+    const workspace = await completeIntakeSourceReviewAndOpenDuplicateGate({
       principal,
       intakeRecordId: intakeId,
       reason: body.reason,

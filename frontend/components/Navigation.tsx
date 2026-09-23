@@ -13,22 +13,78 @@ type ModuleKey =
   | "AGGREGATE_REPORTING"
   | "GOVERNANCE";
 
-const modules: Array<{ label: string; path: string; moduleKey?: ModuleKey }> = [
-  { label: "Dashboard", path: "/" },
-  { label: "Intake", path: "/intake", moduleKey: "INTAKE" },
-  { label: "Cases", path: "/cases", moduleKey: "CASE_PROCESSING" },
-  { label: "Search", path: "/literature-search", moduleKey: "LITERATURE" },
-  { label: "Workflow", path: "/workflow", moduleKey: "LITERATURE" },
-  { label: "Hits", path: "/hits", moduleKey: "LITERATURE" },
-  { label: "Screening", path: "/screening", moduleKey: "LITERATURE" },
-  { label: "Review / MR", path: "/review", moduleKey: "LITERATURE" },
-  { label: "Reports", path: "/reports", moduleKey: "LITERATURE" },
-  { label: "Administration", path: "/admin" },
+type PrimaryItem = {
+  label: string;
+  path?: string;
+  moduleKey?: ModuleKey;
+  activePrefixes?: string[];
+  disabled?: boolean;
+  disabledReason?: string;
+};
+
+type SecondaryItem = {
+  label: string;
+  path: string;
+  exact?: boolean;
+};
+
+const primaryItems: PrimaryItem[] = [
+  { label: "Home", path: "/", activePrefixes: ["/"] },
+  {
+    label: "Intake & Triage",
+    path: "/intake",
+    moduleKey: "INTAKE",
+    activePrefixes: ["/intake"],
+  },
+  {
+    label: "Case Processing",
+    path: "/cases",
+    moduleKey: "CASE_PROCESSING",
+    activePrefixes: ["/cases"],
+  },
+  {
+    label: "Submissions",
+    disabled: true,
+    disabledReason: "Regulatory transmission is not enabled in this release candidate.",
+  },
+  {
+    label: "Literature",
+    path: "/literature-search",
+    moduleKey: "LITERATURE",
+    activePrefixes: ["/literature-search", "/workflow", "/hits", "/screening", "/review"],
+  },
+  { label: "Reports", path: "/reports", activePrefixes: ["/reports"] },
+  { label: "Administration", path: "/admin", activePrefixes: ["/admin"] },
+];
+
+const intakeSecondary: SecondaryItem[] = [
+  { label: "Booking Queue", path: "/intake", exact: true },
+  { label: "Duplicate Check", path: "/intake/duplicate-check" },
+  { label: "Triage Queue", path: "/intake/triage-queue" },
+  { label: "QC Queue", path: "/intake/qc-queue" },
+  { label: "MR Queue", path: "/intake/mr-queue" },
+];
+
+const caseSecondary: SecondaryItem[] = [
+  { label: "My Cases", path: "/cases", exact: true },
+  { label: "Duplicate Check", path: "/cases/duplicate-check" },
+  { label: "Processing Queue", path: "/cases/processing" },
+  { label: "QC Queue", path: "/cases/qc-queue" },
+  { label: "MR Queue", path: "/cases/mr-queue" },
+  { label: "Finalized", path: "/cases/finalized" },
+];
+
+const literatureSecondary: SecondaryItem[] = [
+  { label: "Search", path: "/literature-search", exact: true },
+  { label: "Duplicate Check", path: "/literature-search/duplicate-check" },
+  { label: "Hits", path: "/hits" },
+  { label: "Screening", path: "/screening" },
+  { label: "Review / MR", path: "/review" },
+  { label: "Workflow", path: "/workflow" },
 ];
 
 export default function Navigation() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
   const [context, setContext] = useState<{
     tenantKey: string;
     environment: string;
@@ -56,337 +112,123 @@ export default function Navigation() {
     };
   }, []);
 
-  function isActive(path: string): boolean {
-    return path === "/" ? pathname === "/" : pathname === path || pathname.startsWith(`${path}/`);
+  function primaryActive(item: PrimaryItem): boolean {
+    if (!item.path) return false;
+    if (item.path === "/") return pathname === "/";
+    return (item.activePrefixes ?? [item.path]).some(
+      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+    );
   }
 
-  const visibleModules = modules.filter(
-    (module) => !module.moduleKey || context.enabledModules.includes(module.moduleKey),
+  function secondaryActive(item: SecondaryItem): boolean {
+    if (item.exact) return pathname === item.path;
+    return pathname === item.path || pathname.startsWith(`${item.path}/`);
+  }
+
+  const visiblePrimary = primaryItems.filter(
+    (item) => !item.moduleKey || context.enabledModules.includes(item.moduleKey),
   );
 
+  let secondaryItems: SecondaryItem[] = [];
+  if (pathname.startsWith("/intake")) secondaryItems = intakeSecondary;
+  else if (pathname.startsWith("/cases")) secondaryItems = caseSecondary;
+  else if (
+    ["/literature-search", "/workflow", "/hits", "/screening", "/review"].some(
+      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+    )
+  ) {
+    secondaryItems = literatureSecondary;
+  }
+
+  const moduleSummary = context.enabledModules
+    .filter((module) => ["LITERATURE", "INTAKE", "CASE_PROCESSING"].includes(module))
+    .map((module) => module.replaceAll("_", " "))
+    .join(" · ");
+
   return (
-    <div className="shell-header">
-      <a className="skip-link" href="#main-content">
-        Skip to main content
-      </a>
-      <header className="application-bar">
-        <Link className="brand" href="/" aria-label="ClinixAI Literature Intelligence dashboard">
-          <span className="brand-mark" aria-hidden="true">
-            C
-          </span>
-          <span className="brand-copy">
-            <strong>ClinixAI</strong>
+    <div className="nexus-shell-header">
+      <a className="nexus-skip" href="#main-content">Skip to main content</a>
+
+      <header className="nexus-command-bar">
+        <Link className="nexus-brand" href="/" aria-label="TheClinixAI Nexus home">
+          <span className="nexus-mark" aria-hidden="true">N</span>
+          <span className="nexus-brand-copy">
+            <strong>TheClinixAI</strong>
             <small>Nexus Safety Platform</small>
           </span>
         </Link>
-        <div className="application-title">
-          <span>Safety Operations</span>
-          <strong>Nexus Workspace</strong>
+
+        <div className="nexus-product">
+          <strong>Nexus</strong>
+          <span>Pharmacovigilance Operations Platform</span>
         </div>
-        <div className="identity">
-          <div>
+
+        <div className="nexus-spacer" />
+
+        <div className="nexus-context" title={`Licensed: ${moduleSummary || "Core"}`}>
+          <span className={context.environment === "PROD" ? "nexus-env prod" : "nexus-env"}>
+            {context.environment}
+          </span>
+          <div className="nexus-tenant">
             <span>Tenant</span>
             <strong>{context.tenantKey}</strong>
           </div>
-          <div>
-            <span>Environment</span>
-            <strong>{context.environment}</strong>
-          </div>
-          <div>
+          <div className="nexus-user">
             <span>User</span>
             <strong>{context.displayName}</strong>
+            <small>{context.roleKey.replaceAll("_", " ")}</small>
           </div>
-          <div>
-            <span>Role</span>
-            <strong>{context.roleKey}</strong>
-          </div>
-          <Link className="health" href="/admin/reliability">
-            System Health
-          </Link>
         </div>
-        <button
-          type="button"
-          className="menu"
-          aria-expanded={open}
-          aria-controls="primary-navigation"
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span aria-hidden="true">{open ? "×" : "☰"}</span>
-          <span className="menu-label">Menu</span>
-        </button>
       </header>
-      <nav
-        id="primary-navigation"
-        className={open ? "module-bar open" : "module-bar"}
-        aria-label="Primary navigation"
-      >
-        <div className="module-links">
-          {visibleModules.map((module) => (
-            <Link
-              key={module.path}
-              href={module.path}
-              onClick={() => setOpen(false)}
-              className={isActive(module.path) ? "active" : ""}
-              aria-current={isActive(module.path) ? "page" : undefined}
-            >
-              {module.label}
-            </Link>
-          ))}
+
+      <nav className="nexus-primary" aria-label="Nexus primary navigation">
+        <div className="nexus-primary-scroll">
+          {visiblePrimary.map((item) =>
+            item.disabled ? (
+              <span
+                key={item.label}
+                className="nexus-primary-link disabled"
+                title={item.disabledReason}
+                aria-disabled="true"
+              >
+                {item.label}
+                <small>Planned</small>
+              </span>
+            ) : (
+              <Link
+                key={item.label}
+                href={item.path ?? "/"}
+                className={primaryActive(item) ? "nexus-primary-link active" : "nexus-primary-link"}
+                aria-current={primaryActive(item) ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            ),
+          )}
         </div>
-        <div className="boundary">
-          <span>Licensed Nexus modules</span>
-          <strong>{context.enabledModules.length ? context.enabledModules.join(" · ") : "Core only"}</strong>
-        </div>
+        <Link className="nexus-health" href="/admin/reliability">System Health</Link>
       </nav>
-      <div className="validation">
-        <span aria-hidden="true" />
-        Controlled environment · Tenant, module entitlement and RBAC controls active
-      </div>
+
+      {secondaryItems.length ? (
+        <nav className="nexus-secondary" aria-label="Operational queues">
+          <div className="nexus-secondary-scroll">
+            {secondaryItems.map((item) => (
+              <Link
+                key={item.path}
+                href={item.path}
+                className={secondaryActive(item) ? "active" : ""}
+                aria-current={secondaryActive(item) ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+          <span className="nexus-control-state">Controlled environment · RBAC + entitlement active</span>
+        </nav>
+      ) : null}
+
       <style jsx>{`
-        .shell-header {
-          position: sticky;
-          top: 0;
-          z-index: 60;
-          margin: -24px -24px 18px;
-          font-family: "Poppins", Arial, sans-serif;
-          box-shadow: 0 5px 18px rgba(15, 23, 42, 0.18);
-        }
-        .skip-link {
-          position: fixed;
-          top: 8px;
-          left: 8px;
-          z-index: 200;
-          transform: translateY(-150%);
-          padding: 9px 12px;
-          border-radius: 5px;
-          color: #fff;
-          background: #1d4ed8;
-          font-size: 11px;
-          font-weight: 800;
-        }
-        .skip-link:focus {
-          transform: translateY(0);
-        }
-        .application-bar {
-          display: flex;
-          min-height: 60px;
-          align-items: stretch;
-          color: #fff;
-          background: #0f172a;
-        }
-        .brand {
-          display: flex;
-          min-width: 244px;
-          align-items: center;
-          gap: 10px;
-          padding: 8px 18px;
-          color: #fff;
-          text-decoration: none;
-        }
-        .brand:hover {
-          background: rgba(255, 255, 255, 0.05);
-        }
-        .brand-mark {
-          display: grid;
-          width: 38px;
-          height: 38px;
-          place-items: center;
-          border: 1px solid rgba(255, 255, 255, 0.24);
-          border-radius: 7px;
-          background: linear-gradient(135deg, #1d4ed8, #38bdf8);
-          font-size: 21px;
-          font-weight: 900;
-        }
-        .brand-copy {
-          display: grid;
-        }
-        .brand-copy strong {
-          font-size: 15px;
-        }
-        .brand-copy small {
-          color: #94a3b8;
-          font-size: 8px;
-          font-weight: 800;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-        }
-        .application-title {
-          display: grid;
-          min-width: 235px;
-          align-content: center;
-          padding: 8px 18px;
-          border-inline: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .application-title span,
-        .identity span {
-          color: #7dd3fc;
-          font-size: 8px;
-          font-weight: 800;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-        }
-        .application-title strong {
-          margin-top: 2px;
-          font-size: 12px;
-        }
-        .identity {
-          display: flex;
-          flex: 1;
-          justify-content: flex-end;
-          align-items: stretch;
-          overflow: hidden;
-        }
-        .identity > div {
-          display: grid;
-          min-width: 120px;
-          max-width: 190px;
-          align-content: center;
-          padding: 7px 12px;
-          border-left: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .identity strong {
-          margin-top: 2px;
-          overflow: hidden;
-          font-size: 9px;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-        .health {
-          display: grid;
-          place-items: center;
-          padding: 0 15px;
-          border-left: 1px solid rgba(255, 255, 255, 0.08);
-          color: #bae6fd;
-          font-size: 9px;
-          font-weight: 900;
-          text-decoration: none;
-          white-space: nowrap;
-        }
-        .health:hover {
-          background: rgba(255, 255, 255, 0.06);
-        }
-        .menu {
-          display: none;
-          border: 0;
-          padding: 0 16px;
-          color: #fff;
-          background: transparent;
-          font: inherit;
-          cursor: pointer;
-        }
-        .menu span:first-child {
-          font-size: 21px;
-        }
-        .menu-label {
-          font-size: 9px;
-          font-weight: 800;
-        }
-        .module-bar {
-          display: flex;
-          min-height: 44px;
-          justify-content: space-between;
-          color: #fff;
-          background: #185abd;
-        }
-        .module-links {
-          display: flex;
-          overflow-x: auto;
-        }
-        .module-links :global(a) {
-          display: grid;
-          min-width: 100px;
-          place-items: center;
-          padding: 0 15px;
-          border-right: 1px solid rgba(255, 255, 255, 0.13);
-          color: #dbeafe;
-          font-size: 9px;
-          font-weight: 800;
-          text-decoration: none;
-          white-space: nowrap;
-        }
-        .module-links :global(a:hover) {
-          color: #fff;
-          background: rgba(15, 23, 42, 0.12);
-        }
-        .module-links :global(a.active) {
-          color: #0f172a;
-          background: #fff;
-        }
-        .boundary {
-          display: grid;
-          min-width: 224px;
-          align-content: center;
-          padding: 5px 15px;
-          border-left: 1px solid rgba(255, 255, 255, 0.18);
-          background: rgba(15, 23, 42, 0.14);
-        }
-        .boundary span {
-          color: #bfdbfe;
-          font-size: 7px;
-          font-weight: 900;
-          text-transform: uppercase;
-        }
-        .boundary strong {
-          margin-top: 2px;
-          font-size: 8px;
-        }
-        .validation {
-          display: flex;
-          min-height: 26px;
-          align-items: center;
-          gap: 7px;
-          padding: 0 18px;
-          border-bottom: 1px solid #bbf7d0;
-          color: #166534;
-          background: #f0fdf4;
-          font-size: 8px;
-          font-weight: 800;
-        }
-        .validation span {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: #22c55e;
-        }
-        @media (max-width: 1100px) {
-          .application-title,
-          .boundary,
-          .identity > div:first-child {
-            display: none;
-          }
-        }
-        @media (max-width: 760px) {
-          .shell-header {
-            margin: -12px -12px 14px;
-          }
-          .brand {
-            min-width: 0;
-            flex: 1;
-          }
-          .identity {
-            display: none;
-          }
-          .menu {
-            display: grid;
-            place-items: center;
-          }
-          .module-bar {
-            display: none;
-          }
-          .module-bar.open {
-            display: block;
-          }
-          .module-links {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            padding: 6px;
-          }
-          .module-links :global(a) {
-            min-height: 42px;
-            border: 0;
-            border-radius: 4px;
-          }
-        }
+        .nexus-shell-header{position:sticky;top:0;z-index:80;margin:-18px -18px 16px;border-bottom:1px solid #d8e0ea;background:#fff;box-shadow:0 4px 16px rgba(15,23,42,.06);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.nexus-skip{position:fixed;top:6px;left:6px;z-index:200;transform:translateY(-150%);padding:8px 10px;background:#0f5fa8;color:#fff;text-decoration:none;border-radius:4px}.nexus-skip:focus{transform:translateY(0)}.nexus-command-bar{min-height:58px;display:flex;align-items:center;gap:16px;padding:0 22px;border-bottom:1px solid #e8edf3;background:#fff}.nexus-brand{display:flex;align-items:center;gap:9px;min-width:178px;color:#102a43;text-decoration:none}.nexus-mark{display:grid;width:31px;height:31px;place-items:center;border-radius:7px;color:#fff;background:linear-gradient(135deg,#0f6db7,#16a394);font-size:16px;font-weight:900}.nexus-brand-copy{display:grid;line-height:1.05}.nexus-brand-copy strong{font-size:14px;letter-spacing:-.02em}.nexus-brand-copy small{margin-top:3px;color:#718096;font-size:8px;font-weight:700}.nexus-product{display:grid;padding-left:16px;border-left:1px solid #dce4ed;line-height:1.08}.nexus-product strong{color:#0f5fa8;font-size:15px}.nexus-product span{margin-top:3px;color:#718096;font-size:9px}.nexus-spacer{flex:1}.nexus-context{display:flex;align-items:center;gap:16px;min-width:0}.nexus-env{display:inline-flex;align-items:center;height:27px;padding:0 9px;border-radius:5px;color:#1e40af;background:#dbeafe;font-size:9px;font-weight:900}.nexus-env.prod{color:#065f46;background:#d1fae5}.nexus-tenant,.nexus-user{display:grid;min-width:0}.nexus-tenant span,.nexus-user span{color:#718096;font-size:8px;text-transform:uppercase;font-weight:800;letter-spacing:.04em}.nexus-tenant strong,.nexus-user strong{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#172b4d;font-size:10px}.nexus-user small{color:#718096;font-size:8px}.nexus-primary{display:flex;min-height:43px;align-items:stretch;justify-content:space-between;padding:0 18px;background:#fff}.nexus-primary-scroll,.nexus-secondary-scroll{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}.nexus-primary-scroll::-webkit-scrollbar,.nexus-secondary-scroll::-webkit-scrollbar{display:none}.nexus-primary-link{position:relative;display:inline-flex;align-items:center;gap:5px;padding:0 15px;color:#42526e;text-decoration:none;white-space:nowrap;font-size:10px;font-weight:700;border-bottom:3px solid transparent}.nexus-primary-link:hover{color:#0f5fa8;background:#f7fafc}.nexus-primary-link.active{color:#0f5fa8;border-bottom-color:#0f6db7;background:#f5faff}.nexus-primary-link.disabled{cursor:not-allowed;color:#a0aec0}.nexus-primary-link.disabled small{font-size:7px;font-weight:800;color:#b7791f;text-transform:uppercase}.nexus-health{display:inline-flex;align-items:center;padding:0 8px 0 16px;color:#0f5fa8;text-decoration:none;white-space:nowrap;font-size:9px;font-weight:800}.nexus-secondary{display:flex;min-height:38px;align-items:stretch;justify-content:space-between;padding:0 18px;border-top:1px solid #edf1f5;background:#f8fafc}.nexus-secondary a{display:inline-flex;align-items:center;padding:0 14px;border-bottom:2px solid transparent;color:#526579;text-decoration:none;white-space:nowrap;font-size:9px;font-weight:700}.nexus-secondary a:hover{color:#0f5fa8;background:#fff}.nexus-secondary a.active{color:#0f5fa8;border-bottom-color:#0f6db7;background:#fff}.nexus-control-state{display:inline-flex;align-items:center;padding-left:14px;color:#718096;white-space:nowrap;font-size:8px}@media(max-width:980px){.nexus-command-bar{padding:0 14px;gap:10px}.nexus-product{display:none}.nexus-tenant{display:none}.nexus-primary,.nexus-secondary{padding:0 8px}.nexus-control-state,.nexus-health{display:none}}@media(max-width:620px){.nexus-brand-copy small,.nexus-user span,.nexus-user small{display:none}.nexus-brand{min-width:auto}.nexus-user strong{max-width:100px}.nexus-primary-link{padding-inline:11px}.nexus-secondary a{padding-inline:11px}}
       `}</style>
     </div>
   );

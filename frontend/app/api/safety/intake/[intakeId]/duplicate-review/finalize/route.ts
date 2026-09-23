@@ -4,7 +4,7 @@ import { routeErrorResponse } from "@/lib/api/route-error";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
-import { finalizeDuplicateReview } from "@/lib/safety/duplicate/duplicate-service";
+import { finalizeDuplicateGateReview } from "@/lib/safety/duplicate/duplicate-gate-service";
 import type { DuplicateHumanDecision } from "@/lib/safety/duplicate/duplicate-types";
 
 export const runtime = "nodejs";
@@ -44,7 +44,7 @@ export async function POST(
       throw new Error("rationale is required.");
     }
 
-    const workspace = await finalizeDuplicateReview({
+    const workspace = await finalizeDuplicateGateReview({
       principal,
       intakeRecordId: intakeId,
       humanDecision: body.humanDecision as DuplicateHumanDecision,

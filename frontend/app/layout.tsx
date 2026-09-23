@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./nexus-operational-shell.css";
 import type { Metadata } from "next";
 import SessionTimeoutGuard from "@/components/SessionTimeoutGuard";
 import AuthGate from "@/components/AuthGate";
