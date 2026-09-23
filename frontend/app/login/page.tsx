@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { saveSession, type ClinixSession } from "@/lib/session-manager";
 
@@ -34,6 +34,35 @@ type ServerSession = {
   };
 };
 
+function persistServerSession(
+  server: ServerSession,
+  input: {
+    tenantName: string;
+    environment: "PROD" | "UAT" | "TRAINING";
+  },
+) {
+  const now = new Date().toISOString();
+  const session: ClinixSession = {
+    sessionId: server.id,
+    organizationId: "ORG-CLINIXAI",
+    organizationName: "ClinixAI",
+    tenantId: server.user.tenantId,
+    tenantName: input.tenantName,
+    userId: server.user.id,
+    userName: server.user.name,
+    role: ROLE_LABELS[server.user.role] ?? server.user.role,
+    environment: input.environment,
+    permissions: server.user.permissions,
+    loginTime: now,
+    lastActivity: now,
+    expiresAt: server.expiresAt,
+    locked: false,
+    accessToken: server.accessToken,
+  };
+
+  saveSession(session);
+}
+
 export default function LoginPage() {
   const router = useRouter();
 
@@ -42,7 +71,45 @@ export default function LoginPage() {
   const [environment, setEnvironment] = useState<"PROD" | "UAT" | "TRAINING">("PROD");
   const [tenantId, setTenantId] = useState("clinixai-prod");
   const [loading, setLoading] = useState(false);
+  const [reviewChecking, setReviewChecking] = useState(true);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function enterControlledReviewWorkspace() {
+      try {
+        const response = await fetch("/api/auth/review-session", {
+          method: "POST",
+          cache: "no-store",
+          credentials: "same-origin",
+        });
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (!data?.authenticated || !data?.reviewMode || !data?.session) return;
+
+        persistServerSession(data.session as ServerSession, {
+          tenantName: "Nexus RC1 UAT Review",
+          environment: "UAT",
+        });
+
+        if (!cancelled) router.replace("/literature-search");
+      } catch {
+        // Normal authenticated login remains available when review mode is not
+        // enabled or the preview review session cannot be established.
+      } finally {
+        if (!cancelled) setReviewChecking(false);
+      }
+    }
+
+    void enterControlledReviewWorkspace();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [router]);
 
   async function login() {
     try {
@@ -66,27 +133,12 @@ export default function LoginPage() {
 
       const server = data.session as ServerSession;
       const tenant = TENANTS.find((item) => item.tenantId === tenantId);
-      const now = new Date().toISOString();
 
-      const session: ClinixSession = {
-        sessionId: server.id,
-        organizationId: "ORG-CLINIXAI",
-        organizationName: "ClinixAI",
-        tenantId: server.user.tenantId,
+      persistServerSession(server, {
         tenantName: tenant?.tenantName ?? server.user.tenantId,
-        userId: server.user.id,
-        userName: server.user.name,
-        role: ROLE_LABELS[server.user.role] ?? server.user.role,
         environment,
-        permissions: server.user.permissions,
-        loginTime: now,
-        lastActivity: now,
-        expiresAt: server.expiresAt,
-        locked: false,
-        accessToken: server.accessToken,
-      };
+      });
 
-      saveSession(session);
       router.push("/");
     } catch {
       setError("Login failed.");
@@ -100,8 +152,14 @@ export default function LoginPage() {
       <section className="login-card">
         <div className="brand-block">
           <h1>ClinixAI</h1>
-          <p>Literature Screening V1</p>
+          <p>Nexus Safety Platform</p>
         </div>
+
+        {reviewChecking ? (
+          <div className="review-access" role="status">
+            Opening controlled Nexus UAT review workspace…
+          </div>
+        ) : null}
 
         <div className="form-grid">
           <label>
@@ -151,11 +209,13 @@ export default function LoginPage() {
 
         {error && <div className="error">{error}</div>}
 
-        <button onClick={login} disabled={loading}>
+        <button onClick={login} disabled={loading || reviewChecking}>
           {loading ? "Signing in..." : "Sign In"}
         </button>
 
-        <p className="hint">Email + password + environment + tenant are mandatory.</p>
+        <p className="hint">
+          Production and non-review environments require normal authenticated access.
+        </p>
       </section>
 
       <style jsx>{`
@@ -190,6 +250,17 @@ export default function LoginPage() {
         p {
           margin: 8px 0 0;
           color: #64748b;
+        }
+
+        .review-access {
+          margin-bottom: 16px;
+          border: 1px solid #a7f3d0;
+          border-radius: 12px;
+          background: #ecfdf5;
+          color: #065f46;
+          padding: 11px 12px;
+          font-size: 12px;
+          font-weight: 800;
         }
 
         .form-grid {
