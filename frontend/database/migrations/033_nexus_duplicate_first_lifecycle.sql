@@ -3,6 +3,11 @@
 -- Migration 026 originally routed a valid ICSR to READY_FOR_DUPLICATE_REVIEW.
 -- The governed Nexus operating model now performs duplicate/follow-up review
 -- before formal ICSR triage. A completed valid triage therefore routes to QC.
+--
+-- The legacy READY_FOR_DUPLICATE_REVIEW value remains temporarily accepted
+-- only for backwards-compatible execution of the 026 triage service. The
+-- lifecycle wrapper immediately normalizes newly finalized triage records to
+-- READY_FOR_QC in the same governed transition that opens the QC task.
 
 ALTER TABLE safety_intake_records
   DROP CONSTRAINT IF EXISTS safety_intake_records_triage_outcome_check;
@@ -23,6 +28,7 @@ ALTER TABLE safety_intake_records
   CHECK (
     triage_outcome IS NULL OR triage_outcome IN (
       'READY_FOR_QC',
+      'READY_FOR_DUPLICATE_REVIEW',
       'FOLLOW_UP_REQUIRED',
       'NOT_VALID_ICSR',
       'HOLD_FOR_CLARIFICATION'
@@ -34,6 +40,7 @@ ALTER TABLE safety_triage_assessments
   CHECK (
     triage_outcome IN (
       'READY_FOR_QC',
+      'READY_FOR_DUPLICATE_REVIEW',
       'FOLLOW_UP_REQUIRED',
       'NOT_VALID_ICSR',
       'HOLD_FOR_CLARIFICATION'
