@@ -31,27 +31,31 @@ function buildSslConfiguration(): PoolConfig["ssl"] {
   );
 }
 
-const RC1_UAT_PREVIEW_BRANCH = "release/nexus-integrated-rc1";
-const RC1_UAT_NEON_HOST =
+const ISOLATED_UAT_PREVIEW_BRANCHES = new Set([
+  "release/nexus-integrated-rc1",
+  "feat/nexus-horizontal-operations-shell",
+]);
+const ISOLATED_UAT_NEON_HOST =
   "ep-dry-grass-b3qv8phi-pooler.c-4.ap-southeast-1.aws.neon.tech";
-const RC1_UAT_DATABASE = "literature_screening_prod";
+const ISOLATED_UAT_DATABASE = "literature_screening_prod";
 
-function resolveRc1PreviewDatabaseUrl(databaseUrl: string): string {
-  const isRc1Preview =
+function resolveIsolatedPreviewDatabaseUrl(databaseUrl: string): string {
+  const gitRef = process.env.VERCEL_GIT_COMMIT_REF?.trim() || "";
+  const isIsolatedPreview =
     process.env.VERCEL_ENV?.trim().toLowerCase() === "preview" &&
-    process.env.VERCEL_GIT_COMMIT_REF?.trim() === RC1_UAT_PREVIEW_BRANCH;
+    ISOLATED_UAT_PREVIEW_BRANCHES.has(gitRef);
 
-  if (!isRc1Preview) return databaseUrl;
+  if (!isIsolatedPreview) return databaseUrl;
 
   const parsed = new URL(databaseUrl);
   if (parsed.protocol !== "postgres:" && parsed.protocol !== "postgresql:") {
-    throw new Error("RC1 UAT preview requires a PostgreSQL DATABASE_URL.");
+    throw new Error("Isolated UAT preview requires a PostgreSQL DATABASE_URL.");
   }
 
-  // Reuse only the protected Vercel credential material. The target host and
-  // database are non-secret identifiers for the isolated Neon UAT branch.
-  parsed.hostname = RC1_UAT_NEON_HOST;
-  parsed.pathname = `/${RC1_UAT_DATABASE}`;
+  // Reuse only protected Vercel credential material. The target host/database
+  // identify the isolated Neon UAT branch. Production execution is unaffected.
+  parsed.hostname = ISOLATED_UAT_NEON_HOST;
+  parsed.pathname = `/${ISOLATED_UAT_DATABASE}`;
   parsed.searchParams.set("sslmode", "require");
   return parsed.toString();
 }
@@ -61,7 +65,7 @@ export function getDatabaseUrl(): string {
   if (!databaseUrl) {
     throw new Error("DATABASE_URL is not configured.");
   }
-  return resolveRc1PreviewDatabaseUrl(databaseUrl);
+  return resolveIsolatedPreviewDatabaseUrl(databaseUrl);
 }
 
 export function getPostgresPool(): Pool {
