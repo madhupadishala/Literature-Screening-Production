@@ -5,9 +5,9 @@ import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import {
-  finalizeIntakeDisposition,
-  getDispositionWorkspace,
-} from "@/lib/safety/disposition/disposition-service";
+  finalizeReviewedIntakeDisposition,
+  getReviewedDispositionWorkspace,
+} from "@/lib/safety/disposition/disposition-lifecycle-service";
 import {
   INTAKE_DISPOSITION_TYPES,
   type IntakeDispositionRequest,
@@ -27,7 +27,7 @@ export async function GET(
       PERMISSIONS.INTAKE_VIEW,
     );
     const { intakeId } = await context.params;
-    const workspace = await getDispositionWorkspace({
+    const workspace = await getReviewedDispositionWorkspace({
       principal,
       intakeRecordId: intakeId,
     });
@@ -52,9 +52,7 @@ export async function POST(
 
     if (
       typeof body.dispositionType !== "string" ||
-      !(INTAKE_DISPOSITION_TYPES as readonly string[]).includes(
-        body.dispositionType,
-      )
+      !(INTAKE_DISPOSITION_TYPES as readonly string[]).includes(body.dispositionType)
     ) {
       throw new Error("A valid dispositionType is required.");
     }
@@ -78,25 +76,19 @@ export async function POST(
       );
     }
 
-    const workspace = await finalizeIntakeDisposition({
+    const workspace = await finalizeReviewedIntakeDisposition({
       principal,
       intakeRecordId: intakeId,
       request: {
         dispositionType: body.dispositionType,
         rationale: body.rationale,
         destinationSystem:
-          typeof body.destinationSystem === "string"
-            ? body.destinationSystem
-            : undefined,
+          typeof body.destinationSystem === "string" ? body.destinationSystem : undefined,
         externalCaseReference:
-          typeof body.externalCaseReference === "string"
-            ? body.externalCaseReference
-            : undefined,
+          typeof body.externalCaseReference === "string" ? body.externalCaseReference : undefined,
         caseKey: typeof body.caseKey === "string" ? body.caseKey : undefined,
         metadata:
-          body.metadata &&
-          typeof body.metadata === "object" &&
-          !Array.isArray(body.metadata)
+          body.metadata && typeof body.metadata === "object" && !Array.isArray(body.metadata)
             ? (body.metadata as Record<string, unknown>)
             : undefined,
       },
