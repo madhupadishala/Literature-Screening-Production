@@ -4,10 +4,8 @@ import { routeErrorResponse } from "@/lib/api/route-error";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
-import {
-  finalizeTriageAssessment,
-  getTriageWorkspace,
-} from "@/lib/safety/triage/triage-service";
+import { finalizeLifecycleTriageAssessment } from "@/lib/safety/triage/triage-lifecycle-service";
+import { getTriageWorkspace } from "@/lib/safety/triage/triage-service";
 import type { FinalTriageDecision } from "@/lib/safety/triage/triage-types";
 
 export const runtime = "nodejs";
@@ -45,19 +43,13 @@ export async function POST(
       PERMISSIONS.INTAKE_PROCESS,
     );
     const { intakeId } = await context.params;
-    const body = (await request.json()) as {
-      decision?: unknown;
-    };
+    const body = (await request.json()) as { decision?: unknown };
 
-    if (
-      !body.decision ||
-      typeof body.decision !== "object" ||
-      Array.isArray(body.decision)
-    ) {
+    if (!body.decision || typeof body.decision !== "object" || Array.isArray(body.decision)) {
       throw new Error("A triage decision object is required.");
     }
 
-    const workspace = await finalizeTriageAssessment({
+    const workspace = await finalizeLifecycleTriageAssessment({
       principal,
       intakeRecordId: intakeId,
       decision: body.decision as FinalTriageDecision,
