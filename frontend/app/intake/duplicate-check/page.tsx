@@ -1,13 +1,11 @@
 import Navigation from "@/components/Navigation";
-import { IntakeStageQueue } from "@/components/nexus/OperationalQueue";
+import IntakeDuplicateWorkspace from "./intake-duplicate-workspace";
 
 export default function IntakeDuplicateCheckPage() {
   return (
     <div className="app-shell">
       <Navigation />
-      <div style={{ margin: -18 }}>
-        <IntakeStageQueue stage="duplicate" />
-      </div>
+      <IntakeDuplicateWorkspace />
     </div>
   );
 }
