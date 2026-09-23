@@ -61,28 +61,13 @@ export async function finalizeLifecycleTriageAssessment(input: {
     const latest = assessment.rows[0];
     if (!latest) throw new Error("Triage assessment was not persisted.");
 
-    const normalizedOutcome =
-      latest.triage_outcome === "READY_FOR_DUPLICATE_REVIEW"
-        ? "READY_FOR_QC"
-        : latest.triage_outcome;
-
-    if (normalizedOutcome !== latest.triage_outcome) {
-      await client.query(
-        `UPDATE safety_triage_assessments
-            SET triage_outcome = $4
-          WHERE tenant_id = $1 AND intake_record_id = $2 AND id = $3`,
-        [input.principal.tenantId, intakeRecordId, latest.id, normalizedOutcome],
-      );
-    }
-
     await client.query(
       `UPDATE safety_intake_records
           SET status = 'VALIDITY_REVIEW',
-              triage_outcome = $4,
               updated_by = $3,
               updated_at = now()
         WHERE tenant_id = $1 AND id = $2`,
-      [input.principal.tenantId, intakeRecordId, input.principal.userId, normalizedOutcome],
+      [input.principal.tenantId, intakeRecordId, input.principal.userId],
     );
 
     await client.query(
@@ -122,7 +107,8 @@ export async function finalizeLifecycleTriageAssessment(input: {
           assessmentVersion: latest.assessment_version,
           validity: latest.human_validity_decision,
           seriousness: latest.seriousness_status,
-          triageOutcome: normalizedOutcome,
+          triageOutcome: "READY_FOR_QC",
+          persistedLegacyOutcome: latest.triage_outcome,
         }),
       ],
     );
