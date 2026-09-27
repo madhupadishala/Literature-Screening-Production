@@ -174,3 +174,29 @@ CREATE INDEX IF NOT EXISTS idx_nexus_workspace_access_history_tenant_time
 
 CREATE INDEX IF NOT EXISTS idx_nexus_workspace_access_history_workspace_time
   ON nexus_workspace_access_history (tenant_id, workspace_id, changed_at DESC);
+
+
+-- Carry the workspace dimension into the canonical audit trail. The composite
+-- FK prevents an audit event from naming a workspace owned by another tenant.
+ALTER TABLE audit_events
+  ADD COLUMN IF NOT EXISTS workspace_id uuid;
+
+DO $nexus_workspace_audit_fk$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'fk_audit_events_nexus_workspace'
+      AND conrelid = 'audit_events'::regclass
+  ) THEN
+    ALTER TABLE audit_events
+      ADD CONSTRAINT fk_audit_events_nexus_workspace
+      FOREIGN KEY (tenant_id, workspace_id)
+      REFERENCES nexus_client_workspaces (tenant_id, id)
+      ON DELETE SET NULL;
+  END IF;
+END
+$nexus_workspace_audit_fk$;
+
+CREATE INDEX IF NOT EXISTS idx_audit_events_tenant_workspace_time
+  ON audit_events (tenant_id, workspace_id, occurred_at DESC)
+  WHERE workspace_id IS NOT NULL;
