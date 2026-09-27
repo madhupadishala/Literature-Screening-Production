@@ -1,7 +1,7 @@
 import "server-only";
 
 import { getPostgresPool } from "@/lib/database/postgres";
-import { entitlementIsActive, type NexusEnvironment } from "@/lib/nexus/entitlement-types";
+import { type NexusEnvironment } from "@/lib/nexus/entitlement-types";
 import { isNexusModuleKey, type NexusModuleKey } from "@/lib/nexus/modules";
 import { isPermission, PERMISSIONS, type Permission } from "@/lib/rbac/permissions";
 
