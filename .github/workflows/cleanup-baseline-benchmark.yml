@@ -1,0 +1,133 @@
+name: Cleanup Baseline Benchmark
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - "docs/**"
+      - ".github/workflows/cleanup-baseline-benchmark.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install application dependencies
+        run: npm ci
+
+      - name: Create benchmark output
+        run: mkdir -p benchmark-output
+
+      - name: TypeScript strict check
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx tsc --noEmit 2>&1 | tee benchmark-output/typescript.txt
+
+      - name: ESLint
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run lint 2>&1 | tee benchmark-output/eslint.txt
+
+      - name: Production build
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee benchmark-output/build.txt
+
+      - name: Dependency vulnerability audit
+        continue-on-error: true
+        run: |
+          npm audit --json > benchmark-output/npm-audit.json || true
+          npm audit --audit-level=high 2>&1 | tee benchmark-output/npm-audit.txt || true
+
+      - name: Knip unused code/dependency benchmark
+        continue-on-error: true
+        run: |
+          npx --yes knip@6.38.0 --reporter json > benchmark-output/knip.json || true
+          npx --yes knip@6.38.0 2>&1 | tee benchmark-output/knip.txt || true
+
+      - name: jscpd duplication benchmark
+        continue-on-error: true
+        run: |
+          npx --yes jscpd@5.3.1 --config .jscpd.json . 2>&1 | tee benchmark-output/jscpd.txt || true
+
+      - name: Madge circular dependency benchmark
+        continue-on-error: true
+        run: |
+          npx --yes madge@8.0.0 --extensions ts,tsx,mts --ts-config tsconfig.json --circular app lib scripts 2>&1 | tee benchmark-output/madge-circular.txt || true
+          npx --yes madge@8.0.0 --extensions ts,tsx,mts --ts-config tsconfig.json --json app lib scripts > benchmark-output/madge-graph.json || true
+
+      - name: dependency-cruiser dependency benchmark
+        continue-on-error: true
+        run: |
+          npx --yes dependency-cruiser@18.4.0 --config .dependency-cruiser.cjs --output-type json app lib scripts > benchmark-output/dependency-cruiser.json || true
+          npx --yes dependency-cruiser@18.4.0 --config .dependency-cruiser.cjs app lib scripts 2>&1 | tee benchmark-output/dependency-cruiser.txt || true
+
+      - name: Existing security audit
+        continue-on-error: true
+        run: |
+          npm run security:audit 2>&1 | tee benchmark-output/security-audit.txt || true
+
+      - name: Existing tenant-integrity verification
+        continue-on-error: true
+        run: |
+          npm run nexus:tenant-integrity:verify 2>&1 | tee benchmark-output/nexus-tenant-integrity.txt || true
+
+      - name: Existing PV verification
+        continue-on-error: true
+        run: |
+          npm run pv:verify 2>&1 | tee benchmark-output/pv-verify.txt || true
+
+      - name: Literature screening verification
+        continue-on-error: true
+        run: |
+          npm run screening:verify 2>&1 | tee benchmark-output/screening-verify.txt || true
+
+      - name: Intake verification
+        continue-on-error: true
+        run: |
+          npm run intake:verify 2>&1 | tee benchmark-output/intake-verify.txt || true
+
+      - name: Nexus Sprints 1-10 verification
+        continue-on-error: true
+        run: |
+          for sprint in {1..10}; do
+            echo "===== NEXUS SPRINT $sprint =====" | tee -a benchmark-output/nexus-sprints.txt
+            npm run "nexus:sprint$sprint:verify" 2>&1 | tee -a benchmark-output/nexus-sprints.txt || true
+          done
+
+      - name: Gitleaks secret scan
+        uses: gitleaks/gitleaks-action@v3
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload baseline evidence
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: cleanup-baseline-${{ github.sha }}
+          path: frontend/benchmark-output/
+          if-no-files-found: warn
+          retention-days: 30
