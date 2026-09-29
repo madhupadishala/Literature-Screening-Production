@@ -1,0 +1,14 @@
+{
+  "threshold": 100,
+  "reporters": ["console", "json"],
+  "output": "benchmark-output/jscpd",
+  "ignore": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/benchmark-output/**",
+    "**/*.lock",
+    "**/coverage/**"
+  ],
+  "gitignore": true,
+  "absolute": false
+}
