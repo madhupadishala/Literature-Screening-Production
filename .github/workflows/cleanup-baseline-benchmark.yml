@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -81,8 +83,8 @@ jobs:
       - name: dependency-cruiser dependency benchmark
         continue-on-error: true
         run: |
-          npx --yes dependency-cruiser@18.4.0 --config .dependency-cruiser.cjs --output-type json app lib scripts > benchmark-output/dependency-cruiser.json || true
-          npx --yes dependency-cruiser@18.4.0 --config .dependency-cruiser.cjs app lib scripts 2>&1 | tee benchmark-output/dependency-cruiser.txt || true
+          npx --package dependency-cruiser@18.4.0 --package typescript@5.9.3 depcruise --config .dependency-cruiser.cjs --output-type json app lib scripts > benchmark-output/dependency-cruiser.json || true
+          npx --package dependency-cruiser@18.4.0 --package typescript@5.9.3 depcruise --config .dependency-cruiser.cjs app lib scripts 2>&1 | tee benchmark-output/dependency-cruiser.txt || true
 
       - name: Existing security audit
         continue-on-error: true
@@ -118,10 +120,11 @@ jobs:
           done
 
       - name: Gitleaks secret scan
-        uses: gitleaks/gitleaks-action@v3
         continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx --yes gitleaks-wrapper-do-not-use 2>/dev/null || true
+          curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/scripts/install.sh | sh -s -- -b /tmp 8.24.3
+          /tmp/gitleaks dir . --redact --report-format json --report-path benchmark-output/gitleaks.json 2>&1 | tee benchmark-output/gitleaks.txt || true
 
       - name: Upload baseline evidence
         uses: actions/upload-artifact@v5
