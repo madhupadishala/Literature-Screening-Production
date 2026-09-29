@@ -120,11 +120,10 @@ jobs:
           done
 
       - name: Gitleaks secret scan
+        uses: gitleaks/gitleaks-action@v3
         continue-on-error: true
-        run: |
-          npx --yes gitleaks-wrapper-do-not-use 2>/dev/null || true
-          curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/scripts/install.sh | sh -s -- -b /tmp 8.24.3
-          /tmp/gitleaks dir . --redact --report-format json --report-path benchmark-output/gitleaks.json 2>&1 | tee benchmark-output/gitleaks.txt || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload baseline evidence
         uses: actions/upload-artifact@v5
