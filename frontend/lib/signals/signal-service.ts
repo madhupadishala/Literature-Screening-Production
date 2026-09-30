@@ -15,6 +15,10 @@ import {
   type SignalStatus,
 } from "./signal-types";
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 function requireText(value: unknown, label: string, minimum = 1): string {
   if (typeof value !== "string") {
     throw new Error(`${label} is required.`);
@@ -34,6 +38,15 @@ function validateCreateRequest(request: CreateSignalRequest): CreateSignalReques
   const detectedAt = new Date(detectedAtText);
   if (!Number.isFinite(detectedAt.getTime())) {
     throw new Error("detectedAt must be a valid date/time.");
+  }
+  if (request.detectionSnapshot !== undefined && !isRecord(request.detectionSnapshot)) {
+    throw new Error("detectionSnapshot must be a JSON object.");
+  }
+  if (
+    request.priority !== undefined &&
+    !["LOW", "NORMAL", "HIGH", "CRITICAL"].includes(request.priority)
+  ) {
+    throw new Error("Unsupported signal priority.");
   }
   return {
     signalKey: requireText(request.signalKey, "signalKey"),
@@ -116,6 +129,26 @@ export async function createSignal(input: {
       input.principal.userId,
     ],
   );
+  await getPostgresPool().query(
+    `INSERT INTO audit_events (
+       tenant_id, workspace_id, environment, module_key, actor_id,
+       event_type, event_category, outcome, details
+     ) VALUES ($1,$2,$3,'SIGNAL_MANAGEMENT',$4,
+       'SIGNAL_CREATED','NEXUS_SIGNALS','success',$5::jsonb)`,
+    [
+      input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+      input.principal.userId,
+      JSON.stringify({
+        signalId: result.rows[0].id,
+        signalKey: request.signalKey,
+        sourceType: request.sourceType,
+        snapshotSha256,
+        reason: request.reason,
+      }),
+    ],
+  );
   return result.rows[0];
 }
 
@@ -172,6 +205,12 @@ export async function recordSignalAssessment(input: {
 }): Promise<Record<string, unknown>> {
   const rationale = requireText(input.request.rationale, "rationale", 10);
   const outcome = requireText(input.request.outcome, "outcome");
+  if (!["VALIDATION","PRIORITIZATION","EVALUATION","RECOMMENDATION","CLOSURE"].includes(input.request.assessmentType)) {
+    throw new Error("Unsupported signal assessmentType.");
+  }
+  if (input.request.evidence !== undefined && !isRecord(input.request.evidence)) {
+    throw new Error("Signal assessment evidence must be a JSON object.");
+  }
   const evidence = input.request.evidence ?? {};
   const evidenceSha256 = canonicalSha256(evidence);
   const scope = requireSafetyWorkspaceScope(input.principal);
