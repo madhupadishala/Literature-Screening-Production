@@ -80,11 +80,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 
   const identity = await verifyIdentityCredentials(email, password);
   if (!identity.ok) {
-    const message =
-      identity.reason === "account_locked"
-        ? "This account is temporarily locked after repeated failed attempts."
-        : "Invalid email or password.";
-    return Response.json({ error: message }, { status: 401 });
+    return Response.json({ error: "Invalid email or password." }, { status: 401 });
   }
 
   const created = await createIdentitySession({
