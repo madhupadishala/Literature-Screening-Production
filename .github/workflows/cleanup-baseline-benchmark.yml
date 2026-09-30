@@ -235,9 +235,9 @@ jobs:
             exit 127
           fi
           set -o pipefail
-          "$GITLEAKS_BIN" git .. --redact --verbose --log-opts="--all" --report-format json --report-path benchmark-output/gitleaks-history.json 2>&1 | tee benchmark-output/gitleaks-history.txt
+          "$GITLEAKS_BIN" git .. --config ../.gitleaks.toml --redact --verbose --log-opts="--all" --report-format json --report-path benchmark-output/gitleaks-history.json 2>&1 | tee benchmark-output/gitleaks-history.txt
           history_rc=${PIPESTATUS[0]}
-          "$GITLEAKS_BIN" dir .. --redact --verbose --report-format json --report-path benchmark-output/gitleaks-working-tree.json 2>&1 | tee benchmark-output/gitleaks-working-tree.txt
+          "$GITLEAKS_BIN" dir .. --config ../.gitleaks.toml --redact --verbose --report-format json --report-path benchmark-output/gitleaks-working-tree.json 2>&1 | tee benchmark-output/gitleaks-working-tree.txt
           tree_rc=${PIPESTATUS[0]}
           printf "history_exit=%s\nworking_tree_exit=%s\n" "$history_rc" "$tree_rc" > benchmark-output/gitleaks-full.status
           if [ "$history_rc" -ne 0 ]; then exit "$history_rc"; fi
