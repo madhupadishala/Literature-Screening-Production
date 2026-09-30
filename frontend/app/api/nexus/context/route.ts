@@ -18,6 +18,9 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const UUID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
+
 function normalizeEnvironment(value: string | null | undefined): NexusEnvironment | null {
   const normalized = value?.trim().toUpperCase();
   return normalized && isNexusEnvironment(normalized) ? normalized : null;
@@ -30,9 +33,9 @@ export async function GET(request: NextRequest): Promise<Response> {
     const environment =
       normalizeEnvironment(request.nextUrl.searchParams.get("environment")) ?? "PROD";
 
-    if (!tenantId) {
+    if (!tenantId || !UUID_PATTERN.test(tenantId)) {
       return Response.json(
-        { success: false, error: "Select a tenant before requesting client workspaces." },
+        { success: false, error: "A valid tenantId is required before requesting client workspaces." },
         { status: 400 },
       );
     }
@@ -69,7 +72,26 @@ type SelectContextBody = {
 export async function POST(request: NextRequest): Promise<Response> {
   try {
     const identity = await requireIdentitySession(request);
-    const body = (await request.json()) as SelectContextBody;
+    let body: SelectContextBody;
+    try {
+      body = (await request.json()) as SelectContextBody;
+    } catch {
+      return Response.json({ success: false, error: "Invalid JSON request body." }, { status: 400 });
+    }
+
+    if (
+      (body.tenantId !== undefined && typeof body.tenantId !== "string") ||
+      (body.workspaceId !== undefined && typeof body.workspaceId !== "string") ||
+      (body.environment !== undefined && typeof body.environment !== "string") ||
+      (body.moduleKey !== undefined && typeof body.moduleKey !== "string") ||
+      (body.reason !== undefined && typeof body.reason !== "string")
+    ) {
+      return Response.json(
+        { success: false, error: "Context selector fields must be strings." },
+        { status: 400 },
+      );
+    }
+
     const tenantId = body.tenantId?.trim();
     const workspaceId = body.workspaceId?.trim();
     const environment = normalizeEnvironment(body.environment);
@@ -78,6 +100,8 @@ export async function POST(request: NextRequest): Promise<Response> {
     if (
       !tenantId ||
       !workspaceId ||
+      !UUID_PATTERN.test(tenantId) ||
+      !UUID_PATTERN.test(workspaceId) ||
       !environment ||
       !moduleKey ||
       !isNexusModuleKey(moduleKey)
@@ -98,6 +122,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       workspaceId,
       environment,
       moduleKey,
+      sessionExpiresAt: identity.expiresAt,
     });
 
     if (!access.allowed) {
