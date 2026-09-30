@@ -2,7 +2,7 @@
 
 Document ID: CLEANUP-WAVE-4-7-001  
 Branch: `cleanup/zero-deviation-baseline-20260930`  
-Status: QUALIFICATION IN PROGRESS
+Status: TECHNICAL QUALIFICATION COMPLETE; CODERABBIT FULL REVIEW PENDING
 
 ## Scope
 
@@ -19,7 +19,7 @@ Status: QUALIFICATION IN PROGRESS
 | Tenant-scoped workflow status | `getStatusForTenant` | IMPLEMENTED |
 | Detailed benchmark | `BENCHMARK_LITERATURE_SCREENING.md` | IMPLEMENTED |
 | URS/FRS/User Guide | controlled Sprint 4 documents | IMPLEMENTED |
-| Legacy regression | screening/review/PV scripts | CI qualification required |
+| Legacy regression | screening/review/PV scripts | VERIFIED — exact-head quality gate passed |
 
 ## Sprint 5 — Intake & Triage
 
@@ -41,13 +41,13 @@ Status: QUALIFICATION IN PROGRESS
 | Case worklist scope | tenant+workspace+environment query | IMPLEMENTED |
 | Same-tenant cross-workspace case IDOR control | `assertSafetyCaseInScope` across parameterized case routes | IMPLEMENTED |
 | Case creation from same-scope qualified Intake | `safety-case-service.ts` | IMPLEMENTED |
-| Existing revision/QC/MR/finalization behavior retained | existing Case Processing services and Nexus regression scripts | QUALIFICATION REQUIRED |
-| Immutable final version/evidence hashes | existing finalization/release services | IMPLEMENTED / regression required |
+| Existing revision/QC/MR/finalization behavior retained | existing Case Processing services and Nexus regression scripts | VERIFIED — Nexus Sprint 8–10 + cleanup Sprint 6 passed |
+| Immutable final version/evidence hashes | existing finalization/release services | VERIFIED by regression/cleanup qualification |
 | Benchmark | `BENCHMARK_CASE_PROCESSING.md` | IMPLEMENTED |
 | URS | `URS_CASE_PROCESSING.md` | IMPLEMENTED |
 | FRS | `FRS_CASE_PROCESSING.md` | IMPLEMENTED |
 | User Guide | `USER_GUIDE_CASE_PROCESSING.md` | IMPLEMENTED |
-| Executable qualification | `cleanup:sprint6:verify` | CI qualification required |
+| Executable qualification | `cleanup:sprint6:verify` | VERIFIED |
 
 ## Sprint 7 — Submissions foundation
 
@@ -67,7 +67,7 @@ Status: QUALIFICATION IN PROGRESS
 | URS | `URS_SUBMISSIONS.md` | IMPLEMENTED |
 | FRS | `FRS_SUBMISSIONS.md` | IMPLEMENTED |
 | User Guide | `USER_GUIDE_SUBMISSIONS.md` | IMPLEMENTED |
-| Executable qualification | `cleanup:sprint7:verify` | CI qualification required |
+| Executable qualification | `cleanup:sprint7:verify` | VERIFIED |
 
 ## Security findings closed in this wave
 
@@ -91,9 +91,9 @@ The wave also remediates CodeRabbit findings raised while Sprints 4–5 were in 
 | Ponytail | Existing services reused; Submissions adds only missing canonical foundation. |
 | Architecture Guardian | workspace ownership moved into persistence/service boundary; module guards remain canonical. |
 | Warpath | Literature→Intake→Case→Submission-ready lifecycle covered; external transport intentionally fail-closed without adapter. |
-| CodeRabbit | Current-head re-review required before wave closure. |
-| Hacker Gate | resource-level workspace IDOR controls implemented; executable static/security gates required to pass. |
-| Evidence Gate | blocking CI + benchmark artifacts required for exact final head. |
+| CodeRabbit | Full exact-head review requested after technical qualification; wave closure remains pending until material findings are cleared. |
+| Hacker Gate | VERIFIED for current wave scope — nested Intake/Case resource scope assertions, scoped Submissions DB FKs and security-boundary tests passed. |
+| Evidence Gate | VERIFIED technically on exact head; quality and benchmark workflows passed. |
 | Regulatory Knowledge Gate | regulatory retrieval governance strengthened; production source approval remains controlled. |
 | Modular & Benchmark Completeness | all four wave modules have benchmark/URS/FRS/User Guide; real external Submissions adapter is separately qualified. |
 
@@ -103,3 +103,48 @@ The wave also remediates CodeRabbit findings raised while Sprints 4–5 were in 
 2. Real regulator/partner submission adapters require credentials, conformance testing, validation and production approval.
 3. Warning-level code/architecture debt identified by baseline tools remains visible and moves to later cleanup phases; it is not silently deleted.
 4. Vercel quota/build-rate status is an external deployment quota and is not used as application-code qualification evidence for this source-only wave.
+
+
+## Exact-head qualification evidence
+
+Qualified technical head: `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1`
+
+- Frontend Quality Gate run: `36688802422` — **PASS**
+- Cleanup Baseline Benchmark run: `36688802502` — **PASS**
+- Architecture dependency blocking errors: **0**
+- Dependency audit: **0 vulnerabilities**
+- Lint blocking errors: **0**
+- Legacy Nexus Sprints 1–10: **PASS**
+- Nexus tenant integrity / identity-workspace / security-boundary verification: **PASS**
+- Regulatory knowledge foundation + provenance/retrieval-governance verification: **PASS**
+- Cleanup Sprint 4 Literature reconciliation: **PASS**
+- Cleanup Sprint 5 Intake reconciliation: **PASS**
+- Cleanup Sprint 6 Case Processing reconciliation: **PASS**
+- Cleanup Sprint 7 Submissions foundation: **PASS**
+- Production Next.js build: **PASS**
+- Baseline secret scans: incremental/full-history/governed working tree **PASS**
+- Known non-blocking debt remains visible: Knip unused-file candidates and dependency-cruiser warning-level debt are not silently deleted or promoted to green.
+
+### Sprint 4 qualification result
+
+Literature routes, including the legacy `/api/workflow/run` surface, use canonical workspace/module authorization. Workflow status is tenant-scoped and no global status read remains in the qualified endpoint.
+
+### Sprint 5 qualification result
+
+Parameterized Intake child-resource routes perform persisted tenant/workspace/environment ownership checks before nested resource access. Cross-module Intake→Case authorization remains constrained to the selected workspace/environment.
+
+### Sprint 6 qualification result
+
+Parameterized Case routes enforce persisted workspace/environment ownership. Migration 034 exposes scoped composite identities for downstream integrity, while legacy rows remain unmapped until controlled production migration.
+
+### Sprint 7 qualification result
+
+Submission packages are built only from authoritative finalized case versions in the selected scope. Database constraints bind package→case, package→case-version, attempt→package and acknowledgement→package identities to the governed scope. Missing external transport fails closed; no real regulator connectivity is claimed.
+
+### Regulatory retrieval qualification result
+
+Current governed regulatory retrieval requires approved/effective/date-eligible material and excludes superseded material by default. Historical superseded retrieval requires an explicit `asOf`. Legacy vectors missing governance metadata are excluded and must be rebuilt from controlled approved source versions rather than auto-approved.
+
+### Remaining closure condition
+
+Technical qualification does not by itself close the wave. The CodeRabbit gate remains open until a full review of this exact changeset produces no unresolved material findings.
