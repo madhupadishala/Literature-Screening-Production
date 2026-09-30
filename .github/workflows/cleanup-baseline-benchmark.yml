@@ -228,6 +228,16 @@ jobs:
           printf "exit=%s\n" "$rc" > benchmark-output/regulatory-knowledge.status
           exit "$rc"
 
+      - name: Sprint 4 Literature cleanup reconciliation
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run cleanup:sprint4:verify 2>&1 | tee benchmark-output/cleanup-sprint4-literature.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint4-literature.status
+          exit "$rc"
+
       - name: Gitleaks incremental PR secret scan
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
         continue-on-error: true
