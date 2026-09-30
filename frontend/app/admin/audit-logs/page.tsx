@@ -53,7 +53,12 @@ export default function AuditLogsPage() {
   function exportCsv() {
     const parameters = toParameters(filters);
     parameters.set("format", "csv");
-    window.location.assign(`/api/audit/search?${parameters}`);
+    const download = document.createElement("a");
+    download.href = `/api/audit/search?${parameters}`;
+    download.download = "audit-log-export.csv";
+    document.body.appendChild(download);
+    download.click();
+    download.remove();
   }
 
   return (
