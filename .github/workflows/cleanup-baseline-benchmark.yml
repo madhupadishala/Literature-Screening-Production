@@ -45,18 +45,27 @@ jobs:
         run: |
           set -o pipefail
           npx tsc --noEmit 2>&1 | tee benchmark-output/typescript.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/typescript.status
+          exit "$rc"
 
       - name: ESLint
         continue-on-error: true
         run: |
           set -o pipefail
           npm run lint 2>&1 | tee benchmark-output/eslint.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/eslint.status
+          exit "$rc"
 
       - name: Production build
         continue-on-error: true
         run: |
           set -o pipefail
           npm run build 2>&1 | tee benchmark-output/build.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/build.status
+          exit "$rc"
 
       - name: Dependency vulnerability audit
         continue-on-error: true
@@ -178,6 +187,24 @@ jobs:
             if [ "$rc" -ne 0 ]; then overall=1; fi
           done
           exit "$overall"
+
+      - name: Verify Nexus identity-first workspace architecture
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run nexus:identity-workspace:verify 2>&1 | tee benchmark-output/nexus-identity-workspace.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/nexus-identity-workspace.status
+          exit "$rc"
+
+      - name: Verify Nexus security boundary negative cases
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run nexus:security-boundaries:verify 2>&1 | tee benchmark-output/nexus-security-boundaries.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/nexus-security-boundaries.status
+          exit "$rc"
 
       - name: Gitleaks incremental PR secret scan
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
