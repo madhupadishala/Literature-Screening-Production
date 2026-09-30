@@ -476,10 +476,10 @@ export class QdrantKnowledgeClient {
       }
     }
 
-    const results = await this.client.search(
+    const response = await this.client.query(
       this.config.collectionName,
       {
-        vector: request.queryEmbedding,
+        query: request.queryEmbedding,
         limit: request.limit,
         score_threshold:
           request.scoreThreshold,
@@ -491,7 +491,7 @@ export class QdrantKnowledgeClient {
       },
     );
 
-    return results.flatMap(
+    return response.points.flatMap(
       (result): KnowledgeSearchResult[] => {
         if (!result.payload) {
           return [];
