@@ -23,6 +23,7 @@ export async function POST(
       PERMISSIONS.CASE_PROCESS,
     );
     const { caseId, suggestionId } = await context.params;
+    await assertSafetyCaseInScope(principal, caseId);
     const body = (await request.json()) as {
       decision?: unknown;
       humanPayload?: unknown;
