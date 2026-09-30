@@ -19,7 +19,7 @@ paths = [
 [[allowlists]]
 description = "Known non-secret deterministic idempotency fixture used by Nexus Sprint 3 verification"
 targetRules = ["generic-api-key"]
-regexTarget = "secret"
+regexTarget = "line"
 regexes = [
-  '''^partner-msg-8842$'''
+  '''idempotencyKey:\\s*["']partner-msg-8842["']'''
 ]
