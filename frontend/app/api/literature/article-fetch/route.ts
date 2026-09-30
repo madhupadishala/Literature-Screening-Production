@@ -1,88 +1,68 @@
-import { NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { articleFetchService } from "@/lib/literature/article-fetch/article-fetch-service";
 import type { ArticleFetchRequest } from "@/lib/literature/article-fetch/article-fetch-types";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { assertRequestedTenantMatchesScope } from "@/lib/rbac/scoped-request";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 
-export async function GET() {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export async function GET(request: NextRequest): Promise<Response> {
   try {
-    return NextResponse.json(
-      {
-        success: true,
-        status: articleFetchService.getStatus(),
-        articles: articleFetchService.list(),
-      },
-      {
-        status: 200,
-      },
+    const principal = await requireWorkspaceModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SEARCH_HISTORY_VIEW,
     );
-  } catch (error) {
-    console.error("Article Fetch GET Error:", error);
 
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Unable to retrieve fetched articles.",
-      },
-      {
-        status: 500,
-      },
-    );
+    return Response.json({
+      success: true,
+      articles: articleFetchService.listForTenant(principal.tenantId),
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const body = (await request.json()) as ArticleFetchRequest;
+    const principal = await requireWorkspaceModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SEARCH_EXECUTE,
+    );
+    const body = (await request.json()) as Partial<ArticleFetchRequest>;
 
-    if (
-      !body.tenantId ||
-      typeof body.tenantId !== "string" ||
-      !body.pmid ||
-      typeof body.pmid !== "string"
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "tenantId and pmid are required.",
-        },
-        {
-          status: 400,
-        },
+    assertRequestedTenantMatchesScope(principal, body.tenantId);
+
+    if (!body.pmid || typeof body.pmid !== "string") {
+      return Response.json(
+        { success: false, error: "pmid is required." },
+        { status: 400 },
       );
     }
 
     const article = await articleFetchService.fetch({
-      ...body,
-      tenantId: body.tenantId.trim(),
+      tenantId: principal.tenantId,
       pmid: body.pmid.trim(),
+      source: body.source,
     });
 
-    return NextResponse.json(
-      {
-        success: true,
-        tenantId: body.tenantId,
-        pmid: body.pmid,
-        article,
-        next: {
-          endpoint: "/api/evidence/package",
-          method: "POST",
-        },
+    return Response.json({
+      success: true,
+      tenantId: principal.tenantId,
+      pmid: body.pmid.trim(),
+      article,
+      next: {
+        endpoint: "/api/evidence/package",
+        method: "POST",
       },
-      {
-        status: 200,
-      },
-    );
+    });
   } catch (error) {
-    console.error("Article Fetch Error:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Failed to fetch article.",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }
