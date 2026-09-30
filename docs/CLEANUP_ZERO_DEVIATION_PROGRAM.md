@@ -173,7 +173,7 @@ Literature -> Intake/Triage -> L2A/Case Processing -> Submissions/shared platfor
 No module passes because another module passed.
 
 ### Phase 7 - Clean export candidate
-Freeze a release-candidate commit only when all nine gates are green.
+Freeze a release-candidate commit only when every mandatory applicable gate is green. A failed mandatory gate shall not be waived by disposition. Disposition is limited to documented non-applicability or an approved external dependency/exception that does not bypass a mandatory control.
 
 ## Clean export strategy
 
