@@ -34,7 +34,7 @@ The objective is to:
 
 ---
 
-## 2. Seven mandatory engineering gates
+## 2. Nine mandatory engineering and regulatory gates
 
 Every change in this program must satisfy all seven gates.
 
@@ -79,9 +79,185 @@ Every qualified change must be traceable through:
 
 `Regulatory/Business Requirement -> URS -> FRS -> Architecture -> Code -> Test -> Security -> Evidence -> Release`
 
+### 2.8 Regulatory Knowledge Gate
+- regulated PV requirements must trace to authoritative regulator/harmonised sources where available;
+- source version, jurisdiction and effective date must be controlled;
+- model memory is not an authoritative regulatory source;
+- jurisdictional differences must remain explicit;
+- regulator changes trigger impact assessment across URS/FRS/code/tests/SOPs.
+
+### 2.9 Modular & Benchmark Completeness Gate
+- Nexus and modules must remain architecturally separated;
+- every module must be plug-and-play and entitleable independently or in supported combinations;
+- URS/FRS must be benchmarked against mature market tools;
+- no material field, workflow state, validation, exception, audit/evidence requirement, report, integration or control may be omitted merely because the current product lacks it;
+- module contracts and supported combinations must be tested.
+
 ---
 
-## 3. Market benchmark: heritage vs next-generation PV platforms
+## 3. Platform charter: modular Nexus + plug-and-play PV modules
+
+The cleanup program is governed by:
+
+`docs/architecture/NEXUS_MODULAR_NEXTGEN_CHARTER.md`
+
+This charter is a mandatory reference for every sprint.
+
+### Nexus-level hierarchy
+
+Nexus owns shared platform capabilities:
+
+```text
+Identity
+  ↓
+Tenant
+  ↓
+Client Workspace
+  ↓
+Environment
+  ↓
+Module Entitlement
+  ↓
+Workspace Membership
+  ↓
+Module Role
+  ↓
+Permission
+```
+
+Shared capabilities such as authentication, authorization, audit, evidence, AI gateway, retrieval, events, observability and infrastructure abstractions belong at Nexus level rather than being recreated independently inside modules.
+
+### Module-level architecture
+
+Core PV module lifecycle:
+
+```text
+Literature Screening
+    ↓
+Intake & Triage
+    ↓
+L2A / Case Processing
+    ↓
+Submissions
+    ↓
+Signal Management
+    ↓
+Aggregate Reporting
+    ↓
+PV Documentation
+```
+
+This is the normal lifecycle, **not a mandatory commercial dependency chain**.
+
+The product must support plug-and-play combinations such as:
+
+- Literature only
+- Intake only
+- Literature + Intake
+- Intake + L2A
+- L2A + Submissions
+- Literature + Submissions
+- Literature + Signal
+- Signal + Aggregate
+- selected modules plus PV Documentation
+- complete end-to-end suite
+
+A client should be able to license one, two, several or all modules without bespoke rewiring.
+
+Modules connect through stable, versioned APIs/contracts/events rather than importing one another's private implementation or tables.
+
+### Next-generation AI objective
+
+The cleanup also establishes a governed advanced-AI capability layer using, where justified:
+
+- LLMs
+- ModelGateway
+- LangChain
+- LangGraph
+- Qdrant/vector database
+- Elasticsearch
+- embeddings
+- semantic retrieval
+- hybrid lexical + semantic retrieval
+- reranking
+- RAG
+- PostgreSQL
+- Redis
+- Kafka
+- prompt/policy registry
+- evaluation
+- observability/tracing
+- human-in-the-loop control
+- privately governed/domain-tuned models when justified
+
+AI must assist regulated decision-making without becoming an untraceable sole authority. High-impact PV decisions use controlled regulatory knowledge, deterministic domain rules, model assistance and human review where required.
+
+### Controlled regulatory knowledge loading
+
+Applicable regulator and harmonised guidance is maintained as a versioned controlled corpus.
+
+Process:
+
+```text
+Official Regulatory Source
+        ↓
+Acquisition + Checksum + Version Metadata
+        ↓
+Structure-aware Parsing
+        ↓
+Regulatory Chunking
+        ↓
+Embeddings
+        ↓
+Vector Store + Lexical Index
+        ↓
+Authorized Retrieval / Reranking
+        ↓
+Source-linked AI / Human Workflow
+```
+
+Chunk metadata must retain authority, jurisdiction, document, revision/version, effective date, section hierarchy, source reference, checksum and current/superseded status.
+
+See:
+
+- `docs/pv-knowledge/REGULATORY_SOURCE_REGISTER.md`
+- `docs/architecture/NEXUS_MODULAR_NEXTGEN_CHARTER.md`
+
+### URS/FRS benchmark rule
+
+When creating or revising URS/FRS, use relevant established market tools as capability benchmarks, including:
+
+- Oracle Argus Safety
+- Veeva Safety
+- ArisGlobal LifeSphere / relevant Advanced products
+- Ennov PV
+- specialist tools where they materially lead a specific capability
+
+Benchmark all material:
+- fields and data types;
+- workflows and states;
+- validation;
+- roles/actions;
+- configuration;
+- audit/evidence;
+- exceptions;
+- duplicates/follow-up;
+- coding/medical review;
+- submission clocks/acknowledgements;
+- reports/exports;
+- APIs/integrations;
+- administration;
+- security;
+- retention;
+- operational controls;
+- AI controls;
+- provenance/explainability.
+
+Market tools are references for completeness and maturity; regulatory applicability and our controlled architecture determine the final implementation.
+
+---
+
+## 4. Market benchmark: heritage vs next-generation PV platforms
 
 We do not copy any one commercial product. We use the strongest characteristics of several products as a market benchmark.
 
@@ -106,7 +282,7 @@ Not:
 
 ---
 
-## 4. PV and regulatory benchmark
+## 5. PV and regulatory benchmark
 
 The product must be governed by authoritative sources, not generic internet material.
 
@@ -143,7 +319,7 @@ AI retrieval must never treat these classes as equivalent without policy.
 
 ---
 
-## 5. Canonical access architecture
+## 6. Canonical access architecture
 
 The governing access hierarchy is:
 
@@ -177,7 +353,7 @@ Cross-tenant and cross-client access must fail closed.
 
 ---
 
-## 6. Canonical code architecture
+## 7. Canonical code architecture
 
 ```text
 Presentation / API
@@ -219,7 +395,7 @@ Qdrant Adapter
 
 ---
 
-## 7. Machine-enforced architecture
+## 8. Machine-enforced architecture
 
 Architecture is enforced in CI rather than relying only on documentation.
 
@@ -250,7 +426,7 @@ Examples of rules that should ultimately become blocking:
 
 ---
 
-## 8. Next-generation platform capability stack
+## 9. Next-generation platform capability stack
 
 The modernization target includes the following shared capabilities.
 
@@ -274,7 +450,7 @@ The modernization target includes the following shared capabilities.
 
 ---
 
-## 9. Which next-generation technology solves which problem?
+## 10. Which next-generation technology solves which problem?
 
 ### 9.1 Semantic retrieval / similar-case or regulatory-context search
 
@@ -629,7 +805,7 @@ whatever matches
 
 ---
 
-## 10. Technology ownership rules
+## 11. Technology ownership rules
 
 ### PostgreSQL
 Authoritative for regulated transactional state and governed configuration.
@@ -661,7 +837,7 @@ They must not become the location of regulatory rules or authoritative workflow 
 
 ---
 
-## 11. PV module market benchmark
+## 12. PV module market benchmark
 
 ### Literature Screening
 
@@ -763,7 +939,7 @@ Target capabilities include:
 
 ---
 
-## 12. Cleanup sprint program
+## 13. Cleanup sprint program
 
 ### Sprint 0 — Governance & Baseline
 - URS
@@ -845,7 +1021,7 @@ Capability adoption is incremental. No big-bang rewrite.
 
 ---
 
-## 13. Benchmark tools
+## 14. Benchmark tools
 
 The cleanup benchmark uses objective tools including:
 
@@ -870,7 +1046,7 @@ Metrics are always compared:
 
 ---
 
-## 14. Current baseline signals
+## 15. Current baseline signals
 
 Initial baseline evidence has already identified:
 
@@ -891,7 +1067,7 @@ A benchmark tool result is not automatically trusted merely because it ran. The 
 
 ---
 
-## 15. Zero-deviation rule
+## 16. Zero-deviation rule
 
 Cleanup may improve:
 
@@ -920,7 +1096,7 @@ Any intentional behavior change leaves the cleanup stream and enters controlled 
 
 ---
 
-## 16. Clean repository strategy
+## 17. Clean repository strategy
 
 The existing repository remains the historical development/provenance repository.
 
@@ -953,7 +1129,7 @@ The new repository will contain a `PROVENANCE.md` linking it to:
 
 ---
 
-## 17. Governing documents
+## 18. Governing documents
 
 See:
 
@@ -967,7 +1143,7 @@ See:
 
 ---
 
-## 18. Definition of done
+## 19. Definition of done
 
 The modernization program is not done because:
 
