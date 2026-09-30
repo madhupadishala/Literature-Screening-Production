@@ -16,6 +16,7 @@ import {
   type NexusWorkspaceRole,
 } from "@/lib/nexus/workspace-access-service";
 import type { Permission } from "@/lib/rbac/permissions";
+import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 export class WorkspaceAuthorizationError extends Error {
   constructor(
@@ -27,7 +28,7 @@ export class WorkspaceAuthorizationError extends Error {
   }
 }
 
-export interface ScopedIdentityPrincipal {
+export interface ScopedIdentityPrincipal extends RequestPrincipal {
   sessionId: string;
   userId: string;
   email: string;
@@ -173,6 +174,11 @@ export async function requireWorkspaceModulePermission(
     tenantId: tenant.tenantId,
     tenantKey: tenant.tenantKey,
     environment: context.environment,
+    roleKey: tenant.roleKey,
+    customPermissions: access.effectivePermissions,
+    hasPermission: (candidatePermission) =>
+      tenant.hasPermission(candidatePermission) &&
+      access.effectivePermissions.includes(candidatePermission),
     workspaceId: context.workspaceId,
     workspaceKey: access.workspaceKey,
     workspaceRole: access.workspaceRole,
