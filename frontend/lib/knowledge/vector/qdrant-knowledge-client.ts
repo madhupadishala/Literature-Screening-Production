@@ -451,6 +451,9 @@ export class QdrantKnowledgeClient {
       Boolean(request.regulation?.trim());
 
     if (isGovernedRegulatorySearch) {
+      if (request.includeSuperseded === true && !request.asOf?.trim()) {
+        throw new Error("asOf is required for historical regulatory retrieval.");
+      }
       const asOf = request.asOf?.trim() || new Date().toISOString();
       const asOfMs = Date.parse(asOf);
       if (!Number.isFinite(asOfMs)) {
