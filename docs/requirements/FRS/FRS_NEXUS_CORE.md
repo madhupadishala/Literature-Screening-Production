@@ -299,3 +299,12 @@ The application information architecture shall implement the controlled terminol
 | FRS-NX-029 | URS-NX-079 | Modules with multiple Screens shall expose a subordinate Sub-navigation mechanism rather than placing those Screens in the primary module navigation. | navigation integration test |
 | FRS-NX-030 | URS-NX-080 | Requirement documents, User Guides, traceability matrices, validation scripts/evidence and user-facing navigation nomenclature shall use the controlled terminology consistently. | documentation/traceability review |
 
+## 15. Product Design Guardian implementation standard
+
+| FRS ID | Linked URS | Detailed functional requirement | Verification |
+|---|---|---|---|
+| FRS-NX-031 | URS-NX-081–083 | Material UI work shall be reviewed against the controlled design system, with Carbon as the enterprise-density benchmark and Figma used for material design-source evidence where applicable. | Product Design Guardian review |
+| FRS-NX-032 | URS-NX-084 | Shared UI primitives/tokens shall be used for recurring navigation, actions, fields, tables, status, panels and workflow states; material one-off patterns require explicit justification. | component/design review |
+| FRS-NX-033 | URS-NX-085–086 | Async/workflow components shall deliberately represent applicable loading, empty, error, disabled, final/read-only and success states; controls shall map to real permission/context-aware actions. | UI state tests + browser verification |
+| FRS-NX-034 | URS-NX-087 | AI-assisted content shall be visually and semantically distinguishable from human decisions and authoritative regulated source content. | UI/content review |
+| FRS-NX-035 | URS-NX-088 | CI shall execute `npm run design:verify` for static design architecture and material UI qualification shall additionally retain browser/accessibility review evidence. | CI + visual evidence |
