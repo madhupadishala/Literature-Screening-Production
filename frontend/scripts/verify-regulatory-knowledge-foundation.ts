@@ -263,6 +263,16 @@ for (const indexedDateField of [
   );
 }
 
+assert.ok(
+  qdrantClientSource.includes(
+    'request.includeSuperseded === true && !request.asOf?.trim()',
+  ) &&
+    qdrantClientSource.includes(
+      'asOf is required for historical regulatory retrieval.',
+    ),
+  "Historical superseded regulatory retrieval must require an explicit asOf date.",
+);
+
 for (const governanceExpectation of [
   'key: "approvalStatus"',
   'match: { value: "APPROVED" }',
