@@ -5,6 +5,7 @@ import type { PoolClient } from "pg";
 
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 
 export interface CreateSafetyCaseInput {
   intakeRecordId: string;
@@ -49,6 +50,7 @@ export async function createSafetyCaseShellInTransaction(input: {
   if (!intakeRecordId) throw new Error("intakeRecordId is required.");
   if (!caseKey) throw new Error("caseKey is required.");
   const reason = requireReason(input.request.reason);
+  const scope = requireSafetyWorkspaceScope(input.principal);
 
   const intake = await input.client.query<{
     id: string;
@@ -74,14 +76,23 @@ export async function createSafetyCaseShellInTransaction(input: {
          ON safety_case.tenant_id = intake.tenant_id
         AND safety_case.intake_record_id = intake.id
       WHERE intake.tenant_id = $1
-        AND intake.id = $2
+        AND intake.workspace_id = $2
+        AND intake.environment = $3
+        AND intake.id = $4
       FOR UPDATE OF intake`,
-    [input.principal.tenantId, intakeRecordId],
+    [
+      input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+      intakeRecordId,
+    ],
   );
 
   const row = intake.rows[0];
   if (!row) {
-    throw new Error("Safety intake record was not found in the active tenant.");
+    throw new Error(
+      "Safety intake record was not found in the selected client workspace/environment.",
+    );
   }
 
   if (row.existing_case_id) {
@@ -105,17 +116,19 @@ export async function createSafetyCaseShellInTransaction(input: {
   const caseId = randomUUID();
   const created = await input.client.query<{ created_at: string }>(
     `INSERT INTO safety_cases (
-       id, tenant_id, case_key, intake_record_id, case_status,
+       id, tenant_id, workspace_id, environment, case_key, intake_record_id, case_status,
        report_type, study_type, country_code, initial_receipt_date,
        latest_receipt_date, seriousness_status, expedited_reporting_required,
        current_version, created_by, updated_by
      ) VALUES (
-       $1,$2,$3,$4,'NEW',$5,$6,$7,$8,$9,$10,$11,0,$12,$12
+       $1,$2,$3,$4,$5,$6,'NEW',$7,$8,$9,$10,$11,$12,$13,0,$14,$14
      )
      RETURNING created_at::text`,
     [
       caseId,
       input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
       caseKey,
       intakeRecordId,
       input.request.reportType ?? null,
@@ -158,12 +171,16 @@ export async function createSafetyCaseShellInTransaction(input: {
 
   await input.client.query(
     `INSERT INTO audit_events (
-       tenant_id, actor_id, event_type, event_category, outcome, details
+       tenant_id, workspace_id, environment, module_key, actor_id,
+       event_type, event_category, outcome, details
      ) VALUES (
-       $1,$2,'SAFETY_CASE_CREATED','NEXUS_CASE_PROCESSING','success',$3::jsonb
+       $1,$2,$3,'CASE_PROCESSING',$4,
+       'SAFETY_CASE_CREATED','NEXUS_CASE_PROCESSING','success',$5::jsonb
      )`,
     [
       input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
       input.principal.userId,
       JSON.stringify({
         caseId,
