@@ -107,6 +107,8 @@ export async function POST(
     const workflow =
       await literatureWorkflowService.execute({
         tenantId,
+        workspaceId: principal.workspaceId,
+        environment: principal.environment,
         query,
         maxResults,
       });
