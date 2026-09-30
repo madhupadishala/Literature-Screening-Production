@@ -163,3 +163,96 @@ An auditor should be able to answer:
 - What exact chunk/citation was retrieved?
 - Which model/index version was used?
 - What changed when the regulator updated the source?
+
+
+## 17. Detailed controlled-source operating procedure
+
+### 17.1 Register an official source
+
+1. Confirm the source originates from an official regulator, harmonisation body or other approved authoritative authority.
+2. Record authority, jurisdiction, canonical URL/reference, title and source family.
+3. Record known revision/version, publication date and effective date.
+4. Classify lifecycle state as current/final, future-effective, draft/consultation or superseded as applicable.
+5. Assign module applicability tags.
+6. Set ingestion status to CATALOGUED until full acquisition and review are completed.
+
+**Expected result:** catalog presence indicates discoverability only; it does not indicate production approval.
+
+### 17.2 Acquire source content
+
+1. Retrieve the source from the official origin.
+2. Preserve the original file/content representation where legally permitted.
+3. Calculate SHA-256 checksum.
+4. Record acquisition timestamp and canonical origin.
+5. Verify that the acquired version matches the intended regulator revision.
+6. Retain superseded versions rather than overwriting them.
+
+### 17.3 Parse and normalize
+
+1. Run the governed parser for the source format.
+2. Review parser warnings.
+3. Verify heading/section hierarchy, tables, notes and page references where available.
+4. Reject or reprocess content whose text extraction loses material qualifiers, exceptions or definitions.
+
+### 17.4 Chunk
+
+1. Use structure-aware chunking.
+2. Keep requirements together with their qualifiers/exceptions whenever practical.
+3. Ensure each chunk has a document and section citation.
+4. Confirm content hash and chunk identity are reproducible.
+5. Validate that no chunk loses authority/jurisdiction/version/effective-date context.
+
+### 17.5 Embed and index
+
+1. Record embedding model and version.
+2. Generate embeddings only after source/chunk validation.
+3. Store semantic vectors in the governed vector capability.
+4. Store/rebuild lexical search projection as required.
+5. Maintain the authoritative source record independently of vector/search indexes.
+
+### 17.6 Approve for production retrieval
+
+Production approval requires:
+- official-source verification;
+- checksum;
+- revision/version verification;
+- jurisdiction/effective-date metadata;
+- parser/chunk review;
+- retrieval/citation validation;
+- reviewer approval.
+
+Only then may the source be treated as production-approved regulatory knowledge.
+
+### 17.7 Handle a new regulator revision
+
+1. Acquire the new revision as a new controlled source version.
+2. Preserve the previous version.
+3. Generate/review a source diff.
+4. Determine jurisdiction and effective date.
+5. Perform impact assessment against URS, FRS, code, tests, SOPs and User Guides.
+6. Implement and validate required changes.
+7. Activate the new source for date-appropriate retrieval after approval.
+8. Keep the old source available only for legitimate historical/date-scoped use.
+
+## 18. Retrieval-review checklist
+
+For a regulated retrieval result, verify:
+- authority is correct;
+- jurisdiction is correct;
+- source is current for the queried date or explicitly historical;
+- document/revision is visible;
+- section citation resolves to the supporting text;
+- retrieved text contains the relevant qualifier/exception;
+- client/tenant authorization scope is not crossed;
+- AI-generated interpretation remains distinguishable from the authoritative quotation/source meaning.
+
+## 19. Prohibited practices
+
+Do not:
+- treat a regulator landing page as proof that all linked guidance has been ingested;
+- upload unofficial summaries into the authoritative corpus;
+- silently replace an older version with a newer one;
+- mark a source production-approved only because embeddings were generated;
+- use model memory as the regulatory citation;
+- merge conflicting jurisdictional rules into one vague global rule;
+- remove source provenance from AI/RAG output used in regulated workflows.
