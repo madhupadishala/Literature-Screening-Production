@@ -16,7 +16,7 @@ for (const token of [
 ]) assert.ok(migration.includes(token), token);
 
 const permissions = read("lib/rbac/permissions.ts");
-for (const token of ["SIGNAL_VIEW", "SIGNAL_CREATE", "SIGNAL_ASSESS"]) {
+for (const token of ["SIGNAL_VIEW", "SIGNAL_CREATE", "SIGNAL_ASSESS", "SIGNAL_APPROVE"]) {
   assert.ok(permissions.includes(token), token);
 }
 
@@ -44,6 +44,9 @@ for (const route of [
   assert.ok(source.includes("requireWorkspaceModulePermission"), route);
   assert.ok(source.includes("NEXUS_MODULES.SIGNAL_MANAGEMENT"), route);
 }
+const assessmentRoute = read("app/api/signals/[signalId]/assessments/route.ts");
+assert.ok(assessmentRoute.includes("PERMISSIONS.SIGNAL_APPROVE"));
+assert.ok(assessmentRoute.includes("PERMISSIONS.SIGNAL_ASSESS"));
 
 for (const doc of [
   "../docs/benchmarks/BENCHMARK_SIGNAL_MANAGEMENT.md",
