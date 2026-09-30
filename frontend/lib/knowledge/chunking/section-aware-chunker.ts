@@ -353,6 +353,8 @@ function buildSectionChunks(
           request.context.supersedesSourceId,
         supersededBySourceId:
           request.context.supersededBySourceId,
+        supersededAt:
+          request.context.supersededAt,
         language: document.language,
         sourceFormat: document.format,
         parserName: document.parserName,
