@@ -6,19 +6,15 @@ import {
   getReviewWorkspaceDetail,
   listReviewWorklist,
 } from "@/lib/literature/review/review-workflow-service";
-import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requireModulePermission(
-      request,
-      NEXUS_MODULES.LITERATURE,
-      PERMISSIONS.REVIEW_VIEW,
-    );
+    const principal = await requireWorkspaceModulePermission(request, NEXUS_MODULES.LITERATURE, PERMISSIONS.REVIEW_VIEW);
     const workspaceId = request.nextUrl.searchParams.get("workspaceId")?.trim();
     if (workspaceId) {
       const detail = await getReviewWorkspaceDetail({ principal, workspaceId });
