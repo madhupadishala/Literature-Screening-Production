@@ -19,7 +19,7 @@ const modules: Array<{
   { label: "Dashboard", path: "/" },
   {
     label: "Literature Screening",
-    path: "/literature-search",
+    path: "/literature/dashboard",
     moduleKey: "LITERATURE",
     activePrefixes: ["/literature-search", "/workflow", "/hits", "/screening", "/review", "/reports"],
   },
