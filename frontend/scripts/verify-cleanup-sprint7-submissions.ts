@@ -55,6 +55,12 @@ for (const control of [
   "case_status IN ('FINALIZED','SUBMITTED','CLOSED')",
   "canonicalSha256",
   "idempotency_key = $4",
+  "pg_advisory_xact_lock",
+  "Idempotency conflict:",
+  "withTransportTimeout",
+  "STALE_TRANSMISSION_RECOVERED",
+  "Acknowledgement conflict:",
+  "Acknowledgement cannot be recorded from status",
   "TRANSPORT_NOT_CONFIGURED",
   "nexus_submission_attempts",
   "nexus_submission_acknowledgements",
@@ -74,6 +80,8 @@ for (const route of routes) {
   assert.ok(source.includes("requireWorkspaceModulePermission"));
   assert.equal(/\brequireModulePermission\s*\(/u.test(source), false);
 }
+assert.ok(read("lib/submissions/submission-types.ts").includes("signal: AbortSignal"));
+assert.ok(read("app/api/submissions/route.ts").includes("Number.isFinite(rawLimit)"));
 
 console.log(
   "Cleanup Sprint 7 Submissions foundation verification passed: scoped finalized-case packaging, idempotent attempts, fail-closed transport and ACK tracking.",
