@@ -68,7 +68,11 @@ export async function POST(request: NextRequest): Promise<Response> {
     return Response.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  const email = body.email?.trim();
+  if (typeof body.email !== "string" || typeof body.password !== "string") {
+    return Response.json({ error: "email and password must be strings." }, { status: 400 });
+  }
+
+  const email = body.email.trim();
   const password = body.password;
   if (!email || !password) {
     return Response.json({ error: "email and password are required." }, { status: 400 });
