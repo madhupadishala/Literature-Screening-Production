@@ -46,17 +46,22 @@ export async function createIdentitySession(input: {
   const expiresAt = new Date(Date.now() + NEXUS_IDENTITY_SESSION_MAX_AGE_SECONDS * 1000);
 
   const result = await getPostgresPool().query<IdentitySessionRow>(
-    `INSERT INTO nexus_identity_sessions (
-       user_id, token_hash, provider, status, expires_at
-     ) VALUES ($1,$2,$3,'active',$4)
-     RETURNING
-       id AS session_id,
-       user_id,
-       (SELECT email FROM application_users WHERE id = user_id) AS email,
-       (SELECT display_name FROM application_users WHERE id = user_id) AS display_name,
-       provider,
-       issued_at,
-       expires_at`,
+    `WITH inserted AS (
+       INSERT INTO nexus_identity_sessions (
+         user_id, token_hash, provider, status, expires_at
+       ) VALUES ($1,$2,$3,'active',$4)
+       RETURNING id, user_id, provider, issued_at, expires_at
+     )
+     SELECT
+       i.id AS session_id,
+       i.user_id,
+       u.email,
+       u.display_name,
+       i.provider,
+       i.issued_at,
+       i.expires_at
+     FROM inserted i
+     JOIN application_users u ON u.id = i.user_id`,
     [input.userId, tokenHash, provider, expiresAt],
   );
 
