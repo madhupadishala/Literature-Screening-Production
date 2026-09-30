@@ -74,6 +74,8 @@ export async function createSafetyCaseShellInTransaction(input: {
        FROM safety_intake_records intake
        LEFT JOIN safety_cases safety_case
          ON safety_case.tenant_id = intake.tenant_id
+        AND safety_case.workspace_id = intake.workspace_id
+        AND safety_case.environment = intake.environment
         AND safety_case.intake_record_id = intake.id
       WHERE intake.tenant_id = $1
         AND intake.workspace_id = $2
@@ -145,11 +147,19 @@ export async function createSafetyCaseShellInTransaction(input: {
   await input.client.query(
     `UPDATE safety_intake_records
         SET status = 'CASE_CREATED',
-            updated_by = $3,
+            updated_by = $5,
             updated_at = now()
       WHERE tenant_id = $1
-        AND id = $2`,
-    [input.principal.tenantId, intakeRecordId, input.principal.userId],
+        AND workspace_id = $2
+        AND environment = $3
+        AND id = $4`,
+    [
+      input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+      intakeRecordId,
+      input.principal.userId,
+    ],
   );
 
   await input.client.query(
