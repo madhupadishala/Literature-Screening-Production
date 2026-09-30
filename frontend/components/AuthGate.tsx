@@ -16,6 +16,17 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isPublicPath) return;
 
+    const hostname = window.location.hostname.toLowerCase();
+    const isLocalhost =
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname === "::1";
+
+    if (isLocalhost && isAuthenticated()) {
+      setBackendVerified(true);
+      return;
+    }
+
     let cancelled = false;
 
     async function verifyBackendSession() {
