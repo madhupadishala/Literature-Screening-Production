@@ -17,14 +17,17 @@ class EvidenceNormalizationService {
     return result;
   }
 
-  list(limit = 20) {
-    return this.history.slice(0, limit);
+  listForTenant(tenantId: string, limit = 20) {
+    return this.history
+      .filter((item) => item.package.tenantId === tenantId)
+      .slice(0, limit);
   }
 
-  getStatus(): EvidenceNormalizationStatus {
+  getStatusForTenant(tenantId: string): EvidenceNormalizationStatus {
+    const tenantHistory = this.history.filter((item) => item.package.tenantId === tenantId);
     return {
-      totalPackages: this.history.length,
-      warningCount: this.history.reduce(
+      totalPackages: tenantHistory.length,
+      warningCount: tenantHistory.reduce(
         (sum, item) => sum + item.warnings.length,
         0,
       ),
