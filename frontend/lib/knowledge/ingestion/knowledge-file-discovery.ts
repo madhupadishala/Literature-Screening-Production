@@ -65,8 +65,16 @@ function resolveAuthority(relativePath: string): RegulatoryAuthority {
   if (segments.includes("fda")) return "FDA";
   if (segments.includes("mhra")) return "MHRA";
   if (segments.includes("pmda")) return "PMDA";
+  if (segments.includes("mhlw")) return "MHLW";
   if (segments.includes("ich")) return "ICH";
   if (segments.includes("cioms")) return "CIOMS";
+  if (segments.includes("cdsco")) return "CDSCO";
+  if (segments.includes("pvpi")) return "PVPI";
+  if (segments.includes("ipc")) return "IPC";
+  if (segments.includes("health-canada") || segments.includes("health_canada")) return "HEALTH_CANADA";
+  if (segments.includes("tga")) return "TGA";
+  if (segments.includes("who")) return "WHO";
+  if (segments.includes("eudravigilance")) return "EUDRAVIGILANCE";
 
   const fileName = path.basename(relativePath).toLowerCase();
 
@@ -74,8 +82,16 @@ function resolveAuthority(relativePath: string): RegulatoryAuthority {
   if (fileName.includes("fda")) return "FDA";
   if (fileName.includes("mhra")) return "MHRA";
   if (fileName.includes("pmda")) return "PMDA";
+  if (fileName.includes("mhlw")) return "MHLW";
   if (fileName.includes("ich")) return "ICH";
   if (fileName.includes("cioms")) return "CIOMS";
+  if (fileName.includes("cdsco")) return "CDSCO";
+  if (fileName.includes("pvpi")) return "PVPI";
+  if (fileName.includes("ipc")) return "IPC";
+  if (fileName.includes("health canada") || fileName.includes("health-canada")) return "HEALTH_CANADA";
+  if (fileName.includes("tga")) return "TGA";
+  if (fileName.includes("who")) return "WHO";
+  if (fileName.includes("eudravigilance")) return "EUDRAVIGILANCE";
 
   return "UNKNOWN";
 }
