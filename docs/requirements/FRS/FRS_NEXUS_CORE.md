@@ -267,3 +267,35 @@ The following requirements are normative implementation requirements. They provi
 - Entitlement shall distinguish enabled, disabled and suspended conditions plus validity windows.
 - Module-role assignment shall distinguish active and disabled conditions.
 - No selector, cookie, URL parameter, header or stale context token shall be sufficient to override those authoritative states.
+
+## 14. Navigation terminology implementation standard
+
+The application information architecture shall implement the controlled terminology defined by URS-NX-076 through URS-NX-080.
+
+1. **Module**
+   - A Module is a top-level functional domain.
+   - Modules are represented in the primary module navigation.
+   - A module route may expose one default Screen and additional Screens through module Sub-navigation.
+
+2. **Screen**
+   - A Screen is a distinct page/workspace supporting a defined task, workflow stage or operational responsibility.
+   - Screens belonging to the same Module shall remain grouped under that Module rather than being promoted to separate primary-navigation Modules solely for convenience.
+
+3. **Tab**
+   - A Tab is a local selector between closely related views in one Screen.
+   - Tabs shall preserve the parent Screen context and shall not be used to model independent workflow workspaces, separate security scopes or separate Modules.
+
+4. **Sub-navigation**
+   - Sub-navigation shall be used to move between multiple Screens within one Module.
+   - Sub-navigation shall remain subordinate to the primary module navigation and shall preserve the active Module context.
+
+### Detailed functional requirements
+
+| FRS ID | Linked URS | Detailed functional requirement | Verification |
+|---|---|---|---|
+| FRS-NX-026 | URS-NX-076 | The primary module navigation shall contain only top-level Modules; child workflow pages shall not appear as peer Modules solely because they have independent routes. | UI/navigation review |
+| FRS-NX-027 | URS-NX-077 | Each materially distinct functional workspace within a Module shall be represented as a Screen with a stable route or equivalent controlled navigation state. | route/UI review |
+| FRS-NX-028 | URS-NX-078 | Tabs shall be limited to related views within a single Screen and shall retain the Screen's task and security context. | UI behavior review |
+| FRS-NX-029 | URS-NX-079 | Modules with multiple Screens shall expose a subordinate Sub-navigation mechanism rather than placing those Screens in the primary module navigation. | navigation integration test |
+| FRS-NX-030 | URS-NX-080 | Requirement documents, User Guides, traceability matrices, validation scripts/evidence and user-facing navigation nomenclature shall use the controlled terminology consistently. | documentation/traceability review |
+
