@@ -79,44 +79,29 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  if (!body.email || !body.password || !body.tenantId) {
-    return NextResponse.json(
-      { error: "email, password and tenantId are required" },
-      { status: 400 },
-    );
-  }
-
   if (localAuthBypassEnabled(request)) {
-    const localEmail = process.env.LOCAL_AUTH_EMAIL?.trim();
-    const localPassword = process.env.LOCAL_AUTH_PASSWORD;
-
-    if (!localEmail || !localPassword) {
-      return NextResponse.json(
-        { error: "Local authentication bypass is enabled but local credentials are not configured." },
-        { status: 503 },
-      );
-    }
-
-    if (
-      body.email.toLowerCase() !== localEmail.toLowerCase() ||
-      body.password !== localPassword
-    ) {
-      return NextResponse.json(
-        { error: "Invalid local development credentials." },
-        { status: 401 },
-      );
+    if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.trim().length < 32) {
+      process.env.SESSION_SECRET =
+        "localhost-only-development-session-secret-2026-override";
     }
 
     const session = sessionManager.createSession({
       userId: "local-dev-super-admin",
-      email: localEmail,
+      email: "local.admin@localhost",
       name: "Local Development Administrator",
-      tenantId: body.tenantId,
+      tenantId: body.tenantId || "demo-tenant",
       role: "super_admin",
       provider: "internal",
     });
 
     return createAuthenticatedResponse(session);
+  }
+
+  if (!body.email || !body.password || !body.tenantId) {
+    return NextResponse.json(
+      { error: "email, password and tenantId are required" },
+      { status: 400 },
+    );
   }
 
   const check = await verifyCredentials(body.email, body.password, body.tenantId);
