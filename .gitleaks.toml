@@ -14,3 +14,12 @@ paths = [
   '''(^|/)dist/''',
   '''(^|/)build/'''
 ]
+
+
+[[allowlists]]
+description = "Known non-secret deterministic idempotency fixture used by Nexus Sprint 3 verification"
+targetRules = ["generic-api-key"]
+regexTarget = "secret"
+regexes = [
+  '''^partner-msg-8842$'''
+]
