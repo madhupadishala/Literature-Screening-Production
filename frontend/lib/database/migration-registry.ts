@@ -204,4 +204,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "033_nexus_identity_workspace_foundation.sql",
     required: true,
   },
+  {
+    id: "034",
+    name: "Nexus Safety Workspace Scope",
+    filename: "034_nexus_safety_workspace_scope.sql",
+    required: true,
+  },
 ] as const;
