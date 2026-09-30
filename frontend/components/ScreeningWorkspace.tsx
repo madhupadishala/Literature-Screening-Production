@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { validateAuditReason } from "@/lib/audit/reason";
 
@@ -88,6 +89,7 @@ export default function ScreeningWorkspace({
   onSave,
   onRerunAI,
 }: Props) {
+  const router = useRouter();
   const [modal, setModal] = useState<null | {
     title: string;
     action: "approve" | "exclude" | "save" | "rerun";
@@ -305,7 +307,7 @@ export default function ScreeningWorkspace({
             <button
               type="button"
               className="primary-action"
-              onClick={() => window.location.assign("/review")}
+              onClick={() => router.push("/review")}
             >
               Continue to Review / MR
             </button>
