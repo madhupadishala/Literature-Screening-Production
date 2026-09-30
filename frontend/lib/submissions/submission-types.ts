@@ -43,6 +43,7 @@ export interface SubmissionTransportRequest {
   messageProfile: string;
   packagePayload: Record<string, unknown>;
   packageSha256: string;
+  signal: AbortSignal;
 }
 
 export interface SubmissionTransportResult {
