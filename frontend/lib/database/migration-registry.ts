@@ -228,4 +228,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "037_nexus_aggregate_reporting_foundation.sql",
     required: true,
   },
+  {
+    id: "038",
+    name: "Nexus PV Documentation Foundation",
+    filename: "038_nexus_pv_documentation_foundation.sql",
+    required: true,
+  },
 ] as const;
