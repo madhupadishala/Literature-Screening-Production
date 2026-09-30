@@ -1,0 +1,16 @@
+title = "Literature-Screening-Production Gitleaks policy"
+description = "Extends Gitleaks defaults while excluding generated/dependency artifacts that are never source-controlled release content."
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated and dependency artifacts outside the governed source snapshot"
+paths = [
+  '''(^|/)node_modules/''',
+  '''(^|/)\.next/''',
+  '''(^|/)benchmark-output/''',
+  '''(^|/)coverage/''',
+  '''(^|/)dist/''',
+  '''(^|/)build/'''
+]
