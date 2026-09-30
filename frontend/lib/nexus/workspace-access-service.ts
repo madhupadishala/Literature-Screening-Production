@@ -94,6 +94,13 @@ const SUBMISSION_PERMISSIONS: readonly Permission[] = [
   PERMISSIONS.SUBMISSION_ACKNOWLEDGE,
 ];
 
+const SIGNAL_PERMISSIONS: readonly Permission[] = [
+  PERMISSIONS.SIGNAL_VIEW,
+  PERMISSIONS.SIGNAL_CREATE,
+  PERMISSIONS.SIGNAL_ASSESS,
+  PERMISSIONS.SIGNAL_APPROVE,
+];
+
 function modulePermissions(moduleKey: NexusModuleKey): readonly Permission[] {
   switch (moduleKey) {
     case "LITERATURE":
@@ -111,6 +118,8 @@ function modulePermissions(moduleKey: NexusModuleKey): readonly Permission[] {
       ];
     case "SUBMISSIONS":
       return SUBMISSION_PERMISSIONS;
+    case "SIGNAL_MANAGEMENT":
+      return SIGNAL_PERMISSIONS;
     default:
       return [];
   }
@@ -149,7 +158,8 @@ function builtInModuleRoleHasPermission(
       isReadPermission(permission) ||
       permission === PERMISSIONS.SCREENING_REVIEW ||
       permission === PERMISSIONS.INTAKE_QC ||
-      permission === PERMISSIONS.CASE_QC
+      permission === PERMISSIONS.CASE_QC ||
+      permission === PERMISSIONS.SIGNAL_ASSESS
     );
   }
 
@@ -172,6 +182,7 @@ function builtInModuleRoleHasPermission(
       PERMISSIONS.CASE_FINALIZE,
       PERMISSIONS.SUBMISSION_TRANSMIT,
       PERMISSIONS.SUBMISSION_ACKNOWLEDGE,
+      PERMISSIONS.SIGNAL_APPROVE,
     ];
     return !restrictedPermissions.includes(permission);
   }
