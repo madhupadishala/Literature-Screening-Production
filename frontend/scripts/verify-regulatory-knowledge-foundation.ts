@@ -151,11 +151,11 @@ const qdrantClientSource = readFileSync(
 
 
 function extractInterfaceBlock(source: string, interfaceName: string): string {
-  const marker = \`export interface \${interfaceName}\`;
+  const marker = `export interface \${interfaceName}`;
   const markerIndex = source.indexOf(marker);
-  assert.notEqual(markerIndex, -1, \`Missing interface \${interfaceName}\`);
+  assert.notEqual(markerIndex, -1, `Missing interface \${interfaceName}`);
   const openIndex = source.indexOf("{", markerIndex);
-  assert.notEqual(openIndex, -1, \`Missing opening brace for \${interfaceName}\`);
+  assert.notEqual(openIndex, -1, `Missing opening brace for \${interfaceName}`);
 
   let depth = 0;
   for (let index = openIndex; index < source.length; index += 1) {
@@ -166,15 +166,15 @@ function extractInterfaceBlock(source: string, interfaceName: string): string {
     }
   }
 
-  assert.fail(\`Missing closing brace for \${interfaceName}\`);
+  assert.fail(`Missing closing brace for \${interfaceName}`);
 }
 
 function extractArrayBlock(source: string, variableName: string): string {
-  const marker = \`const \${variableName} = [\`;
+  const marker = `const \${variableName} = [`;
   const start = source.indexOf(marker);
-  assert.notEqual(start, -1, \`Missing array \${variableName}\`);
+  assert.notEqual(start, -1, `Missing array \${variableName}`);
   const end = source.indexOf("];", start);
-  assert.notEqual(end, -1, \`Missing end of array \${variableName}\`);
+  assert.notEqual(end, -1, `Missing end of array \${variableName}`);
   return source.slice(start, end + 2);
 }
 
@@ -200,18 +200,18 @@ for (const provenanceField of [
   "supersededBySourceId",
   "supersededAt",
 ]) {
-  const fieldPattern = new RegExp(\`\\\\b\${provenanceField}\\\\??\\\\s*:\`, "u");
+  const fieldPattern = new RegExp(`\\\\b\${provenanceField}\\\\??\\\\s*:`, "u");
   assert.ok(
     fieldPattern.test(chunkingContextBlock),
-    \`KnowledgeChunkingContext must declare regulator provenance field: \${provenanceField}\`,
+    `KnowledgeChunkingContext must declare regulator provenance field: \${provenanceField}`,
   );
   assert.ok(
     fieldPattern.test(chunkMetadataBlock),
-    \`KnowledgeChunkMetadata must declare regulator provenance field: \${provenanceField}\`,
+    `KnowledgeChunkMetadata must declare regulator provenance field: \${provenanceField}`,
   );
   assert.ok(
-    chunkerSource.includes(\`request.context.\${provenanceField}\`),
-    \`Chunker must propagate regulator provenance field: \${provenanceField}\`,
+    chunkerSource.includes(`request.context.\${provenanceField}`),
+    `Chunker must propagate regulator provenance field: \${provenanceField}`,
   );
 }
 
@@ -229,8 +229,8 @@ for (const vectorField of [
   "supersededAt",
 ]) {
   assert.ok(
-    new RegExp(\`\\\\b\${vectorField}\\\\??\\\\s*:\`, "u").test(qdrantTypesSource),
-    \`Vector payload must support regulator provenance field: \${vectorField}\`,
+    new RegExp(`\\\\b\${vectorField}\\\\??\\\\s*:`, "u").test(qdrantTypesSource),
+    `Vector payload must support regulator provenance field: \${vectorField}`,
   );
 }
 
@@ -246,8 +246,8 @@ for (const indexedField of [
   "supersededBySourceId",
 ]) {
   assert.ok(
-    keywordFieldsBlock.includes(\`"\${indexedField}"\`),
-    \`Qdrant keyword payload indexing must include: \${indexedField}\`,
+    keywordFieldsBlock.includes(`"\${indexedField}"`),
+    `Qdrant keyword payload indexing must include: \${indexedField}`,
   );
 }
 
@@ -258,8 +258,8 @@ for (const indexedDateField of [
   "supersededAt",
 ]) {
   assert.ok(
-    datetimeFieldsBlock.includes(\`"\${indexedDateField}"\`),
-    \`Qdrant datetime payload indexing must include: \${indexedDateField}\`,
+    datetimeFieldsBlock.includes(`"\${indexedDateField}"`),
+    `Qdrant datetime payload indexing must include: \${indexedDateField}`,
   );
 }
 
@@ -273,7 +273,7 @@ for (const governanceExpectation of [
 ]) {
   assert.ok(
     qdrantClientSource.includes(governanceExpectation),
-    \`Regulatory vector retrieval missing governance control: \${governanceExpectation}\`,
+    `Regulatory vector retrieval missing governance control: \${governanceExpectation}`,
   );
 }
 
