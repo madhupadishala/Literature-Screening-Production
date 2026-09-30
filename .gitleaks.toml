@@ -1,11 +1,15 @@
 title = "Literature-Screening-Production Gitleaks policy"
-description = "Extends Gitleaks defaults while excluding generated/dependency artifacts that are never source-controlled release content."
+description = "Extends Gitleaks defaults while excluding generated/dependency artifacts and one known synthetic verification fixture."
 
 [extend]
 useDefault = true
 
-[[allowlists]]
-description = "Generated and dependency artifacts outside the governed source snapshot"
+# Gitleaks 8.24.x uses the singular global allowlist table.
+# Keep this deliberately narrow: generated artifacts plus one exact synthetic
+# idempotency fixture that has never represented a credential.
+[allowlist]
+description = "Generated artifacts and exact non-secret verification fixture"
+regexTarget = "secret"
 paths = [
   '''(^|/)node_modules/''',
   '''(^|/)\.next/''',
@@ -14,12 +18,6 @@ paths = [
   '''(^|/)dist/''',
   '''(^|/)build/'''
 ]
-
-
-[[allowlists]]
-description = "Known non-secret deterministic idempotency fixture used by Nexus Sprint 3 verification"
-targetRules = ["generic-api-key"]
-regexTarget = "line"
 regexes = [
-  '''idempotencyKey:\\s*["']partner-msg-8842["']'''
+  '''^partner-msg-8842$'''
 ]
