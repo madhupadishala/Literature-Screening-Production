@@ -6,6 +6,25 @@ const root = process.cwd();
 const read = (relativePath: string) =>
   readFileSync(path.join(root, relativePath), "utf8");
 
+function interfaceDeclaration(source: string, name: string): string {
+  const marker = `interface ${name}`;
+  const markerIndex = source.indexOf(marker);
+  assert.notEqual(markerIndex, -1, `Missing interface declaration: ${name}`);
+  const openIndex = source.indexOf("{", markerIndex);
+  assert.notEqual(openIndex, -1, `Missing opening brace for interface: ${name}`);
+
+  let depth = 0;
+  for (let index = openIndex; index < source.length; index += 1) {
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}") {
+      depth -= 1;
+      if (depth === 0) return source.slice(markerIndex, index + 1);
+    }
+  }
+
+  assert.fail(`Missing closing brace for interface: ${name}`);
+}
+
 const literatureRoutes = [
   "app/api/literature/adhoc-search/evidence/route.ts",
   "app/api/literature/adhoc-search/route.ts",
@@ -105,9 +124,9 @@ for (const [typeFile, marker] of [
   ["lib/literature/translation/translation-types.ts", "MedicalTranslationResult"],
 ] as const) {
   const source = read(typeFile);
-  const declaration = source.slice(source.indexOf(`interface ${marker}`));
+  const declaration = interfaceDeclaration(source, marker);
   assert.ok(
-    declaration.includes("tenantId: string"),
+    /\btenantId\s*:\s*string\b/u.test(declaration),
     `${marker} must retain tenant ownership`,
   );
 }
