@@ -9,6 +9,19 @@ import type {
   NormalizedKnowledgeSection,
 } from "@/lib/knowledge/document-intelligence/document-intelligence-types";
 
+export type RegulatoryLifecycleStatus =
+  | "DRAFT"
+  | "FUTURE_EFFECTIVE"
+  | "EFFECTIVE"
+  | "SUPERSEDED"
+  | "RETIRED"
+  | "REJECTED";
+
+export type RegulatoryApprovalStatus =
+  | "PENDING"
+  | "APPROVED"
+  | "REJECTED";
+
 export interface KnowledgeChunkingContext {
   layer: KnowledgeLayer;
   category: KnowledgeFileCategory;
@@ -20,10 +33,11 @@ export interface KnowledgeChunkingContext {
   publicationDate?: string;
   effectiveDate?: string;
   jurisdiction?: string;
-  lifecycleStatus?: string;
-  approvalStatus?: string;
+  lifecycleStatus?: RegulatoryLifecycleStatus;
+  approvalStatus?: RegulatoryApprovalStatus;
   supersedesSourceId?: string;
   supersededBySourceId?: string;
+  supersededAt?: string;
 }
 
 export interface KnowledgeChunkingOptions {
@@ -57,10 +71,11 @@ export interface KnowledgeChunkMetadata {
   documentVersion?: string;
   publicationDate?: string;
   effectiveDate?: string;
-  lifecycleStatus?: string;
-  approvalStatus?: string;
+  lifecycleStatus?: RegulatoryLifecycleStatus;
+  approvalStatus?: RegulatoryApprovalStatus;
   supersedesSourceId?: string;
   supersededBySourceId?: string;
+  supersededAt?: string;
   language: string;
   sourceFormat: string;
   parserName: string;
