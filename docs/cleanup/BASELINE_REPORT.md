@@ -24,7 +24,7 @@ Purpose: measure current implementation before cleanup or architecture remediati
 | Dependency vulnerabilities | **21 total: 19 high, 2 moderate in full benchmark audit; install summary reports 2 high top-level paths** | Cleanup Baseline Benchmark run 36664295714 | Hacker |
 | Unused dependencies | pending | Knip | Ponytail |
 | Unused files/exports | **150 files reported; must be classified before deletion** | Knip, run 36664295714 | Ponytail |
-| Duplicate code | pending | jscpd | Ponytail |
+| Duplicate code | **308 clones; 4,611 duplicated lines (3.89%); 23,044 duplicated tokens (4.36%) across 720 analyzed files** | jscpd, Cleanup Baseline Benchmark run 36664295714 | Ponytail |
 | Circular dependencies | **0 found across 578 processed files** | Madge, run 36664295714 | Architecture |
 | Architecture boundary violations | **RECHECK REQUIRED** — previous run under-scanned TypeScript; CI corrected in commit `963a839db903c0910270fd9e857212f276fca078` | dependency-cruiser | Architecture |
 | Secret findings | **0 in cleanup commit range; 20 commits / ~101 KB scanned** | Gitleaks, run 36664295714 | Hacker |
