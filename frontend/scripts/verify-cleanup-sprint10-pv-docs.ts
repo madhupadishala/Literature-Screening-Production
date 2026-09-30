@@ -1,0 +1,6 @@
+import assert from "node:assert/strict";import{readFileSync}from"node:fs";import path from"node:path";const read=(p:string)=>readFileSync(path.join(process.cwd(),p),"utf8");
+const m=read("database/migrations/038_nexus_pv_documentation_foundation.sql");for(const t of["nexus_pv_documents","nexus_pv_document_versions","content_sha256","linked_sources","fk_pv_document_version_scope"])assert.ok(m.includes(t),t);
+const s=read("lib/pv-documentation/pv-document-service.ts");for(const t of["tenant_id=$1","workspace_id=$2","environment=$3","canonicalSha256","Retired PV document cannot receive a new in-place version","current_version"])assert.ok(s.includes(t),t);
+for(const r of["app/api/pv-documents/route.ts","app/api/pv-documents/[documentId]/route.ts","app/api/pv-documents/[documentId]/versions/route.ts"]){const x=read(r);assert.ok(x.includes("requireWorkspaceModulePermission"),r);assert.ok(x.includes("NEXUS_MODULES.PV_DOCUMENTATION"),r);}
+for(const d of["../docs/benchmarks/BENCHMARK_PV_DOCUMENTATION.md","../docs/requirements/URS/URS_PV_DOCUMENTATION.md","../docs/requirements/FRS/FRS_PV_DOCUMENTATION.md","../docs/user-guides/USER_GUIDE_PV_DOCUMENTATION.md"])assert.ok(read(d).length>500,d);
+console.log("Cleanup Sprint 10 PV Documentation foundation verification passed.");
