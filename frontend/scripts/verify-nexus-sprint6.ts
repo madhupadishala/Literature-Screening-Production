@@ -157,7 +157,12 @@ for (const route of [
 ]) {
   const routeSource = readFileSync(path.join(process.cwd(), route), "utf8");
   assert.equal(routeSource.includes("NEXUS_MODULES.INTAKE"), true);
-  assert.equal(routeSource.includes("requireModulePermission"), true);
+  assert.equal(routeSource.includes("requireWorkspaceModulePermission"), true);
+  assert.equal(
+    /\brequireModulePermission\s*\(/u.test(routeSource),
+    false,
+    `${route} must not call the legacy module guard after workspace reconciliation.`,
+  );
 }
 
 const page = readFileSync(
