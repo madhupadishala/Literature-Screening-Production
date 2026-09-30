@@ -6,6 +6,7 @@ on:
     paths:
       - "frontend/**"
       - "docs/**"
+      - ".gitleaks.toml"
       - ".github/workflows/cleanup-baseline-benchmark.yml"
   workflow_dispatch:
 
@@ -236,20 +237,21 @@ jobs:
 
       - name: Gitleaks full-history and working-tree baseline
         continue-on-error: true
+        working-directory: .
         run: |
           set +e
           GITLEAKS_BIN="/tmp/gitleaks-8.24.3/gitleaks"
           if [ ! -x "$GITLEAKS_BIN" ]; then
-            echo "Pinned Gitleaks binary from the preceding action is unavailable." | tee benchmark-output/gitleaks-full.txt
-            printf "history_exit=127\nworking_tree_exit=127\n" > benchmark-output/gitleaks-full.status
+            echo "Pinned Gitleaks binary from the preceding action is unavailable." | tee frontend/benchmark-output/gitleaks-full.txt
+            printf "history_exit=127\nworking_tree_exit=127\n" > frontend/benchmark-output/gitleaks-full.status
             exit 127
           fi
           set -o pipefail
-          "$GITLEAKS_BIN" git .. --config ../.gitleaks.toml --redact --verbose --log-opts="--all" --report-format json --report-path benchmark-output/gitleaks-history.json 2>&1 | tee benchmark-output/gitleaks-history.txt
+          "$GITLEAKS_BIN" git . --config .gitleaks.toml --redact --verbose --log-opts="--all" --report-format json --report-path frontend/benchmark-output/gitleaks-history.json 2>&1 | tee frontend/benchmark-output/gitleaks-history.txt
           history_rc=${PIPESTATUS[0]}
-          "$GITLEAKS_BIN" dir .. --config ../.gitleaks.toml --redact --verbose --report-format json --report-path benchmark-output/gitleaks-working-tree.json 2>&1 | tee benchmark-output/gitleaks-working-tree.txt
+          "$GITLEAKS_BIN" dir . --config .gitleaks.toml --redact --verbose --report-format json --report-path frontend/benchmark-output/gitleaks-working-tree.json 2>&1 | tee frontend/benchmark-output/gitleaks-working-tree.txt
           tree_rc=${PIPESTATUS[0]}
-          printf "history_exit=%s\nworking_tree_exit=%s\n" "$history_rc" "$tree_rc" > benchmark-output/gitleaks-full.status
+          printf "history_exit=%s\nworking_tree_exit=%s\n" "$history_rc" "$tree_rc" > frontend/benchmark-output/gitleaks-full.status
           if [ "$history_rc" -ne 0 ]; then exit "$history_rc"; fi
           exit "$tree_rc"
 
