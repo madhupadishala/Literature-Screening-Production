@@ -198,4 +198,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "032_nexus_tenant_integrity_hardening.sql",
     required: true,
   },
+  {
+    id: "033",
+    name: "Nexus Identity and Workspace Foundation",
+    filename: "033_nexus_identity_workspace_foundation.sql",
+    required: true,
+  },
 ] as const;
