@@ -130,3 +130,85 @@ for (const source of productionEligible) {
 console.log(
   `Regulatory knowledge foundation verification passed: ${catalog.sources?.length ?? 0} controlled source families; ${productionEligible.length} production-approved sources.`,
 );
+
+
+const chunkTypesSource = readFileSync(
+  path.resolve(process.cwd(), "lib/knowledge/chunking/knowledge-chunk-types.ts"),
+  "utf8",
+);
+const chunkerSource = readFileSync(
+  path.resolve(process.cwd(), "lib/knowledge/chunking/section-aware-chunker.ts"),
+  "utf8",
+);
+const qdrantTypesSource = readFileSync(
+  path.resolve(process.cwd(), "lib/knowledge/vector/qdrant-types.ts"),
+  "utf8",
+);
+const qdrantClientSource = readFileSync(
+  path.resolve(process.cwd(), "lib/knowledge/vector/qdrant-knowledge-client.ts"),
+  "utf8",
+);
+
+for (const provenanceField of [
+  "regulatorySourceId",
+  "canonicalSourceUrl",
+  "jurisdiction",
+  "documentVersion",
+  "publicationDate",
+  "effectiveDate",
+  "lifecycleStatus",
+  "approvalStatus",
+  "supersedesSourceId",
+  "supersededBySourceId",
+]) {
+  assert.ok(
+    chunkTypesSource.includes(provenanceField),
+    `Chunk metadata must declare regulator provenance field: ${provenanceField}`,
+  );
+  assert.ok(
+    chunkerSource.includes(`request.context.${provenanceField}`),
+    `Chunker must propagate regulator provenance field: ${provenanceField}`,
+  );
+}
+
+for (const vectorField of [
+  "authority",
+  "regulatorySourceId",
+  "canonicalSourceUrl",
+  "jurisdiction",
+  "publicationDate",
+  "effectiveDate",
+  "lifecycleStatus",
+  "approvalStatus",
+  "supersedesSourceId",
+  "supersededBySourceId",
+]) {
+  assert.ok(
+    qdrantTypesSource.includes(vectorField),
+    `Vector payload must support regulator provenance field: ${vectorField}`,
+  );
+}
+
+for (const indexedField of [
+  "authority",
+  "regulatorySourceId",
+  "canonicalSourceUrl",
+  "jurisdiction",
+  "lifecycleStatus",
+  "approvalStatus",
+]) {
+  assert.ok(
+    qdrantClientSource.includes(`"${indexedField}"`),
+    `Qdrant payload indexing must include controlled provenance field: ${indexedField}`,
+  );
+}
+
+assert.ok(
+  qdrantClientSource.includes('"publicationDate"') &&
+    qdrantClientSource.includes('"effectiveDate"'),
+  "Qdrant payload indexing must include publication/effective date fields.",
+);
+
+console.log(
+  "Regulatory provenance propagation verification passed for chunk and vector metadata.",
+);
