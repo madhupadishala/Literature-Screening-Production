@@ -217,6 +217,16 @@ jobs:
           printf "exit=%s\n" "$rc" > benchmark-output/nexus-security-boundaries.status
           exit "$rc"
 
+      - name: Regulatory knowledge foundation verification
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run regulatory:knowledge:verify 2>&1 | tee benchmark-output/regulatory-knowledge.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/regulatory-knowledge.status
+          exit "$rc"
+
       - name: Gitleaks incremental PR secret scan
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
         continue-on-error: true
