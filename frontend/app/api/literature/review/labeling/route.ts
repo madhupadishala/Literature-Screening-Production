@@ -2,15 +2,16 @@ import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { saveLabelAssessments } from "@/lib/literature/review/review-mutation-service";
-import { requirePermission } from "@/lib/rbac/guard";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(request, PERMISSIONS.REVIEW_EDIT);
+    const principal = await requireWorkspaceModulePermission(request, NEXUS_MODULES.LITERATURE, PERMISSIONS.REVIEW_EDIT);
     const body = await request.json();
     await saveLabelAssessments({
       principal,
