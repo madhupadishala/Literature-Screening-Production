@@ -34,9 +34,9 @@ The objective is to:
 
 ---
 
-## 2. Nine mandatory engineering and regulatory gates
+## 2. Ten mandatory engineering, product-design and regulatory gates
 
-Every sprint, pull request, release candidate and promoted change in this program must satisfy all nine gates.
+Every sprint, pull request, release candidate and promoted change in this program must satisfy all applicable gates. Material UI changes must satisfy Product Design Guardian in addition to the engineering, security and regulatory gates.
 
 ### 2.1 Karpathy Gate
 - understand before editing;
@@ -49,21 +49,36 @@ Every sprint, pull request, release candidate and promoted change in this progra
 - avoid abstractions without demonstrated need;
 - prefer clear, local, maintainable implementations.
 
-### 2.3 Architecture Guardian Gate
+### 2.3 Product Design Guardian Gate
+- Figma is the design source of truth for material screen redesigns;
+- IBM Carbon is the primary benchmark for dense enterprise forms, tables, worklists and operational information architecture;
+- PatternFly is a secondary enterprise workflow/admin benchmark;
+- Radix provides accessibility/interaction reference patterns;
+- shadcn/ui is the preferred component-composition benchmark for React implementation;
+- material UI work follows Requirement -> Wireframe -> Design -> Review -> Implementation -> Browser Verification;
+- fake controls, one-off page design systems, inconsistent status semantics and missing loading/error/empty states block design qualification;
+- browser visual verification and accessibility/interaction evidence are required for material UI changes.
+
+Controlled references:
+- `docs/design/PRODUCT_DESIGN_SYSTEM.md`
+- `docs/design/PRODUCT_DESIGN_GUARDIAN.md`
+- `npm run design:verify`
+
+### 2.4 Architecture Guardian Gate
 - enforce the canonical platform architecture;
 - prevent modules from inventing their own auth, tenancy, storage, audit or AI infrastructure;
 - keep domain rules independent from vendor SDKs.
 
-### 2.4 Warpath Gate
+### 2.5 Warpath Gate
 - test complete real workflows;
 - include unhappy paths, retries, invalid transitions and operational failures;
 - do not call a feature complete when only the happy path works.
 
-### 2.5 CodeRabbit Gate
+### 2.6 CodeRabbit Gate
 - independent machine code review on cleanup PRs;
 - material unresolved findings block qualification.
 
-### 2.6 Hacker Gate
+### 2.7 Hacker Gate
 - adversarial security testing;
 - tenant/client boundary attacks;
 - IDOR/BOLA;
@@ -74,19 +89,19 @@ Every sprint, pull request, release candidate and promoted change in this progra
 - audit/evidence tampering;
 - remediation followed by retest.
 
-### 2.7 Evidence Gate
+### 2.8 Evidence Gate
 Every qualified change must be traceable through:
 
 `Regulatory/Business Requirement -> URS -> FRS -> Architecture -> Code -> Test -> Security -> Evidence -> Release`
 
-### 2.8 Regulatory Knowledge Gate
+### 2.9 Regulatory Knowledge Gate
 - regulated PV requirements must trace to authoritative regulator/harmonised sources where available;
 - source version, jurisdiction and effective date must be controlled;
 - model memory is not an authoritative regulatory source;
 - jurisdictional differences must remain explicit;
 - regulator changes trigger impact assessment across URS/FRS/code/tests/SOPs.
 
-### 2.9 Modular & Benchmark Completeness Gate
+### 2.10 Modular & Benchmark Completeness Gate
 - Nexus and modules must remain architecturally separated;
 - every module must be plug-and-play and entitleable independently or in supported combinations;
 - URS/FRS must be benchmarked against mature market tools;
@@ -268,6 +283,21 @@ We do not copy any one commercial product. We use the strongest characteristics 
 | **Veeva Safety** | Modern cloud / next-generation | unified cloud UX, lower-touch processing, integrated safety platform design |
 | **ArisGlobal LifeSphere Safety** | Next-generation / AI-forward | AI-first intake, literature, signals, automation and unified safety lifecycle |
 | **Ennov PV** | Modern unified compliance platform | configurable workflows, integrated PV lifecycle, traceability, AI-assisted processing |
+
+### UI/design benchmark principle
+
+For operational UI, we deliberately benchmark interaction quality and information density in addition to domain capability:
+
+- **IBM Carbon** — primary benchmark for dense enterprise fields, worklists, data tables, filters, status and progressive disclosure;
+- **PatternFly** — enterprise operations/admin workflow reference;
+- **Radix** — accessible interaction primitives;
+- **shadcn/ui** — composable React implementation patterns;
+- **Figma** — controlled design source of truth;
+- **Argus / established patient-safety systems** — domain workflow reference where relevant.
+
+We do not visually clone any product or design system. We use these references to define a coherent product language suitable for regulated, data-dense patient-safety work.
+
+The governing design documents are `docs/design/PRODUCT_DESIGN_SYSTEM.md` and `docs/design/PRODUCT_DESIGN_GUARDIAN.md`.
 
 ### Benchmark principle
 
