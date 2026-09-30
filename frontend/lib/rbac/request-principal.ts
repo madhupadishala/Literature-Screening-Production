@@ -30,8 +30,22 @@ export class AuthorizationError extends Error {
   }
 }
 
+function isNonProduction(): boolean {
+  return process.env.NODE_ENV !== "production";
+}
+
 function allowDemoPrincipal(): boolean {
-  return process.env.ALLOW_DEMO_PRINCIPAL?.trim().toLowerCase() === "true";
+  return (
+    isNonProduction() &&
+    process.env.ALLOW_DEMO_PRINCIPAL?.trim().toLowerCase() === "true"
+  );
+}
+
+function allowTrustedIdentityHeaders(): boolean {
+  return (
+    isNonProduction() &&
+    process.env.ALLOW_TRUSTED_IDENTITY_HEADERS?.trim().toLowerCase() === "true"
+  );
 }
 
 function resolveRequestEnvironment(request: NextRequest): NexusEnvironment {
@@ -52,7 +66,7 @@ function resolveIdentityHeaders(request: NextRequest) {
     request.headers.get("x-tenant-key")?.trim() || request.headers.get("x-tenant-id")?.trim();
   const email = request.headers.get("x-user-email")?.trim();
 
-  if (tenantKey && email) {
+  if (tenantKey && email && allowTrustedIdentityHeaders()) {
     return {
       tenantKey,
       email,
