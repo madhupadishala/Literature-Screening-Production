@@ -1,5 +1,3 @@
-import { type NextRequest } from "next/server";
-
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { roleHasPermission } from "@/lib/rbac/permissions";
@@ -64,7 +62,7 @@ async function validationPrincipal(): Promise<RequestPrincipal> {
   };
 }
 
-export async function GET(_request: NextRequest): Promise<Response> {
+export async function GET(): Promise<Response> {
   try {
     const principal = await validationPrincipal();
     const pool = getPostgresPool();
