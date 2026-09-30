@@ -1,7 +1,8 @@
 import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
-import { requirePermission } from "@/lib/rbac/guard";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 import {
   createValidationPackagesFromSearch,
   linkValidationPackagesToHits,
