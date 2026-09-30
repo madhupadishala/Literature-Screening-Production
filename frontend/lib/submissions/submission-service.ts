@@ -18,6 +18,29 @@ import {
 } from "./submission-types";
 
 const transportAdapters = new Map<string, SubmissionTransportAdapter>();
+const TRANSPORT_TIMEOUT_MS = 30_000;
+const STALE_TRANSMISSION_MS = 5 * 60_000;
+
+async function withTransportTimeout<T>(
+  operation: (signal: AbortSignal) => Promise<T>,
+): Promise<T> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), TRANSPORT_TIMEOUT_MS);
+  try {
+    return await Promise.race([
+      operation(controller.signal),
+      new Promise<never>((_, reject) => {
+        controller.signal.addEventListener(
+          "abort",
+          () => reject(new Error("Submission transport timed out.")),
+          { once: true },
+        );
+      }),
+    ]);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
 
 export function registerSubmissionTransportAdapter(
   adapter: SubmissionTransportAdapter,
@@ -29,10 +52,13 @@ export function registerSubmissionTransportAdapter(
 }
 
 function requireText(
-  value: string,
+  value: unknown,
   label: string,
   minimum = 1,
 ): string {
+  if (typeof value !== "string") {
+    throw new Error(`${label} is required.`);
+  }
   const normalized = value.trim();
   if (normalized.length < minimum) {
     throw new Error(
@@ -185,7 +211,24 @@ export async function createSubmissionPackage(input: {
   try {
     await client.query("BEGIN");
 
-    const existing = await client.query<Record<string, unknown>>(
+    const idempotencyScopeKey = [
+      input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+      request.idempotencyKey,
+    ].join(":");
+    await client.query(
+      "SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",
+      [idempotencyScopeKey],
+    );
+
+    const existing = await client.query<{
+      case_id: string;
+      destination_type: string;
+      destination_key: string;
+      message_profile: string;
+      [key: string]: unknown;
+    }>(
       `SELECT *
          FROM nexus_submission_packages
         WHERE tenant_id = $1
@@ -202,8 +245,19 @@ export async function createSubmissionPackage(input: {
     );
 
     if (existing.rows[0]) {
+      const stored = existing.rows[0];
+      const sameRequest =
+        stored.case_id === request.caseId &&
+        stored.destination_type === request.destinationType &&
+        stored.destination_key === request.destinationKey &&
+        stored.message_profile === (request.messageProfile ?? "ICH_E2B_R3");
+      if (!sameRequest) {
+        throw new Error(
+          "Idempotency conflict: this idempotencyKey is already bound to different submission data.",
+        );
+      }
       await client.query("COMMIT");
-      return { ...existing.rows[0], reused: true };
+      return { ...stored, reused: true };
     }
 
     const finalCase = await loadFinalCaseForSubmission(
@@ -221,6 +275,32 @@ export async function createSubmissionPackage(input: {
       messageProfile: request.messageProfile ?? "ICH_E2B_R3",
     });
     const id = randomUUID();
+
+    const packageScopeKey = [
+      input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+      key,
+    ].join(":");
+    await client.query(
+      "SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",
+      [packageScopeKey],
+    );
+    const equivalent = await client.query<{ id: string; idempotency_key: string }>(
+      `SELECT id, idempotency_key
+         FROM nexus_submission_packages
+        WHERE tenant_id = $1
+          AND workspace_id = $2
+          AND environment = $3
+          AND submission_key = $4
+        FOR UPDATE`,
+      [input.principal.tenantId, scope.workspaceId, scope.environment, key],
+    );
+    if (equivalent.rows[0]) {
+      throw new Error(
+        "Submission conflict: an equivalent package already exists with a different idempotency key.",
+      );
+    }
 
     const inserted = await client.query<Record<string, unknown>>(
       `INSERT INTO nexus_submission_packages (
@@ -407,6 +487,49 @@ export async function transmitSubmission(input: {
         "Submission package was not found in the selected client workspace/environment.",
       );
     }
+    if (row.status === "TRANSMITTING") {
+      const latestAttempt = await client.query<{
+        id: string;
+        status: string;
+        started_at: Date | string;
+      }>(
+        `SELECT id, status, started_at
+           FROM nexus_submission_attempts
+          WHERE submission_package_id = $1
+          ORDER BY attempt_number DESC
+          LIMIT 1
+          FOR UPDATE`,
+        [row.id],
+      );
+      const latest = latestAttempt.rows[0];
+      const startedAt = latest ? new Date(latest.started_at).getTime() : Number.NaN;
+      const stale =
+        latest?.status === "STARTED" &&
+        Number.isFinite(startedAt) &&
+        Date.now() - startedAt >= STALE_TRANSMISSION_MS;
+      if (!stale) {
+        throw new Error(
+          "Submission package is already transmitting and is not eligible for recovery.",
+        );
+      }
+      await client.query(
+        `UPDATE nexus_submission_attempts
+            SET status = 'FAILED',
+                error_code = 'STALE_TRANSMISSION_RECOVERED',
+                error_message = 'A prior transmission attempt exceeded the recovery threshold.',
+                completed_at = now()
+          WHERE id = $1`,
+        [latest.id],
+      );
+      await client.query(
+        `UPDATE nexus_submission_packages
+            SET status = 'FAILED', updated_at = now()
+          WHERE id = $1`,
+        [row.id],
+      );
+      row.status = "FAILED";
+    }
+
     if (!["READY", "FAILED"].includes(row.status)) {
       throw new Error(
         `Submission package cannot be transmitted from status ${row.status}.`,
@@ -477,15 +600,18 @@ export async function transmitSubmission(input: {
     await client.query("COMMIT");
 
     try {
-      const transmitted = await adapter.transmit({
-        submissionId: row.id,
-        submissionKey: row.submission_key,
-        destinationType: row.destination_type,
-        destinationKey: row.destination_key,
-        messageProfile: row.message_profile,
-        packagePayload: row.package_payload,
-        packageSha256: row.package_sha256,
-      });
+      const transmitted = await withTransportTimeout((signal) =>
+        adapter.transmit({
+          submissionId: row.id,
+          submissionKey: row.submission_key,
+          destinationType: row.destination_type,
+          destinationKey: row.destination_key,
+          messageProfile: row.message_profile,
+          packagePayload: row.package_payload,
+          packageSha256: row.package_sha256,
+          signal,
+        }),
+      );
 
       await getPostgresPool().query(
         `WITH attempt_update AS (
@@ -559,7 +685,8 @@ export async function recordSubmissionAcknowledgement(input: {
     "externalAckId",
   );
   const ackType = requireText(input.request.ackType, "ackType");
-  const receivedAt = new Date(input.request.receivedAt);
+  const receivedAtText = requireText(input.request.receivedAt, "receivedAt");
+  const receivedAt = new Date(receivedAtText);
   if (!Number.isFinite(receivedAt.getTime())) {
     throw new Error("receivedAt must be a valid date/time.");
   }
@@ -569,8 +696,8 @@ export async function recordSubmissionAcknowledgement(input: {
   const client = await getPostgresPool().connect();
   try {
     await client.query("BEGIN");
-    const selected = await client.query<{ id: string }>(
-      `SELECT id
+    const selected = await client.query<{ id: string; status: string }>(
+      `SELECT id, status
          FROM nexus_submission_packages
         WHERE tenant_id = $1
           AND workspace_id = $2
@@ -590,14 +717,57 @@ export async function recordSubmissionAcknowledgement(input: {
       );
     }
 
+    const packageRow = selected.rows[0];
+    if (!["TRANSMITTED", "ACKNOWLEDGED", "REJECTED"].includes(packageRow.status)) {
+      throw new Error(
+        `Acknowledgement cannot be recorded from status ${packageRow.status}.`,
+      );
+    }
+
+    const priorAck = await client.query<{
+      submission_package_id: string;
+      ack_status: string;
+      ack_type: string;
+      ack_sha256: string;
+      [key: string]: unknown;
+    }>(
+      `SELECT *
+         FROM nexus_submission_acknowledgements
+        WHERE tenant_id = $1
+          AND workspace_id = $2
+          AND environment = $3
+          AND external_ack_id = $4
+        FOR UPDATE`,
+      [
+        input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
+        externalAckId,
+      ],
+    );
+
+    if (priorAck.rows[0]) {
+      const stored = priorAck.rows[0];
+      if (
+        stored.submission_package_id !== input.submissionId ||
+        stored.ack_status !== input.request.ackStatus ||
+        stored.ack_type !== ackType ||
+        stored.ack_sha256 !== ackSha256
+      ) {
+        throw new Error(
+          "Acknowledgement conflict: externalAckId is already bound to different acknowledgement data.",
+        );
+      }
+      await client.query("COMMIT");
+      return stored;
+    }
+
     const inserted = await client.query<Record<string, unknown>>(
       `INSERT INTO nexus_submission_acknowledgements (
          tenant_id, workspace_id, environment, submission_package_id,
          external_ack_id, ack_type, ack_status, ack_payload,
          ack_sha256, received_at, recorded_by
        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,$10,$11)
-       ON CONFLICT (tenant_id, workspace_id, environment, external_ack_id)
-       DO UPDATE SET external_ack_id = nexus_submission_acknowledgements.external_ack_id
        RETURNING *`,
       [
         input.principal.tenantId,
@@ -614,20 +784,22 @@ export async function recordSubmissionAcknowledgement(input: {
       ],
     );
 
+    const storedAckStatus = input.request.ackStatus;
     const packageStatus =
-      input.request.ackStatus === "ACCEPTED"
+      storedAckStatus === "ACCEPTED"
         ? "ACKNOWLEDGED"
-        : input.request.ackStatus === "REJECTED" ||
-            input.request.ackStatus === "TECHNICAL_ERROR"
+        : storedAckStatus === "REJECTED" || storedAckStatus === "TECHNICAL_ERROR"
           ? "REJECTED"
-          : "TRANSMITTED";
+          : packageRow.status;
 
-    await client.query(
-      `UPDATE nexus_submission_packages
-          SET status = $2, updated_at = now()
-        WHERE id = $1`,
-      [input.submissionId, packageStatus],
-    );
+    if (packageStatus !== packageRow.status) {
+      await client.query(
+        `UPDATE nexus_submission_packages
+            SET status = $2, updated_at = now()
+          WHERE id = $1`,
+        [input.submissionId, packageStatus],
+      );
+    }
 
     await client.query(
       `INSERT INTO audit_events (
