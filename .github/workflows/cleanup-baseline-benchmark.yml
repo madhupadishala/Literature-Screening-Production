@@ -122,7 +122,6 @@ jobs:
       - name: dependency-cruiser dependency benchmark
         continue-on-error: true
         run: |
-          npm install --no-save --package-lock=false --ignore-scripts dependency-cruiser@18.4.0
           set +e
           ./node_modules/.bin/depcruise --config .dependency-cruiser.cjs --output-type json app lib scripts > benchmark-output/dependency-cruiser.json
           json_rc=$?
