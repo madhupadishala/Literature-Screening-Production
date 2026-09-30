@@ -2,20 +2,20 @@
 
 This document links requirements, architecture, implementation, tests and release evidence.
 
-| Req | Area | Planned evidence | Status |
-|---|---|---|---|
-| URS-001..012 | Identity/Tenant/Workspace/RBAC | architecture tests + authorization negative tests | planned |
-| URS-020..030 | Shared capabilities | adapter/interface tests + dependency-cruiser rules | planned |
-| URS-040..049 | AI/Retrieval | retrieval auth tests + provenance/eval evidence | planned |
-| URS-060..065 | Literature | existing literature verification + regression | planned |
-| URS-070..075 | Intake | existing intake/Nexus verification + regression | planned |
-| URS-080..085 | L2A | state/RBAC/evidence regression | planned |
-| URS-090..095 | Submissions | submission workflow/idempotency evidence | planned |
-| URS-100..104 | Audit/Evidence | immutability + attribution verification | planned |
-| URS-110..117 | Security | Gitleaks + dependency audit + adversarial tests | planned |
-| URS-120..126 | Code quality | tsc/eslint/Knip/jscpd/Madge/dependency-cruiser | planned |
-| URS-130..134 | Benchmark | BEFORE/AFTER report | in progress |
-| URS-140..145 | Clean export | provenance + archive hash + clean-repo CI | planned |
+| Req | FRS | Area | Verification ID(s) | Planned evidence | Status |
+|---|---|---|---|---|---|
+| URS-001..012 | FRS-001..019 | Identity/Tenant/Workspace/RBAC | VER-NEXUS-IDENTITY-WORKSPACE; VER-NEXUS-SEC-BOUNDARY | architecture tests + authorization negative tests | in progress |
+| URS-020..030 | FRS-020..047; FRS-170..175 | Shared capabilities | VER-ARCH-DEPCRUISE; VER-ARCH-ESLINT | adapter/interface tests + dependency-cruiser rules | in progress |
+| URS-040..049 | FRS-050..069 | AI/Retrieval | VER-AI-RETRIEVAL-AUTH; VER-AI-PROVENANCE | retrieval auth tests + provenance/eval evidence | planned |
+| URS-060..065 | FRS-070..079 | Literature | VER-LIT-REGRESSION | existing literature verification + regression | planned |
+| URS-070..075 | FRS-080..089 | Intake | VER-INTAKE-REGRESSION | existing intake/Nexus verification + regression | planned |
+| URS-080..085 | FRS-090..099 | L2A | VER-L2A-STATE-RBAC-EVIDENCE | state/RBAC/evidence regression | planned |
+| URS-090..095 | FRS-100..119 | Submissions | VER-SUBMISSION-WORKFLOW; VER-SUBMISSION-IDEMPOTENCY | submission workflow/idempotency evidence | planned |
+| URS-100..104 | FRS-140..144 | Audit/Evidence | VER-AUDIT-ATTRIBUTION; VER-EVIDENCE-INTEGRITY | immutability + attribution verification | planned |
+| URS-110..117 | FRS-160; FRS-170..175 | Security | VER-SECRET-INCR; VER-SECRET-FULL; VER-NPM-AUDIT; VER-NEXUS-SEC-BOUNDARY | Gitleaks + dependency audit + adversarial tests | in progress |
+| URS-120..126 | FRS-150..157 | Code quality | VER-CQ-TS; VER-CQ-ESLINT; VER-CQ-BUILD; VER-CQ-NPM-AUDIT; VER-CQ-KNIP; VER-CQ-JSCPD; VER-CQ-MADGE; VER-CQ-DEPCRUISE | tsc/eslint/build/npm-audit/Knip/jscpd/Madge/dependency-cruiser | planned |
+| URS-130..134 | FRS-150..160 | Benchmark | VER-BASELINE-BEFORE; VER-BASELINE-AFTER | BEFORE/AFTER report | in progress |
+| URS-140..145 | FRS-180..184 | Clean export | VER-EXPORT-PROVENANCE; VER-EXPORT-HASH; VER-EXPORT-CI | provenance + archive hash + clean-repo CI | planned |
 
 ## Change record format
 
@@ -29,3 +29,21 @@ Every cleanup PR/change shall record:
 - CodeRabbit disposition
 - residual risk
 - before/after benchmark impact
+
+
+## Verification identifier definitions
+
+- **VER-CQ-TS** — TypeScript strict check.
+- **VER-CQ-ESLINT** — repository ESLint/Next lint.
+- **VER-CQ-BUILD** — production Next.js build.
+- **VER-CQ-NPM-AUDIT** — dependency vulnerability audit.
+- **VER-CQ-KNIP** — unused file/export/dependency analysis.
+- **VER-CQ-JSCPD** — duplication analysis.
+- **VER-CQ-MADGE** — circular dependency analysis.
+- **VER-CQ-DEPCRUISE** — architecture/dependency analysis.
+- **VER-SECRET-INCR** — incremental PR Gitleaks scan.
+- **VER-SECRET-FULL** — full-history + working-tree Gitleaks baseline.
+- **VER-NEXUS-IDENTITY-WORKSPACE** — identity-first/workspace architecture verification.
+- **VER-NEXUS-SEC-BOUNDARY** — scoped-context and security boundary negative verification.
+
+A verification identifier is marked complete only when its objective evidence exists for the qualified commit; listing an identifier does not itself prove execution.
