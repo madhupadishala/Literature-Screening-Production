@@ -36,7 +36,7 @@ The objective is to:
 
 ## 2. Nine mandatory engineering and regulatory gates
 
-Every change in this program must satisfy all seven gates.
+Every sprint, pull request, release candidate and promoted change in this program must satisfy all nine gates.
 
 ### 2.1 Karpathy Gate
 - understand before editing;
@@ -1107,7 +1107,7 @@ Current Historical Repository
           ↓
 Controlled Cleanup Branch
           ↓
-7 Gates + URS/FRS + Benchmark PASS
+9 Gates + URS/FRS + Benchmark PASS
           ↓
 Frozen Release Candidate
           ↓
@@ -1123,7 +1123,7 @@ The new repository will contain a `PROVENANCE.md` linking it to:
 - source commit;
 - migration head;
 - benchmark evidence;
-- seven-gate result;
+- nine-gate result;
 - release approval;
 - source archive SHA-256.
 
