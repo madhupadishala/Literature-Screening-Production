@@ -222,4 +222,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "036_nexus_signal_management_foundation.sql",
     required: true,
   },
+  {
+    id: "037",
+    name: "Nexus Aggregate Reporting Foundation",
+    filename: "037_nexus_aggregate_reporting_foundation.sql",
+    required: true,
+  },
 ] as const;
