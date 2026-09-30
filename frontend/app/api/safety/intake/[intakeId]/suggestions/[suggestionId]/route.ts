@@ -36,6 +36,7 @@ export async function POST(
       PERMISSIONS.INTAKE_PROCESS,
     );
     const { intakeId, suggestionId } = await context.params;
+    await assertSafetyIntakeInScope(principal, intakeId);
     const body = (await request.json()) as ReviewBody;
 
     if (
