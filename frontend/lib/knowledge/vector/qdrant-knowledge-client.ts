@@ -627,7 +627,15 @@ export class QdrantKnowledgeClient {
       "documentType",
       "source",
       "regulation",
+      "authority",
+      "regulatorySourceId",
+      "canonicalSourceUrl",
+      "jurisdiction",
       "version",
+      "lifecycleStatus",
+      "approvalStatus",
+      "supersedesSourceId",
+      "supersededBySourceId",
       "category",
       "section",
       "subsection",
@@ -654,6 +662,7 @@ export class QdrantKnowledgeClient {
     }
 
     const datetimeFields = [
+      "publicationDate",
       "effectiveDate",
       "createdAt",
       "updatedAt",
