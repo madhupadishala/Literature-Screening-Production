@@ -138,6 +138,9 @@ jobs:
       - name: Verify cleanup Sprint 9 Aggregate Reporting foundation
         run: npm run cleanup:sprint9:verify
 
+      - name: Verify cleanup Sprint 10 PV Documentation foundation
+        run: npm run cleanup:sprint10:verify
+
       - name: Build production application
         run: npm run build
 
