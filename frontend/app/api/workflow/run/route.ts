@@ -178,16 +178,19 @@ export async function POST(
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    await requireModulePermission(
+    const principal = await requireModulePermission(
       request,
       NEXUS_MODULES.LITERATURE,
-      PERMISSIONS.PACKAGE_ACTION_EXECUTE);
+      PERMISSIONS.PACKAGE_ACTION_EXECUTE,
+    );
 
     return NextResponse.json(
       {
         success: true,
         status:
-          literatureWorkflowService.getStatus(),
+          literatureWorkflowService.getStatusForTenant(
+            principal.tenantKey,
+          ),
         performance:
           literatureWorkflowService.getPerformanceStatus(),
       },
