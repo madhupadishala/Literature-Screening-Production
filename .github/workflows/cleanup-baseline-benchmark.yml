@@ -27,6 +27,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
@@ -249,11 +250,17 @@ jobs:
           exit "$rc"
 
       - name: Gitleaks incremental PR secret scan
+        id: gitleaks_incremental
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_VERSION: "8.24.3"
+
+      - name: Record incremental Gitleaks outcome
+        if: always()
+        run: |
+          printf "outcome=%s\n" "${{ steps.gitleaks_incremental.outcome }}" > benchmark-output/gitleaks-incremental.status
 
       - name: Gitleaks full-history and working-tree baseline
         continue-on-error: true
@@ -274,6 +281,14 @@ jobs:
           printf "history_exit=%s\nworking_tree_exit=%s\n" "$history_rc" "$tree_rc" > frontend/benchmark-output/gitleaks-full.status
           if [ "$history_rc" -ne 0 ]; then exit "$history_rc"; fi
           exit "$tree_rc"
+
+      - name: Enforce secret scan gate
+        if: always()
+        run: |
+          set -e
+          test "${{ steps.gitleaks_incremental.outcome }}" = "success"
+          grep -qx "history_exit=0" benchmark-output/gitleaks-full.status
+          grep -qx "working_tree_exit=0" benchmark-output/gitleaks-full.status
 
       - name: Upload baseline evidence
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
