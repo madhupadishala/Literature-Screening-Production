@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { assertSafetyCaseInScope } from "@/lib/safety/common/safety-workspace-scope";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
@@ -23,6 +24,7 @@ export async function GET(
       PERMISSIONS.CASE_VIEW,
     );
     const { caseId } = await context.params;
+    await assertSafetyCaseInScope(principal, caseId);
     const artifacts = await listCaseReleaseArtifacts({ principal, caseId });
     return Response.json({ success: true, data: artifacts });
   } catch (error) {
@@ -41,6 +43,7 @@ export async function POST(
       PERMISSIONS.CASE_EXPORT,
     );
     const { caseId } = await context.params;
+    await assertSafetyCaseInScope(principal, caseId);
     const evidencePackage = await generateCaseEvidencePackage({
       principal,
       caseId,
