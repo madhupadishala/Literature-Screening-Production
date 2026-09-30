@@ -25,6 +25,34 @@ function clearAccessTokenCookie(response: NextResponse) {
   });
 }
 
+function localAuthBypassEnabled() {
+  return (
+    process.env.NODE_ENV === "development" &&
+    !process.env.VERCEL_ENV &&
+    process.env.LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true"
+  );
+}
+
+function createAuthenticatedResponse(session: ReturnType<typeof sessionManager.createSession>) {
+  const response = NextResponse.json(
+    {
+      authenticated: true,
+      session,
+    },
+    { status: 201 },
+  );
+
+  response.cookies.set(ACCESS_TOKEN_COOKIE, session.accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
+    maxAge: ACCESS_TOKEN_MAX_AGE_SECONDS,
+  });
+
+  return response;
+}
+
 export async function GET(request: NextRequest) {
   const token = getAccessToken(request);
 
@@ -53,6 +81,39 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (localAuthBypassEnabled()) {
+    const localEmail = process.env.LOCAL_AUTH_EMAIL?.trim();
+    const localPassword = process.env.LOCAL_AUTH_PASSWORD;
+
+    if (!localEmail || !localPassword) {
+      return NextResponse.json(
+        { error: "Local authentication bypass is enabled but local credentials are not configured." },
+        { status: 503 },
+      );
+    }
+
+    if (
+      body.email.toLowerCase() !== localEmail.toLowerCase() ||
+      body.password !== localPassword
+    ) {
+      return NextResponse.json(
+        { error: "Invalid local development credentials." },
+        { status: 401 },
+      );
+    }
+
+    const session = sessionManager.createSession({
+      userId: "local-dev-super-admin",
+      email: localEmail,
+      name: "Local Development Administrator",
+      tenantId: body.tenantId,
+      role: "super_admin",
+      provider: "internal",
+    });
+
+    return createAuthenticatedResponse(session);
+  }
+
   const check = await verifyCredentials(body.email, body.password, body.tenantId);
 
   if (!check.ok) {
@@ -74,23 +135,7 @@ export async function POST(request: NextRequest) {
     provider: "internal",
   });
 
-  const response = NextResponse.json(
-    {
-      authenticated: true,
-      session,
-    },
-    { status: 201 },
-  );
-
-  response.cookies.set(ACCESS_TOKEN_COOKIE, session.accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-    maxAge: ACCESS_TOKEN_MAX_AGE_SECONDS,
-  });
-
-  return response;
+  return createAuthenticatedResponse(session);
 }
 
 export async function DELETE(request: NextRequest) {
