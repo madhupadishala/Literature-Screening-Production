@@ -25,6 +25,7 @@ export async function GET(
       PERMISSIONS.INTAKE_VIEW,
     );
     const { intakeId, documentId } = await context.params;
+    await assertSafetyIntakeInScope(principal, intakeId);
 
     const result = await getPostgresPool().query<{
       file_name: string;
