@@ -25,10 +25,15 @@ function clearAccessTokenCookie(response: NextResponse) {
   });
 }
 
-function localAuthBypassEnabled() {
+function localAuthBypassEnabled(request: NextRequest) {
+  const hostname = request.nextUrl.hostname.toLowerCase();
+  const isLocalRequest =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1";
+
   return (
-    process.env.NODE_ENV === "development" &&
-    !process.env.VERCEL_ENV &&
+    isLocalRequest &&
     process.env.LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true"
   );
 }
@@ -81,7 +86,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (localAuthBypassEnabled()) {
+  if (localAuthBypassEnabled(request)) {
     const localEmail = process.env.LOCAL_AUTH_EMAIL?.trim();
     const localPassword = process.env.LOCAL_AUTH_PASSWORD;
 
