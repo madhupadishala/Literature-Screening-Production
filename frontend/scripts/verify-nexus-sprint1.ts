@@ -16,7 +16,11 @@ import {
 
 assert.equal(isNexusModuleKey("LITERATURE"), true);
 assert.equal(isNexusModuleKey("NOT_A_MODULE"), false);
-assert.deepEqual(getModuleDependencies(NEXUS_MODULES.CASE_PROCESSING), ["INTAKE"]);
+assert.deepEqual(
+  getModuleDependencies(NEXUS_MODULES.CASE_PROCESSING),
+  [],
+  "Case Processing must remain independently entitleable; upstream data prerequisites belong to canonical workflow contracts.",
+);
 
 assert.equal(
   entitlementIsActive({
@@ -66,10 +70,11 @@ assert.deepEqual(
     environmentAllowed: true,
     moduleKey: NEXUS_MODULES.CASE_PROCESSING,
     moduleEnabled: true,
-    dependenciesEnabled: false,
+    dependenciesEnabled: true,
     permissionAllowed: true,
   }),
-  { allowed: false, reason: "MODULE_DEPENDENCY_NOT_ENTITLED" },
+  { allowed: true },
+  "Plug-and-play Case Processing authorization must not require an Intake entitlement.",
 );
 
 assert.equal(
