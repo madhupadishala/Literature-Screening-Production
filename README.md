@@ -221,6 +221,7 @@ Chunk metadata must retain authority, jurisdiction, document, revision/version, 
 See:
 
 - `docs/pv-knowledge/REGULATORY_SOURCE_REGISTER.md`
+- `docs/pv-knowledge/OFFICIAL_SOURCE_INVENTORY_2026-09-30.md`
 - `docs/architecture/NEXUS_MODULAR_NEXTGEN_CHARTER.md`
 
 ### URS/FRS benchmark rule
