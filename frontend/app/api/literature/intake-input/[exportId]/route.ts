@@ -2,8 +2,9 @@ import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { getIntakeInputExport } from "@/lib/literature/intake-input/intake-input-service";
-import { requirePermission } from "@/lib/rbac/guard";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,7 +14,7 @@ export async function GET(
   context: { params: Promise<{ exportId: string }> },
 ): Promise<Response> {
   try {
-    const principal = await requirePermission(request, PERMISSIONS.INTAKE_INPUT_DOWNLOAD);
+    const principal = await requireWorkspaceModulePermission(request, NEXUS_MODULES.LITERATURE, PERMISSIONS.INTAKE_INPUT_DOWNLOAD);
     const { exportId } = await context.params;
     const exported = await getIntakeInputExport({ principal, exportId });
     return new Response(exported.content, {
