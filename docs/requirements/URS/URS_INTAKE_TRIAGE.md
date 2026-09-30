@@ -60,3 +60,13 @@ Define the user, regulatory, security and workflow requirements for Intake & Tri
 ## Acceptance
 
 Sprint 5 is accepted only when all nine mandatory gates are green. Formal disposition may document a non-applicable control or approved exception record, but cannot convert a failed mandatory gate into a pass.
+
+## Screen architecture and shared safety assessment requirements
+
+| ID | Requirement |
+|---|---|
+| URS-INT-096 | The Intake module shall expose the Screens Intake, Duplicate Check, Triage and Medical Review through module Sub-navigation. |
+| URS-INT-097 | Duplicate Check shall remain a distinct controlled human-review Screen before uncontrolled case creation. |
+| URS-INT-098 | Triage shall expose validity, seriousness, priority and routing decisions without duplicating shared safety-assessment logic. |
+| URS-INT-099 | Medical Review shall be available for Intake records requiring governed clinical judgment according to controlled routing rules. |
+| URS-INT-100 | Seriousness, Listedness/Expectedness and Causality shall be provided by shared governed safety-assessment services and reused by Intake. |
