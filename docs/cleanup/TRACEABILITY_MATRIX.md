@@ -114,3 +114,20 @@ A sprint is not green when its code passes but its URS/FRS/User Guide or traceab
 | Independent review | PR #80 CodeRabbit full review | CodeRabbit Gate | pending exact-head full review |
 
 No row marked PASS implies external regulator connectivity, production migration execution, licensed terminology availability, or regulatory SME approval unless separate objective evidence exists.
+
+
+## Sprint 8–10 detailed traceability
+
+| Scope | Controlled requirements / implementation | Verification | Qualification |
+|---|---|---|---|
+| Signal Management | `URS_SIGNAL_MANAGEMENT.md`; `FRS_SIGNAL_MANAGEMENT.md`; migration 036; scoped signal/assessment lifecycle; hash-linked evidence; separated assess/approve authority | `cleanup:sprint8:verify`; normal architecture/security/build gates | in progress |
+| Aggregate Reporting | `URS_AGGREGATE_REPORTING.md`; `FRS_AGGREGATE_REPORTING.md`; migration 037; finalized-case source snapshot; report/version hashes; review/approval separation | `cleanup:sprint9:verify`; normal architecture/security/build gates | in progress |
+| PV Documentation | `URS_PV_DOCUMENTATION.md`; `FRS_PV_DOCUMENTATION.md`; migration 038; controlled document/version lifecycle; linked-source provenance; review/approval separation | `cleanup:sprint10:verify`; normal architecture/security/build gates | in progress |
+
+### Verification identifiers
+
+- **VER-SIGNAL-FOUNDATION** — scoped signal creation, lifecycle, assessment evidence and permission separation.
+- **VER-AGGREGATE-FOUNDATION** — finalized-case snapshot, version/hash lifecycle and aggregate scope verification.
+- **VER-PVDOC-FOUNDATION** — controlled PV-document repository/version lifecycle and access verification.
+
+These foundations do not imply validated statistical signal algorithms, regulator-ready aggregate-report generation, electronic signatures, complete PSMF automation or production migration execution.
