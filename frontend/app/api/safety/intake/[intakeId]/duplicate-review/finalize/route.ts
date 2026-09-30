@@ -30,7 +30,6 @@ export async function POST(
     );
     const { intakeId } = await context.params;
     await assertSafetyIntakeInScope(principal, intakeId);
-    await assertSafetyIntakeInScope(principal, intakeId);
     const body = (await request.json()) as {
       humanDecision?: unknown;
       selectedCandidateId?: unknown;
