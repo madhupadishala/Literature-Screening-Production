@@ -1,88 +1,61 @@
-import { NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { literatureSourceRouter } from "@/lib/literature/global/literature-source-router";
 import type { LiteratureRoutingRequest } from "@/lib/literature/global/literature-source-types";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { assertRequestedTenantMatchesScope } from "@/lib/rbac/scoped-request";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 
-export async function GET() {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const result = literatureSourceRouter.route({
-      tenantId: "demo-tenant",
+    const principal = await requireWorkspaceModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SEARCH_EXECUTE,
+    );
+    const result = literatureSourceRouter.route({ tenantId: principal.tenantId });
+
+    return Response.json({
+      success: true,
+      status: literatureSourceRouter.getStatus(),
+      result,
     });
-
-    return NextResponse.json(
-      {
-        success: true,
-        status: literatureSourceRouter.getStatus(),
-        result,
-      },
-      {
-        status: 200,
-      },
-    );
   } catch (error) {
-    console.error("Global Source Router Error:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Unable to retrieve literature source configuration.",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const body = (await request.json()) as LiteratureRoutingRequest;
+    const principal = await requireWorkspaceModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SEARCH_EXECUTE,
+    );
+    const body = (await request.json()) as Partial<LiteratureRoutingRequest>;
 
-    if (
-      !body.tenantId ||
-      typeof body.tenantId !== "string"
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "tenantId is required.",
-        },
-        {
-          status: 400,
-        },
-      );
-    }
+    assertRequestedTenantMatchesScope(principal, body.tenantId);
 
     const routingResult = literatureSourceRouter.route({
       ...body,
-      tenantId: body.tenantId.trim(),
+      tenantId: principal.tenantId,
+    } as LiteratureRoutingRequest);
+
+    return Response.json({
+      success: true,
+      tenantId: principal.tenantId,
+      routing: routingResult,
+      next: {
+        endpoint: "/api/literature/article-fetch",
+        method: "POST",
+      },
     });
-
-    return NextResponse.json(
-      {
-        success: true,
-        tenantId: body.tenantId,
-        routing: routingResult,
-        next: {
-          endpoint: "/api/literature/article-fetch",
-          method: "POST",
-        },
-      },
-      {
-        status: 200,
-      },
-    );
   } catch (error) {
-    console.error("Global Literature Routing Error:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Failed to route literature search.",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }
