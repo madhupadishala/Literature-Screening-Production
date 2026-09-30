@@ -16,6 +16,7 @@ export interface SearchStrategyRequest {
 }
 
 export interface SearchStrategyResult {
+  tenantId: string;
   id: string;
   strategyName: string;
   query: string;
