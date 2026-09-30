@@ -43,6 +43,7 @@ jobs:
       - name: TypeScript strict check
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npx tsc --noEmit 2>&1 | tee benchmark-output/typescript.txt
           rc=${PIPESTATUS[0]}
@@ -52,6 +53,7 @@ jobs:
       - name: ESLint
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run lint 2>&1 | tee benchmark-output/eslint.txt
           rc=${PIPESTATUS[0]}
@@ -61,6 +63,7 @@ jobs:
       - name: Production build
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run build 2>&1 | tee benchmark-output/build.txt
           rc=${PIPESTATUS[0]}
@@ -94,6 +97,7 @@ jobs:
       - name: jscpd duplication benchmark
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npx --yes jscpd@5.3.1 --config .jscpd.json . 2>&1 | tee benchmark-output/jscpd.txt
           rc=${PIPESTATUS[0]}
@@ -129,6 +133,7 @@ jobs:
       - name: Existing security audit
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run security:audit 2>&1 | tee benchmark-output/security-audit.txt
           rc=${PIPESTATUS[0]}
@@ -138,6 +143,7 @@ jobs:
       - name: Existing tenant-integrity verification
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run nexus:tenant-integrity:verify 2>&1 | tee benchmark-output/nexus-tenant-integrity.txt
           rc=${PIPESTATUS[0]}
@@ -147,6 +153,7 @@ jobs:
       - name: Existing PV verification
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run pv:verify 2>&1 | tee benchmark-output/pv-verify.txt
           rc=${PIPESTATUS[0]}
@@ -156,6 +163,7 @@ jobs:
       - name: Literature screening verification
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run screening:verify 2>&1 | tee benchmark-output/screening-verify.txt
           rc=${PIPESTATUS[0]}
@@ -165,6 +173,7 @@ jobs:
       - name: Intake verification
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run intake:verify 2>&1 | tee benchmark-output/intake-verify.txt
           rc=${PIPESTATUS[0]}
@@ -191,6 +200,7 @@ jobs:
       - name: Verify Nexus identity-first workspace architecture
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run nexus:identity-workspace:verify 2>&1 | tee benchmark-output/nexus-identity-workspace.txt
           rc=${PIPESTATUS[0]}
@@ -200,6 +210,7 @@ jobs:
       - name: Verify Nexus security boundary negative cases
         continue-on-error: true
         run: |
+          set +e
           set -o pipefail
           npm run nexus:security-boundaries:verify 2>&1 | tee benchmark-output/nexus-security-boundaries.txt
           rc=${PIPESTATUS[0]}
@@ -236,7 +247,7 @@ jobs:
         uses: actions/upload-artifact@v5
         if: always()
         with:
-          name: cleanup-baseline-${{ github.sha }}
+          name: cleanup-baseline-${{ github.event.pull_request.head.sha || github.sha }}
           path: frontend/benchmark-output/
           if-no-files-found: warn
           retention-days: 30
