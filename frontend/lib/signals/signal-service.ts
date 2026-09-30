@@ -15,7 +15,10 @@ import {
   type SignalStatus,
 } from "./signal-types";
 
-function requireText(value: string, label: string, minimum = 1): string {
+function requireText(value: unknown, label: string, minimum = 1): string {
+  if (typeof value !== "string") {
+    throw new Error(`${label} is required.`);
+  }
   const normalized = value.trim();
   if (normalized.length < minimum) {
     throw new Error(`${label} must contain at least ${minimum} character${minimum === 1 ? "" : "s"}.`);
@@ -27,7 +30,8 @@ function validateCreateRequest(request: CreateSignalRequest): CreateSignalReques
   if (!(SIGNAL_SOURCE_TYPES as readonly string[]).includes(request.sourceType)) {
     throw new Error("A supported signal sourceType is required.");
   }
-  const detectedAt = new Date(request.detectedAt);
+  const detectedAtText = requireText(request.detectedAt, "detectedAt");
+  const detectedAt = new Date(detectedAtText);
   if (!Number.isFinite(detectedAt.getTime())) {
     throw new Error("detectedAt must be a valid date/time.");
   }
