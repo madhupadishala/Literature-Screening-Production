@@ -19,6 +19,18 @@ assert.ok(migration.includes("package_sha256"));
 assert.ok(migration.includes("source_case_sha256"));
 assert.ok(migration.includes("ACKNOWLEDGED"));
 assert.ok(migration.includes("TRANSMITTED"));
+for (const scopeConstraint of [
+  "uq_submission_package_scope_identity",
+  "fk_submission_case_scope",
+  "fk_submission_case_version_identity",
+  "fk_submission_attempt_scope",
+  "fk_submission_ack_scope",
+]) {
+  assert.ok(
+    migration.includes(scopeConstraint),
+    `Migration 035 missing database scope constraint: ${scopeConstraint}`,
+  );
+}
 
 const permissions = read("lib/rbac/permissions.ts");
 for (const permission of [
