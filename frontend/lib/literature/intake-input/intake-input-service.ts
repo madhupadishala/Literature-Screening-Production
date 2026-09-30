@@ -165,7 +165,10 @@ function generationSql(): string {
       WHERE assessment.tenant_id = package.tenant_id
         AND assessment.canonical_package_id = package.id
     ) duplicates ON true
-    WHERE package.tenant_id = $1 AND package.id = $2
+    WHERE package.tenant_id = $1
+      AND package.id = $2
+      AND package.workspace_id = $3
+      AND package.environment = $4
     FOR UPDATE OF package, workflow
   `;
 }
@@ -185,9 +188,15 @@ export async function generateIntakeInput(input: {
     const selected = await client.query<GenerationRow>(generationSql(), [
       input.principal.tenantId,
       packageId,
+      scope.workspaceId,
+      scope.environment,
     ]);
     const row = selected.rows[0];
-    if (!row) throw new Error("Screening package was not found in the active tenant.");
+    if (!row) {
+      throw new Error(
+        "Screening package was not found in the selected client workspace/environment.",
+      );
+    }
     assertIntakeGenerationGate({
       workflowState: row.workflow_state,
       screeningReviewStatus: row.screening_review_status,
@@ -367,8 +376,8 @@ export async function generateIntakeInput(input: {
     );
     await client.query(
       `UPDATE literature_packages SET status = 'INTAKE_INPUT_CREATED', updated_at = now()
-       WHERE id = $1 AND tenant_id = $2`,
-      [packageId, input.principal.tenantId],
+       WHERE id = $1 AND tenant_id = $2 AND workspace_id = $3 AND environment = $4`,
+      [packageId, input.principal.tenantId, scope.workspaceId, scope.environment],
     );
     await client.query(
       `UPDATE literature_workflow_state
@@ -389,11 +398,14 @@ export async function generateIntakeInput(input: {
     );
     await client.query(
       `INSERT INTO audit_events (
-         tenant_id, package_id, actor_id, event_type, event_category, outcome, details
-       ) VALUES ($1, $2, $3, 'INTAKE_INPUT_GENERATED',
-         'LITERATURE_INTAKE_INPUT', 'success', $4::jsonb)`,
+         tenant_id, workspace_id, environment, module_key, package_id, actor_id,
+         event_type, event_category, outcome, details
+       ) VALUES ($1, $2, $3, 'LITERATURE', $4, $5, 'INTAKE_INPUT_GENERATED',
+         'LITERATURE_INTAKE_INPUT', 'success', $6::jsonb)`,
       [
         input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
         packageId,
         input.principal.userId,
         JSON.stringify({
