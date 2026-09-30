@@ -149,6 +149,44 @@ const qdrantClientSource = readFileSync(
   "utf8",
 );
 
+
+function extractInterfaceBlock(source: string, interfaceName: string): string {
+  const marker = \`export interface \${interfaceName}\`;
+  const markerIndex = source.indexOf(marker);
+  assert.notEqual(markerIndex, -1, \`Missing interface \${interfaceName}\`);
+  const openIndex = source.indexOf("{", markerIndex);
+  assert.notEqual(openIndex, -1, \`Missing opening brace for \${interfaceName}\`);
+
+  let depth = 0;
+  for (let index = openIndex; index < source.length; index += 1) {
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}") {
+      depth -= 1;
+      if (depth === 0) return source.slice(markerIndex, index + 1);
+    }
+  }
+
+  assert.fail(\`Missing closing brace for \${interfaceName}\`);
+}
+
+function extractArrayBlock(source: string, variableName: string): string {
+  const marker = \`const \${variableName} = [\`;
+  const start = source.indexOf(marker);
+  assert.notEqual(start, -1, \`Missing array \${variableName}\`);
+  const end = source.indexOf("];", start);
+  assert.notEqual(end, -1, \`Missing end of array \${variableName}\`);
+  return source.slice(start, end + 2);
+}
+
+const chunkingContextBlock = extractInterfaceBlock(
+  chunkTypesSource,
+  "KnowledgeChunkingContext",
+);
+const chunkMetadataBlock = extractInterfaceBlock(
+  chunkTypesSource,
+  "KnowledgeChunkMetadata",
+);
+
 for (const provenanceField of [
   "regulatorySourceId",
   "canonicalSourceUrl",
@@ -160,14 +198,20 @@ for (const provenanceField of [
   "approvalStatus",
   "supersedesSourceId",
   "supersededBySourceId",
+  "supersededAt",
 ]) {
+  const fieldPattern = new RegExp(\`\\\\b\${provenanceField}\\\\??\\\\s*:\`, "u");
   assert.ok(
-    chunkTypesSource.includes(provenanceField),
-    `Chunk metadata must declare regulator provenance field: ${provenanceField}`,
+    fieldPattern.test(chunkingContextBlock),
+    \`KnowledgeChunkingContext must declare regulator provenance field: \${provenanceField}\`,
   );
   assert.ok(
-    chunkerSource.includes(`request.context.${provenanceField}`),
-    `Chunker must propagate regulator provenance field: ${provenanceField}`,
+    fieldPattern.test(chunkMetadataBlock),
+    \`KnowledgeChunkMetadata must declare regulator provenance field: \${provenanceField}\`,
+  );
+  assert.ok(
+    chunkerSource.includes(\`request.context.\${provenanceField}\`),
+    \`Chunker must propagate regulator provenance field: \${provenanceField}\`,
   );
 }
 
@@ -182,13 +226,15 @@ for (const vectorField of [
   "approvalStatus",
   "supersedesSourceId",
   "supersededBySourceId",
+  "supersededAt",
 ]) {
   assert.ok(
-    qdrantTypesSource.includes(vectorField),
-    `Vector payload must support regulator provenance field: ${vectorField}`,
+    new RegExp(\`\\\\b\${vectorField}\\\\??\\\\s*:\`, "u").test(qdrantTypesSource),
+    \`Vector payload must support regulator provenance field: \${vectorField}\`,
   );
 }
 
+const keywordFieldsBlock = extractArrayBlock(qdrantClientSource, "keywordFields");
 for (const indexedField of [
   "authority",
   "regulatorySourceId",
@@ -196,19 +242,42 @@ for (const indexedField of [
   "jurisdiction",
   "lifecycleStatus",
   "approvalStatus",
+  "supersedesSourceId",
+  "supersededBySourceId",
 ]) {
   assert.ok(
-    qdrantClientSource.includes(`"${indexedField}"`),
-    `Qdrant payload indexing must include controlled provenance field: ${indexedField}`,
+    keywordFieldsBlock.includes(\`"\${indexedField}"\`),
+    \`Qdrant keyword payload indexing must include: \${indexedField}\`,
   );
 }
 
-assert.ok(
-  qdrantClientSource.includes('"publicationDate"') &&
-    qdrantClientSource.includes('"effectiveDate"'),
-  "Qdrant payload indexing must include publication/effective date fields.",
-);
+const datetimeFieldsBlock = extractArrayBlock(qdrantClientSource, "datetimeFields");
+for (const indexedDateField of [
+  "publicationDate",
+  "effectiveDate",
+  "supersededAt",
+]) {
+  assert.ok(
+    datetimeFieldsBlock.includes(\`"\${indexedDateField}"\`),
+    \`Qdrant datetime payload indexing must include: \${indexedDateField}\`,
+  );
+}
+
+for (const governanceExpectation of [
+  'key: "approvalStatus"',
+  'match: { value: "APPROVED" }',
+  'key: "effectiveDate"',
+  'key: "lifecycleStatus"',
+  'match: { value: "EFFECTIVE" }',
+  'is_empty: { key: "supersededBySourceId" }',
+]) {
+  assert.ok(
+    qdrantClientSource.includes(governanceExpectation),
+    \`Regulatory vector retrieval missing governance control: \${governanceExpectation}\`,
+  );
+}
 
 console.log(
-  "Regulatory provenance propagation verification passed for chunk and vector metadata.",
+  "Regulatory provenance propagation and governed vector retrieval verification passed.",
 );
+
