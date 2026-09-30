@@ -1,6 +1,6 @@
 # Cleanup Baseline Report
 
-Status: BASELINE CAPTURE QUALIFIED EXCEPT DEPENDENCY-CRUISER RECHECK
+Status: BASELINE CAPTURE QUALIFIED; SECRET-SCAN FINDING CLASSIFICATION OPEN
 Branch: cleanup/zero-deviation-baseline-20260930
 Source baseline: current main at branch creation
 Purpose: measure current implementation before cleanup or architecture remediation.
@@ -21,13 +21,13 @@ Purpose: measure current implementation before cleanup or architecture remediati
 | ESLint errors | **0** | Cleanup Baseline Benchmark run 36664295714 | Karpathy |
 | ESLint warnings | **9** | Cleanup Baseline Benchmark run 36664295714 | Karpathy |
 | Production build | **PASS** | Cleanup Baseline Benchmark run 36664295714 | Warpath |
-| Dependency vulnerabilities | **21 total: 19 high, 2 moderate in full benchmark audit; install summary reports 2 high top-level paths** | Cleanup Baseline Benchmark run 36664295714 | Hacker |
+| Dependency vulnerabilities | **BEFORE: 21 total (19 high, 2 moderate). CURRENT QUALIFICATION: 0 vulnerabilities after controlled compatible overrides.** | BEFORE run 36664295714; current quality run 36673592664 | Hacker |
 | Unused dependencies | pending | Knip | Ponytail |
 | Unused files/exports | **150 files reported; must be classified before deletion** | Knip, run 36664295714 | Ponytail |
 | Duplicate code | **308 clones; 4,611 duplicated lines (3.89%); 23,044 duplicated tokens (4.36%) across 720 analyzed files** | jscpd, Cleanup Baseline Benchmark run 36664295714 | Ponytail |
 | Circular dependencies | **0 found across 578 processed files** | Madge, run 36664295714 | Architecture |
-| Architecture boundary violations | **RECHECK REQUIRED** — previous run under-scanned TypeScript; CI corrected in commit `963a839db903c0910270fd9e857212f276fca078` | dependency-cruiser | Architecture |
-| Secret findings | **0 in cleanup commit range; 20 commits / ~101 KB scanned** | Gitleaks, run 36664295714 | Hacker |
+| Architecture boundary violations | **0 blocking violations on current qualified code; 64 warning-level orphan candidates across 636 modules / 1,543 dependencies.** Vendor edges are retained for boundary-rule evaluation. | dependency-cruiser, current quality run 36673592664 | Architecture |
+| Secret findings | **Incremental PR range: 0. Full historical scan: 2 findings; generated/dependency-inclusive working-tree scan: 11 findings pending classification. These are not accepted as clean until source-vs-artifact classification and remediation are complete.** | Gitleaks, run 36673592643 | Hacker |
 | Literature verification | **PASS** | `screening:verify` / baseline workflow | Evidence |
 | Intake verification | **PASS** | `intake:verify` / baseline workflow | Evidence |
 | L2A verification | **PASS through Sprint 10 scripted checks** | Nexus sprint verification scripts / baseline workflow | Evidence |
@@ -121,4 +121,4 @@ The baseline confirms that the current system contains substantial working PV ca
 
 ## Sprint 0 disposition
 
-Sprint 0 is considered functionally captured. Formal closure requires the corrected dependency-cruiser run to complete without an under-scan warning. All other known baseline outputs above are frozen as BEFORE evidence.
+Sprint 0 baseline capture is functionally complete and the corrected dependency-cruiser scan is trustworthy. Formal wave closure remains blocked until Gitleaks full-history and governed working-tree findings are classified and any real secret exposure is remediated/revoked. All BEFORE metrics remain frozen as evidence.
