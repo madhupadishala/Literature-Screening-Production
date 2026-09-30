@@ -5,6 +5,7 @@ import type { PoolClient } from "pg";
 
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 import { literatureIntakeToSafetyDraft } from "./literature-intake-adapter";
 import type {
   IntakeDraft,
@@ -99,10 +100,11 @@ function summary(row: Record<string, unknown>, reused: boolean): SafetyIntakeSum
 
 async function fetchSummary(
   client: PoolClient,
-  tenantId: string,
+  principal: RequestPrincipal,
   intakeRecordId: string,
   reused: boolean,
 ): Promise<SafetyIntakeSummary> {
+  const scope = requireSafetyWorkspaceScope(principal);
   const result = await client.query<Record<string, unknown>>(
     `SELECT intake.*, source.source_type, source.source_system,
             (
@@ -125,13 +127,22 @@ async function fetchSummary(
          ON source.id = intake.source_id
         AND source.tenant_id = intake.tenant_id
       WHERE intake.tenant_id = $1
-        AND intake.id = $2
+        AND intake.workspace_id = $2
+        AND intake.environment = $3
+        AND intake.id = $4
       LIMIT 1`,
-    [tenantId, intakeRecordId],
+    [
+      principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+      intakeRecordId,
+    ],
   );
 
   if (!result.rows[0]) {
-    throw new Error("Safety intake record was not found in the active tenant.");
+    throw new Error(
+      "Safety intake record was not found in the selected client workspace/environment.",
+    );
   }
 
   return summary(result.rows[0], reused);
@@ -302,22 +313,26 @@ export async function persistSafetyIntakeDraftInTransaction(input: {
   reason: string;
 }): Promise<SafetyIntakeSummary> {
   const reason = requireReason(input.reason);
+  const scope = requireSafetyWorkspaceScope(input.principal);
   const sourceId = randomUUID();
   const source = await input.client.query<{ id: string; source_sha256: string }>(
     `INSERT INTO safety_sources (
-       id, tenant_id, source_key, source_type, source_system,
+       id, tenant_id, workspace_id, environment, source_key, source_type, source_system,
        external_reference, received_at, country_code, language_code,
        source_payload, source_sha256, status, created_by
      ) VALUES (
-       $1,$2,$3,$4,$5,$6,$7,$8,$9,$10::jsonb,$11,'NORMALIZED',$12
+       $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::jsonb,$13,'NORMALIZED',$14
      )
-     ON CONFLICT (tenant_id, source_key)
+     ON CONFLICT (tenant_id, workspace_id, environment, source_key)
+       WHERE workspace_id IS NOT NULL AND environment IS NOT NULL
      DO UPDATE SET
        updated_at = safety_sources.updated_at
      RETURNING id, source_sha256`,
     [
       sourceId,
       input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
       input.draft.source.sourceKey,
       input.draft.source.sourceType,
       input.draft.source.sourceSystem,
@@ -341,19 +356,22 @@ export async function persistSafetyIntakeDraftInTransaction(input: {
   const intakeId = randomUUID();
   const intake = await input.client.query<{ id: string }>(
     `INSERT INTO safety_intake_records (
-       id, tenant_id, intake_key, source_id, source_record_key,
+       id, tenant_id, workspace_id, environment, intake_key, source_id, source_record_key,
        intake_channel, status, initial_receipt_date, latest_receipt_date,
        country_code, language_code, intake_payload, source_lineage,
        source_lineage_sha256, created_by, updated_by
      ) VALUES (
-       $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::jsonb,$13::jsonb,$14,$15,$15
+       $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14::jsonb,$15::jsonb,$16,$17,$17
      )
-     ON CONFLICT (tenant_id, source_id, source_record_key)
+     ON CONFLICT (tenant_id, workspace_id, environment, source_id, source_record_key)
+       WHERE workspace_id IS NOT NULL AND environment IS NOT NULL
      DO UPDATE SET updated_at = safety_intake_records.updated_at
      RETURNING id`,
     [
       intakeId,
       input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
       input.draft.intake.intakeKey,
       persistedSourceId,
       input.draft.intake.sourceRecordKey,
@@ -405,10 +423,14 @@ export async function persistSafetyIntakeDraftInTransaction(input: {
 
     await input.client.query(
       `INSERT INTO audit_events (
-         tenant_id, actor_id, event_type, event_category, outcome, details
-       ) VALUES ($1,$2,'SAFETY_INTAKE_CREATED','NEXUS_SAFETY_INTAKE','success',$3::jsonb)`,
+         tenant_id, workspace_id, environment, module_key, actor_id,
+         event_type, event_category, outcome, details
+       ) VALUES ($1,$2,$3,'INTAKE',$4,
+         'SAFETY_INTAKE_CREATED','NEXUS_SAFETY_INTAKE','success',$5::jsonb)`,
       [
         input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
         input.principal.userId,
         JSON.stringify({
           intakeRecordId: persistedIntakeId,
@@ -425,7 +447,7 @@ export async function persistSafetyIntakeDraftInTransaction(input: {
 
   return fetchSummary(
     input.client,
-    input.principal.tenantId,
+    input.principal,
     persistedIntakeId,
     !newlyCreated,
   );
@@ -465,6 +487,7 @@ export async function importLiteratureIntakeExport(input: {
   const exportId = input.exportId.trim();
   if (!exportId) throw new Error("exportId is required.");
   const reason = requireReason(input.reason);
+  const scope = requireSafetyWorkspaceScope(input.principal);
 
   const client = await getPostgresPool().connect();
   try {
@@ -475,9 +498,16 @@ export async function importLiteratureIntakeExport(input: {
               generated_at::text, safety_intake_record_id
          FROM intake_input_exports
         WHERE tenant_id = $1
-          AND id = $2
+          AND workspace_id = $2
+          AND environment = $3
+          AND id = $4
         FOR UPDATE`,
-      [input.principal.tenantId, exportId],
+      [
+        input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
+        exportId,
+      ],
     );
 
     const row = selected.rows[0];
@@ -488,7 +518,7 @@ export async function importLiteratureIntakeExport(input: {
     if (row.safety_intake_record_id) {
       const existing = await fetchSummary(
         client,
-        input.principal.tenantId,
+        input.principal,
         row.safety_intake_record_id,
         true,
       );
@@ -513,10 +543,18 @@ export async function importLiteratureIntakeExport(input: {
 
     await client.query(
       `UPDATE intake_input_exports
-          SET safety_intake_record_id = $3
+          SET safety_intake_record_id = $5
         WHERE tenant_id = $1
-          AND id = $2`,
-      [input.principal.tenantId, exportId, persisted.intakeRecordId],
+          AND workspace_id = $2
+          AND environment = $3
+          AND id = $4`,
+      [
+        input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
+        exportId,
+        persisted.intakeRecordId,
+      ],
     );
 
     await client.query(
@@ -528,9 +566,13 @@ export async function importLiteratureIntakeExport(input: {
               $3::jsonb, $4, $5::jsonb, $6
          FROM safety_intake_records intake
         WHERE intake.tenant_id = $1
-          AND intake.id = $2`,
+          AND intake.workspace_id = $2
+          AND intake.environment = $3
+          AND intake.id = $4`,
       [
         input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
         persisted.intakeRecordId,
         JSON.stringify({
           exportId: row.id,
@@ -560,6 +602,7 @@ export async function listSafetyIntakes(input: {
   principal: RequestPrincipal;
   limit?: number;
 }): Promise<SafetyIntakeSummary[]> {
+  const scope = requireSafetyWorkspaceScope(input.principal);
   const limit = Math.max(1, Math.min(input.limit ?? 100, 500));
   const result = await getPostgresPool().query<Record<string, unknown>>(
     `SELECT intake.*, source.source_type, source.source_system,
@@ -583,9 +626,16 @@ export async function listSafetyIntakes(input: {
          ON source.id = intake.source_id
         AND source.tenant_id = intake.tenant_id
       WHERE intake.tenant_id = $1
+        AND intake.workspace_id = $2
+        AND intake.environment = $3
       ORDER BY intake.updated_at DESC
-      LIMIT $2`,
-    [input.principal.tenantId, limit],
+      LIMIT $4`,
+    [
+      input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+      limit,
+    ],
   );
 
   return result.rows.map((row) => summary(row, true));
