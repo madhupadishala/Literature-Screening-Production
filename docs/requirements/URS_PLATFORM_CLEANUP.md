@@ -19,6 +19,8 @@ All changes shall satisfy:
 5. CodeRabbit — independent PR review with unresolved material findings blocking promotion.
 6. Hacker Gate — adversarial security testing and remediation/retest.
 7. Evidence Gate — requirement -> architecture -> code -> test -> security -> evidence -> release traceability.
+8. Regulatory Knowledge Gate — authoritative regulator/harmonised source traceability, jurisdiction/version control and change-impact assessment.
+9. Modular & Benchmark Completeness Gate — plug-and-play module integrity plus market/regulatory completeness benchmarking.
 
 ## 3. Canonical access model
 
@@ -146,4 +148,4 @@ URS-145 The clean repository's first commit shall represent the verified clean b
 
 ## 15. Acceptance
 
-The cleanup program is accepted only when all applicable URS items are traced to implementation and objective evidence and all seven gates are passed or formally dispositioned.
+The cleanup program is accepted only when all applicable URS items are traced to implementation and objective evidence and all nine gates are passed or formally dispositioned.
