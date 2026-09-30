@@ -24,8 +24,16 @@ export type RegulatoryAuthority =
   | "FDA"
   | "MHRA"
   | "PMDA"
+  | "MHLW"
   | "ICH"
   | "CIOMS"
+  | "CDSCO"
+  | "PVPI"
+  | "IPC"
+  | "HEALTH_CANADA"
+  | "TGA"
+  | "WHO"
+  | "EUDRAVIGILANCE"
   | "UNKNOWN";
 
 export type KnowledgeIngestionFileStatus =
