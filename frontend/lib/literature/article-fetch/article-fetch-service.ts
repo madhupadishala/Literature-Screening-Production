@@ -10,6 +10,7 @@ import type {
 
 export interface ArticleFetchWorkflowResponse
   extends ArticleFetchResponse {
+  tenantId: string;
   evidencePackageId?: string;
   workflowStage: "ARTICLE_FETCH_COMPLETED";
 }
@@ -101,6 +102,7 @@ class ArticleFetchService {
 
     const workflowResponse: ArticleFetchWorkflowResponse =
       {
+        tenantId: request.tenantId,
         ...response,
 
         evidencePackageId,
@@ -114,10 +116,13 @@ class ArticleFetchService {
     return workflowResponse;
   }
 
-  list(
+  listForTenant(
+    tenantId: string,
     limit = 20,
   ): ArticleFetchWorkflowResponse[] {
-    return this.history.slice(0, limit);
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, limit);
   }
 
   clear(): void {
