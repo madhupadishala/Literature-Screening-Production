@@ -21,8 +21,8 @@ export async function GET(request: NextRequest): Promise<Response> {
 
     return Response.json({
       success: true,
-      status: literatureWorkflowService.getStatusForTenant(principal.tenantId),
-      history: literatureWorkflowService.listForTenant(principal.tenantId),
+      status: literatureWorkflowService.getStatusForTenant(principal.tenantKey),
+      history: literatureWorkflowService.listForTenant(principal.tenantKey),
     });
   } catch (error) {
     return routeErrorResponse(error);
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     }
 
     const result = await literatureWorkflowService.execute({
-      tenantId: principal.tenantId,
+      tenantId: principal.tenantKey,
       query: body.query.trim(),
       maxResults: body.maxResults,
     });
