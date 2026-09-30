@@ -168,3 +168,31 @@ COMMENT ON COLUMN safety_cases.workspace_id IS
   'Client workspace authority. NULL only for legacy rows pending controlled migration mapping.';
 COMMENT ON COLUMN intake_input_exports.workspace_id IS
   'Workspace that generated/owns the immutable Literature-to-Intake handoff.';
+
+
+-- Composite identities used by downstream regulated foreign keys.
+-- Legacy rows may retain NULL workspace/environment until controlled mapping;
+-- new scoped rows use the full authoritative identity.
+DO $safety_scope_identity_keys$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'uq_safety_cases_scope_identity'
+      AND conrelid = 'safety_cases'::regclass
+  ) THEN
+    ALTER TABLE safety_cases
+      ADD CONSTRAINT uq_safety_cases_scope_identity
+      UNIQUE (tenant_id, workspace_id, environment, id);
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'uq_safety_case_versions_case_identity'
+      AND conrelid = 'safety_case_versions'::regclass
+  ) THEN
+    ALTER TABLE safety_case_versions
+      ADD CONSTRAINT uq_safety_case_versions_case_identity
+      UNIQUE (tenant_id, case_id, id);
+  END IF;
+END
+$safety_scope_identity_keys$;
