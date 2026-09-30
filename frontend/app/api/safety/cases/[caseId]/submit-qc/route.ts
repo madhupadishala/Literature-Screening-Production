@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { assertSafetyCaseInScope } from "@/lib/safety/common/safety-workspace-scope";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
@@ -20,6 +21,7 @@ export async function POST(
       PERMISSIONS.CASE_PROCESS,
     );
     const { caseId } = await context.params;
+    await assertSafetyCaseInScope(principal, caseId);
     const body = (await request.json()) as { comments?: unknown };
     if (typeof body.comments !== "string") {
       throw new Error("comments are required.");
