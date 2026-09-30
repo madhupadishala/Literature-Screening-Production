@@ -85,7 +85,7 @@ Current default chunking parameters remain controlled configuration, currently m
 | FRS-PVK-017 | 038-040 | Search mode shall support keyword, semantic and hybrid modes. |
 | FRS-PVK-018 | 042 | Tenant/client-private retrieval shall receive scope from server-authoritative authorization context. |
 | FRS-PVK-019 | 043 | Each returned result shall contain a governed citation. |
-| FRS-PVK-020 | 044-046 | Retrieval filters shall support source/domain/jurisdiction/version/effective-status filtering as metadata becomes available. |
+| FRS-PVK-020 | 044-046 | Production retrieval shall filter by jurisdiction/version and lifecycle status, include only approved/effective sources for the applicable effective date, and exclude sources whose lifecycle status is unknown. Historical/date-scoped retrieval may include superseded sources when explicitly requested and shall preserve their superseded status in citations. |
 | FRS-PVK-021 | 048 | Zero approved results shall return an explicit empty/no-approved-context result. |
 | FRS-PVK-022 | 049 | Retrieval shall write an audit event with query hash, repository/version, result count and citation IDs without unnecessarily storing sensitive free text. |
 | FRS-PVK-023 | 050 | AI context pack shall retain controlled citations and repository manifest/version provenance. |
@@ -154,7 +154,7 @@ Minimum Sprint 1 verification shall cover:
 12. source citation output;
 13. retrieval audit event;
 14. cross-tenant negative retrieval where tenant data is involved;
-15. superseded/current source filtering once implemented.
+15. production retrieval excludes unknown/non-effective sources while explicit historical/date-scoped retrieval can return correctly labelled superseded sources.
 
 ## 14. Traceability
 All FRS items shall be mapped to implementation/tests in the Sprint 1 traceability matrix before qualification.
