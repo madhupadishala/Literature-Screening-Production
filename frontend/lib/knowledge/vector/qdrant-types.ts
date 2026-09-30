@@ -4,6 +4,19 @@ export interface QdrantCollectionConfig {
   distance: "Cosine" | "Dot" | "Euclid" | "Manhattan";
 }
 
+export type RegulatoryLifecycleStatus =
+  | "DRAFT"
+  | "FUTURE_EFFECTIVE"
+  | "EFFECTIVE"
+  | "SUPERSEDED"
+  | "RETIRED"
+  | "REJECTED";
+
+export type RegulatoryApprovalStatus =
+  | "PENDING"
+  | "APPROVED"
+  | "REJECTED";
+
 export interface KnowledgeVectorPayload {
   chunkId: string;
 
@@ -22,10 +35,11 @@ export interface KnowledgeVectorPayload {
   version?: string;
   publicationDate?: string;
   effectiveDate?: string;
-  lifecycleStatus?: string;
-  approvalStatus?: string;
+  lifecycleStatus?: RegulatoryLifecycleStatus;
+  approvalStatus?: RegulatoryApprovalStatus;
   supersedesSourceId?: string;
   supersededBySourceId?: string;
+  supersededAt?: string;
 
   tenantId: string;
 
@@ -76,6 +90,14 @@ export interface KnowledgeSearchRequest {
   category?: string;
 
   regulation?: string;
+
+  /**
+   * Regulatory retrieval is governance-filtered whenever category is
+   * regulatory_guidance or regulation is supplied. Historical retrieval must
+   * be explicit and date-scoped.
+   */
+  asOf?: string;
+  includeSuperseded?: boolean;
 
   tags?: string[];
 }
