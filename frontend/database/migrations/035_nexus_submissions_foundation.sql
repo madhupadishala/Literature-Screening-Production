@@ -97,3 +97,69 @@ CREATE TABLE IF NOT EXISTS nexus_submission_acknowledgements (
 CREATE INDEX IF NOT EXISTS idx_submission_ack_package
   ON nexus_submission_acknowledgements
   (submission_package_id, received_at DESC);
+
+
+-- Enforce the same tenant/workspace/environment authority at the database layer.
+DO $submission_scope_integrity$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'uq_submission_package_scope_identity'
+      AND conrelid = 'nexus_submission_packages'::regclass
+  ) THEN
+    ALTER TABLE nexus_submission_packages
+      ADD CONSTRAINT uq_submission_package_scope_identity
+      UNIQUE (tenant_id, workspace_id, environment, id);
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'fk_submission_case_scope'
+      AND conrelid = 'nexus_submission_packages'::regclass
+  ) THEN
+    ALTER TABLE nexus_submission_packages
+      ADD CONSTRAINT fk_submission_case_scope
+      FOREIGN KEY (tenant_id, workspace_id, environment, case_id)
+      REFERENCES safety_cases (tenant_id, workspace_id, environment, id)
+      ON DELETE RESTRICT;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'fk_submission_case_version_identity'
+      AND conrelid = 'nexus_submission_packages'::regclass
+  ) THEN
+    ALTER TABLE nexus_submission_packages
+      ADD CONSTRAINT fk_submission_case_version_identity
+      FOREIGN KEY (tenant_id, case_id, case_version_id)
+      REFERENCES safety_case_versions (tenant_id, case_id, id)
+      ON DELETE RESTRICT;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'fk_submission_attempt_scope'
+      AND conrelid = 'nexus_submission_attempts'::regclass
+  ) THEN
+    ALTER TABLE nexus_submission_attempts
+      ADD CONSTRAINT fk_submission_attempt_scope
+      FOREIGN KEY (tenant_id, workspace_id, environment, submission_package_id)
+      REFERENCES nexus_submission_packages
+        (tenant_id, workspace_id, environment, id)
+      ON DELETE RESTRICT;
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'fk_submission_ack_scope'
+      AND conrelid = 'nexus_submission_acknowledgements'::regclass
+  ) THEN
+    ALTER TABLE nexus_submission_acknowledgements
+      ADD CONSTRAINT fk_submission_ack_scope
+      FOREIGN KEY (tenant_id, workspace_id, environment, submission_package_id)
+      REFERENCES nexus_submission_packages
+        (tenant_id, workspace_id, environment, id)
+      ON DELETE RESTRICT;
+  END IF;
+END
+$submission_scope_integrity$;
