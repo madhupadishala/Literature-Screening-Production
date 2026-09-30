@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { assertSafetyIntakeInScope } from "@/lib/safety/common/safety-workspace-scope";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import {
@@ -30,6 +31,7 @@ export async function GET(
       PERMISSIONS.INTAKE_VIEW,
     );
     const { intakeId } = await context.params;
+    await assertSafetyIntakeInScope(principal, intakeId);
     const workspace = await getDispositionWorkspace({
       principal,
       intakeRecordId: intakeId,
@@ -51,6 +53,7 @@ export async function POST(
       PERMISSIONS.INTAKE_PROCESS,
     );
     const { intakeId } = await context.params;
+    await assertSafetyIntakeInScope(principal, intakeId);
     const body = (await request.json()) as Partial<IntakeDispositionRequest>;
 
     if (
