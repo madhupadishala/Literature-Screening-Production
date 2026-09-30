@@ -5,8 +5,9 @@ import {
   getDuplicateIntelligenceStatus,
   listDuplicateAssessments,
 } from "@/lib/literature/duplicates/duplicate-repository";
-import { requirePermission } from "@/lib/rbac/guard";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
