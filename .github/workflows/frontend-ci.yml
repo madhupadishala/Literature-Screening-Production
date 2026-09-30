@@ -121,6 +121,9 @@ jobs:
       - name: Verify cleanup Sprint 4 Literature reconciliation
         run: npm run cleanup:sprint4:verify
 
+      - name: Verify cleanup Sprint 5 Intake reconciliation
+        run: npm run cleanup:sprint5:verify
+
       - name: Build production application
         run: npm run build
 
