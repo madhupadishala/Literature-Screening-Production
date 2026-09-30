@@ -68,7 +68,7 @@ function knowledgeRoot(): string {
 
   return path.isAbsolute(configured)
     ? path.normalize(configured)
-    : path.resolve(process.cwd(), configured);
+    : path.resolve(/* turbopackIgnore: true */ process.cwd(), configured);
 }
 
 function repositoryRoot(): string {
