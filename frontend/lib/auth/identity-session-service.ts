@@ -106,17 +106,7 @@ export async function resolveIdentitySession(
   );
 
   const row = result.rows[0];
-  if (!row) {
-    await getPostgresPool().query(
-      `UPDATE nexus_identity_sessions
-          SET status = 'expired'
-        WHERE token_hash = $1
-          AND status = 'active'
-          AND expires_at <= now()`,
-      [tokenHash],
-    );
-    return null;
-  }
+  if (!row) return null;
 
   await getPostgresPool().query(
     `UPDATE nexus_identity_sessions
