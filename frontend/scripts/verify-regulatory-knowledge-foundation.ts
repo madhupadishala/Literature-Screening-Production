@@ -200,7 +200,7 @@ for (const provenanceField of [
   "supersededBySourceId",
   "supersededAt",
 ]) {
-  const fieldPattern = new RegExp(`\\\\b${provenanceField}\\\\??\\\\s*:`, "u");
+  const fieldPattern = new RegExp(`\\b${provenanceField}\\??\\s*:`, "u");
   assert.ok(
     fieldPattern.test(chunkingContextBlock),
     `KnowledgeChunkingContext must declare regulator provenance field: ${provenanceField}`,
@@ -229,7 +229,7 @@ for (const vectorField of [
   "supersededAt",
 ]) {
   assert.ok(
-    new RegExp(`\\\\b${vectorField}\\\\??\\\\s*:`, "u").test(qdrantTypesSource),
+    new RegExp(`\\b${vectorField}\\??\\s*:`, "u").test(qdrantTypesSource),
     `Vector payload must support regulator provenance field: ${vectorField}`,
   );
 }
