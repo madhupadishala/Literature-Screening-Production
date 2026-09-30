@@ -1,7 +1,7 @@
 # Secret Scan Finding Disposition — Sprint 0–3
 
 Document ID: SEC-GITLEAKS-DISP-001  
-Status: Pending final clean rerun  
+Status: QUALIFIED — clean controlled rerun completed  
 Scope: cleanup branch full-history and governed working-tree Gitleaks findings.
 
 ## 1. Purpose
@@ -43,7 +43,7 @@ This disposition is valid only when a subsequent controlled scan demonstrates:
 - governed working-tree/source scan using the governed configuration: exit 0;
 - no broad allowlist capable of hiding arbitrary source secrets.
 
-Until those conditions are met, the Hacker Gate remains open.
+Qualification evidence: Cleanup Baseline Benchmark run **36675295402** demonstrated clean incremental PR, full-history and governed working-tree scans after the narrow policy correction. Subsequent qualified cleanup runs must continue to reproduce those results; any new finding reopens the Hacker Gate.
 
 ## 5. Required response to future findings
 
