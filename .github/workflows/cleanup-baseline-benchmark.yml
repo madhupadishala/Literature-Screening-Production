@@ -62,6 +62,16 @@ jobs:
           printf "exit=%s\n" "$rc" > benchmark-output/eslint.status
           exit "$rc"
 
+      - name: Product Design Guardian benchmark
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run design:verify 2>&1 | tee benchmark-output/product-design-guardian.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/product-design-guardian.status
+          exit "$rc"
+
       - name: Production build
         continue-on-error: true
         run: |
