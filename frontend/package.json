@@ -74,7 +74,9 @@
     "nexus:security-boundaries:verify": "node --import tsx scripts/verify-nexus-security-boundaries.ts",
     "regulatory:knowledge:verify": "node --import tsx scripts/verify-regulatory-knowledge-foundation.ts",
     "cleanup:sprint4:verify": "node --import tsx scripts/verify-cleanup-sprint4-literature.ts",
-    "cleanup:sprint5:verify": "node --import tsx scripts/verify-cleanup-sprint5-intake.ts"
+    "cleanup:sprint5:verify": "node --import tsx scripts/verify-cleanup-sprint5-intake.ts",
+    "cleanup:sprint6:verify": "node --import tsx scripts/verify-cleanup-sprint6-case-processing.ts",
+    "cleanup:sprint7:verify": "node --import tsx scripts/verify-cleanup-sprint7-submissions.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "1.18.0",
