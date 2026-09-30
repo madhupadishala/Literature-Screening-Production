@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { literatureWorkflowService } from "@/lib/literature/workflow/literature-workflow-service";
-import { requireModulePermission } from "@/lib/rbac/guard";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
@@ -68,7 +68,7 @@ export async function POST(
   request: NextRequest,
 ): Promise<Response> {
   try {
-    const principal = await requireModulePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.PACKAGE_ACTION_EXECUTE,
@@ -178,7 +178,7 @@ export async function POST(
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requireModulePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.PACKAGE_ACTION_EXECUTE,
