@@ -118,6 +118,9 @@ jobs:
       - name: Verify controlled regulatory knowledge foundation
         run: npm run regulatory:knowledge:verify
 
+      - name: Verify cleanup Sprint 4 Literature reconciliation
+        run: npm run cleanup:sprint4:verify
+
       - name: Build production application
         run: npm run build
 
