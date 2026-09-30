@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Authoritative PV source catalog. Catalog presence does not imply full text has been ingested or approved.",
+  "rules": {
+    "authoritativeOnly": true,
+    "fullTextInGit": false,
+    "requireChecksumOnAcquisition": true,
+    "requireHumanApprovalBeforeProductionRetrieval": true,
+    "preserveSupersededVersions": true
+  },
+  "sources": [
+    {
+      "id": "EMA-GVP",
+      "authority": "EMA",
+      "jurisdiction": "EU_EEA",
+      "title": "Good pharmacovigilance practices (GVP) — modules, annexes, addenda and product/population considerations",
+      "canonicalUrl": "https://www.ema.europa.eu/en/human-regulatory-overview/post-authorisation/pharmacovigilance-post-authorisation/good-pharmacovigilance-practices-gvp",
+      "status": "ACTIVE_LANDING",
+      "scope": [
+        "NEXUS",
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SUBMISSIONS",
+        "SIGNAL",
+        "AGGREGATE",
+        "PV_DOCUMENTATION"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "ICH-E2-SERIES",
+      "authority": "ICH",
+      "jurisdiction": "GLOBAL_HARMONISED",
+      "title": "ICH E2 pharmacovigilance/safety guideline family",
+      "canonicalUrl": "https://www.ich.org/page/efficacy-guidelines",
+      "status": "ACTIVE_LANDING",
+      "scope": [
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SUBMISSIONS",
+        "SIGNAL",
+        "AGGREGATE"
+      ],
+      "ingestionStatus": "CATALOGUED",
+      "notes": "Track E2A, E2B(R3), E2C(R2), E2D(R1), E2E, E2F plus implementation packages/Q&As/code lists."
+    },
+    {
+      "id": "CDSCO-PV-MAH",
+      "authority": "CDSCO",
+      "jurisdiction": "IN",
+      "title": "CDSCO post-marketing / pharmacovigilance guidance for MAHs and related current materials",
+      "canonicalUrl": "https://cdsco.gov.in/opencms/opencms/en/Post-Marketing-DSM/",
+      "status": "ACTIVE_LANDING",
+      "scope": [
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SUBMISSIONS",
+        "SIGNAL",
+        "AGGREGATE",
+        "PV_DOCUMENTATION"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "PVPI-IPC",
+      "authority": "IPC",
+      "jurisdiction": "IN",
+      "title": "Pharmacovigilance Programme of India / IPC official pharmacovigilance material",
+      "canonicalUrl": "https://ipc.gov.in/PvPI/pv_home.html",
+      "status": "ACTIVE_LANDING",
+      "scope": [
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SIGNAL",
+        "PV_DOCUMENTATION"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "FDA-E2D-R1",
+      "authority": "FDA",
+      "jurisdiction": "US",
+      "title": "E2D(R1) Post-Approval Safety Data: Definitions and Standards for Management and Reporting of ICSRs",
+      "canonicalUrl": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/e2dr1-post-approval-safety-data-definitions-and-standards-management-and-reporting-individual-case",
+      "status": "FINAL",
+      "publicationDate": "2026-03",
+      "scope": [
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SUBMISSIONS"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "FDA-AEMS",
+      "authority": "FDA",
+      "jurisdiction": "US",
+      "title": "FDA adverse-event electronic reporting / AEMS implementation material",
+      "canonicalUrl": "https://www.fda.gov/industry/fda-esubmitter/adverse-event-reporting-system-aers",
+      "status": "ACTIVE_LANDING",
+      "scope": [
+        "SUBMISSIONS",
+        "CASE_PROCESSING"
+      ],
+      "ingestionStatus": "CATALOGUED",
+      "verificationRequired": true
+    },
+    {
+      "id": "MHRA-PV",
+      "authority": "MHRA",
+      "jurisdiction": "UK",
+      "title": "Guidance on pharmacovigilance procedures",
+      "canonicalUrl": "https://www.gov.uk/government/publications/guidance-on-pharmacovigilance-procedures/guidance-on-pharmacovigilance-procedures",
+      "status": "ACTIVE",
+      "scope": [
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SUBMISSIONS",
+        "SIGNAL",
+        "AGGREGATE",
+        "PV_DOCUMENTATION"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "HC-AR-GUIDANCE",
+      "authority": "HEALTH_CANADA",
+      "jurisdiction": "CA",
+      "title": "Reporting adverse reactions to marketed health products — Guidance document for industry",
+      "canonicalUrl": "https://www.canada.ca/en/health-canada/services/drugs-health-products/reports-publications/medeffect-canada/reporting-adverse-reactions-marketed-health-products-guidance-industry/guidance-document.html",
+      "status": "ACTIVE_WITH_2026_NOTICE",
+      "effectiveDate": "2018-05-23",
+      "scope": [
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SUBMISSIONS"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "HC-2026-SECTION-4-3",
+      "authority": "HEALTH_CANADA",
+      "jurisdiction": "CA",
+      "title": "2026 clarification of section 4.3 of marketed health product adverse-reaction guidance",
+      "canonicalUrl": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/announcements/clarification-section-4-3-reporting-adverse-reactions-marketed-health-products-guidance-notice.html",
+      "status": "ACTIVE_NOTICE",
+      "publicationDate": "2026-02-19",
+      "scope": [
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "TGA-PV-SPONSORS",
+      "authority": "TGA",
+      "jurisdiction": "AU",
+      "title": "Pharmacovigilance responsibilities of medicine sponsors",
+      "canonicalUrl": "https://www.tga.gov.au/resources/guidance/pharmacovigilance-responsibilities-medicine-sponsors",
+      "status": "ACTIVE",
+      "scope": [
+        "LITERATURE",
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SUBMISSIONS",
+        "SIGNAL",
+        "PV_DOCUMENTATION"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "PMDA-SAFETY",
+      "authority": "PMDA",
+      "jurisdiction": "JP",
+      "title": "PMDA post-marketing safety measures",
+      "canonicalUrl": "https://www.pmda.go.jp/english/safety/outline/0001.html",
+      "status": "ACTIVE_LANDING",
+      "scope": [
+        "INTAKE",
+        "CASE_PROCESSING",
+        "SUBMISSIONS",
+        "SIGNAL",
+        "PV_DOCUMENTATION"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "PMDA-RMP",
+      "authority": "PMDA",
+      "jurisdiction": "JP",
+      "title": "PMDA Risk Management Plan (RMP)",
+      "canonicalUrl": "https://www.pmda.go.jp/english/safety/info-services/drugs/rmp/0001.html",
+      "status": "ACTIVE",
+      "scope": [
+        "SIGNAL",
+        "PV_DOCUMENTATION",
+        "AGGREGATE"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    },
+    {
+      "id": "WHO-SMART-PV",
+      "authority": "WHO",
+      "jurisdiction": "GLOBAL",
+      "title": "The global smart pharmacovigilance strategy",
+      "canonicalUrl": "https://www.who.int/publications/b/81580",
+      "status": "ACTIVE",
+      "publicationDate": "2025",
+      "scope": [
+        "NEXUS",
+        "SIGNAL",
+        "PV_DOCUMENTATION"
+      ],
+      "ingestionStatus": "CATALOGUED"
+    }
+  ]
+}
