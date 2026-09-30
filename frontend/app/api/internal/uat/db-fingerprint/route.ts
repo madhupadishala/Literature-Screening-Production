@@ -3,18 +3,6 @@ import { getPostgresPool } from "@/lib/database/postgres";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-interface FingerprintRow {
-  current_database: string;
-  neon_branch_id: string | null;
-  neon_project_id: string | null;
-  migration_ledger_present: boolean;
-  migration_id: string | null;
-  migration_count: string;
-  nexus_migration_count: string;
-  safety_table_count: string;
-  uat_tenant_count: string;
-}
-
 export async function GET(): Promise<Response> {
   if (process.env.VERCEL_ENV === "production") {
     return new Response("Not Found", { status: 404 });
