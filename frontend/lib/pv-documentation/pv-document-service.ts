@@ -55,6 +55,9 @@ export async function getPvDocument(input:{principal:RequestPrincipal;documentId
 }
 
 export async function createPvDocumentVersion(input:{principal:RequestPrincipal;documentId:string;request:CreatePvDocumentVersionRequest}){
+ if(!isRecord(input.request.content))throw new Error("PV document content must be a JSON object.");
+ if(!["DRAFT","REVIEWED","APPROVED","EFFECTIVE","RETIRED"].includes(input.request.versionStatus))throw new Error("Unsupported PV document version status.");
+ if(input.request.linkedSources!==undefined&&(!Array.isArray(input.request.linkedSources)||input.request.linkedSources.some((item)=>!isRecord(item))))throw new Error("linkedSources must be an array of JSON objects.");
  const scope=requireSafetyWorkspaceScope(input.principal);const client=await getPostgresPool().connect();
  try{
   await client.query("BEGIN");
@@ -81,6 +84,15 @@ export async function createPvDocumentVersion(input:{principal:RequestPrincipal;
   );
   const lifecycle=input.request.versionStatus==="EFFECTIVE"?"EFFECTIVE":input.request.versionStatus==="APPROVED"?"APPROVED":input.request.versionStatus==="REVIEWED"?"IN_REVIEW":input.request.versionStatus;
   await client.query(`UPDATE nexus_pv_documents SET current_version=$2,lifecycle_status=$3,updated_at=now() WHERE id=$1`,[input.documentId,version,lifecycle]);
+  await client.query(
+   `INSERT INTO audit_events (
+      tenant_id,workspace_id,environment,module_key,actor_id,event_type,event_category,outcome,details
+    ) VALUES ($1,$2,$3,'PV_DOCUMENTATION',$4,'PV_DOCUMENT_VERSION_RECORDED','NEXUS_PV_DOCUMENTATION','success',$5::jsonb)`,
+   [input.principal.tenantId,scope.workspaceId,scope.environment,input.principal.userId,JSON.stringify({
+     documentId:input.documentId,version,versionStatus:input.request.versionStatus,contentSha256,
+     changeReason:input.request.changeReason,effectiveFrom,effectiveUntil,
+   })],
+  );
   await client.query("COMMIT");return inserted.rows[0];
  }catch(error){await client.query("ROLLBACK");throw error;}finally{client.release();}
 }
