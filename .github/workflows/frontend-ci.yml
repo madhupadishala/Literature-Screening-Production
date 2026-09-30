@@ -132,6 +132,9 @@ jobs:
       - name: Verify cleanup Sprint 7 Submissions foundation
         run: npm run cleanup:sprint7:verify
 
+      - name: Verify cleanup Sprint 8 Signal Management foundation
+        run: npm run cleanup:sprint8:verify
+
       - name: Build production application
         run: npm run build
 
