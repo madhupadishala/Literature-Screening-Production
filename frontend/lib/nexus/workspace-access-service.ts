@@ -402,8 +402,12 @@ export async function evaluateWorkspaceModuleAccess(input: {
   if (input.permission) {
     const permitted = result.rows.some((row) => {
       if (!row.module_role) return false;
+      const allowedForModule = modulePermissions(input.moduleKey);
       const customPermissions = Array.isArray(row.custom_permissions)
-        ? row.custom_permissions.map(String).filter(isPermission)
+        ? row.custom_permissions
+            .map(String)
+            .filter(isPermission)
+            .filter((permission) => allowedForModule.includes(permission))
         : [];
       return (
         customPermissions.includes(input.permission!) ||
