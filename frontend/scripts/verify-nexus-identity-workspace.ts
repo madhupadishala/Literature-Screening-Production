@@ -21,7 +21,9 @@ assert.ok(migration.includes("ON DELETE RESTRICT"), "Workspace audit/history mus
 
 const identityRoute = read("app/api/auth/identity/route.ts");
 assert.ok(identityRoute.includes("verifyIdentityCredentials"));
-assert.ok(!identityRoute.includes("tenantId") || identityRoute.includes("listTenantMemberships"));
+const loginBody = identityRoute.match(/type LoginBody = \{[\s\S]*?\};/u)?.[0] || "";
+assert.ok(loginBody.length > 0, "LoginBody must be declared.");
+assert.ok(!loginBody.includes("tenantId"), "Identity login body must not accept tenant selection.");
 assert.ok(identityRoute.includes("next: \"SELECT_TENANT\""));
 assert.ok(identityRoute.includes("httpOnly: true"));
 assert.ok(identityRoute.includes('sameSite: "strict"'));
