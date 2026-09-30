@@ -4,6 +4,7 @@ import type { PoolClient } from "pg";
 
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 import { canonicalSha256 } from "@/lib/safety/common/canonical-json";
 import {
   CASE_ASSESSMENT_TYPES,
@@ -606,6 +607,7 @@ export async function listCaseWorklist(input: {
   principal: RequestPrincipal;
   limit?: number;
 }): Promise<CaseWorklistRow[]> {
+  const scope = requireSafetyWorkspaceScope(input.principal);
   const limit = Math.max(1, Math.min(input.limit ?? 200, 500));
   const result = await getPostgresPool().query<Record<string, unknown>>(
     `SELECT safety_case.id, safety_case.case_key,
@@ -621,6 +623,8 @@ export async function listCaseWorklist(input: {
          ON intake.id = safety_case.intake_record_id
         AND intake.tenant_id = safety_case.tenant_id
       WHERE safety_case.tenant_id = $1
+        AND safety_case.workspace_id = $2
+        AND safety_case.environment = $3
       ORDER BY
         CASE intake.priority
           WHEN 'URGENT' THEN 1
@@ -629,8 +633,13 @@ export async function listCaseWorklist(input: {
           ELSE 4
         END,
         safety_case.updated_at DESC
-      LIMIT $2`,
-    [input.principal.tenantId, limit],
+      LIMIT $4`,
+    [
+      input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+      limit,
+    ],
   );
 
   return result.rows.map((row) => ({
