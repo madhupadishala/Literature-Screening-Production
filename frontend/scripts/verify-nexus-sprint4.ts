@@ -68,7 +68,16 @@ for (const route of [
 ]) {
   const source = readFileSync(path.join(process.cwd(), route), "utf8");
   assert.equal(source.includes("NEXUS_MODULES.INTAKE"), true, route);
-  assert.equal(source.includes("requireModulePermission"), true, route);
+  assert.equal(
+    source.includes("requireWorkspaceModulePermission"),
+    true,
+    `${route} must use the canonical workspace/module guard`,
+  );
+  assert.equal(
+    /\brequireModulePermission\s*\(/u.test(source),
+    false,
+    `${route} must not call the legacy module guard`,
+  );
 }
 
 const reviewService = readFileSync(
