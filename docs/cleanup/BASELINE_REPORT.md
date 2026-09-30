@@ -1,6 +1,6 @@
 # Cleanup Baseline Report
 
-Status: BASELINE CAPTURE QUALIFIED; SECRET-SCAN FINDING CLASSIFICATION OPEN
+Status: BASELINE CAPTURE QUALIFIED; CURRENT SECURITY BASELINE CLEAN
 Branch: cleanup/zero-deviation-baseline-20260930
 Source baseline: current main at branch creation
 Purpose: measure current implementation before cleanup or architecture remediation.
@@ -23,17 +23,17 @@ Purpose: measure current implementation before cleanup or architecture remediati
 | Production build | **PASS** | Cleanup Baseline Benchmark run 36664295714 | Warpath |
 | Dependency vulnerabilities | **BEFORE: 21 total (19 high, 2 moderate). CURRENT QUALIFICATION: 0 vulnerabilities after controlled compatible overrides.** | BEFORE run 36664295714; current quality run 36673592664 | Hacker |
 | Unused dependencies | pending | Knip | Ponytail |
-| Unused files/exports | **150 files reported; must be classified before deletion** | Knip, run 36664295714 | Ponytail |
+| Unused files/exports | **BEFORE: 150 files reported. CURRENT: 151 candidates; must be classified before deletion.** | Knip; current run 36675295402 | Ponytail |
 | Duplicate code | **308 clones; 4,611 duplicated lines (3.89%); 23,044 duplicated tokens (4.36%) across 720 analyzed files** | jscpd, Cleanup Baseline Benchmark run 36664295714 | Ponytail |
-| Circular dependencies | **0 found across 578 processed files** | Madge, run 36664295714 | Architecture |
-| Architecture boundary violations | **0 blocking violations on current qualified code; 64 warning-level orphan candidates across 636 modules / 1,543 dependencies.** Vendor edges are retained for boundary-rule evaluation. | dependency-cruiser, current quality run 36673592664 | Architecture |
-| Secret findings | **Incremental PR range: 0. Full historical scan: 2 findings; generated/dependency-inclusive working-tree scan: 11 findings pending classification. These are not accepted as clean until source-vs-artifact classification and remediation are complete.** | Gitleaks, run 36673592643 | Hacker |
+| Circular dependencies | **BEFORE: 0 across 578 files. CURRENT: 0 across 589 processed files.** | Madge; current run 36675295402 | Architecture |
+| Architecture boundary violations | **0 blocking violations; 64 warning-level transitional/orphan findings across 637 modules / 1,546 dependencies.** Warning debt remains visible for later module reconciliation. | dependency-cruiser, run 36675295402 | Architecture |
+| Secret findings | **CURRENT: 0 incremental findings; 0 findings across full 1,026-commit history; 0 governed working-tree findings.** Prior hits were classified as one exact synthetic idempotency fixture and generated Next.js build material; policy was narrowed/fixed and the clean scans were re-run. | Gitleaks, run 36675295402 | Hacker |
 | Literature verification | **PASS** | `screening:verify` / baseline workflow | Evidence |
 | Intake verification | **PASS** | `intake:verify` / baseline workflow | Evidence |
 | L2A verification | **PASS through Sprint 10 scripted checks** | Nexus sprint verification scripts / baseline workflow | Evidence |
-| Tenant isolation | pending | existing + new negative tests | Architecture/Hacker |
-| Workspace isolation | pending | new negative tests | Architecture/Hacker |
-| Module entitlement isolation | pending | existing + new negative tests | Architecture/Hacker |
+| Tenant isolation | **PASS at Nexus foundation boundary** | `nexus:security-boundaries:verify`, run 36675295402 | Architecture/Hacker |
+| Workspace isolation | **PASS at Nexus foundation boundary** | `nexus:security-boundaries:verify`, run 36675295402 | Architecture/Hacker |
+| Module entitlement isolation | **PASS at Nexus foundation boundary** | identity/workspace + security-boundary verification, run 36675295402 | Architecture/Hacker |
 | Audit/evidence integrity | pending | governed verification | Evidence |
 | Migration integrity | pending | governed migration checks | Evidence |
 
@@ -121,4 +121,4 @@ The baseline confirms that the current system contains substantial working PV ca
 
 ## Sprint 0 disposition
 
-Sprint 0 baseline capture is functionally complete and the corrected dependency-cruiser scan is trustworthy. Formal wave closure remains blocked until Gitleaks full-history and governed working-tree findings are classified and any real secret exposure is remediated/revoked. All BEFORE metrics remain frozen as evidence.
+Sprint 0 baseline capture is qualified. The corrected dependency-cruiser scan is trustworthy, and the corrected Gitleaks policy now produces clean incremental, full-history and governed-working-tree results on run 36675295402. BEFORE metrics remain frozen as evidence; current cleanup metrics are recorded separately and must not overwrite the original baseline.
