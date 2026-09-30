@@ -4,6 +4,8 @@ import { getPostgresPool } from "@/lib/database/postgres";
 
 export interface PersistWorkflowArticleInput {
   tenantKey: string;
+  workspaceId: string;
+  environment: "PROD" | "UAT" | "TRAINING";
   pmid: string;
   doi?: string;
   title: string;
@@ -58,14 +60,36 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
 
     const packageKey = input.pmid;
 
+    const workspaceResult = await client.query<{ id: string }>(
+      `SELECT id
+         FROM nexus_client_workspaces
+        WHERE tenant_id = $1
+          AND id = $2
+          AND lifecycle_status = 'active'
+        LIMIT 1`,
+      [tenantId, input.workspaceId],
+    );
+    if (!workspaceResult.rows[0]) {
+      throw new Error("The selected client workspace is not active for this tenant.");
+    }
+
     const packageResult = await client.query<{ id: string }>(
-      `INSERT INTO literature_packages (tenant_id, package_key, source_type, external_reference, article_identity, status)
-       VALUES ($1, $2, 'PubMed', $3, $4::jsonb, $5)
-       ON CONFLICT (tenant_id, package_key)
-       DO UPDATE SET article_identity = EXCLUDED.article_identity, status = EXCLUDED.status, updated_at = now()
+      `INSERT INTO literature_packages (
+         tenant_id, workspace_id, environment, package_key,
+         source_type, external_reference, article_identity, status
+       )
+       VALUES ($1, $2, $3, $4, 'PubMed', $5, $6::jsonb, $7)
+       ON CONFLICT (tenant_id, workspace_id, environment, package_key)
+         WHERE workspace_id IS NOT NULL
+       DO UPDATE SET
+         article_identity = EXCLUDED.article_identity,
+         status = EXCLUDED.status,
+         updated_at = now()
        RETURNING id`,
       [
         tenantId,
+        input.workspaceId,
+        input.environment,
         packageKey,
         input.pmid,
         JSON.stringify({ pmid: input.pmid, doi: input.doi, title: input.title }),
@@ -145,6 +169,8 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
 // the cross-run half of that gap).
 export async function findExistingArticlesByIdentity(
   tenantKey: string,
+  workspaceId: string,
+  environment: "PROD" | "UAT" | "TRAINING",
   pmids: string[],
 ): Promise<Array<{ pmid: string; doi: string | null; title: string; packageId: string }>> {
   if (pmids.length === 0) return [];
@@ -162,8 +188,10 @@ export async function findExistingArticlesByIdentity(
        JOIN literature_packages lp ON lp.id = lps.package_id
        JOIN tenants t ON t.id = lp.tenant_id
       WHERE t.tenant_key = $1
-        AND lps.pmid = ANY($2::text[])`,
-    [tenantKey, pmids],
+        AND lp.workspace_id = $2
+        AND lp.environment = $3
+        AND lps.pmid = ANY($4::text[])`,
+    [tenantKey, workspaceId, environment, pmids],
   );
 
   return result.rows.map((row) => ({
