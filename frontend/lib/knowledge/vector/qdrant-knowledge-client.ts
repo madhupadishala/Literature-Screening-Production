@@ -430,7 +430,7 @@ export class QdrantKnowledgeClient {
     type FilterCondition =
       | { key: string; match: { any: string[] } }
       | { key: string; match: { value: string } }
-      | { key: string; range: { lte: string } }
+      | { key: string; range: { lte?: string; gt?: string } }
       | { is_empty: { key: string } };
 
     const must: FilterCondition[] = [
@@ -510,6 +510,10 @@ export class QdrantKnowledgeClient {
       });
       must.push({
         is_empty: { key: "supersededBySourceId" },
+      });
+      mustNot.push({
+        key: "effectiveDate",
+        range: { gt: new Date().toISOString() },
       });
       mustNot.push({
         key: "category",
