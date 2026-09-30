@@ -75,3 +75,13 @@ Define user, compliance and security requirements for the Literature Screening m
 ## Acceptance
 
 Sprint 4 is accepted only when all nine mandatory gates are green. Formal disposition can document non-applicability or an approved exception record, but it does not convert an actually failed mandatory gate into a pass.
+
+## Screen architecture and shared safety assessment requirements
+
+| ID | Requirement |
+|---|---|
+| URS-LIT-106 | The Literature Screening module shall expose the Screens Dashboard, Hits, Screening, Medical Review and Administration through module Sub-navigation. |
+| URS-LIT-107 | Dashboard and Administration shall support user/workload and configuration activities and shall remain distinct from the regulated PV processing Screens. |
+| URS-LIT-108 | Hits, Screening and Medical Review shall represent the regulated Literature PV workflow sequence. |
+| URS-LIT-109 | Seriousness, Listedness/Expectedness and Causality shall be provided by shared governed safety-assessment services rather than independent Literature-only engines. |
+| URS-LIT-110 | Literature Screens shall display shared assessment results with provenance, rule/reference version, evidence, human decision and override rationale where applicable. |
