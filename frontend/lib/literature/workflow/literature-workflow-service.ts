@@ -400,15 +400,14 @@ class LiteratureWorkflowService {
     }
   }
 
-  list(
+  listForTenant(
+    tenantId: string,
     limit = 20,
   ): LiteratureWorkflowResponse[] {
-    const safeLimit =
-      Number.isFinite(limit) && limit > 0
-        ? Math.min(Math.floor(limit), 100)
-        : 20;
-
-    return this.history.slice(0, safeLimit);
+    const safeLimit = Math.max(1, Math.min(limit, 100));
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, safeLimit);
   }
 
   clear(): void {
@@ -418,8 +417,8 @@ class LiteratureWorkflowService {
 
   getStatus(): LiteratureWorkflowStatus {
     return {
-      totalRuns: this.history.length,
-      completedRuns: this.history.length,
+      totalRuns: this.history.filter((item) => item.tenantId === tenantId).length,
+      completedRuns: this.history.filter((item) => item.tenantId === tenantId).length,
       failedRuns:
         getPerformanceSummary().byOperation[
           "literature_workflow"
@@ -427,7 +426,7 @@ class LiteratureWorkflowService {
           ? 0
           : getPerformanceSummary().failedOperations,
       lastRunAt:
-        this.history[0]?.completedAt,
+        this.history.find((item) => item.tenantId === tenantId)?.completedAt,
     };
   }
 
