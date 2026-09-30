@@ -34,18 +34,15 @@ type Workspace = {
 
 const TABS = [
   "General",
-  "Reporter",
   "Patient",
-  "Events",
   "Products",
-  "Medical History",
-  "Labs",
-  "Assessments",
+  "Events",
+  "Safety Assessment",
   "Narrative",
-  "Attachments",
-  "Reviews",
+  "Action Items",
+  "Additional Information",
   "Evidence & Export",
-  "Audit",
+  "Audit & Versions",
 ] as const;
 
 type Tab = (typeof TABS)[number];
@@ -582,7 +579,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
       </nav>
 
       <section className={styles.panel}>
-        {["General","Reporter","Patient","Events","Products","Medical History","Labs"].includes(tab) ? (
+        {["General","Patient","Events","Products"].includes(tab) ? (
           <JsonEditor
             title={tab}
             value={editors[tab] ?? ""}
@@ -591,7 +588,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
           />
         ) : null}
 
-        {tab === "Assessments" ? (
+        {tab === "Safety Assessment" ? (
           <div className={styles.stack}>
             <div className={styles.formGrid}>
               <label>
@@ -679,7 +676,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
           <DataCards records={workspace.sourceDocuments} empty="No source documents linked." />
         ) : null}
 
-        {tab === "Reviews" ? (
+        {tab === "Action Items" ? (
           <div className={styles.stack}>
             <section className={styles.reviewBox}>
               <h3>Processor → QC</h3>
@@ -761,6 +758,38 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
 
             <h3>Review History</h3>
             <DataCards records={workspace.reviewActions} empty="No review actions yet." />
+          </div>
+        ) : null}
+
+
+        {tab === "Additional Information" ? (
+          <div className={styles.stack}>
+            <JsonEditor
+              title="Reporter"
+              value={editors.Reporter ?? ""}
+              onChange={(value) => setEditors((current) => ({ ...current, Reporter: value }))}
+              disabled={isFinal}
+            />
+            <JsonEditor
+              title="Medical History"
+              value={editors["Medical History"] ?? ""}
+              onChange={(value) => setEditors((current) => ({ ...current, ["Medical History"]: value }))}
+              disabled={isFinal}
+            />
+            <JsonEditor
+              title="Labs"
+              value={editors.Labs ?? ""}
+              onChange={(value) => setEditors((current) => ({ ...current, Labs: value }))}
+              disabled={isFinal}
+            />
+            <JsonEditor
+              title="Additional Information"
+              value={editors.Additional ?? ""}
+              onChange={(value) => setEditors((current) => ({ ...current, Additional: value }))}
+              disabled={isFinal}
+            />
+            <h3>Attachments / Source Documents</h3>
+            <DataCards records={workspace.sourceDocuments} empty="No source documents linked." />
           </div>
         ) : null}
 
@@ -857,7 +886,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
           </div>
         ) : null}
 
-        {tab === "Audit" ? (
+        {tab === "Audit & Versions" ? (
           <div className={styles.stack}>
             <h3>Audit Events</h3>
             <DataCards records={workspace.auditEvents} empty="No case audit events found." />
@@ -869,7 +898,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
         ) : null}
       </section>
 
-      {["General","Reporter","Patient","Events","Products","Medical History","Labs"].includes(tab) && !isFinal ? (
+      {["General","Patient","Events","Products","Additional Information"].includes(tab) && !isFinal ? (
         <section className={styles.saveBar}>
           <label>
             <span>Change reason</span>
