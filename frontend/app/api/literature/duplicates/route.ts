@@ -14,8 +14,9 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
+      NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_HISTORY_VIEW,
     );
     const rawLimit = Number(request.nextUrl.searchParams.get("limit") || 100);
