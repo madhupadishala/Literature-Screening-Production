@@ -4,6 +4,7 @@ import { createHash, randomUUID } from "node:crypto";
 
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 
 import {
   assertIntakeGenerationGate,
@@ -176,6 +177,7 @@ export async function generateIntakeInput(input: {
   const packageId = input.request.packageId?.trim();
   if (!packageId) throw new Error("packageId is required.");
   const reason = validateIntakeGenerationReason(input.request.reason);
+  const scope = requireSafetyWorkspaceScope(input.principal);
 
   const client = await getPostgresPool().connect();
   try {
@@ -223,9 +225,18 @@ export async function generateIntakeInput(input: {
       `SELECT export.*, generator.display_name AS generated_by_name
        FROM intake_input_exports export
        LEFT JOIN application_users generator ON generator.id = export.generated_by
-       WHERE export.tenant_id = $1 AND export.package_id = $2
-         AND export.source_lineage_sha256 = $3`,
-      [input.principal.tenantId, packageId, lineageHash],
+       WHERE export.tenant_id = $1
+         AND export.workspace_id = $2
+         AND export.environment = $3
+         AND export.package_id = $4
+         AND export.source_lineage_sha256 = $5`,
+      [
+        input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
+        packageId,
+        lineageHash,
+      ],
     );
     if (existing.rows[0]) {
       await client.query("COMMIT");
@@ -236,8 +247,17 @@ export async function generateIntakeInput(input: {
     const generatedAt = new Date().toISOString();
     const next = await client.query<{ next_version: number }>(
       `SELECT COALESCE(MAX(export_version), 0) + 1 AS next_version
-       FROM intake_input_exports WHERE tenant_id = $1 AND package_id = $2`,
-      [input.principal.tenantId, packageId],
+       FROM intake_input_exports
+       WHERE tenant_id = $1
+         AND workspace_id = $2
+         AND environment = $3
+         AND package_id = $4`,
+      [
+        input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
+        packageId,
+      ],
     );
     const exportVersion = Number(next.rows[0].next_version);
     const payload: Record<string, unknown> = {
@@ -302,14 +322,19 @@ export async function generateIntakeInput(input: {
     const fileName = "intake_input.json";
     const stored = await client.query<ExportRow>(
       `INSERT INTO intake_input_exports (
-         id, tenant_id, package_id, screening_result_id, screening_review_id,
+         id, tenant_id, workspace_id, environment, package_id,
+         screening_result_id, screening_review_id,
          export_version, schema_version, file_name, payload, content, sha256,
          source_lineage_sha256, generated_by, generated_at
-       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::jsonb, $10, $11, $12, $13, $14)
-       RETURNING *, $15::text AS generated_by_name`,
+       ) VALUES (
+         $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13,$14,$15,$16
+       )
+       RETURNING *, $17::text AS generated_by_name`,
       [
         exportId,
         input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
         packageId,
         row.screening_result_id,
         row.screening_review_id,
@@ -396,12 +421,21 @@ export async function getIntakeInputExport(input: {
   exportId: string;
 }): Promise<IntakeInputDownload> {
   if (!input.exportId?.trim()) throw new Error("exportId is required.");
+  const scope = requireSafetyWorkspaceScope(input.principal);
   const result = await getPostgresPool().query<ExportRow>(
     `SELECT export.*, generator.display_name AS generated_by_name
      FROM intake_input_exports export
      LEFT JOIN application_users generator ON generator.id = export.generated_by
-     WHERE export.id = $1 AND export.tenant_id = $2`,
-    [input.exportId, input.principal.tenantId],
+     WHERE export.id = $1
+       AND export.tenant_id = $2
+       AND export.workspace_id = $3
+       AND export.environment = $4`,
+    [
+      input.exportId,
+      input.principal.tenantId,
+      scope.workspaceId,
+      scope.environment,
+    ],
   );
   const row = result.rows[0];
   if (!row) throw new Error("Intake input export was not found in the active tenant.");
