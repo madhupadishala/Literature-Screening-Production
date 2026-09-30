@@ -14,9 +14,16 @@ export interface KnowledgeChunkingContext {
   category: KnowledgeFileCategory;
   authority: RegulatoryAuthority;
   tenantId?: string;
+  regulatorySourceId?: string;
+  canonicalSourceUrl?: string;
   documentVersion?: string;
+  publicationDate?: string;
   effectiveDate?: string;
   jurisdiction?: string;
+  lifecycleStatus?: string;
+  approvalStatus?: string;
+  supersedesSourceId?: string;
+  supersededBySourceId?: string;
 }
 
 export interface KnowledgeChunkingOptions {
@@ -44,9 +51,16 @@ export interface KnowledgeChunkMetadata {
   layer: KnowledgeLayer;
   category: KnowledgeFileCategory;
   authority: RegulatoryAuthority;
+  regulatorySourceId?: string;
+  canonicalSourceUrl?: string;
   jurisdiction?: string;
   documentVersion?: string;
+  publicationDate?: string;
   effectiveDate?: string;
+  lifecycleStatus?: string;
+  approvalStatus?: string;
+  supersedesSourceId?: string;
+  supersededBySourceId?: string;
   language: string;
   sourceFormat: string;
   parserName: string;
