@@ -45,6 +45,7 @@ export interface WorkspaceModuleAccess {
   workspaceRole?: NexusWorkspaceRole;
   moduleKey: NexusModuleKey;
   moduleRoles: NexusWorkspaceModuleRole[];
+  effectivePermissions: Permission[];
 }
 
 const LITERATURE_PERMISSIONS: readonly Permission[] = [
@@ -331,6 +332,7 @@ export async function evaluateWorkspaceModuleAccess(input: {
       workspaceId: input.workspaceId,
       moduleKey: input.moduleKey,
       moduleRoles: [],
+      effectivePermissions: [],
     };
   }
 
@@ -348,6 +350,7 @@ export async function evaluateWorkspaceModuleAccess(input: {
       workspaceRole: first.workspace_role ?? undefined,
       moduleKey: input.moduleKey,
       moduleRoles,
+      effectivePermissions: [],
     };
   }
 
@@ -366,6 +369,7 @@ export async function evaluateWorkspaceModuleAccess(input: {
       workspaceRole: first.workspace_role ?? undefined,
       moduleKey: input.moduleKey,
       moduleRoles,
+      effectivePermissions: [],
     };
   }
 
@@ -384,6 +388,7 @@ export async function evaluateWorkspaceModuleAccess(input: {
       workspaceRole: first.workspace_role ?? undefined,
       moduleKey: input.moduleKey,
       moduleRoles,
+      effectivePermissions: [],
     };
   }
 
@@ -396,24 +401,29 @@ export async function evaluateWorkspaceModuleAccess(input: {
       workspaceRole: first.workspace_role ?? undefined,
       moduleKey: input.moduleKey,
       moduleRoles,
+      effectivePermissions: [],
     };
   }
 
-  if (input.permission) {
-    const permitted = result.rows.some((row) => {
+  const allowedForModule = modulePermissions(input.moduleKey);
+  const effectivePermissions = allowedForModule.filter((permission) =>
+    result.rows.some((row) => {
       if (!row.module_role) return false;
-      const allowedForModule = modulePermissions(input.moduleKey);
       const customPermissions = Array.isArray(row.custom_permissions)
         ? row.custom_permissions
             .map(String)
             .filter(isPermission)
-            .filter((permission) => allowedForModule.includes(permission))
+            .filter((customPermission) => allowedForModule.includes(customPermission))
         : [];
       return (
-        customPermissions.includes(input.permission!) ||
-        builtInModuleRoleHasPermission(input.moduleKey, row.module_role, input.permission!)
+        customPermissions.includes(permission) ||
+        builtInModuleRoleHasPermission(input.moduleKey, row.module_role, permission)
       );
-    });
+    }),
+  );
+
+  if (input.permission) {
+    const permitted = effectivePermissions.includes(input.permission);
 
     if (!permitted) {
       return {
@@ -424,6 +434,7 @@ export async function evaluateWorkspaceModuleAccess(input: {
         workspaceRole: first.workspace_role ?? undefined,
         moduleKey: input.moduleKey,
         moduleRoles,
+        effectivePermissions,
       };
     }
   }
@@ -436,5 +447,6 @@ export async function evaluateWorkspaceModuleAccess(input: {
     workspaceRole: first.workspace_role ?? undefined,
     moduleKey: input.moduleKey,
     moduleRoles,
+    effectivePermissions,
   };
 }
