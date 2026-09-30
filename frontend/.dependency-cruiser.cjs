@@ -62,6 +62,6 @@ module.exports = {
       exportsFields: ["exports"],
       conditionNames: ["import", "require", "node", "default"]
     },
-    exclude: "node_modules|\\.next|benchmark-output"
+    exclude: "\\.next|benchmark-output"
   }
 };
