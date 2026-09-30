@@ -34,6 +34,7 @@ export async function GET(request: NextRequest): Promise<Response> {
             "LITERATURE",
             "INTAKE",
             "CASE_PROCESSING",
+            "SUBMISSIONS",
             "MEDICAL_REVIEW",
             "SIGNAL_MANAGEMENT",
             "AGGREGATE_REPORTING",
