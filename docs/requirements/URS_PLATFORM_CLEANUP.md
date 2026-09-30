@@ -148,4 +148,4 @@ URS-145 The clean repository's first commit shall represent the verified clean b
 
 ## 15. Acceptance
 
-The cleanup program is accepted only when all applicable URS items are traced to implementation and objective evidence and all nine gates are passed or formally dispositioned.
+The cleanup program is accepted only when all applicable URS items are traced to implementation and objective evidence and every mandatory applicable gate has passed. Formal disposition may document an approved non-applicable gate or an external dependency/exception that does not represent a failed mandatory control; it shall not waive a failed mandatory gate.
