@@ -30,32 +30,38 @@ It is a controlled modernization program to produce a modular, secure, regulator
 Every sprint, PR and release candidate must satisfy the following nine gates.
 
 ### Gate 1 — Karpathy
+
 - understand before editing;
 - smallest correct change;
 - no speculative rewrite;
 - verify after material change.
 
 ### Gate 2 — Ponytail
+
 - remove accidental complexity;
 - avoid unjustified abstractions;
 - prefer simple, maintainable design.
 
 ### Gate 3 — Architecture Guardian
+
 - preserve canonical platform boundaries;
 - Nexus owns shared capabilities;
 - modules do not invent independent auth, tenancy, context, audit, evidence or infrastructure conventions;
 - domain logic does not depend on vendor SDKs.
 
 ### Gate 4 — Warpath
+
 - complete real workflows end to end;
 - close edge cases, failure states, retries and negative paths;
 - do not mark partial happy-path implementations as complete.
 
 ### Gate 5 — CodeRabbit
+
 - independent code review;
 - material unresolved findings block promotion.
 
 ### Gate 6 — Hacker Gate
+
 - adversarial security testing;
 - IDOR/BOLA;
 - tenant/client/module boundary attacks;
@@ -67,11 +73,13 @@ Every sprint, PR and release candidate must satisfy the following nine gates.
 - remediation and retest.
 
 ### Gate 7 — Evidence Gate
+
 Traceability must exist through:
 
 `Requirement -> Architecture -> Code -> Test -> Security -> Evidence -> Release`
 
 ### Gate 8 — Regulatory Knowledge Gate
+
 - regulated requirements must trace to authoritative sources when available;
 - source version/effective date must be controlled;
 - jurisdictional differences must be explicit;
@@ -79,6 +87,7 @@ Traceability must exist through:
 - changed regulator guidance must trigger impact assessment.
 
 ### Gate 9 — Modular & Benchmark Completeness Gate
+
 - URS/FRS must be benchmarked against mature market tools;
 - no material field, function, state, control, report, exception or workflow may be omitted simply because the current product does not yet contain it;
 - each module must remain plug-and-play;
@@ -188,12 +197,14 @@ Modules connect through versioned contracts rather than internal implementation 
 Preferred mechanisms:
 
 ### Synchronous
+
 - application-service interfaces;
 - versioned internal APIs;
 - canonical DTOs;
 - server-side authorization on every protected operation.
 
 ### Asynchronous
+
 - typed/versioned domain events through EventBus/Kafka;
 - idempotent consumers;
 - retry/dead-letter handling;
@@ -528,6 +539,7 @@ No feature is copied merely because a competitor has it. The benchmark identifie
 ## 10. Module-specific benchmark direction
 
 ### Literature Screening
+
 Benchmark:
 - ArisGlobal Literature Intelligence class capability;
 - mature enterprise safety literature workflows;
@@ -551,6 +563,7 @@ Include:
 - testing vs regulated-search distinction.
 
 ### Intake & Triage
+
 Benchmark:
 - ArisGlobal Advanced Intake;
 - Veeva Safety automation;
@@ -558,6 +571,7 @@ Benchmark:
 - Argus mature intake controls.
 
 ### L2A / Case Processing
+
 Benchmark:
 - Argus;
 - Veeva;
@@ -565,6 +579,7 @@ Benchmark:
 - Ennov.
 
 ### Submissions
+
 Benchmark:
 - Argus;
 - Veeva;
@@ -573,6 +588,7 @@ Benchmark:
 - regulator E2B/acknowledgement requirements.
 
 ### Signal Management
+
 Benchmark:
 - Oracle Empirica;
 - ArisGlobal Advanced Signals;
@@ -580,10 +596,12 @@ Benchmark:
 - regulator signal-management guidance.
 
 ### Aggregate Reporting
+
 Benchmark:
 - mature aggregate/periodic reporting products and applicable ICH/GVP requirements.
 
 ### PV Documentation
+
 Benchmark:
 - enterprise controlled-document/compliance systems plus applicable PV documentation requirements.
 
@@ -701,6 +719,7 @@ This charter is a governing reference for every subsequent sprint.
 URS, FRS and User Guides are controlled lifecycle documents and must be written to a globally professional, audit-ready standard.
 
 ### General writing principles
+
 - clear, concise and unambiguous language;
 - one requirement or instruction per statement where practical;
 - avoid vague terms such as "user friendly", "fast", "appropriate", "etc.", "as required" unless explicitly defined;
@@ -718,6 +737,7 @@ URS, FRS and User Guides are controlled lifecycle documents and must be written 
 - preserve version, author/reviewer/approval status and change history.
 
 ### URS convention
+
 Each URS requirement should be:
 - uniquely identified;
 - atomic;
@@ -750,6 +770,7 @@ Preferred structure includes:
 - traceability references.
 
 ### FRS convention
+
 FRS must translate each approved URS requirement into detailed, implementable and testable system behavior.
 
 FRS should include:
@@ -780,6 +801,7 @@ FRS should include:
 - positive and negative acceptance criteria.
 
 ### User Guide convention
+
 User Guides must describe the actual released behavior, not planned functionality.
 
 They should include:
@@ -806,6 +828,7 @@ They should include:
 Instructions should use task-oriented language and observable user actions.
 
 ### Global convention references
+
 Writing should be broadly aligned with internationally used documentation/requirements principles such as:
 - ISO/IEC/IEEE 29148 concepts for requirements quality and traceability;
 - ISO/IEC/IEEE 26514 concepts for user documentation;
@@ -815,6 +838,7 @@ Writing should be broadly aligned with internationally used documentation/requir
 These are writing/quality references; applicable PV regulations and company procedures remain the governing domain requirements.
 
 ### Documentation completeness gate
+
 A sprint cannot close when code is complete but documentation is:
 - incomplete;
 - ambiguous;
