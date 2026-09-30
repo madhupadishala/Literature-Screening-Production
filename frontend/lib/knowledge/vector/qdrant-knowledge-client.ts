@@ -487,6 +487,34 @@ export class QdrantKnowledgeClient {
           match: { any: ["SUPERSEDED", "RETIRED"] },
         });
       }
+    } else {
+      // Generic knowledge retrieval must not become a bypass around regulatory
+      // lifecycle controls. Missing governance fields remain eligible for
+      // ordinary SOP/template knowledge, while explicitly non-eligible values
+      // and regulatory records are excluded from this path.
+      mustNot.push({
+        key: "lifecycleStatus",
+        match: {
+          any: [
+            "DRAFT",
+            "FUTURE_EFFECTIVE",
+            "SUPERSEDED",
+            "RETIRED",
+            "REJECTED",
+          ],
+        },
+      });
+      mustNot.push({
+        key: "approvalStatus",
+        match: { any: ["PENDING", "REJECTED"] },
+      });
+      must.push({
+        is_empty: { key: "supersededBySourceId" },
+      });
+      mustNot.push({
+        key: "category",
+        match: { value: "regulatory_guidance" },
+      });
     }
 
     if (request.category?.trim()) {
