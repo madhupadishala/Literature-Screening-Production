@@ -61,71 +61,149 @@ jobs:
       - name: Dependency vulnerability audit
         continue-on-error: true
         run: |
-          npm audit --json > benchmark-output/npm-audit.json || true
-          npm audit --audit-level=high 2>&1 | tee benchmark-output/npm-audit.txt || true
+          set +e
+          npm audit --json > benchmark-output/npm-audit.json
+          json_rc=$?
+          set -o pipefail
+          npm audit --audit-level=high 2>&1 | tee benchmark-output/npm-audit.txt
+          text_rc=${PIPESTATUS[0]}
+          printf "json_exit=%s\ntext_exit=%s\n" "$json_rc" "$text_rc" > benchmark-output/npm-audit.status
+          exit "$text_rc"
 
       - name: Knip unused code/dependency benchmark
         continue-on-error: true
         run: |
-          npx --yes knip@6.38.0 --reporter json > benchmark-output/knip.json || true
-          npx --yes knip@6.38.0 2>&1 | tee benchmark-output/knip.txt || true
+          set +e
+          npx --yes knip@6.38.0 --reporter json > benchmark-output/knip.json
+          json_rc=$?
+          set -o pipefail
+          npx --yes knip@6.38.0 2>&1 | tee benchmark-output/knip.txt
+          text_rc=${PIPESTATUS[0]}
+          printf "json_exit=%s\ntext_exit=%s\n" "$json_rc" "$text_rc" > benchmark-output/knip.status
+          exit "$text_rc"
 
       - name: jscpd duplication benchmark
         continue-on-error: true
         run: |
-          npx --yes jscpd@5.3.1 --config .jscpd.json . 2>&1 | tee benchmark-output/jscpd.txt || true
+          set -o pipefail
+          npx --yes jscpd@5.3.1 --config .jscpd.json . 2>&1 | tee benchmark-output/jscpd.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/jscpd.status
+          exit "$rc"
 
       - name: Madge circular dependency benchmark
         continue-on-error: true
         run: |
-          npx --yes madge@8.0.0 --extensions ts,tsx,mts --ts-config tsconfig.json --circular app lib scripts 2>&1 | tee benchmark-output/madge-circular.txt || true
-          npx --yes madge@8.0.0 --extensions ts,tsx,mts --ts-config tsconfig.json --json app lib scripts > benchmark-output/madge-graph.json || true
+          set +e
+          set -o pipefail
+          npx --yes madge@8.0.0 --extensions ts,tsx,mts --ts-config tsconfig.json --circular app lib scripts 2>&1 | tee benchmark-output/madge-circular.txt
+          circular_rc=${PIPESTATUS[0]}
+          npx --yes madge@8.0.0 --extensions ts,tsx,mts --ts-config tsconfig.json --json app lib scripts > benchmark-output/madge-graph.json
+          graph_rc=$?
+          printf "circular_exit=%s\ngraph_exit=%s\n" "$circular_rc" "$graph_rc" > benchmark-output/madge.status
+          if [ "$circular_rc" -ne 0 ]; then exit "$circular_rc"; fi
+          exit "$graph_rc"
 
       - name: dependency-cruiser dependency benchmark
         continue-on-error: true
         run: |
           npm install --no-save --package-lock=false --ignore-scripts dependency-cruiser@18.4.0
-          ./node_modules/.bin/depcruise --config .dependency-cruiser.cjs --output-type json app lib scripts > benchmark-output/dependency-cruiser.json || true
-          ./node_modules/.bin/depcruise --config .dependency-cruiser.cjs app lib scripts 2>&1 | tee benchmark-output/dependency-cruiser.txt || true
+          set +e
+          ./node_modules/.bin/depcruise --config .dependency-cruiser.cjs --output-type json app lib scripts > benchmark-output/dependency-cruiser.json
+          json_rc=$?
+          set -o pipefail
+          ./node_modules/.bin/depcruise --config .dependency-cruiser.cjs app lib scripts 2>&1 | tee benchmark-output/dependency-cruiser.txt
+          text_rc=${PIPESTATUS[0]}
+          printf "json_exit=%s\ntext_exit=%s\n" "$json_rc" "$text_rc" > benchmark-output/dependency-cruiser.status
+          exit "$text_rc"
 
       - name: Existing security audit
         continue-on-error: true
         run: |
-          npm run security:audit 2>&1 | tee benchmark-output/security-audit.txt || true
+          set -o pipefail
+          npm run security:audit 2>&1 | tee benchmark-output/security-audit.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/security-audit.status
+          exit "$rc"
 
       - name: Existing tenant-integrity verification
         continue-on-error: true
         run: |
-          npm run nexus:tenant-integrity:verify 2>&1 | tee benchmark-output/nexus-tenant-integrity.txt || true
+          set -o pipefail
+          npm run nexus:tenant-integrity:verify 2>&1 | tee benchmark-output/nexus-tenant-integrity.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/nexus-tenant-integrity.status
+          exit "$rc"
 
       - name: Existing PV verification
         continue-on-error: true
         run: |
-          npm run pv:verify 2>&1 | tee benchmark-output/pv-verify.txt || true
+          set -o pipefail
+          npm run pv:verify 2>&1 | tee benchmark-output/pv-verify.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/pv-verify.status
+          exit "$rc"
 
       - name: Literature screening verification
         continue-on-error: true
         run: |
-          npm run screening:verify 2>&1 | tee benchmark-output/screening-verify.txt || true
+          set -o pipefail
+          npm run screening:verify 2>&1 | tee benchmark-output/screening-verify.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/screening-verify.status
+          exit "$rc"
 
       - name: Intake verification
         continue-on-error: true
         run: |
-          npm run intake:verify 2>&1 | tee benchmark-output/intake-verify.txt || true
+          set -o pipefail
+          npm run intake:verify 2>&1 | tee benchmark-output/intake-verify.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/intake-verify.status
+          exit "$rc"
 
       - name: Nexus Sprints 1-10 verification
         continue-on-error: true
         run: |
+          set +e
+          overall=0
+          : > benchmark-output/nexus-sprints.txt
+          : > benchmark-output/nexus-sprints.status
           for sprint in {1..10}; do
             echo "===== NEXUS SPRINT $sprint =====" | tee -a benchmark-output/nexus-sprints.txt
-            npm run "nexus:sprint$sprint:verify" 2>&1 | tee -a benchmark-output/nexus-sprints.txt || true
+            set -o pipefail
+            npm run "nexus:sprint$sprint:verify" 2>&1 | tee -a benchmark-output/nexus-sprints.txt
+            rc=${PIPESTATUS[0]}
+            printf "sprint_%s_exit=%s\n" "$sprint" "$rc" | tee -a benchmark-output/nexus-sprints.status
+            if [ "$rc" -ne 0 ]; then overall=1; fi
           done
+          exit "$overall"
 
-      - name: Gitleaks secret scan
-        uses: gitleaks/gitleaks-action@v3
+      - name: Gitleaks incremental PR secret scan
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: "8.24.3"
+
+      - name: Gitleaks full-history and working-tree baseline
+        continue-on-error: true
+        run: |
+          set +e
+          GITLEAKS_BIN="/tmp/gitleaks-8.24.3/gitleaks"
+          if [ ! -x "$GITLEAKS_BIN" ]; then
+            echo "Pinned Gitleaks binary from the preceding action is unavailable." | tee benchmark-output/gitleaks-full.txt
+            printf "history_exit=127\nworking_tree_exit=127\n" > benchmark-output/gitleaks-full.status
+            exit 127
+          fi
+          set -o pipefail
+          "$GITLEAKS_BIN" git .. --redact --log-opts="--all" 2>&1 | tee benchmark-output/gitleaks-history.txt
+          history_rc=${PIPESTATUS[0]}
+          "$GITLEAKS_BIN" dir .. --redact 2>&1 | tee benchmark-output/gitleaks-working-tree.txt
+          tree_rc=${PIPESTATUS[0]}
+          printf "history_exit=%s\nworking_tree_exit=%s\n" "$history_rc" "$tree_rc" > benchmark-output/gitleaks-full.status
+          if [ "$history_rc" -ne 0 ]; then exit "$history_rc"; fi
+          exit "$tree_rc"
 
       - name: Upload baseline evidence
         uses: actions/upload-artifact@v5
