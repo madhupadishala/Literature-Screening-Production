@@ -83,8 +83,9 @@ jobs:
       - name: dependency-cruiser dependency benchmark
         continue-on-error: true
         run: |
-          npx --package dependency-cruiser@18.4.0 --package typescript@5.9.3 depcruise --config .dependency-cruiser.cjs --output-type json app lib scripts > benchmark-output/dependency-cruiser.json || true
-          npx --package dependency-cruiser@18.4.0 --package typescript@5.9.3 depcruise --config .dependency-cruiser.cjs app lib scripts 2>&1 | tee benchmark-output/dependency-cruiser.txt || true
+          npm install --no-save --package-lock=false --ignore-scripts dependency-cruiser@18.4.0
+          ./node_modules/.bin/depcruise --config .dependency-cruiser.cjs --output-type json app lib scripts > benchmark-output/dependency-cruiser.json || true
+          ./node_modules/.bin/depcruise --config .dependency-cruiser.cjs app lib scripts 2>&1 | tee benchmark-output/dependency-cruiser.txt || true
 
       - name: Existing security audit
         continue-on-error: true
