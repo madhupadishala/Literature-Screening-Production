@@ -512,7 +512,9 @@ export async function importLiteratureIntakeExport(input: {
 
     const row = selected.rows[0];
     if (!row) {
-      throw new Error("Literature Intake export was not found in the active tenant.");
+      throw new Error(
+        "Literature Intake export was not found in the selected client workspace/environment.",
+      );
     }
 
     if (row.safety_intake_record_id) {
@@ -563,7 +565,7 @@ export async function importLiteratureIntakeExport(input: {
          source_locator, evidence_sha256, metadata, created_by
        )
        SELECT $1, intake.source_id, intake.id, 'LITERATURE_INTAKE_EXPORT',
-              $3::jsonb, $4, $5::jsonb, $6
+              $5::jsonb, $6, $7::jsonb, $8
          FROM safety_intake_records intake
         WHERE intake.tenant_id = $1
           AND intake.workspace_id = $2
