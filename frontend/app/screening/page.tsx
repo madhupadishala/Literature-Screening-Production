@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import Navigation from "@/components/Navigation";
+import ModuleSubNavigation from "@/components/ModuleSubNavigation";
 import ScreeningWorkspace from "@/components/ScreeningWorkspace";
 
 type AuditEvent = {
@@ -485,6 +486,7 @@ export default function ScreeningPage() {
   return (
     <main className="app-shell">
       <Navigation />
+      <ModuleSubNavigation module="LITERATURE" />
       <InvestorDemoHeader
         title="Human-Governed Screening Intelligence"
         subtitle="Complete article-level Screening with a governed human decision. Approved INCLUDE articles move to the separate Review / MR workspace for patient segmentation, labeling / expectedness, causality and Medical Review."
