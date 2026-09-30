@@ -124,3 +124,88 @@ Do not:
 
 ## 15. Current limitations
 Sprint 3 enforces the Nexus/platform foundation. Full module route migration and live IDOR/BOLA tests against Literature, Intake, Case Processing and Submissions occur during their module reconciliation sprints.
+
+
+## 16. Detailed security-administration procedures
+
+### 16.1 Review an architecture-gate failure
+
+1. Open the failed CI job for the exact commit under review.
+2. Identify the dependency-cruiser or ESLint rule name.
+3. Determine whether the edge is:
+   - a blocking platform violation;
+   - a known warning-level transitional module dependency;
+   - an incorrectly classified path requiring rule maintenance.
+4. For a blocking violation, modify the code to use the approved platform contract or dependency direction.
+5. Do not suppress the rule merely to restore green CI.
+6. Re-run the quality gate and retain the new result.
+
+### 16.2 Review a dependency vulnerability
+
+1. Record package, affected version, severity and dependency path.
+2. Determine whether the vulnerable package is direct or transitive.
+3. Prefer a compatible patched version.
+4. If an override is required, keep it explicit in the package manifest and lockfile.
+5. Run the full locked-tree audit.
+6. Run TypeScript, lint, PV verification, Nexus verification and production build.
+7. Record before/after vulnerability count and any functional impact.
+
+### 16.3 Review a secret-scan finding
+
+1. Identify whether the finding is in governed source, Git history, dependency/generated output or a demonstrably synthetic test fixture.
+2. Never copy the secret value into review comments or documentation.
+3. If the finding is a real credential/token/key:
+   - remove it from current source;
+   - revoke/rotate the credential;
+   - determine exposure scope;
+   - document remediation and evidence.
+4. If the finding is generated output, exclude the generated path rather than weakening the secret rule globally.
+5. If the finding is a synthetic fixture, any allowlist entry must match only that exact safe fixture or narrowly controlled path.
+6. Re-run both incremental and full-history/governed-working-tree scans.
+
+### 16.4 Review an authorization-boundary failure
+
+Capture:
+- authenticated user/session;
+- tenant;
+- workspace;
+- environment;
+- module;
+- requested permission;
+- expected denial/allow outcome;
+- observed result.
+
+Treat an unexpected allow across tenant/workspace/module boundaries as a release-blocking security defect.
+
+### 16.5 CodeRabbit disposition
+
+1. Confirm that the review refers to the current code.
+2. Reproduce/inspect the finding.
+3. Apply the smallest correct fix when valid.
+4. Run applicable tests.
+5. Do not mark a finding resolved merely because a reviewer suggested a patch.
+6. Request/rely on re-review of the new head.
+7. Material unresolved findings block Sprint 3 qualification.
+
+## 17. Security evidence expected for qualification
+
+The security administrator/reviewer shall be able to identify:
+- exact commit SHA;
+- normal quality-gate result;
+- dependency audit result;
+- architecture-rule result;
+- secret-scan result;
+- identity/workspace verifier result;
+- security-boundary verifier result;
+- CodeRabbit disposition;
+- known warning-level transitional debt and its target sprint.
+
+## 18. Incident escalation conditions
+
+Escalate immediately when any of the following is observed:
+- confirmed production credential in source/history;
+- successful cross-tenant or cross-workspace access;
+- production trust of arbitrary identity headers/demo fallback;
+- authorization granted after authoritative disablement when the next protected request should fail;
+- evidence/audit tampering;
+- high-severity dependency exposure with no safe mitigation and real reachable impact.
