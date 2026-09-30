@@ -26,7 +26,6 @@ export async function GET(
     );
     const { intakeId } = await context.params;
     await assertSafetyIntakeInScope(principal, intakeId);
-    await assertSafetyIntakeInScope(principal, intakeId);
     const workspace = await getTriageWorkspace({
       principal,
       intakeRecordId: intakeId,
@@ -48,7 +47,6 @@ export async function POST(
       PERMISSIONS.INTAKE_PROCESS,
     );
     const { intakeId } = await context.params;
-    await assertSafetyIntakeInScope(principal, intakeId);
     await assertSafetyIntakeInScope(principal, intakeId);
     const body = (await request.json()) as {
       decision?: unknown;
