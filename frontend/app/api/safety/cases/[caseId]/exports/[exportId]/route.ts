@@ -25,6 +25,7 @@ export async function GET(
       PERMISSIONS.CASE_EXPORT,
     );
     const { caseId, exportId } = await context.params;
+    await assertSafetyCaseInScope(principal, caseId);
     const result = await getCaseExportContent({
       principal,
       caseId,
