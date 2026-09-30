@@ -8,9 +8,9 @@ The current `main` branch is the preserved baseline. Cleanup work is performed o
 
 `cleanup/zero-deviation-baseline-20260930`
 
-## Seven mandatory gates
+## Nine mandatory gates
 
-Every cleanup change must pass all seven gates.
+Every sprint, pull request, release candidate and cleanup change must pass all nine gates.
 
 1. **Karpathy Gate**
    - Understand before editing.
@@ -54,6 +54,17 @@ Every cleanup change must pass all seven gates.
 7. **Evidence Gate**
    - Every promoted change must produce traceable evidence:
      requirement -> architecture -> code -> test -> security -> evidence -> UAT/validation -> release.
+
+8. **Regulatory Knowledge Gate**
+   - Regulated PV requirements must trace to authoritative regulator/harmonised sources where available.
+   - Source authority, jurisdiction, version/revision, effective date and lifecycle status must be controlled.
+   - Model memory is not an authoritative regulatory source.
+   - Jurisdictional differences and regulator updates require explicit impact assessment.
+
+9. **Modular & Benchmark Completeness Gate**
+   - Nexus and PV modules must preserve the plug-and-play architecture.
+   - URS/FRS must be benchmarked against mature market tools and authoritative regulatory requirements.
+   - Material fields, workflow states, validations, exceptions, audit/evidence, integrations and controls must not be omitted merely because the current implementation lacks them.
 
 ## Baseline benchmark stack
 
@@ -162,7 +173,7 @@ Literature -> Intake/Triage -> L2A/Case Processing -> Submissions/shared platfor
 No module passes because another module passed.
 
 ### Phase 7 - Clean export candidate
-Freeze a release-candidate commit only when all seven gates are green.
+Freeze a release-candidate commit only when all nine gates are green.
 
 ## Clean export strategy
 
@@ -208,7 +219,7 @@ The new repository must contain `PROVENANCE.md` recording:
 - export date
 - migration head
 - benchmark report reference
-- seven-gate result
+- nine-gate result
 - release approver
 - SHA-256 of the exported source archive
 
