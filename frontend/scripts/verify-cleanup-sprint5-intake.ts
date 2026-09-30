@@ -70,6 +70,18 @@ assert.ok(
   "Cross-module helper must reuse signed selected workspace scope rather than accept arbitrary selectors.",
 );
 
+const nestedIntakeRoutes = [
+  "app/api/safety/intake/[intakeId]/suggestions/[suggestionId]/route.ts",
+  "app/api/safety/intake/[intakeId]/documents/[documentId]/route.ts",
+  "app/api/safety/intake/[intakeId]/handoffs/[packageId]/route.ts",
+];
+for (const route of nestedIntakeRoutes) {
+  assert.ok(
+    read(route).includes("assertSafetyIntakeInScope(principal, intakeId)"),
+    `${route} must assert persisted workspace/environment ownership before nested resource access`,
+  );
+}
+
 const documentRoute = read(
   "app/api/safety/intake/[intakeId]/documents/[documentId]/route.ts",
 );
