@@ -26,7 +26,7 @@ Scope: Sprint 0 Baseline & Governance; Sprint 1 Regulatory Knowledge Foundation;
 | Duplication baseline | jscpd: 308 clones, 4,611 duplicated lines (3.89%), 23,044 duplicated tokens (4.36%); run 36664295714 | VERIFIED |
 | Circular dependency baseline | Madge/dependency-cruiser evidence | VERIFIED |
 | Architecture dependency graph | dependency-cruiser scans >600 modules / >1,200 dependencies | VERIFIED |
-| Secret scan | Gitleaks must scan non-zero intended commit range | VERIFIED on measured run; rechecked on subsequent heads through CI |
+| Secret scan | Incremental PR scan clean; full-history/governed working-tree scan required | BLOCKED pending classification of 2 historical and current working-tree findings from run 36673592643; generated/dependency paths are being excluded without allowlisting governed source |
 | Existing Literature/Intake/L2A behavior | existing PV/Nexus verification scripts | VERIFIED |
 | Zero-deviation baseline report | `docs/cleanup/BASELINE_REPORT.md` | IMPLEMENTED |
 
@@ -122,7 +122,7 @@ Scope: Sprint 0 Baseline & Governance; Sprint 1 Regulatory Knowledge Foundation;
 | Context tamper/expiry test | `verify-nexus-security-boundaries.ts` | IMPLEMENTED |
 | Cross-session context replay protection | sessionId binding + verification | IMPLEMENTED |
 | Dependency vulnerability remediation | compatible transitive overrides + lockfile | VERIFIED when current-head npm audit passes |
-| Secret scanning | exact PR head/full history + Gitleaks | VERIFIED when current-head scan non-zero and clean |
+| Secret scanning | exact PR head/full history + governed source-tree Gitleaks | BLOCKED until full-history findings are classified/remediated and governed source-tree scan is clean |
 | Architecture CI | normal quality gate | IMPLEMENTED |
 | CodeRabbit | PR #80 independent review/disposition | PENDING QUALIFICATION |
 
