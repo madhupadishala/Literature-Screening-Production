@@ -49,3 +49,13 @@ Define user requirements for workspace-scoped L2A / ICSR case processing while p
 ## Acceptance
 
 Sprint 6 may be qualified only when all nine governing gates are green and objective evidence exists for the exact commit. A failed applicable gate cannot be waived into green; an approved exception/non-applicable disposition must remain visibly non-green or N/A according to governance.
+
+## Case workspace tab architecture and shared safety assessment requirements
+
+| ID | User requirement |
+|---|---|
+| URS-CASE-035 | The Case Workspace Screen shall organize processing through the Tabs General, Patient, Products, Events, Safety Assessment, Narrative, Action Items, Additional Information, Evidence & Export, and Audit & Versions. |
+| URS-CASE-036 | Safety Assessment shall provide access to Seriousness, Listedness/Expectedness and Causality through shared governed safety-assessment services. |
+| URS-CASE-037 | Action Items shall consolidate processor/QC/medical-review actions, queries and governed finalization actions without changing their underlying permission or audit requirements. |
+| URS-CASE-038 | Additional Information shall group supporting reporter, medical-history, laboratory, source-document and other non-primary case information without becoming an uncontrolled data category. |
+| URS-CASE-039 | Evidence & Export and Audit & Versions shall remain distinct from editable case-data Tabs. |
