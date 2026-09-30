@@ -14,10 +14,18 @@ export interface KnowledgeVectorPayload {
   source: string;
 
   regulation?: string;
+  authority?: string;
+  regulatorySourceId?: string;
+  canonicalSourceUrl?: string;
+  jurisdiction?: string;
 
   version?: string;
-
+  publicationDate?: string;
   effectiveDate?: string;
+  lifecycleStatus?: string;
+  approvalStatus?: string;
+  supersedesSourceId?: string;
+  supersededBySourceId?: string;
 
   tenantId: string;
 
