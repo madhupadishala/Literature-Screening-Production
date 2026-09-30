@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import ModuleSubNavigation from "@/components/ModuleSubNavigation";
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import AdHocSearchWorkspace from "@/components/literature/AdHocSearchWorkspace";
 
@@ -6,6 +7,7 @@ export default function LiteratureSearchPage() {
   return (
     <main className="app-shell">
       <Navigation />
+      <ModuleSubNavigation module="LITERATURE" />
       <InvestorDemoHeader
         eyebrow="RBAC-CONTROLLED SEARCH UTILITY"
         title="Enterprise Literature Search"
