@@ -122,7 +122,6 @@ export async function POST(request: NextRequest): Promise<Response> {
       workspaceId,
       environment,
       moduleKey,
-      sessionExpiresAt: identity.expiresAt,
     });
 
     if (!access.allowed) {
@@ -158,6 +157,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       workspaceId,
       environment,
       moduleKey,
+      sessionExpiresAt: identity.expiresAt,
     });
 
     const reason = body.reason?.trim() || "User selected an authorized Nexus workspace context.";
