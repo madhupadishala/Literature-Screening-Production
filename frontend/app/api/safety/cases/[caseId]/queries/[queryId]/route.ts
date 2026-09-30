@@ -21,6 +21,7 @@ export async function POST(
       PERMISSIONS.CASE_PROCESS,
     );
     const { caseId, queryId } = await context.params;
+    await assertSafetyCaseInScope(principal, caseId);
     const body = (await request.json()) as { responseText?: unknown };
     if (typeof body.responseText !== "string") {
       throw new Error("responseText is required.");
