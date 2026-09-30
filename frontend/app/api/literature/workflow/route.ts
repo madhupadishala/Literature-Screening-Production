@@ -49,6 +49,8 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     const result = await literatureWorkflowService.execute({
       tenantId: principal.tenantKey,
+      workspaceId: principal.workspaceId,
+      environment: principal.environment,
       query: body.query.trim(),
       maxResults: body.maxResults,
     });
