@@ -26,7 +26,7 @@ Scope: Sprint 0 Baseline & Governance; Sprint 1 Regulatory Knowledge Foundation;
 | Duplication baseline | jscpd: 308 clones, 4,611 duplicated lines (3.89%), 23,044 duplicated tokens (4.36%); run 36664295714 | VERIFIED |
 | Circular dependency baseline | Madge/dependency-cruiser evidence | VERIFIED |
 | Architecture dependency graph | dependency-cruiser scans >600 modules / >1,200 dependencies | VERIFIED |
-| Secret scan | Incremental PR scan clean; full-history/governed working-tree scan required | BLOCKED pending classification of 2 historical and current working-tree findings from run 36673592643; generated/dependency paths are being excluded without allowlisting governed source |
+| Secret scan | Incremental PR + full-history + governed working-tree scans | VERIFIED — 0 findings on all three scopes in run 36675295402 after narrow classification/remediation of synthetic/generated findings |
 | Existing Literature/Intake/L2A behavior | existing PV/Nexus verification scripts | VERIFIED |
 | Zero-deviation baseline report | `docs/cleanup/BASELINE_REPORT.md` | IMPLEMENTED |
 
@@ -122,9 +122,9 @@ Scope: Sprint 0 Baseline & Governance; Sprint 1 Regulatory Knowledge Foundation;
 | Context tamper/expiry test | `verify-nexus-security-boundaries.ts` | IMPLEMENTED |
 | Cross-session context replay protection | sessionId binding + verification | IMPLEMENTED |
 | Dependency vulnerability remediation | compatible transitive overrides + lockfile | VERIFIED when current-head npm audit passes |
-| Secret scanning | exact PR head/full history + governed source-tree Gitleaks | BLOCKED until full-history findings are classified/remediated and governed source-tree scan is clean |
+| Secret scanning | exact PR head/full history + governed source-tree Gitleaks | VERIFIED — clean incremental/full-history/working-tree scans in run 36675295402 |
 | Architecture CI | normal quality gate | IMPLEMENTED |
-| CodeRabbit | PR #80 independent review/disposition | PENDING QUALIFICATION |
+| CodeRabbit | PR #80 independent review/disposition | PENDING FINAL RE-REVIEW ON CURRENT HEAD |
 
 ### Controlled documents
 - `docs/requirements/URS/URS_NEXUS_ARCHITECTURE_SECURITY.md`
@@ -141,7 +141,7 @@ Scope: Sprint 0 Baseline & Governance; Sprint 1 Regulatory Knowledge Foundation;
 | Warpath | Existing PV workflows retained; new identity/context negative verification added; live module IDOR continues in module sprints. |
 | CodeRabbit | PENDING current-wave review/disposition. |
 | Hacker Gate | Foundation negative tests implemented; module-resource adversarial testing continues in module sprints. |
-| Evidence Gate | This record + CI artifacts + baseline report; current-head CI must be green. |
+| Evidence Gate | Current-head quality gate and benchmark workflow are green; captured sub-check outcomes remain explicit, including warning/debt analyses. |
 | Regulatory Knowledge Gate | Controlled source register/catalog + detailed URS/FRS/User Guide; full regulator corpus acquisition is not overstated. |
 | Modular & Benchmark Completeness | Plug-and-play entitlement architecture implemented; module-specific market completeness occurs in Sprints 4+. |
 
