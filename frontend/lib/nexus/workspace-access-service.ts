@@ -109,6 +109,14 @@ const AGGREGATE_PERMISSIONS: readonly Permission[] = [
   PERMISSIONS.AGGREGATE_EXPORT,
 ];
 
+const PV_DOCUMENT_PERMISSIONS: readonly Permission[] = [
+  PERMISSIONS.PV_DOCUMENT_VIEW,
+  PERMISSIONS.PV_DOCUMENT_CREATE,
+  PERMISSIONS.PV_DOCUMENT_REVIEW,
+  PERMISSIONS.PV_DOCUMENT_APPROVE,
+  PERMISSIONS.PV_DOCUMENT_EXPORT,
+];
+
 function modulePermissions(moduleKey: NexusModuleKey): readonly Permission[] {
   switch (moduleKey) {
     case "LITERATURE":
@@ -130,6 +138,8 @@ function modulePermissions(moduleKey: NexusModuleKey): readonly Permission[] {
       return SIGNAL_PERMISSIONS;
     case "AGGREGATE_REPORTING":
       return AGGREGATE_PERMISSIONS;
+    case "PV_DOCUMENTATION":
+      return PV_DOCUMENT_PERMISSIONS;
     default:
       return [];
   }
@@ -170,7 +180,8 @@ function builtInModuleRoleHasPermission(
       permission === PERMISSIONS.INTAKE_QC ||
       permission === PERMISSIONS.CASE_QC ||
       permission === PERMISSIONS.SIGNAL_ASSESS ||
-      permission === PERMISSIONS.AGGREGATE_REVIEW
+      permission === PERMISSIONS.AGGREGATE_REVIEW ||
+      permission === PERMISSIONS.PV_DOCUMENT_REVIEW
     );
   }
 
@@ -195,6 +206,7 @@ function builtInModuleRoleHasPermission(
       PERMISSIONS.SUBMISSION_ACKNOWLEDGE,
       PERMISSIONS.SIGNAL_APPROVE,
       PERMISSIONS.AGGREGATE_APPROVE,
+      PERMISSIONS.PV_DOCUMENT_APPROVE,
     ];
     return !restrictedPermissions.includes(permission);
   }
