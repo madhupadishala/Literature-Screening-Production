@@ -49,6 +49,7 @@ const literatureRoutes = [
   "app/api/literature/search-strategy/route.ts",
   "app/api/literature/translation/route.ts",
   "app/api/literature/workflow/route.ts",
+  "app/api/workflow/run/route.ts",
 ];
 
 for (const route of literatureRoutes) {
