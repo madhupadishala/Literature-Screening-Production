@@ -408,6 +408,9 @@ The platform will maintain a controlled regulatory knowledge corpus.
 See:
 `docs/pv-knowledge/REGULATORY_SOURCE_REGISTER.md`
 
+Current verified source discovery inventory:
+`docs/pv-knowledge/OFFICIAL_SOURCE_INVENTORY_2026-09-30.md`
+
 ### Ingestion lifecycle
 
 ```text
