@@ -152,3 +152,23 @@ Selection of a context shall not itself grant authority.
 | URS-NX-073 | Verification shall cover disabled tenant/workspace/module/membership/role states. |
 | URS-NX-074 | Verification shall cover context tampering, expiry and cross-session replay. |
 | URS-NX-075 | Verification shall cover standalone and supported module-combination entitlement. |
+
+## 15. Navigation terminology and information architecture requirements
+
+The following terminology is normative across Nexus user-interface requirements, functional specifications, user guides, validation evidence and implementation naming.
+
+| Term | Controlled definition |
+|---|---|
+| Module | A top-level functional domain represented in the primary module navigation, for example Literature Screening, Intake, Case Processing or Submissions. |
+| Screen | A distinct functional page or workspace within a module that supports a defined user task or workflow state. |
+| Tab | A local view selector within the same screen. A tab shall not be used to represent an independent module or a materially distinct workflow workspace. |
+| Sub-navigation | The navigation mechanism used to move between multiple screens belonging to the same module. |
+
+| ID | Requirement |
+|---|---|
+| URS-NX-076 | Nexus shall use the term **Module** only for top-level functional domains represented in the primary module navigation. |
+| URS-NX-077 | Nexus shall use the term **Screen** for a distinct functional page or workspace within a module. |
+| URS-NX-078 | Nexus shall use the term **Tab** only for switching between related views within the same screen and shall not use tabs as substitutes for independent modules or materially distinct workflow screens. |
+| URS-NX-079 | Nexus shall use **Sub-navigation** to navigate between multiple screens within the same module. |
+| URS-NX-080 | URS, FRS, User Guides, traceability records, UI labels and validation evidence shall use Module, Screen, Tab and Sub-navigation consistently with these controlled definitions. |
+
