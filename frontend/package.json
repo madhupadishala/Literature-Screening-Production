@@ -77,7 +77,8 @@
     "cleanup:sprint5:verify": "node --import tsx scripts/verify-cleanup-sprint5-intake.ts",
     "cleanup:sprint6:verify": "node --import tsx scripts/verify-cleanup-sprint6-case-processing.ts",
     "cleanup:sprint7:verify": "node --import tsx scripts/verify-cleanup-sprint7-submissions.ts",
-    "cleanup:sprint8:verify": "node --import tsx scripts/verify-cleanup-sprint8-signals.ts"
+    "cleanup:sprint8:verify": "node --import tsx scripts/verify-cleanup-sprint8-signals.ts",
+    "cleanup:sprint9:verify": "node --import tsx scripts/verify-cleanup-sprint9-aggregate.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "1.18.0",
