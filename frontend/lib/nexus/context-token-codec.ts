@@ -79,8 +79,11 @@ export function decodeScopedContext(
       return null;
     }
 
-    if (new Date(payload.expiresAt).getTime() <= now.getTime()) return null;
-    if (new Date(payload.issuedAt).getTime() > now.getTime() + 60_000) return null;
+    const expiresAtMs = new Date(payload.expiresAt).getTime();
+    const issuedAtMs = new Date(payload.issuedAt).getTime();
+    if (!Number.isFinite(expiresAtMs) || !Number.isFinite(issuedAtMs)) return null;
+    if (expiresAtMs <= now.getTime()) return null;
+    if (issuedAtMs > now.getTime() + 60_000) return null;
 
     return payload as ScopedContextPayload;
   } catch {
