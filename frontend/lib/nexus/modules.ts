@@ -3,8 +3,10 @@ export const NEXUS_MODULES = {
   INTAKE: "INTAKE",
   CASE_PROCESSING: "CASE_PROCESSING",
   MEDICAL_REVIEW: "MEDICAL_REVIEW",
+  SUBMISSIONS: "SUBMISSIONS",
   SIGNAL_MANAGEMENT: "SIGNAL_MANAGEMENT",
   AGGREGATE_REPORTING: "AGGREGATE_REPORTING",
+  PV_DOCUMENTATION: "PV_DOCUMENTATION",
   GOVERNANCE: "GOVERNANCE",
 } as const;
 
@@ -34,12 +36,18 @@ export const NEXUS_MODULE_DEFINITIONS: Record<NexusModuleKey, NexusModuleDefinit
     key: "CASE_PROCESSING",
     label: "Nexus Case Processing",
     description: "L2A case processing, assessments, narrative, QC, finalisation and export.",
-    dependencies: ["INTAKE"],
+    dependencies: [],
   },
   MEDICAL_REVIEW: {
     key: "MEDICAL_REVIEW",
     label: "Nexus Medical Review",
     description: "Medical review tasks and governed medical decisions.",
+    dependencies: [],
+  },
+  SUBMISSIONS: {
+    key: "SUBMISSIONS",
+    label: "Nexus Submissions",
+    description: "Regulatory submission readiness, packaging, transmission and acknowledgement tracking.",
     dependencies: [],
   },
   SIGNAL_MANAGEMENT: {
@@ -52,6 +60,12 @@ export const NEXUS_MODULE_DEFINITIONS: Record<NexusModuleKey, NexusModuleDefinit
     key: "AGGREGATE_REPORTING",
     label: "Nexus Aggregate",
     description: "Aggregate safety reporting.",
+    dependencies: [],
+  },
+  PV_DOCUMENTATION: {
+    key: "PV_DOCUMENTATION",
+    label: "Nexus PV Documentation",
+    description: "Controlled pharmacovigilance documentation and governed source workflows.",
     dependencies: [],
   },
   GOVERNANCE: {
