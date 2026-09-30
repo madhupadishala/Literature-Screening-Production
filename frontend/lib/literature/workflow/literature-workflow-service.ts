@@ -5,6 +5,7 @@ import { screeningService } from "@/lib/literature/screening/screening-service";
 import { runAsyncBatch } from "@/lib/performance/async-batch-runner";
 import {
   getPerformanceSummary,
+  listPerformanceMetrics,
   recordPerformanceMetric,
 } from "@/lib/performance/performance-metrics";
 import { getRuntimePerformanceSettings } from "@/lib/performance/runtime-performance-settings";
@@ -415,18 +416,22 @@ class LiteratureWorkflowService {
     this.workflowCache.clear();
   }
 
-  getStatus(): LiteratureWorkflowStatus {
+  getStatusForTenant(tenantId: string): LiteratureWorkflowStatus {
+    const tenantHistory = this.history.filter(
+      (item) => item.tenantId === tenantId,
+    );
+    const failedRuns = listPerformanceMetrics(5_000).filter(
+      (metric) =>
+        metric.tenantId === tenantId &&
+        metric.operation === "literature_workflow" &&
+        !metric.success,
+    ).length;
+
     return {
-      totalRuns: this.history.filter((item) => item.tenantId === tenantId).length,
-      completedRuns: this.history.filter((item) => item.tenantId === tenantId).length,
-      failedRuns:
-        getPerformanceSummary().byOperation[
-          "literature_workflow"
-        ] === undefined
-          ? 0
-          : getPerformanceSummary().failedOperations,
-      lastRunAt:
-        this.history.find((item) => item.tenantId === tenantId)?.completedAt,
+      totalRuns: tenantHistory.length + failedRuns,
+      completedRuns: tenantHistory.length,
+      failedRuns,
+      lastRunAt: tenantHistory[0]?.completedAt,
     };
   }
 
