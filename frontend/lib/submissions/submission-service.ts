@@ -534,9 +534,7 @@ export async function transmitSubmission(input: {
       throw error;
     }
   } catch (error) {
-    if (!client.released) {
-      await client.query("ROLLBACK").catch(() => undefined);
-    }
+    await client.query("ROLLBACK").catch(() => undefined);
     throw error;
   } finally {
     client.release();
