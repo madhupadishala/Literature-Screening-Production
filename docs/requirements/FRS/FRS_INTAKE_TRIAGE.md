@@ -43,3 +43,10 @@ A cross-module handoff does not require a second identity login or a browser con
 ## No-behavior-change constraint
 
 Workspace authorization migration shall not change intake source meaning, receipt dates, minimum-valid-case criteria, duplicate/follow-up semantics, extraction evidence, disposition meaning or handoff payload content unless separately approved through change control.
+
+## Module screen architecture
+
+| FRS ID | Linked URS | Functional requirement | Verification |
+|---|---|---|---|
+| FRS-INT-014 | URS-INT-096–099 | Intake Sub-navigation shall expose Intake, Duplicate Check, Triage and Medical Review Screens while preserving record-level governed APIs and audit behavior. | navigation/UI verification |
+| FRS-INT-015 | URS-INT-098–100 | Triage and Medical Review shall consume shared seriousness, listedness/expectedness and causality contracts where applicable; Intake shall not implement independent regulatory assessment engines. | architecture/service-contract review |
