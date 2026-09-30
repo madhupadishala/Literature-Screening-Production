@@ -9,6 +9,7 @@ import {
   resolveActiveConfigurations,
 } from "@/lib/configuration/active-resolver";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 
 type SearchResultRow = {
   id: string;
@@ -113,6 +114,7 @@ export async function createEvidencePackagesFromSearch(input: {
   principal: RequestPrincipal;
   resultIds: string[];
 }): Promise<EvidencePackageCreationResult[]> {
+  const scope = requireSafetyWorkspaceScope(input.principal);
   const uniqueIds = [...new Set(input.resultIds.filter(Boolean))];
   if (uniqueIds.length === 0) {
     throw new Error("Select at least one literature result.");
@@ -171,6 +173,8 @@ export async function createEvidencePackagesFromSearch(input: {
           ON package.id = prior.evidence_package_id
          AND package.tenant_id = prior.tenant_id
         WHERE prior.tenant_id = $1
+          AND package.workspace_id = $6
+          AND package.environment = $7
           AND prior.evidence_package_id IS NOT NULL
           AND NOT (prior.id = ANY($2::uuid[]))
           AND (
@@ -193,6 +197,8 @@ export async function createEvidencePackagesFromSearch(input: {
         primary.pmid || null,
         primary.doi || null,
         primary.dedupe_key,
+        scope.workspaceId,
+        scope.environment,
       ],
     );
     const canonicalPackage = canonical.rows[0];
@@ -334,6 +340,8 @@ export async function createEvidencePackagesFromSearch(input: {
         `
           INSERT INTO literature_packages (
             tenant_id,
+            workspace_id,
+            environment,
             package_key,
             source_type,
             external_reference,
@@ -345,17 +353,21 @@ export async function createEvidencePackagesFromSearch(input: {
           VALUES (
             $1,
             $2,
-            'AD_HOC_GLOBAL_SEARCH',
             $3,
-            $4::jsonb,
-            $5::jsonb,
+            $4,
+            'AD_HOC_GLOBAL_SEARCH',
+            $5,
+            $6::jsonb,
+            $7::jsonb,
             'NEW',
-            $6
+            $8
           )
           RETURNING id
         `,
         [
           input.principal.tenantId,
+          scope.workspaceId,
+          scope.environment,
           packageKey,
           primary.pmid || primary.doi || primary.source_record_id,
           JSON.stringify({
