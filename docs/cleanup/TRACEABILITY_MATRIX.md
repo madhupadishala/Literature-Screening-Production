@@ -45,5 +45,22 @@ Every cleanup PR/change shall record:
 - **VER-SECRET-FULL** — full-history + working-tree Gitleaks baseline.
 - **VER-NEXUS-IDENTITY-WORKSPACE** — identity-first/workspace architecture verification.
 - **VER-NEXUS-SEC-BOUNDARY** — scoped-context and security boundary negative verification.
+- **VER-ARCH-DEPCRUISE** — dependency-cruiser architecture-boundary verification.
+- **VER-ARCH-ESLINT** — ESLint restricted-import and architecture rule verification.
+- **VER-AI-RETRIEVAL-AUTH** — authorization-scoped retrieval negative/positive verification.
+- **VER-AI-PROVENANCE** — AI/model/retrieval provenance evidence verification.
+- **VER-LIT-REGRESSION** — Literature Screening regulated workflow regression verification.
+- **VER-INTAKE-REGRESSION** — Intake & Triage regulated workflow regression verification.
+- **VER-L2A-STATE-RBAC-EVIDENCE** — L2A state-transition, authorization and evidence verification.
+- **VER-SUBMISSION-WORKFLOW** — submission preparation/transmission/acknowledgement workflow verification.
+- **VER-SUBMISSION-IDEMPOTENCY** — retry/replay/idempotency verification.
+- **VER-AUDIT-ATTRIBUTION** — actor/scope/action/outcome audit attribution verification.
+- **VER-EVIDENCE-INTEGRITY** — evidence immutability/tamper-detection/reproducibility verification.
+- **VER-NPM-AUDIT** — dependency vulnerability audit used as a security gate alias.
+- **VER-BASELINE-BEFORE** — immutable BEFORE benchmark evidence.
+- **VER-BASELINE-AFTER** — AFTER benchmark and comparison evidence.
+- **VER-EXPORT-PROVENANCE** — clean export provenance record verification.
+- **VER-EXPORT-HASH** — exported source archive SHA-256 verification.
+- **VER-EXPORT-CI** — clean repository CI qualification.
 
 A verification identifier is marked complete only when its objective evidence exists for the qualified commit; listing an identifier does not itself prove execution.
