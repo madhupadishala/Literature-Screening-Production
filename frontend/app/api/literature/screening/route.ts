@@ -11,8 +11,8 @@ import type {
   ExecuteScreeningInput,
   SaveScreeningReviewInput,
 } from "@/lib/literature/screening/screening-workflow-types";
-import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,7 +23,7 @@ type ScreeningActionRequest =
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requireModulePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_HISTORY_VIEW,
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const body = (await request.json()) as ScreeningActionRequest;
 
     if (body.action === "execute") {
-      const principal = await requireModulePermission(
+      const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SCREENING_EXECUTE,
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     }
 
     if (body.action === "review") {
-      const principal = await requireModulePermission(
+      const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SCREENING_REVIEW,
