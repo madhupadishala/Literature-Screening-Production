@@ -62,6 +62,9 @@ jobs:
             echo "No lint script is currently configured."
           fi
 
+      - name: Enforce Product Design Guardian static gate
+        run: npm run design:verify
+
       - name: Verify pharmaceutical product intelligence
         run: npm run pharmaceutical:verify
 
