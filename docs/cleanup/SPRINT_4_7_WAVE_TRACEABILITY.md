@@ -107,10 +107,10 @@ The wave also remediates CodeRabbit findings raised while Sprints 4–5 were in 
 
 ## Exact-head qualification evidence
 
-Qualified technical head: `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1`
+Qualified technical head before this evidence-record update: `d246ced95502b15e5a15e5341c46333e5f4fc63f`
 
-- Frontend Quality Gate run: `36688802422` — **PASS**
-- Cleanup Baseline Benchmark run: `36688802502` — **PASS**
+- Frontend Quality Gate run: `36694661547` — **PASS**
+- Cleanup Baseline Benchmark run: `36694661467` — **PASS**
 - Architecture dependency blocking errors: **0**
 - Dependency audit: **0 vulnerabilities**
 - Lint blocking errors: **0**
@@ -124,6 +124,24 @@ Qualified technical head: `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1`
 - Production Next.js build: **PASS**
 - Baseline secret scans: incremental/full-history/governed working tree **PASS**
 - Known non-blocking debt remains visible: Knip unused-file candidates and dependency-cruiser warning-level debt are not silently deleted or promoted to green.
+
+### Current benchmark observations
+
+On benchmark run `36694661467`:
+- dependency vulnerabilities: **0**;
+- ESLint: **0 errors / 9 warnings**;
+- Knip: **149 potential unused files**, requiring classification before deletion;
+- circular dependencies: **0**;
+- dependency-cruiser: **0 blocking errors / 64 warning-level findings** across 667 modules and 1,734 dependencies;
+- incremental/full-history/governed-working-tree Gitleaks: **PASS / no leaks found**;
+- regulatory knowledge provenance/retrieval governance: **PASS**;
+- Sprint 4 Literature reconciliation: **PASS**;
+- Sprint 5 Intake reconciliation: **PASS**;
+- Sprint 6 Case Processing reconciliation: **PASS**;
+- Sprint 7 Submissions foundation: **PASS**;
+- production Next.js compilation/type checking: **PASS**.
+
+These values are evidence, not cleanup targets to manipulate. Warning/dead-code candidates remain visible until separately characterized and remediated.
 
 ### Sprint 4 qualification result
 
@@ -148,3 +166,27 @@ Current governed regulatory retrieval requires approved/effective/date-eligible 
 ### Remaining closure condition
 
 Technical qualification does not by itself close the wave. The CodeRabbit gate remains open until a full review of this exact changeset produces no unresolved material findings.
+
+
+## Post-review hardening incorporated
+
+The current wave head also includes fixes made after independent review and CI feedback:
+- account lockout increment made concurrency-safe;
+- context/session lifetime binding and malformed selector validation;
+- module-scoped custom permission enforcement;
+- exact workspace handling for denied-access auditing;
+- Literature tenant-key consistency;
+- Intake resource-scope assertions and redundant guard cleanup;
+- Submissions idempotency conflict checks, finite transport timeout, stale transmission recovery and acknowledgement-state conflict controls;
+- generic knowledge retrieval prevented from bypassing regulatory lifecycle controls;
+- regulator provenance propagated into chunk/vector metadata;
+- GitHub Actions pinned and dependency-cruiser controlled through the locked development dependency tree;
+- build/type errors in later foundation modules corrected without altering Sprint 4–7 behavior.
+
+## Formal closure rule
+
+Sprints 4–7 shall not be marked fully closed until:
+1. CI is green on the final evidence/documentation head;
+2. CodeRabbit reviews that final head and no material finding remains unresolved;
+3. all nine gates remain satisfied or explicitly non-applicable under the governing rule;
+4. external regulator transport connectivity remains **not claimed** until separately credentialed and validated.
