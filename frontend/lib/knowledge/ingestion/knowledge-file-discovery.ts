@@ -59,39 +59,32 @@ function resolveLayer(relativePath: string): KnowledgeLayer {
 }
 
 function resolveAuthority(relativePath: string): RegulatoryAuthority {
-  const segments = getLowerSegments(relativePath);
+  const normalized = normalizePath(relativePath)
+    .toLowerCase()
+    .replace(/[_-]+/gu, " ")
+    .replace(/[^a-z0-9/ ]+/gu, " ");
 
-  if (segments.includes("ema")) return "EMA";
-  if (segments.includes("fda")) return "FDA";
-  if (segments.includes("mhra")) return "MHRA";
-  if (segments.includes("pmda")) return "PMDA";
-  if (segments.includes("mhlw")) return "MHLW";
-  if (segments.includes("ich")) return "ICH";
-  if (segments.includes("cioms")) return "CIOMS";
-  if (segments.includes("cdsco")) return "CDSCO";
-  if (segments.includes("pvpi")) return "PVPI";
-  if (segments.includes("ipc")) return "IPC";
-  if (segments.includes("health-canada") || segments.includes("health_canada")) return "HEALTH_CANADA";
-  if (segments.includes("tga")) return "TGA";
-  if (segments.includes("who")) return "WHO";
-  if (segments.includes("eudravigilance")) return "EUDRAVIGILANCE";
+  const tokens = normalized.split(/[\/\s]+/u).filter(Boolean);
+  const hasToken = (value: string) => tokens.includes(value);
+  const hasPhrase = (value: string) =>
+    new RegExp(`(?:^|[\\s/])${value.replace(/ /gu, "[\\s_-]+")}(?:$|[\\s/])`, "u").test(
+      normalizePath(relativePath).toLowerCase(),
+    );
 
-  const fileName = path.basename(relativePath).toLowerCase();
-
-  if (fileName.includes("ema")) return "EMA";
-  if (fileName.includes("fda")) return "FDA";
-  if (fileName.includes("mhra")) return "MHRA";
-  if (fileName.includes("pmda")) return "PMDA";
-  if (fileName.includes("mhlw")) return "MHLW";
-  if (fileName.includes("ich")) return "ICH";
-  if (fileName.includes("cioms")) return "CIOMS";
-  if (fileName.includes("cdsco")) return "CDSCO";
-  if (fileName.includes("pvpi")) return "PVPI";
-  if (fileName.includes("ipc")) return "IPC";
-  if (fileName.includes("health canada") || fileName.includes("health-canada")) return "HEALTH_CANADA";
-  if (fileName.includes("tga")) return "TGA";
-  if (fileName.includes("who")) return "WHO";
-  if (fileName.includes("eudravigilance")) return "EUDRAVIGILANCE";
+  if (hasToken("ema")) return "EMA";
+  if (hasToken("fda")) return "FDA";
+  if (hasToken("mhra")) return "MHRA";
+  if (hasToken("pmda")) return "PMDA";
+  if (hasToken("mhlw")) return "MHLW";
+  if (hasToken("ich")) return "ICH";
+  if (hasToken("cioms")) return "CIOMS";
+  if (hasToken("cdsco")) return "CDSCO";
+  if (hasToken("pvpi")) return "PVPI";
+  if (hasToken("ipc")) return "IPC";
+  if (hasPhrase("health canada")) return "HEALTH_CANADA";
+  if (hasToken("tga")) return "TGA";
+  if (hasToken("who")) return "WHO";
+  if (hasToken("eudravigilance")) return "EUDRAVIGILANCE";
 
   return "UNKNOWN";
 }
