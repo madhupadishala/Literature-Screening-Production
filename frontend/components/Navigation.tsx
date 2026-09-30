@@ -8,22 +8,24 @@ type ModuleKey =
   | "LITERATURE"
   | "INTAKE"
   | "CASE_PROCESSING"
-  | "MEDICAL_REVIEW"
-  | "SIGNAL_MANAGEMENT"
-  | "AGGREGATE_REPORTING"
-  | "GOVERNANCE";
+  | "SUBMISSIONS";
 
-const modules: Array<{ label: string; path: string; moduleKey?: ModuleKey }> = [
+const modules: Array<{
+  label: string;
+  path: string;
+  moduleKey?: ModuleKey;
+  activePrefixes?: string[];
+}> = [
   { label: "Dashboard", path: "/" },
+  {
+    label: "Literature Screening",
+    path: "/literature-search",
+    moduleKey: "LITERATURE",
+    activePrefixes: ["/literature-search", "/workflow", "/hits", "/screening", "/review", "/reports"],
+  },
   { label: "Intake", path: "/intake", moduleKey: "INTAKE" },
-  { label: "Cases", path: "/cases", moduleKey: "CASE_PROCESSING" },
-  { label: "Search", path: "/literature-search", moduleKey: "LITERATURE" },
-  { label: "Workflow", path: "/workflow", moduleKey: "LITERATURE" },
-  { label: "Hits", path: "/hits", moduleKey: "LITERATURE" },
-  { label: "Screening", path: "/screening", moduleKey: "LITERATURE" },
-  { label: "Review / MR", path: "/review", moduleKey: "LITERATURE" },
-  { label: "Reports", path: "/reports", moduleKey: "LITERATURE" },
-  { label: "Administration", path: "/admin" },
+  { label: "Case Processing", path: "/cases", moduleKey: "CASE_PROCESSING" },
+  { label: "Submissions", path: "/submissions", moduleKey: "SUBMISSIONS" },
 ];
 
 export default function Navigation() {
@@ -56,8 +58,12 @@ export default function Navigation() {
     };
   }, []);
 
-  function isActive(path: string): boolean {
-    return path === "/" ? pathname === "/" : pathname === path || pathname.startsWith(`${path}/`);
+  function isActive(module: (typeof modules)[number]): boolean {
+    if (module.path === "/") return pathname === "/";
+    const prefixes = module.activePrefixes ?? [module.path];
+    return prefixes.some(
+      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+    );
   }
 
   const visibleModules = modules.filter(
@@ -126,17 +132,14 @@ export default function Navigation() {
               key={module.path}
               href={module.path}
               onClick={() => setOpen(false)}
-              className={isActive(module.path) ? "active" : ""}
-              aria-current={isActive(module.path) ? "page" : undefined}
+              className={isActive(module) ? "active" : ""}
+              aria-current={isActive(module) ? "page" : undefined}
             >
               {module.label}
             </Link>
           ))}
         </div>
-        <div className="boundary">
-          <span>Licensed Nexus modules</span>
-          <strong>{context.enabledModules.length ? context.enabledModules.join(" · ") : "Core only"}</strong>
-        </div>
+
       </nav>
       <div className="validation">
         <span aria-hidden="true" />
