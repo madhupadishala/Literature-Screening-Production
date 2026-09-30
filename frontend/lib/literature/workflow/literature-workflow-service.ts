@@ -84,6 +84,8 @@ function buildWorkflowCacheKey(
 ): string {
   return JSON.stringify({
     tenantId: request.tenantId.trim(),
+    workspaceId: request.workspaceId.trim(),
+    environment: request.environment,
     query: request.query.trim(),
     maxResults: request.maxResults ?? null,
   });
@@ -115,6 +117,14 @@ class LiteratureWorkflowService {
 
     if (!request.tenantId?.trim()) {
       throw new Error("tenantId is required.");
+    }
+
+    if (!request.workspaceId?.trim()) {
+      throw new Error("workspaceId is required.");
+    }
+
+    if (!["PROD", "UAT", "TRAINING"].includes(request.environment)) {
+      throw new Error("A valid environment is required.");
     }
 
     if (!request.query?.trim()) {
@@ -179,6 +189,8 @@ class LiteratureWorkflowService {
       try {
         const priorArticles = await findExistingArticlesByIdentity(
           normalizedRequest.tenantId,
+          normalizedRequest.workspaceId,
+          normalizedRequest.environment,
           search.articles.map((article) => article.pmid),
         );
 
@@ -284,6 +296,8 @@ class LiteratureWorkflowService {
 
           persistWorkflowArticle({
             tenantKey: normalizedRequest.tenantId,
+            workspaceId: normalizedRequest.workspaceId,
+            environment: normalizedRequest.environment,
             pmid: article.pmid,
             doi: article.doi,
             title: article.title,
