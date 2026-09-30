@@ -204,7 +204,8 @@ for (const route of [
 ]) {
   const source = readFileSync(path.join(process.cwd(), route), "utf8");
   assert.equal(source.includes("NEXUS_MODULES.CASE_PROCESSING"), true);
-  assert.equal(source.includes("requireModulePermission"), true);
+  assert.equal(source.includes("requireWorkspaceModulePermission"), true);
+  assert.equal(/\brequireModulePermission\s*\(/u.test(source), false);
   assert.equal(source.includes("PERMISSIONS.CASE_EXPORT") || source.includes("PERMISSIONS.CASE_VIEW"), true);
 }
 
@@ -241,7 +242,8 @@ for (const route of [
   "app/api/safety/cases/[caseId]/exports/route.ts",
 ]) {
   const source = readFileSync(path.join(process.cwd(), route), "utf8");
-  assert.equal(source.includes("requireModulePermission"), true);
+  assert.equal(source.includes("requireWorkspaceModulePermission"), true);
+  assert.equal(/\brequireModulePermission\s*\(/u.test(source), false);
   assert.equal(source.includes("NEXUS_MODULES.CASE_PROCESSING"), true);
 }
 
