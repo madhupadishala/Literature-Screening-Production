@@ -16,6 +16,8 @@ import type {
 
 export interface LiteratureWorkflowRequest {
   tenantId: string;
+  workspaceId: string;
+  environment: "PROD" | "UAT" | "TRAINING";
 
   query: string;
 
