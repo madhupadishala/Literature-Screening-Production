@@ -452,7 +452,7 @@ The modernization target includes the following shared capabilities.
 
 ## 10. Which next-generation technology solves which problem?
 
-### 9.1 Semantic retrieval / similar-case or regulatory-context search
+### 10.1 Semantic retrieval / similar-case or regulatory-context search
 
 **Problem**
 - keyword search misses semantically related content;
@@ -482,7 +482,7 @@ Qdrant supports dense, sparse and hybrid retrieval patterns and can apply tenant
 
 ---
 
-### 9.2 Exact medical/regulatory/product keyword search
+### 10.2 Exact medical/regulatory/product keyword search
 
 **Problem**
 - semantic search alone can miss exact terms such as:
@@ -511,7 +511,7 @@ Elasticsearch is especially useful for full-text and structured operational sear
 
 ---
 
-### 9.3 Hybrid PV knowledge search
+### 10.3 Hybrid PV knowledge search
 
 **Problem**
 A query may contain both semantic intent and exact regulated terminology.
@@ -547,7 +547,7 @@ semantic             lexical
 
 ---
 
-### 9.4 Multi-step AI-assisted PV workflows
+### 10.4 Multi-step AI-assisted PV workflows
 
 **Problem**
 A PV AI workflow may require multiple controlled steps:
@@ -577,7 +577,7 @@ Deterministic PV rules remain in controlled domain services.
 
 ---
 
-### 9.5 Long-running workflow state / human-in-the-loop AI
+### 10.5 Long-running workflow state / human-in-the-loop AI
 
 **Problem**
 Some AI workflows require:
@@ -596,7 +596,7 @@ Some AI workflows require:
 
 ---
 
-### 9.6 High-frequency cache and repeated lookups
+### 10.6 High-frequency cache and repeated lookups
 
 **Problem**
 Repeatedly requesting:
@@ -619,7 +619,7 @@ can increase latency and infrastructure cost.
 
 ---
 
-### 9.7 API abuse / rate limiting
+### 10.7 API abuse / rate limiting
 
 **Problem**
 Prevent:
@@ -646,7 +646,7 @@ Possible dimensions:
 
 ---
 
-### 9.8 Distributed locks / duplicate execution prevention
+### 10.8 Distributed locks / duplicate execution prevention
 
 **Problem**
 Prevent simultaneous execution of operations such as:
@@ -665,7 +665,7 @@ Redis locks never replace database integrity constraints.
 
 ---
 
-### 9.9 Cross-module asynchronous communication
+### 10.9 Cross-module asynchronous communication
 
 **Problem**
 Modules should not directly call each other's internals and create hidden coupling.
@@ -705,7 +705,7 @@ Events must be:
 
 ---
 
-### 9.10 Reliable event + database consistency
+### 10.10 Reliable event + database consistency
 
 **Problem**
 A database transaction succeeds but the event fails, or an event is published before the database transaction fails.
@@ -718,7 +718,7 @@ This prevents regulated workflow state and asynchronous integrations from silent
 
 ---
 
-### 9.11 AI-provider independence
+### 10.11 AI-provider independence
 
 **Problem**
 Regulated workflows must not become tightly coupled to one model provider.
@@ -753,7 +753,7 @@ The gateway controls:
 
 ---
 
-### 9.12 Controlled RAG
+### 10.12 Controlled RAG
 
 **Problem**
 AI needs current controlled PV context without allowing arbitrary or cross-client retrieval.
@@ -1138,6 +1138,8 @@ See:
 - `docs/requirements/FRS_PLATFORM_CLEANUP.md`
 - `docs/architecture/CANONICAL_ARCHITECTURE.md`
 - `docs/architecture/PLATFORM_CAPABILITY_TARGET.md`
+- `docs/architecture/NEXUS_MODULAR_NEXTGEN_CHARTER.md`
+- `docs/pv-knowledge/REGULATORY_SOURCE_REGISTER.md`
 - `docs/cleanup/BASELINE_REPORT.md`
 - `docs/cleanup/TRACEABILITY_MATRIX.md`
 
