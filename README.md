@@ -1145,6 +1145,25 @@ See:
 
 ---
 
+### Documentation Quality Rule
+
+URS, FRS and User Guides are mandatory controlled sprint deliverables and must be detailed, audit-ready and written using globally recognized technical-writing and requirements conventions.
+
+They must use:
+- clear and unambiguous terminology;
+- unique requirement identifiers;
+- atomic/testable requirements;
+- consistent **shall / should / may / shall not** usage;
+- explicit roles, preconditions, validations, exceptions and outcomes;
+- field/state/permission/error-level detail in FRS;
+- task-oriented, released-behavior instructions in User Guides;
+- version/change control and traceability.
+
+Writing should be broadly aligned with ISO/IEC/IEEE 29148 requirements-engineering concepts, ISO/IEC/IEEE 26514 user-documentation concepts, regulated controlled-document practices and applicable GAMP-style lifecycle expectations.
+
+Detailed rules are defined in:
+`docs/architecture/NEXUS_MODULAR_NEXTGEN_CHARTER.md`
+
 ## 19. Definition of done
 
 The modernization program is not done because:
