@@ -22,6 +22,8 @@ assert.ok(migration.includes("workspace_id uuid"));
 assert.ok(migration.includes("environment text"));
 assert.ok(migration.includes("fk_safety_cases_workspace"));
 assert.ok(migration.includes("uq_safety_cases_scope_key"));
+assert.ok(migration.includes("uq_safety_cases_scope_identity"));
+assert.ok(migration.includes("uq_safety_case_versions_case_identity"));
 
 const caseService = read("lib/safety/common/safety-case-service.ts");
 assert.ok(caseService.includes("requireSafetyWorkspaceScope"));
