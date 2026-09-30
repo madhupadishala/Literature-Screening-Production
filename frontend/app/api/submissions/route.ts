@@ -20,7 +20,8 @@ export async function GET(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.SUBMISSIONS,
       PERMISSIONS.SUBMISSION_VIEW,
     );
-    const limit = Number(request.nextUrl.searchParams.get("limit") || "100");
+    const rawLimit = Number(request.nextUrl.searchParams.get("limit") || "100");
+    const limit = Number.isFinite(rawLimit) ? rawLimit : 100;
     const records = await listSubmissionPackages({ principal, limit });
     return Response.json({ success: true, data: { records } });
   } catch (error) {
