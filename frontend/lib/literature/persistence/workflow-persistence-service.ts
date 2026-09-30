@@ -65,7 +65,7 @@ export async function persistWorkflowArticle(input: PersistWorkflowArticleInput)
          FROM nexus_client_workspaces
         WHERE tenant_id = $1
           AND id = $2
-          AND lifecycle_status = 'active'
+          AND status = 'active'
         LIMIT 1`,
       [tenantId, input.workspaceId],
     );
