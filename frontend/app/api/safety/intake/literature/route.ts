@@ -2,8 +2,8 @@ import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
-import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 import { importLiteratureIntakeExport } from "@/lib/safety/common/safety-backbone-service";
 
 export const runtime = "nodejs";
@@ -16,7 +16,7 @@ interface ImportBody {
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requireModulePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.INTAKE,
       PERMISSIONS.INTAKE_CREATE,
