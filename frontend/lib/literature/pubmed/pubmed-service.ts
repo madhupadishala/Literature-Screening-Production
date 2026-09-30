@@ -60,18 +60,23 @@ class PubMedService {
     return workflowResult;
   }
 
-  list(limit = 20): PubMedWorkflowResult[] {
-    return this.history.slice(0, limit);
+  listForTenant(tenantId: string, limit = 20): PubMedWorkflowResult[] {
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, limit);
   }
 
   clear(): void {
     this.history = [];
   }
 
-  getStatus(): PubMedStatus {
+  getStatusForTenant(tenantId: string): PubMedStatus {
+    const tenantHistory = this.history.filter((item) => item.tenantId === tenantId);
     return {
       provider: "PubMed",
-      totalSearches: this.history.length,
+      totalSearches: tenantHistory.length,
+      lastSearchAt: tenantHistory[0]?.searchedAt,
+      lastQuery: tenantHistory[0]?.query,
     };
   }
 }
