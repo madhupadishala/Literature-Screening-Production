@@ -47,6 +47,7 @@ Every cleanup PR/change shall record:
 - **VER-NEXUS-SEC-BOUNDARY** — scoped-context and security boundary negative verification.
 - **VER-ARCH-DEPCRUISE** — dependency-cruiser architecture-boundary verification.
 - **VER-ARCH-ESLINT** — ESLint restricted-import and architecture rule verification.
+- **VER-PVK-FOUNDATION** — controlled regulatory knowledge catalog, metadata, ingestion and retrieval-foundation verification.
 - **VER-AI-RETRIEVAL-AUTH** — authorization-scoped retrieval negative/positive verification.
 - **VER-AI-PROVENANCE** — AI/model/retrieval provenance evidence verification.
 - **VER-LIT-REGRESSION** — Literature Screening regulated workflow regression verification.
@@ -64,3 +65,36 @@ Every cleanup PR/change shall record:
 - **VER-EXPORT-CI** — clean repository CI qualification.
 
 A verification identifier is marked complete only when its objective evidence exists for the qualified commit; listing an identifier does not itself prove execution.
+
+
+## Sprint 0–3 detailed traceability
+
+| URS range | FRS range | Scope | Verification | Current qualification state |
+|---|---|---|---|---|
+| URS-PVK-001–074 | FRS-PVK-001–023 | Controlled regulatory knowledge source lifecycle, acquisition, provenance, chunking, embedding, retrieval, review and update impact | VER-PVK-FOUNDATION; source-catalog validation; ingestion/retrieval tests | foundation implemented; full corpus acquisition/production approval intentionally not yet claimed |
+| URS-NX-001–004 | FRS-NX-001–002 | Identity-first credential validation and lockout | VER-NEXUS-IDENTITY-WORKSPACE; CodeRabbit security review | implemented / verified by current CI |
+| URS-NX-005–010 | FRS-NX-003–005 | Durable identity session and provider-independent identity | VER-NEXUS-IDENTITY-WORKSPACE | implemented / verified |
+| URS-NX-011–026 | FRS-NX-006–008 | Tenant/workspace/environment hierarchy | VER-NEXUS-IDENTITY-WORKSPACE; VER-NEXUS-SEC-BOUNDARY | implemented / verified |
+| URS-NX-027–036 | FRS-NX-009–010 | Plug-and-play entitlements and canonical module contracts | module registry verification; future module contract tests | Nexus foundation implemented; module contract qualification continues in module sprints |
+| URS-NX-037–044 | FRS-NX-011–013 | Workspace/module role and permission enforcement | VER-NEXUS-SEC-BOUNDARY | implemented / verified |
+| URS-NX-045–053 | FRS-NX-014–016 | Scoped context creation, binding, expiry and context switching | VER-NEXUS-SEC-BOUNDARY | implemented / verified |
+| URS-NX-054–058 | FRS-NX-017 | Access/audit attribution | migration/static verification; module evidence expansion later | implemented foundation / partial live-workflow coverage |
+| URS-NX-059–065 | FRS-NX-018–021 | IDOR boundary foundation, production principal hardening, secrets and relational integrity | VER-NEXUS-SEC-BOUNDARY; VER-SECRET-INCR; VER-SECRET-FULL | code implemented; secret baseline must be green on current head |
+| URS-NX-066–075 | FRS-NX-022–025 | additive migration, compatibility, regression and entitlement qualification | VER-NEXUS-IDENTITY-WORKSPACE; existing PV regression | implemented / transitional module migration explicit |
+| URS-SEC-001–010 | FRS-SEC-001–005 | machine-enforced architecture | VER-ARCH-DEPCRUISE; VER-ARCH-ESLINT; VER-CQ-MADGE | blocking platform rules implemented; module debt warning-visible |
+| URS-SEC-011–020 | FRS-SEC-006–009 | production authorization/context security | VER-NEXUS-SEC-BOUNDARY | implemented / verified |
+| URS-SEC-021–026 | FRS-SEC-010 | dependency vulnerability gate | VER-NPM-AUDIT | current locked tree reports 0 vulnerabilities |
+| URS-SEC-027–030 | FRS-SEC-011–012 | secret scanning | VER-SECRET-INCR; VER-SECRET-FULL | current rerun required after Gitleaks policy correction |
+| URS-SEC-031–037 | FRS-SEC-013–014 | executable negative security verification | VER-NEXUS-SEC-BOUNDARY | foundation verified; real module-resource Hacker Gate continues in module sprints |
+| URS-SEC-038–048 | FRS-SEC-015–020 | evidence, CodeRabbit, incremental enforcement and legacy retirement | CI artifacts + PR #80 review | qualification pending final CodeRabbit/current-head evidence |
+
+### Sprint 0–3 documentation rule
+
+The following controlled documents are required and versioned in Git:
+- detailed URS;
+- detailed FRS with atomic identifiers and linked URS;
+- task-oriented User Guide describing actual implemented behavior;
+- regulatory/source register where domain knowledge is involved;
+- objective verification evidence attributable to the exact commit.
+
+A sprint is not green when its code passes but its URS/FRS/User Guide or traceability is incomplete.
