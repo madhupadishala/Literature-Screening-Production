@@ -15,22 +15,26 @@ export async function POST(
   context: { params: Promise<{ signalId: string }> },
 ): Promise<Response> {
   try {
-    const principal = await requireWorkspaceModulePermission(
-      request,
-      NEXUS_MODULES.SIGNAL_MANAGEMENT,
-      PERMISSIONS.SIGNAL_ASSESS,
-    );
     const body = await request.json().catch(() => null);
     if (!body || typeof body !== "object" || Array.isArray(body)) {
       throw new Error("Invalid signal assessment body.");
     }
+    const signalRequest = body as RecordSignalAssessmentRequest;
+    const approvalTransition =
+      signalRequest.nextStatus === "CONFIRMED" ||
+      signalRequest.nextStatus === "CLOSED";
+    const principal = await requireWorkspaceModulePermission(
+      request,
+      NEXUS_MODULES.SIGNAL_MANAGEMENT,
+      approvalTransition ? PERMISSIONS.SIGNAL_APPROVE : PERMISSIONS.SIGNAL_ASSESS,
+    );
     const { signalId } = await context.params;
     return Response.json({
       success: true,
       data: await recordSignalAssessment({
         principal,
         signalId,
-        request: body as RecordSignalAssessmentRequest,
+        request: signalRequest,
       }),
     }, { status: 201 });
   } catch (error) {
