@@ -172,3 +172,15 @@ The following terminology is normative across Nexus user-interface requirements,
 | URS-NX-079 | Nexus shall use **Sub-navigation** to navigate between multiple screens within the same module. |
 | URS-NX-080 | URS, FRS, User Guides, traceability records, UI labels and validation evidence shall use Module, Screen, Tab and Sub-navigation consistently with these controlled definitions. |
 
+## 16. Product design system and Product Design Guardian requirements
+
+| ID | Requirement |
+|---|---|
+| URS-NX-081 | Material UI changes shall follow the controlled product-design system and Product Design Guardian gate. |
+| URS-NX-082 | Figma shall be the preferred design source of truth for material screen redesigns before implementation. |
+| URS-NX-083 | Operational screens shall target Carbon-class enterprise information density while preserving readability, hierarchy and accessibility. |
+| URS-NX-084 | Reusable accessible components and controlled design tokens shall be preferred over page-specific visual systems. |
+| URS-NX-085 | Material asynchronous workflows shall provide deliberate loading, empty, error, disabled, read-only/final and success states as applicable. |
+| URS-NX-086 | User actions shall be real, permission-aware and context-aware; fake or decorative workflow controls are prohibited. |
+| URS-NX-087 | AI suggestions shall be visually distinguishable from human decisions and authoritative regulatory/source information. |
+| URS-NX-088 | Material UI changes shall include browser visual verification and accessibility/interaction review evidence before design qualification. |
