@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   clearSession,
@@ -10,6 +11,7 @@ import {
 } from "@/lib/session-manager";
 
 export default function SessionTimeoutGuard() {
+  const router = useRouter();
   const [showWarning, setShowWarning] = useState(false);
   const [countdown, setCountdown] = useState(60);
   const endingSessionRef = useRef(false);
@@ -36,7 +38,7 @@ export default function SessionTimeoutGuard() {
       await clearBackendSession();
 
       clearSession();
-      window.location.href = "/login";
+      router.replace("/login");
     }
 
     activityEvents.forEach((event) => window.addEventListener(event, handleActivity));
@@ -60,7 +62,7 @@ export default function SessionTimeoutGuard() {
       activityEvents.forEach((event) => window.removeEventListener(event, handleActivity));
       window.clearInterval(interval);
     };
-  }, []);
+  }, [router]);
 
   async function auditSession(action: string, reason: string) {
     const session = getSession();
@@ -117,7 +119,7 @@ export default function SessionTimeoutGuard() {
         );
         await clearBackendSession();
         clearSession();
-        window.location.href = "/login";
+        router.replace("/login");
         return;
       }
 
@@ -128,7 +130,7 @@ export default function SessionTimeoutGuard() {
     } catch {
       endingSessionRef.current = true;
       clearSession();
-      window.location.href = "/login";
+      router.replace("/login");
     }
   }
 
@@ -140,7 +142,7 @@ export default function SessionTimeoutGuard() {
     await clearBackendSession();
 
     clearSession();
-    window.location.href = "/login";
+    router.replace("/login");
   }
 
   if (!showWarning) return null;
