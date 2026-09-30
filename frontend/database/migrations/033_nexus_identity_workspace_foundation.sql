@@ -11,7 +11,7 @@
 
 CREATE TABLE IF NOT EXISTS nexus_identity_sessions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id uuid NOT NULL REFERENCES application_users(id) ON DELETE CASCADE,
+  user_id uuid NOT NULL REFERENCES application_users(id) ON DELETE RESTRICT,
   token_hash text NOT NULL UNIQUE CHECK (token_hash ~ '^[0-9a-f]{64}$'),
   provider text NOT NULL DEFAULT 'internal'
     CHECK (provider IN ('internal','microsoft_entra','okta','auth0','keycloak','next_auth')),
