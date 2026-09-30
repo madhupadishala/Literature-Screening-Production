@@ -82,10 +82,11 @@ async function auditDenial(input: {
  * Identity -> tenant -> workspace -> environment -> module -> role -> permission.
  * Context cookie only selects scope; mutable authority is re-read from PostgreSQL.
  */
-export async function requireWorkspaceModulePermission(
+async function requireScopedWorkspaceModulePermission(
   request: NextRequest,
   moduleKey: NexusModuleKey,
   permission: Permission,
+  requireContextModuleMatch: boolean,
 ): Promise<ScopedIdentityPrincipal> {
   const identity = await requireIdentitySession(request);
   const rawContext = request.cookies.get(NEXUS_CONTEXT_COOKIE)?.value;
@@ -106,7 +107,7 @@ export async function requireWorkspaceModulePermission(
     !context ||
     context.sessionId !== identity.sessionId ||
     context.userId !== identity.userId ||
-    context.moduleKey !== moduleKey
+    (requireContextModuleMatch && context.moduleKey !== moduleKey)
   ) {
     await auditDenial({
       request,
@@ -185,4 +186,41 @@ export async function requireWorkspaceModulePermission(
     moduleKey,
     moduleRoles: access.moduleRoles,
   };
+}
+
+
+/**
+ * Standard module guard. The selected context module must match the route module.
+ */
+export async function requireWorkspaceModulePermission(
+  request: NextRequest,
+  moduleKey: NexusModuleKey,
+  permission: Permission,
+): Promise<ScopedIdentityPrincipal> {
+  return requireScopedWorkspaceModulePermission(
+    request,
+    moduleKey,
+    permission,
+    true,
+  );
+}
+
+/**
+ * Authorize an additional module inside the already-selected tenant/workspace/environment.
+ *
+ * Use only after the route has authorized its primary selected module. This supports
+ * canonical cross-module handoffs (for example Intake -> Case Processing) without
+ * treating a client-supplied selector as authority or requiring a second login.
+ */
+export async function requireAdditionalModulePermissionInSelectedWorkspace(
+  request: NextRequest,
+  moduleKey: NexusModuleKey,
+  permission: Permission,
+): Promise<ScopedIdentityPrincipal> {
+  return requireScopedWorkspaceModulePermission(
+    request,
+    moduleKey,
+    permission,
+    false,
+  );
 }
