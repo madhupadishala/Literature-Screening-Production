@@ -112,6 +112,9 @@ jobs:
       - name: Verify Nexus identity-first workspace architecture
         run: npm run nexus:identity-workspace:verify
 
+      - name: Verify Nexus security boundary negative cases
+        run: npm run nexus:security-boundaries:verify
+
       - name: Build production application
         run: npm run build
 
