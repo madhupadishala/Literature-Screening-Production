@@ -138,7 +138,8 @@ for (const [route, permission] of [
   const source = readFileSync(path.join(process.cwd(), route), "utf8");
   assert.equal(source.includes("NEXUS_MODULES.CASE_PROCESSING"), true);
   assert.equal(source.includes(`PERMISSIONS.${permission}`), true);
-  assert.equal(source.includes("requireModulePermission"), true);
+  assert.equal(source.includes("requireWorkspaceModulePermission"), true);
+  assert.equal(/\brequireModulePermission\s*\(/u.test(source), false);
 }
 
 const workspace = readFileSync(
