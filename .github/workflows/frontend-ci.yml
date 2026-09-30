@@ -115,6 +115,9 @@ jobs:
       - name: Verify Nexus security boundary negative cases
         run: npm run nexus:security-boundaries:verify
 
+      - name: Verify controlled regulatory knowledge foundation
+        run: npm run regulatory:knowledge:verify
+
       - name: Build production application
         run: npm run build
 
