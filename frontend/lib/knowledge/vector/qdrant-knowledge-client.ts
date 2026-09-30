@@ -427,7 +427,13 @@ export class QdrantKnowledgeClient {
       return [];
     }
 
-    const must = [
+    type FilterCondition =
+      | { key: string; match: { any: string[] } }
+      | { key: string; match: { value: string } }
+      | { key: string; range: { lte: string } }
+      | { is_empty: { key: string } };
+
+    const must: FilterCondition[] = [
       {
         key: "tenantId",
         match: {
@@ -438,6 +444,47 @@ export class QdrantKnowledgeClient {
         },
       },
     ];
+    const mustNot: FilterCondition[] = [];
+
+    const isGovernedRegulatorySearch =
+      request.category?.trim() === "regulatory_guidance" ||
+      Boolean(request.regulation?.trim());
+
+    if (isGovernedRegulatorySearch) {
+      const asOf = request.asOf?.trim() || new Date().toISOString();
+      const asOfMs = Date.parse(asOf);
+      if (!Number.isFinite(asOfMs)) {
+        throw new Error("asOf must be a valid ISO date/time for regulatory retrieval.");
+      }
+
+      must.push({
+        key: "approvalStatus",
+        match: { value: "APPROVED" },
+      });
+      must.push({
+        key: "effectiveDate",
+        range: { lte: new Date(asOfMs).toISOString() },
+      });
+
+      if (request.includeSuperseded === true) {
+        must.push({
+          key: "lifecycleStatus",
+          match: { any: ["EFFECTIVE", "SUPERSEDED"] },
+        });
+      } else {
+        must.push({
+          key: "lifecycleStatus",
+          match: { value: "EFFECTIVE" },
+        });
+        must.push({
+          is_empty: { key: "supersededBySourceId" },
+        });
+        mustNot.push({
+          key: "lifecycleStatus",
+          match: { any: ["SUPERSEDED", "RETIRED"] },
+        });
+      }
+    }
 
     if (request.category?.trim()) {
       must.push({
@@ -487,6 +534,7 @@ export class QdrantKnowledgeClient {
         with_vector: false,
         filter: {
           must,
+          must_not: mustNot,
         },
       },
     );
@@ -664,6 +712,7 @@ export class QdrantKnowledgeClient {
     const datetimeFields = [
       "publicationDate",
       "effectiveDate",
+      "supersededAt",
       "createdAt",
       "updatedAt",
     ];
