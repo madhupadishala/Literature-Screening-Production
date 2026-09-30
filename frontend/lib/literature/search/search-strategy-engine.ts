@@ -39,6 +39,7 @@ class SearchStrategyEngine {
 
     // Step 3 — Store strategy
     const result: SearchWorkflowResult = {
+      tenantId: request.tenantId,
       id: createStrategyId(),
 
       strategyName:
@@ -79,20 +80,23 @@ class SearchStrategyEngine {
     return result;
   }
 
-  list(
+  listForTenant(
+    tenantId: string,
     limit = 20,
   ): SearchWorkflowResult[] {
-    return this.history.slice(0, limit);
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, limit);
   }
 
   clear(): void {
     this.history = [];
   }
 
-  getStatus(): SearchStrategyStatus {
+  getStatusForTenant(tenantId: string): SearchStrategyStatus {
     return {
       totalStrategies:
-        this.history.length,
+        this.history.filter((item) => item.tenantId === tenantId).length,
     };
   }
 }
