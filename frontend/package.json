@@ -73,7 +73,8 @@
     "nexus:identity-workspace:verify": "node --import tsx scripts/verify-nexus-identity-workspace.ts",
     "nexus:security-boundaries:verify": "node --import tsx scripts/verify-nexus-security-boundaries.ts",
     "regulatory:knowledge:verify": "node --import tsx scripts/verify-regulatory-knowledge-foundation.ts",
-    "cleanup:sprint4:verify": "node --import tsx scripts/verify-cleanup-sprint4-literature.ts"
+    "cleanup:sprint4:verify": "node --import tsx scripts/verify-cleanup-sprint4-literature.ts",
+    "cleanup:sprint5:verify": "node --import tsx scripts/verify-cleanup-sprint5-intake.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "1.18.0",
