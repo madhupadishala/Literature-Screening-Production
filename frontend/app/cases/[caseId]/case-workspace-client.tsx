@@ -506,6 +506,23 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
     }
   }
 
+
+  useEffect(() => {
+    const handleSave = () => void saveDraft();
+    const handleEvidence = () => void generateEvidence();
+    const handleE2B = () => void generateExport("E2B_R3_MAPPING_JSON");
+
+    window.addEventListener("nexus:save", handleSave);
+    window.addEventListener("nexus:generate-evidence", handleEvidence);
+    window.addEventListener("nexus:generate-e2b", handleE2B);
+
+    return () => {
+      window.removeEventListener("nexus:save", handleSave);
+      window.removeEventListener("nexus:generate-evidence", handleEvidence);
+      window.removeEventListener("nexus:generate-e2b", handleE2B);
+    };
+  }, [workspace, editors, changeReason, caseId]);
+
   if (!workspace) {
     return (
       <main className="app-shell" id="main-content">
