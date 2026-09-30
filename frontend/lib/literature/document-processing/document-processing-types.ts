@@ -10,6 +10,7 @@ export interface OCRResult {
 }
 
 export interface PDFProcessingResult {
+  tenantId: string;
   pmid: string;
   fileName: string;
   pageCount: number;
