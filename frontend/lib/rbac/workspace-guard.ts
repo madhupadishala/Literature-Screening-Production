@@ -53,7 +53,25 @@ async function auditDenial(input: {
   permission: Permission;
   reason: string;
 }) {
-  await getPostgresPool()
+  const pool = getPostgresPool();
+  let auditedWorkspaceId: string | null = input.workspaceId ?? null;
+
+  if (input.tenantId && input.workspaceId) {
+    const workspace = await pool
+      .query<{ id: string }>(
+        `SELECT id
+           FROM nexus_client_workspaces
+          WHERE tenant_id = $1 AND id = $2
+          LIMIT 1`,
+        [input.tenantId, input.workspaceId],
+      )
+      .catch(() => ({ rows: [] as Array<{ id: string }> }));
+    if (!workspace.rows[0]) {
+      auditedWorkspaceId = null;
+    }
+  }
+
+  await pool
     .query(
       `INSERT INTO audit_events (
          tenant_id, workspace_id, environment, module_key, actor_id,
@@ -61,7 +79,7 @@ async function auditDenial(input: {
        ) VALUES ($1,$2,$3,$4,$5,'WORKSPACE_AUTHORIZATION_DENIED','SECURITY_RBAC','denied',$6,$7,$8::jsonb)`,
       [
         input.tenantId ?? null,
-        input.workspaceId ?? null,
+        auditedWorkspaceId,
         input.environment ?? null,
         input.moduleKey,
         input.userId,
@@ -70,6 +88,7 @@ async function auditDenial(input: {
         JSON.stringify({
           permission: input.permission,
           reason: input.reason,
+          requestedWorkspaceId: input.workspaceId ?? null,
           pathname: input.request.nextUrl.pathname,
           method: input.request.method,
         }),
