@@ -133,13 +133,13 @@ export async function POST(request: NextRequest): Promise<Response> {
            ) VALUES ($1,$2,$3,$4,$5,'WORKSPACE_CONTEXT_DENIED','SECURITY_RBAC','denied',$6,$7,$8::jsonb)`,
           [
             tenant.tenantId,
-            workspaceId,
+            access.reason === "WORKSPACE_NOT_FOUND" ? null : workspaceId,
             environment,
             moduleKey,
             identity.userId,
             request.headers.get("x-request-id")?.trim() || null,
             request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null,
-            JSON.stringify({ reason: access.reason }),
+            JSON.stringify({ reason: access.reason, requestedWorkspaceId: workspaceId }),
           ],
         )
         .catch(() => undefined);
