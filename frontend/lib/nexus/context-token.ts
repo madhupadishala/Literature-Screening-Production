@@ -28,8 +28,24 @@ export function createNexusContextToken(input: {
   workspaceId: string;
   environment: NexusEnvironment;
   moduleKey: NexusModuleKey;
+  sessionExpiresAt: string;
   expiresInSeconds?: number;
 }): string {
+  const requestedLifetimeSeconds = Math.min(
+    input.expiresInSeconds ?? NEXUS_CONTEXT_MAX_AGE_SECONDS,
+    NEXUS_CONTEXT_MAX_AGE_SECONDS,
+  );
+  const sessionRemainingSeconds = Math.floor(
+    (new Date(input.sessionExpiresAt).getTime() - Date.now()) / 1000,
+  );
+  if (!Number.isFinite(sessionRemainingSeconds) || sessionRemainingSeconds <= 0) {
+    throw new Error("Identity session has expired.");
+  }
+  const expiresInSeconds = Math.max(
+    1,
+    Math.min(requestedLifetimeSeconds, sessionRemainingSeconds),
+  );
+
   return encodeScopedContext(
     {
       sessionId: input.sessionId,
@@ -40,7 +56,7 @@ export function createNexusContextToken(input: {
       moduleKey: input.moduleKey,
     },
     contextSecret(),
-    { expiresInSeconds: input.expiresInSeconds ?? NEXUS_CONTEXT_MAX_AGE_SECONDS },
+    { expiresInSeconds },
   );
 }
 
