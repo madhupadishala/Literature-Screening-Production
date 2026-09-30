@@ -27,6 +27,7 @@ export async function GET(
       PERMISSIONS.INTAKE_EXPORT,
     );
     const { intakeId, packageId } = await context.params;
+    await assertSafetyIntakeInScope(principal, intakeId);
     const handoff = await getExternalHandoffPayload({
       principal,
       intakeRecordId: intakeId,
