@@ -22,6 +22,7 @@ export async function GET(
     );
     const { intakeId } = await context.params;
     await assertSafetyIntakeInScope(principal, intakeId);
+    await assertSafetyIntakeInScope(principal, intakeId);
     const workspace = await getIntakeWorkspace({
       principal,
       intakeRecordId: intakeId,
