@@ -692,3 +692,136 @@ the priority is:
 9. feature speed.
 
 This charter is a governing reference for every subsequent sprint.
+
+
+---
+
+## 15. Documentation Quality Rule — Global Writing Convention
+
+URS, FRS and User Guides are controlled lifecycle documents and must be written to a globally professional, audit-ready standard.
+
+### General writing principles
+- clear, concise and unambiguous language;
+- one requirement or instruction per statement where practical;
+- avoid vague terms such as "user friendly", "fast", "appropriate", "etc.", "as required" unless explicitly defined;
+- use consistent terminology, abbreviations and role names;
+- define acronyms at first use;
+- distinguish mandatory requirements from explanatory notes;
+- use active voice where it improves clarity;
+- use normative wording consistently:
+  - **shall** = mandatory system requirement;
+  - **should** = recommended practice;
+  - **may** = permitted option;
+  - **must not / shall not** = prohibited behavior;
+- avoid hidden assumptions;
+- identify preconditions, triggers, outputs, exceptions and failure states;
+- preserve version, author/reviewer/approval status and change history.
+
+### URS convention
+Each URS requirement should be:
+- uniquely identified;
+- atomic;
+- necessary;
+- solution-independent where possible;
+- measurable/testable;
+- traceable to business/regulatory/quality needs;
+- classified by module, role, criticality and regulatory relevance where applicable.
+
+Preferred structure includes:
+- purpose and scope;
+- intended use;
+- system context;
+- users/roles;
+- business processes;
+- functional requirements;
+- data requirements;
+- security/access requirements;
+- audit/evidence requirements;
+- regulatory requirements;
+- integration requirements;
+- availability/performance requirements;
+- data retention/archiving;
+- business continuity/recovery;
+- reporting;
+- AI/automation requirements;
+- assumptions/constraints;
+- out-of-scope;
+- acceptance criteria;
+- traceability references.
+
+### FRS convention
+FRS must translate each approved URS requirement into detailed, implementable and testable system behavior.
+
+FRS should include:
+- unique FRS IDs;
+- linked URS IDs;
+- field-level behavior;
+- data type/format/length;
+- required/optional/conditional status;
+- default values;
+- controlled terminology;
+- validation logic;
+- calculations;
+- state transitions;
+- role/permission behavior;
+- error handling;
+- retry behavior;
+- duplicate/follow-up handling;
+- audit events;
+- evidence outputs;
+- APIs/events/contracts;
+- external-system behavior;
+- configuration;
+- logging/monitoring;
+- performance expectations;
+- security controls;
+- AI/model behavior and provenance;
+- exception and boundary conditions;
+- positive and negative acceptance criteria.
+
+### User Guide convention
+User Guides must describe the actual released behavior, not planned functionality.
+
+They should include:
+- document purpose/scope;
+- intended audience;
+- roles and prerequisites;
+- login/context/module access;
+- screen/workspace orientation;
+- step-by-step procedures;
+- field explanations;
+- expected results;
+- warnings/cautions;
+- errors and recovery;
+- role-specific differences;
+- approval/review flows;
+- audit/evidence implications where relevant;
+- screenshots/illustrations when maintained;
+- troubleshooting;
+- FAQs where useful;
+- known limitations;
+- glossary;
+- version/release applicability.
+
+Instructions should use task-oriented language and observable user actions.
+
+### Global convention references
+Writing should be broadly aligned with internationally used documentation/requirements principles such as:
+- ISO/IEC/IEEE 29148 concepts for requirements quality and traceability;
+- ISO/IEC/IEEE 26514 concepts for user documentation;
+- controlled-document practices used in regulated GxP environments;
+- applicable GAMP-style lifecycle and traceability expectations.
+
+These are writing/quality references; applicable PV regulations and company procedures remain the governing domain requirements.
+
+### Documentation completeness gate
+A sprint cannot close when code is complete but documentation is:
+- incomplete;
+- ambiguous;
+- outdated;
+- inconsistent with released behavior;
+- missing traceability;
+- missing field/state/exception detail;
+- written only as a high-level overview.
+
+URS, FRS and User Guide quality are part of release evidence.
