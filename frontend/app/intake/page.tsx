@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import Navigation from "@/components/Navigation";
+import ModuleSubNavigation from "@/components/ModuleSubNavigation";
 import styles from "./intake.module.css";
 
 type IntakeRow = {
@@ -302,6 +303,7 @@ export default function IntakePage() {
   return (
     <main className="app-shell" id="main-content">
       <Navigation />
+      <ModuleSubNavigation module="INTAKE" />
 
       <section className={styles.hero}>
         <div>
