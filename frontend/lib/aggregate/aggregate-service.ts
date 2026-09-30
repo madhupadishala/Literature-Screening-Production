@@ -94,6 +94,8 @@ export async function getAggregateReport(input:{principal:RequestPrincipal;repor
 }
 
 export async function createAggregateVersion(input:{principal:RequestPrincipal;reportId:string;request:CreateAggregateVersionRequest}) {
+  if(!isRecord(input.request.content))throw new Error("Aggregate report content must be a JSON object.");
+  if(!["DRAFT","REVIEWED","APPROVED","FINALIZED"].includes(input.request.status))throw new Error("Unsupported aggregate version status.");
   const scope=requireSafetyWorkspaceScope(input.principal);
   const client=await getPostgresPool().connect();
   try{
@@ -120,6 +122,18 @@ export async function createAggregateVersion(input:{principal:RequestPrincipal;r
     );
     const parentStatus=input.request.status==="FINALIZED"?"FINALIZED":input.request.status==="APPROVED"?"APPROVED":"UNDER_REVIEW";
     await client.query(`UPDATE nexus_aggregate_reports SET status=$2,updated_at=now() WHERE id=$1`,[input.reportId,parentStatus]);
+    await client.query(
+      `INSERT INTO audit_events (
+         tenant_id,workspace_id,environment,module_key,actor_id,event_type,event_category,outcome,details
+       ) VALUES ($1,$2,$3,'AGGREGATE_REPORTING',$4,'AGGREGATE_VERSION_RECORDED','NEXUS_AGGREGATE','success',$5::jsonb)`,
+      [input.principal.tenantId,scope.workspaceId,scope.environment,input.principal.userId,JSON.stringify({
+        aggregateReportId:input.reportId,
+        version:Number(next.rows[0].next_version),
+        versionStatus:input.request.status,
+        contentSha256,
+        changeReason:input.request.changeReason,
+      })],
+    );
     await client.query("COMMIT");
     return inserted.rows[0];
   }catch(error){await client.query("ROLLBACK");throw error;}finally{client.release();}
