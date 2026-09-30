@@ -17,7 +17,8 @@ export async function GET(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.SIGNAL_MANAGEMENT,
       PERMISSIONS.SIGNAL_VIEW,
     );
-    const limit = Number(request.nextUrl.searchParams.get("limit") || "100");
+    const rawLimit = Number(request.nextUrl.searchParams.get("limit") || "100");
+    const limit = Number.isFinite(rawLimit) ? rawLimit : 100;
     return Response.json({ success: true, data: { records: await listSignals({ principal, limit }) } });
   } catch (error) {
     return routeErrorResponse(error);
