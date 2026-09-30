@@ -17,19 +17,22 @@ class OCRService {
     return result;
   }
 
-  list(limit = 20) {
-    return this.history.slice(0, limit);
+  listForTenant(tenantId: string, limit = 20) {
+    return this.history
+      .filter((item) => item.tenantId === tenantId)
+      .slice(0, limit);
   }
 
-  getStatus(): DocumentProcessingStatus {
-    const processedDocuments = this.history.length;
+  getStatusForTenant(tenantId: string): DocumentProcessingStatus {
+    const tenantHistory = this.history.filter((item) => item.tenantId === tenantId);
+    const processedDocuments = tenantHistory.length;
 
     const averageOCRConfidence =
       processedDocuments === 0
         ? 0
         : Number(
             (
-              this.history.reduce(
+              tenantHistory.reduce(
                 (sum, item) => sum + item.ocr.confidence,
                 0,
               ) / processedDocuments
