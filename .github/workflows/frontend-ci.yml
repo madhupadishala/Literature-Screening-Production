@@ -48,7 +48,6 @@ jobs:
 
       - name: Enforce architecture dependency gate
         run: |
-          npm install --no-save --package-lock=false --ignore-scripts dependency-cruiser@18.4.0
           ./node_modules/.bin/depcruise --config .dependency-cruiser.cjs app lib scripts
 
       - name: Enforce dependency security gate
