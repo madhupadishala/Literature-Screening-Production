@@ -104,6 +104,9 @@ jobs:
       - name: Verify Nexus tenant integrity hardening
         run: npm run nexus:tenant-integrity:verify
 
+      - name: Verify Nexus identity-first workspace architecture
+        run: npm run nexus:identity-workspace:verify
+
       - name: Build production application
         run: npm run build
 
