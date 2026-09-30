@@ -101,6 +101,14 @@ const SIGNAL_PERMISSIONS: readonly Permission[] = [
   PERMISSIONS.SIGNAL_APPROVE,
 ];
 
+const AGGREGATE_PERMISSIONS: readonly Permission[] = [
+  PERMISSIONS.AGGREGATE_VIEW,
+  PERMISSIONS.AGGREGATE_CREATE,
+  PERMISSIONS.AGGREGATE_REVIEW,
+  PERMISSIONS.AGGREGATE_APPROVE,
+  PERMISSIONS.AGGREGATE_EXPORT,
+];
+
 function modulePermissions(moduleKey: NexusModuleKey): readonly Permission[] {
   switch (moduleKey) {
     case "LITERATURE":
@@ -120,6 +128,8 @@ function modulePermissions(moduleKey: NexusModuleKey): readonly Permission[] {
       return SUBMISSION_PERMISSIONS;
     case "SIGNAL_MANAGEMENT":
       return SIGNAL_PERMISSIONS;
+    case "AGGREGATE_REPORTING":
+      return AGGREGATE_PERMISSIONS;
     default:
       return [];
   }
@@ -159,7 +169,8 @@ function builtInModuleRoleHasPermission(
       permission === PERMISSIONS.SCREENING_REVIEW ||
       permission === PERMISSIONS.INTAKE_QC ||
       permission === PERMISSIONS.CASE_QC ||
-      permission === PERMISSIONS.SIGNAL_ASSESS
+      permission === PERMISSIONS.SIGNAL_ASSESS ||
+      permission === PERMISSIONS.AGGREGATE_REVIEW
     );
   }
 
@@ -183,6 +194,7 @@ function builtInModuleRoleHasPermission(
       PERMISSIONS.SUBMISSION_TRANSMIT,
       PERMISSIONS.SUBMISSION_ACKNOWLEDGE,
       PERMISSIONS.SIGNAL_APPROVE,
+      PERMISSIONS.AGGREGATE_APPROVE,
     ];
     return !restrictedPermissions.includes(permission);
   }
