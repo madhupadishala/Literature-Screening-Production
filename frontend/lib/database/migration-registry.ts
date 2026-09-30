@@ -234,4 +234,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "038_nexus_pv_documentation_foundation.sql",
     required: true,
   },
+  {
+    id: "039",
+    name: "Literature Workspace Scope",
+    filename: "039_literature_workspace_scope.sql",
+    required: true,
+  },
 ] as const;
