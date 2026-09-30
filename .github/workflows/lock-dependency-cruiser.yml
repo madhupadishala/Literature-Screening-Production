@@ -1,0 +1,45 @@
+name: One-time Lock Dependency Cruiser
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/lock-dependency-cruiser.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  lock:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'cleanup/zero-deviation-baseline-20260930'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Generate controlled dependency-cruiser lock
+        working-directory: frontend
+        run: npm install --package-lock-only --ignore-scripts --save-dev dependency-cruiser@18.4.0
+
+      - name: Commit lock update to cleanup branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontend/package.json frontend/package-lock.json
+          if git diff --cached --quiet; then
+            echo "Lockfile already current."
+            exit 0
+          fi
+          git commit -m "ci: lock dependency-cruiser analyzer"
+          git push origin HEAD:cleanup/zero-deviation-baseline-20260930
