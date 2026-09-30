@@ -70,6 +70,27 @@ export default function Navigation() {
     (module) => !module.moduleKey || context.enabledModules.includes(module.moduleKey),
   );
 
+  const isCaseWorkspace =
+    Boolean(pathname) &&
+    pathname !== "/cases" &&
+    pathname.startsWith("/cases/");
+
+  function dispatchUtilityAction(action: string) {
+    window.dispatchEvent(new CustomEvent(`nexus:${action}`));
+  }
+
+  function goBack() {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    routerFallback();
+  }
+
+  function routerFallback() {
+    window.location.assign("/");
+  }
+
   return (
     <div className="shell-header">
       <a className="skip-link" href="#main-content">
@@ -89,6 +110,65 @@ export default function Navigation() {
           <span>Safety Operations</span>
           <strong>Nexus Workspace</strong>
         </div>
+
+        <div className="utility-toolbar" aria-label="Global actions">
+          <button
+            type="button"
+            className="utility-action"
+            onClick={goBack}
+            disabled={pathname === "/"}
+            title="Go back"
+          >
+            ← <span>Back</span>
+          </button>
+
+          <button
+            type="button"
+            className="utility-action"
+            onClick={() => dispatchUtilityAction("save")}
+            disabled={!isCaseWorkspace}
+            title={isCaseWorkspace ? "Save current case" : "Save is available inside an editable workspace"}
+          >
+            Save
+          </button>
+
+          <button
+            type="button"
+            className="utility-action"
+            onClick={() => window.print()}
+            title="Print current screen"
+          >
+            Print
+          </button>
+
+          <details className="generate-menu">
+            <summary className={isCaseWorkspace ? "" : "disabled"}>Generate</summary>
+            <div className="generate-popover">
+              <button
+                type="button"
+                disabled={!isCaseWorkspace}
+                onClick={() => dispatchUtilityAction("generate-evidence")}
+              >
+                Evidence Package
+              </button>
+              <button
+                type="button"
+                disabled={!isCaseWorkspace}
+                onClick={() => dispatchUtilityAction("generate-e2b")}
+              >
+                E2B(R3) Export
+              </button>
+              <button
+                type="button"
+                disabled
+                title="CIOMS I generator will be enabled after the regulated CIOMS reporting function is implemented."
+              >
+                CIOMS I
+              </button>
+            </div>
+          </details>
+        </div>
+
         <div className="identity">
           <div>
             <span>Tenant</span>
@@ -232,6 +312,74 @@ export default function Navigation() {
           margin-top: 2px;
           font-size: 12px;
         }
+        .utility-toolbar {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          padding: 7px 10px;
+          border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .utility-action,
+        .generate-menu summary,
+        .generate-popover button {
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 5px;
+          color: #e2e8f0;
+          background: rgba(255, 255, 255, 0.05);
+          font: inherit;
+          font-size: 9px;
+          font-weight: 800;
+          cursor: pointer;
+        }
+        .utility-action {
+          min-height: 34px;
+          padding: 0 10px;
+        }
+        .utility-action:hover:not(:disabled),
+        .generate-menu summary:hover,
+        .generate-popover button:hover:not(:disabled) {
+          background: rgba(255, 255, 255, 0.12);
+        }
+        .utility-action:disabled,
+        .generate-popover button:disabled,
+        .generate-menu summary.disabled {
+          opacity: 0.38;
+          cursor: not-allowed;
+        }
+        .generate-menu {
+          position: relative;
+        }
+        .generate-menu summary {
+          display: grid;
+          min-height: 34px;
+          place-items: center;
+          padding: 0 10px;
+          list-style: none;
+        }
+        .generate-menu summary::-webkit-details-marker {
+          display: none;
+        }
+        .generate-popover {
+          position: absolute;
+          top: calc(100% + 6px);
+          left: 0;
+          z-index: 120;
+          display: grid;
+          min-width: 170px;
+          gap: 4px;
+          padding: 6px;
+          border: 1px solid #cbd5e1;
+          border-radius: 6px;
+          background: #ffffff;
+          box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+        }
+        .generate-popover button {
+          min-height: 34px;
+          padding: 0 10px;
+          color: #0f172a;
+          background: #f8fafc;
+          text-align: left;
+        }
         .identity {
           display: flex;
           flex: 1;
@@ -358,6 +506,15 @@ export default function Navigation() {
             display: none;
           }
         }
+        @media (max-width: 900px) {
+          .utility-toolbar {
+            flex: 1;
+            justify-content: flex-end;
+          }
+          .utility-action span {
+            display: none;
+          }
+        }
         @media (max-width: 760px) {
           .shell-header {
             margin: -12px -12px 14px;
@@ -368,6 +525,13 @@ export default function Navigation() {
           }
           .identity {
             display: none;
+          }
+          .utility-toolbar {
+            padding-inline: 6px;
+          }
+          .utility-action,
+          .generate-menu summary {
+            padding-inline: 8px;
           }
           .menu {
             display: grid;
