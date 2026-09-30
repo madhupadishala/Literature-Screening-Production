@@ -2,8 +2,11 @@ import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
-import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import {
+  requireAdditionalModulePermissionInSelectedWorkspace,
+  requireWorkspaceModulePermission,
+} from "@/lib/rbac/workspace-guard";
 import {
   finalizeIntakeDisposition,
   getDispositionWorkspace,
@@ -21,7 +24,7 @@ export async function GET(
   context: { params: Promise<{ intakeId: string }> },
 ): Promise<Response> {
   try {
-    const principal = await requireModulePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.INTAKE,
       PERMISSIONS.INTAKE_VIEW,
@@ -42,7 +45,7 @@ export async function POST(
   context: { params: Promise<{ intakeId: string }> },
 ): Promise<Response> {
   try {
-    const principal = await requireModulePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.INTAKE,
       PERMISSIONS.INTAKE_PROCESS,
@@ -63,7 +66,7 @@ export async function POST(
     }
 
     if (body.dispositionType === "CREATE_NEXUS_CASE") {
-      await requireModulePermission(
+      await requireAdditionalModulePermissionInSelectedWorkspace(
         request,
         NEXUS_MODULES.CASE_PROCESSING,
         PERMISSIONS.CASE_CREATE,
