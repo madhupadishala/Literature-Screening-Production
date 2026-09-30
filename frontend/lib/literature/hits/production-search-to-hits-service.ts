@@ -10,6 +10,7 @@ import { hitsAgent } from "@/lib/ai/hits-agent";
 import { runAsyncBatch } from "@/lib/performance/async-batch-runner";
 import { getRuntimePerformanceSettings } from "@/lib/performance/runtime-performance-settings";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 
 type SearchResultRow = {
   id: string;
@@ -139,6 +140,7 @@ async function createDatabaseEvidencePackages(input: {
   principal: RequestPrincipal;
   resultIds: string[];
 }): Promise<CreatedPackage[]> {
+  const scope = requireSafetyWorkspaceScope(input.principal);
   const pool = getPostgresPool();
   const selected = await pool.query<SearchResultRow>(
     `SELECT * FROM ad_hoc_literature_results
@@ -177,6 +179,8 @@ async function createDatabaseEvidencePackages(input: {
        JOIN literature_packages package
          ON package.id = prior.evidence_package_id AND package.tenant_id = prior.tenant_id
        WHERE prior.tenant_id = $1
+         AND package.workspace_id = $6
+         AND package.environment = $7
          AND prior.evidence_package_id IS NOT NULL
          AND NOT (prior.id = ANY($2::uuid[]))
          AND (($3::text IS NOT NULL AND prior.pmid = $3)
@@ -193,6 +197,8 @@ async function createDatabaseEvidencePackages(input: {
         primary.pmid || null,
         primary.doi || null,
         primary.dedupe_key,
+        scope.workspaceId,
+        scope.environment,
       ],
     );
 
@@ -275,12 +281,14 @@ async function createDatabaseEvidencePackages(input: {
       await client.query("BEGIN");
       const packageResult = await client.query<{ id: string }>(
         `INSERT INTO literature_packages (
-           tenant_id, package_key, source_type, external_reference,
-           article_identity, product_context, status, created_by)
-         VALUES ($1,$2,'AD_HOC_GLOBAL_SEARCH',$3,$4::jsonb,$5::jsonb,'NEW',$6)
+           tenant_id, workspace_id, environment, package_key, source_type,
+           external_reference, article_identity, product_context, status, created_by)
+         VALUES ($1,$2,$3,$4,'AD_HOC_GLOBAL_SEARCH',$5,$6::jsonb,$7::jsonb,'NEW',$8)
          RETURNING id`,
         [
           input.principal.tenantId,
+          scope.workspaceId,
+          scope.environment,
           packageKey,
           primary.pmid || primary.doi || primary.source_record_id,
           JSON.stringify({
@@ -490,12 +498,12 @@ async function loadPackageInput(input: {
      JOIN ad_hoc_literature_results search_result
        ON search_result.evidence_package_id=package.id
       AND search_result.tenant_id=package.tenant_id
-     WHERE package.tenant_id=$1 AND package.id=$2
+     WHERE package.tenant_id=$1 AND package.workspace_id=$3 AND package.environment=$4 AND package.id=$2
      ORDER BY (search_result.abstract_text IS NOT NULL) DESC,
        length(COALESCE(search_result.abstract_text,'')) DESC,
        search_result.created_at
      LIMIT 1`,
-    [input.principal.tenantId, input.packageId],
+    [input.principal.tenantId, input.packageId, requireSafetyWorkspaceScope(input.principal).workspaceId, requireSafetyWorkspaceScope(input.principal).environment],
   );
   if (!result.rows[0]) throw new Error("Evidence package source article was not found.");
   return result.rows[0];
