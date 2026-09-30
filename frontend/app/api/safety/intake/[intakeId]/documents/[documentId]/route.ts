@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { assertSafetyIntakeInScope } from "@/lib/safety/common/safety-workspace-scope";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
