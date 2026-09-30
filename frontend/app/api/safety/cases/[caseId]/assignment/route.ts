@@ -2,8 +2,8 @@ import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
-import { requireModulePermission } from "@/lib/rbac/guard";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 import { assignCase } from "@/lib/safety/case-processing/case-processing-service";
 
 export const runtime = "nodejs";
@@ -14,7 +14,7 @@ export async function POST(
   context: { params: Promise<{ caseId: string }> },
 ): Promise<Response> {
   try {
-    const principal = await requireModulePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
       NEXUS_MODULES.CASE_PROCESSING,
       PERMISSIONS.CASE_ASSIGN,
