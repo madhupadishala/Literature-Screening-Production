@@ -14,8 +14,9 @@ export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const principal = await requirePermission(
+    const principal = await requireWorkspaceModulePermission(
       request,
+      NEXUS_MODULES.LITERATURE,
       PERMISSIONS.EVIDENCE_CREATE,
     );
 
