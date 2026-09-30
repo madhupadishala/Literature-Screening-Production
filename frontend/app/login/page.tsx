@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { saveSession, type ClinixSession } from "@/lib/session-manager";
 
@@ -44,6 +44,63 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  async function completeLogin(response: Response, requestedTenantId: string, requestedEnvironment: "PROD" | "UAT" | "TRAINING") {
+    const data = await response.json();
+
+    if (!response.ok || !data.authenticated) {
+      throw new Error(data.error || "Login failed.");
+    }
+
+    const server = data.session as ServerSession;
+    const tenant = TENANTS.find((item) => item.tenantId === requestedTenantId);
+    const now = new Date().toISOString();
+
+    const session: ClinixSession = {
+      sessionId: server.id,
+      organizationId: "ORG-CLINIXAI",
+      organizationName: "ClinixAI",
+      tenantId: server.user.tenantId,
+      tenantName: tenant?.tenantName ?? server.user.tenantId,
+      userId: server.user.id,
+      userName: server.user.name,
+      role: ROLE_LABELS[server.user.role] ?? server.user.role,
+      environment: requestedEnvironment,
+      permissions: server.user.permissions,
+      loginTime: now,
+      lastActivity: now,
+      expiresAt: server.expiresAt,
+      locked: false,
+      accessToken: server.accessToken,
+    };
+
+    saveSession(session);
+    router.push("/");
+  }
+
+  useEffect(() => {
+    if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+      return;
+    }
+
+    const runLocalBypass = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const response = await fetch("/api/auth/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tenantId: "demo-tenant" }),
+        });
+        await completeLogin(response, "demo-tenant", "UAT");
+      } catch (caughtError) {
+        setError(caughtError instanceof Error ? caughtError.message : "Local bypass failed.");
+        setLoading(false);
+      }
+    };
+
+    void runLocalBypass();
+  }, [router]);
+
   async function login() {
     try {
       setLoading(true);
@@ -57,37 +114,7 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password, tenantId }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok || !data.authenticated) {
-        setError(data.error || "Login failed.");
-        return;
-      }
-
-      const server = data.session as ServerSession;
-      const tenant = TENANTS.find((item) => item.tenantId === tenantId);
-      const now = new Date().toISOString();
-
-      const session: ClinixSession = {
-        sessionId: server.id,
-        organizationId: "ORG-CLINIXAI",
-        organizationName: "ClinixAI",
-        tenantId: server.user.tenantId,
-        tenantName: tenant?.tenantName ?? server.user.tenantId,
-        userId: server.user.id,
-        userName: server.user.name,
-        role: ROLE_LABELS[server.user.role] ?? server.user.role,
-        environment,
-        permissions: server.user.permissions,
-        loginTime: now,
-        lastActivity: now,
-        expiresAt: server.expiresAt,
-        locked: false,
-        accessToken: server.accessToken,
-      };
-
-      saveSession(session);
-      router.push("/");
+      await completeLogin(response, tenantId, environment);
     } catch {
       setError("Login failed.");
     } finally {
