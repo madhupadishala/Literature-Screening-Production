@@ -74,7 +74,7 @@
     "nexus:security-boundaries:verify": "node --import tsx scripts/verify-nexus-security-boundaries.ts"
   },
   "dependencies": {
-    "@qdrant/js-client-rest": "^1.18.0",
+    "@qdrant/js-client-rest": "1.18.0",
     "@types/papaparse": "^5.5.2",
     "cheerio": "^1.2.0",
     "exceljs": "4.4.0",
