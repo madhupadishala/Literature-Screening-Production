@@ -214,3 +214,56 @@ The validation suite shall include:
 
 ## 12. Compatibility
 No existing PV route is assumed converted merely because the new guard exists. Each module sprint must explicitly migrate protected routes and demonstrate no behavior regression.
+
+
+## 13. Detailed functional requirement matrix
+
+The following requirements are normative implementation requirements. They provide atomic FRS identifiers for traceability to the approved URS.
+
+| FRS ID | Linked URS | Detailed functional requirement | Verification |
+|---|---|---|---|
+| FRS-NX-001 | URS-NX-001–004 | The identity login endpoint shall accept only string `email` and `password` values, shall normalize the email for lookup, shall not accept tenant/workspace/module as authentication authority, shall return controlled 400/401 responses, and shall use indistinguishable invalid-credential responses to prevent account enumeration. | API/static verification + negative malformed-body tests |
+| FRS-NX-002 | URS-NX-004 | Failed password attempts shall be incremented atomically in PostgreSQL; the account shall enter a time-bounded lockout when the configured threshold is reached; concurrent failed requests shall not overwrite the counter with stale values. | credential-service verification / CodeRabbit disposition |
+| FRS-NX-003 | URS-NX-005–009 | Successful authentication shall create a cryptographically random opaque session token; only its SHA-256 hash shall be persisted; the session shall contain issue/expiry/revocation state and the browser cookie shall be HttpOnly, SameSite=Strict and Secure in production. | identity-workspace verifier |
+| FRS-NX-004 | URS-NX-007–008 | Session resolution shall fail closed when the token hash is unknown, expired, revoked, or belongs to an inactive user; a random invalid token shall not cause an unnecessary database write. | identity-session tests/static verifier |
+| FRS-NX-005 | URS-NX-010 | Module authorization logic shall depend on an authenticated identity/session abstraction and shall not depend on a password-provider-specific implementation. | architecture review |
+| FRS-NX-006 | URS-NX-011–015 | After authentication, tenant choices shall be generated only from active tenant memberships read from authoritative storage; client-supplied tenant identifiers shall be treated solely as selectors and revalidated server-side. | identity API / tenant-resolution negative tests |
+| FRS-NX-007 | URS-NX-016–022 | Client workspaces shall be tenant-bound; workspace membership shall reference the corresponding tenant membership; lifecycle states shall support active/suspended/archived; access-history records shall retain actor, change reason, timestamps and prior/new controlled state where applicable. | migration 033 integrity verification |
+| FRS-NX-008 | URS-NX-023–026 | Environment shall be a controlled enum of PROD/UAT/TRAINING. Invalid environment values shall return a controlled client error and shall never grant fallback access. | context API negative tests |
+| FRS-NX-009 | URS-NX-027–036 | Tenant entitlement shall define the maximum module surface. Workspace entitlement shall be a subset. Literature, Intake, Case Processing, Submissions, Signal, Aggregate and PV Documentation shall be independently representable; lifecycle order shall not create a commercial entitlement dependency. | module registry + entitlement verification |
+| FRS-NX-010 | URS-NX-035–036 | Cross-module interoperability shall use versioned contracts/APIs/events. A supported non-linear combination such as Literature + Submissions shall use a canonical validated handoff rather than direct table coupling or bypass of required regulatory validation. | architecture contract tests planned with module sprints |
+| FRS-NX-011 | URS-NX-037–044 | Every protected module operation shall require active workspace membership, active tenant entitlement, active workspace entitlement, an active module role and the requested permission. Custom permissions shall be filtered to permissions valid for the selected module. | workspace-access security verifier |
+| FRS-NX-012 | URS-NX-042–043 | Built-in module roles shall be represented by controlled role keys; permission evaluation shall use the controlled permission taxonomy and module-specific permission surface. | static role/permission verification |
+| FRS-NX-013 | URS-NX-044,051 | Mutable membership/entitlement/role state shall be re-read from PostgreSQL on each protected request so disablement takes effect without waiting for the scoped context token to expire. | workspace guard negative tests |
+| FRS-NX-014 | URS-NX-045–050 | Context selection shall occur only after authentication and shall include tenantId, workspaceId, environment and moduleKey. The signed context shall contain no authoritative permission claims. | context route/token verification |
+| FRS-NX-015 | URS-NX-047–049 | Scoped context shall be HMAC-protected, bound to sessionId/userId, reject malformed or non-finite timestamps, reject materially future-issued/expired tokens, and expire no later than the associated identity session or configured context maximum. | context codec/security verifier |
+| FRS-NX-016 | URS-NX-052–053 | A user with a still-valid identity session shall be able to clear/change workspace or module context without re-entering credentials; context clearing shall not revoke the identity session. | context DELETE/change-flow verification |
+| FRS-NX-017 | URS-NX-054–058 | Authenticated authorization denials and context selections shall generate attributable audit/access-history records containing tenant/workspace/environment/module/action/outcome/timestamp and reason where governance requires it. | audit/access-history verification |
+| FRS-NX-018 | URS-NX-059–065 | Cross-tenant/cross-workspace identifiers, forged selector values, cross-session context reuse and production demo/header identity paths shall fail closed. UUID selectors shall be validated before database queries so raw database errors are not exposed. | security-boundary negative verifier |
+| FRS-NX-019 | URS-NX-061–062 | A scoped context token shall be usable only with the identity session to which it was issued; revocation/expiry of that session shall invalidate subsequent use even if the context signature itself remains cryptographically valid. | cross-session/revocation tests |
+| FRS-NX-020 | URS-NX-063–064 | Production shall reject trusted identity headers and demo principals unless explicitly supported by an approved production identity mechanism; signing/session secrets shall come from protected runtime configuration and not source control. | production-principal + Gitleaks checks |
+| FRS-NX-021 | URS-NX-065 | Access-control relationships shall use composite/foreign-key integrity constraints where feasible to prevent tenant/workspace cross-link creation at the database layer. | migration integrity verification |
+| FRS-NX-022 | URS-NX-066–069 | Identity-first migration shall remain additive. Legacy tenant-first paths may exist only as identified compatibility paths and shall not be removed until affected modules are characterized, migrated and regression/security tested. | migration/compatibility review |
+| FRS-NX-023 | URS-NX-070–074 | Automated verification shall cover tenant-free identity authentication, session hash-at-rest/revocation, cross-tenant/workspace denial, disabled authorization states, context tampering/expiry and cross-session replay. | `nexus:identity-workspace:verify` + `nexus:security-boundaries:verify` |
+| FRS-NX-024 | URS-NX-075 | Qualification shall include entitlement tests for standalone modules and supported combinations; full module workflow combination tests shall be completed in the corresponding module and integration sprints. | entitlement verification + Sprint 12 integration evidence |
+| FRS-NX-025 | URS-NX-001–075 | Errors shall be normalized into controlled 400/401/403/5xx responses without exposing SQL, stack, secret, membership, or authorization internals. | API negative tests / route-error review |
+
+### 13.1 Field-level selector specification
+
+| Field | Type | Required | Validation | Failure behavior |
+|---|---|---:|---|---|
+| email | string | Yes for login | trim; non-empty; application identity lookup is case-insensitive | 400 malformed; 401 invalid credentials |
+| password | string | Yes for login | non-empty; passed only to password verifier | 400 malformed; 401 invalid credentials |
+| tenantId | UUID string | Context GET/POST | syntactically valid UUID; active membership required | 400 invalid syntax; 403 unauthorized membership |
+| workspaceId | UUID string | Context POST | syntactically valid UUID; must belong to selected tenant and active membership | 400 invalid syntax; 403 unauthorized |
+| environment | enum | Context scope | PROD/UAT/TRAINING only | 400 unsupported |
+| moduleKey | controlled enum | Context POST | registered Nexus module and effectively entitled | 400 invalid enum; 403 not entitled |
+| reason | string | Conditional | bounded/trimmed when governance action requires reason | 400 when mandatory and absent/invalid |
+
+### 13.2 State and failure requirements
+
+- Session states shall distinguish active, revoked and expired conditions.
+- Workspace lifecycle shall distinguish active, suspended and archived conditions.
+- Entitlement shall distinguish enabled, disabled and suspended conditions plus validity windows.
+- Module-role assignment shall distinguish active and disabled conditions.
+- No selector, cookie, URL parameter, header or stale context token shall be sufficient to override those authoritative states.
