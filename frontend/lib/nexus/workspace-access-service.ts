@@ -154,13 +154,14 @@ function builtInModuleRoleHasPermission(
   }
 
   if (roleKey === "MODULE_OPERATOR") {
-    return ![
+    const restrictedPermissions: Permission[] = [
       PERMISSIONS.MEDICAL_REVIEW,
       PERMISSIONS.CASE_MEDICAL_REVIEW,
       PERMISSIONS.INTAKE_QC,
       PERMISSIONS.CASE_QC,
       PERMISSIONS.CASE_FINALIZE,
-    ].includes(permission);
+    ];
+    return !restrictedPermissions.includes(permission);
   }
 
   return false;
