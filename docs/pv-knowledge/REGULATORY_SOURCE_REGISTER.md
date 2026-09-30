@@ -4,6 +4,8 @@ Document ID: PV-KNOWLEDGE-REGISTER-001
 Status: Active baseline
 Purpose: define the authoritative source universe used to derive PV requirements, test cases, decision tables and controlled retrieval knowledge.
 
+Current verified discovery inventory: `docs/pv-knowledge/OFFICIAL_SOURCE_INVENTORY_2026-09-30.md`.
+
 ## Core rule
 
 No regulated PV requirement may be created from model memory alone when an authoritative source is available.
