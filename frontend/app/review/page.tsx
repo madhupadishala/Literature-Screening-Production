@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import Navigation from "@/components/Navigation";
+import ModuleSubNavigation from "@/components/ModuleSubNavigation";
 
 type ReviewRecord = {
   workspaceId: string;
@@ -455,6 +456,7 @@ export default function ReviewPage() {
   return (
     <main className="app-shell" id="main-content">
       <Navigation />
+      <ModuleSubNavigation module="LITERATURE" />
       <InvestorDemoHeader
         eyebrow="POST-SCREENING GOVERNED REVIEW"
         title="Review & Medical Review Workspace"
