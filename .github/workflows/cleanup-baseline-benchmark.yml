@@ -269,6 +269,36 @@ jobs:
           printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint7-submissions.status
           exit "$rc"
 
+      - name: Sprint 8 Signal Management cleanup foundation
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run cleanup:sprint8:verify 2>&1 | tee benchmark-output/cleanup-sprint8-signals.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint8-signals.status
+          exit "$rc"
+
+      - name: Sprint 9 Aggregate Reporting cleanup foundation
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run cleanup:sprint9:verify 2>&1 | tee benchmark-output/cleanup-sprint9-aggregate.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint9-aggregate.status
+          exit "$rc"
+
+      - name: Sprint 10 PV Documentation cleanup foundation
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run cleanup:sprint10:verify 2>&1 | tee benchmark-output/cleanup-sprint10-pv-docs.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint10-pv-docs.status
+          exit "$rc"
+
       - name: Gitleaks incremental PR secret scan
         id: gitleaks_incremental
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
