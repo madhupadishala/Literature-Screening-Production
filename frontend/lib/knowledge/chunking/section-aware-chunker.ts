@@ -333,12 +333,26 @@ function buildSectionChunks(
         layer: request.context.layer,
         category: request.context.category,
         authority: request.context.authority,
+        regulatorySourceId:
+          request.context.regulatorySourceId,
+        canonicalSourceUrl:
+          request.context.canonicalSourceUrl,
         jurisdiction:
           request.context.jurisdiction,
         documentVersion:
           request.context.documentVersion,
+        publicationDate:
+          request.context.publicationDate,
         effectiveDate:
           request.context.effectiveDate,
+        lifecycleStatus:
+          request.context.lifecycleStatus,
+        approvalStatus:
+          request.context.approvalStatus,
+        supersedesSourceId:
+          request.context.supersedesSourceId,
+        supersededBySourceId:
+          request.context.supersededBySourceId,
         language: document.language,
         sourceFormat: document.format,
         parserName: document.parserName,
