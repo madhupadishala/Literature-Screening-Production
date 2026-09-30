@@ -68,22 +68,27 @@ async function authenticateIdentity(
   const passwordValid = await verifyPassword(password, user.password_hash);
 
   if (!passwordValid) {
-    const attempts = user.failed_login_attempts + 1;
-    const shouldLock = attempts >= MAX_FAILED_ATTEMPTS;
-
-    await pool.query(
+    const lockoutResult = await pool.query<{ failed_login_attempts: number }>(
       `UPDATE application_users
-          SET failed_login_attempts = $2,
+          SET failed_login_attempts = failed_login_attempts + 1,
               locked_until = CASE
-                WHEN $3 THEN now() + ($4::text || ' minutes')::interval
+                WHEN failed_login_attempts + 1 >= $2
+                  THEN now() + ($3::text || ' minutes')::interval
                 ELSE locked_until
               END,
               updated_at = now()
-        WHERE id = $1`,
-      [user.id, attempts, shouldLock, String(LOCKOUT_MINUTES)],
+        WHERE id = $1
+        RETURNING failed_login_attempts`,
+      [user.id, MAX_FAILED_ATTEMPTS, String(LOCKOUT_MINUTES)],
     );
 
-    return { ok: false, reason: "invalid_credentials" };
+    return {
+      ok: false,
+      reason:
+        (lockoutResult.rows[0]?.failed_login_attempts ?? 0) >= MAX_FAILED_ATTEMPTS
+          ? "account_locked"
+          : "invalid_credentials",
+    };
   }
 
   await pool.query(
