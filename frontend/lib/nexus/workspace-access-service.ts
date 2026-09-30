@@ -249,12 +249,14 @@ export async function listAccessibleWorkspaces(input: {
 
     if (!row.module_key || !row.module_role || !isNexusModuleKey(row.module_key)) continue;
 
-    let module = workspace.modules.find((item) => item.moduleKey === row.module_key);
-    if (!module) {
-      module = { moduleKey: row.module_key, roleKeys: [] };
-      workspace.modules.push(module);
+    let moduleAccess = workspace.modules.find((item) => item.moduleKey === row.module_key);
+    if (!moduleAccess) {
+      moduleAccess = { moduleKey: row.module_key, roleKeys: [] };
+      workspace.modules.push(moduleAccess);
     }
-    if (!module.roleKeys.includes(row.module_role)) module.roleKeys.push(row.module_role);
+    if (!moduleAccess.roleKeys.includes(row.module_role)) {
+      moduleAccess.roleKeys.push(row.module_role);
+    }
   }
 
   return [...byWorkspace.values()];
