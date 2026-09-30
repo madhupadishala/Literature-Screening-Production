@@ -42,3 +42,12 @@ Required tests include:
 ## Production migration rule
 
 Existing rows with NULL workspace_id/environment are not production-authorized through the new scoped path. They require controlled source-to-workspace mapping, migration rehearsal, reconciliation counts, rollback evidence and approval before production cutover.
+
+## Case workspace tab architecture
+
+| FRS ID | Linked URS | Functional requirement / verification |
+|---|---|---|
+| FRS-CASE-021 | URS-CASE-035 | The Case Workspace shall expose the controlled Tabs General, Patient, Products, Events, Safety Assessment, Narrative, Action Items, Additional Information, Evidence & Export, and Audit & Versions. |
+| FRS-CASE-022 | URS-CASE-036 | Safety Assessment shall use shared seriousness, listedness/expectedness and causality service contracts and persist governed assessment provenance/version/evidence. |
+| FRS-CASE-023 | URS-CASE-037 | Action Items shall present existing QC/MR/query/finalization operations without weakening service-layer permissions, state-transition checks or audit controls. |
+| FRS-CASE-024 | URS-CASE-038–039 | Supporting information, evidence/export and audit/version views shall remain logically separated from primary editable case data and shall preserve existing finalization immutability rules. |
