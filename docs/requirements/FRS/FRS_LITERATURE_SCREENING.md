@@ -59,3 +59,10 @@ Linked URS: URS-LIT-001
 ## No-behavior-change constraint
 
 Workspace authorization reconciliation shall not alter search query meaning, deduplication semantics, patient extraction meaning, expectedness or causality rules, Medical Review decision semantics or canonical handoff content except where a separately approved requirement explicitly changes them.
+
+## Module screen architecture
+
+| FRS ID | Linked URS | Functional requirement | Verification |
+|---|---|---|---|
+| FRS-LIT-021 | URS-LIT-106–108 | Literature module Sub-navigation shall expose Dashboard, Hits, Screening, Medical Review and Administration; legacy child routes may remain operational but shall not be represented as peer top-level Modules. | navigation/UI verification |
+| FRS-LIT-022 | URS-LIT-109–110 | Literature Screening and Medical Review shall consume shared seriousness, listedness/expectedness and causality service contracts; module-private duplicate engines shall not be introduced. | architecture/service-contract review |
