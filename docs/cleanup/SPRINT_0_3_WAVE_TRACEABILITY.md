@@ -23,7 +23,7 @@ Scope: Sprint 0 Baseline & Governance; Sprint 1 Regulatory Knowledge Foundation;
 | Lint baseline | ESLint baseline captured | VERIFIED |
 | Dependency vulnerability baseline | npm audit baseline; findings captured before remediation | VERIFIED |
 | Dead/unused candidates | Knip identifies ~150 candidates; no blind deletion | VERIFIED |
-| Duplication baseline | jscpd evidence captured | VERIFIED |
+| Duplication baseline | jscpd: 308 clones, 4,611 duplicated lines (3.89%), 23,044 duplicated tokens (4.36%); run 36664295714 | VERIFIED |
 | Circular dependency baseline | Madge/dependency-cruiser evidence | VERIFIED |
 | Architecture dependency graph | dependency-cruiser scans >600 modules / >1,200 dependencies | VERIFIED |
 | Secret scan | Gitleaks must scan non-zero intended commit range | VERIFIED on measured run; rechecked on subsequent heads through CI |
