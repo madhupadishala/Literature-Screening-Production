@@ -1,93 +1,67 @@
-import { NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { literatureWorkflowService } from "@/lib/literature/workflow/literature-workflow-service";
+import type { LiteratureWorkflowRequest } from "@/lib/literature/workflow/literature-workflow-types";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
+import { PERMISSIONS } from "@/lib/rbac/permissions";
+import { assertRequestedTenantMatchesScope } from "@/lib/rbac/scoped-request";
+import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 
-import type {
-  LiteratureWorkflowRequest,
-} from "@/lib/literature/workflow/literature-workflow-types";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-export async function GET() {
-  return NextResponse.json(
-    {
+export async function GET(request: NextRequest): Promise<Response> {
+  try {
+    const principal = await requireWorkspaceModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SEARCH_HISTORY_VIEW,
+    );
+
+    return Response.json({
       success: true,
-
-      status:
-        literatureWorkflowService.getStatus(),
-
-      history:
-        literatureWorkflowService.list(),
-    },
-    {
-      status: 200,
-    },
-  );
+      status: literatureWorkflowService.getStatusForTenant(principal.tenantId),
+      history: literatureWorkflowService.listForTenant(principal.tenantId),
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
 
-export async function POST(
-  request: Request,
-) {
+export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const body =
-      (await request.json()) as LiteratureWorkflowRequest;
+    const principal = await requireWorkspaceModulePermission(
+      request,
+      NEXUS_MODULES.LITERATURE,
+      PERMISSIONS.SEARCH_EXECUTE,
+    );
+    const body = (await request.json()) as Partial<LiteratureWorkflowRequest>;
 
-    if (
-      !body.tenantId ||
-      !body.query
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
+    assertRequestedTenantMatchesScope(principal, body.tenantId);
 
-          error:
-            "tenantId and query are required.",
-        },
-        {
-          status: 400,
-        },
+    if (!body.query || typeof body.query !== "string") {
+      return Response.json(
+        { success: false, error: "query is required." },
+        { status: 400 },
       );
     }
 
-    const result =
-      await literatureWorkflowService.execute({
-        tenantId: body.tenantId,
+    const result = await literatureWorkflowService.execute({
+      tenantId: principal.tenantId,
+      query: body.query.trim(),
+      maxResults: body.maxResults,
+    });
 
-        query: body.query.trim(),
-
-        maxResults:
-          body.maxResults,
-      });
-
-    return NextResponse.json(
+    return Response.json(
       {
         success: true,
-
-        workflowStage:
-          "WORKFLOW_COMPLETED",
-
+        workflowStage: "WORKFLOW_COMPLETED",
         result,
       },
-      {
-        status: 201,
-      },
+      { status: 201 },
     );
   } catch (error) {
-    console.error(
-      "Workflow Error",
-      error,
-    );
-
-    return NextResponse.json(
-      {
-        success: false,
-
-        error:
-          error instanceof Error
-            ? error.message
-            : "Unknown workflow error",
-      },
-      {
-        status: 500,
-      },
-    );
+    return routeErrorResponse(error);
   }
 }
