@@ -87,6 +87,13 @@ const CASE_PERMISSIONS: readonly Permission[] = [
   PERMISSIONS.CASE_EXPORT,
 ];
 
+const SUBMISSION_PERMISSIONS: readonly Permission[] = [
+  PERMISSIONS.SUBMISSION_VIEW,
+  PERMISSIONS.SUBMISSION_CREATE,
+  PERMISSIONS.SUBMISSION_TRANSMIT,
+  PERMISSIONS.SUBMISSION_ACKNOWLEDGE,
+];
+
 function modulePermissions(moduleKey: NexusModuleKey): readonly Permission[] {
   switch (moduleKey) {
     case "LITERATURE":
@@ -102,6 +109,8 @@ function modulePermissions(moduleKey: NexusModuleKey): readonly Permission[] {
         PERMISSIONS.REVIEW_VIEW,
         PERMISSIONS.CASE_VIEW,
       ];
+    case "SUBMISSIONS":
+      return SUBMISSION_PERMISSIONS;
     default:
       return [];
   }
@@ -161,6 +170,8 @@ function builtInModuleRoleHasPermission(
       PERMISSIONS.INTAKE_QC,
       PERMISSIONS.CASE_QC,
       PERMISSIONS.CASE_FINALIZE,
+      PERMISSIONS.SUBMISSION_TRANSMIT,
+      PERMISSIONS.SUBMISSION_ACKNOWLEDGE,
     ];
     return !restrictedPermissions.includes(permission);
   }
