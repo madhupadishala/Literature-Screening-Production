@@ -74,7 +74,7 @@ export async function POST(
     }
 
     if (body.dispositionType === "EXPORT_EXTERNAL") {
-      await requireModulePermission(
+      await requireWorkspaceModulePermission(
         request,
         NEXUS_MODULES.INTAKE,
         PERMISSIONS.INTAKE_EXPORT,
