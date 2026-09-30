@@ -7,6 +7,10 @@ import { canonicalSha256 } from "@/lib/safety/common/canonical-json";
 import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 import { PV_DOCUMENT_TYPES, type CreatePvDocumentRequest, type CreatePvDocumentVersionRequest } from "./pv-document-types";
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 function text(value:string,label:string,min=1){const v=value.trim();if(v.length<min)throw new Error(`${label} must contain at least ${min} characters.`);return v;}
 function optionalDate(value:string|undefined,label:string){if(!value)return null;const d=new Date(value);if(!Number.isFinite(d.getTime()))throw new Error(`${label} must be a valid date.`);return d.toISOString().slice(0,10);}
 
