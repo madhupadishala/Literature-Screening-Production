@@ -1,28 +1,16 @@
 import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { getEffectiveEnabledModules } from "@/lib/nexus/entitlement-service";
+import { localAuthBypassEnabled } from "@/lib/auth/local-auth-bypass";
+import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { resolveRequestPrincipal } from "@/lib/rbac/request-principal";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function localhostBypassEnabled(request: NextRequest) {
-  const hostname = request.nextUrl.hostname.toLowerCase();
-  const isLocalhost =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "::1";
-
-  return (
-    process.env.NODE_ENV === "development" &&
-    isLocalhost &&
-    process.env.LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true"
-  );
-}
-
 export async function GET(request: NextRequest): Promise<Response> {
   try {
-    if (localhostBypassEnabled(request)) {
+    if (localAuthBypassEnabled(request)) {
       return Response.json({
         success: true,
         data: {
@@ -31,16 +19,7 @@ export async function GET(request: NextRequest): Promise<Response> {
           displayName: "Local Development Administrator",
           email: "local.admin@localhost",
           roleKey: "CLINIXAI_SUPER_ADMIN",
-          enabledModules: [
-            "LITERATURE",
-            "INTAKE",
-            "CASE_PROCESSING",
-            "SUBMISSIONS",
-            "MEDICAL_REVIEW",
-            "SIGNAL_MANAGEMENT",
-            "AGGREGATE_REPORTING",
-            "GOVERNANCE",
-          ],
+          enabledModules: Object.values(NEXUS_MODULES),
         },
       });
     }
