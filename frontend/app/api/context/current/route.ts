@@ -14,6 +14,7 @@ function localhostBypassEnabled(request: NextRequest) {
     hostname === "::1";
 
   return (
+    process.env.NODE_ENV === "development" &&
     isLocalhost &&
     process.env.LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true"
   );
