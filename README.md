@@ -1138,7 +1138,7 @@ Current Historical Repository
           ↓
 Controlled Cleanup Branch
           ↓
-9 Gates + URS/FRS + Benchmark PASS
+10 Gates + URS/FRS + Benchmark PASS
           ↓
 Frozen Release Candidate
           ↓
@@ -1154,7 +1154,7 @@ The new repository will contain a `PROVENANCE.md` linking it to:
 - source commit;
 - migration head;
 - benchmark evidence;
-- nine-gate result;
+- ten-gate result;
 - release approval;
 - source archive SHA-256.
 
