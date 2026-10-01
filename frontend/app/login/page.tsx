@@ -7,7 +7,8 @@ import { saveSession, type ClinixSession } from "@/lib/session-manager";
 const TENANTS = [
   { tenantId: "clinixai-prod", tenantName: "TheClinixAI Production" },
   { tenantId: "demo-tenant", tenantName: "Demo Tenant" },
-  { tenantId: "uat-tenant", tenantName: "UAT Workspace" },
+  { tenantId: "nexus-uat-rc1-a", tenantName: "Nexus UAT RC1 Tenant A" },
+  { tenantId: "nexus-uat-rc1-b", tenantName: "Nexus UAT RC1 Tenant B" },
   { tenantId: "training-tenant", tenantName: "Training Workspace" },
 ];
 
@@ -337,7 +338,7 @@ export default function LoginPage() {
               onChange={(event) => setTenantId(event.target.value)}
             >
               {(previewRuntime
-                ? TENANTS.filter((tenant) => tenant.tenantId === "uat-tenant")
+                ? TENANTS.filter((tenant) => tenant.tenantId === tenantId)
                 : TENANTS
               ).map((tenant) => (
                 <option key={tenant.tenantId} value={tenant.tenantId}>
