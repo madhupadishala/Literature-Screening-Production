@@ -35,11 +35,19 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_EXECUTE,
     );
-    const body = (await request.json()) as Partial<ArticleFetchRequest>;
+    const parsed: unknown = await request.json().catch(() => null);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return Response.json(
+        { success: false, error: "A JSON object body is required." },
+        { status: 400 },
+      );
+    }
+    const body = parsed as Partial<ArticleFetchRequest>;
 
     assertRequestedTenantMatchesScope(principal, body.tenantId);
 
-    if (!body.pmid || typeof body.pmid !== "string") {
+    const pmid = typeof body.pmid === "string" ? body.pmid.trim() : "";
+    if (!pmid) {
       return Response.json(
         { success: false, error: "pmid is required." },
         { status: 400 },
@@ -48,14 +56,14 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     const article = await articleFetchService.fetch({
       tenantId: principal.tenantId,
-      pmid: body.pmid.trim(),
+      pmid,
       source: body.source,
     });
 
     return Response.json({
       success: true,
       tenantId: principal.tenantId,
-      pmid: body.pmid.trim(),
+      pmid,
       article,
       next: {
         endpoint: "/api/evidence/package",
