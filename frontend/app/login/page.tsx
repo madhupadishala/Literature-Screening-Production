@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { saveSession, type ClinixSession } from "@/lib/session-manager";
 
@@ -44,7 +44,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function completeLogin(response: Response, requestedTenantId: string, requestedEnvironment: "PROD" | "UAT" | "TRAINING") {
+  const completeLogin = useCallback(async (response: Response, requestedTenantId: string, requestedEnvironment: "PROD" | "UAT" | "TRAINING") => {
     const data = await response.json();
 
     if (!response.ok || !data.authenticated) {
