@@ -8,9 +8,9 @@ The current `main` branch is the preserved baseline. Cleanup work is performed o
 
 `cleanup/zero-deviation-baseline-20260930`
 
-## Nine mandatory gates
+## Ten mandatory gates
 
-Every sprint, pull request, release candidate and cleanup change must pass all nine gates.
+Every sprint, pull request, release candidate and cleanup change must pass all ten gates.
 
 1. **Karpathy Gate**
    - Understand before editing.
@@ -65,6 +65,11 @@ Every sprint, pull request, release candidate and cleanup change must pass all n
    - Nexus and PV modules must preserve the plug-and-play architecture.
    - URS/FRS must be benchmarked against mature market tools and authoritative regulatory requirements.
    - Material fields, workflow states, validations, exceptions, audit/evidence, integrations and controls must not be omitted merely because the current implementation lacks them.
+
+10. **Product Design Guardian Gate**
+   - Material UI changes shall conform to the governed product design system and documented screen architecture.
+   - Dense enterprise workflows shall preserve usability, accessibility, information hierarchy, workflow-state clarity and consistent component behavior.
+   - UI changes shall not bypass regulated workflow rules, authorization, audit/evidence controls or server-enforced state transitions.
 
 ## Baseline benchmark stack
 
@@ -219,7 +224,7 @@ The new repository must contain `PROVENANCE.md` recording:
 - export date
 - migration head
 - benchmark report reference
-- nine-gate result
+- ten-gate result
 - release approver
 - SHA-256 of the exported source archive
 
