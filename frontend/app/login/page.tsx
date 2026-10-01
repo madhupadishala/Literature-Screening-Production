@@ -78,6 +78,9 @@ export default function LoginPage() {
   }
 
   useEffect(() => {
+    const localBypassEnabled =
+      process.env.NEXT_PUBLIC_LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true";
+    if (!localBypassEnabled) return;
     if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
       return;
     }
