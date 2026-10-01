@@ -488,46 +488,9 @@ export async function transmitSubmission(input: {
       );
     }
     if (row.status === "TRANSMITTING") {
-      const latestAttempt = await client.query<{
-        id: string;
-        status: string;
-        started_at: Date | string;
-      }>(
-        `SELECT id, status, started_at
-           FROM nexus_submission_attempts
-          WHERE submission_package_id = $1
-          ORDER BY attempt_number DESC
-          LIMIT 1
-          FOR UPDATE`,
-        [row.id],
+      throw new Error(
+        "Submission package is already transmitting or awaiting transmission reconciliation. Automatic retransmission is blocked to prevent duplicate regulator delivery.",
       );
-      const latest = latestAttempt.rows[0];
-      const startedAt = latest ? new Date(latest.started_at).getTime() : Number.NaN;
-      const stale =
-        latest?.status === "STARTED" &&
-        Number.isFinite(startedAt) &&
-        Date.now() - startedAt >= STALE_TRANSMISSION_MS;
-      if (!stale) {
-        throw new Error(
-          "Submission package is already transmitting and is not eligible for recovery.",
-        );
-      }
-      await client.query(
-        `UPDATE nexus_submission_attempts
-            SET status = 'FAILED',
-                error_code = 'STALE_TRANSMISSION_RECOVERED',
-                error_message = 'A prior transmission attempt exceeded the recovery threshold.',
-                completed_at = now()
-          WHERE id = $1`,
-        [latest.id],
-      );
-      await client.query(
-        `UPDATE nexus_submission_packages
-            SET status = 'FAILED', updated_at = now()
-          WHERE id = $1`,
-        [row.id],
-      );
-      row.status = "FAILED";
     }
 
     if (!["READY", "FAILED"].includes(row.status)) {
@@ -599,8 +562,9 @@ export async function transmitSubmission(input: {
     );
     await client.query("COMMIT");
 
+    let transmitted;
     try {
-      const transmitted = await withTransportTimeout((signal) =>
+      transmitted = await withTransportTimeout((signal) =>
         adapter.transmit({
           submissionId: row.id,
           submissionKey: row.submission_key,
@@ -612,32 +576,6 @@ export async function transmitSubmission(input: {
           signal,
         }),
       );
-
-      await getPostgresPool().query(
-        `WITH attempt_update AS (
-           UPDATE nexus_submission_attempts
-              SET status = 'SUCCEEDED',
-                  external_message_id = $2,
-                  response_metadata = $3::jsonb,
-                  completed_at = now()
-            WHERE id = $1
-            RETURNING submission_package_id
-         )
-         UPDATE nexus_submission_packages package
-            SET status = 'TRANSMITTED', updated_at = now()
-           FROM attempt_update
-          WHERE package.id = attempt_update.submission_package_id`,
-        [
-          attempt.rows[0].id,
-          transmitted.externalMessageId,
-          JSON.stringify(transmitted.responseMetadata ?? {}),
-        ],
-      );
-
-      return getSubmissionPackage({
-        principal: input.principal,
-        submissionId: row.id,
-      });
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Unknown transport failure.";
@@ -659,6 +597,32 @@ export async function transmitSubmission(input: {
       );
       throw error;
     }
+
+    await getPostgresPool().query(
+      `WITH attempt_update AS (
+         UPDATE nexus_submission_attempts
+            SET status = 'SUCCEEDED',
+                external_message_id = $2,
+                response_metadata = $3::jsonb,
+                completed_at = now()
+          WHERE id = $1
+          RETURNING submission_package_id
+       )
+       UPDATE nexus_submission_packages package
+          SET status = 'TRANSMITTED', updated_at = now()
+         FROM attempt_update
+        WHERE package.id = attempt_update.submission_package_id`,
+      [
+        attempt.rows[0].id,
+        transmitted.externalMessageId,
+        JSON.stringify(transmitted.responseMetadata ?? {}),
+      ],
+    );
+
+    return getSubmissionPackage({
+      principal: input.principal,
+      submissionId: row.id,
+    });
   } catch (error) {
     await client.query("ROLLBACK").catch(() => undefined);
     throw error;
