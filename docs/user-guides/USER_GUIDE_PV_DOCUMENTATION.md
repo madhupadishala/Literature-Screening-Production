@@ -28,6 +28,8 @@ The released foundation provides a controlled PV-document repository with worksp
 
 The platform computes a SHA-256 hash for the content and increments the version number.
 
+Lifecycle progression is governed and forward-only: DRAFT → REVIEWED → APPROVED → EFFECTIVE → RETIRED. The system rejects status skipping and regression. An EFFECTIVE version requires an effective-from date.
+
 ## Review and approval
 
 DRAFT and REVIEWED changes require review authority. APPROVED, EFFECTIVE and RETIRED states require approval authority. This Sprint 10 foundation does not substitute a validated electronic-signature control.
