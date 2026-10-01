@@ -33,6 +33,7 @@ function localAuthBypassEnabled(request: NextRequest) {
     hostname === "::1";
 
   return (
+    process.env.NODE_ENV === "development" &&
     isLocalRequest &&
     process.env.LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true"
   );
@@ -80,11 +81,6 @@ export async function POST(request: NextRequest) {
   }
 
   if (localAuthBypassEnabled(request)) {
-    if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.trim().length < 32) {
-      process.env.SESSION_SECRET =
-        "localhost-only-development-session-secret-2026-override";
-    }
-
     const session = sessionManager.createSession({
       userId: "local-dev-super-admin",
       email: "local.admin@localhost",
