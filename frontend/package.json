@@ -36,7 +36,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "npm run scheduler:verify && next build",
+    "build": "node scripts/reset-preview-admin-once.mjs && npm run scheduler:verify && next build",
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "node scripts/run-database-migrations.mjs",
