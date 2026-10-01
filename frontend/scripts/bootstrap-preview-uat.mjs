@@ -13,7 +13,7 @@ const EXPECTED_MIGRATION = "039";
 const EXPECTED_MIGRATION_COUNT = 39;
 const ADMIN_EMAIL = "support@theclinixai.com";
 const ADMIN_PASSWORD_HASH =
-  "$2b$12$X.gRFwmLFVuwpadfHtkkZeFFckPeXBqEVviKKE4JNM85LOV/84r3y";
+  process.env.PREVIEW_UAT_ADMIN_PASSWORD_HASH?.trim() || "";
 const TENANT_KEY = "uat-tenant";
 const TENANT_NAME = "ClinixAI UAT Workspace";
 const WORKSPACE_KEY = "clinixai-uat-primary";
@@ -215,13 +215,6 @@ async function provisionUat() {
        ON CONFLICT (email)
        DO UPDATE SET
          display_name = EXCLUDED.display_name,
-         password_hash = CASE
-           WHEN application_users.password_hash IS NULL THEN EXCLUDED.password_hash
-           ELSE application_users.password_hash
-         END,
-         status = 'active',
-         failed_login_attempts = 0,
-         locked_until = NULL,
          updated_at = now()
        RETURNING id`,
       [ADMIN_EMAIL, ADMIN_PASSWORD_HASH],
@@ -234,13 +227,7 @@ async function provisionUat() {
          membership_version, updated_by, updated_at
        ) VALUES ($1, $2, 'CLINIXAI_SUPER_ADMIN', '[]'::jsonb, 'active', 1, $2, now())
        ON CONFLICT (tenant_id, user_id)
-       DO UPDATE SET
-         role_key = 'CLINIXAI_SUPER_ADMIN',
-         permissions = '[]'::jsonb,
-         membership_status = 'active',
-         membership_version = tenant_memberships.membership_version + 1,
-         updated_by = $2,
-         updated_at = now()`,
+       DO NOTHING`,
       [tenantId, userId],
     );
 
@@ -249,12 +236,7 @@ async function provisionUat() {
          user_id, role_key, status, updated_by, updated_at
        ) VALUES ($1, 'PLATFORM_SUPER_ADMIN', 'active', $1, now())
        ON CONFLICT (user_id)
-       DO UPDATE SET
-         role_key = 'PLATFORM_SUPER_ADMIN',
-         status = 'active',
-         version = platform_role_assignments.version + 1,
-         updated_by = $1,
-         updated_at = now()`,
+       DO NOTHING`,
       [userId],
     );
 
@@ -408,6 +390,11 @@ async function main() {
     process.env.VERCEL_GIT_COMMIT_REF !== TARGET_GIT_BRANCH
   ) {
     console.log("PREVIEW_UAT_BOOTSTRAP_SKIPPED");
+    return;
+  }
+
+  if (!ADMIN_PASSWORD_HASH) {
+    console.log("PREVIEW_UAT_BOOTSTRAP_SKIPPED: PREVIEW_UAT_ADMIN_PASSWORD_HASH is not configured.");
     return;
   }
 
