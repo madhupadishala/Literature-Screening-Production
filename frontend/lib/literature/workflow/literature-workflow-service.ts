@@ -154,6 +154,8 @@ class LiteratureWorkflowService {
         success: true,
         durationMs: Date.now() - workflowStartedAt,
         tenantId: normalizedRequest.tenantId,
+        workspaceId: normalizedRequest.workspaceId,
+        environment: normalizedRequest.environment,
         itemCount: cachedWorkflow.articles.length,
         metadata: {
           cacheHit: true,
@@ -349,6 +351,8 @@ class LiteratureWorkflowService {
 
       const workflow: LiteratureWorkflowResponse = {
         tenantId: normalizedRequest.tenantId,
+        workspaceId: normalizedRequest.workspaceId,
+        environment: normalizedRequest.environment,
         query: normalizedRequest.query,
         search,
         articles,
@@ -370,6 +374,8 @@ class LiteratureWorkflowService {
         success: batchResult.failed === 0,
         durationMs: batchResult.durationMs,
         tenantId: normalizedRequest.tenantId,
+        workspaceId: normalizedRequest.workspaceId,
+        environment: normalizedRequest.environment,
         itemCount: batchResult.total,
         concurrency: settings.articleConcurrency,
         metadata: {
@@ -383,6 +389,8 @@ class LiteratureWorkflowService {
         success: true,
         durationMs: Date.now() - workflowStartedAt,
         tenantId: normalizedRequest.tenantId,
+        workspaceId: normalizedRequest.workspaceId,
+        environment: normalizedRequest.environment,
         itemCount: articles.length,
         concurrency: settings.articleConcurrency,
         metadata: {
@@ -401,6 +409,8 @@ class LiteratureWorkflowService {
         success: false,
         durationMs: Date.now() - workflowStartedAt,
         tenantId: normalizedRequest.tenantId,
+        workspaceId: normalizedRequest.workspaceId,
+        environment: normalizedRequest.environment,
         itemCount: 0,
         concurrency: settings.articleConcurrency,
         metadata: {
@@ -418,11 +428,20 @@ class LiteratureWorkflowService {
 
   listForTenant(
     tenantId: string,
+    workspaceId: string,
+    environment: LiteratureWorkflowRequest["environment"],
     limit = 20,
   ): LiteratureWorkflowResponse[] {
-    const safeLimit = Math.max(1, Math.min(limit, 100));
+    const safeLimit = Number.isFinite(limit)
+      ? Math.min(Math.max(Math.floor(limit), 1), 100)
+      : 20;
     return this.history
-      .filter((item) => item.tenantId === tenantId)
+      .filter(
+        (item) =>
+          item.tenantId === tenantId &&
+          item.workspaceId === workspaceId &&
+          item.environment === environment,
+      )
       .slice(0, safeLimit);
   }
 
@@ -431,13 +450,22 @@ class LiteratureWorkflowService {
     this.workflowCache.clear();
   }
 
-  getStatusForTenant(tenantId: string): LiteratureWorkflowStatus {
+  getStatusForTenant(
+    tenantId: string,
+    workspaceId: string,
+    environment: LiteratureWorkflowRequest["environment"],
+  ): LiteratureWorkflowStatus {
     const tenantHistory = this.history.filter(
-      (item) => item.tenantId === tenantId,
+      (item) =>
+        item.tenantId === tenantId &&
+        item.workspaceId === workspaceId &&
+        item.environment === environment,
     );
     const failedRuns = listPerformanceMetrics(5_000).filter(
       (metric) =>
         metric.tenantId === tenantId &&
+        metric.workspaceId === workspaceId &&
+        metric.environment === environment &&
         metric.operation === "literature_workflow" &&
         !metric.success,
     ).length;
