@@ -148,17 +148,15 @@ const workspace = readFileSync(
 );
 for (const tab of [
   "General",
-  "Reporter",
   "Patient",
-  "Events",
   "Products",
-  "Medical History",
-  "Labs",
-  "Assessments",
+  "Events",
+  "Safety Assessment",
   "Narrative",
-  "Attachments",
-  "Reviews",
-  "Audit",
+  "Action Items",
+  "Additional Information",
+  "Evidence & Export",
+  "Audit & Versions",
 ]) {
   assert.equal(workspace.includes(`"${tab}"`), true, `Missing case tab ${tab}`);
 }
@@ -172,7 +170,7 @@ const navigation = readFileSync(
 );
 assert.equal(
   navigation.includes(
-    '{ label: "Cases", path: "/cases", moduleKey: "CASE_PROCESSING" }',
+    '{ label: "Case Processing", path: "/cases", moduleKey: "CASE_PROCESSING" }',
   ),
   true,
 );
