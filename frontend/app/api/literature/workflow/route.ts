@@ -21,8 +21,16 @@ export async function GET(request: NextRequest): Promise<Response> {
 
     return Response.json({
       success: true,
-      status: literatureWorkflowService.getStatusForTenant(principal.tenantKey),
-      history: literatureWorkflowService.listForTenant(principal.tenantKey),
+      status: literatureWorkflowService.getStatusForTenant(
+        principal.tenantKey,
+        principal.workspaceId,
+        principal.environment,
+      ),
+      history: literatureWorkflowService.listForTenant(
+        principal.tenantKey,
+        principal.workspaceId,
+        principal.environment,
+      ),
     });
   } catch (error) {
     return routeErrorResponse(error);
@@ -36,11 +44,28 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_EXECUTE,
     );
-    const body = (await request.json()) as Partial<LiteratureWorkflowRequest>;
+    const parsed: unknown = await request.json().catch(() => null);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return Response.json(
+        { success: false, error: "A JSON object body is required." },
+        { status: 400 },
+      );
+    }
+    const body = parsed as Partial<LiteratureWorkflowRequest>;
 
     assertRequestedTenantMatchesScope(principal, body.tenantId);
 
-    if (!body.query || typeof body.query !== "string") {
+    if (
+      body.maxResults !== undefined &&
+      (!Number.isInteger(body.maxResults) || body.maxResults < 1 || body.maxResults > 1000)
+    ) {
+      return Response.json(
+        { success: false, error: "maxResults must be an integer from 1 through 1000." },
+        { status: 400 },
+      );
+    }
+
+    if (!body.query || typeof body.query !== "string" || !body.query.trim()) {
       return Response.json(
         { success: false, error: "query is required." },
         { status: 400 },
