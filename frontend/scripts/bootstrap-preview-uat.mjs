@@ -1,4 +1,6 @@
 import { spawnSync } from "node:child_process";
+import { mkdirSync, writeFileSync } from "node:fs";
+import path from "node:path";
 
 // Redeploy marker: pick up Preview-scoped UAT admin secret.
 import process from "node:process";
@@ -21,6 +23,25 @@ const TENANT_NAME = "ClinixAI UAT Workspace";
 const WORKSPACE_KEY = "clinixai-uat-primary";
 const WORKSPACE_NAME = "ClinixAI UAT Primary Workspace";
 const BOOTSTRAP_VERSION = "wave3-uat-v1";
+
+const STATUS_FILE = path.join(process.cwd(), "public", "uat-bootstrap-status.json");
+
+function writeBootstrapStatus(status) {
+  mkdirSync(path.dirname(STATUS_FILE), { recursive: true });
+  writeFileSync(
+    STATUS_FILE,
+    JSON.stringify(
+      {
+        bootstrapVersion: BOOTSTRAP_VERSION,
+        generatedAt: new Date().toISOString(),
+        ...status,
+      },
+      null,
+      2,
+    ) + "\n",
+    "utf8",
+  );
+}
 
 const MODULES = [
   "LITERATURE",
@@ -391,23 +412,53 @@ async function main() {
     process.env.VERCEL_ENV !== "preview" ||
     process.env.VERCEL_GIT_COMMIT_REF !== TARGET_GIT_BRANCH
   ) {
+    writeBootstrapStatus({
+      ready: false,
+      state: "skipped_non_preview",
+      message: "Bootstrap only runs on the governed cleanup preview branch.",
+    });
     console.log("PREVIEW_UAT_BOOTSTRAP_SKIPPED");
     return;
   }
 
   if (!ADMIN_PASSWORD_HASH) {
+    writeBootstrapStatus({
+      ready: false,
+      state: "missing_admin_secret",
+      message: "PREVIEW_UAT_ADMIN_PASSWORD_HASH is not configured for this Preview deployment.",
+    });
     console.log("PREVIEW_UAT_BOOTSTRAP_SKIPPED: PREVIEW_UAT_ADMIN_PASSWORD_HASH is not configured.");
     return;
   }
 
+  writeBootstrapStatus({
+    ready: false,
+    state: "running",
+    message: "UAT database migration and provisioning are in progress.",
+  });
+
   await runMigrationsIfRequired();
   await provisionUat();
+
+  writeBootstrapStatus({
+    ready: true,
+    state: "ready",
+    message: "UAT migrations and governed provisioning completed.",
+    migrationCeiling: EXPECTED_MIGRATION,
+    migrationCount: EXPECTED_MIGRATION_COUNT,
+    tenantKey: TENANT_KEY,
+    workspaceKey: WORKSPACE_KEY,
+    adminEmail: ADMIN_EMAIL,
+  });
 }
 
 main().catch((error) => {
-  console.error(
-    "PREVIEW_UAT_BOOTSTRAP_FAILED",
-    error instanceof Error ? error.stack || error.message : String(error),
-  );
-  process.exit(1);
+  const message =
+    error instanceof Error ? error.message : "Unknown UAT bootstrap failure.";
+  writeBootstrapStatus({
+    ready: false,
+    state: "failed",
+    message: message.slice(0, 1200),
+  });
+  console.error("PREVIEW_UAT_BOOTSTRAP_FAILED", message);
 });
