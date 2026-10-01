@@ -16,9 +16,10 @@ Benchmark: BENCH-PVDOC-001
 | URS-PVD-011 | Each version shall retain content hash, change reason, actor and timestamp. |
 | URS-PVD-012 | Versions shall support DRAFT, REVIEWED, APPROVED, EFFECTIVE and RETIRED states. |
 | URS-PVD-013 | Review and approval authority shall be separable. |
-| URS-PVD-014 | Effective versions may retain effective-from and effective-until dates. |
+| URS-PVD-014 | EFFECTIVE versions shall require an effective-from date and may retain an effective-until date. |
 | URS-PVD-015 | Effective-until shall not precede effective-from. |
 | URS-PVD-016 | Retired document roots shall not receive new in-place versions. |
+| URS-PVD-018 | Lifecycle transitions shall be forward-governed: DRAFT → REVIEWED → APPROVED → EFFECTIVE → RETIRED; direct status skipping and post-effective regression shall be rejected. |
 | URS-PVD-017 | Linked sources shall remain version-level provenance and shall not be silently removed from prior versions. |
 | URS-PVD-020 | Worklists and detail retrieval shall be scoped to tenant/workspace/environment. |
 | URS-PVD-021 | Material create/version/review/approval activity shall be auditable. |
