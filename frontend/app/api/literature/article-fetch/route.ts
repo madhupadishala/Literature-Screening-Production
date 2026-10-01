@@ -47,9 +47,9 @@ export async function POST(request: NextRequest): Promise<Response> {
     assertRequestedTenantMatchesScope(principal, body.tenantId);
 
     const pmid = typeof body.pmid === "string" ? body.pmid.trim() : "";
-    if (!pmid) {
+    if (!/^\d{1,9}$/.test(pmid)) {
       return Response.json(
-        { success: false, error: "pmid is required." },
+        { success: false, error: "A valid numeric pmid is required." },
         { status: 400 },
       );
     }
