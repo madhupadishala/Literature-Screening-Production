@@ -140,6 +140,7 @@ class LiteratureWorkflowService {
     const normalizedRequest: LiteratureWorkflowRequest = {
       ...request,
       tenantId: request.tenantId.trim(),
+      workspaceId: request.workspaceId.trim(),
       query: request.query.trim(),
       maxResults: boundedMaxResults,
     };
