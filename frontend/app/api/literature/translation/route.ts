@@ -2,7 +2,7 @@ import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { medicalTranslationService } from "@/lib/literature/translation/medical-translation-service";
-import type { MedicalTranslationRequest } from "@/lib/literature/translation/translation-types";
+import { type MedicalTranslationRequest, type SupportedLanguage } from "@/lib/literature/translation/translation-types";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
 import { assertRequestedTenantMatchesScope } from "@/lib/rbac/scoped-request";
@@ -35,22 +35,63 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.REVIEW_EDIT,
     );
-    const body = (await request.json()) as Partial<MedicalTranslationRequest>;
+    const parsed: unknown = await request.json().catch(() => null);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return Response.json(
+        { error: "A JSON object body is required." },
+        { status: 400 },
+      );
+    }
+    const body = parsed as Partial<MedicalTranslationRequest>;
 
     assertRequestedTenantMatchesScope(principal, body.tenantId);
 
-    if (!body.sourceText || typeof body.sourceText !== "string") {
+    const sourceText =
+      typeof body.sourceText === "string" ? body.sourceText.trim() : "";
+    const supportedLanguages: readonly SupportedLanguage[] = [
+      "en",
+      "ja",
+      "ko",
+      "zh",
+      "es",
+      "pt",
+      "fr",
+      "de",
+      "ru",
+      "unknown",
+    ];
+    const isSupportedLanguage = (value: unknown): value is SupportedLanguage =>
+      typeof value === "string" &&
+      supportedLanguages.includes(value as SupportedLanguage);
+    if (
+      !sourceText ||
+      (body.sourceLanguage !== undefined &&
+        !isSupportedLanguage(body.sourceLanguage)) ||
+      (body.targetLanguage !== undefined &&
+        !isSupportedLanguage(body.targetLanguage)) ||
+      (body.preserveTerms !== undefined &&
+        (!Array.isArray(body.preserveTerms) ||
+          body.preserveTerms.some((term) => typeof term !== "string")))
+    ) {
       return Response.json(
-        { error: "sourceText is required." },
+        { error: "Invalid translation request." },
         { status: 400 },
       );
     }
 
     const result = medicalTranslationService.translate({
-      ...body,
       tenantId: principal.tenantId,
-      sourceText: body.sourceText,
-    } as MedicalTranslationRequest);
+      sourceText,
+      ...(body.sourceLanguage !== undefined
+        ? { sourceLanguage: body.sourceLanguage }
+        : {}),
+      ...(body.targetLanguage !== undefined
+        ? { targetLanguage: body.targetLanguage }
+        : {}),
+      ...(body.preserveTerms !== undefined
+        ? { preserveTerms: body.preserveTerms.map((term) => term.trim()).filter(Boolean) }
+        : {}),
+    });
 
     return Response.json({ result }, { status: 201 });
   } catch (error) {
