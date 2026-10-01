@@ -63,16 +63,22 @@ async function readFingerprint(): Promise<Fingerprint> {
 
 function assertTarget(fingerprint: Fingerprint) {
   if (fingerprint.database_name !== TARGET_DATABASE) {
-    throw new Error("UAT bootstrap guard rejected the current database.");
+    throw new Error(
+      `UAT bootstrap guard rejected database=${fingerprint.database_name}; expected=${TARGET_DATABASE}.`,
+    );
   }
   if (fingerprint.neon_project_id !== TARGET_PROJECT_ID) {
-    throw new Error("UAT bootstrap guard rejected the current Neon project.");
+    throw new Error(
+      `UAT bootstrap guard rejected neonProjectId=${fingerprint.neon_project_id ?? "null"}; expected=${TARGET_PROJECT_ID}.`,
+    );
   }
   if (
     typeof fingerprint.neon_branch_id !== "string" ||
     !fingerprint.neon_branch_id.startsWith(TARGET_BRANCH_PREFIX)
   ) {
-    throw new Error("UAT bootstrap guard rejected the current Neon branch.");
+    throw new Error(
+      `UAT bootstrap guard rejected neonBranchId=${fingerprint.neon_branch_id ?? "null"}; expected prefix=${TARGET_BRANCH_PREFIX}.`,
+    );
   }
 }
 
