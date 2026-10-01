@@ -37,6 +37,10 @@ export interface LiteratureWorkflowArticle {
 export interface LiteratureWorkflowResponse {
   tenantId: string;
 
+  workspaceId: string;
+
+  environment: "PROD" | "UAT" | "TRAINING";
+
   query: string;
 
   search: PubMedWorkflowResult;
