@@ -233,7 +233,7 @@ export async function GET(): Promise<Response> {
         [tenant.rows[0].id, workspace.id],
       );
 
-      for (const module of modules.rows) {
+      for (const moduleRow of modules.rows) {
         await client.query(
           `INSERT INTO nexus_workspace_module_roles (
              tenant_id, workspace_id, user_id, environment, module_key,
@@ -245,7 +245,7 @@ export async function GET(): Promise<Response> {
              version = nexus_workspace_module_roles.version + 1,
              updated_by = $3,
              updated_at = now()`,
-          [tenant.rows[0].id, workspace.id, userId, module.module_key],
+          [tenant.rows[0].id, workspace.id, userId, moduleRow.module_key],
         );
       }
     }
