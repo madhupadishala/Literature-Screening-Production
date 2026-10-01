@@ -15,5 +15,7 @@ export function getDefaultNexusEnvironment(): NexusEnvironment {
 }
 
 export function getDefaultTenantKey(): string {
-  return getDefaultNexusEnvironment() === "UAT" ? "uat-tenant" : "clinixai-prod";
+  return getDefaultNexusEnvironment() === "UAT"
+    ? "nexus-uat-rc1-a"
+    : "clinixai-prod";
 }
