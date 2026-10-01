@@ -511,11 +511,13 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   }
 
 
-  toolbarActionsRef.current = {
-    save: () => void saveDraft(),
-    evidence: () => void generateEvidence(),
-    e2b: () => void generateExport("E2B_R3_MAPPING_JSON"),
-  };
+  useEffect(() => {
+    toolbarActionsRef.current = {
+      save: () => void saveDraft(),
+      evidence: () => void generateEvidence(),
+      e2b: () => void generateExport("E2B_R3_MAPPING_JSON"),
+    };
+  });
 
   useEffect(() => {
     const handleSave = () => toolbarActionsRef.current.save();
