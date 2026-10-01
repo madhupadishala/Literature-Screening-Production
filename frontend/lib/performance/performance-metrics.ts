@@ -12,6 +12,8 @@ export interface PerformanceMetric {
   success: boolean;
   durationMs: number;
   tenantId?: string;
+  workspaceId?: string;
+  environment?: "PROD" | "UAT" | "TRAINING";
   correlationId?: string;
   itemCount?: number;
   concurrency?: number;
