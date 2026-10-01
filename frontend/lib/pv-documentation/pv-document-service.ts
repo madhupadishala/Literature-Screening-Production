@@ -17,21 +17,33 @@ function optionalDate(value:string|undefined,label:string){if(!value)return null
 export async function createPvDocument(input:{principal:RequestPrincipal;request:CreatePvDocumentRequest}){
  if(!(PV_DOCUMENT_TYPES as readonly string[]).includes(input.request.documentType))throw new Error("Unsupported PV documentType.");
  const scope=requireSafetyWorkspaceScope(input.principal);
- const result=await getPostgresPool().query<Record<string,unknown>>(
-  `INSERT INTO nexus_pv_documents (
-    id,tenant_id,workspace_id,environment,document_key,document_type,title,lifecycle_status,created_by
-   ) VALUES ($1,$2,$3,$4,$5,$6,$7,'DRAFT',$8) RETURNING *`,
-  [randomUUID(),input.principal.tenantId,scope.workspaceId,scope.environment,
-   text(input.request.documentKey,"documentKey"),input.request.documentType,text(input.request.title,"title"),
-   input.principal.userId],
- );
- await getPostgresPool().query(
-  `INSERT INTO audit_events (tenant_id,workspace_id,environment,module_key,actor_id,event_type,event_category,outcome,details)
-   VALUES ($1,$2,$3,'PV_DOCUMENTATION',$4,'PV_DOCUMENT_CREATED','NEXUS_PV_DOCUMENTATION','success',$5::jsonb)`,
-  [input.principal.tenantId,scope.workspaceId,scope.environment,input.principal.userId,
-   JSON.stringify({documentId:result.rows[0].id,reason:text(input.request.reason,"reason",10)})],
- );
- return result.rows[0];
+ const documentKey=text(input.request.documentKey,"documentKey");
+ const title=text(input.request.title,"title");
+ const reason=text(input.request.reason,"reason",10);
+ const client=await getPostgresPool().connect();
+ try{
+  await client.query("BEGIN");
+  const result=await client.query<Record<string,unknown>>(
+   `INSERT INTO nexus_pv_documents (
+     id,tenant_id,workspace_id,environment,document_key,document_type,title,lifecycle_status,created_by
+    ) VALUES ($1,$2,$3,$4,$5,$6,$7,'DRAFT',$8) RETURNING *`,
+   [randomUUID(),input.principal.tenantId,scope.workspaceId,scope.environment,
+    documentKey,input.request.documentType,title,input.principal.userId],
+  );
+  await client.query(
+   `INSERT INTO audit_events (tenant_id,workspace_id,environment,module_key,actor_id,event_type,event_category,outcome,details)
+    VALUES ($1,$2,$3,'PV_DOCUMENTATION',$4,'PV_DOCUMENT_CREATED','NEXUS_PV_DOCUMENTATION','success',$5::jsonb)`,
+   [input.principal.tenantId,scope.workspaceId,scope.environment,input.principal.userId,
+    JSON.stringify({documentId:result.rows[0].id,reason})],
+  );
+  await client.query("COMMIT");
+  return result.rows[0];
+ }catch(error){
+  await client.query("ROLLBACK").catch(()=>undefined);
+  throw error;
+ }finally{
+  client.release();
+ }
 }
 
 export async function listPvDocuments(input:{principal:RequestPrincipal;limit?:number}){
