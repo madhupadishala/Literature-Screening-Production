@@ -389,13 +389,9 @@ Cross-tenant and cross-client access must fail closed.
 ```text
 Presentation / API
         ↓
-Application Services
+Application Services ─────────→ Platform Interfaces ←──────── Infrastructure Adapters
         ↓
 Domain
-        ↓
-Platform Interfaces
-        ↑
-Infrastructure Adapters
 ```
 
 ### Mandatory dependency direction
@@ -1133,14 +1129,16 @@ The existing repository remains the historical development/provenance repository
 
 The clean repository is created only from one exact qualified cleanup release-candidate commit.
 
+All applicable qualification evidence must identify that same frozen commit, including CI/benchmark runs and the independent CodeRabbit review. Evidence from an earlier head remains historical evidence and does not qualify a later release candidate.
+
 ```text
 Current Historical Repository
           ↓
 Controlled Cleanup Branch
           ↓
-10 Gates + URS/FRS + Benchmark PASS
+10 Gates + URS/FRS + CI/Benchmark + Independent Review PASS
           ↓
-Frozen Release Candidate
+Same exact commit frozen as Release Candidate
           ↓
 Verified Source Snapshot
           ↓
