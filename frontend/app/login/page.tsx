@@ -37,6 +37,30 @@ type IdentityLoginResponse = {
   error?: string;
 };
 
+type LoginApiResponse = {
+  authenticated?: boolean;
+  error?: string;
+  session?: ServerSession;
+};
+
+type WorkspaceSummary = {
+  workspaceId: string;
+  modules?: Array<{ moduleKey?: string }>;
+};
+
+type WorkspaceContextResponse = {
+  success?: boolean;
+  error?: string;
+  data?: {
+    workspaces?: WorkspaceSummary[];
+  };
+};
+
+type ContextSelectionResponse = {
+  success?: boolean;
+  error?: string;
+};
+
 type ServerSession = {
   id: string;
   accessToken: string;
@@ -51,7 +75,7 @@ type ServerSession = {
   };
 };
 
-async function readJsonResponse(response: Response): Promise<Record<string, unknown>> {
+async function readJsonResponse<T>(response: Response): Promise<T> {
   const text = await response.text();
   if (!text.trim()) {
     throw new Error(
@@ -62,7 +86,7 @@ async function readJsonResponse(response: Response): Promise<Record<string, unkn
   }
 
   try {
-    return JSON.parse(text) as Record<string, unknown>;
+    return JSON.parse(text) as T;
   } catch {
     throw new Error(
       response.ok
@@ -84,13 +108,16 @@ export default function LoginPage() {
   const [previewRuntime, setPreviewRuntime] = useState(false);
 
   const completeLogin = useCallback(async (response: Response, requestedTenantId: string, requestedEnvironment: "PROD" | "UAT" | "TRAINING") => {
-    const data = await readJsonResponse(response);
+    const data = await readJsonResponse<LoginApiResponse>(response);
 
     if (!response.ok || !data.authenticated) {
       throw new Error(data.error || "Login failed.");
     }
 
-    const server = data.session as ServerSession;
+    const server = data.session;
+    if (!server) {
+      throw new Error("Authenticated login response did not include a session.");
+    }
     const tenant = TENANTS.find((item) => item.tenantId === requestedTenantId);
     const now = new Date().toISOString();
 
@@ -172,7 +199,7 @@ export default function LoginPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    const identity = (await readJsonResponse(identityResponse)) as unknown as IdentityLoginResponse;
+    const identity = await readJsonResponse<IdentityLoginResponse>(identityResponse);
     if (!identityResponse.ok || !identity.authenticated) {
       throw new Error(identity.error || "Identity authentication failed.");
     }
@@ -186,12 +213,13 @@ export default function LoginPage() {
       `/api/nexus/context?tenantId=${encodeURIComponent(tenant.tenantId)}&environment=${environment}`,
       { cache: "no-store" },
     );
-    const workspacePayload = await readJsonResponse(workspaceResponse);
+    const workspacePayload =
+      await readJsonResponse<WorkspaceContextResponse>(workspaceResponse);
     if (!workspaceResponse.ok || !workspacePayload?.success) {
       throw new Error(workspacePayload?.error || "UAT workspace context could not be loaded.");
     }
 
-    const workspaces = Array.isArray(workspacePayload?.data?.workspaces)
+    const workspaces = Array.isArray(workspacePayload.data?.workspaces)
       ? workspacePayload.data.workspaces
       : [];
     const workspace =
@@ -220,7 +248,8 @@ export default function LoginPage() {
         reason: "Authenticated preview user selected the governed UAT workspace context.",
       }),
     });
-    const contextPayload = await readJsonResponse(contextResponse);
+    const contextPayload =
+      await readJsonResponse<ContextSelectionResponse>(contextResponse);
     if (!contextResponse.ok || !contextPayload?.success) {
       throw new Error(contextPayload?.error || "UAT workspace context selection failed.");
     }
