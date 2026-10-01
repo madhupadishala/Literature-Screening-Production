@@ -45,7 +45,26 @@ export async function GET(request: NextRequest): Promise<Response> {
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const body = (await request.json()) as ScreeningActionRequest;
+    const parsed: unknown = await request.json().catch(() => null);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return Response.json(
+        { success: false, error: "A JSON object body is required." },
+        { status: 400 },
+      );
+    }
+
+    const body = parsed as Partial<ScreeningActionRequest>;
+    if (
+      (body.action !== "execute" && body.action !== "review") ||
+      !body.input ||
+      typeof body.input !== "object" ||
+      Array.isArray(body.input)
+    ) {
+      return Response.json(
+        { success: false, error: "A valid Screening action and input are required." },
+        { status: 400 },
+      );
+    }
 
     if (body.action === "execute") {
       const principal = await requireWorkspaceModulePermission(
@@ -53,7 +72,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SCREENING_EXECUTE,
       );
-      const record = await executeScreening({ principal, request: body.input });
+      const record = await executeScreening({ principal, request: body.input as ExecuteScreeningInput });
       return Response.json({ success: true, data: record }, { status: 201 });
     }
 
@@ -65,7 +84,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       );
       const mutation = await saveScreeningReview({
         principal,
-        review: body.input,
+        review: body.input as SaveScreeningReviewInput,
       });
       return Response.json({ success: true, data: mutation });
     }
