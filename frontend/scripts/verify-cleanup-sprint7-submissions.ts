@@ -61,7 +61,7 @@ for (const control of [
   "Automatic retransmission is blocked to prevent duplicate regulator delivery.",
   "Acknowledgement conflict:",
   "Acknowledgement cannot be recorded from status",
-  "TRANSPORT_NOT_CONFIGURED",
+  "TRANSPORT_NOT_CONFIGURED",\n  "TRANSPORT_OUTCOME_UNKNOWN",
   "nexus_submission_attempts",
   "nexus_submission_acknowledgements",
 ]) {
