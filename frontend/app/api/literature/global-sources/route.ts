@@ -37,14 +37,37 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_EXECUTE,
     );
-    const body = (await request.json()) as Partial<LiteratureRoutingRequest>;
+    const parsed: unknown = await request.json().catch(() => null);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return Response.json(
+        { success: false, error: "Invalid request body." },
+        { status: 400 },
+      );
+    }
+    const body = parsed as Partial<LiteratureRoutingRequest>;
 
     assertRequestedTenantMatchesScope(principal, body.tenantId);
 
+    const isStringArray = (value: unknown): value is string[] =>
+      Array.isArray(value) && value.every((item) => typeof item === "string");
+    if (
+      (body.countries !== undefined && !isStringArray(body.countries)) ||
+      (body.languages !== undefined && !isStringArray(body.languages))
+    ) {
+      return Response.json(
+        {
+          success: false,
+          error: "countries and languages must be arrays of strings.",
+        },
+        { status: 400 },
+      );
+    }
+
     const routingResult = literatureSourceRouter.route({
-      ...body,
       tenantId: principal.tenantId,
-    } as LiteratureRoutingRequest);
+      ...(body.countries !== undefined ? { countries: body.countries } : {}),
+      ...(body.languages !== undefined ? { languages: body.languages } : {}),
+    });
 
     return Response.json({
       success: true,
