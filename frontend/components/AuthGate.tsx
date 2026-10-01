@@ -7,6 +7,16 @@ import { clearSession, isAuthenticated } from "@/lib/session-manager";
 const PUBLIC_PATHS = ["/login"];
 const BACKEND_SESSION_CHECK_INTERVAL_MS = 60_000;
 
+function hasLocalhostBypassSession(): boolean {
+  if (typeof window === "undefined") return false;
+  const hostname = window.location.hostname.toLowerCase();
+  const isLocalhost =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1";
+  return isLocalhost && isAuthenticated();
+}
+
 export default function AuthGate({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -16,16 +26,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isPublicPath) return;
 
-    const hostname = window.location.hostname.toLowerCase();
-    const isLocalhost =
-      hostname === "localhost" ||
-      hostname === "127.0.0.1" ||
-      hostname === "::1";
-
-    if (isLocalhost && isAuthenticated()) {
-      setBackendVerified(true);
-      return;
-    }
+    if (hasLocalhostBypassSession()) return;
 
     let cancelled = false;
 
@@ -87,7 +88,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
     };
   }, [isPublicPath, pathname, router]);
 
-  if (isPublicPath) return <>{children}</>;
+  if (isPublicPath || hasLocalhostBypassSession()) return <>{children}</>;
   if (!backendVerified) return null;
 
   return <>{children}</>;
