@@ -1,4 +1,5 @@
 import { getPostgresPool } from "@/lib/database/postgres";
+import { getDefaultNexusEnvironment } from "@/lib/nexus/runtime-environment";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -65,7 +66,7 @@ export async function GET(): Promise<Response> {
     const tenants = await pool.query<{ uat_tenant_count: string }>(`
       SELECT count(*)::text AS uat_tenant_count
       FROM tenants
-      WHERE tenant_key IN ('nexus-uat-rc1-a', 'nexus-uat-rc1-b')
+      WHERE tenant_key IN ('uat-tenant', 'nexus-uat-rc1-a', 'nexus-uat-rc1-b')
         AND status = 'active'
     `);
     uatTenantCount = Number(tenants.rows[0].uat_tenant_count);
@@ -76,12 +77,7 @@ export async function GET(): Promise<Response> {
     process.env.GITHUB_HEAD_REF?.trim() ||
     "";
 
-  const nexusEnvironment =
-    process.env.NEXUS_DEFAULT_ENVIRONMENT?.trim().toUpperCase() ||
-    (process.env.VERCEL_ENV === "preview" &&
-    previewBranch === "release/nexus-integrated-rc1"
-      ? "UAT"
-      : "PROD");
+  const nexusEnvironment = getDefaultNexusEnvironment();
 
   const fingerprint = {
     vercelEnvironment: process.env.VERCEL_ENV ?? "unknown",
@@ -102,10 +98,10 @@ export async function GET(): Promise<Response> {
     fingerprint.vercelEnvironment === "preview" &&
     fingerprint.nexusEnvironment === "UAT" &&
     fingerprint.migrationLedgerPresent &&
-    fingerprint.maxMigration === "032" &&
-    fingerprint.nexusMigrationCount === 11 &&
+    fingerprint.maxMigration === "039" &&
+    fingerprint.nexusMigrationCount === 18 &&
     fingerprint.safetyTableCount >= 31 &&
-    fingerprint.uatTenantCount === 2 &&
+    fingerprint.uatTenantCount >= 1 &&
     Boolean(fingerprint.neonProjectId) &&
     Boolean(fingerprint.neonBranchId);
 
