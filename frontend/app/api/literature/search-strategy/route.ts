@@ -64,15 +64,37 @@ export async function POST(request: NextRequest): Promise<Response> {
       );
     }
 
+    const cleanTerms = (value: unknown): string[] | null => {
+      if (!Array.isArray(value) || !value.every((term) => typeof term === "string")) {
+        return null;
+      }
+      return value.map((term) => term.trim()).filter(Boolean);
+    };
+
+    const productNames = cleanTerms(body.productNames);
+    const inclusionTerms = cleanTerms(body.inclusionTerms);
+    const exclusionTerms =
+      body.exclusionTerms === undefined ? undefined : cleanTerms(body.exclusionTerms);
+
+    if (
+      !productNames ||
+      productNames.length === 0 ||
+      !inclusionTerms ||
+      inclusionTerms.length === 0 ||
+      exclusionTerms === null
+    ) {
+      return Response.json(
+        { success: false, error: "Search strategy terms must be non-empty string arrays." },
+        { status: 400 },
+      );
+    }
+
     const normalizedRequest: SearchStrategyRequest = {
-      ...body,
       tenantId: principal.tenantId,
       strategyName: body.strategyName.trim(),
-      productNames: body.productNames.map(String),
-      inclusionTerms: body.inclusionTerms.map(String),
-      exclusionTerms: Array.isArray(body.exclusionTerms)
-        ? body.exclusionTerms.map(String)
-        : undefined,
+      productNames,
+      inclusionTerms,
+      ...(exclusionTerms !== undefined ? { exclusionTerms } : {}),
     };
 
     const strategy = await searchStrategyEngine.build(normalizedRequest);
