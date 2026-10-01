@@ -35,4 +35,4 @@ Benchmark: BENCH-SIGNAL-001
 
 ## Acceptance
 
-Sprint 8 qualifies only the governed Signal Management foundation when all nine mandatory gates are satisfied for the exact commit. Production statistical detection, AI decisioning and external integrations remain separately validated capabilities.
+Sprint 8 qualifies only the governed Signal Management foundation when all ten mandatory gates are satisfied for the exact commit. Production statistical detection, AI decisioning and external integrations remain separately validated capabilities.
