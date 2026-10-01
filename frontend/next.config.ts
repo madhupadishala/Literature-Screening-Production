@@ -11,7 +11,12 @@ const nextConfig: NextConfig = {
   // can verify and read KNOWLEDGE_ROOT at runtime.
   outputFileTracingRoot: path.join(process.cwd(), ".."),
   outputFileTracingIncludes: {
-    "/*": ["../knowledge/**/*", "./database/migrations/**/*.sql"],
+    "/*": [
+      "../knowledge/**/*",
+      "./database/migrations/**/*.sql",
+      "./scripts/bootstrap-preview-uat.mjs",
+      "./scripts/run-database-migrations.mjs",
+    ],
   },
 };
 
