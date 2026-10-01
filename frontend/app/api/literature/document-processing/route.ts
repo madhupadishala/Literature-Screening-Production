@@ -35,16 +35,21 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.EVIDENCE_CREATE,
     );
-    const body = (await request.json()) as Partial<PDFProcessingRequest>;
+    const parsed: unknown = await request.json().catch(() => null);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return Response.json(
+        { error: "A JSON object body is required." },
+        { status: 400 },
+      );
+    }
+    const body = parsed as Partial<PDFProcessingRequest>;
 
     assertRequestedTenantMatchesScope(principal, body.tenantId);
 
-    if (
-      !body.pmid ||
-      typeof body.pmid !== "string" ||
-      !body.fileName ||
-      typeof body.fileName !== "string"
-    ) {
+    const pmid = typeof body.pmid === "string" ? body.pmid.trim() : "";
+    const fileName =
+      typeof body.fileName === "string" ? body.fileName.trim() : "";
+    if (!pmid || !fileName) {
       return Response.json(
         { error: "pmid and fileName are required." },
         { status: 400 },
@@ -53,8 +58,8 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     const result = await ocrService.process({
       tenantId: principal.tenantId,
-      pmid: body.pmid.trim(),
-      fileName: body.fileName.trim(),
+      pmid,
+      fileName,
     });
 
     return Response.json({ result }, { status: 201 });
