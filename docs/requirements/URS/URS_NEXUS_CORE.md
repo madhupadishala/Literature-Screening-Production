@@ -5,14 +5,17 @@ Version: 1.0-draft
 Status: Sprint 2 controlled draft
 
 ## 1. Purpose
+
 Define mandatory user and compliance requirements for Nexus shared platform access and plug-and-play module entitlement.
 
 ## 2. Intended access hierarchy
+
 `Identity -> Tenant -> Client Workspace -> Environment -> Module Entitlement -> Workspace Membership -> Module Role -> Permission -> Workflow Data -> Audit/Evidence`.
 
 Selection of a context shall not itself grant authority.
 
 ## 3. User classes
+
 - Platform administrator
 - Security administrator
 - QA/validation administrator
