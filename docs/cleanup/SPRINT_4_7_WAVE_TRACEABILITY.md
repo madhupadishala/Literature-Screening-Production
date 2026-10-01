@@ -83,7 +83,7 @@ The wave also remediates CodeRabbit findings raised while Sprints 4–5 were in 
 - current regulatory vector retrieval requires APPROVED + EFFECTIVE + effective-date qualification and excludes superseded records by default;
 - legacy regulatory vector migration is explicitly controlled rather than auto-approved.
 
-## Nine-gate qualification
+## Ten-gate qualification
 
 | Gate | Current state |
 |---|---|
@@ -96,6 +96,7 @@ The wave also remediates CodeRabbit findings raised while Sprints 4–5 were in 
 | Evidence Gate | VERIFIED technically on exact head; quality and benchmark workflows passed. |
 | Regulatory Knowledge Gate | regulatory retrieval governance strengthened; production source approval remains controlled. |
 | Modular & Benchmark Completeness | all four wave modules have benchmark/URS/FRS/User Guide; real external Submissions adapter is separately qualified. |
+| Product Design Guardian | Governed design-system, accessibility, information hierarchy and workflow-state controls apply to all material UI changes. |
 
 ## Residual controlled work
 
@@ -188,5 +189,5 @@ The current wave head also includes fixes made after independent review and CI f
 Sprints 4–7 shall not be marked fully closed until:
 1. CI is green on the final evidence/documentation head;
 2. CodeRabbit reviews that final head and no material finding remains unresolved;
-3. all nine gates remain satisfied or explicitly non-applicable under the governing rule;
+3. all ten gates remain satisfied or explicitly non-applicable under the governing rule;
 4. external regulator transport connectivity remains **not claimed** until separately credentialed and validated.
