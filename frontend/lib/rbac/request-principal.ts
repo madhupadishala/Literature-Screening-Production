@@ -3,6 +3,7 @@ import "server-only";
 import type { NextRequest } from "next/server";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { isNexusEnvironment, type NexusEnvironment } from "@/lib/nexus/entitlement-types";
+import { getDefaultNexusEnvironment } from "@/lib/nexus/runtime-environment";
 import { roleHasPermission, type Permission } from "@/lib/rbac/permissions";
 import { tokenService } from "@/lib/auth/token-service";
 
@@ -51,8 +52,7 @@ function allowTrustedIdentityHeaders(): boolean {
 function resolveRequestEnvironment(request: NextRequest): NexusEnvironment {
   const raw =
     request.headers.get("x-nexus-environment")?.trim().toUpperCase() ||
-    process.env.NEXUS_DEFAULT_ENVIRONMENT?.trim().toUpperCase() ||
-    "PROD";
+    getDefaultNexusEnvironment();
 
   if (!isNexusEnvironment(raw)) {
     throw new AuthorizationError(`Unsupported Nexus environment: ${raw}`, 403);
