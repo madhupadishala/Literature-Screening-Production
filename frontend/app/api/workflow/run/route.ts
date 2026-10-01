@@ -192,6 +192,8 @@ export async function GET(request: NextRequest): Promise<Response> {
         status:
           literatureWorkflowService.getStatusForTenant(
             principal.tenantKey,
+            principal.workspaceId,
+            principal.environment,
           ),
         performance:
           literatureWorkflowService.getPerformanceStatus(),
