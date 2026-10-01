@@ -36,7 +36,14 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_EXECUTE,
     );
-    const body = (await request.json()) as Partial<SearchStrategyRequest>;
+    const parsed: unknown = await request.json().catch(() => null);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return Response.json(
+        { success: false, error: "A JSON object body is required." },
+        { status: 400 },
+      );
+    }
+    const body = parsed as Partial<SearchStrategyRequest>;
 
     assertRequestedTenantMatchesScope(principal, body.tenantId);
 
