@@ -51,24 +51,34 @@ export async function createAggregateReport(input:{principal:RequestPrincipal;re
   const scope=requireSafetyWorkspaceScope(input.principal);
   const sourceSnapshot=await buildSourceSnapshot(input.principal,periodStart,periodEnd);
   const sourceSha256=canonicalSha256(sourceSnapshot);
-  const result=await getPostgresPool().query<Record<string,unknown>>(
-    `INSERT INTO nexus_aggregate_reports (
-       id,tenant_id,workspace_id,environment,report_key,report_type,product_key,
-       period_start,period_end,status,source_snapshot,source_sha256,created_by
-     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,'GENERATED',$10::jsonb,$11,$12)
-     RETURNING *`,
-    [randomUUID(),input.principal.tenantId,scope.workspaceId,scope.environment,
-     text(input.request.reportKey,"reportKey"),input.request.reportType,input.request.productKey?.trim()||null,
-     periodStart,periodEnd,JSON.stringify(sourceSnapshot),sourceSha256,input.principal.userId],
-  );
-  await getPostgresPool().query(
-    `INSERT INTO audit_events (tenant_id,workspace_id,environment,module_key,actor_id,event_type,event_category,outcome,details)
-     VALUES ($1,$2,$3,'AGGREGATE_REPORTING',$4,'AGGREGATE_REPORT_CREATED','NEXUS_AGGREGATE','success',$5::jsonb)`,
-    [input.principal.tenantId,scope.workspaceId,scope.environment,input.principal.userId,JSON.stringify({
-      aggregateReportId:result.rows[0].id,sourceSha256,reason,
-    })],
-  );
-  return result.rows[0];
+  const client=await getPostgresPool().connect();
+  try{
+    await client.query("BEGIN");
+    const result=await client.query<Record<string,unknown>>(
+      `INSERT INTO nexus_aggregate_reports (
+         id,tenant_id,workspace_id,environment,report_key,report_type,product_key,
+         period_start,period_end,status,source_snapshot,source_sha256,created_by
+       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,'GENERATED',$10::jsonb,$11,$12)
+       RETURNING *`,
+      [randomUUID(),input.principal.tenantId,scope.workspaceId,scope.environment,
+       text(input.request.reportKey,"reportKey"),input.request.reportType,input.request.productKey?.trim()||null,
+       periodStart,periodEnd,JSON.stringify(sourceSnapshot),sourceSha256,input.principal.userId],
+    );
+    await client.query(
+      `INSERT INTO audit_events (tenant_id,workspace_id,environment,module_key,actor_id,event_type,event_category,outcome,details)
+       VALUES ($1,$2,$3,'AGGREGATE_REPORTING',$4,'AGGREGATE_REPORT_CREATED','NEXUS_AGGREGATE','success',$5::jsonb)`,
+      [input.principal.tenantId,scope.workspaceId,scope.environment,input.principal.userId,JSON.stringify({
+        aggregateReportId:result.rows[0].id,sourceSha256,reason,
+      })],
+    );
+    await client.query("COMMIT");
+    return result.rows[0];
+  }catch(error){
+    await client.query("ROLLBACK").catch(()=>undefined);
+    throw error;
+  }finally{
+    client.release();
+  }
 }
 
 export async function listAggregateReports(input:{principal:RequestPrincipal;limit?:number}) {
