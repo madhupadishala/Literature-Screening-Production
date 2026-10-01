@@ -19,7 +19,6 @@ import {
 
 const transportAdapters = new Map<string, SubmissionTransportAdapter>();
 const TRANSPORT_TIMEOUT_MS = 30_000;
-const STALE_TRANSMISSION_MS = 5 * 60_000;
 
 async function withTransportTimeout<T>(
   operation: (signal: AbortSignal) => Promise<T>,
