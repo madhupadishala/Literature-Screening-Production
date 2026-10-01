@@ -104,14 +104,16 @@ A sprint is not green when its code passes but its URS/FRS/User Guide or traceab
 
 | Scope | Controlled requirements / implementation | Verification | Qualification |
 |---|---|---|---|
-| Literature Screening | `URS_LITERATURE_SCREENING.md`; `FRS_LITERATURE_SCREENING.md`; workspace-scoped Literature APIs; tenant-scoped workflow history/status | VER-LIT-REGRESSION; `cleanup:sprint4:verify`; quality gate | PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
-| Intake & Triage | `URS_INTAKE_TRIAGE.md`; `FRS_INTAKE_TRIAGE.md`; migration 034; persisted workspace/environment scope; nested-resource IDOR assertions | VER-INTAKE-REGRESSION; `cleanup:sprint5:verify`; Nexus Intake regressions | PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
-| Case Processing / L2A | `URS_CASE_PROCESSING.md`; `FRS_CASE_PROCESSING.md`; migration 034; scoped Case resources; immutable finalization/evidence | VER-L2A-STATE-RBAC-EVIDENCE; `cleanup:sprint6:verify`; Nexus Sprints 8–10 | PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
-| Submissions foundation | `URS_SUBMISSIONS.md`; `FRS_SUBMISSIONS.md`; migration 035; scoped package/attempt/ACK lifecycle; fail-closed adapter boundary | VER-SUBMISSION-WORKFLOW; VER-SUBMISSION-IDEMPOTENCY; `cleanup:sprint7:verify` | PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1`; external adapter separately qualified |
-| Regulatory retrieval used by modules | approval/lifecycle/effective-date/supersession filters; explicit historical `asOf`; controlled vector rebuild rule | VER-PVK-FOUNDATION; quality gate | PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
-| Security / tenant-workspace isolation | canonical workspace guards; persisted resource assertions; composite DB scope FKs | VER-NEXUS-SEC-BOUNDARY; architecture gate; Hacker checks | PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
-| Evidence / build | Quality Gate `36688802422`; Baseline Benchmark `36688802502` | VER-CQ-TS; VER-CQ-ESLINT; VER-CQ-BUILD; VER-NPM-AUDIT; secret scan evidence | PASS |
-| Independent review | PR #80 CodeRabbit full review | CodeRabbit Gate | pending exact-head full review |
+| Literature Screening | `URS_LITERATURE_SCREENING.md`; `FRS_LITERATURE_SCREENING.md`; workspace-scoped Literature APIs; tenant-scoped workflow history/status | VER-LIT-REGRESSION; `cleanup:sprint4:verify`; quality gate | Historical PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
+| Intake & Triage | `URS_INTAKE_TRIAGE.md`; `FRS_INTAKE_TRIAGE.md`; migration 034; persisted workspace/environment scope; nested-resource IDOR assertions | VER-INTAKE-REGRESSION; `cleanup:sprint5:verify`; Nexus Intake regressions | Historical PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
+| Case Processing / L2A | `URS_CASE_PROCESSING.md`; `FRS_CASE_PROCESSING.md`; migration 034; scoped Case resources; immutable finalization/evidence | VER-L2A-STATE-RBAC-EVIDENCE; `cleanup:sprint6:verify`; Nexus Sprints 8–10 | Historical PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
+| Submissions foundation | `URS_SUBMISSIONS.md`; `FRS_SUBMISSIONS.md`; migration 035; scoped package/attempt/ACK lifecycle; fail-closed adapter boundary | VER-SUBMISSION-WORKFLOW; VER-SUBMISSION-IDEMPOTENCY; `cleanup:sprint7:verify` | Historical PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1`; external adapter separately qualified |
+| Regulatory retrieval used by modules | approval/lifecycle/effective-date/supersession filters; explicit historical `asOf`; controlled vector rebuild rule | VER-PVK-FOUNDATION; quality gate | Historical PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
+| Security / tenant-workspace isolation | canonical workspace guards; persisted resource assertions; composite DB scope FKs | VER-NEXUS-SEC-BOUNDARY; architecture gate; Hacker checks | Historical PASS on head `675aa4bcd30485b0a4ed2084065bcf9cb73fddd1` |
+| Evidence / build | Historical Quality Gate `36688802422`; Historical Baseline Benchmark `36688802502` | VER-CQ-TS; VER-CQ-ESLINT; VER-CQ-BUILD; VER-NPM-AUDIT; secret scan evidence | Historical PASS; current release qualification must use exact-head evidence recorded for the active Wave 3 release candidate |
+| Independent review | PR #80 CodeRabbit full review | CodeRabbit Gate | Current release qualification requires a clean review on the same frozen release-candidate commit; earlier reviews are historical evidence only |
+
+The Sprint 4–7 rows above preserve historical qualification evidence. They do not by themselves qualify the current Wave 3 release candidate; current exact-head CI/benchmark and independent-review evidence must be recorded against the frozen commit before export.
 
 No row marked PASS implies external regulator connectivity, production migration execution, licensed terminology availability, or regulatory SME approval unless separate objective evidence exists.
 
