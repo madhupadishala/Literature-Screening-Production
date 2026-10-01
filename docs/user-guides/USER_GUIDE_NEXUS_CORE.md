@@ -13,8 +13,8 @@ The intended user sequence is:
 ```text
 Login
  -> Select Tenant
- -> Select Client Workspace
  -> Select Environment
+ -> Select Client Workspace
  -> Select Module
  -> Work within authorized scope
 ```
@@ -33,23 +33,29 @@ After successful authentication Nexus returns only tenants where the account has
 ## 4. Tenant selection
 Choose the organization/tenant you intend to work under. The system rechecks membership on the server. Typing or manipulating another tenant ID does not grant access.
 
-## 5. Client workspace selection
-After tenant selection, Nexus lists accessible client workspaces for the selected environment.
+## 5. Environment
 
-A workspace may be unavailable when:
-- workspace is suspended/archived;
-- membership is disabled;
-- parent tenant module entitlement is not active;
-- workspace module entitlement is not active;
-- no module role has been assigned.
+After tenant selection, select the controlled environment before Nexus lists accessible client workspaces.
 
-## 6. Environment
 Supported controlled contexts:
+
 - PROD
 - UAT
 - TRAINING
 
 Always verify environment before regulated work. Data and permissions may differ by environment.
+
+## 6. Client workspace selection
+
+After tenant and environment selection, Nexus lists only client workspaces accessible in that environment.
+
+A workspace may be unavailable when:
+
+- workspace is suspended/archived;
+- membership is disabled;
+- parent tenant module entitlement is not active;
+- workspace module entitlement is not active;
+- no module role has been assigned.
 
 ## 7. Module selection
 Available modules depend on tenant/workspace entitlements and assigned role.
