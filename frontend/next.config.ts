@@ -14,8 +14,6 @@ const nextConfig: NextConfig = {
     "/*": [
       "../knowledge/**/*",
       "./database/migrations/**/*.sql",
-      "./scripts/bootstrap-preview-uat.mjs",
-      "./scripts/run-database-migrations.mjs",
     ],
   },
 };
