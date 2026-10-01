@@ -25,9 +25,9 @@ It is a controlled modernization program to produce a modular, secure, regulator
 
 ---
 
-## 2. The nine mandatory principles and gates
+## 2. The ten mandatory principles and gates
 
-Every sprint, PR and release candidate must satisfy the following nine gates.
+Every sprint, PR and release candidate must satisfy the following ten gates.
 
 ### Gate 1 — Karpathy
 
@@ -93,6 +93,12 @@ Traceability must exist through:
 - each module must remain plug-and-play;
 - combinations of modules must work through stable contracts;
 - module independence and cross-module interoperability must both be tested.
+
+### Gate 10 — Product Design Guardian Gate
+
+- material UI changes must conform to the governed product design system;
+- enterprise information hierarchy, accessibility, workflow-state clarity and dense-workflow usability are release controls;
+- UI behavior must not bypass authorization, regulated workflow state, audit or evidence boundaries.
 
 ---
 
