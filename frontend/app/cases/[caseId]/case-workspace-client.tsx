@@ -232,7 +232,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   }
 
   async function saveDraft() {
-    if (!workspace) return;
+    if (!workspace || isFinal || busy !== "") return;
     setBusy("save");
     setMessage("");
     try {
@@ -455,6 +455,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   }
 
   async function generateEvidence() {
+    if (!isFinal || busy !== "") return;
     setBusy("evidence");
     try {
       const response = await fetch(
@@ -478,6 +479,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
       | "E2B_R3_MAPPING_JSON"
       | "HUMAN_READABLE_HTML",
   ) {
+    if (!isFinal || busy !== "") return;
     setBusy(`export-${format}`);
     try {
       const response = await fetch(
@@ -518,7 +520,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
       window.removeEventListener("nexus:generate-evidence", handleEvidence);
       window.removeEventListener("nexus:generate-e2b", handleE2B);
     };
-  }, [workspace, editors, changeReason, caseId]);
+  }, [workspace, editors, changeReason, caseId, isFinal, busy]);
 
   if (!workspace) {
     return (
