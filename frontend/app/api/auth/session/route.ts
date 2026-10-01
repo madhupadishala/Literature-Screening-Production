@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { sessionManager } from "@/lib/auth/session-manager";
 import { verifyCredentials } from "@/lib/auth/verify-credentials";
+import { localAuthBypassEnabled } from "@/lib/auth/local-auth-bypass";
 
 const ACCESS_TOKEN_COOKIE = "clinixai_access_token";
 const ACCESS_TOKEN_MAX_AGE_SECONDS = 60 * 60;
@@ -23,20 +24,6 @@ function clearAccessTokenCookie(response: NextResponse) {
     path: "/",
     maxAge: 0,
   });
-}
-
-function localAuthBypassEnabled(request: NextRequest) {
-  const hostname = request.nextUrl.hostname.toLowerCase();
-  const isLocalRequest =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "::1";
-
-  return (
-    process.env.NODE_ENV === "development" &&
-    isLocalRequest &&
-    process.env.LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true"
-  );
 }
 
 function createAuthenticatedResponse(session: ReturnType<typeof sessionManager.createSession>) {
