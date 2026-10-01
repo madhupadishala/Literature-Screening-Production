@@ -48,7 +48,7 @@ Define user requirements for workspace-scoped L2A / ICSR case processing while p
 
 ## Acceptance
 
-Sprint 6 may be qualified only when all nine governing gates are green and objective evidence exists for the exact commit. A failed applicable gate cannot be waived into green; an approved exception/non-applicable disposition must remain visibly non-green or N/A according to governance.
+Sprint 6 may be qualified only when all ten governing gates are green and objective evidence exists for the exact commit. A failed applicable gate cannot be waived into green; an approved exception/non-applicable disposition must remain visibly non-green or N/A according to governance.
 
 ## Case workspace tab architecture and shared safety assessment requirements
 
