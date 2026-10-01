@@ -59,7 +59,7 @@ Define the user, regulatory, security and workflow requirements for Intake & Tri
 
 ## Acceptance
 
-Sprint 5 is accepted only when all nine mandatory gates are green. Formal disposition may document a non-applicable control or approved exception record, but cannot convert a failed mandatory gate into a pass.
+Sprint 5 is accepted only when all ten mandatory gates are green. Formal disposition may document a non-applicable control or approved exception record, but cannot convert a failed mandatory gate into a pass.
 
 ## Screen architecture and shared safety assessment requirements
 
