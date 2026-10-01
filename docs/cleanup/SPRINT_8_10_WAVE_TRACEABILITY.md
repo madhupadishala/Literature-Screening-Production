@@ -65,7 +65,7 @@ Not claimed:
 - collaborative redline/authoring;
 - certified records-management retention.
 
-## Nine-gate status
+## Ten-gate status
 
 | Gate | State |
 |---|---|
@@ -78,6 +78,7 @@ Not claimed:
 | Evidence Gate | CI and benchmark rerun pending exact head. |
 | Regulatory Knowledge Gate | benchmark/regulatory scope documented; unsupported production claims prohibited. |
 | Modular & Benchmark Completeness | all three foundations benchmarked and independently entitleable. |
+| Product Design Guardian | Governed design-system, accessibility, information hierarchy and workflow-state controls apply to all material UI changes. |
 
 ## Production migration rule
 
