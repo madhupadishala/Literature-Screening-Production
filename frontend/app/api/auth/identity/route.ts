@@ -8,6 +8,7 @@ import {
   revokeIdentitySession,
 } from "@/lib/auth/identity-session-service";
 import { verifyIdentityCredentials } from "@/lib/auth/verify-credentials";
+import { routeErrorResponse } from "@/lib/api/route-error";
 import { getPostgresPool } from "@/lib/database/postgres";
 
 export const runtime = "nodejs";
@@ -43,16 +44,20 @@ async function listTenantMemberships(userId: string) {
 }
 
 export async function GET(request: NextRequest): Promise<Response> {
-  const session = await resolveIdentitySession(readIdentityToken(request));
-  if (!session) {
-    return Response.json({ authenticated: false, identity: null, tenants: [] }, { status: 401 });
-  }
+  try {
+    const session = await resolveIdentitySession(readIdentityToken(request));
+    if (!session) {
+      return Response.json({ authenticated: false, identity: null, tenants: [] }, { status: 401 });
+    }
 
-  return Response.json({
-    authenticated: true,
-    identity: session,
-    tenants: await listTenantMemberships(session.userId),
-  });
+    return Response.json({
+      authenticated: true,
+      identity: session,
+      tenants: await listTenantMemberships(session.userId),
+    });
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
 
 type LoginBody = {
@@ -61,7 +66,8 @@ type LoginBody = {
 };
 
 export async function POST(request: NextRequest): Promise<Response> {
-  let body: LoginBody;
+  try {
+    let body: LoginBody;
   try {
     body = (await request.json()) as LoginBody;
   } catch {
@@ -106,18 +112,25 @@ export async function POST(request: NextRequest): Promise<Response> {
     maxAge: NEXUS_IDENTITY_SESSION_MAX_AGE_SECONDS,
   });
 
-  return response;
+    return response;
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
 
 export async function DELETE(request: NextRequest): Promise<Response> {
-  const revoked = await revokeIdentitySession(readIdentityToken(request));
-  const response = NextResponse.json({ revoked });
-  response.cookies.set(NEXUS_IDENTITY_SESSION_COOKIE, "", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-    maxAge: 0,
-  });
-  return response;
+  try {
+    const revoked = await revokeIdentitySession(readIdentityToken(request));
+    const response = NextResponse.json({ revoked });
+    response.cookies.set(NEXUS_IDENTITY_SESSION_COOKIE, "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge: 0,
+    });
+    return response;
+  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
