@@ -20,7 +20,7 @@ All changes shall satisfy:
 6. Hacker Gate — adversarial security testing and remediation/retest.
 7. Evidence Gate — requirement -> architecture -> code -> test -> security -> evidence -> release traceability.
 8. Regulatory Knowledge Gate — authoritative regulator/harmonised source traceability, jurisdiction/version control and change-impact assessment.
-9. Modular & Benchmark Completeness Gate — plug-and-play module integrity plus market/regulatory completeness benchmarking.
+9. Modular & Benchmark Completeness Gate — plug-and-play module integrity plus market/regulatory completeness benchmarking.\n10. Product Design Guardian Gate — material UI changes shall conform to the governed design system, accessibility/usability controls, enterprise information hierarchy and regulated workflow-state behavior.
 
 ## 3. Canonical access model
 
