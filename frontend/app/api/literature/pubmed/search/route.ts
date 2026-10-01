@@ -36,29 +36,71 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SEARCH_EXECUTE,
     );
-    const body = (await request.json()) as Partial<PubMedSearchRequest>;
+    const parsed: unknown = await request.json().catch(() => null);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return Response.json(
+        { success: false, error: "A JSON object body is required." },
+        { status: 400 },
+      );
+    }
+    const body = parsed as Partial<PubMedSearchRequest>;
 
     assertRequestedTenantMatchesScope(principal, body.tenantId);
 
-    if (!body.query || typeof body.query !== "string") {
+    const query = typeof body.query === "string" ? body.query.trim() : "";
+    if (!query) {
       return Response.json(
         { success: false, error: "query is required." },
         { status: 400 },
       );
     }
+    if (
+      body.maxResults !== undefined &&
+      (typeof body.maxResults !== "number" ||
+        !Number.isFinite(body.maxResults) ||
+        body.maxResults < 1)
+    ) {
+      return Response.json(
+        { success: false, error: "maxResults must be a positive finite number." },
+        { status: 400 },
+      );
+    }
+    for (const [label, value] of [
+      ["includeAbstract", body.includeAbstract],
+      ["includeMetadata", body.includeMetadata],
+      ["includeFullTextLinks", body.includeFullTextLinks],
+    ] as const) {
+      if (value !== undefined && typeof value !== "boolean") {
+        return Response.json(
+          { success: false, error: `${label} must be boolean.` },
+          { status: 400 },
+        );
+      }
+    }
 
     const result = await pubMedService.search({
-      ...body,
       tenantId: principal.tenantId,
-      query: body.query.trim(),
-    } as PubMedSearchRequest);
+      query,
+      ...(body.maxResults !== undefined
+        ? { maxResults: Math.min(Math.trunc(body.maxResults), 200) }
+        : {}),
+      ...(body.includeAbstract !== undefined
+        ? { includeAbstract: body.includeAbstract }
+        : {}),
+      ...(body.includeMetadata !== undefined
+        ? { includeMetadata: body.includeMetadata }
+        : {}),
+      ...(body.includeFullTextLinks !== undefined
+        ? { includeFullTextLinks: body.includeFullTextLinks }
+        : {}),
+    });
 
     const articles = result.articles;
 
     return Response.json({
       success: true,
       tenantId: principal.tenantId,
-      query: body.query.trim(),
+      query,
       totalArticles: articles.length,
       result,
       next: {
