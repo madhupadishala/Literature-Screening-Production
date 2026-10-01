@@ -26,7 +26,7 @@ Benchmark: BENCH-PVDOC-001
 | URS-PVD-031 | A document type label shall not imply that all required sections/templates are automatically compliant. |
 | URS-PVD-032 | Electronic signature controls, retention schedules and certified records management shall be separately specified/validated before being claimed. |
 | URS-PVD-040 | Security verification shall include cross-workspace IDOR, role separation, invalid date windows and retired-document mutation. |
-| URS-PVD-041 | All nine mandatory gates shall pass before qualification. |
+| URS-PVD-041 | All ten mandatory gates shall pass before qualification. |
 
 ## Acceptance
 
