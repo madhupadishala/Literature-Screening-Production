@@ -4,6 +4,7 @@ import { requireIdentitySession, resolveTenantForIdentity } from "@/lib/auth/ide
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { isNexusEnvironment, type NexusEnvironment } from "@/lib/nexus/entitlement-types";
+import { getDefaultNexusEnvironment } from "@/lib/nexus/runtime-environment";
 import {
   createNexusContextToken,
   NEXUS_CONTEXT_COOKIE,
@@ -31,7 +32,8 @@ export async function GET(request: NextRequest): Promise<Response> {
     const identity = await requireIdentitySession(request);
     const tenantId = request.nextUrl.searchParams.get("tenantId")?.trim();
     const environment =
-      normalizeEnvironment(request.nextUrl.searchParams.get("environment")) ?? "PROD";
+      normalizeEnvironment(request.nextUrl.searchParams.get("environment")) ??
+      getDefaultNexusEnvironment();
 
     if (!tenantId || !UUID_PATTERN.test(tenantId)) {
       return Response.json(
