@@ -75,7 +75,7 @@ export default function LoginPage() {
 
     saveSession(session);
     router.push("/");
-  }
+  }, [router]);
 
   useEffect(() => {
     const localBypassEnabled =
@@ -102,7 +102,7 @@ export default function LoginPage() {
     };
 
     void runLocalBypass();
-  }, [router]);
+  }, [completeLogin]);
 
   async function login() {
     try {
