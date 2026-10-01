@@ -20,6 +20,23 @@ const ROLE_LABELS: Record<string, string> = {
   read_only: "Read Only",
 };
 
+type RuntimeConfig = {
+  environment: "PROD" | "UAT" | "TRAINING";
+  defaultTenantKey: string;
+  preview: boolean;
+};
+
+type IdentityLoginResponse = {
+  authenticated: boolean;
+  tenants?: Array<{
+    tenantId: string;
+    tenantKey: string;
+    displayName: string;
+    roleKey: string;
+  }>;
+  error?: string;
+};
+
 type ServerSession = {
   id: string;
   accessToken: string;
@@ -43,6 +60,7 @@ export default function LoginPage() {
   const [tenantId, setTenantId] = useState("clinixai-prod");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [previewRuntime, setPreviewRuntime] = useState(false);
 
   const completeLogin = useCallback(async (response: Response, requestedTenantId: string, requestedEnvironment: "PROD" | "UAT" | "TRAINING") => {
     const data = await response.json();
@@ -78,6 +96,29 @@ export default function LoginPage() {
   }, [router]);
 
   useEffect(() => {
+    let cancelled = false;
+
+    const loadRuntimeConfig = async () => {
+      try {
+        const response = await fetch("/api/runtime-config", { cache: "no-store" });
+        if (!response.ok) return;
+        const config = (await response.json()) as RuntimeConfig;
+        if (cancelled) return;
+        setEnvironment(config.environment);
+        setTenantId(config.defaultTenantKey);
+        setPreviewRuntime(config.preview);
+      } catch {
+        // Server remains authoritative; login will fail closed if scope is invalid.
+      }
+    };
+
+    void loadRuntimeConfig();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
     const localBypassEnabled =
       process.env.NEXT_PUBLIC_LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true";
     if (!localBypassEnabled) return;
@@ -104,6 +145,66 @@ export default function LoginPage() {
     void runLocalBypass();
   }, [completeLogin]);
 
+  async function establishPreviewIdentityContext() {
+    const identityResponse = await fetch("/api/auth/identity", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const identity = (await identityResponse.json()) as IdentityLoginResponse;
+    if (!identityResponse.ok || !identity.authenticated) {
+      throw new Error(identity.error || "Identity authentication failed.");
+    }
+
+    const tenant = identity.tenants?.find((item) => item.tenantKey === tenantId);
+    if (!tenant) {
+      throw new Error("The authenticated identity has no access to the UAT tenant.");
+    }
+
+    const workspaceResponse = await fetch(
+      `/api/nexus/context?tenantId=${encodeURIComponent(tenant.tenantId)}&environment=${environment}`,
+      { cache: "no-store" },
+    );
+    const workspacePayload = await workspaceResponse.json();
+    if (!workspaceResponse.ok || !workspacePayload?.success) {
+      throw new Error(workspacePayload?.error || "UAT workspace context could not be loaded.");
+    }
+
+    const workspaces = Array.isArray(workspacePayload?.data?.workspaces)
+      ? workspacePayload.data.workspaces
+      : [];
+    const workspace =
+      workspaces.find((item: { modules?: Array<{ moduleKey?: string }> }) =>
+        item.modules?.some((module) => module.moduleKey === "LITERATURE"),
+      ) ?? workspaces[0];
+    if (!workspace) {
+      throw new Error("No authorized UAT workspace is available.");
+    }
+
+    const moduleKey =
+      workspace.modules?.find((module: { moduleKey?: string }) => module.moduleKey === "LITERATURE")
+        ?.moduleKey ?? workspace.modules?.[0]?.moduleKey;
+    if (!moduleKey) {
+      throw new Error("No authorized UAT module is available.");
+    }
+
+    const contextResponse = await fetch("/api/nexus/context", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tenantId: tenant.tenantId,
+        workspaceId: workspace.workspaceId,
+        environment,
+        moduleKey,
+        reason: "Authenticated preview user selected the governed UAT workspace context.",
+      }),
+    });
+    const contextPayload = await contextResponse.json();
+    if (!contextResponse.ok || !contextPayload?.success) {
+      throw new Error(contextPayload?.error || "UAT workspace context selection failed.");
+    }
+  }
+
   async function login() {
     try {
       setLoading(true);
@@ -117,9 +218,19 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password, tenantId }),
       });
 
+      if (response.ok && previewRuntime) {
+        try {
+          await establishPreviewIdentityContext();
+        } catch (contextError) {
+          await fetch("/api/auth/identity", { method: "DELETE" }).catch(() => undefined);
+          await fetch("/api/auth/session", { method: "DELETE" }).catch(() => undefined);
+          throw contextError;
+        }
+      }
+
       await completeLogin(response, tenantId, environment);
-    } catch {
-      setError("Login failed.");
+    } catch (caughtError) {
+      setError(caughtError instanceof Error ? caughtError.message : "Login failed.");
     } finally {
       setLoading(false);
     }
@@ -157,6 +268,7 @@ export default function LoginPage() {
             Environment
             <select
               value={environment}
+              disabled={previewRuntime}
               onChange={(event) =>
                 setEnvironment(event.target.value as "PROD" | "UAT" | "TRAINING")
               }
@@ -169,8 +281,15 @@ export default function LoginPage() {
 
           <label>
             Tenant
-            <select value={tenantId} onChange={(event) => setTenantId(event.target.value)}>
-              {TENANTS.map((tenant) => (
+            <select
+              value={tenantId}
+              disabled={previewRuntime}
+              onChange={(event) => setTenantId(event.target.value)}
+            >
+              {(previewRuntime
+                ? TENANTS.filter((tenant) => tenant.tenantId === "uat-tenant")
+                : TENANTS
+              ).map((tenant) => (
                 <option key={tenant.tenantId} value={tenant.tenantId}>
                   {tenant.tenantName}
                 </option>
@@ -185,7 +304,11 @@ export default function LoginPage() {
           {loading ? "Signing in..." : "Sign In"}
         </button>
 
-        <p className="hint">Email + password + environment + tenant are mandatory.</p>
+        <p className="hint">
+          {previewRuntime
+            ? "Preview deployment · UAT environment and tenant are enforced."
+            : "Email + password + environment + tenant are mandatory."}
+        </p>
       </section>
 
       <style jsx>{`
