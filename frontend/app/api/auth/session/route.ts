@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { sessionManager } from "@/lib/auth/session-manager";
 import { verifyCredentials } from "@/lib/auth/verify-credentials";
 import { localAuthBypassEnabled } from "@/lib/auth/local-auth-bypass";
+import { routeErrorResponse } from "@/lib/api/route-error";
 
 const ACCESS_TOKEN_COOKIE = "clinixai_access_token";
 const ACCESS_TOKEN_MAX_AGE_SECONDS = 60 * 60;
@@ -59,6 +60,7 @@ type LoginBody = {
 };
 
 export async function POST(request: NextRequest) {
+  try {
   let body: Partial<LoginBody>;
 
   try {
@@ -109,6 +111,9 @@ export async function POST(request: NextRequest) {
   });
 
   return createAuthenticatedResponse(session);
+}  } catch (error) {
+    return routeErrorResponse(error);
+  }
 }
 
 export async function DELETE(request: NextRequest) {
