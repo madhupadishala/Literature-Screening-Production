@@ -1,3 +1,5 @@
+import type { NextRequest } from "next/server";
+
 import {
   getPreviewUatBootstrapStatus,
   runPreviewUatBootstrap,
@@ -42,8 +44,23 @@ button{width:100%;margin-top:18px;border:0;border-radius:12px;padding:14px 18px;
   );
 }
 
-export async function GET(): Promise<Response> {
+export async function GET(request: NextRequest): Promise<Response> {
   try {
+    if (request.nextUrl.searchParams.get("action") === "initialize") {
+      const result = await runPreviewUatBootstrap();
+      return page(
+        "UAT initialization complete",
+        `<p class="ok"><strong>The governed UAT database is ready.</strong></p>
+         <code>migrationCount=${result.migrationCount}</code>
+         <code>maxMigration=${esc(result.maxMigration)}</code>
+         <code>tenantCount=${result.tenantCount}</code>
+         <code>adminCount=${result.adminCount}</code>
+         <code>workspaceCount=${result.workspaceCount}</code>
+         <code>enabledModuleCount=${result.enabledModuleCount}</code>
+         <p class="note">Return to the login page and use the temporary UAT administrator credentials.</p>`,
+      );
+    }
+
     const status = await getPreviewUatBootstrapStatus();
 
     if (status.ready) {
@@ -53,7 +70,7 @@ export async function GET(): Promise<Response> {
          <code>database=${esc(status.database_name)}</code>
          <code>migrationCount=${status.migrationCount}</code>
          <code>maxMigration=${esc(status.maxMigration)}</code>
-         <code>uatTenantCount=${status.uatTenantCount}</code>
+         <code>tenantCount=${status.tenantCount}</code>
          <code>adminCount=${status.adminCount}</code>
          <p class="note">You can now return to the login page and test the UAT administrator.</p>`,
       );
@@ -65,7 +82,7 @@ export async function GET(): Promise<Response> {
        <code>database=${esc(status.database_name)}</code>
        <code>migrationCount=${status.migrationCount}</code>
        <code>maxMigration=${esc(status.maxMigration)}</code>
-       <code>uatTenantCount=${status.uatTenantCount}</code>
+       <code>tenantCount=${status.tenantCount}</code>
        <code>adminCount=${status.adminCount}</code>
        <form method="post"><button type="submit">Initialize UAT</button></form>
        <p class="note">The operation is restricted to the governed Preview branch and exact Neon project/branch guards.</p>`,
@@ -87,7 +104,7 @@ export async function POST(): Promise<Response> {
       `<p class="ok"><strong>The governed UAT database is ready.</strong></p>
        <code>migrationCount=${result.migrationCount}</code>
        <code>maxMigration=${esc(result.maxMigration)}</code>
-       <code>uatTenantCount=${result.uatTenantCount}</code>
+       <code>tenantCount=${result.tenantCount}</code>
        <code>adminCount=${result.adminCount}</code>
        <p class="note">Return to the login page and use the temporary UAT administrator credentials.</p>`,
     );
