@@ -131,7 +131,7 @@ Scope: Sprint 0 Baseline & Governance; Sprint 1 Regulatory Knowledge Foundation;
 - `docs/requirements/FRS/FRS_NEXUS_ARCHITECTURE_SECURITY.md`
 - `docs/user-guides/USER_GUIDE_NEXUS_SECURITY_ADMIN.md`
 
-## 6. Nine-gate disposition for this wave
+## 6. Ten-gate disposition for this wave
 
 | Gate | Current disposition |
 |---|---|
@@ -144,6 +144,7 @@ Scope: Sprint 0 Baseline & Governance; Sprint 1 Regulatory Knowledge Foundation;
 | Evidence Gate | Current-head quality gate and benchmark workflow are green; captured sub-check outcomes remain explicit, including warning/debt analyses. |
 | Regulatory Knowledge Gate | Controlled source register/catalog + detailed URS/FRS/User Guide; full regulator corpus acquisition is not overstated. |
 | Modular & Benchmark Completeness | Plug-and-play entitlement architecture implemented; module-specific market completeness occurs in Sprints 4+. |
+| Product Design Guardian | Governed design-system, accessibility, information hierarchy and workflow-state controls apply to all material UI changes. |
 
 ## 7. Known transitional debt carried forward
 
