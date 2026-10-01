@@ -24,7 +24,7 @@ Benchmark: BENCH-AGG-001
 | URS-AGG-022 | Statistical/tabulation logic used for regulatory output shall be separately specified and validated. |
 | URS-AGG-030 | The module shall remain plug-and-play and shall consume canonical finalized case contracts without requiring Intake/Literature entitlement. |
 | URS-AGG-040 | Security verification shall include cross-workspace IDOR, mutable-draft exclusion, finalized-report mutation and privilege-separation cases. |
-| URS-AGG-041 | All nine mandatory gates shall pass before qualification. |
+| URS-AGG-041 | All ten mandatory gates shall pass before qualification. |
 
 ## Acceptance
 
