@@ -51,6 +51,27 @@ type ServerSession = {
   };
 };
 
+async function readJsonResponse(response: Response): Promise<Record<string, unknown>> {
+  const text = await response.text();
+  if (!text.trim()) {
+    throw new Error(
+      response.ok
+        ? "The login service returned an empty response."
+        : "The UAT login service is temporarily unavailable.",
+    );
+  }
+
+  try {
+    return JSON.parse(text) as Record<string, unknown>;
+  } catch {
+    throw new Error(
+      response.ok
+        ? "The login service returned an invalid response."
+        : "The UAT login service is temporarily unavailable.",
+    );
+  }
+}
+
 export default function LoginPage() {
   const router = useRouter();
 
@@ -63,7 +84,7 @@ export default function LoginPage() {
   const [previewRuntime, setPreviewRuntime] = useState(false);
 
   const completeLogin = useCallback(async (response: Response, requestedTenantId: string, requestedEnvironment: "PROD" | "UAT" | "TRAINING") => {
-    const data = await response.json();
+    const data = await readJsonResponse(response);
 
     if (!response.ok || !data.authenticated) {
       throw new Error(data.error || "Login failed.");
@@ -151,7 +172,7 @@ export default function LoginPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    const identity = (await identityResponse.json()) as IdentityLoginResponse;
+    const identity = (await readJsonResponse(identityResponse)) as unknown as IdentityLoginResponse;
     if (!identityResponse.ok || !identity.authenticated) {
       throw new Error(identity.error || "Identity authentication failed.");
     }
@@ -165,7 +186,7 @@ export default function LoginPage() {
       `/api/nexus/context?tenantId=${encodeURIComponent(tenant.tenantId)}&environment=${environment}`,
       { cache: "no-store" },
     );
-    const workspacePayload = await workspaceResponse.json();
+    const workspacePayload = await readJsonResponse(workspaceResponse);
     if (!workspaceResponse.ok || !workspacePayload?.success) {
       throw new Error(workspacePayload?.error || "UAT workspace context could not be loaded.");
     }
@@ -199,7 +220,7 @@ export default function LoginPage() {
         reason: "Authenticated preview user selected the governed UAT workspace context.",
       }),
     });
-    const contextPayload = await contextResponse.json();
+    const contextPayload = await readJsonResponse(contextResponse);
     if (!contextResponse.ok || !contextPayload?.success) {
       throw new Error(contextPayload?.error || "UAT workspace context selection failed.");
     }
