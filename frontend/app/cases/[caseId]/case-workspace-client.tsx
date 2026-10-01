@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import Navigation from "@/components/Navigation";
 import styles from "./case-workspace.module.css";
@@ -74,6 +74,11 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   );
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState("");
+  const toolbarActionsRef = useRef({
+    save: () => {},
+    evidence: () => {},
+    e2b: () => {},
+  });
 
   const [assessment, setAssessment] = useState({
     productKey: "",
@@ -506,10 +511,16 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   }
 
 
+  toolbarActionsRef.current = {
+    save: () => void saveDraft(),
+    evidence: () => void generateEvidence(),
+    e2b: () => void generateExport("E2B_R3_MAPPING_JSON"),
+  };
+
   useEffect(() => {
-    const handleSave = () => void saveDraft();
-    const handleEvidence = () => void generateEvidence();
-    const handleE2B = () => void generateExport("E2B_R3_MAPPING_JSON");
+    const handleSave = () => toolbarActionsRef.current.save();
+    const handleEvidence = () => toolbarActionsRef.current.evidence();
+    const handleE2B = () => toolbarActionsRef.current.e2b();
 
     window.addEventListener("nexus:save", handleSave);
     window.addEventListener("nexus:generate-evidence", handleEvidence);
@@ -520,7 +531,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
       window.removeEventListener("nexus:generate-evidence", handleEvidence);
       window.removeEventListener("nexus:generate-e2b", handleE2B);
     };
-  }, [workspace, editors, changeReason, caseId, isFinal, busy]);
+  }, []);
 
   if (!workspace) {
     return (
