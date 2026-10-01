@@ -51,26 +51,25 @@ export async function GET(): Promise<Response> {
     nexusMigrationCount = Number(ledger.rows[0].nexus_migration_count);
   }
 
-  const schema = await pool.query<{
+  const safetyTables = await pool.query<{
     safety_table_count: string;
-    uat_tenant_count: string;
   }>(`
-    SELECT
-      (
-        SELECT count(*)::text
-        FROM information_schema.tables
-        WHERE table_schema = 'public'
-          AND table_name LIKE 'safety_%'
-      ) AS safety_table_count,
-      CASE WHEN $1::boolean THEN
-        (
-          SELECT count(*)::text
-          FROM tenants
-          WHERE tenant_key IN ('nexus-uat-rc1-a', 'nexus-uat-rc1-b')
-            AND status = 'active'
-        )
-      ELSE '0' END AS uat_tenant_count
-  `, [baseRow.tenants_present]);
+    SELECT count(*)::text AS safety_table_count
+    FROM information_schema.tables
+    WHERE table_schema = 'public'
+      AND table_name LIKE 'safety_%'
+  `);
+
+  let uatTenantCount = 0;
+  if (baseRow.tenants_present) {
+    const tenants = await pool.query<{ uat_tenant_count: string }>(`
+      SELECT count(*)::text AS uat_tenant_count
+      FROM tenants
+      WHERE tenant_key IN ('nexus-uat-rc1-a', 'nexus-uat-rc1-b')
+        AND status = 'active'
+    `);
+    uatTenantCount = Number(tenants.rows[0].uat_tenant_count);
+  }
 
   const previewBranch =
     process.env.VERCEL_GIT_COMMIT_REF?.trim() ||
@@ -95,8 +94,8 @@ export async function GET(): Promise<Response> {
     maxMigration: migrationId,
     migrationCount,
     nexusMigrationCount,
-    safetyTableCount: Number(schema.rows[0].safety_table_count),
-    uatTenantCount: Number(schema.rows[0].uat_tenant_count),
+    safetyTableCount: Number(safetyTables.rows[0].safety_table_count),
+    uatTenantCount,
   };
 
   const ready =
