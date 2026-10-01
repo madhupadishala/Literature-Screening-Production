@@ -43,4 +43,4 @@ Benchmark: BENCH-SUB-001
 
 ## Acceptance
 
-Sprint 7 can be described as a qualified **Submissions foundation** only after all nine applicable gates pass on the exact commit. Real external transport remains separately unqualified until credentialed conformance and validation evidence exists.
+Sprint 7 can be described as a qualified **Submissions foundation** only after all ten applicable gates pass on the exact commit. Real external transport remains separately unqualified until credentialed conformance and validation evidence exists.
