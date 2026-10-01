@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
   });
 
   return createAuthenticatedResponse(session);
-}  } catch (error) {
+  } catch (error) {
     return routeErrorResponse(error);
   }
 }
