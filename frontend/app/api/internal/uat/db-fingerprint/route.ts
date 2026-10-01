@@ -43,7 +43,7 @@ export async function GET(): Promise<Response> {
         max(migration_id) AS migration_id,
         count(*)::text AS migration_count,
         count(*) FILTER (
-          WHERE migration_id BETWEEN '022' AND '032'
+          WHERE migration_id BETWEEN '022' AND '039'
         )::text AS nexus_migration_count
       FROM clinixai_schema_migrations
     `);
