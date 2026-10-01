@@ -58,7 +58,7 @@ for (const control of [
   "pg_advisory_xact_lock",
   "Idempotency conflict:",
   "withTransportTimeout",
-  "STALE_TRANSMISSION_RECOVERED",
+  "Automatic retransmission is blocked to prevent duplicate regulator delivery.",
   "Acknowledgement conflict:",
   "Acknowledgement cannot be recorded from status",
   "TRANSPORT_NOT_CONFIGURED",
