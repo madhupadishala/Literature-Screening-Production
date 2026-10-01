@@ -101,55 +101,103 @@ export async function createSignal(input: {
   const request = validateCreateRequest(input.request);
   const scope = requireSafetyWorkspaceScope(input.principal);
   const snapshotSha256 = canonicalSha256(request.detectionSnapshot ?? {});
-  const result = await getPostgresPool().query<Record<string, unknown>>(
-    `INSERT INTO nexus_signal_records (
-       id, tenant_id, workspace_id, environment, signal_key,
-       product_key, event_term, source_type, source_reference,
-       detection_method, detection_snapshot, snapshot_sha256,
-       priority, status, detected_at, created_by
-     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13,'DETECTED',$14,$15)
-     ON CONFLICT (tenant_id, workspace_id, environment, signal_key)
-     DO UPDATE SET signal_key = nexus_signal_records.signal_key
-     RETURNING *`,
-    [
-      randomUUID(),
-      input.principal.tenantId,
-      scope.workspaceId,
-      scope.environment,
-      request.signalKey,
-      request.productKey,
-      request.eventTerm,
-      request.sourceType,
-      request.sourceReference ?? null,
-      request.detectionMethod,
-      JSON.stringify(request.detectionSnapshot ?? {}),
-      snapshotSha256,
-      request.priority ?? "NORMAL",
-      request.detectedAt,
-      input.principal.userId,
-    ],
-  );
-  await getPostgresPool().query(
-    `INSERT INTO audit_events (
-       tenant_id, workspace_id, environment, module_key, actor_id,
-       event_type, event_category, outcome, details
-     ) VALUES ($1,$2,$3,'SIGNAL_MANAGEMENT',$4,
-       'SIGNAL_CREATED','NEXUS_SIGNALS','success',$5::jsonb)`,
-    [
-      input.principal.tenantId,
-      scope.workspaceId,
-      scope.environment,
-      input.principal.userId,
-      JSON.stringify({
-        signalId: result.rows[0].id,
-        signalKey: request.signalKey,
-        sourceType: request.sourceType,
+  const client = await getPostgresPool().connect();
+
+  try {
+    await client.query("BEGIN");
+    const inserted = await client.query<Record<string, unknown>>(
+      `INSERT INTO nexus_signal_records (
+         id, tenant_id, workspace_id, environment, signal_key,
+         product_key, event_term, source_type, source_reference,
+         detection_method, detection_snapshot, snapshot_sha256,
+         priority, status, detected_at, created_by
+       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13,'DETECTED',$14,$15)
+       ON CONFLICT (tenant_id, workspace_id, environment, signal_key)
+       DO NOTHING
+       RETURNING *`,
+      [
+        randomUUID(),
+        input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
+        request.signalKey,
+        request.productKey,
+        request.eventTerm,
+        request.sourceType,
+        request.sourceReference ?? null,
+        request.detectionMethod,
+        JSON.stringify(request.detectionSnapshot ?? {}),
         snapshotSha256,
-        reason: request.reason,
-      }),
-    ],
-  );
-  return result.rows[0];
+        request.priority ?? "NORMAL",
+        request.detectedAt,
+        input.principal.userId,
+      ],
+    );
+
+    if (inserted.rows[0]) {
+      await client.query(
+        `INSERT INTO audit_events (
+           tenant_id, workspace_id, environment, module_key, actor_id,
+           event_type, event_category, outcome, details
+         ) VALUES ($1,$2,$3,'SIGNAL_MANAGEMENT',$4,
+           'SIGNAL_CREATED','NEXUS_SIGNALS','success',$5::jsonb)`,
+        [
+          input.principal.tenantId,
+          scope.workspaceId,
+          scope.environment,
+          input.principal.userId,
+          JSON.stringify({
+            signalId: inserted.rows[0].id,
+            signalKey: request.signalKey,
+            sourceType: request.sourceType,
+            snapshotSha256,
+            reason: request.reason,
+          }),
+        ],
+      );
+      await client.query("COMMIT");
+      return inserted.rows[0];
+    }
+
+    const existing = await client.query<Record<string, unknown>>(
+      `SELECT *
+         FROM nexus_signal_records
+        WHERE tenant_id = $1
+          AND workspace_id = $2
+          AND environment = $3
+          AND signal_key = $4
+        FOR UPDATE`,
+      [
+        input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
+        request.signalKey,
+      ],
+    );
+    const row = existing.rows[0];
+    if (!row) {
+      throw new Error("Signal replay could not resolve the existing governed record.");
+    }
+
+    const replayMatches =
+      row.snapshot_sha256 === snapshotSha256 &&
+      row.product_key === request.productKey &&
+      row.event_term === request.eventTerm &&
+      row.source_type === request.sourceType;
+    if (!replayMatches) {
+      throw new Error(
+        "signalKey already exists with different governed signal content.",
+      );
+    }
+
+    await client.query("COMMIT");
+    return row;
+  } catch (error) {
+    await client.query("ROLLBACK").catch(() => undefined);
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 
 export async function listSignals(input: {
