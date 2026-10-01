@@ -24,7 +24,9 @@ const WORKSPACE_KEY = "clinixai-uat-primary";
 const WORKSPACE_NAME = "ClinixAI UAT Primary Workspace";
 const BOOTSTRAP_VERSION = "wave3-uat-v1";
 
-const STATUS_FILE = path.join(process.cwd(), "public", "uat-bootstrap-status.json");
+const STATUS_FILE = process.env.VERCEL
+  ? path.join("/tmp", "uat-bootstrap-status.json")
+  : path.join(process.cwd(), "public", "uat-bootstrap-status.json");
 
 function writeBootstrapStatus(status) {
   mkdirSync(path.dirname(STATUS_FILE), { recursive: true });
@@ -461,4 +463,5 @@ main().catch((error) => {
     message: message.slice(0, 1200),
   });
   console.error("PREVIEW_UAT_BOOTSTRAP_FAILED", message);
+  process.exitCode = 1;
 });
