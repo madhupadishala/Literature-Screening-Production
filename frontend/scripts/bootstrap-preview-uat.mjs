@@ -1,4 +1,6 @@
 import { spawnSync } from "node:child_process";
+
+// Redeploy marker: pick up Preview-scoped UAT admin secret.
 import process from "node:process";
 
 import pg from "pg";
