@@ -9,7 +9,7 @@ import { requireWorkspaceModulePermission } from "@/lib/rbac/workspace-guard";
 export const runtime="nodejs"; export const dynamic="force-dynamic";
 export async function GET(request:NextRequest){try{
  const principal=await requireWorkspaceModulePermission(request,NEXUS_MODULES.AGGREGATE_REPORTING,PERMISSIONS.AGGREGATE_VIEW);
- const limit=Number(request.nextUrl.searchParams.get("limit")||"100");
+ const rawLimit=Number(request.nextUrl.searchParams.get("limit")||"100");\n const limit=Number.isFinite(rawLimit)?rawLimit:100;
  return Response.json({success:true,data:{records:await listAggregateReports({principal,limit})}});
 }catch(error){return routeErrorResponse(error);}}
 export async function POST(request:NextRequest){try{
