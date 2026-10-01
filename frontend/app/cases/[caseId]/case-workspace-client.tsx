@@ -672,10 +672,6 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
           </div>
         ) : null}
 
-        {tab === "Attachments" ? (
-          <DataCards records={workspace.sourceDocuments} empty="No source documents linked." />
-        ) : null}
-
         {tab === "Action Items" ? (
           <div className={styles.stack}>
             <section className={styles.reviewBox}>
