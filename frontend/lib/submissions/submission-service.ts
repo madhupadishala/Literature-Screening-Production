@@ -579,22 +579,15 @@ export async function transmitSubmission(input: {
       const message =
         error instanceof Error ? error.message : "Unknown transport failure.";
       await getPostgresPool().query(
-        `WITH attempt_update AS (
-           UPDATE nexus_submission_attempts
-              SET status = 'FAILED',
-                  error_code = 'TRANSPORT_FAILURE',
-                  error_message = $2,
-                  completed_at = now()
-            WHERE id = $1
-            RETURNING submission_package_id
-         )
-         UPDATE nexus_submission_packages package
-            SET status = 'FAILED', updated_at = now()
-           FROM attempt_update
-          WHERE package.id = attempt_update.submission_package_id`,
+        `UPDATE nexus_submission_attempts
+            SET error_code = 'TRANSPORT_OUTCOME_UNKNOWN',
+                error_message = $2
+          WHERE id = $1`,
         [attempt.rows[0].id, message.slice(0, 2000)],
       );
-      throw error;
+      throw new Error(
+        "Submission transport outcome is unknown. The package remains TRANSMITTING and automatic retransmission is blocked pending reconciliation.",
+      );
     }
 
     await getPostgresPool().query(
