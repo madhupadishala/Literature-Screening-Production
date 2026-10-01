@@ -74,7 +74,7 @@ Define user, compliance and security requirements for the Literature Screening m
 
 ## Acceptance
 
-Sprint 4 is accepted only when all nine mandatory gates are green. Formal disposition can document non-applicability or an approved exception record, but it does not convert an actually failed mandatory gate into a pass.
+Sprint 4 is accepted only when all ten mandatory gates are green. Formal disposition can document non-applicability or an approved exception record, but it does not convert an actually failed mandatory gate into a pass.
 
 ## Screen architecture and shared safety assessment requirements
 
