@@ -44,23 +44,8 @@ button{width:100%;margin-top:18px;border:0;border-radius:12px;padding:14px 18px;
   );
 }
 
-export async function GET(request: NextRequest): Promise<Response> {
+export async function GET(): Promise<Response> {
   try {
-    if (request.nextUrl.searchParams.get("action") === "initialize") {
-      const result = await runPreviewUatBootstrap();
-      return page(
-        "UAT initialization complete",
-        `<p class="ok"><strong>The governed UAT database is ready.</strong></p>
-         <code>migrationCount=${result.migrationCount}</code>
-         <code>maxMigration=${esc(result.maxMigration)}</code>
-         <code>tenantCount=${result.tenantCount}</code>
-         <code>adminCount=${result.adminCount}</code>
-         <code>workspaceCount=${result.workspaceCount}</code>
-         <code>enabledModuleCount=${result.enabledModuleCount}</code>
-         <p class="note">Return to the login page and use the temporary UAT administrator credentials.</p>`,
-      );
-    }
-
     const status = await getPreviewUatBootstrapStatus();
 
     if (status.ready) {
@@ -84,7 +69,10 @@ export async function GET(request: NextRequest): Promise<Response> {
        <code>maxMigration=${esc(status.maxMigration)}</code>
        <code>tenantCount=${status.tenantCount}</code>
        <code>adminCount=${status.adminCount}</code>
-       <form method="post"><button type="submit">Initialize UAT</button></form>
+       <form method="post">
+         <input type="hidden" name="confirmation" value="INITIALIZE_WAVE3_UAT">
+         <button type="submit">Initialize UAT</button>
+       </form>
        <p class="note">The operation is restricted to the governed Preview branch and exact Neon project/branch guards.</p>`,
     );
   } catch (error) {
@@ -96,8 +84,17 @@ export async function GET(request: NextRequest): Promise<Response> {
   }
 }
 
-export async function POST(): Promise<Response> {
+export async function POST(request: NextRequest): Promise<Response> {
   try {
+    const form = await request.formData();
+    if (form.get("confirmation") !== "INITIALIZE_WAVE3_UAT") {
+      return page(
+        "UAT initialization rejected",
+        '<p class="bad">Explicit initialization confirmation is required.</p>',
+        400,
+      );
+    }
+
     const result = await runPreviewUatBootstrap();
     return page(
       "UAT initialization complete",
