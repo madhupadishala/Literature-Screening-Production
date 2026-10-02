@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type ModuleKey =
@@ -30,6 +30,7 @@ const modules: Array<{
 
 export default function Navigation() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [context, setContext] = useState<{
     tenantKey: string;
@@ -88,7 +89,7 @@ export default function Navigation() {
   }
 
   function routerFallback() {
-    window.location.assign("/");
+    router.push("/");
   }
 
   return (
@@ -231,7 +232,7 @@ export default function Navigation() {
           top: 0;
           z-index: 60;
           margin: -24px -24px 18px;
-          font-family: "Poppins", Arial, sans-serif;
+          font-family: var(--nx-font-sans);
           box-shadow: 0 5px 18px rgba(15, 23, 42, 0.18);
         }
         .skip-link {
@@ -242,7 +243,7 @@ export default function Navigation() {
           transform: translateY(-150%);
           padding: 9px 12px;
           border-radius: 5px;
-          color: #fff;
+          color: var(--nx-color-text-inverse);
           background: #1d4ed8;
           font-size: 11px;
           font-weight: 800;
@@ -254,8 +255,8 @@ export default function Navigation() {
           display: flex;
           min-height: 60px;
           align-items: stretch;
-          color: #fff;
-          background: #0f172a;
+          color: var(--nx-color-text-inverse);
+          background: var(--nx-color-text);
         }
         .brand {
           display: flex;
@@ -263,7 +264,7 @@ export default function Navigation() {
           align-items: center;
           gap: 10px;
           padding: 8px 18px;
-          color: #fff;
+          color: var(--nx-color-text-inverse);
           text-decoration: none;
         }
         .brand:hover {
@@ -276,7 +277,7 @@ export default function Navigation() {
           place-items: center;
           border: 1px solid rgba(255, 255, 255, 0.24);
           border-radius: 7px;
-          background: linear-gradient(135deg, #1d4ed8, #38bdf8);
+          background: var(--nx-color-interactive);
           font-size: 21px;
           font-weight: 900;
         }
@@ -370,7 +371,7 @@ export default function Navigation() {
           padding: 6px;
           border: 1px solid #cbd5e1;
           border-radius: 6px;
-          background: #ffffff;
+          background: var(--nx-color-surface);
           box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
         }
         .generate-popover button {
@@ -420,7 +421,7 @@ export default function Navigation() {
           display: none;
           border: 0;
           padding: 0 16px;
-          color: #fff;
+          color: var(--nx-color-text-inverse);
           background: transparent;
           font: inherit;
           cursor: pointer;
@@ -436,7 +437,7 @@ export default function Navigation() {
           display: flex;
           min-height: 44px;
           justify-content: space-between;
-          color: #fff;
+          color: var(--nx-color-text-inverse);
           background: #185abd;
         }
         .module-links {
@@ -456,7 +457,7 @@ export default function Navigation() {
           white-space: nowrap;
         }
         .module-links :global(a:hover) {
-          color: #fff;
+          color: var(--nx-color-text-inverse);
           background: rgba(15, 23, 42, 0.12);
         }
         .module-links :global(a.active) {
