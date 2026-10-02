@@ -81,7 +81,10 @@
     "cleanup:sprint9:verify": "node --import tsx scripts/verify-cleanup-sprint9-aggregate.ts",
     "cleanup:sprint10:verify": "node --import tsx scripts/verify-cleanup-sprint10-pv-docs.ts",
     "cleanup:sprint11:verify": "node --import tsx scripts/verify-cleanup-sprint11-product-design.ts",
-    "design:verify": "node --import tsx scripts/verify-product-design-guardian.ts"
+    "design:verify": "node --import tsx scripts/verify-product-design-guardian.ts",
+    "cleanup:sprint12:verify": "node --import tsx scripts/verify-cleanup-sprint12-literature-ux.ts",
+    "cleanup:sprint13:verify": "node --import tsx scripts/verify-cleanup-sprint13-intake-ux.ts",
+    "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "1.18.0",

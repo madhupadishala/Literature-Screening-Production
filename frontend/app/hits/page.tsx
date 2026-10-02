@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
-import Navigation from "@/components/Navigation";
-import ModuleSubNavigation from "@/components/ModuleSubNavigation";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import OperationalState from "@/components/enterprise/OperationalState";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
 import AdHocSearchWorkspace from "@/components/literature/AdHocSearchWorkspace";
@@ -370,9 +370,7 @@ export default function HitsReviewPage() {
   };
 
   return (
-    <main className="app-shell">
-      <Navigation />
-      <ModuleSubNavigation module="LITERATURE" />
+    <ApplicationShell module="LITERATURE">
       <OperationalScreenHeader
         eyebrow="Literature Screening / Hits"
         title="Hits"
@@ -412,6 +410,29 @@ export default function HitsReviewPage() {
           { label: "Mean AI confidence", value: percent(metrics.avgConfidence) },
         ]}
       />
+
+      {loading ? (
+        <OperationalState
+          kind="loading"
+          title="Refreshing governed Hits worklist"
+          message="Retrieved evidence and prior human review decisions remain unchanged while the worklist refreshes."
+          compact
+        />
+      ) : processedHits.length === 0 ? (
+        <OperationalState
+          kind="empty"
+          title="No Hits match the current worklist view"
+          message="Adjust the worklist status or search filter. No safety record has been deleted or reclassified."
+          compact
+        />
+      ) : (
+        <OperationalState
+          kind="info"
+          title="AI output is assistive"
+          message="Confidence, duplicate intelligence and evidence suggestions support review; the recorded human decision remains authoritative and auditable."
+          compact
+        />
+      )}
 
       {/* Modern Workflow segment selection header tab controls */}
       <div className="tab-navigation">
@@ -1156,6 +1177,6 @@ export default function HitsReviewPage() {
           .table-wrap { max-height: none; }
         }
       `}</style>
-    </main>
+    </ApplicationShell>
   );
 }

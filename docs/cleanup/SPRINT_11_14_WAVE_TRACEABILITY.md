@@ -2,7 +2,7 @@
 
 Document ID: CLEANUP-WAVE-11-14-001  
 Branch: `cleanup/zero-deviation-baseline-20260930`  
-Status: STARTED  
+Status: IMPLEMENTED — exact-head CI and CodeRabbit evidence required for promotion  
 Deployment rule: source qualification first; intentional Vercel preview only at governed checkpoints.
 
 ## Scope
@@ -118,3 +118,35 @@ Wave 4 development SHALL NOT auto-deploy from the working branch. Browser previe
 - exact-head CI: PENDING
 - CodeRabbit review: PENDING
 - browser verification: DEFERRED until intentional `preview/wave4` checkpoint
+
+
+## Sprint 12–14 implementation closure
+
+### Sprint 12 — Literature Operational UX
+- governed Application Shell: IMPLEMENTED across Dashboard, Hits, Screening, Medical Review and Administration
+- dense Hits worklist, search/sort/status segmentation and operational metrics: IMPLEMENTED
+- AI-assistive versus human-authoritative decision distinction: IMPLEMENTED
+- loading, empty, error and informational operational states: IMPLEMENTED where applicable
+- medical-review seriousness, listedness / expectedness and causality language with evidence-first boundary: IMPLEMENTED
+- static qualification command: `cleanup:sprint12:verify`
+
+### Sprint 13 — Intake & Triage Operational UX
+- live reusable Intake operational queue backed by the existing governed Intake read API: IMPLEMENTED
+- Duplicate Check operational queue: IMPLEMENTED
+- Triage operational queue: IMPLEMENTED
+- Medical Review oversight queue: IMPLEMENTED without creating a second mutation or authority path
+- validity, seriousness, duplicate, triage and disposition visibility: IMPLEMENTED
+- server-side workflow authority notice and governed record routing: IMPLEMENTED
+- static qualification command: `cleanup:sprint13:verify`
+
+### Sprint 14 — Case Processing Operational UX
+- governed Application Shell and operational header: IMPLEMENTED
+- dense status, priority, seriousness, draft/version and open-query metrics: IMPLEMENTED
+- controlled read-only state for finalized cases: IMPLEMENTED
+- General, Patient, Products, Events, Safety Assessment, Narrative, Action Items, Additional Information, Evidence & Export, Audit & Versions architecture: PRESERVED and RECONCILED
+- seriousness, listedness / expectedness and causality assessment visibility: IMPLEMENTED
+- human-authoritative decision and immutable evidence language: IMPLEMENTED
+- static qualification command: `cleanup:sprint14:verify`
+
+### Qualification rule
+This document records source implementation only. Wave 4 is promotable only when the exact Wave 4 head commit has green mandatory CI/benchmark gates and independent CodeRabbit status. Browser verification remains a governed `preview/wave4` checkpoint activity and is not substituted by static checks.

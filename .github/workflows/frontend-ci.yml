@@ -146,6 +146,15 @@ jobs:
       - name: Verify cleanup Sprint 11 Product Design System and Application Shell
         run: npm run cleanup:sprint11:verify
 
+      - name: Verify cleanup Sprint 12 Literature operational UX
+        run: npm run cleanup:sprint12:verify
+
+      - name: Verify cleanup Sprint 13 Intake and Triage operational UX
+        run: npm run cleanup:sprint13:verify
+
+      - name: Verify cleanup Sprint 14 Case Processing operational UX
+        run: npm run cleanup:sprint14:verify
+
       - name: Build production application
         run: npm run build
 

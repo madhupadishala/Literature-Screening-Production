@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import InvestorDemoHeader from "@/components/InvestorDemoHeader";
-import Navigation from "@/components/Navigation";
-import ModuleSubNavigation from "@/components/ModuleSubNavigation";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
+import OperationalState from "@/components/enterprise/OperationalState";
 import ScreeningWorkspace from "@/components/ScreeningWorkspace";
 
 type AuditEvent = {
@@ -484,12 +484,18 @@ export default function ScreeningPage() {
   ).length;
 
   return (
-    <main className="app-shell">
-      <Navigation />
-      <ModuleSubNavigation module="LITERATURE" />
-      <InvestorDemoHeader
-        title="Human-Governed Screening Intelligence"
-        subtitle="Complete article-level Screening with a governed human decision. Approved INCLUDE articles move to the separate Review / MR workspace for patient segmentation, labeling / expectedness, causality and Medical Review."
+    <ApplicationShell module="LITERATURE">
+      <OperationalScreenHeader
+        eyebrow="Literature Screening · Screening"
+        title="Human-Governed Screening"
+        description="Complete article-level screening with source evidence, AI assistance and an explicit human decision before governed handoff to Medical Review."
+        status="Human decision required"
+      />
+      <OperationalState
+        kind="info"
+        title="Decision authority"
+        message="AI screening output is a recommendation only. Include, exclude and review outcomes become authoritative only when saved by an authorized human reviewer."
+        compact
       />
 
       <section className="metrics-grid">
@@ -933,7 +939,7 @@ export default function ScreeningPage() {
           }
         }
       `}</style>
-    </main>
+    </ApplicationShell>
   );
 }
 

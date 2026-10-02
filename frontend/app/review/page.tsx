@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import InvestorDemoHeader from "@/components/InvestorDemoHeader";
-import Navigation from "@/components/Navigation";
-import ModuleSubNavigation from "@/components/ModuleSubNavigation";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
+import OperationalState from "@/components/enterprise/OperationalState";
 
 type ReviewRecord = {
   workspaceId: string;
@@ -454,14 +454,18 @@ export default function ReviewPage() {
   );
 
   return (
-    <main className="app-shell" id="main-content">
-      <Navigation />
-      <ModuleSubNavigation module="LITERATURE" />
-      <InvestorDemoHeader
-        eyebrow="POST-SCREENING GOVERNED REVIEW"
-        title="Review & Medical Review Workspace"
-        subtitle="Patient-level review after an approved Screening INCLUDE: case segmentation, product-event expectedness, causality and Medical Reviewer finalization with audit traceability."
-        status="Operational Review v1"
+    <ApplicationShell module="LITERATURE">
+      <OperationalScreenHeader
+        eyebrow="Literature Screening · Medical Review"
+        title="Medical Review Workspace"
+        description="Perform patient-level segmentation, seriousness, listedness / expectedness and causality review after a human-approved Screening INCLUDE decision."
+        status="Medical review controlled"
+      />
+      <OperationalState
+        kind="info"
+        title="Evidence-first medical review"
+        message="Patient, product and event assessments must remain linked to source evidence. AI extraction can propose; authorized medical review records the governed conclusion."
+        compact
       />
 
       <section className="boundary-note">
@@ -910,7 +914,7 @@ export default function ReviewPage() {
         @media(max-width:980px){.metrics{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}}
         @media(max-width:700px){.app-shell{padding:12px}.metrics{grid-template-columns:1fr}.boundary-note{flex-direction:column}}
       `}</style>
-    </main>
+    </ApplicationShell>
   );
 }
 

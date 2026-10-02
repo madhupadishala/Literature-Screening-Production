@@ -318,6 +318,36 @@ jobs:
           printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint11-product-design.status
           exit "$rc"
 
+      - name: Sprint 12 Literature operational UX
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run cleanup:sprint12:verify 2>&1 | tee benchmark-output/cleanup-sprint12-literature-ux.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint12-literature-ux.status
+          exit "$rc"
+
+      - name: Sprint 13 Intake and Triage operational UX
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run cleanup:sprint13:verify 2>&1 | tee benchmark-output/cleanup-sprint13-intake-ux.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint13-intake-ux.status
+          exit "$rc"
+
+      - name: Sprint 14 Case Processing operational UX
+        continue-on-error: true
+        run: |
+          set +e
+          set -o pipefail
+          npm run cleanup:sprint14:verify 2>&1 | tee benchmark-output/cleanup-sprint14-case-processing-ux.txt
+          rc=${PIPESTATUS[0]}
+          printf "exit=%s\n" "$rc" > benchmark-output/cleanup-sprint14-case-processing-ux.status
+          exit "$rc"
+
       - name: Gitleaks incremental PR secret scan
         id: gitleaks_incremental
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
@@ -328,8 +358,10 @@ jobs:
 
       - name: Record incremental Gitleaks outcome
         if: always()
+        env:
+          GITLEAKS_OUTCOME: ${{ steps.gitleaks_incremental.outcome }}
         run: |
-          printf "outcome=%s\n" "${{ steps.gitleaks_incremental.outcome }}" > benchmark-output/gitleaks-incremental.status
+          printf "outcome=%s\n" "$GITLEAKS_OUTCOME" > benchmark-output/gitleaks-incremental.status
 
       - name: Gitleaks full-history and working-tree baseline
         continue-on-error: true
@@ -353,9 +385,11 @@ jobs:
 
       - name: Enforce secret scan gate
         if: always()
+        env:
+          GITLEAKS_OUTCOME: ${{ steps.gitleaks_incremental.outcome }}
         run: |
           set -e
-          test "${{ steps.gitleaks_incremental.outcome }}" = "success"
+          test "$GITLEAKS_OUTCOME" = "success"
           grep -qx "history_exit=0" benchmark-output/gitleaks-full.status
           grep -qx "working_tree_exit=0" benchmark-output/gitleaks-full.status
 

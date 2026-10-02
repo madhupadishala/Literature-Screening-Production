@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import Navigation from "@/components/Navigation";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
+import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
+import OperationalState from "@/components/enterprise/OperationalState";
 import styles from "./case-workspace.module.css";
 
 type Workspace = {
@@ -537,48 +540,57 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
 
   if (!workspace) {
     return (
-      <main className="app-shell" id="main-content">
-        <Navigation />
-        <div className={styles.loading}>{message || "Loading case workspace…"}</div>
-      </main>
+      <ApplicationShell>
+        <OperationalState
+          kind={message ? "error" : "loading"}
+          title={message ? "Case workspace unavailable" : "Loading case workspace"}
+          message={message || "Retrieving the governed case draft, evidence, assessments and review state."}
+        />
+      </ApplicationShell>
     );
   }
 
   return (
-    <main className="app-shell" id="main-content">
-      <Navigation />
-
-      <section className={styles.hero}>
-        <div>
-          <span>Nexus L2A Case Processing</span>
-          <h1>{display(workspace.safetyCase.case_key)}</h1>
-          <p>
-            Draft R{workspace.draft.revision} · immutable final version V
-            {display(workspace.safetyCase.current_version, "0")} · source{" "}
-            {display(workspace.source.source_type)}
-          </p>
-        </div>
-        <div className={styles.heroActions}>
-          <Link href="/cases">Case Worklist</Link>
-          <button type="button" onClick={() => void load()}>Refresh</button>
-          {!isFinal ? (
-            <button type="button" onClick={() => void assignToMe()} disabled={busy !== ""}>
-              Assign to me
-            </button>
-          ) : null}
-        </div>
-      </section>
+    <ApplicationShell>
+      <OperationalScreenHeader
+        eyebrow="Case Processing · L2A"
+        title={display(workspace.safetyCase.case_key)}
+        description={`Draft R${workspace.draft.revision} · immutable final version V${display(workspace.safetyCase.current_version, "0")} · source ${display(workspace.source.source_type)}`}
+        status={isFinal ? "Finalized / read-only" : "Controlled case draft"}
+        actions={
+          <div className={styles.heroActions}>
+            <Link href="/cases">Case Worklist</Link>
+            <button type="button" onClick={() => void load()}>Refresh</button>
+            {!isFinal ? (
+              <button type="button" onClick={() => void assignToMe()} disabled={busy !== ""}>
+                Assign to me
+              </button>
+            ) : null}
+          </div>
+        }
+      />
 
       {message ? <div className={styles.message}>{message}</div> : null}
 
-      <section className={styles.summary}>
-        <Summary label="Status" value={currentStatus} />
-        <Summary label="Priority" value={display(workspace.intake.priority)} />
-        <Summary label="Seriousness" value={display(workspace.safetyCase.seriousness_status)} />
-        <Summary label="Draft revision" value={`R${workspace.draft.revision}`} />
-        <Summary label="Case version" value={`V${display(workspace.safetyCase.current_version, "0")}`} />
-        <Summary label="Open queries" value={String(openQueries.length)} />
-      </section>
+      <OperationalMetricStrip
+        metrics={[
+          { label: "Status", value: currentStatus },
+          { label: "Priority", value: display(workspace.intake.priority) },
+          { label: "Seriousness", value: display(workspace.safetyCase.seriousness_status), tone: "attention" },
+          { label: "Draft revision", value: `R${workspace.draft.revision}` },
+          { label: "Case version", value: `V${display(workspace.safetyCase.current_version, "0")}` },
+          { label: "Open queries", value: openQueries.length, tone: openQueries.length ? "attention" : "neutral" },
+        ]}
+      />
+
+      <OperationalState
+        kind={isFinal ? "read-only" : "info"}
+        title={isFinal ? "Immutable finalized case" : "Human-governed case processing"}
+        message={isFinal
+          ? "The finalized case is read-only. Evidence, exports, audit history and immutable versions remain available."
+          : "AI or deterministic assistance cannot change the regulated case by itself. Saved human actions create controlled draft revisions and auditable assessments."}
+        compact
+      />
 
       <nav className={styles.tabs} aria-label="Case workspace tabs">
         {TABS.map((item) => (
@@ -929,7 +941,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
         </div>
         <DataCards records={workspace.assistSuggestions} empty="No assist suggestions for this revision." />
       </section>
-    </main>
+    </ApplicationShell>
   );
 }
 
