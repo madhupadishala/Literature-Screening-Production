@@ -33,14 +33,14 @@ export default function OperationalScreenHeader({
           justify-content: space-between;
           gap: 24px;
           padding: 14px 0 16px;
-          border-bottom: 1px solid #d6d9de;
+          border-bottom: 1px solid var(--nx-color-border);
         }
         .ops-screen-copy { min-width: 0; }
         .ops-eyebrow {
           display: block;
           margin-bottom: 4px;
-          color: #525252;
-          font-size: 11px;
+          color: var(--nx-color-text-secondary);
+          font-size: var(--nx-font-size-1);
           font-weight: 600;
           letter-spacing: .08em;
           text-transform: uppercase;
@@ -53,8 +53,8 @@ export default function OperationalScreenHeader({
         }
         h1 {
           margin: 0;
-          color: #161616;
-          font-size: 24px;
+          color: var(--nx-color-text);
+          font-size: var(--nx-font-size-7);
           font-weight: 600;
           line-height: 1.2;
           letter-spacing: -.01em;
@@ -62,8 +62,8 @@ export default function OperationalScreenHeader({
         p {
           max-width: 900px;
           margin: 6px 0 0;
-          color: #525252;
-          font-size: 13px;
+          color: var(--nx-color-text-secondary);
+          font-size: var(--nx-font-size-3);
           line-height: 1.45;
         }
         .ops-status {
@@ -72,8 +72,8 @@ export default function OperationalScreenHeader({
           min-height: 22px;
           padding: 0 8px;
           border-radius: 2px;
-          background: #e0e0e0;
-          color: #393939;
+          background: var(--nx-color-surface-muted);
+          color: var(--nx-color-text-secondary);
           font-size: 11px;
           font-weight: 600;
           white-space: nowrap;
