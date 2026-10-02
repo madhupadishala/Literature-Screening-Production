@@ -1,0 +1,17 @@
+.shell {
+  min-height: 100vh;
+  padding: var(--nx-space-6);
+  color: var(--nx-color-text);
+  background: var(--nx-color-bg);
+  font-family: var(--nx-font-sans);
+}
+
+.content {
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .shell {
+    padding: var(--nx-space-4);
+  }
+}
