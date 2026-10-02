@@ -3,8 +3,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import InvestorDemoHeader from "@/components/InvestorDemoHeader";
-import Navigation from "@/components/Navigation";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
+import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
+import OperationalState from "@/components/enterprise/OperationalState";
 import WorkflowDashboard from "@/components/workflow/WorkflowDashboard";
 import type { WorkflowPackage } from "@/components/workflow/WorkflowTable";
 
@@ -44,22 +46,26 @@ export default function HomePage() {
   }, [packages]);
 
   return (
-    <main className="app-shell" id="main-content">
-      <Navigation />
-      <InvestorDemoHeader
-        eyebrow="LITERATURE OPERATIONS"
-        title="Literature Screening Command Center"
-        subtitle="A single governed view of enterprise search, evidence packages, AI-assisted Hits and Screening, human decisions, and traceable downstream outputs."
+    <ApplicationShell>
+      <OperationalScreenHeader
+        eyebrow="Safety Operations"
+        title="Nexus Operations Dashboard"
+        description="A governed view of operational workload, human decisions, evidence packages, and traceable downstream safety outputs."
         status="Operational"
+      />
+
+      <OperationalMetricStrip
+        metrics={[
+          { label: "Packages", value: workflowSummary.total },
+          { label: "Active", value: workflowSummary.active, tone: "attention" },
+          { label: "Completed", value: workflowSummary.completed, tone: "positive" },
+        ]}
       />
 
       <section className="quick-actions" aria-label="Primary actions">
         <div>
-          <span>Current workspace</span>
-          <strong>
-            {workflowSummary.total} packages · {workflowSummary.active} active ·{" "}
-            {workflowSummary.completed} completed
-          </strong>
+          <span>Workspace actions</span>
+          <strong>Open or refresh the current operational queue</strong>
         </div>
         <div className="actions">
           <button
@@ -79,15 +85,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {message && (
-        <div className="error" role="alert">
-          <strong>Dashboard unavailable</strong>
-          <span>{message}</span>
-          <button type="button" onClick={() => void loadPackages()}>
-            Retry
-          </button>
-        </div>
-      )}
+      {message ? (
+        <OperationalState
+          kind="error"
+          title="Dashboard unavailable"
+          message={message}
+          actions={<button type="button" onClick={() => void loadPackages()}>Retry</button>}
+        />
+      ) : null}
 
       <WorkflowDashboard
         packages={packages}
@@ -96,13 +101,6 @@ export default function HomePage() {
       />
 
       <style jsx>{`
-        .app-shell {
-          min-height: 100vh;
-          padding: 24px;
-          color: #0f172a;
-          background: #eef2f7;
-          font-family: "Poppins", Arial, sans-serif;
-        }
         .quick-actions {
           display: flex;
           justify-content: space-between;
@@ -182,9 +180,6 @@ export default function HomePage() {
           }
         }
         @media (max-width: 700px) {
-          .app-shell {
-            padding: 12px;
-          }
           .actions button {
             flex: 1 1 140px;
           }
