@@ -107,10 +107,10 @@ Wave 4 development SHALL NOT auto-deploy from the working branch. Browser previe
 
 ## Current Sprint 11 status
 
-- Wave 4 governance: IN PROGRESS
-- Vercel work-branch auto-deployment suppression: IMPLEMENTED
-- shared design-token consolidation: PENDING
-- application shell/navigation reconciliation: PENDING
+- Wave 4 governance: IMPLEMENTED
+- Vercel work-branch auto-deployment suppression: IMPLEMENTED — deployment reserved for qualified `preview/wave4` checkpoints
+- shared design-token consolidation: IMPLEMENTED — initial governed token layer loaded globally
+- application shell/navigation reconciliation: IN PROGRESS — router-safe navigation and controlled visual tokens applied
 - exact-head CI: PENDING
 - CodeRabbit review: PENDING
 - browser verification: DEFERRED until intentional preview checkpoint
