@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import Navigation from "@/components/Navigation";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
+import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
+import OperationalState from "@/components/enterprise/OperationalState";
 import styles from "./cases.module.css";
 
 type CaseRow = {
@@ -72,40 +75,46 @@ export default function CasesPage() {
   }, [query, records]);
 
   return (
-    <main className="app-shell" id="main-content">
-      <Navigation />
+    <ApplicationShell>
+      <OperationalScreenHeader
+        eyebrow="Nexus Case Processing"
+        title="L2A Case Worklist"
+        description="Case-owned processing workspace with immutable revisions, QC, Medical Review, finalization and evidence controls."
+        actions={
+          <button type="button" onClick={() => void load()}>
+            Refresh
+          </button>
+        }
+      />
 
-      <section className={styles.hero}>
-        <div>
-          <span>Nexus Case Processing · Sprint 8–10</span>
-          <h1>L2A Case Worklist</h1>
-          <p>
-            Case-owned processing workspace with immutable revisions, QC, Medical
-            Review, finalization and evidence controls.
-          </p>
-        </div>
-        <button type="button" onClick={() => void load()}>
-          Refresh
-        </button>
-      </section>
+      {message ? (
+        <OperationalState
+          kind="error"
+          title="Case worklist unavailable"
+          message={message}
+          actions={<button type="button" onClick={() => void load()}>Retry</button>}
+        />
+      ) : null}
 
-      {message ? <div className={styles.message}>{message}</div> : null}
-
-      <section className={styles.metrics}>
-        <Metric label="Cases" value={records.length} />
-        <Metric
-          label="Processing"
-          value={records.filter((r) => ["NEW","ASSIGNED","PROCESSING","QC_RETURNED"].includes(r.caseStatus)).length}
-        />
-        <Metric
-          label="In review"
-          value={records.filter((r) => ["READY_FOR_QC","QC_APPROVED","MEDICAL_REVIEW"].includes(r.caseStatus)).length}
-        />
-        <Metric
-          label="Final"
-          value={records.filter((r) => ["FINAL","FINALIZED"].includes(r.caseStatus)).length}
-        />
-      </section>
+      <OperationalMetricStrip
+        metrics={[
+          { label: "Cases", value: records.length },
+          {
+            label: "Processing",
+            value: records.filter((r) => ["NEW","ASSIGNED","PROCESSING","QC_RETURNED"].includes(r.caseStatus)).length,
+          },
+          {
+            label: "In review",
+            value: records.filter((r) => ["READY_FOR_QC","QC_APPROVED","MEDICAL_REVIEW"].includes(r.caseStatus)).length,
+            tone: "attention",
+          },
+          {
+            label: "Final",
+            value: records.filter((r) => ["FINAL","FINALIZED"].includes(r.caseStatus)).length,
+            tone: "positive",
+          },
+        ]}
+      />
 
       <section className={styles.panel}>
         <div className={styles.toolbar}>
@@ -158,22 +167,15 @@ export default function CasesPage() {
               ))}
               {!filtered.length ? (
                 <tr>
-                  <td colSpan={8} className={styles.empty}>No cases found.</td>
+                  <td colSpan={8} className={styles.empty}>
+                    No cases match the current worklist filter.
+                  </td>
                 </tr>
               ) : null}
             </tbody>
           </table>
         </div>
       </section>
-    </main>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: number }) {
-  return (
-    <div className={styles.metric}>
-      <span>{label}</span>
-      <strong>{value}</strong>
-    </div>
+    </ApplicationShell>
   );
 }
