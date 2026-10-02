@@ -108,9 +108,13 @@ Wave 4 development SHALL NOT auto-deploy from the working branch. Browser previe
 ## Current Sprint 11 status
 
 - Wave 4 governance: IMPLEMENTED
-- Vercel work-branch auto-deployment suppression: IMPLEMENTED — deployment reserved for qualified `preview/wave4` checkpoints
-- shared design-token consolidation: IMPLEMENTED — initial governed token layer loaded globally
-- application shell/navigation reconciliation: IN PROGRESS — router-safe navigation and controlled visual tokens applied
+- Vercel work-branch auto-deployment suppression: IMPLEMENTED — `frontend/vercel.json` disables the cleanup working branch; deployment is reserved for qualified `preview/wave4` checkpoints
+- shared design-token consolidation: IMPLEMENTED — governed token layer is loaded globally
+- governed Application Shell: IMPLEMENTED — primary navigation, module sub-navigation and main-content boundary are reusable shell primitives
+- operational state contract: IMPLEMENTED — loading, empty, error, read-only and informational states share one accessible primitive
+- entry-screen reconciliation: IMPLEMENTED — platform dashboard, Literature dashboard, Intake, Case Processing and Submissions use the governed shell
+- Sprint 11 static verification: IMPLEMENTED — `cleanup:sprint11:verify` is enforced in both quality workflows
+- legacy page-level visual drift cleanup: IN PROGRESS — remaining workflow/detail screens will be reconciled without changing regulated business behavior
 - exact-head CI: PENDING
 - CodeRabbit review: PENDING
-- browser verification: DEFERRED until intentional preview checkpoint
+- browser verification: DEFERRED until intentional `preview/wave4` checkpoint
