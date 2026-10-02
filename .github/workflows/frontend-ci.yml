@@ -143,6 +143,9 @@ jobs:
       - name: Verify cleanup Sprint 10 PV Documentation foundation
         run: npm run cleanup:sprint10:verify
 
+      - name: Verify cleanup Sprint 11 Product Design System and Application Shell
+        run: npm run cleanup:sprint11:verify
+
       - name: Build production application
         run: npm run build
 
