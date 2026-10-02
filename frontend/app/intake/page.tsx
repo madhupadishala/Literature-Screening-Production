@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import Navigation from "@/components/Navigation";
-import ModuleSubNavigation from "@/components/ModuleSubNavigation";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
+import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import styles from "./intake.module.css";
 
 type IntakeRow = {
@@ -301,31 +302,22 @@ export default function IntakePage() {
       : "";
 
   return (
-    <main className="app-shell" id="main-content">
-      <Navigation />
-      <ModuleSubNavigation module="INTAKE" />
+    <ApplicationShell module="INTAKE">
+      <OperationalScreenHeader
+        eyebrow="Nexus Intake · Safety Operations"
+        title="Source Review & Extraction Workspace"
+        description="Review original safety sources beside structured Nexus data. Extraction remains assistive; human decisions are authoritative and auditable."
+        status="Human governed"
+      />
 
-      <section className={styles.hero}>
-        <div>
-          <span className={styles.kicker}>Nexus Intake · Safety Operations</span>
-          <h1>Source Review & Extraction Workspace</h1>
-          <p>
-            Review the original safety source beside structured Nexus data. Extraction
-            is assistive only; human decisions remain authoritative and auditable.
-          </p>
-        </div>
-        <div className={styles.heroStatus}>
-          <span>Regulated boundary</span>
-          <strong>Source → Suggestion → Human Decision → Structured Intake</strong>
-        </div>
-      </section>
-
-      <section className={styles.metrics}>
-        <Metric label="Intake records" value={records.length} />
-        <Metric label="Awaiting source review" value={pendingReview} />
-        <Metric label="Extraction attention" value={extractionPending} />
-        <Metric label="Source verified" value={verified} />
-      </section>
+      <OperationalMetricStrip
+        metrics={[
+          { label: "Intake records", value: records.length },
+          { label: "Awaiting source review", value: pendingReview, tone: "attention" },
+          { label: "Extraction attention", value: extractionPending, tone: "attention" },
+          { label: "Source verified", value: verified, tone: "positive" },
+        ]}
+      />
 
       <section className={styles.layout}>
         <div className={styles.worklist}>
@@ -679,16 +671,7 @@ export default function IntakePage() {
           )}
         </div>
       </section>
-    </main>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: number }) {
-  return (
-    <div className={styles.metric}>
-      <span>{label}</span>
-      <strong>{value}</strong>
-    </div>
+    </ApplicationShell>
   );
 }
 
