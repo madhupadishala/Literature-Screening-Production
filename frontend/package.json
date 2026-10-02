@@ -80,6 +80,7 @@
     "cleanup:sprint8:verify": "node --import tsx scripts/verify-cleanup-sprint8-signals.ts",
     "cleanup:sprint9:verify": "node --import tsx scripts/verify-cleanup-sprint9-aggregate.ts",
     "cleanup:sprint10:verify": "node --import tsx scripts/verify-cleanup-sprint10-pv-docs.ts",
+    "cleanup:sprint11:verify": "node --import tsx scripts/verify-cleanup-sprint11-product-design.ts",
     "design:verify": "node --import tsx scripts/verify-product-design-guardian.ts"
   },
   "dependencies": {
