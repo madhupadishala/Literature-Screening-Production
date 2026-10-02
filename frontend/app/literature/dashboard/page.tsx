@@ -1,7 +1,6 @@
 import Link from "next/link";
-import Navigation from "@/components/Navigation";
-import ModuleSubNavigation from "@/components/ModuleSubNavigation";
-import InvestorDemoHeader from "@/components/InvestorDemoHeader";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 
 const WORKFLOW = [
   { label: "Hits", href: "/hits", description: "Review retrieved literature, duplicates, product matches and AI relevance suggestions." },
@@ -11,13 +10,11 @@ const WORKFLOW = [
 
 export default function LiteratureDashboardPage() {
   return (
-    <main className="app-shell" id="main-content">
-      <Navigation />
-      <ModuleSubNavigation module="LITERATURE" />
-      <InvestorDemoHeader
-        eyebrow="LITERATURE SCREENING · DASHBOARD"
+    <ApplicationShell module="LITERATURE">
+      <OperationalScreenHeader
+        eyebrow="Literature Screening · Dashboard"
         title="Literature Screening Dashboard"
-        subtitle="Operational entry point for the literature safety workflow and user workload."
+        description="Operational entry point for the literature safety workflow and user workload."
         status="Controlled workspace"
       />
       <section className="grid">
@@ -35,15 +32,14 @@ export default function LiteratureDashboardPage() {
         <p>These assessments use the common governed safety-assessment layer and are surfaced contextually in Screening, Medical Review, Intake and Case Processing.</p>
       </section>
       <style>{`
-        .app-shell{min-height:100vh;padding:24px;background:#eef2f7;color:#0f172a;font-family:"Poppins",Arial,sans-serif}
         .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:14px}
         .card,.assessment{border:1px solid #cbd5e1;border-radius:8px;background:#fff;padding:20px;text-decoration:none;color:inherit}
         .card span,.assessment span{font-size:8px;font-weight:900;letter-spacing:.08em;color:#185abd}
         .card strong,.assessment strong{display:block;margin-top:8px;font-size:18px}
         .card p,.assessment p{margin:8px 0 0;color:#64748b;font-size:11px;line-height:1.6}
         .card:hover{border-color:#185abd}
-        @media(max-width:800px){.grid{grid-template-columns:1fr}.app-shell{padding:12px}}
+        @media(max-width:800px){.grid{grid-template-columns:1fr}}
       `}</style>
-    </main>
+    </ApplicationShell>
   );
 }
