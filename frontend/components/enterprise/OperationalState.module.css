@@ -1,0 +1,73 @@
+.state {
+  display: grid;
+  grid-template-columns: 4px minmax(0, 1fr) auto;
+  gap: var(--nx-space-4);
+  align-items: center;
+  min-height: 72px;
+  padding: var(--nx-space-5);
+  border: 1px solid var(--nx-color-border);
+  background: var(--nx-color-surface);
+}
+
+.compact {
+  min-height: 56px;
+  padding-block: var(--nx-space-4);
+}
+
+.indicator {
+  align-self: stretch;
+  background: var(--nx-color-info);
+}
+
+.loading .indicator,
+.info .indicator {
+  background: var(--nx-color-info);
+}
+
+.empty .indicator {
+  background: var(--nx-color-border-strong);
+}
+
+.error .indicator {
+  background: var(--nx-color-critical);
+}
+
+.readOnly .indicator {
+  background: var(--nx-color-warning);
+}
+
+.copy {
+  min-width: 0;
+}
+
+.copy strong {
+  display: block;
+  color: var(--nx-color-text);
+  font-size: var(--nx-font-size-3);
+  font-weight: 600;
+}
+
+.copy p {
+  margin: var(--nx-space-2) 0 0;
+  color: var(--nx-color-text-secondary);
+  font-size: var(--nx-font-size-2);
+  line-height: var(--nx-line-body);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--nx-space-3);
+}
+
+@media (max-width: 700px) {
+  .state {
+    grid-template-columns: 4px minmax(0, 1fr);
+  }
+
+  .actions {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+}
