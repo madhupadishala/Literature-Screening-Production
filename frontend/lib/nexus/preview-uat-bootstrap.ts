@@ -3,7 +3,10 @@ import "server-only";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { runGovernedDatabaseMigrations } from "@/lib/database/governed-migration-runner";
 
-const TARGET_GIT_BRANCH = "cleanup/zero-deviation-baseline-20260930";
+const GOVERNED_UAT_GIT_BRANCHES = new Set([
+  "cleanup/zero-deviation-baseline-20260930",
+  "preview/wave4",
+]);
 const TARGET_PROJECT_ID = "old-mountain-48148190";
 const TARGET_BRANCH_ID = "br-square-breeze-b3yxypxx";
 const TARGET_DATABASE = "literature_screening_prod";
@@ -43,12 +46,13 @@ type TableState = {
 };
 
 function assertPreviewRuntime() {
+  const gitBranch = process.env.VERCEL_GIT_COMMIT_REF?.trim() ?? "";
   if (
     process.env.VERCEL_ENV !== "preview" ||
-    process.env.VERCEL_GIT_COMMIT_REF !== TARGET_GIT_BRANCH
+    !GOVERNED_UAT_GIT_BRANCHES.has(gitBranch)
   ) {
     throw new Error(
-      "UAT bootstrap is restricted to the governed cleanup Preview branch.",
+      "UAT bootstrap is restricted to governed UAT Preview branches.",
     );
   }
 }

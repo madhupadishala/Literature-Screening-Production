@@ -34,3 +34,24 @@ assert.ok(!source.includes('import Navigation from "@/components/Navigation"'), 
 assert.ok(!/["']Other["']/.test(source), 'Uncontrolled "Other" tab is not permitted.');
 
 console.log("Cleanup Sprint 14 Case Processing operational UX verification passed.");
+
+
+const databaseRuntime = readFileSync(
+  path.resolve(process.cwd(), "lib/database/postgres.ts"),
+  "utf8",
+);
+const previewBootstrap = readFileSync(
+  path.resolve(process.cwd(), "lib/nexus/preview-uat-bootstrap.ts"),
+  "utf8",
+);
+
+assert.ok(
+  databaseRuntime.includes('"preview/wave4"'),
+  "Wave 4 preview must resolve to the governed UAT database target.",
+);
+assert.ok(
+  previewBootstrap.includes('"preview/wave4"'),
+  "Wave 4 preview must be admitted by the governed UAT bootstrap guard.",
+);
+
+console.log("Wave 4 preview UAT routing verification passed.");

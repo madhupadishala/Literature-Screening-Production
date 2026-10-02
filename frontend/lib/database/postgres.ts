@@ -34,6 +34,7 @@ function buildSslConfiguration(): PoolConfig["ssl"] {
 const GOVERNED_UAT_PREVIEW_BRANCHES = new Set([
   "release/nexus-integrated-rc1",
   "cleanup/zero-deviation-baseline-20260930",
+  "preview/wave4",
 ]);
 const GOVERNED_UAT_NEON_HOST =
   "ep-dry-grass-b3qv8phi-pooler.c-4.ap-southeast-1.aws.neon.tech";
