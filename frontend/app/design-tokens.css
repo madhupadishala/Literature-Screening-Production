@@ -1,0 +1,60 @@
+:root {
+  --nx-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --nx-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --nx-color-bg: #f4f4f4;
+  --nx-color-surface: #ffffff;
+  --nx-color-surface-subtle: #f8f8f8;
+  --nx-color-surface-muted: #e0e0e0;
+  --nx-color-border: #d6d6d6;
+  --nx-color-border-strong: #8d8d8d;
+
+  --nx-color-text: #161616;
+  --nx-color-text-secondary: #525252;
+  --nx-color-text-muted: #6f6f6f;
+  --nx-color-text-inverse: #ffffff;
+
+  --nx-color-interactive: #0f62fe;
+  --nx-color-interactive-hover: #0353e9;
+  --nx-color-focus: #0f62fe;
+
+  --nx-color-positive: #198038;
+  --nx-color-warning: #8e6a00;
+  --nx-color-critical: #da1e28;
+  --nx-color-info: #0043ce;
+
+  --nx-space-1: 2px;
+  --nx-space-2: 4px;
+  --nx-space-3: 8px;
+  --nx-space-4: 12px;
+  --nx-space-5: 16px;
+  --nx-space-6: 24px;
+  --nx-space-7: 32px;
+
+  --nx-radius-1: 2px;
+  --nx-radius-2: 4px;
+  --nx-radius-3: 6px;
+
+  --nx-control-h-compact: 32px;
+  --nx-control-h-default: 40px;
+  --nx-table-row-compact: 36px;
+  --nx-table-row-default: 44px;
+
+  --nx-shadow-overlay: 0 8px 24px rgba(22, 22, 22, 0.16);
+
+  --nx-font-size-1: 11px;
+  --nx-font-size-2: 12px;
+  --nx-font-size-3: 13px;
+  --nx-font-size-4: 14px;
+  --nx-font-size-5: 16px;
+  --nx-font-size-6: 20px;
+  --nx-font-size-7: 24px;
+
+  --nx-line-tight: 1.2;
+  --nx-line-body: 1.45;
+}
+
+[data-density="compact"] {
+  --nx-control-h-default: 32px;
+  --nx-table-row-default: 36px;
+}
