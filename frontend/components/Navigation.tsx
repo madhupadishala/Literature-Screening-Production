@@ -21,11 +21,16 @@ const modules: Array<{
     label: "Literature Screening",
     path: "/literature/dashboard",
     moduleKey: "LITERATURE",
-    activePrefixes: ["/literature-search", "/workflow", "/hits", "/screening", "/review", "/reports"],
+    activePrefixes: ["/literature-search", "/workflow", "/hits", "/screening", "/review"],
   },
   { label: "Intake", path: "/intake", moduleKey: "INTAKE" },
   { label: "Case Processing", path: "/cases", moduleKey: "CASE_PROCESSING" },
   { label: "Submissions", path: "/submissions", moduleKey: "SUBMISSIONS" },
+  {
+    label: "Utilities",
+    path: "/utilities",
+    activePrefixes: ["/utilities", "/reports", "/admin/audit-logs", "/admin/reliability", "/admin/performance"],
+  },
 ];
 
 export default function Navigation() {
