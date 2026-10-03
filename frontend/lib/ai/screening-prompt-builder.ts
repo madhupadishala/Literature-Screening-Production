@@ -6,6 +6,26 @@ export interface ScreeningPromptGovernance {
   runtimeConfiguration: Record<string, unknown>;
 }
 
+function screeningConfigurationForPrompt(
+  configuration: Record<string, unknown>,
+): Record<string, unknown> {
+  const clientGuidelines = Array.isArray(configuration.clientGuidelines)
+    ? configuration.clientGuidelines
+    : [];
+
+  return {
+    snapshot: configuration.snapshot ?? null,
+    clientGuidelines,
+    outcomeTemplate: configuration.outcomeTemplate ?? null,
+    screeningGovernance: {
+      deterministicProductMasterAssessment: true,
+      productMasterConfigured: Boolean(configuration.productMaster),
+      note:
+        "Product Master/MAH matching, licence status, and pharmaceutical relationship conclusions are applied deterministically after evidence extraction and are intentionally not duplicated into the LLM prompt.",
+    },
+  };
+}
+
 function knowledgeContext(context: RAGMergedContext): string {
   if (context.chunks.length === 0) {
     return "No approved governed knowledge was retrieved. Select REVIEW when the decision cannot be supported.";
@@ -112,7 +132,7 @@ Keywords: ${(request.article.keywords ?? []).join(", ")}
 MeSH Terms: ${(request.article.meshTerms ?? []).join(", ")}
 
 ACTIVE TENANT CONFIGURATION
-${JSON.stringify(governance.runtimeConfiguration, null, 2).slice(0, 40_000)}
+${JSON.stringify(screeningConfigurationForPrompt(governance.runtimeConfiguration), null, 2).slice(0, 20_000)}
 
 APPROVED CONTROLLED KNOWLEDGE
 Context Pack: ${governance.ragContext.contextPackId ?? "Not Available"}
