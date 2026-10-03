@@ -33,7 +33,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-const TEST_ID = "PROD-E2E-HITS-L2A-42573610-20261003-A";
+const TEST_ID = "PROD-E2E-HITS-L2A-42573610-20261003-B";
 const EXPECTED_TOKEN_SHA256 =
   "e3c4fb9dfa8a958b4e1af8c76f649176efef713a0b8c2937dc775efd59143cd8";
 const TENANT_ID = "c3570ce0-6492-4dac-ba40-c0363b2835a4";
@@ -52,11 +52,12 @@ function authorized(token: string | null): boolean {
   );
 }
 
-function principal(): RequestPrincipal {
+function principal(): RequestPrincipal & { workspaceId: string } {
   return {
     tenantId: TENANT_ID,
     tenantKey: TENANT_KEY,
     environment: "PROD",
+    workspaceId: WORKSPACE_ID,
     userId: USER_ID,
     email: USER_EMAIL,
     displayName: "ClinixAI Super Admin",
