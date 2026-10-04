@@ -8,6 +8,9 @@ const requiredPaths = [
   "SOP/README.md",
   "Regulatory/README.md",
   "Controlled-Approved-Knowledge/README.md",
+  "Scenarios/README.md",
+  "Scenarios/Templates/scenario.schema.json",
+  "_system/policy/scenario-retrieval-policy.v1.json",
   "_system/pipeline/knowledge-ingestion-pipeline.v1.json",
   "_system/schemas/document-package.schema.json",
   "SOP/Literature/Reference/SVS-SOP-PV-006/v1.0/manifest.json",
@@ -26,7 +29,29 @@ const prohibitedLegacyPaths = [
   "controlled",
   "SOP/Sources",
   "SOP/Master",
-  "Regulatory/EMA/GVP/source"
+  "Regulatory/EMA/GVP/source",
+  "Controlled-Approved-Knowledge/Golden-Cases"
+];
+
+const scenarioFolders = [
+  "Scenarios/General",
+  "Scenarios/Edge-Cases",
+  "Scenarios/Ambiguous-Conflicting",
+  "Scenarios/Multi-Drug",
+  "Scenarios/Special-Situations",
+  "Scenarios/ICSR-Validity",
+  "Scenarios/Seriousness",
+  "Scenarios/Causality",
+  "Scenarios/Literature-Screening",
+  "Scenarios/Aggregate-Safety",
+  "Scenarios/Signal",
+  "Scenarios/Duplicate",
+  "Scenarios/Day-Zero",
+  "Scenarios/Cross-Engine",
+  "Scenarios/Adversarial",
+  "Scenarios/Regression",
+  "Scenarios/Golden-Cases",
+  "Scenarios/Templates"
 ];
 
 const documentPackages = [
@@ -71,6 +96,10 @@ for (const relative of requiredPaths) {
   assert(await exists(relative), `Missing required knowledge path: ${relative}`);
 }
 
+for (const scenarioFolder of scenarioFolders) {
+  assert(await exists(scenarioFolder), `Missing scenario folder: ${scenarioFolder}`);
+}
+
 for (const relative of documentPackages) {
   for (const child of [
     "source",
@@ -107,6 +136,7 @@ console.table([
     document_packages: documentPackages.length,
     controlled_files_checked: controlledFiles.length,
     regulatory_families: coverage.families.length,
+    scenario_folders: scenarioFolders.length,
     legacy_paths: 0
   }
 ]);
