@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0",
+  "status": "TARGET_PIPELINE_V1",
+  "principles": {
+    "immutableSource": true,
+    "losslessParsing": true,
+    "sourceCoordinatesRequired": true,
+    "noBlindFixedSizeChunking": true,
+    "mandatoryRulesBeforeSemanticRetrieval": true,
+    "failClosedOnMissingMandatoryKnowledge": true
+  },
+  "ingestion": {
+    "supported": [
+      "pdf",
+      "docx",
+      "xml",
+      "html",
+      "markdown",
+      "text"
+    ],
+    "ocrPolicy": "ONLY_WHEN_NATIVE_TEXT_IS_MISSING_OR_UNUSABLE",
+    "idp": {
+      "preserve": [
+        "page",
+        "section",
+        "heading",
+        "paragraph",
+        "list",
+        "table",
+        "figure",
+        "caption",
+        "footnote",
+        "reference"
+      ],
+      "readingOrderRequired": true,
+      "coordinatesRequired": true
+    }
+  },
+  "chunking": {
+    "strategy": "STRUCTURE_AWARE_SEMANTIC_PARENT_CHILD",
+    "rules": [
+      "Never split a regulatory requirement or controlled rule solely to satisfy a fixed token size.",
+      "Prefer section/subsection boundaries.",
+      "Keep tables and their headers/notes logically intact.",
+      "Keep definitions with their defined term.",
+      "Keep exception/qualification language with the governing rule.",
+      "Create parent chunks for broader context and child chunks for precise retrieval.",
+      "Use semantic boundary detection inside long sections.",
+      "Preserve page/section/paragraph citations on every chunk."
+    ],
+    "childTargetTokens": {
+      "min": 300,
+      "target": 550,
+      "max": 850
+    },
+    "parentTargetTokens": {
+      "min": 1000,
+      "target": 1600,
+      "max": 2400
+    },
+    "overlapPolicy": "SEMANTIC_BOUNDARY_OVERLAP_ONLY",
+    "maximumOverlapFraction": 0.12
+  },
+  "representations": {
+    "denseEmbedding": true,
+    "sparseKeywordIndex": true,
+    "parentChildGraph": true,
+    "citationGraph": true,
+    "entityIndex": true,
+    "summaryVector": "OPTIONAL",
+    "titleSectionVector": "OPTIONAL"
+  },
+  "embeddings": {
+    "provider": "CONFIGURABLE_VALIDATED_PROVIDER",
+    "model": "MODEL_REGISTRY",
+    "dimensions": "MODEL_DEFINED",
+    "store": "POSTGRES_PGVECTOR",
+    "requireModelVersion": true,
+    "requireChunkHash": true,
+    "reembedOnContentOrModelChange": true
+  },
+  "retrieval": {
+    "mandatoryExactIdRetrieval": true,
+    "hybridDenseSparse": true,
+    "defaultDenseWeight": 0.7,
+    "defaultSparseWeight": 0.3,
+    "reranker": "CONFIGURABLE_CROSS_ENCODER_OR_LLM_RERANKER",
+    "metadataFilters": [
+      "authority",
+      "jurisdiction",
+      "documentType",
+      "version",
+      "effectiveDate",
+      "domain",
+      "decisionType",
+      "tenantId",
+      "productId"
+    ],
+    "agenticRetrieval": true,
+    "citationRequired": true
+  },
+  "governance": {
+    "draftIsolation": true,
+    "approvedOnlyProduction": true,
+    "versionPinning": true,
+    "sha256Required": true,
+    "auditDecisionKnowledgePack": true
+  }
+}
