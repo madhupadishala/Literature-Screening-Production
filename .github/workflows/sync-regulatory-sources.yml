@@ -30,7 +30,7 @@ jobs:
       - name: Commit source archive
         shell: bash
         run: |
-          if git diff --quiet -- knowledge/Regulatory/EMA/GVP; then
+          if [ -z "$(git status --porcelain -- knowledge/Regulatory/EMA/GVP)" ]; then
             echo "No regulatory source changes."
             exit 0
           fi
