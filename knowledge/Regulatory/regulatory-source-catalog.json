@@ -28,9 +28,10 @@
       ],
       "ingestionStatus": "PHYSICAL_SOURCE_SET_ACQUIRED_NOT_YET_QA_APPROVED",
       "physicalSourceManifest": "knowledge/Regulatory/EMA/GVP/source-manifest.json",
-      "physicalSourceDirectory": "knowledge/Regulatory/EMA/GVP/source/",
+      "physicalSourceDirectory": "knowledge/Regulatory/EMA/GVP/<Document-Package>/source/",
       "acquisitionResult": "knowledge/Regulatory/EMA/GVP/acquisition-result.json",
-      "physicalSourceCount": 9
+      "physicalSourceCount": 9,
+      "packageManifestPattern": "knowledge/Regulatory/EMA/GVP/<Document-Package>/manifest.json"
     },
     {
       "id": "ICH-E2-SERIES",
