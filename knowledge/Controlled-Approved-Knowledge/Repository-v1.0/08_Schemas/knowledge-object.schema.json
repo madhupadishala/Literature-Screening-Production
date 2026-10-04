@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClinixAI Knowledge Object",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "domain",
+    "rule",
+    "status",
+    "version",
+    "regulatory_reference",
+    "effective_for_production"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(LF|SI|DB|SDI|OI|VAL|CDS)-\\d{3}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "domain": {
+      "type": "string"
+    },
+    "rule": {
+      "type": "string",
+      "minLength": 20
+    },
+    "status": {
+      "enum": [
+        "Approved",
+        "Draft \u2013 Requires Approval"
+      ]
+    },
+    "version": {
+      "type": "string"
+    },
+    "regulatory_reference": {
+      "type": "string"
+    },
+    "effective_for_production": {
+      "type": "boolean"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rule_hash_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

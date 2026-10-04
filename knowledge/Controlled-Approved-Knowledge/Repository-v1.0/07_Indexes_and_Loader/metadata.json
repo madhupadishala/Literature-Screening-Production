@@ -1,0 +1,12 @@
+{
+  "repository_name": "ClinixAI Knowledge Repository",
+  "version": "1.0.0",
+  "generated_at": "2026-07-21T10:58:47Z",
+  "scope": "Pharmacovigilance Literature Intelligence",
+  "knowledge_objects_total": 100,
+  "approved_objects": 80,
+  "draft_governance_objects": 20,
+  "vector_chunks_total": 1700,
+  "source_of_truth": "User-approved 80-KO register plus 20 clearly separated governance drafts",
+  "production_rule": "Only records with status=Approved and effective_for_production=true may enter the production retrieval collection."
+}
