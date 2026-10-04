@@ -21,8 +21,8 @@ const repositoryRoot = path.resolve(
   process.cwd(),
   "..",
   "knowledge",
-  "controlled",
-  "ClinixAI_Knowledge_Repository_v1.0",
+  "Controlled-Approved-Knowledge",
+    "Repository-v1.0",
 );
 
 const pool = new Pool({
