@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0",
+  "jurisdiction": "United States",
+  "authority": "US FDA",
+  "mah": "ClinixAI",
+  "authorizationStatus": "CONFIGURED",
+  "labelingAcquisitionStatus": "PENDING_SOURCE_DOCUMENT_INGESTION"
+}
