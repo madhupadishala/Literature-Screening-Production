@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "0.1",
+  "status": "WORKING_SOURCE_REGISTRY",
+  "failClosed": true,
+  "sources": [
+    {
+      "sourceId": "SOP-SVS-PV-006",
+      "type": "SOP_SOURCE_TRANSCRIPTION",
+      "title": "SVS-SOP-PV-006 Literature Search",
+      "path": "knowledge/SOP/Sources/SVS-SOP-PV-006-Literature-Search/v1.0/source-transcription.md",
+      "manifest": "knowledge/SOP/Sources/SVS-SOP-PV-006-Literature-Search/v1.0/source-manifest.json",
+      "originalBinarySha256": "59763e4f53a3d1dc7afeafb1dbac1bcdbcd39fcd7cdd5ee7e42a5db4c6d97f4d",
+      "governanceStatus": "REFERENCE_PENDING_RECONCILIATION"
+    },
+    {
+      "sourceId": "MASTER-LITERATURE-PV-SOP-0.1",
+      "type": "MASTER_SOP_DRAFT",
+      "title": "Literature Safety Surveillance and Assessment Master SOP",
+      "path": "knowledge/SOP/Master/Literature-Safety-Surveillance/v0.1/LITERATURE_SAFETY_SURVEILLANCE_MASTER_SOP_v0.1.md",
+      "governanceStatus": "DRAFT_NON_PRODUCTION"
+    },
+    {
+      "sourceId": "EMA-GVP-BASELINE-2026-10-04",
+      "type": "REGULATORY_SOURCE_SET",
+      "title": "EMA/HMA Good Pharmacovigilance Practices baseline",
+      "manifest": "knowledge/Regulatory/EMA/GVP/source-manifest.json",
+      "acquisitionResult": "knowledge/Regulatory/EMA/GVP/acquisition-result.json",
+      "physicalSourceDirectory": "knowledge/Regulatory/EMA/GVP/source/",
+      "sourceCount": 9,
+      "governanceStatus": "ACQUIRED_NOT_YET_QA_APPROVED"
+    }
+  ]
+}
