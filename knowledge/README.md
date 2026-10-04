@@ -42,6 +42,13 @@ knowledge/
 │   ├── PMDA/
 │   └── WHO/
 │
+├── Labeling/
+│   └── <Brand-Name>/
+│       └── <Generic-Name>/
+│           └── <Country-or-GLOBAL>/
+│               └── <SmPC|CCDS|IB|USPI|PI|PIL|Package-Insert|Core-Safety-Information|Other>/
+│                   └── <Version>/
+│
 ├── Controlled-Approved-Knowledge/
 │   ├── Repository-v1.0/
 │   ├── Team-Rules/
@@ -147,7 +154,7 @@ Every regulated engine must obtain a Decision Knowledge Pack composed of:
 2. exact applicable SOP sections;
 3. exact applicable regulatory sections;
 4. client/MAH requirements;
-5. Product Master/label/reference-safety-information;
+5. Product Master plus the exact applicable labeling/reference-safety-information package resolved by Brand → Generic → Country → Document Type → Version;
 6. source article evidence;
 7. approved relevant scenario precedents/examples;
 8. optional hybrid/agentic retrieval results.
