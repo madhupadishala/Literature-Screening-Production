@@ -3,11 +3,11 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const manifestPath = path.resolve("knowledge/Regulatory/EMA/GVP/source-manifest.json");
-const outputDir = path.resolve("knowledge/Regulatory/EMA/GVP/source");
+const outputRoot = path.resolve("knowledge/Regulatory/EMA/GVP");
 const resultPath = path.resolve("knowledge/Regulatory/EMA/GVP/acquisition-result.json");
 
 const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-await mkdir(outputDir, { recursive: true });
+await mkdir(outputRoot, { recursive: true });
 
 const results = [];
 
@@ -26,8 +26,35 @@ for (const source of manifest.sources) {
   }
 
   const sha256 = createHash("sha256").update(bytes).digest("hex");
-  const localPath = path.join(outputDir, source.localFile);
+  const localPath = path.join(outputRoot, source.localFile);
+  await mkdir(path.dirname(localPath), { recursive: true });
   await writeFile(localPath, bytes);
+
+  const packageRoot = path.dirname(path.dirname(localPath));
+  const packageManifest = {
+    schemaVersion: "1.0",
+    documentId: source.id,
+    documentType: "REGULATORY_GUIDANCE",
+    title: source.title,
+    authority: manifest.authority,
+    version: source.referenceNumber,
+    effectiveDate: source.legalEffectiveDate,
+    governanceStatus: "ACQUIRED",
+    source: {
+      path: path.relative(process.cwd(), localPath).replaceAll("\\\\", "/"),
+      canonicalUrl: source.url,
+      sha256,
+      bytes: bytes.length,
+      mimeType: "application/pdf"
+    },
+    derived: {
+      parsedPath: path.relative(process.cwd(), path.join(packageRoot, "derived/parsed")).replaceAll("\\\\", "/"),
+      chunksPath: path.relative(process.cwd(), path.join(packageRoot, "derived/chunks")).replaceAll("\\\\", "/"),
+      embeddingsPath: path.relative(process.cwd(), path.join(packageRoot, "derived/embeddings")).replaceAll("\\\\", "/"),
+      indexPath: path.relative(process.cwd(), path.join(packageRoot, "derived/indexes")).replaceAll("\\\\", "/")
+    }
+  };
+  await writeFile(path.join(packageRoot, "manifest.json"), JSON.stringify(packageManifest, null, 2) + "\\n", "utf8");
 
   results.push({
     id: source.id,
