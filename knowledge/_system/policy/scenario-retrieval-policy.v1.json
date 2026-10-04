@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0",
+  "status": "TARGET_RUNTIME_POLICY",
+  "sourceRoot": "knowledge/Scenarios",
+  "purpose": "Retrieve approved PV scenarios as governed precedents/examples after mandatory rules and source evidence have been resolved.",
+  "governance": {
+    "productionEligibleStatuses": [
+      "APPROVED",
+      "EFFECTIVE"
+    ],
+    "excludedStatuses": [
+      "DRAFT",
+      "REVIEWED",
+      "SUPERSEDED",
+      "RETIRED"
+    ],
+    "scenarioNeverOverridesMandatoryRule": true,
+    "scenarioNeverReplacesSourceEvidence": true,
+    "conflictingScenarioForcesExplicitConflictHandling": true
+  },
+  "indexing": {
+    "separateKnowledgeClass": "DECISION_SCENARIO",
+    "store": "POSTGRES_PGVECTOR",
+    "denseEmbeddings": true,
+    "sparseIndex": true,
+    "metadataRequired": [
+      "scenarioId",
+      "version",
+      "governanceStatus",
+      "domain",
+      "tags",
+      "evidenceLevel",
+      "regressionCriticality",
+      "ruleLinks"
+    ],
+    "embeddingUnits": [
+      "scenario facts",
+      "expected rationale",
+      "prohibited conclusions",
+      "decision pattern"
+    ],
+    "preserveStructuredScenario": true
+  },
+  "retrieval": {
+    "order": 3,
+    "after": [
+      "MANDATORY_RULES",
+      "SOURCE_EVIDENCE"
+    ],
+    "before": [
+      "OPTIONAL_SUPPORTING_RAG"
+    ],
+    "hybridDenseSparse": true,
+    "useMetadataFilters": true,
+    "rerankBy": [
+      "decisionDomainMatch",
+      "ruleOverlap",
+      "evidencePatternSimilarity",
+      "productRolePattern",
+      "specialSituationPattern",
+      "regressionCriticality"
+    ],
+    "defaultTopK": 5,
+    "maximumTopK": 12
+  },
+  "decisionUse": {
+    "permitted": [
+      "identify similar governed fact patterns",
+      "surface known edge cases",
+      "surface prohibited conclusions",
+      "challenge an unsafe shortcut",
+      "support consistency across engines",
+      "trigger regression/golden-case checks"
+    ],
+    "prohibited": [
+      "copy expected decision without comparing current source evidence",
+      "override current SOP/regulatory/controlled rules",
+      "convert scenario facts into current-case facts",
+      "use draft scenarios in production"
+    ]
+  },
+  "audit": {
+    "recordScenarioIds": true,
+    "recordVersions": true,
+    "recordSimilarityScores": true,
+    "recordWhyRetrieved": true,
+    "recordWhetherScenarioAffectedRecommendation": true
+  }
+}
