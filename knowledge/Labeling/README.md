@@ -18,7 +18,7 @@ knowledge/Labeling/
 │           ├── Package-Insert/
 │           ├── Core-Safety-Information/
 │           └── Other/
-│               └── <Version>/
+│               └── _Version/
 │                   ├── manifest.json
 │                   ├── source/
 │                   ├── derived/
@@ -56,7 +56,7 @@ Additional document types may be added without changing the higher-level hierarc
 Each label/version is an independent governed package:
 
 ```text
-<Version>/
+_Version/
 ├── manifest.json
 ├── source/
 │   └── document.<pdf|docx|xml|html>
