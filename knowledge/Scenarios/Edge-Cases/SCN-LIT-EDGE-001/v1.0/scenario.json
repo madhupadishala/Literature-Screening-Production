@@ -1,0 +1,89 @@
+{
+  "scenarioId": "SCN-LIT-EDGE-001",
+  "title": "Combination product present but authors attribute event to one ingredient only",
+  "version": "1.0",
+  "governanceStatus": "DRAFT",
+  "domain": [
+    "LITERATURE_SCREENING",
+    "CAUSALITY",
+    "PRODUCT_ROLE"
+  ],
+  "tags": [
+    "edge-case",
+    "combination-product",
+    "causality",
+    "multi-drug"
+  ],
+  "provenance": {
+    "type": "DEFECT_REGRESSION",
+    "sourceReferences": [
+      "manual-evaluation:Norco-pattern"
+    ],
+    "containsPersonalData": false
+  },
+  "evidenceLevel": "FULL_TEXT",
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "A combination medicinal product contains Ingredient A and Ingredient B."
+    },
+    {
+      "id": "F2",
+      "statement": "The adverse event occurs while the combination product is used."
+    },
+    {
+      "id": "F3",
+      "statement": "The authors explicitly attribute the event to Ingredient A."
+    },
+    {
+      "id": "F4",
+      "statement": "The source does not support Ingredient B as causal."
+    }
+  ],
+  "expected": {
+    "decision": {
+      "Ingredient A": "SUSPECT_OR_CAUSALLY_SUPPORTED",
+      "Ingredient B": "DO_NOT_INFER_SUSPECT_FROM_COMBINATION_MEMBERSHIP"
+    },
+    "rationale": [
+      "Each ingredient must be assessed independently.",
+      "Author attribution and supporting evidence outweigh simple co-occurrence.",
+      "Combination membership does not transfer causality to every ingredient."
+    ],
+    "humanReviewRequired": false,
+    "prohibitedConclusions": [
+      "Classify both ingredients as suspect solely because both are present in the administered combination."
+    ]
+  },
+  "ruleLinks": {
+    "masterSopSections": [
+      "11",
+      "13",
+      "21"
+    ],
+    "controlledKnowledgeObjectIds": [
+      "SDI-008",
+      "SDI-010",
+      "VAL-004",
+      "VAL-008",
+      "VAL-010"
+    ],
+    "regulatoryReferences": [
+      "GVP Module VI: literature/multiple medicinal-product causality principles"
+    ],
+    "clientRules": []
+  },
+  "regression": {
+    "criticality": "CRITICAL",
+    "mustPassReleaseGate": true,
+    "linkedDefects": [
+      "PV-SAFETY-GAP-001",
+      "PV-SAFETY-GAP-002"
+    ]
+  },
+  "approval": {
+    "approvedBy": [],
+    "approvedAt": null,
+    "approvalBasis": null
+  }
+}
