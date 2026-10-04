@@ -124,7 +124,7 @@ const titleOnly: PvSafetyAssessmentInput = {
       role: "SUSPECT",
       eventRelation: "UNRESOLVED",
       authorCausality: "NOT_STATED",
-      roleEvidence: [{ text: "acetaminophen (paracetamol) overdose", location: "TITLE" }],
+      roleEvidence: { text: "acetaminophen (paracetamol) overdose", location: "TITLE" },
     },
   ],
   specialSituations: [
