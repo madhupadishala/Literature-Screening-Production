@@ -1,0 +1,157 @@
+{
+  "version": "0.1.0",
+  "status": "draft_non_production",
+  "principle": "Every regulated decision requires a complete Decision Knowledge Pack containing mandatory internal SOP rules, applicable regulatory sections, tenant/client rules, master data and source evidence.",
+  "regulatory_sources": {
+    "GVP_I": "Pharmacovigilance systems and their quality systems",
+    "GVP_VI": "Collection, management and submission of reports of suspected adverse reactions to medicinal products (Rev. 2)",
+    "GVP_VI_ADD_I": "Duplicate management of suspected adverse reaction reports",
+    "GVP_VI_ADD_II": "Masking of personal data in ICSRs submitted to EudraVigilance",
+    "GVP_VII": "Periodic safety update report (Rev. 1)",
+    "GVP_VIII": "Post-authorisation safety studies (Rev. 3)",
+    "GVP_IX": "Signal management (Rev. 1)",
+    "GVP_ANNEX_I": "Definitions (Rev. 5)"
+  },
+  "decisions": {
+    "SEARCH_SETUP": {
+      "master_sop_sections": ["6"],
+      "gvp_sections": ["GVP_I", "GVP_VI:VI.B.1.1.2", "GVP_VI:VI.App.2", "GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["LF-001","LF-002","LF-003","LF-004","LF-005","LF-011","LF-012","LF-015","LF-016","SI-001","SI-002","SI-003","SI-004","SI-005","SI-008"],
+      "finalization_block_on_missing_source": true
+    },
+    "HIT_GENERATION": {
+      "master_sop_sections": ["7"],
+      "gvp_sections": ["GVP_VI:VI.B.1.1.2","GVP_I"],
+      "mandatory_internal_objects": ["LF-006","LF-007","LF-010","LF-019","LF-020","LF-021","SDI-001"],
+      "finalization_block_on_missing_source": true
+    },
+    "EVIDENCE_AVAILABILITY": {
+      "master_sop_sections": ["8","9"],
+      "gvp_sections": ["GVP_VI:VI.B.1.1.2","GVP_VI:VI.C.2.2.3","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["OI-005","OI-006","OI-007","OI-008","OI-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "PUBLICATION_CLASSIFICATION": {
+      "master_sop_sections": ["10"],
+      "gvp_sections": ["GVP_VI:VI.B.1.1.2","GVP_VII","GVP_IX"],
+      "mandatory_internal_objects": ["SDI-002","SDI-006","SDI-008"],
+      "finalization_block_on_missing_source": true
+    },
+    "PRODUCT_IDENTIFICATION": {
+      "master_sop_sections": ["11"],
+      "gvp_sections": ["GVP_VI:VI.B.1.1.2","GVP_VI:VI.C.6.2.2.2","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["LF-023","LF-024","SDI-004","SDI-005","VAL-004"],
+      "finalization_block_on_missing_source": true
+    },
+    "SAFETY_ASSESSMENT": {
+      "master_sop_sections": ["12","13","14","15","16","17","18","19"],
+      "gvp_sections": [
+        "GVP_VI:VI.B.1.1.2",
+        "GVP_VI:VI.B.2",
+        "GVP_VI:VI.B.6",
+        "GVP_VI:VI.C.2.2.3",
+        "GVP_VI:VI.C.6.2.2.2",
+        "GVP_VI:VI.C.6.2.2.3",
+        "GVP_VI:VI.C.6.2.2.4",
+        "GVP_VI:VI.C.6.2.3",
+        "GVP_ANNEX_I"
+      ],
+      "mandatory_internal_objects": ["SDI-003","SDI-007","SDI-008","SDI-010","OI-004","OI-008","OI-009","OI-010","VAL-001","VAL-002","VAL-003","VAL-004","VAL-005","VAL-008","VAL-009","VAL-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "DRUG_EVENT_RELATION": {
+      "master_sop_sections": ["11","13"],
+      "gvp_sections": ["GVP_VI:VI.B.1.1.2","GVP_VI:VI.C.6.2.2.2","GVP_VI:VI.C.6.2.2.4","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["SDI-008","SDI-010","VAL-008","VAL-010"],
+      "knowledge_gap_ids": ["PV-SAFETY-GAP-001","PV-SAFETY-GAP-002","PV-SAFETY-GAP-003"],
+      "finalization_block_on_missing_source": true
+    },
+    "SPECIAL_SITUATION": {
+      "master_sop_sections": ["14"],
+      "gvp_sections": ["GVP_VI:VI.B.6","GVP_VI:VI.C.6.2.3","GVP_VI:VI.C.2.2.12","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["VAL-005","OI-004","SDI-008"],
+      "knowledge_gap_ids": ["PV-SAFETY-GAP-004"],
+      "finalization_block_on_missing_source": true
+    },
+    "ICSR_VALIDITY": {
+      "master_sop_sections": ["15","16","17","18"],
+      "gvp_sections": ["GVP_VI:VI.B.2","GVP_VI:VI.C.2.2.3","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["VAL-001","VAL-002","VAL-003","VAL-004","VAL-005","VAL-006","VAL-008","VAL-010","OI-001"],
+      "finalization_block_on_missing_source": true
+    },
+    "SERIOUSNESS": {
+      "master_sop_sections": ["19"],
+      "gvp_sections": ["GVP_VI:VI.A.1.6","GVP_VI:VI.C.6.2.2.3","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["VAL-009","SDI-008","VAL-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "LISTEDNESS_EXPECTEDNESS": {
+      "master_sop_sections": ["20"],
+      "gvp_sections": ["GVP_VI","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["SDI-008","VAL-010"],
+      "requires_reference_safety_information": true,
+      "finalization_block_on_missing_source": true
+    },
+    "SCREENING_DISPOSITION": {
+      "master_sop_sections": ["21"],
+      "gvp_sections": ["GVP_VI:VI.B.1.1.2","GVP_VI:VI.B.2","GVP_VI:VI.C.2.2.3.2","GVP_VII","GVP_IX"],
+      "mandatory_internal_objects": ["SDI-003","SDI-006","SDI-007","SDI-008","SDI-010","OI-010","VAL-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "MEDICAL_REVIEW": {
+      "master_sop_sections": ["22"],
+      "gvp_sections": ["GVP_I","GVP_VI","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["SDI-009","OI-009","OI-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "DAY_ZERO": {
+      "master_sop_sections": ["23"],
+      "gvp_sections": ["GVP_VI:VI.B.1.1.2","GVP_VI:VI.C.2.2.3","GVP_VI:VI.C.3"],
+      "mandatory_internal_objects": ["LF-029","OI-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "DUPLICATE_CHECK": {
+      "master_sop_sections": ["24"],
+      "gvp_sections": ["GVP_VI:VI.C.6.2.4","GVP_VI_ADD_I"],
+      "mandatory_internal_objects": ["LF-007","LF-029","VAL-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "INTAKE_TRIAGE_L2A": {
+      "master_sop_sections": ["25"],
+      "gvp_sections": ["GVP_VI:VI.B.2","GVP_VI:VI.B.3","GVP_VI:VI.C.6.2.2","GVP_VI_ADD_I","GVP_VI_ADD_II"],
+      "mandatory_internal_objects": ["LF-030","VAL-001","VAL-008","VAL-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "AGGREGATE_SAFETY": {
+      "master_sop_sections": ["12","26"],
+      "gvp_sections": ["GVP_VI:VI.B.1.1.2","GVP_VII","GVP_IX","GVP_ANNEX_I"],
+      "mandatory_internal_objects": ["SDI-002","SDI-003","SDI-008","OI-010"],
+      "knowledge_gap_ids": ["PV-SAFETY-GAP-006"],
+      "finalization_block_on_missing_source": true
+    },
+    "SIGNAL_RELEVANCE": {
+      "master_sop_sections": ["26"],
+      "gvp_sections": ["GVP_IX","GVP_VII","GVP_VI:VI.B.1.1.2"],
+      "mandatory_internal_objects": ["SDI-008","OI-010"],
+      "finalization_block_on_missing_source": true
+    },
+    "FOLLOW_UP": {
+      "master_sop_sections": ["27"],
+      "gvp_sections": ["GVP_VI:VI.B.3","GVP_VI:VI.C.6.2.2.7"],
+      "mandatory_internal_objects": ["VAL-008","VAL-010","LF-029"],
+      "finalization_block_on_missing_source": true
+    },
+    "PII_MASKING": {
+      "master_sop_sections": ["28","31"],
+      "gvp_sections": ["GVP_VI:VI.C.6.2.2.10","GVP_VI_ADD_II"],
+      "mandatory_internal_objects": ["VAL-007","LF-029"],
+      "finalization_block_on_missing_source": true
+    },
+    "QUALITY_GOVERNANCE": {
+      "master_sop_sections": ["28","31","32","34"],
+      "gvp_sections": ["GVP_I","GVP_VI:VI.B.5"],
+      "mandatory_internal_objects": ["LF-010","LF-011","LF-029","SDI-009","OI-010"],
+      "finalization_block_on_missing_source": true
+    }
+  }
+}
