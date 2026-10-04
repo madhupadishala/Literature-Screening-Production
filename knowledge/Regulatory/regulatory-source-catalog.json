@@ -3,7 +3,7 @@
   "purpose": "Authoritative PV source catalog. Catalog presence does not imply full text has been ingested or approved.",
   "rules": {
     "authoritativeOnly": true,
-    "fullTextInGit": false,
+    "fullTextInGit": "SOURCE_SPECIFIC",
     "requireChecksumOnAcquisition": true,
     "requireHumanApprovalBeforeProductionRetrieval": true,
     "preserveSupersededVersions": true
@@ -26,7 +26,11 @@
         "AGGREGATE",
         "PV_DOCUMENTATION"
       ],
-      "ingestionStatus": "CATALOGUED"
+      "ingestionStatus": "PHYSICAL_SOURCE_SET_ACQUIRED_NOT_YET_QA_APPROVED",
+      "physicalSourceManifest": "knowledge/Regulatory/EMA/GVP/source-manifest.json",
+      "physicalSourceDirectory": "knowledge/Regulatory/EMA/GVP/source/",
+      "acquisitionResult": "knowledge/Regulatory/EMA/GVP/acquisition-result.json",
+      "physicalSourceCount": 9
     },
     {
       "id": "ICH-E2-SERIES",
