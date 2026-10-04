@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pv-decision-scenario-v1",
+  "title": "PV Decision Scenario",
+  "type": "object",
+  "required": [
+    "scenarioId",
+    "title",
+    "version",
+    "governanceStatus",
+    "domain",
+    "provenance",
+    "facts",
+    "expected",
+    "ruleLinks"
+  ],
+  "properties": {
+    "scenarioId": {
+      "type": "string",
+      "pattern": "^SCN-[A-Z0-9-]+-[0-9]{3,}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "governanceStatus": {
+      "enum": [
+        "DRAFT",
+        "REVIEWED",
+        "APPROVED",
+        "EFFECTIVE",
+        "SUPERSEDED",
+        "RETIRED"
+      ]
+    },
+    "domain": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SYNTHETIC",
+            "SOURCE_DERIVED",
+            "DEFECT_REGRESSION",
+            "VALIDATION_CASE"
+          ]
+        },
+        "sourceReferences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "containsPersonalData": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "evidenceLevel": {
+      "enum": [
+        "TITLE_ONLY",
+        "ABSTRACT_ONLY",
+        "FULL_TEXT",
+        "MIXED",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 1
+    },
+    "expected": {
+      "type": "object",
+      "required": [
+        "decision",
+        "rationale"
+      ],
+      "properties": {
+        "decision": {
+          "type": [
+            "string",
+            "object",
+            "array"
+          ]
+        },
+        "rationale": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "humanReviewRequired": {
+          "type": "boolean"
+        },
+        "prohibitedConclusions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ruleLinks": {
+      "type": "object",
+      "required": [
+        "controlledKnowledgeObjectIds"
+      ],
+      "properties": {
+        "masterSopSections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "controlledKnowledgeObjectIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "regulatoryReferences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "clientRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "regression": {
+      "type": "object",
+      "properties": {
+        "criticality": {
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+          ]
+        },
+        "mustPassReleaseGate": {
+          "type": "boolean"
+        },
+        "linkedDefects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "properties": {
+        "approvedBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approvedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "approvalBasis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}
