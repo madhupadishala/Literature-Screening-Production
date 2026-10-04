@@ -1,0 +1,8 @@
+{
+  "requestId": "EMA-GVP-BASELINE-2026-10-04",
+  "requestedAt": "2026-10-04",
+  "branch": "feat/pv-safety-assessment-engine-v1",
+  "sourceManifest": "knowledge/Regulatory/EMA/GVP/source-manifest.json",
+  "purpose": "Physically archive the authoritative GVP source PDFs used by Literature/PV decision engines. Acquired files remain non-production until QA/PV governance approves their versions and derived knowledge objects.",
+  "expectedSourceCount": 9
+}
