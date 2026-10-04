@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-MODULE-VI-REV2",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Module VI — Collection, management and submission of reports of suspected adverse reactions to medicinal products (Rev. 2)",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/873138/2011 Rev. 2",
+  "effectiveDate": "2017-11-22",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/Module-VI-Rev2/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-collection-management-submission-reports-suspected-adverse-reactions-medicinal-products-rev-2_en.pdf",
+    "sha256": "f27a7f0d678b17f2d6374946ae03d0b59db18217ed0fabae0b2f8a9111513b9e",
+    "bytes": 2115278,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Rev2/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Rev2/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Rev2/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Rev2/derived/indexes"
+  }
+}\n

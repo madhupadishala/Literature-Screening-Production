@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-MODULE-VIII-REV3",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Module VIII — Post-authorisation safety studies (Rev. 3)",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/813938/2011 Rev. 3",
+  "effectiveDate": "2017-10-13",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/Module-VIII-Rev3/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-viii-post-authorisation-safety-studies-rev-3_en.pdf",
+    "sha256": "847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e",
+    "bytes": 241070,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/Module-VIII-Rev3/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/Module-VIII-Rev3/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/Module-VIII-Rev3/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/Module-VIII-Rev3/derived/indexes"
+  }
+}\n

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-MODULE-VII-REV1",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Module VII — Periodic safety update report (Rev. 1)",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/816292/2011 Rev. 1",
+  "effectiveDate": "2013-12-13",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/Module-VII-Rev1/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vii-periodic-safety-update-report_en.pdf",
+    "sha256": "49c5e574e9296c38a5a1ddcb6cf7903a4b91c3b28bd98088c839eea50f0a23a8",
+    "bytes": 1516490,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/Module-VII-Rev1/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/Module-VII-Rev1/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/Module-VII-Rev1/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/Module-VII-Rev1/derived/indexes"
+  }
+}\n

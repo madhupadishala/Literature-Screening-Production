@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-MODULE-I",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Module I — Pharmacovigilance systems and their quality systems",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/541760/2011",
+  "effectiveDate": "2012-07-02",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/Module-I/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-module-i-pharmacovigilance-systems-and-their-quality-systems_en.pdf",
+    "sha256": "197de2bc0cfb6bdafe8d322934ece6e9bd4c5901651a5a828e74076470d7ff59",
+    "bytes": 218257,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/Module-I/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/Module-I/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/Module-I/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/Module-I/derived/indexes"
+  }
+}\n

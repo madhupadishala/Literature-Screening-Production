@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-PSC-III-2026",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Product-/Population-Specific Considerations III — Pregnant and breastfeeding women and their children exposed in utero or via breastmilk",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/653036/2019 Corr.",
+  "effectiveDate": "2026-02-09",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/PSC-III-Pregnancy-Breastfeeding-2026/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-product-or-population-specific-considerations-iii-pregnant-breastfeeding-women-their-children-exposed-utero-or-breastmilk_en.pdf",
+    "sha256": "fab70a9f661fa38f9deef967096f7fc92fcf9730e084a700a4116eba1d273edd",
+    "bytes": 540481,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/PSC-III-Pregnancy-Breastfeeding-2026/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/PSC-III-Pregnancy-Breastfeeding-2026/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/PSC-III-Pregnancy-Breastfeeding-2026/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/PSC-III-Pregnancy-Breastfeeding-2026/derived/indexes"
+  }
+}\n

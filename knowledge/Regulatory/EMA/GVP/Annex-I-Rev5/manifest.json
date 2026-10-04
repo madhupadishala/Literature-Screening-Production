@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-ANNEX-I-REV5",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Annex I — Definitions (Rev. 5)",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/876333/2011",
+  "effectiveDate": "2024-08-06",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/Annex-I-Rev5/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-annex-i-definitions-rev-5_en.pdf",
+    "sha256": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
+    "bytes": 343077,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/Annex-I-Rev5/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/Annex-I-Rev5/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/Annex-I-Rev5/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/Annex-I-Rev5/derived/indexes"
+  }
+}\n

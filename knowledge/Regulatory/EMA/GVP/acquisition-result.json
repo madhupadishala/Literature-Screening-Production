@@ -11,7 +11,7 @@
       "referenceNumber": "EMA/541760/2011",
       "legalEffectiveDate": "2012-07-02",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-module-i-pharmacovigilance-systems-and-their-quality-systems_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-Module-I.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/Module-I/source/document.pdf",
       "bytes": 218257,
       "sha256": "197de2bc0cfb6bdafe8d322934ece6e9bd4c5901651a5a828e74076470d7ff59",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"
@@ -22,7 +22,7 @@
       "referenceNumber": "EMA/873138/2011 Rev. 2",
       "legalEffectiveDate": "2017-11-22",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-collection-management-submission-reports-suspected-adverse-reactions-medicinal-products-rev-2_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-Module-VI-Rev2.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Rev2/source/document.pdf",
       "bytes": 2115278,
       "sha256": "f27a7f0d678b17f2d6374946ae03d0b59db18217ed0fabae0b2f8a9111513b9e",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"
@@ -33,7 +33,7 @@
       "referenceNumber": "EMA/405655/2016",
       "legalEffectiveDate": "2017-11-22",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-addendum-i-duplicate-management-suspected-adverse-reaction-reports_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-Module-VI-Addendum-I.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-I/source/document.pdf",
       "bytes": 368558,
       "sha256": "4993d9f6a6a6cb8828a36f604743c8dd8724b0c40d9c2082f2a4d1158b14a9b6",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"
@@ -44,7 +44,7 @@
       "referenceNumber": "EMA/178902/2025",
       "legalEffectiveDate": "2025-07-25",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-addendum-ii-masking-personal-data-individual-case-safety-reports-submitted-eudravigilance_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-Module-VI-Addendum-II.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-II/source/document.pdf",
       "bytes": 342933,
       "sha256": "53bb1c46db481ae94009a302ca87cb44325cf1a82e7908c41e33c01649878b4c",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"
@@ -55,7 +55,7 @@
       "referenceNumber": "EMA/816292/2011 Rev. 1",
       "legalEffectiveDate": "2013-12-13",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vii-periodic-safety-update-report_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-Module-VII-Rev1.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/Module-VII-Rev1/source/document.pdf",
       "bytes": 1516490,
       "sha256": "49c5e574e9296c38a5a1ddcb6cf7903a4b91c3b28bd98088c839eea50f0a23a8",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"
@@ -66,7 +66,7 @@
       "referenceNumber": "EMA/813938/2011 Rev. 3",
       "legalEffectiveDate": "2017-10-13",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-viii-post-authorisation-safety-studies-rev-3_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-Module-VIII-Rev3.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/Module-VIII-Rev3/source/document.pdf",
       "bytes": 241070,
       "sha256": "847b0c095bc647e02aa577e2116a03b14ff237982af6b850d88e77fcc69e343e",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"
@@ -77,7 +77,7 @@
       "referenceNumber": "EMA/827661/2011 Rev. 1",
       "legalEffectiveDate": "2017-11-22",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-ix-signal-management-rev-1_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-Module-IX-Rev1.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/Module-IX-Rev1/source/document.pdf",
       "bytes": 290012,
       "sha256": "801755430dbf3ac68dfed481afc642937b9dbb3c73e38a83e8cd767dc165d1b5",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"
@@ -88,7 +88,7 @@
       "referenceNumber": "EMA/876333/2011",
       "legalEffectiveDate": "2024-08-06",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-annex-i-definitions-rev-5_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-Annex-I-Rev5.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/Annex-I-Rev5/source/document.pdf",
       "bytes": 343077,
       "sha256": "409f9f85c1ff025dfc0a5ff9f0b21afc2c7d09cc1b47484a40c9ee11e1da536f",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"
@@ -99,7 +99,7 @@
       "referenceNumber": "EMA/653036/2019 Corr.",
       "legalEffectiveDate": "2026-02-09",
       "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-product-or-population-specific-considerations-iii-pregnant-breastfeeding-women-their-children-exposed-utero-or-breastmilk_en.pdf",
-      "localPath": "knowledge/Regulatory/EMA/GVP/source/EMA-GVP-PSC-III-Pregnancy-Breastfeeding-2026.pdf",
+      "localPath": "knowledge/Regulatory/EMA/GVP/PSC-III-Pregnancy-Breastfeeding-2026/source/document.pdf",
       "bytes": 540481,
       "sha256": "fab70a9f661fa38f9deef967096f7fc92fcf9730e084a700a4116eba1d273edd",
       "acquiredFromAuthority": "European Medicines Agency / Heads of Medicines Agencies"

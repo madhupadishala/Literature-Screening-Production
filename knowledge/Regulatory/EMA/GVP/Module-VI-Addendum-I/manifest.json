@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-MODULE-VI-ADD-I",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Module VI Addendum I — Duplicate management of suspected adverse reaction reports",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/405655/2016",
+  "effectiveDate": "2017-11-22",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-I/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-addendum-i-duplicate-management-suspected-adverse-reaction-reports_en.pdf",
+    "sha256": "4993d9f6a6a6cb8828a36f604743c8dd8724b0c40d9c2082f2a4d1158b14a9b6",
+    "bytes": 368558,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-I/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-I/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-I/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-I/derived/indexes"
+  }
+}\n

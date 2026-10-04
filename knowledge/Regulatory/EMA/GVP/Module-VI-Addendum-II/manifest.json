@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-MODULE-VI-ADD-II",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Module VI Addendum II — Masking of personal data in ICSRs submitted to EudraVigilance",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/178902/2025",
+  "effectiveDate": "2025-07-25",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-II/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-addendum-ii-masking-personal-data-individual-case-safety-reports-submitted-eudravigilance_en.pdf",
+    "sha256": "53bb1c46db481ae94009a302ca87cb44325cf1a82e7908c41e33c01649878b4c",
+    "bytes": 342933,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-II/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-II/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-II/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/Module-VI-Addendum-II/derived/indexes"
+  }
+}\n

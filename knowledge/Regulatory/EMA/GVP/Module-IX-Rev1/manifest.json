@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "EMA-GVP-MODULE-IX-REV1",
+  "documentType": "REGULATORY_GUIDANCE",
+  "title": "GVP Module IX — Signal management (Rev. 1)",
+  "authority": "European Medicines Agency / Heads of Medicines Agencies",
+  "version": "EMA/827661/2011 Rev. 1",
+  "effectiveDate": "2017-11-22",
+  "governanceStatus": "ACQUIRED",
+  "source": {
+    "path": "knowledge/Regulatory/EMA/GVP/Module-IX-Rev1/source/document.pdf",
+    "canonicalUrl": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-ix-signal-management-rev-1_en.pdf",
+    "sha256": "801755430dbf3ac68dfed481afc642937b9dbb3c73e38a83e8cd767dc165d1b5",
+    "bytes": 290012,
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Regulatory/EMA/GVP/Module-IX-Rev1/derived/parsed",
+    "chunksPath": "knowledge/Regulatory/EMA/GVP/Module-IX-Rev1/derived/chunks",
+    "embeddingsPath": "knowledge/Regulatory/EMA/GVP/Module-IX-Rev1/derived/embeddings",
+    "indexPath": "knowledge/Regulatory/EMA/GVP/Module-IX-Rev1/derived/indexes"
+  }
+}\n
