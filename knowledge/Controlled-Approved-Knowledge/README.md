@@ -2,7 +2,7 @@
 
 This is the **team-approved decision knowledge layer**.
 
-It contains approved guidance, operational logic, deterministic rules, decision policies, mappings and validated golden cases created/approved by the PV/QA team.
+It contains approved guidance, operational logic, deterministic rules, decision policies, mappings created/approved by the PV/QA team.
 
 ## It may contain
 
@@ -19,7 +19,6 @@ It contains approved guidance, operational logic, deterministic rules, decision 
 - signal-relevance routing;
 - client-independent cross-engine policies;
 - approved decision trees;
-- approved examples/golden cases.
 
 ## It must not contain
 
@@ -36,4 +35,4 @@ Every approved Knowledge Object must cite one or more source documents and secti
 
 ## Runtime use
 
-Mandatory Knowledge Object IDs are loaded first. Hybrid vector/keyword retrieval and Agentic RAG may add supporting context but may not omit mandatory rules.
+Mandatory Knowledge Object IDs are loaded first. Approved decision scenarios may then be retrieved from the separate `knowledge/Scenarios/` layer as precedents/examples. Hybrid vector/keyword retrieval and Agentic RAG may add supporting context but may not omit or override mandatory rules.
