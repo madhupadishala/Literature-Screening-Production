@@ -10,7 +10,7 @@
   "physicalRepositoryRepresentation": "source-transcription.md",
   "binaryMirrorStatus": "NOT_MIRRORED_FROM_CHAT_ATTACHMENT",
   "transcriptionStatus": "SOURCE_TRANSCRIBED",
-  "governanceStatus": "REFERENCE_PENDING_RECONCILIATION",
+  "governanceStatus": "REFERENCE",
   "observedMetadata": {
     "headerVersion": "1.0",
     "titleBlockVersionText": "21.0",
@@ -22,5 +22,24 @@
   "notes": [
     "The source file contains overlapping tracked-change/version text. Do not promote to production-effective controlled knowledge until QA confirms the approved version/effective date.",
     "The transcription preserves substantive SOP content and page provenance; the original uploaded DOCX hash is retained for integrity comparison."
-  ]
+  ],
+  "documentType": "SOP",
+  "version": "1.0 (pending document-control reconciliation)",
+  "source": {
+    "path": "knowledge/SOP/Literature/Reference/SVS-SOP-PV-006/v1.0/source/source-transcription.md",
+    "originalFileName": "SVS-SOP-PV-006-Literature Search 1(1).docx",
+    "originalBinarySha256": "59763e4f53a3d1dc7afeafb1dbac1bcdbcd39fcd7cdd5ee7e42a5db4c6d97f4d",
+    "originalBinarySizeBytes": 442631,
+    "binaryMirrorStatus": "NOT_MIRRORED_FROM_CHAT_ATTACHMENT"
+  },
+  "derived": {
+    "parsedPath": "knowledge/SOP/Literature/Reference/SVS-SOP-PV-006/v1.0/derived/parsed",
+    "chunksPath": "knowledge/SOP/Literature/Reference/SVS-SOP-PV-006/v1.0/derived/chunks",
+    "embeddingsPath": "knowledge/SOP/Literature/Reference/SVS-SOP-PV-006/v1.0/derived/embeddings",
+    "indexPath": "knowledge/SOP/Literature/Reference/SVS-SOP-PV-006/v1.0/derived/indexes"
+  },
+  "qa": {
+    "path": "knowledge/SOP/Literature/Reference/SVS-SOP-PV-006/v1.0/qa",
+    "approvalStatus": "PENDING_DOCUMENT_CONTROL_RECONCILIATION"
+  }
 }
