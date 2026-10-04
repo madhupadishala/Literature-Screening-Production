@@ -47,7 +47,7 @@ knowledge/
 │       └── <Generic-Name>/
 │           └── <Country-or-GLOBAL>/
 │               └── <SmPC|CCDS|IB|USPI|PI|PIL|Package-Insert|Core-Safety-Information|Other>/
-│                   └── <Version>/
+│                   └── _Version/
 │
 ├── Controlled-Approved-Knowledge/
 │   ├── Repository-v1.0/
