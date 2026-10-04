@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "2.0",
+  "productId": "CLX-PROD-005",
+  "productMasterId": "CLINIXAI-PRODUCT-MASTER",
+  "productMasterVersion": "2.0.0",
+  "product": {
+    "brandName": "Gastrovia",
+    "genericName": "Pantoprazole",
+    "api": "Pantoprazole",
+    "strength": "40 mg",
+    "dosageForm": "Tablet",
+    "route": "Oral",
+    "lifecycleStatus": "MARKETED",
+    "active": true
+  },
+  "mah": "ClinixAI",
+  "authorizationScope": [
+    {
+      "jurisdiction": "India",
+      "authority": "CDSCO",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Gastrovia/Pantoprazole/India"
+    },
+    {
+      "jurisdiction": "United States",
+      "authority": "US FDA",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Gastrovia/Pantoprazole/United-States"
+    },
+    {
+      "jurisdiction": "European Union / EEA",
+      "authority": "EMA / EEA NCAs",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "authority": "HSA",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Gastrovia/Pantoprazole/Singapore"
+    },
+    {
+      "jurisdiction": "China",
+      "authority": "NMPA",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Gastrovia/Pantoprazole/China"
+    }
+  ],
+  "labelingResolution": {
+    "hierarchy": "Brand > Generic > Jurisdiction > Document Type > Version",
+    "requiredDocumentTypes": [
+      "SmPC",
+      "CCDS",
+      "IB",
+      "USPI",
+      "PI",
+      "PIL",
+      "Package-Insert",
+      "Core-Safety-Information",
+      "Other"
+    ],
+    "sourceDocumentStatus": "PENDING_SOURCE_DOCUMENT_INGESTION"
+  }
+}
