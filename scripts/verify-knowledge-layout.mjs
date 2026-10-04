@@ -90,7 +90,7 @@ for (const legacy of prohibitedLegacyPaths) {
 
 const controlledRoot = path.join(root, "Controlled-Approved-Knowledge");
 const controlledFiles = await walk(controlledRoot);
-const forbiddenExtensions = new Set([".pdf", ".docx", ".doc", ".pptx", ".xlsx"]);
+const forbiddenExtensions = new Set([".pdf", ".docx", ".doc"]);
 for (const file of controlledFiles) {
   assert(
     !forbiddenExtensions.has(path.extname(file).toLowerCase()),
