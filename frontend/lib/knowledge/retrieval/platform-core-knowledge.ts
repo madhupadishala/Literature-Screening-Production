@@ -74,8 +74,8 @@ function knowledgeRoot(): string {
 function repositoryRoot(): string {
   return path.join(
     knowledgeRoot(),
-    "controlled",
-    "ClinixAI_Knowledge_Repository_v1.0",
+    "Controlled-Approved-Knowledge",
+    "Repository-v1.0",
   );
 }
 
