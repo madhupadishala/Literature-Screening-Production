@@ -1,0 +1,41 @@
+name: Sync authoritative GVP sources
+
+on:
+  push:
+    branches:
+      - feat/pv-safety-assessment-engine-v1
+    paths:
+      - "knowledge/Regulatory/EMA/GVP/acquisition-request.json"
+
+permissions:
+  contents: write
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/pv-safety-assessment-engine-v1
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Download and hash authoritative EMA GVP PDFs
+        run: node scripts/sync-regulatory-sources.mjs
+
+      - name: Commit source archive
+        shell: bash
+        run: |
+          if git diff --quiet -- knowledge/Regulatory/EMA/GVP; then
+            echo "No regulatory source changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add knowledge/Regulatory/EMA/GVP
+          git commit -m "knowledge(regulatory): archive authoritative EMA GVP sources"
+          git push origin HEAD:feat/pv-safety-assessment-engine-v1
