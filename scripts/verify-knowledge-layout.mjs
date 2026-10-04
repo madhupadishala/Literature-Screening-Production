@@ -21,7 +21,11 @@ const requiredPaths = [
   "Controlled-Approved-Knowledge/Repository-v1.0/07_Indexes_and_Loader/chunks.jsonl",
   "Regulatory/EMA/GVP/Module-VI-Rev2/manifest.json",
   "Regulatory/EMA/GVP/Module-VI-Rev2/source/document.pdf",
-  "Regulatory/coverage.v1.json"
+  "Regulatory/coverage.v1.json",
+  "Labeling/README.md",
+  "Labeling/Templates/manifest.template.json",
+  "_system/schemas/labeling-document.schema.json",
+  "_system/policy/labeling-resolution-policy.v1.json"
 ];
 
 const prohibitedLegacyPaths = [
@@ -31,6 +35,10 @@ const prohibitedLegacyPaths = [
   "SOP/Master",
   "Regulatory/EMA/GVP/source",
   "Controlled-Approved-Knowledge/Golden-Cases"
+];
+
+const labelingDocumentTypes = [
+  "SmPC","CCDS","IB","USPI","PI","PIL","Package-Insert","Core-Safety-Information","Other"
 ];
 
 const scenarioFolders = [
@@ -96,6 +104,22 @@ for (const relative of requiredPaths) {
   assert(await exists(relative), `Missing required knowledge path: ${relative}`);
 }
 
+for (const documentType of labelingDocumentTypes) {
+  const base = path.join(
+    "Labeling","_Template","Product-Brand-Name","Generic-Name","Country",documentType,"_Version"
+  );
+  for (const child of [
+    "source",
+    "derived/parsed",
+    "derived/chunks",
+    "derived/embeddings",
+    "derived/indexes",
+    "qa"
+  ]) {
+    assert(await exists(path.join(base, child)), `Incomplete labeling package template: ${base}/${child}`);
+  }
+}
+
 for (const scenarioFolder of scenarioFolders) {
   assert(await exists(scenarioFolder), `Missing scenario folder: ${scenarioFolder}`);
 }
@@ -137,6 +161,7 @@ console.table([
     controlled_files_checked: controlledFiles.length,
     regulatory_families: coverage.families.length,
     scenario_folders: scenarioFolders.length,
+    labeling_document_types: labelingDocumentTypes.length,
     legacy_paths: 0
   }
 ]);
