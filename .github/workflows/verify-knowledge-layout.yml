@@ -1,0 +1,29 @@
+name: Verify PV Knowledge Centre layout
+
+on:
+  push:
+    branches:
+      - feat/pv-safety-assessment-engine-v1
+    paths:
+      - "knowledge/**"
+      - "scripts/verify-knowledge-layout.mjs"
+      - ".github/workflows/verify-knowledge-layout.yml"
+  pull_request:
+    paths:
+      - "knowledge/**"
+      - "scripts/verify-knowledge-layout.mjs"
+      - ".github/workflows/verify-knowledge-layout.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Verify Knowledge Centre structure
+        run: node scripts/verify-knowledge-layout.mjs
