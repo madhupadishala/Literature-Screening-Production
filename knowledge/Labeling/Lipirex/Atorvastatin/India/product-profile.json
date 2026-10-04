@@ -1,10 +1,9 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "productId": "DEMO-PROD-009",
-  "sourceProductMaster": {
-    "sourceFilename": "TheClinixAI_Synthetic_Product_Master_10_Products.csv",
-    "productMasterVersion": "1.0.0",
-    "synthetic": true
+  "productMaster": {
+    "name": "ClinixAI Product Master",
+    "version": "1.0.0"
   },
   "product": {
     "brandName": "Lipirex",
@@ -16,22 +15,46 @@
     "lifecycleStatus": "WITHDRAWN",
     "active": false
   },
-  "authorization": {
-    "configuredCountry": "India",
-    "configuredMah": "ClinixAI Demo Pharma Pvt Ltd",
-    "mahCountry": null,
-    "authoritativeMahVerified": false
-  },
-  "publicVerification": {
-    "status": "SYNTHETIC_IDENTITY_NOT_AUTHORITATIVELY_VERIFIED",
-    "authoritativeProductMatchFound": false,
-    "collisionWarning": "Public manufacturer information identifies Lipirex atorvastatin with Highnoon Laboratories in Pakistan; not the synthetic MAH/country.",
-    "checkedAt": "2026-10-04"
-  },
-  "labelingAcquisition": {
-    "status": "BLOCKED_UNTIL_REAL_PRODUCT_MAH_IDENTITY_IS_VERIFIED",
-    "authoritativeDocumentsDownloaded": 0,
-    "reason": "The Product Master is synthetic. Downloading labels for same/similar public brand names would create false product-to-label associations.",
-    "allowedNextStep": "Replace/augment this demo record with an authoritative product identity and MAH/jurisdiction, then acquire exact labels."
+  "marketingAuthorizationScope": [
+    {
+      "jurisdiction": "India",
+      "authority": "CDSCO",
+      "mah": "ClinixAI",
+      "authorizationStatus": "HISTORICAL",
+      "source": "CONFIGURED_PRODUCT_MASTER"
+    },
+    {
+      "jurisdiction": "United States",
+      "authority": "US FDA",
+      "mah": "ClinixAI",
+      "authorizationStatus": "HISTORICAL",
+      "source": "CONFIGURED_PRODUCT_MASTER"
+    },
+    {
+      "jurisdiction": "European Union / EEA",
+      "authority": "EMA / EEA national competent authorities",
+      "mah": "ClinixAI",
+      "authorizationStatus": "HISTORICAL",
+      "source": "CONFIGURED_PRODUCT_MASTER"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "authority": "HSA",
+      "mah": "ClinixAI",
+      "authorizationStatus": "HISTORICAL",
+      "source": "CONFIGURED_PRODUCT_MASTER"
+    },
+    {
+      "jurisdiction": "China",
+      "authority": "NMPA",
+      "mah": "ClinixAI",
+      "authorizationStatus": "HISTORICAL",
+      "source": "CONFIGURED_PRODUCT_MASTER"
+    }
+  ],
+  "labelingResolution": {
+    "required": true,
+    "hierarchy": "Brand > Generic > Jurisdiction > Document Type > Version",
+    "authoritativeLabelAssociationStatus": "PENDING_SOURCE_DOCUMENT_INGESTION"
   }
 }
