@@ -1,0 +1,74 @@
+{
+  "scenarioId": "SCN-LIT-GENERAL-001",
+  "title": "Article mentions company product but contains no supported safety relationship",
+  "version": "1.0",
+  "governanceStatus": "DRAFT",
+  "domain": [
+    "LITERATURE_SCREENING",
+    "SAFETY_ASSESSMENT"
+  ],
+  "tags": [
+    "general",
+    "negative",
+    "product-mention"
+  ],
+  "provenance": {
+    "type": "SYNTHETIC",
+    "sourceReferences": [],
+    "containsPersonalData": false
+  },
+  "evidenceLevel": "FULL_TEXT",
+  "facts": [
+    {
+      "id": "F1",
+      "statement": "The company product is discussed as background therapy."
+    },
+    {
+      "id": "F2",
+      "statement": "No patient-level adverse event is attributed to the product."
+    },
+    {
+      "id": "F3",
+      "statement": "No aggregate risk finding or special situation is reported."
+    }
+  ],
+  "expected": {
+    "decision": "NO_SAFETY_SUPPORTED",
+    "rationale": [
+      "Product mention alone does not establish safety relevance.",
+      "No patient-level or aggregate safety evidence is supported."
+    ],
+    "humanReviewRequired": false,
+    "prohibitedConclusions": [
+      "Include solely because product and medical-event terms coexist in the article."
+    ]
+  },
+  "ruleLinks": {
+    "masterSopSections": [
+      "11",
+      "12",
+      "21"
+    ],
+    "controlledKnowledgeObjectIds": [
+      "SDI-003",
+      "SDI-008",
+      "OI-004",
+      "VAL-008",
+      "VAL-010"
+    ],
+    "regulatoryReferences": [
+      "GVP Module VI"
+    ],
+    "clientRules": []
+  },
+  "regression": {
+    "criticality": "HIGH",
+    "mustPassReleaseGate": true,
+    "linkedDefects": []
+  },
+  "approval": {
+    "approvedBy": [],
+    "approvedAt": null,
+    "approvalBasis": null
+  }
+}
