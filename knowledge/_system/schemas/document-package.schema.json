@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pv-knowledge-document-package-v1",
+  "title": "PV Knowledge Document Package",
+  "type": "object",
+  "required": [
+    "documentId",
+    "documentType",
+    "title",
+    "version",
+    "governanceStatus",
+    "source",
+    "derived"
+  ],
+  "properties": {
+    "documentId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "documentType": {
+      "enum": [
+        "SOP",
+        "WORK_INSTRUCTION",
+        "REGULATION",
+        "GUIDANCE",
+        "ANNEX",
+        "ADDENDUM",
+        "DICTIONARY",
+        "PRODUCT_REFERENCE",
+        "CLIENT_RULE",
+        "CONTROLLED_KNOWLEDGE"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "jurisdiction": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effectiveDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "governanceStatus": {
+      "enum": [
+        "DRAFT",
+        "REFERENCE",
+        "ACQUIRED",
+        "UNDER_REVIEW",
+        "APPROVED",
+        "EFFECTIVE",
+        "SUPERSEDED",
+        "RETIRED"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "canonicalUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "mimeType": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "derived": {
+      "type": "object",
+      "properties": {
+        "parsedPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "chunksPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "embeddingsPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "indexPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parserVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "chunkerVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "embeddingModel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "embeddingDimensions": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}
