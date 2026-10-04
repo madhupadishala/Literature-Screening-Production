@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Track PV-relevant regulatory/source families and physical acquisition status. Applicability is decision-, jurisdiction-, product- and client-specific.",
+  "statuses": [
+    "ACQUIRED",
+    "PARTIAL",
+    "PLANNED",
+    "LICENSE_REQUIRED",
+    "NOT_APPLICABLE"
+  ],
+  "families": [
+    {
+      "path": "EMA/GVP",
+      "authority": "EMA/HMA",
+      "status": "ACQUIRED",
+      "items": [
+        "GVP Module I",
+        "GVP Module VI Rev.2",
+        "GVP Module VI Addendum I",
+        "GVP Module VI Addendum II",
+        "GVP Module VII Rev.1",
+        "GVP Module VIII Rev.3",
+        "GVP Module IX Rev.1",
+        "GVP Annex I Rev.5",
+        "Product-/Population-Specific Considerations III — pregnancy/breastfeeding"
+      ]
+    },
+    {
+      "path": "ICH/E2-Safety",
+      "authority": "ICH",
+      "status": "PLANNED",
+      "items": [
+        "E2A",
+        "E2B(R3)",
+        "E2C(R2)",
+        "E2D(R1)",
+        "E2E",
+        "E2F"
+      ]
+    },
+    {
+      "path": "ICH/E6-GCP",
+      "authority": "ICH",
+      "status": "PLANNED",
+      "items": [
+        "E6(R3) Good Clinical Practice and applicable annexes/principles"
+      ]
+    },
+    {
+      "path": "FDA/21-CFR",
+      "authority": "US FDA / eCFR",
+      "status": "PLANNED",
+      "items": [
+        "21 CFR Part 11 — Electronic records/electronic signatures",
+        "21 CFR 310.305 — Postmarketing reporting of adverse drug experiences",
+        "21 CFR 312.32 — IND safety reporting",
+        "21 CFR 314.80 — Postmarketing reporting of adverse drug experiences",
+        "21 CFR 600.80 — Postmarketing reporting of adverse experiences for biologics",
+        "Other PV-relevant CFR provisions selected by applicability"
+      ]
+    },
+    {
+      "path": "FDA/Guidance",
+      "authority": "US FDA",
+      "status": "PLANNED",
+      "items": [
+        "PV/safety reporting, electronic reporting, clinical safety and postmarketing safety guidance selected by applicability"
+      ]
+    },
+    {
+      "path": "Privacy/HIPAA",
+      "authority": "US HHS",
+      "status": "PLANNED",
+      "items": [
+        "45 CFR Part 160",
+        "45 CFR Part 164 privacy/security/breach-notification provisions relevant to PHI processing"
+      ]
+    },
+    {
+      "path": "Privacy/GDPR",
+      "authority": "European Union",
+      "status": "PLANNED",
+      "items": [
+        "Regulation (EU) 2016/679 and PV-relevant data-protection guidance"
+      ]
+    },
+    {
+      "path": "GxP/GCP",
+      "authority": "Multi-authority",
+      "status": "PARTIAL",
+      "items": [
+        "ICH GCP is catalogued separately; other applicable GCP sources to be acquired by jurisdiction"
+      ]
+    },
+    {
+      "path": "GxP/Computerized-Systems",
+      "authority": "Multi-authority",
+      "status": "PLANNED",
+      "items": [
+        "21 CFR Part 11",
+        "EU GMP Annex 11 where applicable",
+        "Data-integrity/computerised-system guidance applicable to PV GxP systems"
+      ]
+    },
+    {
+      "path": "CDSCO",
+      "authority": "CDSCO / PvPI / IPC",
+      "status": "PLANNED",
+      "items": [
+        "India post-marketing pharmacovigilance and MAH requirements relevant to configured workflows"
+      ]
+    },
+    {
+      "path": "MHRA",
+      "authority": "MHRA",
+      "status": "PLANNED",
+      "items": [
+        "UK pharmacovigilance procedures and applicable guidance"
+      ]
+    },
+    {
+      "path": "Health-Canada",
+      "authority": "Health Canada",
+      "status": "PLANNED",
+      "items": [
+        "Marketed health product adverse-reaction reporting guidance"
+      ]
+    },
+    {
+      "path": "TGA",
+      "authority": "TGA",
+      "status": "PLANNED",
+      "items": [
+        "Medicine sponsor pharmacovigilance responsibilities and applicable guidance"
+      ]
+    },
+    {
+      "path": "PMDA",
+      "authority": "PMDA/MHLW",
+      "status": "PLANNED",
+      "items": [
+        "Japan post-marketing safety/PV sources selected by applicability"
+      ]
+    },
+    {
+      "path": "WHO",
+      "authority": "WHO",
+      "status": "PLANNED",
+      "items": [
+        "WHO pharmacovigilance guidance selected by applicability"
+      ]
+    }
+  ],
+  "licensingRule": "Licensed standards or copyrighted commercial frameworks are catalogued but must not be copied into the repository unless the organisation has rights to store and use them."
+}
