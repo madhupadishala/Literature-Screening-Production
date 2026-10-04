@@ -1,0 +1,476 @@
+{
+  "schemaVersion": "2.0",
+  "productMasterId": "CLINIXAI-PRODUCT-MASTER",
+  "version": "2.0.0",
+  "owner": "ClinixAI",
+  "authorizationModel": "MULTI_REGION_MAH",
+  "authorizedRegions": [
+    {
+      "jurisdiction": "India",
+      "authority": "CDSCO",
+      "mah": "ClinixAI"
+    },
+    {
+      "jurisdiction": "United States",
+      "authority": "US FDA",
+      "mah": "ClinixAI"
+    },
+    {
+      "jurisdiction": "European Union / EEA",
+      "authority": "EMA / EEA NCAs",
+      "mah": "ClinixAI"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "authority": "HSA",
+      "mah": "ClinixAI"
+    },
+    {
+      "jurisdiction": "China",
+      "authority": "NMPA",
+      "mah": "ClinixAI"
+    }
+  ],
+  "products": [
+    {
+      "productId": "CLX-PROD-001",
+      "brandName": "Clinivex",
+      "genericName": "Paracetamol",
+      "api": "Paracetamol",
+      "strength": "500 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "MARKETED",
+      "active": true,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "brandName": "Neurovia",
+      "genericName": "Pregabalin",
+      "api": "Pregabalin",
+      "strength": "75 mg",
+      "dosageForm": "Capsule",
+      "route": "Oral",
+      "status": "MARKETED",
+      "active": true,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "brandName": "Cardionex",
+      "genericName": "Amlodipine",
+      "api": "Amlodipine",
+      "strength": "5 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "MARKETED",
+      "active": true,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "brandName": "Glycora",
+      "genericName": "Metformin",
+      "api": "Metformin",
+      "strength": "500 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "MARKETED",
+      "active": true,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "brandName": "Gastrovia",
+      "genericName": "Pantoprazole",
+      "api": "Pantoprazole",
+      "strength": "40 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "MARKETED",
+      "active": true,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "brandName": "Allerzen",
+      "genericName": "Cetirizine",
+      "api": "Cetirizine",
+      "strength": "10 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "MARKETED",
+      "active": true,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "brandName": "Respira-L",
+      "genericName": "Montelukast",
+      "api": "Montelukast",
+      "strength": "10 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "MARKETED",
+      "active": true,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "brandName": "Ceflora",
+      "genericName": "Cefixime",
+      "api": "Cefixime",
+      "strength": "200 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "MARKETED",
+      "active": true,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "AUTHORIZED"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "brandName": "Lipirex",
+      "genericName": "Atorvastatin",
+      "api": "Atorvastatin",
+      "strength": "20 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "WITHDRAWN",
+      "active": false,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "brandName": "Serovex",
+      "genericName": "Sertraline",
+      "api": "Sertraline",
+      "strength": "50 mg",
+      "dosageForm": "Tablet",
+      "route": "Oral",
+      "status": "RETIRED",
+      "active": false,
+      "mah": "ClinixAI",
+      "authorizationScope": [
+        {
+          "jurisdiction": "India",
+          "authority": "CDSCO",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "United States",
+          "authority": "US FDA",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "European Union / EEA",
+          "authority": "EMA / EEA NCAs",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "Singapore",
+          "authority": "HSA",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "China",
+          "authority": "NMPA",
+          "mah": "ClinixAI",
+          "status": "HISTORICAL"
+        }
+      ]
+    }
+  ]
+}
