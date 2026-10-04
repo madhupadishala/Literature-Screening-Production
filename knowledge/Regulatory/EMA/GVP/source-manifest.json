@@ -4,7 +4,7 @@
   "sourceFamily": "Good Pharmacovigilance Practices (GVP)",
   "canonicalLandingPage": "https://www.ema.europa.eu/en/human-regulatory-overview/post-authorisation/pharmacovigilance-post-authorisation/good-pharmacovigilance-practices-gvp",
   "storagePolicy": {
-    "originalPdfPath": "knowledge/Regulatory/EMA/GVP/source/",
+    "originalPdfPath": "knowledge/Regulatory/EMA/GVP/<Document-Package>/source/document.pdf",
     "acquisitionResult": "knowledge/Regulatory/EMA/GVP/acquisition-result.json",
     "requirePdfSignature": true,
     "requireSha256": true,
@@ -18,7 +18,7 @@
       "referenceNumber": "EMA/541760/2011",
       "legalEffectiveDate": "2012-07-02",
       "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-module-i-pharmacovigilance-systems-and-their-quality-systems_en.pdf",
-      "localFile": "EMA-GVP-Module-I.pdf",
+      "localFile": "Module-I/source/document.pdf",
       "applicability": [
         "QUALITY_SYSTEM",
         "TRAINING",
@@ -26,7 +26,8 @@
         "AUDIT",
         "VALIDATION",
         "PV_GOVERNANCE"
-      ]
+      ],
+      "documentPackage": "Module-I"
     },
     {
       "id": "EMA-GVP-MODULE-VI-REV2",
@@ -34,7 +35,7 @@
       "referenceNumber": "EMA/873138/2011 Rev. 2",
       "legalEffectiveDate": "2017-11-22",
       "url": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-collection-management-submission-reports-suspected-adverse-reactions-medicinal-products-rev-2_en.pdf",
-      "localFile": "EMA-GVP-Module-VI-Rev2.pdf",
+      "localFile": "Module-VI-Rev2/source/document.pdf",
       "applicability": [
         "LITERATURE",
         "SAFETY_ASSESSMENT",
@@ -46,7 +47,8 @@
         "CASE_PROCESSING",
         "SUBMISSIONS",
         "DAY_ZERO"
-      ]
+      ],
+      "documentPackage": "Module-VI-Rev2"
     },
     {
       "id": "EMA-GVP-MODULE-VI-ADD-I",
@@ -54,13 +56,14 @@
       "referenceNumber": "EMA/405655/2016",
       "legalEffectiveDate": "2017-11-22",
       "url": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-addendum-i-duplicate-management-suspected-adverse-reaction-reports_en.pdf",
-      "localFile": "EMA-GVP-Module-VI-Addendum-I.pdf",
+      "localFile": "Module-VI-Addendum-I/source/document.pdf",
       "applicability": [
         "DUPLICATE_DETECTION",
         "DUPLICATE_MANAGEMENT",
         "INTAKE",
         "CASE_PROCESSING"
-      ]
+      ],
+      "documentPackage": "Module-VI-Addendum-I"
     },
     {
       "id": "EMA-GVP-MODULE-VI-ADD-II",
@@ -68,13 +71,14 @@
       "referenceNumber": "EMA/178902/2025",
       "legalEffectiveDate": "2025-07-25",
       "url": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-addendum-ii-masking-personal-data-individual-case-safety-reports-submitted-eudravigilance_en.pdf",
-      "localFile": "EMA-GVP-Module-VI-Addendum-II.pdf",
+      "localFile": "Module-VI-Addendum-II/source/document.pdf",
       "applicability": [
         "DATA_PROTECTION",
         "PII_MASKING",
         "EUDRAVIGILANCE",
         "SUBMISSIONS"
-      ]
+      ],
+      "documentPackage": "Module-VI-Addendum-II"
     },
     {
       "id": "EMA-GVP-MODULE-VII-REV1",
@@ -82,7 +86,7 @@
       "referenceNumber": "EMA/816292/2011 Rev. 1",
       "legalEffectiveDate": "2013-12-13",
       "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vii-periodic-safety-update-report_en.pdf",
-      "localFile": "EMA-GVP-Module-VII-Rev1.pdf",
+      "localFile": "Module-VII-Rev1/source/document.pdf",
       "applicability": [
         "AGGREGATE_SAFETY",
         "PSUR",
@@ -90,7 +94,8 @@
         "LITERATURE",
         "SIGNAL_EVALUATION",
         "BENEFIT_RISK"
-      ]
+      ],
+      "documentPackage": "Module-VII-Rev1"
     },
     {
       "id": "EMA-GVP-MODULE-VIII-REV3",
@@ -98,13 +103,14 @@
       "referenceNumber": "EMA/813938/2011 Rev. 3",
       "legalEffectiveDate": "2017-10-13",
       "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-viii-post-authorisation-safety-studies-rev-3_en.pdf",
-      "localFile": "EMA-GVP-Module-VIII-Rev3.pdf",
+      "localFile": "Module-VIII-Rev3/source/document.pdf",
       "applicability": [
         "PASS",
         "POST_AUTHORISATION_STUDIES",
         "OBSERVATIONAL_LITERATURE",
         "AGGREGATE_SAFETY"
-      ]
+      ],
+      "documentPackage": "Module-VIII-Rev3"
     },
     {
       "id": "EMA-GVP-MODULE-IX-REV1",
@@ -112,14 +118,15 @@
       "referenceNumber": "EMA/827661/2011 Rev. 1",
       "legalEffectiveDate": "2017-11-22",
       "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-module-ix-signal-management-rev-1_en.pdf",
-      "localFile": "EMA-GVP-Module-IX-Rev1.pdf",
+      "localFile": "Module-IX-Rev1/source/document.pdf",
       "applicability": [
         "SIGNAL_DETECTION",
         "SIGNAL_VALIDATION",
         "SIGNAL_ANALYSIS",
         "SIGNAL_PRIORITISATION",
         "LITERATURE"
-      ]
+      ],
+      "documentPackage": "Module-IX-Rev1"
     },
     {
       "id": "EMA-GVP-ANNEX-I-REV5",
@@ -127,11 +134,12 @@
       "referenceNumber": "EMA/876333/2011",
       "legalEffectiveDate": "2024-08-06",
       "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-annex-i-definitions-rev-5_en.pdf",
-      "localFile": "EMA-GVP-Annex-I-Rev5.pdf",
+      "localFile": "Annex-I-Rev5/source/document.pdf",
       "applicability": [
         "DEFINITIONS",
         "ALL_PV_ENGINES"
-      ]
+      ],
+      "documentPackage": "Annex-I-Rev5"
     },
     {
       "id": "EMA-GVP-PSC-III-2026",
@@ -139,13 +147,14 @@
       "referenceNumber": "EMA/653036/2019 Corr.",
       "legalEffectiveDate": "2026-02-09",
       "url": "https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-good-pharmacovigilance-practices-gvp-product-or-population-specific-considerations-iii-pregnant-breastfeeding-women-their-children-exposed-utero-or-breastmilk_en.pdf",
-      "localFile": "EMA-GVP-PSC-III-Pregnancy-Breastfeeding-2026.pdf",
+      "localFile": "PSC-III-Pregnancy-Breastfeeding-2026/source/document.pdf",
       "applicability": [
         "PREGNANCY",
         "BREASTFEEDING",
         "PREGNANCY_OUTCOME",
         "SPECIAL_SITUATIONS"
-      ]
+      ],
+      "documentPackage": "PSC-III-Pregnancy-Breastfeeding-2026"
     }
   ]
 }
