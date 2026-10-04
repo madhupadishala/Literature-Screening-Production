@@ -56,8 +56,27 @@ knowledge/
 │   ├── Aggregate-Safety/
 │   ├── Signal/
 │   ├── Data-Privacy/
-│   ├── Cross-Engine-Policies/
-│   └── Golden-Cases/
+│   └── Cross-Engine-Policies/
+│
+├── Scenarios/
+│   ├── General/
+│   ├── Edge-Cases/
+│   ├── Ambiguous-Conflicting/
+│   ├── Multi-Drug/
+│   ├── Special-Situations/
+│   ├── ICSR-Validity/
+│   ├── Seriousness/
+│   ├── Causality/
+│   ├── Literature-Screening/
+│   ├── Aggregate-Safety/
+│   ├── Signal/
+│   ├── Duplicate/
+│   ├── Day-Zero/
+│   ├── Cross-Engine/
+│   ├── Adversarial/
+│   ├── Regression/
+│   ├── Golden-Cases/
+│   └── Templates/
 │
 ├── Clients/
 ├── Products/
@@ -105,7 +124,7 @@ Validation and approval evidence for the document package and derived artifacts.
 
 ## Controlled Approved Knowledge
 
-This folder contains only **team-approved operational guidance, logic, rules, decision policies, mappings and golden cases**.
+This folder contains only **team-approved operational guidance, logic, rules, decision policies and mappings**. Scenario examples are maintained separately under `Scenarios/`.
 
 It does not contain raw GVP PDFs, raw ICH/FDA regulations, external SOPs, unapproved drafts, or generated AI reasoning.
 
@@ -130,6 +149,7 @@ Every regulated engine must obtain a Decision Knowledge Pack composed of:
 4. client/MAH requirements;
 5. Product Master/label/reference-safety-information;
 6. source article evidence;
-7. optional hybrid/agentic retrieval results.
+7. approved relevant scenario precedents/examples;
+8. optional hybrid/agentic retrieval results.
 
 Vector similarity alone can never be used as the sole rule-selection mechanism.
