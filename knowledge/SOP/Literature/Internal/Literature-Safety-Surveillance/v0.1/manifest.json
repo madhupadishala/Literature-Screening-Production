@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0",
+  "documentId": "MASTER-LITERATURE-PV-SOP-0.1",
+  "documentType": "SOP",
+  "title": "Literature Safety Surveillance and Assessment Master SOP",
+  "authority": "Internal PV/QA Governance",
+  "version": "0.1",
+  "governanceStatus": "DRAFT",
+  "source": {
+    "path": "knowledge/SOP/Literature/Internal/Literature-Safety-Surveillance/v0.1/source/master-sop.md",
+    "sha256": null,
+    "mimeType": "text/markdown"
+  },
+  "derived": {
+    "parsedPath": "knowledge/SOP/Literature/Internal/Literature-Safety-Surveillance/v0.1/derived/parsed",
+    "chunksPath": "knowledge/SOP/Literature/Internal/Literature-Safety-Surveillance/v0.1/derived/chunks",
+    "embeddingsPath": "knowledge/SOP/Literature/Internal/Literature-Safety-Surveillance/v0.1/derived/embeddings",
+    "indexPath": "knowledge/SOP/Literature/Internal/Literature-Safety-Surveillance/v0.1/derived/indexes"
+  },
+  "qa": {
+    "path": "knowledge/SOP/Literature/Internal/Literature-Safety-Surveillance/v0.1/qa",
+    "approvalStatus": "DRAFT_NON_PRODUCTION"
+  }
+}
