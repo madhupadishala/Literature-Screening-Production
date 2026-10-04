@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "productId": "DEMO-PROD-005",
+  "sourceProductMaster": {
+    "sourceFilename": "TheClinixAI_Synthetic_Product_Master_10_Products.csv",
+    "productMasterVersion": "1.0.0",
+    "synthetic": true
+  },
+  "product": {
+    "brandName": "Gastrovia",
+    "genericName": "Pantoprazole",
+    "api": "Pantoprazole",
+    "strength": "40 mg",
+    "dosageForm": "Tablet",
+    "route": "Oral",
+    "lifecycleStatus": "MARKETED",
+    "active": true
+  },
+  "authorization": {
+    "configuredCountry": "India",
+    "configuredMah": "ClinixAI Demo Pharma Pvt Ltd",
+    "mahCountry": null,
+    "authoritativeMahVerified": false
+  },
+  "publicVerification": {
+    "status": "SYNTHETIC_IDENTITY_NOT_AUTHORITATIVELY_VERIFIED",
+    "authoritativeProductMatchFound": false,
+    "collisionWarning": null,
+    "checkedAt": "2026-10-04"
+  },
+  "labelingAcquisition": {
+    "status": "BLOCKED_UNTIL_REAL_PRODUCT_MAH_IDENTITY_IS_VERIFIED",
+    "authoritativeDocumentsDownloaded": 0,
+    "reason": "The Product Master is synthetic. Downloading labels for same/similar public brand names would create false product-to-label associations.",
+    "allowedNextStep": "Replace/augment this demo record with an authoritative product identity and MAH/jurisdiction, then acquire exact labels."
+  }
+}
