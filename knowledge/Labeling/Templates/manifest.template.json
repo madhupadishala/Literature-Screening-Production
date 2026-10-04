@@ -1,0 +1,36 @@
+{
+  "labelId": "LABEL-<BRAND>-<GENERIC>-<COUNTRY>-<TYPE>-<VERSION>",
+  "brandName": "<Brand Name>",
+  "genericName": "<Generic Name>",
+  "country": "<Country or GLOBAL>",
+  "documentType": "SmPC",
+  "version": "<Version>",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  },
+  "source": {
+    "path": "knowledge/Labeling/<Brand>/<Generic>/<Country>/<Type>/<Version>/source/document.pdf",
+    "canonicalUrl": null,
+    "sha256": "<sha256>",
+    "mimeType": "application/pdf"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/<Brand>/<Generic>/<Country>/<Type>/<Version>/derived/parsed",
+    "chunksPath": "knowledge/Labeling/<Brand>/<Generic>/<Country>/<Type>/<Version>/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/<Brand>/<Generic>/<Country>/<Type>/<Version>/derived/embeddings",
+    "indexPath": "knowledge/Labeling/<Brand>/<Generic>/<Country>/<Type>/<Version>/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  }
+}
