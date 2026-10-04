@@ -1,56 +1,135 @@
 # PV Knowledge Centre
 
-This directory is the physical and controlled knowledge source for regulated PV decisions.
+This directory is the canonical physical knowledge centre for PV automation.
 
-## Layers
+## Core principle
 
-### 1. SOP/
-Authoritative or reference SOP sources, controlled transcriptions, source manifests and master SOPs.
+**Source documents, AI-derived artifacts, and team-approved operational knowledge are separate layers.**
 
-- `SOP/Sources/` — source-level documents and manifests.
-- `SOP/Master/` — consolidated end-to-end master SOPs.
-- A source may be physically represented as its original binary, a controlled transcription, or both.
-- Source manifests preserve integrity hashes and document-control status.
+No raw SOP, regulation, guidance PDF, generated chunk, vector embedding, or draft rule may be mixed into the wrong layer.
 
-### 2. Regulatory/
-Authoritative regulatory guidance acquired from official authorities.
+## Canonical hierarchy
 
-- `Regulatory/EMA/GVP/source/` contains physically archived EMA/HMA GVP PDFs.
-- `source-manifest.json` records canonical official URLs, reference numbers, legal effective dates and applicability.
-- `acquisition-result.json` records local paths, byte sizes and SHA-256 hashes.
-- Acquired regulatory sources remain **non-production** until PV/QA approval.
+```text
+knowledge/
+├── SOP/
+│   ├── Literature/
+│   ├── ICSR/
+│   ├── Triage/
+│   ├── Aggregate/
+│   ├── Signal/
+│   ├── Submissions/
+│   ├── Quality/
+│   └── Validation/
+│
+├── Regulatory/
+│   ├── EMA/
+│   │   └── GVP/
+│   ├── ICH/
+│   │   ├── E2-Safety/
+│   │   └── E6-GCP/
+│   ├── FDA/
+│   │   ├── 21-CFR/
+│   │   └── Guidance/
+│   ├── Privacy/
+│   │   ├── HIPAA/
+│   │   └── GDPR/
+│   ├── GxP/
+│   ├── CDSCO/
+│   ├── MHRA/
+│   ├── Health-Canada/
+│   ├── TGA/
+│   ├── PMDA/
+│   └── WHO/
+│
+├── Controlled-Approved-Knowledge/
+│   ├── Repository-v1.0/
+│   ├── Team-Rules/
+│   ├── Literature-Screening/
+│   ├── ICSR-Validity/
+│   ├── Causality/
+│   ├── Seriousness/
+│   ├── Special-Situations/
+│   ├── Expectedness-Listedness/
+│   ├── Duplicate-Management/
+│   ├── Day-Zero/
+│   ├── Aggregate-Safety/
+│   ├── Signal/
+│   ├── Data-Privacy/
+│   ├── Cross-Engine-Policies/
+│   └── Golden-Cases/
+│
+├── Clients/
+├── Products/
+├── Dictionaries/
+├── _system/
+└── drafts/
+```
 
-### 3. controlled/
-Approved, versioned Knowledge Objects and retrieval chunks derived from governed source documents.
+## Document package standard
 
-Only approved/effective knowledge may be used to finalise regulated production decisions.
+Every source document is stored as its own package:
 
-### 4. drafts/
-Work-in-progress knowledge, policy maps and design material. Draft content must never silently enter production retrieval.
+```text
+<Document-ID>/
+├── manifest.json
+├── source/
+│   └── document.<pdf|docx|xml|html|md>
+├── derived/
+│   ├── parsed/
+│   ├── chunks/
+│   ├── embeddings/
+│   └── indexes/
+└── qa/
+    ├── validation.json
+    └── approval.json
+```
 
-### 5. Clients/, Products/, Dictionaries/, Rules/
-Tenant/client requirements, Product Master/MAH data, controlled dictionaries and deterministic rules.
+### source/
+Immutable authoritative or reference source. Store original binary whenever available. Preserve source URL, version, effective date, SHA-256 and provenance in `manifest.json`.
 
-## Decision rule
+### derived/parsed/
+Lossless structured representation produced by parsing/OCR/IDP. Preserve page, section, paragraph, table, figure and source coordinates.
 
-A regulated engine must not rely on a general top-K RAG result alone.
+### derived/chunks/
+Machine-retrieval units. Chunks must be source-linked, section-aware and versioned. Chunking must never modify the source document.
 
-Before finalising a decision, the engine shall receive a complete **Decision Knowledge Pack** containing:
+### derived/embeddings/
+Embedding metadata, vector IDs, model/version, dimension, content hashes and index references. The vector database is an index, not the authoritative source.
 
-1. mandatory Master SOP rules;
-2. mandatory applicable regulatory/GVP sections;
-3. applicable client/MAH SOP/SOW/safety-agreement rules;
-4. Product Master/MAH/label/reference-safety-information sources;
-5. source article evidence;
-6. source/rule versions and hashes;
-7. conflicts or missing mandatory sources.
+### derived/indexes/
+Sparse/BM25 terms, parent-child relationships, entity maps, citation maps and retrieval metadata.
 
-If a mandatory source is missing, conflicting or not effective, the engine must fail closed to an unresolved/manual-review state.
+### qa/
+Validation and approval evidence for the document package and derived artifacts.
 
-## Current governance status
+## Controlled Approved Knowledge
 
-- Uploaded Literature Search SOP: physically stored as controlled source transcription with original DOCX SHA-256; document-control metadata requires reconciliation before production approval.
-- Master Literature Safety Surveillance SOP v0.1: physically stored under `SOP/Master/`; draft/non-production.
-- EMA/HMA GVP baseline: nine authoritative PDFs physically archived and hashed under `Regulatory/EMA/GVP/source/`; acquired but not yet QA-approved for controlled production retrieval.
-- Existing controlled repository: remains the currently approved internal Knowledge Object set.
-- Production pgvector loading/promotion is a separate governed step and must not happen automatically merely because a source file exists here.
+This folder contains only **team-approved operational guidance, logic, rules, decision policies, mappings and golden cases**.
+
+It does not contain raw GVP PDFs, raw ICH/FDA regulations, external SOPs, unapproved drafts, or generated AI reasoning.
+
+A controlled rule must carry:
+- stable Knowledge Object ID;
+- source references;
+- version;
+- status;
+- effective date;
+- approver/approval basis;
+- content hash;
+- production eligibility;
+- supersession lineage.
+
+## Retrieval rule
+
+Every regulated engine must obtain a Decision Knowledge Pack composed of:
+
+1. exact mandatory controlled rules;
+2. exact applicable SOP sections;
+3. exact applicable regulatory sections;
+4. client/MAH requirements;
+5. Product Master/label/reference-safety-information;
+6. source article evidence;
+7. optional hybrid/agentic retrieval results.
+
+Vector similarity alone can never be used as the sole rule-selection mechanism.
