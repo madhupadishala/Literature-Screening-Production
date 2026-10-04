@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0",
+  "jurisdiction": "European Union / EEA",
+  "authority": "EMA / EEA NCAs",
+  "mah": "ClinixAI",
+  "authorizationStatus": "CONFIGURED",
+  "labelingAcquisitionStatus": "PENDING_SOURCE_DOCUMENT_INGESTION"
+}
