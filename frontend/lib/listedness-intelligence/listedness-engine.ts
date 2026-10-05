@@ -460,4 +460,8 @@ export function assessListedness(input: ListednessAssessmentInput): ListednessAs
   };
 }
 
+export function listednessSearchTerms(event: string): string[] {
+  return eventAliases(event);
+}
+
 export const LISTEDNESS_CONTROLLED_SYNONYM_GROUPS = CONTROLLED_SYNONYM_GROUPS;
