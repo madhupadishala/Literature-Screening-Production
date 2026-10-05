@@ -1,0 +1,88 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-004-European-Union-EEA-SmPC-5d518519b3f0",
+  "brandName": "Glycora",
+  "genericName": "Metformin",
+  "country": "European-Union-EEA",
+  "documentType": "SmPC",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-004",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "name": "METFORMINA ACTIVASE 500 MG COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+      "holder": "Activase Pharmaceuticals Limited",
+      "registration": "91590",
+      "dose": "500 mg",
+      "form": {
+        "id": 42,
+        "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+      },
+      "language": "Spanish"
+    },
+    "sourceJurisdiction": "Spain",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "regionalApplicability": "SPAIN_NATIONAL_LABEL_NOT_EMA_CENTRAL_OR_ALL_EEA_APPROVAL"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://cima.aemps.es/cima/pdfs/ft/91590/FT_91590.pdf",
+    "resolvedUrl": "https://cima.aemps.es/cima/pdfs/ft/91590/FT_91590.pdf",
+    "sha256": "5d518519b3f04ed7c44cabbddb9a91b520e19526007a27657b714ea0579b3dd6",
+    "bytes": 256663,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:50:06.081155+00:00",
+    "sourcePublicationOrUpdateDate": "2026-09-01T07:39:42+00:00",
+    "authorityClass": "NATIONAL_REGULATOR"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 11,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Metformin"
+    ],
+    "strengths": [
+      "500 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

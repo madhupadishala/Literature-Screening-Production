@@ -1,0 +1,88 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-003-European-Union-EEA-PIL-4bacd035680a",
+  "brandName": "Cardionex",
+  "genericName": "Amlodipine",
+  "country": "European-Union-EEA",
+  "documentType": "PIL",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-003",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "name": "AMLODIPINO ALMUS 5 mg COMPRIMIDOS EFG",
+      "holder": "Almus Farmaceutica S.A.U.",
+      "registration": "70750",
+      "dose": "5 mg",
+      "form": {
+        "id": 40,
+        "nombre": "COMPRIMIDO"
+      },
+      "language": "Spanish"
+    },
+    "sourceJurisdiction": "Spain",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "regionalApplicability": "SPAIN_NATIONAL_LABEL_NOT_EMA_CENTRAL_OR_ALL_EEA_APPROVAL"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://cima.aemps.es/cima/pdfs/p/70750/P_70750.pdf",
+    "resolvedUrl": "https://cima.aemps.es/cima/pdfs/p/70750/P_70750.pdf",
+    "sha256": "4bacd035680af7d577ebc5222005bb56fda587c7ac170105e51e7810c3196c01",
+    "bytes": 183848,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:50:05.805974+00:00",
+    "sourcePublicationOrUpdateDate": "2025-06-10T23:33:19+00:00",
+    "authorityClass": "NATIONAL_REGULATOR"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 6,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Amlodipine"
+    ],
+    "strengths": [
+      "5 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

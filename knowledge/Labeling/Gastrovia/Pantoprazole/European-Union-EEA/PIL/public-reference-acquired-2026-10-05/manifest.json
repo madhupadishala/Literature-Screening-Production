@@ -1,0 +1,89 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-005-European-Union-EEA-PIL-9952b44e2afa",
+  "brandName": "Gastrovia",
+  "genericName": "Pantoprazole",
+  "country": "European-Union-EEA",
+  "documentType": "PIL",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-005",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "name": "PANTOPRAZOL ALMUS 40 mg COMPRIMIDOS GASTRORRESISTENTES EFG",
+      "holder": "Almus Farmaceutica S.A.U.",
+      "registration": "70297",
+      "dose": "40 mg pantoprazol",
+      "form": {
+        "id": 46,
+        "nombre": "COMPRIMIDO GASTRORRESISTENTE"
+      },
+      "language": "Spanish"
+    },
+    "sourceJurisdiction": "Spain",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "releaseCharacteristicsReview": "MASTER_TABLET_RELEASE_UNSPECIFIED_REQUIRES_REVIEW",
+    "regionalApplicability": "SPAIN_NATIONAL_LABEL_NOT_EMA_CENTRAL_OR_ALL_EEA_APPROVAL"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://cima.aemps.es/cima/pdfs/p/70297/P_70297.pdf",
+    "resolvedUrl": "https://cima.aemps.es/cima/pdfs/p/70297/P_70297.pdf",
+    "sha256": "9952b44e2afa1a95e922474b4d84b3ada1c015ab9ad8e678b6b2e4d524bf456e",
+    "bytes": 198684,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:50:39.256907+00:00",
+    "sourcePublicationOrUpdateDate": "2025-06-10T23:30:58+00:00",
+    "authorityClass": "NATIONAL_REGULATOR"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 7,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Pantoprazole"
+    ],
+    "strengths": [
+      "40 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

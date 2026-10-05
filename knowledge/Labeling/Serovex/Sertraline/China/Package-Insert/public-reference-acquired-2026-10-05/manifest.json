@@ -1,0 +1,77 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-010-China-Package-Insert-db3a61546139",
+  "brandName": "Serovex",
+  "genericName": "Sertraline",
+  "country": "China",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-010",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "Zoloft / Viatris China",
+    "sourceJurisdiction": "China",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Serovex/Sertraline/China/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://viatris.cn/-/media/project/viatris-sites/product-document/10zoloft.pdf",
+    "resolvedUrl": "https://viatris.cn/-/media/project/viatris-sites/product-document/10zoloft.pdf",
+    "sha256": "db3a615461390fa1ec5837a8790416d9cdfb4bb44166cf05aea484fe80f311e5",
+    "bytes": 340105,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:51:57.162973+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "MANUFACTURER"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Serovex/Sertraline/China/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Serovex/Sertraline/China/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Serovex/Sertraline/China/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Serovex/Sertraline/China/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 15,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Sertraline"
+    ],
+    "strengths": [
+      "50 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

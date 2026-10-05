@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "jurisdiction": "Singapore",
+  "authority": "HSA",
+  "mah": "ClinixAI",
+  "authorizationStatus": "CONFIGURED",
+  "labelingAcquisitionStatus": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+  "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED",
+  "legalAuthorizationVerified": false,
+  "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+  "sourceManifestPaths": [
+    "knowledge/Labeling/Neurovia/Pregabalin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json"
+  ]
+}

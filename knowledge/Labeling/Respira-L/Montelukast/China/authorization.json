@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "jurisdiction": "China",
+  "authority": "NMPA",
+  "mah": "ClinixAI",
+  "authorizationStatus": "CONFIGURED",
+  "labelingAcquisitionStatus": "MATCHING_SOURCE_NOT_ACQUIRED",
+  "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED",
+  "legalAuthorizationVerified": false,
+  "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+  "sourceManifestPaths": []
+}

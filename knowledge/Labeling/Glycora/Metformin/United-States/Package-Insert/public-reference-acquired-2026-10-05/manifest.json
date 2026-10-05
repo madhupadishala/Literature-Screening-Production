@@ -1,0 +1,77 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-004-United-States-Package-Insert-bc85e180675b",
+  "brandName": "Glycora",
+  "genericName": "Metformin",
+  "country": "United-States",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-004",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "METFORMIN HYDROCHLORIDE TABLET, FILM COATED [A-S MEDICATION SOLUTIONS]",
+    "sourceJurisdiction": "United-States",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Glycora/Metformin/United-States/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=23aa50c5-28fe-4322-b5c6-1f1c48409b16&type=pdf",
+    "resolvedUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=23aa50c5-28fe-4322-b5c6-1f1c48409b16&type=pdf",
+    "sha256": "bc85e180675b9596021275380500a446477f7d394f2fc92d5661bb01e23f6b2c",
+    "bytes": 239008,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:50:03.418249+00:00",
+    "sourcePublicationOrUpdateDate": "Sep 23, 2026",
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Glycora/Metformin/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Glycora/Metformin/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Glycora/Metformin/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Glycora/Metformin/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 23,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Metformin"
+    ],
+    "strengths": [
+      "500 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-003-United-States-Package-Insert-242048a9cdf2",
+  "brandName": "Cardionex",
+  "genericName": "Amlodipine",
+  "country": "United-States",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-003",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "RemedyRepack amlodipine 5 mg tablets",
+    "sourceJurisdiction": "United-States",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Cardionex/Amlodipine/United-States/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=d09173a1-5e3c-4c86-8c7c-15238925ef50&type=pdf",
+    "resolvedUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=d09173a1-5e3c-4c86-8c7c-15238925ef50&type=pdf",
+    "sha256": "242048a9cdf234c618d5ef429f1bf300474f08c97f8dc4e26e5aa8b8811520f1",
+    "bytes": 534917,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:58:07.072791+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Cardionex/Amlodipine/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Cardionex/Amlodipine/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Cardionex/Amlodipine/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Cardionex/Amlodipine/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "fullHtmlSmPC": false,
+    "pages": 24,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Amlodipine"
+    ],
+    "strengths": [
+      "5 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

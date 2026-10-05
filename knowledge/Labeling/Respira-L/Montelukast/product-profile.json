@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "2.0",
+  "productId": "CLX-PROD-007",
+  "productMasterId": "CLINIXAI-PRODUCT-MASTER",
+  "productMasterVersion": "2.1.0",
+  "product": {
+    "brandName": "Respira-L",
+    "genericName": "Montelukast",
+    "api": "Montelukast",
+    "strength": "10 mg",
+    "dosageForm": "Tablet",
+    "route": "Oral",
+    "lifecycleStatus": "MARKETED",
+    "active": true
+  },
+  "mah": "ClinixAI",
+  "authorizationScope": [
+    {
+      "jurisdiction": "India",
+      "authority": "CDSCO",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Respira-L/Montelukast/India"
+    },
+    {
+      "jurisdiction": "United States",
+      "authority": "US FDA",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Respira-L/Montelukast/United-States"
+    },
+    {
+      "jurisdiction": "European Union / EEA",
+      "authority": "EMA / EEA NCAs",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "authority": "HSA",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Respira-L/Montelukast/Singapore"
+    },
+    {
+      "jurisdiction": "China",
+      "authority": "NMPA",
+      "mah": "ClinixAI",
+      "status": "AUTHORIZED",
+      "labelingFolder": "knowledge/Labeling/Respira-L/Montelukast/China"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "authority": "MHRA",
+      "mah": "ClinixAI",
+      "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+      "legalAuthorizationVerified": false,
+      "status": "CONFIGURED",
+      "labelingFolder": "knowledge/Labeling/Respira-L/Montelukast/United-Kingdom"
+    }
+  ],
+  "labelingResolution": {
+    "hierarchy": "Brand > Generic > Jurisdiction > Document Type > Version",
+    "requiredDocumentTypes": [
+      "SmPC",
+      "CCDS",
+      "IB",
+      "USPI",
+      "PI",
+      "PIL",
+      "Package-Insert",
+      "Core-Safety-Information",
+      "Other"
+    ],
+    "sourceDocumentStatus": "REFERENCE_SOURCES_ACQUIRED_PENDING_REVIEW",
+    "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED"
+  }
+}

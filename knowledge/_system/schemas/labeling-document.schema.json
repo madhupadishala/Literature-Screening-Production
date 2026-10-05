@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pv-labeling-document-package-v1",
+  "title": "PV Labeling Document Package",
+  "type": "object",
+  "required": [
+    "labelId",
+    "brandName",
+    "genericName",
+    "country",
+    "documentType",
+    "version",
+    "governanceStatus",
+    "source",
+    "derived"
+  ],
+  "properties": {
+    "labelId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "brandName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "genericName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "country": {
+      "type": "string",
+      "minLength": 1
+    },
+    "documentType": {
+      "enum": [
+        "SmPC",
+        "CCDS",
+        "IB",
+        "USPI",
+        "PI",
+        "PIL",
+        "Package-Insert",
+        "Core-Safety-Information",
+        "Other"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effectiveDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "supersedesLabelId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "governanceStatus": {
+      "enum": [
+        "DRAFT",
+        "REFERENCE",
+        "ACQUIRED",
+        "UNDER_REVIEW",
+        "APPROVED",
+        "EFFECTIVE",
+        "SUPERSEDED",
+        "RETIRED"
+      ]
+    },
+    "productScope": {
+      "type": "object",
+      "properties": {
+        "activeIngredients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "strengths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dosageForms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "canonicalUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "mimeType": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "derived": {
+      "type": "object",
+      "properties": {
+        "parsedPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "chunksPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "embeddingsPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "indexPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "embeddingModel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "embeddingDimensions": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    },
+    "regulatoryUse": {
+      "type": "object",
+      "properties": {
+        "referenceSafetyInformation": {
+          "type": "boolean"
+        },
+        "listednessExpectedness": {
+          "type": "boolean"
+        },
+        "jurisdictionSpecific": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-007-United-States-Package-Insert-d9d9efd4f094",
+  "brandName": "Respira-L",
+  "genericName": "Montelukast",
+  "country": "United-States",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-007",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "MONTELUKAST SODIUM TABLET, FILM COATED [CARDINAL HEALTH 107, LLC]",
+    "sourceJurisdiction": "United-States",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Respira-L/Montelukast/United-States/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=9287d2f1-2414-4ee2-aecc-b6b59c6a0a4c&type=pdf",
+    "resolvedUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=9287d2f1-2414-4ee2-aecc-b6b59c6a0a4c&type=pdf",
+    "sha256": "d9d9efd4f0945bf29af60e116cc9478c8db9a55c0b60619607e9f74fb8a5c6b5",
+    "bytes": 320508,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:50:43.659620+00:00",
+    "sourcePublicationOrUpdateDate": "Sep 21, 2026",
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Respira-L/Montelukast/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Respira-L/Montelukast/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Respira-L/Montelukast/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Respira-L/Montelukast/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 30,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Montelukast"
+    ],
+    "strengths": [
+      "10 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}
