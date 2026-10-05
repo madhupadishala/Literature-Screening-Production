@@ -196,7 +196,14 @@ async function retrieveLabelEvidence(input: {
 export async function assessListednessFromKnowledgeBase(
   request: ListednessKnowledgeRequest,
 ): Promise<ListednessKnowledgeAssessment> {
-  const reference = await resolveListednessReference(request);
+  const usageScope = request.usageScope ?? "PRODUCTION";
+  const reference = await resolveListednessReference({
+    tenantId: request.tenantId,
+    clientProductId: request.clientProductId,
+    country: request.country,
+    relevantDate: request.relevantDate,
+    usageScope,
+  });
 
   if (!reference) {
     return {
@@ -212,33 +219,89 @@ export async function assessListednessFromKnowledgeBase(
         evidenceMode: "NONE",
         queryTerms: listednessSearchTerms(request.reportedEvent),
         matchedChunks: 0,
+        searchedChunks: 0,
+        documentAvailable: false,
         citationIds: [],
       },
     };
   }
 
-  const retrieved = await retrieveLabelEvidence({ request, reference });
+  const retrieved = await retrieveLabelEvidence({
+    request: { ...request, usageScope },
+    reference,
+  });
 
-  if (
-    request.requireDocumentEvidence === true &&
-    retrieved.evidenceMode !== "CONTROLLED_KNOWLEDGE_DOCUMENT"
-  ) {
+  if (!retrieved.documentAvailable) {
+    if (
+      request.requireDocumentEvidence === true ||
+      retrieved.evidenceMode === "NONE"
+    ) {
+      return {
+        reference,
+        assessment: {
+          reportedEvent: request.reportedEvent,
+          normalizedEvent: normalize(request.reportedEvent),
+          listedness: "UNRESOLVED",
+          manualReviewRequired: true,
+          reasonCode: "LABEL_DOCUMENT_EVIDENCE_NOT_AVAILABLE",
+          rationale:
+            "The governed label reference resolved, but its bound knowledge document is not available in the active label repository.",
+          evidenceDecisions: [],
+        },
+        retrieval: {
+          evidenceMode: retrieved.evidenceMode,
+          queryTerms: retrieved.queryTerms,
+          matchedChunks: 0,
+          searchedChunks: 0,
+          documentAvailable: false,
+          citationIds: [],
+          sourceDocument: reference.sourceDocument,
+        },
+      };
+    }
+
+    const fallbackAssessment = assessListedness({
+      reportedEvent: request.reportedEvent,
+      eventKind: request.eventKind,
+      caseContext: request.caseContext,
+      labContext: request.labContext,
+      labelEvidence: retrieved.evidence,
+    });
+
+    return {
+      reference,
+      assessment: fallbackAssessment,
+      retrieval: {
+        evidenceMode: retrieved.evidenceMode,
+        queryTerms: retrieved.queryTerms,
+        matchedChunks: retrieved.evidence.length,
+        searchedChunks: 0,
+        documentAvailable: false,
+        citationIds: [],
+        sourceDocument: reference.sourceDocument,
+      },
+    };
+  }
+
+  if (retrieved.evidence.length === 0) {
     return {
       reference,
       assessment: {
         reportedEvent: request.reportedEvent,
         normalizedEvent: normalize(request.reportedEvent),
-        listedness: "UNRESOLVED",
-        manualReviewRequired: true,
-        reasonCode: "LABEL_DOCUMENT_EVIDENCE_NOT_RETRIEVED",
+        listedness: "UNLISTED",
+        manualReviewRequired: false,
+        reasonCode: "NO_LISTED_EVENT_FOUND_AFTER_DOCUMENT_SEARCH",
         rationale:
-          "The governed label reference was resolved, but no matching chunk from the configured source document was retrieved from the controlled knowledge repository.",
+          "The governed label document was available and searched using normalized event terms, spelling variants and controlled synonyms, but no supporting event concept was found.",
         evidenceDecisions: [],
       },
       retrieval: {
-        evidenceMode: retrieved.evidenceMode,
+        evidenceMode: "CONTROLLED_KNOWLEDGE_DOCUMENT",
         queryTerms: retrieved.queryTerms,
         matchedChunks: 0,
+        searchedChunks: retrieved.searchedChunks,
+        documentAvailable: true,
         citationIds: [],
         sourceDocument: reference.sourceDocument,
       },
@@ -257,9 +320,11 @@ export async function assessListednessFromKnowledgeBase(
     reference,
     assessment,
     retrieval: {
-      evidenceMode: retrieved.evidenceMode,
+      evidenceMode: "CONTROLLED_KNOWLEDGE_DOCUMENT",
       queryTerms: retrieved.queryTerms,
       matchedChunks: retrieved.evidence.length,
+      searchedChunks: retrieved.searchedChunks,
+      documentAvailable: true,
       citationIds: retrieved.citationIds,
       sourceDocument: reference.sourceDocument,
     },
