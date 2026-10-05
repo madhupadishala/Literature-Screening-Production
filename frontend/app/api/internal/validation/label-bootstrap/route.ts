@@ -7,7 +7,7 @@ import { bootstrapLabelKnowledge } from "@/lib/listedness-intelligence/label-kno
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function POST(_request: NextRequest): Promise<Response> {
+export async function GET(_request: NextRequest): Promise<Response> {
   if (process.env.VERCEL_ENV !== "preview") {
     return new Response("Not found", { status: 404 });
   }
