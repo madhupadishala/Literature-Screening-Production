@@ -19,9 +19,9 @@
   ],
   "governance": {
     "status": "CONTROLLED_REFERENCE_NOT_HUMAN_MEDICAL_SIGNOFF",
-    "rule": "FAERS supplies real event/product anchors. Label passages are controlled fixtures designed to test listedness logic and must not be represented as the original product label.",
-    "productionUse": "Use for regression/reference. Product-specific production listedness must still use the governed client/product/version labeling document from the knowledge base.",
-    "approvalRequired": "PV/medical reviewer sign-off before promoting this dataset to human-approved GOLD status."
+    "rule": "FAERS supplies real event/product anchors. Label passages are controlled fixtures designed to test listedness logic and must not be represented as original product labels.",
+    "productionUse": "Use for regression/reference. Product-specific production listedness must use the governed client/product/version labeling document from the knowledge base.",
+    "approvalRequired": "PV/medical reviewer sign-off before promotion to human-approved GOLD status."
   },
   "scenarios": [
     {
@@ -43,7 +43,9 @@
         "medicinalProduct": "DURAGESIC-100",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "DRUG ADMINISTRATION ERROR",
@@ -85,7 +87,9 @@
         "medicinalProduct": "BONIVA",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Vomiting",
@@ -125,7 +129,9 @@
         "medicinalProduct": "IBUPROFEN",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Dyspepsia",
@@ -164,7 +170,9 @@
         "medicinalProduct": "LYRICA",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Drug ineffective",
@@ -203,7 +211,9 @@
         "medicinalProduct": "DOXYCYCLINE HYCLATE",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Drug hypersensitivity",
@@ -242,7 +252,9 @@
         "medicinalProduct": "LIPITOR",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Drug hypersensitivity",
@@ -282,7 +294,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Cough",
@@ -321,7 +335,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Rhinorrhoea",
@@ -361,7 +377,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Unevaluable event",
@@ -400,7 +418,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Hepatic enzyme increased",
@@ -439,7 +459,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Back pain",
@@ -479,7 +501,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Oedema peripheral",
@@ -519,7 +543,9 @@
         "medicinalProduct": "ILARIS",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Pneumonia",
@@ -559,7 +585,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Swelling",
@@ -598,7 +626,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Back pain",
@@ -639,8 +669,10 @@
         ],
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Dyspnoea%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Oedema%22&limit=10",
+        "queryTerm": "Oedema",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Oedema",
@@ -668,28 +700,32 @@
       "edgeCaseCategory": "UK_US_SPELLING",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003630",
-        "safetyReportVersion": "2",
+        "safetyReportId": "10003335",
+        "safetyReportVersion": "3",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Haemorrhage",
+        "eventPt": "Localised oedema",
         "allReactionPts": [
-          "Haemorrhage",
-          "Skin atrophy"
+          "Localised oedema",
+          "Oedema peripheral",
+          "Fluid retention",
+          "Nasal congestion"
         ],
         "medicinalProduct": "LETAIRIS",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Haemorrhage%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Oedema%22&limit=10",
+        "queryTerm": "Oedema",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Haemorrhage",
+        "reportedEvent": "Localised oedema",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include hemorrhage.",
+          "text": "Adverse reactions include Localised edema.",
           "subjectProduct": "LETAIRIS"
         }
       },
@@ -708,27 +744,31 @@
       "edgeCaseCategory": "UK_US_SPELLING",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003339",
+        "safetyReportId": "10003341",
         "safetyReportVersion": "2",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Anaemia",
+        "eventPt": "Oedema",
         "allReactionPts": [
-          "Anaemia"
+          "Dizziness",
+          "Oedema",
+          "Dyspnoea"
         ],
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Anaemia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Oedema%22&limit=10",
+        "queryTerm": "Oedema",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Anaemia",
+        "reportedEvent": "Oedema",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include anemia.",
+          "text": "Adverse reactions include edema.",
           "subjectProduct": "LETAIRIS"
         }
       },
@@ -747,28 +787,30 @@
       "edgeCaseCategory": "UK_US_SPELLING",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003315",
-        "safetyReportVersion": "1",
+        "safetyReportId": "10003352",
+        "safetyReportVersion": "3",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Death",
+        "eventPt": "Oedema peripheral",
         "allReactionPts": [
-          "Death"
+          "Oedema peripheral"
         ],
-        "medicinalProduct": "RANOLAZINE",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "LETAIRIS",
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Oedema%22&limit=10",
+        "queryTerm": "Oedema",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Death",
+        "reportedEvent": "Oedema peripheral",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include death.",
-          "subjectProduct": "RANOLAZINE"
+          "text": "Adverse reactions include edema peripheral.",
+          "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
@@ -786,35 +828,30 @@
       "edgeCaseCategory": "UK_US_SPELLING",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003329",
-        "safetyReportVersion": "11",
+        "safetyReportId": "10003356",
+        "safetyReportVersion": "3",
         "receivedDate": "20140312",
-        "country": "IT",
-        "eventPt": "Diarrhoea",
+        "country": "US",
+        "eventPt": "Oedema peripheral",
         "allReactionPts": [
-          "Diarrhoea",
-          "Abdominal pain",
-          "Asthenia",
-          "Diarrhoea",
-          "Weight decreased",
-          "Abdominal pain",
-          "Blood creatinine increased",
-          "C-reactive protein increased"
+          "Oedema peripheral"
         ],
-        "medicinalProduct": "BIBW 2992",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "LETAIRIS",
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Oedema%22&limit=10",
+        "queryTerm": "Oedema",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Diarrhoea",
+        "reportedEvent": "Oedema peripheral",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include diarrhea.",
-          "subjectProduct": "BIBW 2992"
+          "text": "Adverse reactions include edema peripheral.",
+          "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
@@ -844,7 +881,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Oedema%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": "Oedema",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Oedema",
@@ -872,30 +911,30 @@
       "edgeCaseCategory": "UK_US_SPELLING",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003317",
-        "safetyReportVersion": "1",
+        "safetyReportId": "10003366",
+        "safetyReportVersion": "2",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Angioedema",
+        "eventPt": "Oedema",
         "allReactionPts": [
-          "Angioedema",
-          "Laryngeal oedema",
-          "Face oedema"
+          "Oedema"
         ],
-        "medicinalProduct": "BENLYSTA",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "LETAIRIS",
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Oedema%22&limit=10",
+        "queryTerm": "Oedema",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Angioedema",
+        "reportedEvent": "Oedema",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include angioedema.",
-          "subjectProduct": "BENLYSTA"
+          "text": "Adverse reactions include edema.",
+          "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
@@ -913,31 +952,31 @@
       "edgeCaseCategory": "UK_US_SPELLING",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003419",
+        "safetyReportId": "10003388",
         "safetyReportVersion": "3",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Anaemia",
+        "eventPt": "Oedema",
         "allReactionPts": [
-          "Anaemia",
-          "Fatigue",
-          "Fibrosis",
           "Dyspnoea",
-          "Weight decreased"
+          "Dyspnoea exertional",
+          "Oedema"
         ],
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Anaemia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Oedema%22&limit=10",
+        "queryTerm": "Oedema",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Anaemia",
+        "reportedEvent": "Oedema",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include anemia.",
+          "text": "Adverse reactions include edema.",
           "subjectProduct": "LETAIRIS"
         }
       },
@@ -956,28 +995,37 @@
       "edgeCaseCategory": "UK_US_SPELLING",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003318",
-        "safetyReportVersion": "2",
+        "safetyReportId": "10003428",
+        "safetyReportVersion": "1",
         "receivedDate": "20140312",
-        "country": "BR",
-        "eventPt": "Tuberculosis of central nervous system",
+        "country": "CN",
+        "eventPt": "Foetal distress syndrome",
         "allReactionPts": [
-          "Tuberculosis of central nervous system"
+          "Foetal distress syndrome",
+          "Intraventricular haemorrhage neonatal",
+          "Low birth weight baby",
+          "Listeriosis",
+          "Pyrexia",
+          "Sepsis",
+          "Meningitis",
+          "Pneumonia aspiration"
         ],
-        "medicinalProduct": "BELIMUMAB",
+        "medicinalProduct": "CEFTRIAXONE",
         "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Haemorrhage%22&limit=10",
+        "queryTerm": "Haemorrhage",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Tuberculosis of central nervous system",
+        "reportedEvent": "Foetal distress syndrome",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include tuberculosis of central nervous system.",
-          "subjectProduct": "BELIMUMAB"
+          "text": "Adverse reactions include fetal distress syndrome.",
+          "subjectProduct": "CEFTRIAXONE"
         }
       },
       "expected": {
@@ -995,32 +1043,32 @@
       "edgeCaseCategory": "UK_US_SPELLING",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003414",
-        "safetyReportVersion": "3",
+        "safetyReportId": "10003515",
+        "safetyReportVersion": "1",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Diarrhoea",
+        "eventPt": "Vaginal haemorrhage",
         "allReactionPts": [
-          "Diarrhoea",
-          "Vomiting",
-          "Abdominal discomfort",
-          "Malaise",
-          "Dyspepsia"
+          "Vaginal haemorrhage",
+          "Amenorrhoea",
+          "Abdominal pain lower"
         ],
-        "medicinalProduct": "LETAIRIS",
+        "medicinalProduct": "MIRENA",
         "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Vomiting%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Haemorrhage%22&limit=10",
+        "queryTerm": "Haemorrhage",
+        "queryGroup": "UK",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Diarrhoea",
+        "reportedEvent": "Vaginal haemorrhage",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include diarrhea.",
-          "subjectProduct": "LETAIRIS"
+          "text": "Adverse reactions include Vaginal hemorrhage.",
+          "subjectProduct": "MIRENA"
         }
       },
       "expected": {
@@ -1038,31 +1086,31 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003319",
-        "safetyReportVersion": "2",
+        "safetyReportId": "10003321",
+        "safetyReportVersion": "3",
         "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Cholecystectomy",
+        "country": "JP",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
-          "Cholecystectomy",
-          "Nephrolithiasis",
-          "Biliary tract disorder",
-          "Malaise"
+          "Adenoviral haemorrhagic cystitis",
+          "Pyrexia"
         ],
-        "medicinalProduct": "BENLYSTA",
+        "medicinalProduct": "OFATUMUMAB",
         "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Cholecystectomy",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Cholecystectomy.",
-          "subjectProduct": "BENLYSTA"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "OFATUMUMAB"
         }
       },
       "expected": {
@@ -1080,32 +1128,37 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003657",
+        "safetyReportId": "10003327",
         "safetyReportVersion": "1",
         "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Vomiting",
+        "country": "CN",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
+          "Respiratory failure",
+          "Listeriosis",
+          "Pyrexia",
+          "Headache",
           "Vomiting",
-          "Nausea",
-          "Fatigue",
-          "Lethargy",
-          "Abdominal pain upper"
+          "Mental status changes",
+          "Meningitis",
+          "Pneumonia staphylococcal"
         ],
-        "medicinalProduct": "DEPAKOTE",
+        "medicinalProduct": "PREDNISONE",
         "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Vomiting%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Vomiting",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Emesis.",
-          "subjectProduct": "DEPAKOTE"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "PREDNISONE"
         }
       },
       "expected": {
@@ -1123,28 +1176,37 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003604",
-        "safetyReportVersion": "2",
+        "safetyReportId": "10003329",
+        "safetyReportVersion": "11",
         "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Pruritus",
+        "country": "IT",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
-          "Pruritus"
+          "Diarrhoea",
+          "Abdominal pain",
+          "Asthenia",
+          "Diarrhoea",
+          "Weight decreased",
+          "Abdominal pain",
+          "Blood creatinine increased",
+          "C-reactive protein increased"
         ],
-        "medicinalProduct": "JAKAFI",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pruritus%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "BIBW 2992",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Pruritus",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Itching.",
-          "subjectProduct": "JAKAFI"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "BIBW 2992"
         }
       },
       "expected": {
@@ -1162,29 +1224,33 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003346",
-        "safetyReportVersion": "3",
+        "safetyReportId": "10003340",
+        "safetyReportVersion": "1",
         "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Dyspnoea",
+        "country": "CN",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
-          "Dyspnoea",
-          "Hypoxia"
+          "Listeriosis",
+          "Pyrexia",
+          "Diarrhoea",
+          "Meningitis"
         ],
-        "medicinalProduct": "LETAIRIS",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Dyspnoea%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "PREDNISONE",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Dyspnoea",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Shortness of breath.",
-          "subjectProduct": "LETAIRIS"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "PREDNISONE"
         }
       },
       "expected": {
@@ -1202,29 +1268,35 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003548",
+        "safetyReportId": "10003375",
         "safetyReportVersion": "1",
         "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Urticaria",
+        "country": "CN",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
-          "Urticaria",
-          "Somnolence"
+          "Loss of consciousness",
+          "Listeriosis",
+          "Pyrexia",
+          "Headache",
+          "Vomiting",
+          "Meningitis"
         ],
-        "medicinalProduct": "DEPAKOTE",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Urticaria%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "PREDNISONE",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Urticaria",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Hives.",
-          "subjectProduct": "DEPAKOTE"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "PREDNISONE"
         }
       },
       "expected": {
@@ -1242,29 +1314,36 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003320",
-        "safetyReportVersion": "3",
+        "safetyReportId": "10003549",
+        "safetyReportVersion": "2",
         "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Headache",
+        "country": "CA",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
+          "Nasopharyngitis",
+          "Malaise",
+          "Pyrexia",
+          "Nasal congestion",
           "Headache",
-          "Hypotension"
+          "Diarrhoea",
+          "Nausea"
         ],
-        "medicinalProduct": "TYVASO",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "ACLASTA",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Headache",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Headache.",
-          "subjectProduct": "TYVASO"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "ACLASTA"
         }
       },
       "expected": {
@@ -1282,29 +1361,32 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003321",
-        "safetyReportVersion": "3",
+        "safetyReportId": "10003617",
+        "safetyReportVersion": "1",
         "receivedDate": "20140312",
-        "country": "JP",
-        "eventPt": "Adenoviral haemorrhagic cystitis",
+        "country": "US",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
-          "Adenoviral haemorrhagic cystitis",
-          "Pyrexia"
+          "Haemoglobin decreased",
+          "Pyrexia",
+          "Headache"
         ],
-        "medicinalProduct": "OFATUMUMAB",
+        "medicinalProduct": "JAKAFI",
         "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Adenoviral haemorrhagic cystitis",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Adenoviral haemorrhagic cystitis.",
-          "subjectProduct": "OFATUMUMAB"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "JAKAFI"
         }
       },
       "expected": {
@@ -1322,29 +1404,37 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003606",
-        "safetyReportVersion": "1",
+        "safetyReportId": "10003707",
+        "safetyReportVersion": "2",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Pruritus",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
-          "Pruritus",
-          "Erythema"
+          "Suicide attempt",
+          "Antipsychotic drug level below therapeutic",
+          "Mental disorder",
+          "Antipsychotic drug level above therapeutic",
+          "Adverse reaction",
+          "Suicidal ideation",
+          "Dizziness",
+          "Aphasia"
         ],
-        "medicinalProduct": "DEPAKOTE",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pruritus%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "REBIF",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Pruritus",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Itching.",
-          "subjectProduct": "DEPAKOTE"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "REBIF"
         }
       },
       "expected": {
@@ -1362,29 +1452,36 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003353",
+        "safetyReportId": "10003771",
         "safetyReportVersion": "1",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Dyspnoea",
+        "eventPt": "Pyrexia",
         "allReactionPts": [
+          "Hyponatraemia",
           "Dyspnoea",
-          "Drug ineffective"
+          "Pyrexia",
+          "Pancreatitis",
+          "Influenza",
+          "Pneumonia",
+          "Sepsis"
         ],
-        "medicinalProduct": "CASODEX",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Dyspnoea%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "HUMIRA",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
+        "queryTerm": "Pyrexia",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Dyspnoea",
+        "reportedEvent": "Pyrexia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Shortness of breath.",
-          "subjectProduct": "CASODEX"
+          "text": "Adverse reactions include Fever.",
+          "subjectProduct": "HUMIRA"
         }
       },
       "expected": {
@@ -1402,31 +1499,36 @@
       "edgeCaseCategory": "SYNONYM_MEDICAL_EQUIVALENT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10004152",
+        "safetyReportId": "10003390",
         "safetyReportVersion": "2",
         "receivedDate": "20140312",
-        "country": "IT",
-        "eventPt": "Urticaria",
+        "country": "US",
+        "eventPt": "Vomiting",
         "allReactionPts": [
-          "Urticaria",
-          "Erythema",
-          "Pruritus",
-          "Drug interaction"
+          "Headache",
+          "Dyspnoea",
+          "Diarrhoea",
+          "Increased appetite",
+          "Swelling",
+          "Weight increased",
+          "Vomiting"
         ],
-        "medicinalProduct": "KETOPROFEN",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Urticaria%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "LETAIRIS",
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Vomiting%22&limit=10",
+        "queryTerm": "Vomiting",
+        "queryGroup": "SYN",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Urticaria",
+        "reportedEvent": "Vomiting",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Adverse reactions include Hives.",
-          "subjectProduct": "KETOPROFEN"
+          "text": "Adverse reactions include Emesis.",
+          "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
@@ -1444,6 +1546,217 @@
       "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
       "source": {
         "system": "FAERS/openFDA",
+        "safetyReportId": "10003315",
+        "safetyReportVersion": "1",
+        "receivedDate": "20140312",
+        "country": "US",
+        "eventPt": "Death",
+        "allReactionPts": [
+          "Death"
+        ],
+        "medicinalProduct": "RANOLAZINE",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
+      },
+      "input": {
+        "reportedEvent": "Death",
+        "eventKind": "CLINICAL_EVENT",
+        "caseContext": {},
+        "labelFixture": {
+          "documentType": "CONTROLLED_LABEL_FIXTURE",
+          "section": "Adverse reactions / warnings",
+          "text": "Post-marketing experience has included reports of Death; frequency cannot be estimated reliably.",
+          "subjectProduct": "RANOLAZINE"
+        }
+      },
+      "expected": {
+        "listedness": "LISTED",
+        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
+        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "manualReviewRequired": false
+      },
+      "rationale": "Partial-term retrieval may locate the passage; the final decision still uses the full event concept."
+    },
+    {
+      "id": "LIST-FAERS-037",
+      "version": "1.0.0",
+      "controlStatus": "CONTROLLED_REFERENCE",
+      "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
+      "source": {
+        "system": "FAERS/openFDA",
+        "safetyReportId": "10003317",
+        "safetyReportVersion": "1",
+        "receivedDate": "20140312",
+        "country": "US",
+        "eventPt": "Angioedema",
+        "allReactionPts": [
+          "Angioedema",
+          "Laryngeal oedema",
+          "Face oedema"
+        ],
+        "medicinalProduct": "BENLYSTA",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
+      },
+      "input": {
+        "reportedEvent": "Angioedema",
+        "eventKind": "CLINICAL_EVENT",
+        "caseContext": {},
+        "labelFixture": {
+          "documentType": "CONTROLLED_LABEL_FIXTURE",
+          "section": "Adverse reactions / warnings",
+          "text": "Post-marketing experience has included reports of Angioedema; frequency cannot be estimated reliably.",
+          "subjectProduct": "BENLYSTA"
+        }
+      },
+      "expected": {
+        "listedness": "LISTED",
+        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
+        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "manualReviewRequired": false
+      },
+      "rationale": "Partial-term retrieval may locate the passage; the final decision still uses the full event concept."
+    },
+    {
+      "id": "LIST-FAERS-038",
+      "version": "1.0.0",
+      "controlStatus": "CONTROLLED_REFERENCE",
+      "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
+      "source": {
+        "system": "FAERS/openFDA",
+        "safetyReportId": "10003318",
+        "safetyReportVersion": "2",
+        "receivedDate": "20140312",
+        "country": "BR",
+        "eventPt": "Tuberculosis of central nervous system",
+        "allReactionPts": [
+          "Tuberculosis of central nervous system"
+        ],
+        "medicinalProduct": "BELIMUMAB",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
+      },
+      "input": {
+        "reportedEvent": "Tuberculosis of central nervous system",
+        "eventKind": "CLINICAL_EVENT",
+        "caseContext": {},
+        "labelFixture": {
+          "documentType": "CONTROLLED_LABEL_FIXTURE",
+          "section": "Adverse reactions / warnings",
+          "text": "Post-marketing experience has included reports of Tuberculosis of central nervous system; frequency cannot be estimated reliably.",
+          "subjectProduct": "BELIMUMAB"
+        }
+      },
+      "expected": {
+        "listedness": "LISTED",
+        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
+        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "manualReviewRequired": false
+      },
+      "rationale": "Partial-term retrieval may locate the passage; the final decision still uses the full event concept."
+    },
+    {
+      "id": "LIST-FAERS-039",
+      "version": "1.0.0",
+      "controlStatus": "CONTROLLED_REFERENCE",
+      "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
+      "source": {
+        "system": "FAERS/openFDA",
+        "safetyReportId": "10003319",
+        "safetyReportVersion": "2",
+        "receivedDate": "20140312",
+        "country": "US",
+        "eventPt": "Cholecystectomy",
+        "allReactionPts": [
+          "Cholecystectomy",
+          "Nephrolithiasis",
+          "Biliary tract disorder",
+          "Malaise"
+        ],
+        "medicinalProduct": "BENLYSTA",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
+      },
+      "input": {
+        "reportedEvent": "Cholecystectomy",
+        "eventKind": "CLINICAL_EVENT",
+        "caseContext": {},
+        "labelFixture": {
+          "documentType": "CONTROLLED_LABEL_FIXTURE",
+          "section": "Adverse reactions / warnings",
+          "text": "Post-marketing experience has included reports of Cholecystectomy; frequency cannot be estimated reliably.",
+          "subjectProduct": "BENLYSTA"
+        }
+      },
+      "expected": {
+        "listedness": "LISTED",
+        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
+        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "manualReviewRequired": false
+      },
+      "rationale": "Partial-term retrieval may locate the passage; the final decision still uses the full event concept."
+    },
+    {
+      "id": "LIST-FAERS-040",
+      "version": "1.0.0",
+      "controlStatus": "CONTROLLED_REFERENCE",
+      "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
+      "source": {
+        "system": "FAERS/openFDA",
+        "safetyReportId": "10003320",
+        "safetyReportVersion": "3",
+        "receivedDate": "20140312",
+        "country": "US",
+        "eventPt": "Headache",
+        "allReactionPts": [
+          "Headache",
+          "Hypotension"
+        ],
+        "medicinalProduct": "TYVASO",
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
+      },
+      "input": {
+        "reportedEvent": "Headache",
+        "eventKind": "CLINICAL_EVENT",
+        "caseContext": {},
+        "labelFixture": {
+          "documentType": "CONTROLLED_LABEL_FIXTURE",
+          "section": "Adverse reactions / warnings",
+          "text": "Post-marketing experience has included reports of Headache; frequency cannot be estimated reliably.",
+          "subjectProduct": "TYVASO"
+        }
+      },
+      "expected": {
+        "listedness": "LISTED",
+        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
+        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "manualReviewRequired": false
+      },
+      "rationale": "Partial-term retrieval may locate the passage; the final decision still uses the full event concept."
+    },
+    {
+      "id": "LIST-FAERS-041",
+      "version": "1.0.0",
+      "controlStatus": "CONTROLLED_REFERENCE",
+      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
+      "source": {
+        "system": "FAERS/openFDA",
         "safetyReportId": "10003322",
         "safetyReportVersion": "3",
         "receivedDate": "20140312",
@@ -1455,7 +1768,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Tremor",
@@ -1464,23 +1779,23 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Post-marketing experience has included reports of Tremor; frequency cannot be estimated reliably.",
+          "text": "Severe tremor has been reported.",
           "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
-        "listedness": "LISTED",
-        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
-        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "listedness": "UNLISTED",
+        "matchType": "QUALIFIER_MISMATCH",
+        "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "Partial-term retrieval is permitted to find the passage, but the final decision is based on the complete matched concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-037",
+      "id": "LIST-FAERS-042",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
+      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003323",
@@ -1496,7 +1811,9 @@
         "medicinalProduct": "PRADAXA",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Fall",
@@ -1505,23 +1822,23 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Post-marketing experience has included reports of Fall; frequency cannot be estimated reliably.",
+          "text": "Severe fall has been reported.",
           "subjectProduct": "PRADAXA"
         }
       },
       "expected": {
-        "listedness": "LISTED",
-        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
-        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "listedness": "UNLISTED",
+        "matchType": "QUALIFIER_MISMATCH",
+        "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "Partial-term retrieval is permitted to find the passage, but the final decision is based on the complete matched concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-038",
+      "id": "LIST-FAERS-043",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
+      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003324",
@@ -1536,7 +1853,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Malaise",
@@ -1545,23 +1864,23 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Post-marketing experience has included reports of Malaise; frequency cannot be estimated reliably.",
+          "text": "Severe malaise has been reported.",
           "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
-        "listedness": "LISTED",
-        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
-        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "listedness": "UNLISTED",
+        "matchType": "QUALIFIER_MISMATCH",
+        "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "Partial-term retrieval is permitted to find the passage, but the final decision is based on the complete matched concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-039",
+      "id": "LIST-FAERS-044",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
+      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003325",
@@ -1575,7 +1894,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Swelling",
@@ -1584,23 +1905,23 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Post-marketing experience has included reports of Swelling; frequency cannot be estimated reliably.",
+          "text": "Severe swelling has been reported.",
           "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
-        "listedness": "LISTED",
-        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
-        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
+        "listedness": "UNLISTED",
+        "matchType": "QUALIFIER_MISMATCH",
+        "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "Partial-term retrieval is permitted to find the passage, but the final decision is based on the complete matched concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-040",
+      "id": "LIST-FAERS-045",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "PARTIAL_TERM_RETRIEVAL",
+      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003326",
@@ -1616,7 +1937,9 @@
         "medicinalProduct": "CEFTRIAXONE",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Meconium stain",
@@ -1625,54 +1948,8 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Post-marketing experience has included reports of Meconium stain; frequency cannot be estimated reliably.",
+          "text": "Severe meconium stain has been reported.",
           "subjectProduct": "CEFTRIAXONE"
-        }
-      },
-      "expected": {
-        "listedness": "LISTED",
-        "matchType": "PARTIAL_RETRIEVAL_THEN_EXACT_CONCEPT",
-        "reasonCode": "CONCEPT_FOUND_IN_CONTEXT",
-        "manualReviewRequired": false
-      },
-      "rationale": "Partial-term retrieval is permitted to find the passage, but the final decision is based on the complete matched concept."
-    },
-    {
-      "id": "LIST-FAERS-041",
-      "version": "1.0.0",
-      "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
-      "source": {
-        "system": "FAERS/openFDA",
-        "safetyReportId": "10003327",
-        "safetyReportVersion": "1",
-        "receivedDate": "20140312",
-        "country": "CN",
-        "eventPt": "Respiratory failure",
-        "allReactionPts": [
-          "Respiratory failure",
-          "Listeriosis",
-          "Pyrexia",
-          "Headache",
-          "Vomiting",
-          "Mental status changes",
-          "Meningitis",
-          "Pneumonia staphylococcal"
-        ],
-        "medicinalProduct": "PREDNISONE",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
-      },
-      "input": {
-        "reportedEvent": "Respiratory failure",
-        "eventKind": "CLINICAL_EVENT",
-        "caseContext": {},
-        "labelFixture": {
-          "documentType": "CONTROLLED_LABEL_FIXTURE",
-          "section": "Adverse reactions / warnings",
-          "text": "Severe respiratory failure has been reported.",
-          "subjectProduct": "PREDNISONE"
         }
       },
       "expected": {
@@ -1681,10 +1958,10 @@
         "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-042",
+      "id": "LIST-FAERS-046",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
@@ -1708,7 +1985,9 @@
         "medicinalProduct": "PACLITAXEL",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Type IV hypersensitivity reaction",
@@ -1727,10 +2006,10 @@
         "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-043",
+      "id": "LIST-FAERS-047",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
@@ -1747,7 +2026,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Feeling abnormal",
@@ -1766,10 +2047,10 @@
         "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-044",
+      "id": "LIST-FAERS-048",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
@@ -1789,7 +2070,9 @@
         "medicinalProduct": "MIRENA",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Chemical poisoning",
@@ -1808,10 +2091,10 @@
         "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-045",
+      "id": "LIST-FAERS-049",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
@@ -1830,7 +2113,9 @@
         "medicinalProduct": "PRADAXA",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Proctalgia",
@@ -1849,10 +2134,10 @@
         "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-046",
+      "id": "LIST-FAERS-050",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
@@ -1869,7 +2154,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Swelling",
@@ -1888,13 +2175,13 @@
         "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy the narrower concept."
     },
     {
-      "id": "LIST-FAERS-047",
+      "id": "LIST-FAERS-051",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
+      "edgeCaseCategory": "CASE_MORE_SPECIFIC_SEVERITY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003334",
@@ -1909,74 +2196,34 @@
         "medicinalProduct": "SPIRIVA",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Dry mouth",
+        "reportedEvent": "Severe dry mouth",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Severe dry mouth has been reported.",
+          "text": "Dry mouth has been reported as an adverse reaction.",
           "subjectProduct": "SPIRIVA"
         }
       },
       "expected": {
-        "listedness": "UNLISTED",
-        "matchType": "QUALIFIER_MISMATCH",
-        "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
+        "listedness": "LISTED",
+        "matchType": "CASE_NARROWER_THAN_LABEL",
+        "reasonCode": "GENERIC_LABEL_COVERS_SEVERITY_SUBTYPE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The generic label event covers the case's more specific severe form."
     },
     {
-      "id": "LIST-FAERS-048",
+      "id": "LIST-FAERS-052",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
-      "source": {
-        "system": "FAERS/openFDA",
-        "safetyReportId": "10003335",
-        "safetyReportVersion": "3",
-        "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Localised oedema",
-        "allReactionPts": [
-          "Localised oedema",
-          "Oedema peripheral",
-          "Fluid retention",
-          "Nasal congestion"
-        ],
-        "medicinalProduct": "LETAIRIS",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
-      },
-      "input": {
-        "reportedEvent": "Localised oedema",
-        "eventKind": "CLINICAL_EVENT",
-        "caseContext": {},
-        "labelFixture": {
-          "documentType": "CONTROLLED_LABEL_FIXTURE",
-          "section": "Adverse reactions / warnings",
-          "text": "Severe localised oedema has been reported.",
-          "subjectProduct": "LETAIRIS"
-        }
-      },
-      "expected": {
-        "listedness": "UNLISTED",
-        "matchType": "QUALIFIER_MISMATCH",
-        "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
-        "manualReviewRequired": false
-      },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
-    },
-    {
-      "id": "LIST-FAERS-049",
-      "version": "1.0.0",
-      "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
+      "edgeCaseCategory": "CASE_MORE_SPECIFIC_SEVERITY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003336",
@@ -1997,32 +2244,34 @@
         "medicinalProduct": "JANUMET",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Metastases to spine",
+        "reportedEvent": "Severe metastases to spine",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Severe metastases to spine has been reported.",
+          "text": "Metastases to spine has been reported as an adverse reaction.",
           "subjectProduct": "JANUMET"
         }
       },
       "expected": {
-        "listedness": "UNLISTED",
-        "matchType": "QUALIFIER_MISMATCH",
-        "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
+        "listedness": "LISTED",
+        "matchType": "CASE_NARROWER_THAN_LABEL",
+        "reasonCode": "GENERIC_LABEL_COVERS_SEVERITY_SUBTYPE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The generic label event covers the case's more specific severe form."
     },
     {
-      "id": "LIST-FAERS-050",
+      "id": "LIST-FAERS-053",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "LABEL_MORE_SPECIFIC_SEVERITY",
+      "edgeCaseCategory": "CASE_MORE_SPECIFIC_SEVERITY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003337",
@@ -2037,29 +2286,31 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Dysphonia",
+        "reportedEvent": "Severe dysphonia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Severe dysphonia has been reported.",
+          "text": "Dysphonia has been reported as an adverse reaction.",
           "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
-        "listedness": "UNLISTED",
-        "matchType": "QUALIFIER_MISMATCH",
-        "reasonCode": "LABEL_REQUIRES_SEVERE_QUALIFIER",
+        "listedness": "LISTED",
+        "matchType": "CASE_NARROWER_THAN_LABEL",
+        "reasonCode": "GENERIC_LABEL_COVERS_SEVERITY_SUBTYPE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only the severe qualified form; the unqualified reported event does not satisfy that narrower listed concept."
+      "rationale": "The generic label event covers the case's more specific severe form."
     },
     {
-      "id": "LIST-FAERS-051",
+      "id": "LIST-FAERS-054",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CASE_MORE_SPECIFIC_SEVERITY",
@@ -2078,7 +2329,9 @@
         "medicinalProduct": "KLACID",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Severe swollen tongue",
@@ -2097,80 +2350,38 @@
         "reasonCode": "GENERIC_LABEL_COVERS_SEVERITY_SUBTYPE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists the underlying event without restricting severity, so the case's more specific severe form remains within the listed concept."
+      "rationale": "The generic label event covers the case's more specific severe form."
     },
     {
-      "id": "LIST-FAERS-052",
+      "id": "LIST-FAERS-055",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CASE_MORE_SPECIFIC_SEVERITY",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003340",
-        "safetyReportVersion": "1",
-        "receivedDate": "20140312",
-        "country": "CN",
-        "eventPt": "Listeriosis",
-        "allReactionPts": [
-          "Listeriosis",
-          "Pyrexia",
-          "Diarrhoea",
-          "Meningitis"
-        ],
-        "medicinalProduct": "PREDNISONE",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
-      },
-      "input": {
-        "reportedEvent": "Severe listeriosis",
-        "eventKind": "CLINICAL_EVENT",
-        "caseContext": {},
-        "labelFixture": {
-          "documentType": "CONTROLLED_LABEL_FIXTURE",
-          "section": "Adverse reactions / warnings",
-          "text": "Listeriosis has been reported as an adverse reaction.",
-          "subjectProduct": "PREDNISONE"
-        }
-      },
-      "expected": {
-        "listedness": "LISTED",
-        "matchType": "CASE_NARROWER_THAN_LABEL",
-        "reasonCode": "GENERIC_LABEL_COVERS_SEVERITY_SUBTYPE",
-        "manualReviewRequired": false
-      },
-      "rationale": "The label lists the underlying event without restricting severity, so the case's more specific severe form remains within the listed concept."
-    },
-    {
-      "id": "LIST-FAERS-053",
-      "version": "1.0.0",
-      "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CASE_MORE_SPECIFIC_SEVERITY",
-      "source": {
-        "system": "FAERS/openFDA",
-        "safetyReportId": "10003341",
+        "safetyReportId": "10003339",
         "safetyReportVersion": "2",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Dizziness",
+        "eventPt": "Anaemia",
         "allReactionPts": [
-          "Dizziness",
-          "Oedema",
-          "Dyspnoea"
+          "Anaemia"
         ],
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Severe dizziness",
+        "reportedEvent": "Severe anaemia",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Dizziness has been reported as an adverse reaction.",
+          "text": "Anaemia has been reported as an adverse reaction.",
           "subjectProduct": "LETAIRIS"
         }
       },
@@ -2180,13 +2391,13 @@
         "reasonCode": "GENERIC_LABEL_COVERS_SEVERITY_SUBTYPE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists the underlying event without restricting severity, so the case's more specific severe form remains within the listed concept."
+      "rationale": "The generic label event covers the case's more specific severe form."
     },
     {
-      "id": "LIST-FAERS-054",
+      "id": "LIST-FAERS-056",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CASE_MORE_SPECIFIC_SEVERITY",
+      "edgeCaseCategory": "NEGATED_LABEL_MENTION",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003342",
@@ -2203,32 +2414,34 @@
         "medicinalProduct": "TASIGNA",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Severe overdose",
+        "reportedEvent": "Overdose",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Overdose has been reported as an adverse reaction.",
+          "text": "No cases of overdose have been reported with this product.",
           "subjectProduct": "TASIGNA"
         }
       },
       "expected": {
-        "listedness": "LISTED",
-        "matchType": "CASE_NARROWER_THAN_LABEL",
-        "reasonCode": "GENERIC_LABEL_COVERS_SEVERITY_SUBTYPE",
+        "listedness": "UNLISTED",
+        "matchType": "NEGATED",
+        "reasonCode": "NEGATED_LABEL_MENTION",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists the underlying event without restricting severity, so the case's more specific severe form remains within the listed concept."
+      "rationale": "A negated mention is not positive evidence of listedness."
     },
     {
-      "id": "LIST-FAERS-055",
+      "id": "LIST-FAERS-057",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CASE_MORE_SPECIFIC_SEVERITY",
+      "edgeCaseCategory": "NEGATED_LABEL_MENTION",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003343",
@@ -2243,29 +2456,31 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Severe liver function test abnormal",
+        "reportedEvent": "Liver function test abnormal",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Liver function test abnormal has been reported as an adverse reaction.",
+          "text": "No cases of liver function test abnormal have been reported with this product.",
           "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
-        "listedness": "LISTED",
-        "matchType": "CASE_NARROWER_THAN_LABEL",
-        "reasonCode": "GENERIC_LABEL_COVERS_SEVERITY_SUBTYPE",
+        "listedness": "UNLISTED",
+        "matchType": "NEGATED",
+        "reasonCode": "NEGATED_LABEL_MENTION",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists the underlying event without restricting severity, so the case's more specific severe form remains within the listed concept."
+      "rationale": "A negated mention is not positive evidence of listedness."
     },
     {
-      "id": "LIST-FAERS-056",
+      "id": "LIST-FAERS-058",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "NEGATED_LABEL_MENTION",
@@ -2282,7 +2497,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Headache",
@@ -2304,7 +2521,7 @@
       "rationale": "A negated mention is not positive evidence of listedness."
     },
     {
-      "id": "LIST-FAERS-057",
+      "id": "LIST-FAERS-059",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "NEGATED_LABEL_MENTION",
@@ -2323,7 +2540,9 @@
         "medicinalProduct": "CITALOPRAM",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Haematoma",
@@ -2345,10 +2564,52 @@
       "rationale": "A negated mention is not positive evidence of listedness."
     },
     {
-      "id": "LIST-FAERS-058",
+      "id": "LIST-FAERS-060",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "NEGATED_LABEL_MENTION",
+      "source": {
+        "system": "FAERS/openFDA",
+        "safetyReportId": "10003346",
+        "safetyReportVersion": "3",
+        "receivedDate": "20140312",
+        "country": "US",
+        "eventPt": "Dyspnoea",
+        "allReactionPts": [
+          "Dyspnoea",
+          "Hypoxia"
+        ],
+        "medicinalProduct": "LETAIRIS",
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
+      },
+      "input": {
+        "reportedEvent": "Dyspnoea",
+        "eventKind": "CLINICAL_EVENT",
+        "caseContext": {},
+        "labelFixture": {
+          "documentType": "CONTROLLED_LABEL_FIXTURE",
+          "section": "Adverse reactions / warnings",
+          "text": "No cases of dyspnoea have been reported with this product.",
+          "subjectProduct": "LETAIRIS"
+        }
+      },
+      "expected": {
+        "listedness": "UNLISTED",
+        "matchType": "NEGATED",
+        "reasonCode": "NEGATED_LABEL_MENTION",
+        "manualReviewRequired": false
+      },
+      "rationale": "A negated mention is not positive evidence of listedness."
+    },
+    {
+      "id": "LIST-FAERS-061",
+      "version": "1.0.0",
+      "controlStatus": "CONTROLLED_REFERENCE",
+      "edgeCaseCategory": "CLASS_EFFECT_ONLY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003347",
@@ -2362,7 +2623,9 @@
         "medicinalProduct": "MIRENA",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Device dislocation",
@@ -2371,23 +2634,23 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "No cases of device dislocation have been reported with this product.",
+          "text": "Other drugs in this class have been associated with device dislocation, but this reaction has not been reported with this product.",
           "subjectProduct": "MIRENA"
         }
       },
       "expected": {
         "listedness": "UNLISTED",
-        "matchType": "NEGATED",
-        "reasonCode": "NEGATED_LABEL_MENTION",
+        "matchType": "CLASS_EFFECT",
+        "reasonCode": "CLASS_EFFECT_NOT_PRODUCT_SPECIFIC",
         "manualReviewRequired": false
       },
-      "rationale": "A negated mention is not positive evidence of listedness."
+      "rationale": "Class-effect wording alone does not establish product-specific listedness."
     },
     {
-      "id": "LIST-FAERS-059",
+      "id": "LIST-FAERS-062",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "NEGATED_LABEL_MENTION",
+      "edgeCaseCategory": "CLASS_EFFECT_ONLY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003348",
@@ -2406,7 +2669,9 @@
         "medicinalProduct": "OXYGEN.",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Epistaxis",
@@ -2415,23 +2680,23 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "No cases of epistaxis have been reported with this product.",
+          "text": "Other drugs in this class have been associated with epistaxis, but this reaction has not been reported with this product.",
           "subjectProduct": "OXYGEN."
         }
       },
       "expected": {
         "listedness": "UNLISTED",
-        "matchType": "NEGATED",
-        "reasonCode": "NEGATED_LABEL_MENTION",
+        "matchType": "CLASS_EFFECT",
+        "reasonCode": "CLASS_EFFECT_NOT_PRODUCT_SPECIFIC",
         "manualReviewRequired": false
       },
-      "rationale": "A negated mention is not positive evidence of listedness."
+      "rationale": "Class-effect wording alone does not establish product-specific listedness."
     },
     {
-      "id": "LIST-FAERS-060",
+      "id": "LIST-FAERS-063",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "NEGATED_LABEL_MENTION",
+      "edgeCaseCategory": "CLASS_EFFECT_ONLY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003349",
@@ -2447,7 +2712,9 @@
         "medicinalProduct": "MORPHINE SULFATE EXTENDED-RELEASE TABLETS (RHODES 74-862)",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Cerebrovascular accident",
@@ -2456,20 +2723,20 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "No cases of cerebrovascular accident have been reported with this product.",
+          "text": "Other drugs in this class have been associated with cerebrovascular accident, but this reaction has not been reported with this product.",
           "subjectProduct": "MORPHINE SULFATE EXTENDED-RELEASE TABLETS (RHODES 74-862)"
         }
       },
       "expected": {
         "listedness": "UNLISTED",
-        "matchType": "NEGATED",
-        "reasonCode": "NEGATED_LABEL_MENTION",
+        "matchType": "CLASS_EFFECT",
+        "reasonCode": "CLASS_EFFECT_NOT_PRODUCT_SPECIFIC",
         "manualReviewRequired": false
       },
-      "rationale": "A negated mention is not positive evidence of listedness."
+      "rationale": "Class-effect wording alone does not establish product-specific listedness."
     },
     {
-      "id": "LIST-FAERS-061",
+      "id": "LIST-FAERS-064",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CLASS_EFFECT_ONLY",
@@ -2487,7 +2754,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Malaise",
@@ -2506,10 +2775,10 @@
         "reasonCode": "CLASS_EFFECT_NOT_PRODUCT_SPECIFIC",
         "manualReviewRequired": false
       },
-      "rationale": "A class-effect statement without product-specific occurrence does not establish listedness for the product."
+      "rationale": "Class-effect wording alone does not establish product-specific listedness."
     },
     {
-      "id": "LIST-FAERS-062",
+      "id": "LIST-FAERS-065",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CLASS_EFFECT_ONLY",
@@ -2530,7 +2799,9 @@
         "medicinalProduct": "MIRTAZAPINE (UNKNOWN)",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Aggression",
@@ -2549,52 +2820,55 @@
         "reasonCode": "CLASS_EFFECT_NOT_PRODUCT_SPECIFIC",
         "manualReviewRequired": false
       },
-      "rationale": "A class-effect statement without product-specific occurrence does not establish listedness for the product."
+      "rationale": "Class-effect wording alone does not establish product-specific listedness."
     },
     {
-      "id": "LIST-FAERS-063",
+      "id": "LIST-FAERS-066",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CLASS_EFFECT_ONLY",
+      "edgeCaseCategory": "OTHER_PRODUCT_ONLY",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003352",
-        "safetyReportVersion": "3",
+        "safetyReportId": "10003353",
+        "safetyReportVersion": "1",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Oedema peripheral",
+        "eventPt": "Dyspnoea",
         "allReactionPts": [
-          "Oedema peripheral"
+          "Dyspnoea",
+          "Drug ineffective"
         ],
-        "medicinalProduct": "LETAIRIS",
+        "medicinalProduct": "CASODEX",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Oedema peripheral",
+        "reportedEvent": "Dyspnoea",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Other drugs in this class have been associated with oedema peripheral, but this reaction has not been reported with this product.",
-          "subjectProduct": "LETAIRIS"
+          "text": "In comparative studies, Comparator Drug Y was associated with dyspnoea.",
+          "subjectProduct": "CASODEX"
         }
       },
       "expected": {
         "listedness": "UNLISTED",
-        "matchType": "CLASS_EFFECT",
-        "reasonCode": "CLASS_EFFECT_NOT_PRODUCT_SPECIFIC",
+        "matchType": "OTHER_PRODUCT",
+        "reasonCode": "EVENT_ATTRIBUTED_TO_OTHER_PRODUCT",
         "manualReviewRequired": false
       },
-      "rationale": "A class-effect statement without product-specific occurrence does not establish listedness for the product."
+      "rationale": "The event is attributed to another product."
     },
     {
-      "id": "LIST-FAERS-064",
+      "id": "LIST-FAERS-067",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CLASS_EFFECT_ONLY",
+      "edgeCaseCategory": "OTHER_PRODUCT_ONLY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003354",
@@ -2608,7 +2882,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Haemoglobin decreased",
@@ -2617,23 +2893,23 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Other drugs in this class have been associated with haemoglobin decreased, but this reaction has not been reported with this product.",
+          "text": "In comparative studies, Comparator Drug Y was associated with haemoglobin decreased.",
           "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
         "listedness": "UNLISTED",
-        "matchType": "CLASS_EFFECT",
-        "reasonCode": "CLASS_EFFECT_NOT_PRODUCT_SPECIFIC",
+        "matchType": "OTHER_PRODUCT",
+        "reasonCode": "EVENT_ATTRIBUTED_TO_OTHER_PRODUCT",
         "manualReviewRequired": false
       },
-      "rationale": "A class-effect statement without product-specific occurrence does not establish listedness for the product."
+      "rationale": "The event is attributed to another product."
     },
     {
-      "id": "LIST-FAERS-065",
+      "id": "LIST-FAERS-068",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CLASS_EFFECT_ONLY",
+      "edgeCaseCategory": "OTHER_PRODUCT_ONLY",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003355",
@@ -2647,7 +2923,9 @@
         "medicinalProduct": "CASODEX",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Heart rate decreased",
@@ -2656,47 +2934,8 @@
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "Other drugs in this class have been associated with heart rate decreased, but this reaction has not been reported with this product.",
+          "text": "In comparative studies, Comparator Drug Y was associated with heart rate decreased.",
           "subjectProduct": "CASODEX"
-        }
-      },
-      "expected": {
-        "listedness": "UNLISTED",
-        "matchType": "CLASS_EFFECT",
-        "reasonCode": "CLASS_EFFECT_NOT_PRODUCT_SPECIFIC",
-        "manualReviewRequired": false
-      },
-      "rationale": "A class-effect statement without product-specific occurrence does not establish listedness for the product."
-    },
-    {
-      "id": "LIST-FAERS-066",
-      "version": "1.0.0",
-      "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "OTHER_PRODUCT_ONLY",
-      "source": {
-        "system": "FAERS/openFDA",
-        "safetyReportId": "10003356",
-        "safetyReportVersion": "3",
-        "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Oedema peripheral",
-        "allReactionPts": [
-          "Oedema peripheral"
-        ],
-        "medicinalProduct": "LETAIRIS",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
-      },
-      "input": {
-        "reportedEvent": "Oedema peripheral",
-        "eventKind": "CLINICAL_EVENT",
-        "caseContext": {},
-        "labelFixture": {
-          "documentType": "CONTROLLED_LABEL_FIXTURE",
-          "section": "Adverse reactions / warnings",
-          "text": "In comparative studies, Comparator Drug Y was associated with oedema peripheral.",
-          "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
@@ -2705,10 +2944,10 @@
         "reasonCode": "EVENT_ATTRIBUTED_TO_OTHER_PRODUCT",
         "manualReviewRequired": false
       },
-      "rationale": "The event is attributed to another product, not the subject product."
+      "rationale": "The event is attributed to another product."
     },
     {
-      "id": "LIST-FAERS-067",
+      "id": "LIST-FAERS-069",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "OTHER_PRODUCT_ONLY",
@@ -2727,7 +2966,9 @@
         "medicinalProduct": "TACROLIMUS (WATSON LABORATORIES)",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Posterior reversible encephalopathy syndrome",
@@ -2746,10 +2987,10 @@
         "reasonCode": "EVENT_ATTRIBUTED_TO_OTHER_PRODUCT",
         "manualReviewRequired": false
       },
-      "rationale": "The event is attributed to another product, not the subject product."
+      "rationale": "The event is attributed to another product."
     },
     {
-      "id": "LIST-FAERS-068",
+      "id": "LIST-FAERS-070",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "OTHER_PRODUCT_ONLY",
@@ -2766,7 +3007,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Dyspnoea",
@@ -2785,13 +3028,13 @@
         "reasonCode": "EVENT_ATTRIBUTED_TO_OTHER_PRODUCT",
         "manualReviewRequired": false
       },
-      "rationale": "The event is attributed to another product, not the subject product."
+      "rationale": "The event is attributed to another product."
     },
     {
-      "id": "LIST-FAERS-069",
+      "id": "LIST-FAERS-071",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "OTHER_PRODUCT_ONLY",
+      "edgeCaseCategory": "CONDITIONAL_CONTEXT_MATCH",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003359",
@@ -2805,32 +3048,36 @@
         "medicinalProduct": "DOXAZOSIN (UNKNOWN)",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Erection increased",
         "eventKind": "CLINICAL_EVENT",
-        "caseContext": {},
+        "caseContext": {
+          "milkExposure": true
+        },
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "In comparative studies, Comparator Drug Y was associated with erection increased.",
+          "text": "Erection increased may occur when the product is administered with milk.",
           "subjectProduct": "DOXAZOSIN (UNKNOWN)"
         }
       },
       "expected": {
-        "listedness": "UNLISTED",
-        "matchType": "OTHER_PRODUCT",
-        "reasonCode": "EVENT_ATTRIBUTED_TO_OTHER_PRODUCT",
+        "listedness": "LISTED",
+        "matchType": "CONDITIONAL_MATCH",
+        "reasonCode": "REQUIRED_CONTEXT_CONFIRMED",
         "manualReviewRequired": false
       },
-      "rationale": "The event is attributed to another product, not the subject product."
+      "rationale": "The reported scenario satisfies the label condition."
     },
     {
-      "id": "LIST-FAERS-070",
+      "id": "LIST-FAERS-072",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "OTHER_PRODUCT_ONLY",
+      "edgeCaseCategory": "CONDITIONAL_CONTEXT_MATCH",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003360",
@@ -2844,29 +3091,33 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Hypertension",
         "eventKind": "CLINICAL_EVENT",
-        "caseContext": {},
+        "caseContext": {
+          "milkExposure": true
+        },
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Adverse reactions / warnings",
-          "text": "In comparative studies, Comparator Drug Y was associated with hypertension.",
+          "text": "Hypertension may occur when the product is administered with milk.",
           "subjectProduct": "LETAIRIS"
         }
       },
       "expected": {
-        "listedness": "UNLISTED",
-        "matchType": "OTHER_PRODUCT",
-        "reasonCode": "EVENT_ATTRIBUTED_TO_OTHER_PRODUCT",
+        "listedness": "LISTED",
+        "matchType": "CONDITIONAL_MATCH",
+        "reasonCode": "REQUIRED_CONTEXT_CONFIRMED",
         "manualReviewRequired": false
       },
-      "rationale": "The event is attributed to another product, not the subject product."
+      "rationale": "The reported scenario satisfies the label condition."
     },
     {
-      "id": "LIST-FAERS-071",
+      "id": "LIST-FAERS-073",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_MATCH",
@@ -2883,7 +3134,9 @@
         "medicinalProduct": "CITALOPRAM (UNKNOWN)",
         "faersSerious": true,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Hyponatraemia",
@@ -2904,10 +3157,10 @@
         "reasonCode": "REQUIRED_CONTEXT_CONFIRMED",
         "manualReviewRequired": false
       },
-      "rationale": "The reported scenario satisfies the condition under which the label describes the event."
+      "rationale": "The reported scenario satisfies the label condition."
     },
     {
-      "id": "LIST-FAERS-072",
+      "id": "LIST-FAERS-074",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_MATCH",
@@ -2925,7 +3178,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Gastric disorder",
@@ -2946,10 +3201,10 @@
         "reasonCode": "REQUIRED_CONTEXT_CONFIRMED",
         "manualReviewRequired": false
       },
-      "rationale": "The reported scenario satisfies the condition under which the label describes the event."
+      "rationale": "The reported scenario satisfies the label condition."
     },
     {
-      "id": "LIST-FAERS-073",
+      "id": "LIST-FAERS-075",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_MATCH",
@@ -2966,7 +3221,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Unevaluable event",
@@ -2987,13 +3244,13 @@
         "reasonCode": "REQUIRED_CONTEXT_CONFIRMED",
         "manualReviewRequired": false
       },
-      "rationale": "The reported scenario satisfies the condition under which the label describes the event."
+      "rationale": "The reported scenario satisfies the label condition."
     },
     {
-      "id": "LIST-FAERS-074",
+      "id": "LIST-FAERS-076",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CONDITIONAL_CONTEXT_MATCH",
+      "edgeCaseCategory": "CONDITIONAL_CONTEXT_MISMATCH",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003364",
@@ -3009,13 +3266,15 @@
         "medicinalProduct": "ADCIRCA",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Drug hypersensitivity",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {
-          "milkExposure": true
+          "milkExposure": false
         },
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
@@ -3025,56 +3284,15 @@
         }
       },
       "expected": {
-        "listedness": "LISTED",
-        "matchType": "CONDITIONAL_MATCH",
-        "reasonCode": "REQUIRED_CONTEXT_CONFIRMED",
+        "listedness": "UNLISTED",
+        "matchType": "CONDITIONAL_MISMATCH",
+        "reasonCode": "REQUIRED_CONTEXT_CONTRADICTED",
         "manualReviewRequired": false
       },
-      "rationale": "The reported scenario satisfies the condition under which the label describes the event."
+      "rationale": "The required label scenario is explicitly absent."
     },
     {
-      "id": "LIST-FAERS-075",
-      "version": "1.0.0",
-      "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CONDITIONAL_CONTEXT_MATCH",
-      "source": {
-        "system": "FAERS/openFDA",
-        "safetyReportId": "10003366",
-        "safetyReportVersion": "2",
-        "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Oedema",
-        "allReactionPts": [
-          "Oedema"
-        ],
-        "medicinalProduct": "LETAIRIS",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
-      },
-      "input": {
-        "reportedEvent": "Oedema",
-        "eventKind": "CLINICAL_EVENT",
-        "caseContext": {
-          "milkExposure": true
-        },
-        "labelFixture": {
-          "documentType": "CONTROLLED_LABEL_FIXTURE",
-          "section": "Adverse reactions / warnings",
-          "text": "Oedema may occur when the product is administered with milk.",
-          "subjectProduct": "LETAIRIS"
-        }
-      },
-      "expected": {
-        "listedness": "LISTED",
-        "matchType": "CONDITIONAL_MATCH",
-        "reasonCode": "REQUIRED_CONTEXT_CONFIRMED",
-        "manualReviewRequired": false
-      },
-      "rationale": "The reported scenario satisfies the condition under which the label describes the event."
-    },
-    {
-      "id": "LIST-FAERS-076",
+      "id": "LIST-FAERS-077",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_MISMATCH",
@@ -3093,7 +3311,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Unevaluable event",
@@ -3114,10 +3334,10 @@
         "reasonCode": "REQUIRED_CONTEXT_CONTRADICTED",
         "manualReviewRequired": false
       },
-      "rationale": "The label's required milk-exposure scenario is explicitly absent in the case."
+      "rationale": "The required label scenario is explicitly absent."
     },
     {
-      "id": "LIST-FAERS-077",
+      "id": "LIST-FAERS-078",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_MISMATCH",
@@ -3136,7 +3356,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Pollakiuria",
@@ -3157,10 +3379,10 @@
         "reasonCode": "REQUIRED_CONTEXT_CONTRADICTED",
         "manualReviewRequired": false
       },
-      "rationale": "The label's required milk-exposure scenario is explicitly absent in the case."
+      "rationale": "The required label scenario is explicitly absent."
     },
     {
-      "id": "LIST-FAERS-078",
+      "id": "LIST-FAERS-079",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_MISMATCH",
@@ -3177,7 +3399,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Feeling abnormal",
@@ -3198,10 +3422,10 @@
         "reasonCode": "REQUIRED_CONTEXT_CONTRADICTED",
         "manualReviewRequired": false
       },
-      "rationale": "The label's required milk-exposure scenario is explicitly absent in the case."
+      "rationale": "The required label scenario is explicitly absent."
     },
     {
-      "id": "LIST-FAERS-079",
+      "id": "LIST-FAERS-080",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_MISMATCH",
@@ -3218,7 +3442,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Swelling",
@@ -3239,13 +3465,13 @@
         "reasonCode": "REQUIRED_CONTEXT_CONTRADICTED",
         "manualReviewRequired": false
       },
-      "rationale": "The label's required milk-exposure scenario is explicitly absent in the case."
+      "rationale": "The required label scenario is explicitly absent."
     },
     {
-      "id": "LIST-FAERS-080",
+      "id": "LIST-FAERS-081",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CONDITIONAL_CONTEXT_MISMATCH",
+      "edgeCaseCategory": "CONDITIONAL_CONTEXT_UNKNOWN",
       "source": {
         "system": "FAERS/openFDA",
         "safetyReportId": "10003371",
@@ -3260,13 +3486,15 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Nasal congestion",
         "eventKind": "CLINICAL_EVENT",
         "caseContext": {
-          "milkExposure": false
+          "milkExposure": null
         },
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
@@ -3276,15 +3504,15 @@
         }
       },
       "expected": {
-        "listedness": "UNLISTED",
-        "matchType": "CONDITIONAL_MISMATCH",
-        "reasonCode": "REQUIRED_CONTEXT_CONTRADICTED",
-        "manualReviewRequired": false
+        "listedness": "UNRESOLVED",
+        "matchType": "CONDITIONAL_UNKNOWN",
+        "reasonCode": "REQUIRED_CONTEXT_UNRESOLVED",
+        "manualReviewRequired": true
       },
-      "rationale": "The label's required milk-exposure scenario is explicitly absent in the case."
+      "rationale": "The event matches but the condition cannot be confirmed or excluded."
     },
     {
-      "id": "LIST-FAERS-081",
+      "id": "LIST-FAERS-082",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_UNKNOWN",
@@ -3301,7 +3529,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Nausea",
@@ -3322,10 +3552,10 @@
         "reasonCode": "REQUIRED_CONTEXT_UNRESOLVED",
         "manualReviewRequired": true
       },
-      "rationale": "The event text matches, but the label condition cannot be confirmed or excluded from the case evidence."
+      "rationale": "The event matches but the condition cannot be confirmed or excluded."
     },
     {
-      "id": "LIST-FAERS-082",
+      "id": "LIST-FAERS-083",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "CONDITIONAL_CONTEXT_UNKNOWN",
@@ -3342,7 +3572,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Nasal congestion",
@@ -3363,53 +3595,7 @@
         "reasonCode": "REQUIRED_CONTEXT_UNRESOLVED",
         "manualReviewRequired": true
       },
-      "rationale": "The event text matches, but the label condition cannot be confirmed or excluded from the case evidence."
-    },
-    {
-      "id": "LIST-FAERS-083",
-      "version": "1.0.0",
-      "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "CONDITIONAL_CONTEXT_UNKNOWN",
-      "source": {
-        "system": "FAERS/openFDA",
-        "safetyReportId": "10003375",
-        "safetyReportVersion": "1",
-        "receivedDate": "20140312",
-        "country": "CN",
-        "eventPt": "Loss of consciousness",
-        "allReactionPts": [
-          "Loss of consciousness",
-          "Listeriosis",
-          "Pyrexia",
-          "Headache",
-          "Vomiting",
-          "Meningitis"
-        ],
-        "medicinalProduct": "PREDNISONE",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
-      },
-      "input": {
-        "reportedEvent": "Loss of consciousness",
-        "eventKind": "CLINICAL_EVENT",
-        "caseContext": {
-          "milkExposure": null
-        },
-        "labelFixture": {
-          "documentType": "CONTROLLED_LABEL_FIXTURE",
-          "section": "Adverse reactions / warnings",
-          "text": "Loss of consciousness may occur when the product is administered with milk.",
-          "subjectProduct": "PREDNISONE"
-        }
-      },
-      "expected": {
-        "listedness": "UNRESOLVED",
-        "matchType": "CONDITIONAL_UNKNOWN",
-        "reasonCode": "REQUIRED_CONTEXT_UNRESOLVED",
-        "manualReviewRequired": true
-      },
-      "rationale": "The event text matches, but the label condition cannot be confirmed or excluded from the case evidence."
+      "rationale": "The event matches but the condition cannot be confirmed or excluded."
     },
     {
       "id": "LIST-FAERS-084",
@@ -3431,7 +3617,9 @@
         "medicinalProduct": "CASODEX",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Diarrhoea",
@@ -3452,7 +3640,7 @@
         "reasonCode": "REQUIRED_CONTEXT_UNRESOLVED",
         "manualReviewRequired": true
       },
-      "rationale": "The event text matches, but the label condition cannot be confirmed or excluded from the case evidence."
+      "rationale": "The event matches but the condition cannot be confirmed or excluded."
     },
     {
       "id": "LIST-FAERS-085",
@@ -3473,7 +3661,9 @@
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
         "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "queryTerm": null,
+        "queryGroup": "GENERAL",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Malaise",
@@ -3494,10 +3684,58 @@
         "reasonCode": "REQUIRED_CONTEXT_UNRESOLVED",
         "manualReviewRequired": true
       },
-      "rationale": "The event text matches, but the label condition cannot be confirmed or excluded from the case evidence."
+      "rationale": "The event matches but the condition cannot be confirmed or excluded."
     },
     {
       "id": "LIST-FAERS-086",
+      "version": "1.0.0",
+      "controlStatus": "CONTROLLED_REFERENCE",
+      "edgeCaseCategory": "LAB_EXACT",
+      "source": {
+        "system": "FAERS/openFDA",
+        "safetyReportId": "10003501",
+        "safetyReportVersion": "1",
+        "receivedDate": "20140312",
+        "country": "US",
+        "eventPt": "Alanine aminotransferase increased",
+        "allReactionPts": [
+          "Off label use",
+          "Eye haemorrhage",
+          "Blood creatinine increased",
+          "Visual acuity reduced",
+          "Ophthalmological examination abnormal",
+          "Alanine aminotransferase increased",
+          "Aspartate aminotransferase increased",
+          "Feeling abnormal"
+        ],
+        "medicinalProduct": "LYRICA",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
+      },
+      "input": {
+        "reportedEvent": "Alanine aminotransferase increased",
+        "eventKind": "LAB",
+        "caseContext": {},
+        "labelFixture": {
+          "documentType": "CONTROLLED_LABEL_FIXTURE",
+          "section": "Laboratory abnormalities / adverse reactions",
+          "text": "Laboratory abnormalities include Alanine aminotransferase increased.",
+          "subjectProduct": "LYRICA"
+        }
+      },
+      "expected": {
+        "listedness": "LISTED",
+        "matchType": "LAB_EXACT",
+        "reasonCode": "LAB_CONCEPT_MATCH",
+        "manualReviewRequired": false
+      },
+      "rationale": "The laboratory PT is explicitly listed."
+    },
+    {
+      "id": "LIST-FAERS-087",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "LAB_EXACT",
@@ -3519,8 +3757,10 @@
         ],
         "medicinalProduct": "KYNAMRO",
         "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Alanine aminotransferase increased",
@@ -3542,75 +3782,43 @@
       "rationale": "The laboratory PT is explicitly listed."
     },
     {
-      "id": "LIST-FAERS-087",
-      "version": "1.0.0",
-      "controlStatus": "CONTROLLED_REFERENCE",
-      "edgeCaseCategory": "LAB_EXACT",
-      "source": {
-        "system": "FAERS/openFDA",
-        "safetyReportId": "10009749",
-        "safetyReportVersion": "2",
-        "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Aspartate aminotransferase increased",
-        "allReactionPts": [
-          "Aspartate aminotransferase increased",
-          "Alanine aminotransferase increased",
-          "Pyrexia"
-        ],
-        "medicinalProduct": "JAKAFI",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
-      },
-      "input": {
-        "reportedEvent": "Aspartate aminotransferase increased",
-        "eventKind": "LAB",
-        "caseContext": {},
-        "labelFixture": {
-          "documentType": "CONTROLLED_LABEL_FIXTURE",
-          "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Laboratory abnormalities include Aspartate aminotransferase increased.",
-          "subjectProduct": "JAKAFI"
-        }
-      },
-      "expected": {
-        "listedness": "LISTED",
-        "matchType": "LAB_EXACT",
-        "reasonCode": "LAB_CONCEPT_MATCH",
-        "manualReviewRequired": false
-      },
-      "rationale": "The laboratory PT is explicitly listed."
-    },
-    {
       "id": "LIST-FAERS-088",
       "version": "1.0.0",
       "controlStatus": "CONTROLLED_REFERENCE",
       "edgeCaseCategory": "LAB_EXACT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10009706",
-        "safetyReportVersion": "2",
+        "safetyReportId": "10004822",
+        "safetyReportVersion": "1",
         "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Blood bilirubin increased",
+        "country": "KR",
+        "eventPt": "Alanine aminotransferase increased",
         "allReactionPts": [
-          "Blood bilirubin increased"
+          "Serum sickness-like reaction",
+          "Nausea",
+          "Vomiting",
+          "Abdominal discomfort",
+          "Pain in extremity",
+          "Hypoaesthesia",
+          "Conjunctival haemorrhage",
+          "C-reactive protein increased"
         ],
-        "medicinalProduct": "JAKAFI",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "RIFAMPICIN",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Blood bilirubin increased",
+        "reportedEvent": "Alanine aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Laboratory abnormalities include Blood bilirubin increased.",
-          "subjectProduct": "JAKAFI"
+          "text": "Laboratory abnormalities include Alanine aminotransferase increased.",
+          "subjectProduct": "RIFAMPICIN"
         }
       },
       "expected": {
@@ -3628,28 +3836,34 @@
       "edgeCaseCategory": "LAB_EXACT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003587",
+        "safetyReportId": "10006887",
         "safetyReportVersion": "1",
-        "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Platelet count decreased",
+        "receivedDate": "20140311",
+        "country": "JP",
+        "eventPt": "Alanine aminotransferase increased",
         "allReactionPts": [
-          "Platelet count decreased"
+          "Rash",
+          "Drug eruption",
+          "Hepatic function abnormal",
+          "Alanine aminotransferase increased",
+          "Toxic epidermal necrolysis"
         ],
-        "medicinalProduct": "DEPAKOTE",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "OLMETEC (OLMESARTAN MEDOXOMIL)",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Platelet count decreased",
+        "reportedEvent": "Alanine aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Laboratory abnormalities include Platelet count decreased.",
-          "subjectProduct": "DEPAKOTE"
+          "text": "Laboratory abnormalities include Alanine aminotransferase increased.",
+          "subjectProduct": "OLMETEC (OLMESARTAN MEDOXOMIL)"
         }
       },
       "expected": {
@@ -3667,30 +3881,33 @@
       "edgeCaseCategory": "LAB_EXACT",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003617",
-        "safetyReportVersion": "1",
-        "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Haemoglobin decreased",
+        "safetyReportId": "10007535",
+        "safetyReportVersion": "2",
+        "receivedDate": "20140313",
+        "country": "DE",
+        "eventPt": "Alanine aminotransferase increased",
         "allReactionPts": [
-          "Haemoglobin decreased",
-          "Pyrexia",
-          "Headache"
+          "Gamma-glutamyltransferase increased",
+          "Aspartate aminotransferase increased",
+          "Alanine aminotransferase increased",
+          "Blood alkaline phosphatase increased"
         ],
-        "medicinalProduct": "JAKAFI",
+        "medicinalProduct": "BETAFERON",
         "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Haemoglobin decreased",
+        "reportedEvent": "Alanine aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Laboratory abnormalities include Haemoglobin decreased.",
-          "subjectProduct": "JAKAFI"
+          "text": "Laboratory abnormalities include Alanine aminotransferase increased.",
+          "subjectProduct": "BETAFERON"
         }
       },
       "expected": {
@@ -3720,8 +3937,10 @@
         ],
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
         "reportedEvent": "Alanine aminotransferase increased",
@@ -3749,29 +3968,31 @@
       "edgeCaseCategory": "LAB_SYNONYM",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10009359",
-        "safetyReportVersion": "3",
-        "receivedDate": "20140313",
+        "safetyReportId": "10008733",
+        "safetyReportVersion": "1",
+        "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Aspartate aminotransferase increased",
+        "eventPt": "Alanine aminotransferase increased",
         "allReactionPts": [
-          "Aspartate aminotransferase increased",
-          "Blood bilirubin increased"
+          "Alanine aminotransferase increased",
+          "Aspartate aminotransferase increased"
         ],
-        "medicinalProduct": "LETAIRIS",
+        "medicinalProduct": "JAKAFI",
         "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Aspartate aminotransferase increased",
+        "reportedEvent": "Alanine aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Laboratory abnormalities include AST elevation.",
-          "subjectProduct": "LETAIRIS"
+          "text": "Laboratory abnormalities include ALT elevation.",
+          "subjectProduct": "JAKAFI"
         }
       },
       "expected": {
@@ -3789,30 +4010,30 @@
       "edgeCaseCategory": "LAB_SYNONYM",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003378",
-        "safetyReportVersion": "3",
-        "receivedDate": "20140312",
+        "safetyReportId": "10009243",
+        "safetyReportVersion": "4",
+        "receivedDate": "20140313",
         "country": "US",
-        "eventPt": "Dyspnoea",
+        "eventPt": "Alanine aminotransferase increased",
         "allReactionPts": [
-          "Dyspnoea",
-          "Tremor",
-          "Bone pain",
-          "Presyncope"
+          "Transaminases increased",
+          "Alanine aminotransferase increased"
         ],
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Dyspnoea",
+        "reportedEvent": "Alanine aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Laboratory abnormalities include Dyspnoea.",
+          "text": "Laboratory abnormalities include ALT elevation.",
           "subjectProduct": "LETAIRIS"
         }
       },
@@ -3831,28 +4052,31 @@
       "edgeCaseCategory": "LAB_SYNONYM",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003864",
+        "safetyReportId": "10009749",
         "safetyReportVersion": "2",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Platelet count decreased",
+        "eventPt": "Alanine aminotransferase increased",
         "allReactionPts": [
-          "Platelet count decreased",
-          "Blood count abnormal"
+          "Aspartate aminotransferase increased",
+          "Alanine aminotransferase increased",
+          "Pyrexia"
         ],
         "medicinalProduct": "JAKAFI",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Platelet count decreased",
+        "reportedEvent": "Alanine aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Laboratory abnormalities include Thrombocytopenia.",
+          "text": "Laboratory abnormalities include ALT elevation.",
           "subjectProduct": "JAKAFI"
         }
       },
@@ -3871,27 +4095,33 @@
       "edgeCaseCategory": "LAB_SYNONYM",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003518",
-        "safetyReportVersion": "1",
+        "safetyReportId": "10009856",
+        "safetyReportVersion": "2",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Haemoglobin decreased",
+        "eventPt": "Alanine aminotransferase increased",
         "allReactionPts": [
-          "Haemoglobin decreased"
+          "Alanine aminotransferase increased",
+          "Aspartate aminotransferase increased",
+          "Anaemia",
+          "Thrombocytopenia",
+          "White blood cell count decreased"
         ],
         "medicinalProduct": "JAKAFI",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Alanine%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Alanine aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Haemoglobin decreased",
+        "reportedEvent": "Alanine aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Laboratory abnormalities include Decreased hemoglobin.",
+          "text": "Laboratory abnormalities include ALT elevation.",
           "subjectProduct": "JAKAFI"
         }
       },
@@ -3910,29 +4140,37 @@
       "edgeCaseCategory": "LAB_THRESHOLD_LABEL_MORE_SPECIFIC",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10008733",
+        "safetyReportId": "10004945",
         "safetyReportVersion": "1",
         "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Alanine aminotransferase increased",
+        "country": "JP",
+        "eventPt": "Aspartate aminotransferase increased",
         "allReactionPts": [
-          "Alanine aminotransferase increased",
-          "Aspartate aminotransferase increased"
+          "Megakaryocytes decreased",
+          "Aplastic anaemia",
+          "Platelet count decreased",
+          "Blood potassium abnormal",
+          "Aspartate aminotransferase increased",
+          "Alanine aminotransferase abnormal",
+          "White blood cell count decreased",
+          "Blood creatinine increased"
         ],
-        "medicinalProduct": "JAKAFI",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "NEORAL",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Aspartate%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Aspartate aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Alanine aminotransferase increased",
+        "reportedEvent": "Aspartate aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Clinically significant laboratory abnormalities included severe alanine aminotransferase increased (greater than 5 × ULN).",
-          "subjectProduct": "JAKAFI"
+          "text": "Clinically significant laboratory abnormalities included severe aspartate aminotransferase increased (greater than 5 × ULN).",
+          "subjectProduct": "NEORAL"
         }
       },
       "expected": {
@@ -3941,7 +4179,7 @@
         "reasonCode": "LABEL_THRESHOLD_NOT_ESTABLISHED_IN_CASE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish that threshold."
+      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish the threshold."
     },
     {
       "id": "LIST-FAERS-097",
@@ -3950,27 +4188,30 @@
       "edgeCaseCategory": "LAB_THRESHOLD_LABEL_MORE_SPECIFIC",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003379",
-        "safetyReportVersion": "2",
-        "receivedDate": "20140312",
+        "safetyReportId": "10009359",
+        "safetyReportVersion": "3",
+        "receivedDate": "20140313",
         "country": "US",
-        "eventPt": "Nasopharyngitis",
+        "eventPt": "Aspartate aminotransferase increased",
         "allReactionPts": [
-          "Nasopharyngitis"
+          "Aspartate aminotransferase increased",
+          "Blood bilirubin increased"
         ],
         "medicinalProduct": "LETAIRIS",
         "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Aspartate%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Aspartate aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Nasopharyngitis",
+        "reportedEvent": "Aspartate aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Clinically significant laboratory abnormalities included severe nasopharyngitis (greater than 5 × ULN).",
+          "text": "Clinically significant laboratory abnormalities included severe aspartate aminotransferase increased (greater than 5 × ULN).",
           "subjectProduct": "LETAIRIS"
         }
       },
@@ -3980,7 +4221,7 @@
         "reasonCode": "LABEL_THRESHOLD_NOT_ESTABLISHED_IN_CASE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish that threshold."
+      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish the threshold."
     },
     {
       "id": "LIST-FAERS-098",
@@ -3989,31 +4230,32 @@
       "edgeCaseCategory": "LAB_THRESHOLD_LABEL_MORE_SPECIFIC",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003380",
+        "safetyReportId": "10009623",
         "safetyReportVersion": "2",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Respiratory tract infection",
+        "eventPt": "Aspartate aminotransferase increased",
         "allReactionPts": [
-          "Respiratory tract infection",
-          "Body temperature",
-          "Pneumonia",
-          "Productive cough"
+          "Haematocrit decreased",
+          "Haemoglobin decreased",
+          "Aspartate aminotransferase increased"
         ],
-        "medicinalProduct": "LETAIRIS",
-        "faersSerious": false,
-        "endpoint": "https://api.fda.gov/drug/event.json?limit=100",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "medicinalProduct": "JAKAFI",
+        "faersSerious": true,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Aspartate%20aminotransferase%20increased%22&limit=10",
+        "queryTerm": "Aspartate aminotransferase increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Respiratory tract infection",
+        "reportedEvent": "Aspartate aminotransferase increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Clinically significant laboratory abnormalities included severe respiratory tract infection (greater than 5 × ULN).",
-          "subjectProduct": "LETAIRIS"
+          "text": "Clinically significant laboratory abnormalities included severe aspartate aminotransferase increased (greater than 5 × ULN).",
+          "subjectProduct": "JAKAFI"
         }
       },
       "expected": {
@@ -4022,7 +4264,7 @@
         "reasonCode": "LABEL_THRESHOLD_NOT_ESTABLISHED_IN_CASE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish that threshold."
+      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish the threshold."
     },
     {
       "id": "LIST-FAERS-099",
@@ -4031,30 +4273,29 @@
       "edgeCaseCategory": "LAB_THRESHOLD_LABEL_MORE_SPECIFIC",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003869",
+        "safetyReportId": "10009706",
         "safetyReportVersion": "2",
         "receivedDate": "20140312",
         "country": "US",
-        "eventPt": "Platelet count decreased",
+        "eventPt": "Blood bilirubin increased",
         "allReactionPts": [
-          "Platelet count decreased",
-          "Stem cell transplant",
-          "Splenomegaly",
-          "Contusion"
+          "Blood bilirubin increased"
         ],
         "medicinalProduct": "JAKAFI",
-        "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "faersSerious": false,
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Blood%20bilirubin%20increased%22&limit=10",
+        "queryTerm": "Blood bilirubin increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Platelet count decreased",
+        "reportedEvent": "Blood bilirubin increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Clinically significant laboratory abnormalities included severe platelet count decreased (greater than 5 × ULN).",
+          "text": "Clinically significant laboratory abnormalities included severe blood bilirubin increased (greater than 5 × ULN).",
           "subjectProduct": "JAKAFI"
         }
       },
@@ -4064,7 +4305,7 @@
         "reasonCode": "LABEL_THRESHOLD_NOT_ESTABLISHED_IN_CASE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish that threshold."
+      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish the threshold."
     },
     {
       "id": "LIST-FAERS-100",
@@ -4073,29 +4314,37 @@
       "edgeCaseCategory": "LAB_THRESHOLD_LABEL_MORE_SPECIFIC",
       "source": {
         "system": "FAERS/openFDA",
-        "safetyReportId": "10003717",
-        "safetyReportVersion": "2",
-        "receivedDate": "20140312",
-        "country": "US",
-        "eventPt": "Haemoglobin decreased",
+        "safetyReportId": "10011657",
+        "safetyReportVersion": "7",
+        "receivedDate": "20140314",
+        "country": "JP",
+        "eventPt": "Blood bilirubin increased",
         "allReactionPts": [
-          "Haemoglobin decreased",
-          "Weight increased"
+          "Malignant neoplasm progression",
+          "Platelet count decreased",
+          "Haemophagocytic lymphohistiocytosis",
+          "Blood bilirubin increased",
+          "Drug intolerance",
+          "Platelet count decreased",
+          "Hepatic function abnormal",
+          "Blood glucose increased"
         ],
-        "medicinalProduct": "JAKAFI",
+        "medicinalProduct": "MELPHALAN.",
         "faersSerious": true,
-        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Pyrexia%22&limit=10",
-        "note": "The FAERS report anchors the real reported MedDRA event/product. The label passage below is a controlled validation fixture, not the original product label."
+        "endpoint": "https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:%22Blood%20bilirubin%20increased%22&limit=10",
+        "queryTerm": "Blood bilirubin increased",
+        "queryGroup": "LAB",
+        "note": "FAERS anchors the real reported MedDRA event/product. The label passage is a controlled validation fixture, not the original product label."
       },
       "input": {
-        "reportedEvent": "Haemoglobin decreased",
+        "reportedEvent": "Blood bilirubin increased",
         "eventKind": "LAB",
         "caseContext": {},
         "labelFixture": {
           "documentType": "CONTROLLED_LABEL_FIXTURE",
           "section": "Laboratory abnormalities / adverse reactions",
-          "text": "Clinically significant laboratory abnormalities included severe haemoglobin decreased (greater than 5 × ULN).",
-          "subjectProduct": "JAKAFI"
+          "text": "Clinically significant laboratory abnormalities included severe blood bilirubin increased (greater than 5 × ULN).",
+          "subjectProduct": "MELPHALAN."
         }
       },
       "expected": {
@@ -4104,7 +4353,7 @@
         "reasonCode": "LABEL_THRESHOLD_NOT_ESTABLISHED_IN_CASE",
         "manualReviewRequired": false
       },
-      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish that threshold."
+      "rationale": "The label lists only a threshold-qualified abnormality, while the FAERS PT alone does not establish the threshold."
     }
   ]
 }
