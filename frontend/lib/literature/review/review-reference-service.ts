@@ -37,10 +37,12 @@ export interface ActiveLabelReference {
   country: string;
   labelType: string;
   version: string;
-  effectiveFrom: string;
+  effectiveFrom?: string;
   effectiveTo?: string;
   eventTerms: string[];
   sourceDocument?: string;
+  knowledgeObjectId?: string;
+  productionUseBlocked: boolean;
   usageScope: ReviewReferenceUsageScope;
 }
 
@@ -77,10 +79,16 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
       country: text(record.country || record.market),
       labelType: text(record.labelType || record.referenceType),
       version: text(record.version || record.labelVersion),
-      effectiveFrom: text(record.effectiveFrom || record.labelEffectiveFrom),
+      effectiveFrom: text(record.effectiveFrom || record.labelEffectiveFrom) || undefined,
       effectiveTo: text(record.effectiveTo || record.labelEffectiveTo) || undefined,
       eventTerms: stringList(record.eventTerms),
       sourceDocument: text(record.sourceDocument || record.sourceFilename) || undefined,
+      knowledgeObjectId: text(record.knowledgeObjectId) || undefined,
+      productionUseBlocked:
+        record.productionUseBlocked === true ||
+        record.productionEligible === false ||
+        (isRecord(configuration.payload) &&
+          configuration.payload.productionUseBlocked === true),
       usageScope: (
         record.usageScope === "VALIDATION_ONLY"
           ? "VALIDATION_ONLY"
@@ -93,7 +101,7 @@ export async function activeReviewReferenceData(tenantId: string): Promise<{
           record.country &&
           record.labelType &&
           record.version &&
-          record.effectiveFrom,
+          (record.usageScope === "VALIDATION_ONLY" || record.effectiveFrom),
       ),
     );
   });
