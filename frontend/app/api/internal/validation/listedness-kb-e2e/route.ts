@@ -1,5 +1,6 @@
 import { type NextRequest } from "next/server";
 
+import { runGovernedDatabaseMigrations } from "@/lib/database/governed-migration-runner";
 import { activeReviewReferenceData } from "@/lib/literature/review/review-reference-service";
 import { assessListednessFromKnowledgeBase } from "@/lib/listedness-intelligence/knowledge-base-listedness-service";
 
@@ -10,6 +11,8 @@ export async function GET(_request: NextRequest): Promise<Response> {
   if (process.env.VERCEL_ENV !== "preview") {
     return new Response("Not found", { status: 404 });
   }
+
+  const migration = await runGovernedDatabaseMigrations();
 
   const tenantId =
     process.env.DEFAULT_TENANT_KEY?.trim() ||
@@ -72,6 +75,12 @@ export async function GET(_request: NextRequest): Promise<Response> {
 
   return Response.json({
     status: failed === 0 && cases.length > 0 ? "PASSED" : "FAILED",
+    migration: {
+      migrationCount: migration.migrationCount,
+      maxMigration: migration.maxMigration,
+      appliedCount: migration.applied.length,
+      skippedCount: migration.skipped.length,
+    },
     tenantConfigured: Boolean(tenantId),
     productionLabelReferences: references.length,
     tested: cases.length,
