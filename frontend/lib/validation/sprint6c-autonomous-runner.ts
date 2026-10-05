@@ -359,6 +359,12 @@ export async function runSprint6CAutonomousValidation(input: {
     "Sprint 6C validation-only Label/RSI reference is unavailable.",
   );
 
+  const labelEffectiveFrom = labelReference.effectiveFrom;
+  assertTrue(
+    labelEffectiveFrom,
+    "Sprint 6C validation-only Label/RSI effective date is unavailable.",
+  );
+
   await saveLabelAssessments({
     principal: input.principal,
     workspaceId,
@@ -370,7 +376,7 @@ export async function runSprint6CAutonomousValidation(input: {
         conclusion: "EXPECTED",
         referenceLabelKey: labelReference.labelKey,
         referenceLabelVersion: labelReference.version,
-        referenceEffectiveDate: labelReference.effectiveFrom.slice(0, 10),
+        referenceEffectiveDate: labelEffectiveFrom!.slice(0, 10),
         evidence:
           "Synthetic validation-only CCSI lists Urticaria as an expected event for DEMO-PROD-001 in India.",
         rationale:
