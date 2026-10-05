@@ -265,6 +265,7 @@ export async function bootstrapLabelKnowledge(input?: {
             tenant.id,
             document.rows[0].id,
             index,
+            content,
             Math.max(1, Math.ceil(content.length / 4)),
             JSON.stringify({
               koId: manifest.labelId,
