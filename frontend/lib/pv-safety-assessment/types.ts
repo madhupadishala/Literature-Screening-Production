@@ -1,3 +1,5 @@
+import type { SeriousnessInput } from "./seriousness-engine";
+
 export type EvidenceStatus =
   | "PRESENT"
   | "ABSENT"
@@ -85,6 +87,7 @@ export interface SpecialSituationAssessmentInput {
 }
 
 export interface PvSafetyAssessmentInput {
+  seriousnessInput?: SeriousnessInput;
   sourceCoverage: SourceCoverage;
   publicationType: string;
   humanPopulation: EvidenceStatus;
@@ -106,6 +109,7 @@ export interface ProductSafetyAssessment
 }
 
 export interface PvSafetyAssessmentResult {
+  seriousness?: ReturnType<typeof import("./seriousness-engine").assessSeriousness>;
   sourceCoverage: SourceCoverage;
   publicationType: string;
   safetyRelevance: SafetyRelevance;

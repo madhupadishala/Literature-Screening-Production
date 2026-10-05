@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { assessSeriousness, extractSeriousnessCandidates, SERIOUSNESS_CRITERIA } from '../lib/pv-safety-assessment/seriousness-engine.ts';
+const rows=JSON.parse(readFileSync(new URL('../../knowledge/Scenarios/Seriousness/scenarios-v0.1.json',import.meta.url),'utf8'));
+let passed=0;
+for(const row of rows){
+ const source={id:'source-1',text:row.text,sha256:createHash('sha256').update(row.text).digest('hex')};
+ const base={tenantId:'tenant-1',clientId:'client-1',patientId:'patient-1',eventId:'event-1',coverage:'FULL_TEXT',sources:[source],findings:[],knowledgePack:{id:'pack-1',version:'draft-1',tenantId:'tenant-1',clientId:'client-1',status:'DRAFT',mandatoryRuleIds:[],sourceHashes:[]}};
+ for(const claim of row.claims??[])base.findings.push({criterion:claim.criterion,state:claim.state,origin:'REVIEWER',patientId:'patient-1',eventId:'event-1',attribution:'SUPPORTED',evidence:{sourceId:source.id,start:0,end:source.text.length,quote:source.text}});
+ if(row.allNegative)base.findings=SERIOUSNESS_CRITERIA.map(criterion=>({criterion,state:'FALSE',origin:'REVIEWER',patientId:'patient-1',eventId:'event-1',attribution:'SUPPORTED',evidence:{sourceId:source.id,start:0,end:source.text.length,quote:source.text}}));
+ if(row.reporter)base.reporterAssessment=row.reporter;
+ if(row.badSpan)base.findings[0].evidence.quote='invented quote';
+ if(row.wrongPatient)base.findings[0].patientId='other-patient';
+ if(row.coverage)base.coverage=row.coverage;
+ const result=assessSeriousness(base);
+ assert.equal(result.recommendation,row.expected,row.id);
+ assert.equal(result.effectiveForProduction,false);
+ assert.equal(result.manualReviewRequired,true);
+ if(row.conflict)assert.equal(result.conflict,true,row.id);
+ if(row.contextFlag)assert(extractSeriousnessCandidates(source).some(c=>c.contextFlags.includes(row.contextFlag)),row.id);
+ passed++;
+}
+const input={tenantId:'a',clientId:'b',patientId:'p',eventId:'e',sources:[],findings:[],coverage:'FULL_TEXT',knowledgePack:{tenantId:'x',clientId:'b',id:'k',version:'1',status:'DRAFT',mandatoryRuleIds:[],sourceHashes:[]}};
+assert.throws(()=>assessSeriousness(input),/scope mismatch/);
+console.log(JSON.stringify({syntheticScenariosPassed:passed,tenantIsolation:'PASS',productionActivation:'BLOCKED',clinicalAccuracy:'NOT_MEASURED'}));
+const {assessSeriousnessWithNlp}=await import('../lib/pv-safety-assessment/seriousness-engine.ts');
+const valid={...input,knowledgePack:{...input.knowledgePack,tenantId:'a'}};
+const failed=await assessSeriousnessWithNlp(valid,{modelId:'test-provider',promptVersion:'1',extract:async()=>{throw new Error('offline');}});
+assert.equal(failed.nlp.status,'FAILED_REVIEW_REQUIRED');
+assert.equal(failed.recommendation,'UNRESOLVED');
+assert.equal(failed.manualReviewRequired,true);
+let called=false;
+await assert.rejects(()=>assessSeriousnessWithNlp(input,{modelId:'test-provider',promptVersion:'1',extract:async()=>{called=true;return [];}}),/scope mismatch/);
+assert.equal(called,false);
+console.log('PASS: NLP provider failure and pre-provider tenant isolation');

@@ -1,0 +1,290 @@
+[
+  {
+    "id": "DEATH-supported",
+    "text": "The patient died due to the reaction.",
+    "claims": [
+      {
+        "criterion": "DEATH",
+        "state": "TRUE"
+      }
+    ],
+    "expected": "SERIOUS"
+  },
+  {
+    "id": "DEATH-candidate",
+    "text": "The patient died due to the reaction.",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "DEATH-conflict",
+    "text": "The patient died due to the reaction. A second source contradicts this.",
+    "claims": [
+      {
+        "criterion": "DEATH",
+        "state": "TRUE"
+      },
+      {
+        "criterion": "DEATH",
+        "state": "FALSE"
+      }
+    ],
+    "expected": "SERIOUS",
+    "conflict": true
+  },
+  {
+    "id": "LIFE_THREATENING-supported",
+    "text": "The reaction was life-threatening.",
+    "claims": [
+      {
+        "criterion": "LIFE_THREATENING",
+        "state": "TRUE"
+      }
+    ],
+    "expected": "SERIOUS"
+  },
+  {
+    "id": "LIFE_THREATENING-candidate",
+    "text": "The reaction was life-threatening.",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "LIFE_THREATENING-conflict",
+    "text": "The reaction was life-threatening. A second source contradicts this.",
+    "claims": [
+      {
+        "criterion": "LIFE_THREATENING",
+        "state": "TRUE"
+      },
+      {
+        "criterion": "LIFE_THREATENING",
+        "state": "FALSE"
+      }
+    ],
+    "expected": "SERIOUS",
+    "conflict": true
+  },
+  {
+    "id": "HOSPITALIZATION-supported",
+    "text": "The patient required inpatient admission due to the reaction.",
+    "claims": [
+      {
+        "criterion": "HOSPITALIZATION",
+        "state": "TRUE"
+      }
+    ],
+    "expected": "SERIOUS"
+  },
+  {
+    "id": "HOSPITALIZATION-candidate",
+    "text": "The patient required inpatient admission due to the reaction.",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "HOSPITALIZATION-conflict",
+    "text": "The patient required inpatient admission due to the reaction. A second source contradicts this.",
+    "claims": [
+      {
+        "criterion": "HOSPITALIZATION",
+        "state": "TRUE"
+      },
+      {
+        "criterion": "HOSPITALIZATION",
+        "state": "FALSE"
+      }
+    ],
+    "expected": "SERIOUS",
+    "conflict": true
+  },
+  {
+    "id": "DISABILITY-supported",
+    "text": "The reaction caused permanent disability.",
+    "claims": [
+      {
+        "criterion": "DISABILITY",
+        "state": "TRUE"
+      }
+    ],
+    "expected": "SERIOUS"
+  },
+  {
+    "id": "DISABILITY-candidate",
+    "text": "The reaction caused permanent disability.",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "DISABILITY-conflict",
+    "text": "The reaction caused permanent disability. A second source contradicts this.",
+    "claims": [
+      {
+        "criterion": "DISABILITY",
+        "state": "TRUE"
+      },
+      {
+        "criterion": "DISABILITY",
+        "state": "FALSE"
+      }
+    ],
+    "expected": "SERIOUS",
+    "conflict": true
+  },
+  {
+    "id": "CONGENITAL_ANOMALY-supported",
+    "text": "The infant had a birth defect.",
+    "claims": [
+      {
+        "criterion": "CONGENITAL_ANOMALY",
+        "state": "TRUE"
+      }
+    ],
+    "expected": "SERIOUS"
+  },
+  {
+    "id": "CONGENITAL_ANOMALY-candidate",
+    "text": "The infant had a birth defect.",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "CONGENITAL_ANOMALY-conflict",
+    "text": "The infant had a birth defect. A second source contradicts this.",
+    "claims": [
+      {
+        "criterion": "CONGENITAL_ANOMALY",
+        "state": "TRUE"
+      },
+      {
+        "criterion": "CONGENITAL_ANOMALY",
+        "state": "FALSE"
+      }
+    ],
+    "expected": "SERIOUS",
+    "conflict": true
+  },
+  {
+    "id": "OTHER_MEDICALLY_IMPORTANT-supported",
+    "text": "The reviewer classified this as medically important.",
+    "claims": [
+      {
+        "criterion": "OTHER_MEDICALLY_IMPORTANT",
+        "state": "TRUE"
+      }
+    ],
+    "expected": "SERIOUS"
+  },
+  {
+    "id": "OTHER_MEDICALLY_IMPORTANT-candidate",
+    "text": "The reviewer classified this as medically important.",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "OTHER_MEDICALLY_IMPORTANT-conflict",
+    "text": "The reviewer classified this as medically important. A second source contradicts this.",
+    "claims": [
+      {
+        "criterion": "OTHER_MEDICALLY_IMPORTANT",
+        "state": "TRUE"
+      },
+      {
+        "criterion": "OTHER_MEDICALLY_IMPORTANT",
+        "state": "FALSE"
+      }
+    ],
+    "expected": "SERIOUS",
+    "conflict": true
+  },
+  {
+    "id": "negated",
+    "text": "The patient was not hospitalized.",
+    "contextFlag": "NEGATION_REQUIRES_SCOPE_REVIEW",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "historical",
+    "text": "The patient had a previous hospital admission.",
+    "contextFlag": "HISTORICAL_CONTEXT",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "family",
+    "text": "The father died.",
+    "contextFlag": "SUBJECT_ATTRIBUTION_REQUIRED",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "planned",
+    "text": "The patient had a planned admission.",
+    "contextFlag": "CARE_SETTING_REVIEW",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "hypothetical",
+    "text": "The event might be life-threatening if more severe.",
+    "contextFlag": "HYPOTHETICAL_CONTEXT",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "severity-only",
+    "text": "The patient had severe headache, CTCAE grade 3.",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "empty",
+    "text": "",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "reporter-serious",
+    "text": "Reporter marked serious; criterion unavailable.",
+    "reporter": "SERIOUS",
+    "expected": "SERIOUS"
+  },
+  {
+    "id": "explicit-negative",
+    "text": "All six criteria were explicitly assessed as absent by the reviewer.",
+    "allNegative": true,
+    "expected": "NON_SERIOUS"
+  },
+  {
+    "id": "incomplete-negative",
+    "text": "All six criteria were explicitly assessed as absent by the reviewer.",
+    "allNegative": true,
+    "coverage": "TITLE_ONLY",
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "bad-span",
+    "text": "The patient died due to the reaction.",
+    "claims": [
+      {
+        "criterion": "DEATH",
+        "state": "TRUE"
+      }
+    ],
+    "badSpan": true,
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "wrong-patient",
+    "text": "The patient died due to the reaction.",
+    "claims": [
+      {
+        "criterion": "DEATH",
+        "state": "TRUE"
+      }
+    ],
+    "wrongPatient": true,
+    "expected": "UNRESOLVED"
+  },
+  {
+    "id": "reporter-conflict",
+    "text": "All six criteria were explicitly assessed as absent by the reviewer.",
+    "allNegative": true,
+    "reporter": "SERIOUS",
+    "conflict": true,
+    "expected": "SERIOUS"
+  },
+  {
+    "id": "ed-only",
+    "text": "The patient visited the emergency department and received epinephrine.",
+    "expected": "UNRESOLVED"
+  }
+]

@@ -162,3 +162,7 @@ Do not wire the new Safety Assessment Engine into production Screening until:
 4. ICSR versus aggregate-safety scope is governed;
 5. golden cases pass;
 6. source evidence, applied rules and uncertainty can be reconstructed from the audit record.
+
+## PV-SAFETY-GAP-008 — Seriousness assessment
+
+DRAFT shared six-criterion recommendation and lexical NLP context extraction implemented in `frontend/lib/pv-safety-assessment/seriousness-engine.ts`. Exact span validation, tenant/client boundaries, uncertainty and conflict handling are included. Actual IME/CTCAE references, approved exact-rule source binding, semantic clinical validation, reviewed FAERS/gold cases, downstream workflow integration and production release gates remain open. This gap is not closed by synthetic test success.

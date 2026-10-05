@@ -1,3 +1,4 @@
+import { assessSeriousness } from "./seriousness-engine";
 import type {
   ProductSafetyAssessment,
   ProductSafetyAssessmentInput,
@@ -140,7 +141,9 @@ export function assessPvSafety(
   const unresolvedProduct = productAssessments.some(
     (product) => product.suspectForEvent === null,
   );
+  const seriousness = input.seriousnessInput ? assessSeriousness(input.seriousnessInput) : undefined;
   const manualReviewRequired =
+    Boolean(seriousness?.manualReviewRequired) ||
     safety.relevance === "UNRESOLVED" ||
     unresolvedProduct ||
     input.sourceCoverage !== "FULL_TEXT";
@@ -156,6 +159,7 @@ export function assessPvSafety(
     !manualReviewRequired;
 
   return {
+    seriousness,
     sourceCoverage: input.sourceCoverage,
     publicationType: input.publicationType,
     safetyRelevance: safety.relevance,
@@ -170,6 +174,6 @@ export function assessPvSafety(
     symptoms: input.symptoms ?? [],
     rationale,
     appliedKnowledgeObjectIds: [...PV_SAFETY_V1_KNOWLEDGE_OBJECTS],
-    knowledgeGaps: [...KNOWLEDGE_GAPS],
+    knowledgeGaps: [...KNOWLEDGE_GAPS, "PV-SAFETY-GAP-008 seriousness validation and production activation", ...(seriousness?.knowledgeGaps ?? [])],
   };
 }
