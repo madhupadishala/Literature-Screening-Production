@@ -27,7 +27,7 @@ const CONTROLLED_SYNONYM_GROUPS: string[][] = [
   ["pruritus", "itching"],
   ["dyspnea", "shortness of breath", "breathlessness"],
   ["urticaria", "hives"],
-  ["hyperbilirubinemia", "blood bilirubin increased", "bilirubin increased"],
+  ["hyperbilirubinemia", "hyperbilirubinaemia", "blood bilirubin increased", "bilirubin increased"],
   ["thrombocytopenia", "platelet count decreased", "platelets decreased"],
   ["alanine aminotransferase increased", "alt increased", "alt elevation", "elevated alt"],
   ["aspartate aminotransferase increased", "ast increased", "ast elevation", "elevated ast"],
