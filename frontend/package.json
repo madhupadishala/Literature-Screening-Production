@@ -85,7 +85,8 @@
     "cleanup:sprint12:verify": "node --import tsx scripts/verify-cleanup-sprint12-literature-ux.ts",
     "cleanup:sprint13:verify": "node --import tsx scripts/verify-cleanup-sprint13-intake-ux.ts",
     "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts",
-    "listedness:verify": "node --import tsx scripts/verify-listedness-engine.ts"
+    "listedness:verify": "node --import tsx scripts/verify-listedness-engine.ts",
+    "listedness:verify:kb": "node --import tsx scripts/verify-listedness-kb-e2e.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "1.18.0",
