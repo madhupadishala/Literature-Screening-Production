@@ -2,7 +2,6 @@ import { type NextRequest } from "next/server";
 
 import { runGovernedDatabaseMigrations } from "@/lib/database/governed-migration-runner";
 import { getPostgresPool } from "@/lib/database/postgres";
-import { getPostgresPool } from "@/lib/database/postgres";
 import { activeReviewReferenceData } from "@/lib/literature/review/review-reference-service";
 import { assessListednessFromKnowledgeBase } from "@/lib/listedness-intelligence/knowledge-base-listedness-service";
 
