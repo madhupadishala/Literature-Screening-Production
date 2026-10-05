@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { runGovernedDatabaseMigrations } from "@/lib/database/governed-migration-runner";
+import { getPostgresPool } from "@/lib/database/postgres";
 import { activeReviewReferenceData } from "@/lib/literature/review/review-reference-service";
 import { assessListednessFromKnowledgeBase } from "@/lib/listedness-intelligence/knowledge-base-listedness-service";
 
@@ -14,11 +15,35 @@ export async function GET(_request: NextRequest): Promise<Response> {
 
   const migration = await runGovernedDatabaseMigrations();
 
-  const tenantId =
-    process.env.DEFAULT_TENANT_KEY?.trim() ||
+  const tenantReference =
     process.env.LISTEDNESS_E2E_TENANT_ID?.trim() ||
+    process.env.DEFAULT_TENANT_KEY?.trim() ||
     "demo-tenant";
 
+  const tenant = await getPostgresPool().query<{ id: string; tenant_key: string }>(
+    `SELECT id::text, tenant_key
+       FROM tenants
+      WHERE id::text = $1 OR tenant_key = $1
+      LIMIT 1`,
+    [tenantReference],
+  );
+  if (!tenant.rows[0]) {
+    return Response.json(
+      {
+        status: "FAILED",
+        migration: {
+          migrationCount: migration.migrationCount,
+          maxMigration: migration.maxMigration,
+          appliedCount: migration.applied.length,
+          skippedCount: migration.skipped.length,
+        },
+        failureReasons: { TENANT_NOT_FOUND: 1 },
+      },
+      { status: 424 },
+    );
+  }
+
+  const tenantId = tenant.rows[0].id;
   const references = (await activeReviewReferenceData(tenantId)).labelReferences
     .filter(
       (reference) =>
@@ -81,7 +106,7 @@ export async function GET(_request: NextRequest): Promise<Response> {
       appliedCount: migration.applied.length,
       skippedCount: migration.skipped.length,
     },
-    tenantConfigured: Boolean(tenantId),
+    tenantConfigured: true,
     productionLabelReferences: references.length,
     tested: cases.length,
     passed,
