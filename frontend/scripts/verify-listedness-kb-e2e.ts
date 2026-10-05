@@ -1,10 +1,23 @@
+import { getPostgresPool } from "../lib/database/postgres";
 import { activeReviewReferenceData } from "../lib/literature/review/review-reference-service";
 import { assessListednessFromKnowledgeBase } from "../lib/listedness-intelligence/knowledge-base-listedness-service";
 
-const tenantId =
+const tenantReference =
   process.env.LISTEDNESS_E2E_TENANT_ID?.trim() ||
   process.env.DEMO_TENANT_KEY?.trim() ||
   "demo-tenant";
+
+const tenant = await getPostgresPool().query<{ id: string }>(
+  `SELECT id::text
+     FROM tenants
+    WHERE id::text = $1 OR tenant_key = $1
+    LIMIT 1`,
+  [tenantReference],
+);
+if (!tenant.rows[0]) {
+  throw new Error(`Listedness E2E tenant was not found: ${tenantReference}`);
+}
+const tenantId = tenant.rows[0].id;
 const maxCases = Math.max(
   1,
   Math.min(Number(process.env.LISTEDNESS_E2E_MAX_CASES || 20), 100),
