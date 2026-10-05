@@ -1,18 +1,16 @@
 import "server-only";
 
-import path from "node:path";
-
-import { searchControlledKnowledge } from "@/lib/knowledge/retrieval/controlled-knowledge-service";
-import type { ControlledKnowledgeSearchResult } from "@/lib/knowledge/retrieval/controlled-knowledge-types";
 import {
   activeReviewReferenceData,
   type ActiveLabelReference,
+  type ReviewReferenceUsageScope,
 } from "@/lib/literature/review/review-reference-service";
 
 import {
   assessListedness,
   listednessSearchTerms,
 } from "./listedness-engine";
+import { searchBoundLabelDocument } from "./label-knowledge-search";
 import type {
   ListednessAssessment,
   ListednessCaseContext,
@@ -30,53 +28,18 @@ function normalize(value: unknown): string {
 
 function dateInRange(
   relevantDate: string | undefined,
-  from: string,
-  to?: string,
+  from: string | undefined,
+  to: string | undefined,
+  usageScope: ReviewReferenceUsageScope,
 ): boolean {
   if (!relevantDate) return true;
+  if (!from) return usageScope === "VALIDATION_ONLY";
   const target = Date.parse(relevantDate);
   const start = Date.parse(from);
   const end = to ? Date.parse(to) : Number.POSITIVE_INFINITY;
   if (!Number.isFinite(target) || !Number.isFinite(start)) return false;
   if (to && !Number.isFinite(end)) return false;
   return target >= start && target <= end;
-}
-
-function sameSourceDocument(
-  result: ControlledKnowledgeSearchResult,
-  reference: ActiveLabelReference,
-): boolean {
-  const source = normalize(result.citation.sourceFile);
-  const title = normalize(result.citation.title);
-  const objectId = normalize(result.citation.knowledgeObjectId);
-  const labelKey = normalize(reference.labelKey);
-  const configuredSource = normalize(reference.sourceDocument);
-
-  if (labelKey && objectId === labelKey) return true;
-  if (labelKey && title.includes(labelKey)) return true;
-  if (!configuredSource) return false;
-
-  if (source === configuredSource || title === configuredSource) return true;
-
-  const sourceBase = normalize(path.basename(result.citation.sourceFile || ""));
-  const configuredBase = normalize(path.basename(reference.sourceDocument || ""));
-  return Boolean(configuredBase && sourceBase === configuredBase);
-}
-
-function labelEvidenceFromKnowledge(
-  result: ControlledKnowledgeSearchResult,
-  reference: ActiveLabelReference,
-): ListednessLabelEvidence {
-  return {
-    text: result.content,
-    section: result.citation.section,
-    documentId: result.citation.knowledgeObjectId,
-    documentType: reference.labelType,
-    documentVersion: reference.version,
-    effectiveDate: reference.effectiveFrom,
-    subjectProduct: reference.clientProductId,
-    chunkId: result.citation.chunkId,
-  };
 }
 
 function structuredReferenceEvidence(
