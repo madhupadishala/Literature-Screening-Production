@@ -7,16 +7,38 @@ const tenantReference =
   process.env.DEMO_TENANT_KEY?.trim() ||
   "demo-tenant";
 
-const tenant = await getPostgresPool().query<{ id: string }>(
-  `SELECT id::text
+const pool = getPostgresPool();
+let tenant = await pool.query<{ id: string; tenant_key: string }>(
+  `SELECT id::text, tenant_key
      FROM tenants
     WHERE id::text = $1 OR tenant_key = $1
     LIMIT 1`,
   [tenantReference],
 );
+
 if (!tenant.rows[0]) {
-  throw new Error(`Listedness E2E tenant was not found: ${tenantReference}`);
+  tenant = await pool.query<{ id: string; tenant_key: string }>(
+    `SELECT DISTINCT t.id::text, t.tenant_key
+       FROM tenants t
+       JOIN tenant_configuration_sets s
+         ON s.tenant_id = t.id
+        AND s.resource_type = 'LABEL_REFERENCE'
+       JOIN tenant_configuration_versions v
+         ON v.config_set_id = s.id
+        AND v.tenant_id = t.id
+        AND v.lifecycle_status = 'active'
+      WHERE t.status = 'active'
+      ORDER BY t.tenant_key
+      LIMIT 1`,
+  );
 }
+
+if (!tenant.rows[0]) {
+  throw new Error(
+    "No active tenant with a governed LABEL_REFERENCE configuration is available for real-label E2E validation.",
+  );
+}
+
 const tenantId = tenant.rows[0].id;
 const maxCases = Math.max(
   1,
