@@ -1,0 +1,88 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-009-European-Union-EEA-PIL-6992fc9595b9",
+  "brandName": "Lipirex",
+  "genericName": "Atorvastatin",
+  "country": "European-Union-EEA",
+  "documentType": "PIL",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-009",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "name": "ATORVASTATINA ALMUS PHARMA 20 MG COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+      "holder": "Almus Farmaceutica S.A.U.",
+      "registration": "82628",
+      "dose": "20 mg",
+      "form": {
+        "id": 42,
+        "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+      },
+      "language": "Spanish"
+    },
+    "sourceJurisdiction": "Spain",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "regionalApplicability": "SPAIN_NATIONAL_LABEL_NOT_EMA_CENTRAL_OR_ALL_EEA_APPROVAL"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://cima.aemps.es/cima/pdfs/p/82628/P_82628.pdf",
+    "resolvedUrl": "https://cima.aemps.es/cima/pdfs/p/82628/P_82628.pdf",
+    "sha256": "6992fc9595b9cfd25cd8ac1d356da8903e7f92eafc734529bfebb163cd76a6ef",
+    "bytes": 282917,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:51:34.004360+00:00",
+    "sourcePublicationOrUpdateDate": "2024-10-31T23:11:27+00:00",
+    "authorityClass": "NATIONAL_REGULATOR"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 7,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Atorvastatin"
+    ],
+    "strengths": [
+      "20 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

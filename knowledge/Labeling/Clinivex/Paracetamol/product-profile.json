@@ -2,7 +2,7 @@
   "schemaVersion": "2.0",
   "productId": "CLX-PROD-001",
   "productMasterId": "CLINIXAI-PRODUCT-MASTER",
-  "productMasterVersion": "2.0.0",
+  "productMasterVersion": "2.1.0",
   "product": {
     "brandName": "Clinivex",
     "genericName": "Paracetamol",
@@ -49,6 +49,15 @@
       "mah": "ClinixAI",
       "status": "AUTHORIZED",
       "labelingFolder": "knowledge/Labeling/Clinivex/Paracetamol/China"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "authority": "MHRA",
+      "mah": "ClinixAI",
+      "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+      "legalAuthorizationVerified": false,
+      "status": "CONFIGURED",
+      "labelingFolder": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom"
     }
   ],
   "labelingResolution": {
@@ -64,6 +73,7 @@
       "Core-Safety-Information",
       "Other"
     ],
-    "sourceDocumentStatus": "PENDING_SOURCE_DOCUMENT_INGESTION"
+    "sourceDocumentStatus": "REFERENCE_SOURCES_ACQUIRED_PENDING_REVIEW",
+    "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED"
   }
 }

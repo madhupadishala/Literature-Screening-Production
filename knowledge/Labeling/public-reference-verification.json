@@ -1,0 +1,362 @@
+{
+  "checks": [
+    {
+      "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Glycora/Metformin/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Glycora/Metformin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Serovex/Sertraline/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Serovex/Sertraline/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Serovex/Sertraline/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    },
+    {
+      "manifestPath": "knowledge/Labeling/Serovex/Sertraline/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+      "hashAndByteCount": "PASS",
+      "sourceReadableAndTextPresent": "PASS",
+      "draftAndProductionBlock": "PASS"
+    }
+  ],
+  "sourceCount": 59,
+  "technicalChecks": "PASS",
+  "productRegulatoryAndHistoricalApproval": "PENDING",
+  "productionActivation": "BLOCKED"
+}

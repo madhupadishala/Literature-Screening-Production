@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.0",
   "productMasterId": "CLINIXAI-PRODUCT-MASTER",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "owner": "ClinixAI",
   "authorizationModel": "MULTI_REGION_MAH",
   "authorizedRegions": [
@@ -29,6 +29,13 @@
       "jurisdiction": "China",
       "authority": "NMPA",
       "mah": "ClinixAI"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "authority": "MHRA",
+      "mah": "ClinixAI",
+      "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+      "legalAuthorizationVerified": false
     }
   ],
   "products": [
@@ -73,6 +80,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -117,6 +132,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -161,6 +184,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -205,6 +236,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -249,6 +288,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -293,6 +340,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -337,6 +392,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -381,6 +444,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "AUTHORIZED"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -425,6 +496,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     },
@@ -469,6 +548,14 @@
           "authority": "NMPA",
           "mah": "ClinixAI",
           "status": "HISTORICAL"
+        },
+        {
+          "jurisdiction": "United Kingdom",
+          "authority": "MHRA",
+          "mah": "ClinixAI",
+          "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+          "legalAuthorizationVerified": false,
+          "status": "CONFIGURED"
         }
       ]
     }

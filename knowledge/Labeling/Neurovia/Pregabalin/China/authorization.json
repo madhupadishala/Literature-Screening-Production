@@ -4,5 +4,11 @@
   "authority": "NMPA",
   "mah": "ClinixAI",
   "authorizationStatus": "CONFIGURED",
-  "labelingAcquisitionStatus": "PENDING_SOURCE_DOCUMENT_INGESTION"
+  "labelingAcquisitionStatus": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+  "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED",
+  "legalAuthorizationVerified": false,
+  "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+  "sourceManifestPaths": [
+    "knowledge/Labeling/Neurovia/Pregabalin/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json"
+  ]
 }

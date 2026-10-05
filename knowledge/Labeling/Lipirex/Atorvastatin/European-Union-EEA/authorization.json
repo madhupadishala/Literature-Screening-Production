@@ -4,5 +4,12 @@
   "authority": "EMA / EEA NCAs",
   "mah": "ClinixAI",
   "authorizationStatus": "CONFIGURED",
-  "labelingAcquisitionStatus": "PENDING_SOURCE_DOCUMENT_INGESTION"
+  "labelingAcquisitionStatus": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+  "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED",
+  "legalAuthorizationVerified": false,
+  "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+  "sourceManifestPaths": [
+    "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+    "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json"
+  ]
 }

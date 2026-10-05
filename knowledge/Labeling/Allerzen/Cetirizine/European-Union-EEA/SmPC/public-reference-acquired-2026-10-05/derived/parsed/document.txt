@@ -1,0 +1,526 @@
+                                             FICHA TÉCNICA
+
+1. NOMBRE DEL MEDICAMENTO
+
+Cetirizina Almus 10 mg comprimidos recubiertos con película EFG
+
+2. COMPOSICIÓN CUALITATIVA Y CUANTITATIVA
+
+Cada comprimido recubierto con película contiene 10 mg de cetirizina dihidrocloruro.
+
+Excipiente(s) con efecto conocido:
+Cada comprimido recubierto con película contiene 117 mg de lactosa monohidrato y entre 0,69 y 1,38 mg
+de propilenglicol.
+
+Para consultar la lista completa de excipientes, ver sección 6.1.
+
+3. FORMA FARMACÉUTICA
+
+Comprimido recubierto con película.
+
+Comprimidos recubiertos con película, blancos, elípticos, ranurados en una sola cara.
+El comprimido se puede dividir en dosis iguales.
+
+4. DATOS CLÍNICOS
+
+4.1. Indicaciones terapéuticas
+
+En adultos, adolescentes y pacientes pediátricos a partir de 6 años:
+
+    -   Cetirizina está indicada para el alivio de los síntomas nasales y oculares de la rinitis alérgica
+        estacional y perenne.
+    -   Cetirizina está indicada para el alivio de los síntomas de la urticaria crónica idiopática.
+
+
+4.2. Posología y forma de administración
+
+Posología
+
+Niños de 6 a 12 años:
+5 mg dos veces al día (medio comprimido dos veces al día).
+
+Adultos y adolescentes mayores de 12 años:
+10 mg una vez al día (1 comprimido).
+
+Pacientes de edad avanzada:
+Los datos no sugieren que se necesite reducir la dosis en pacientes de edad avanzada en los que la función
+renal es normal.
+
+Insuficiencia renal:
+No hay datos para documentar la relación eficacia/seguridad en pacientes con insuficiencia renal. Ya que
+cetirizina se elimina mayoritariamente por vía renal (ver sección 5.2), en casos en los que no se pueda
+utilizar un tratamiento alternativo, se deben individualizar los intervalos de dosificación de acuerdo con la
+función renal. Consulte la siguiente tabla y ajuste la dosis según proceda. Para utilizar esta tabla de
+
+                                                    1 de 10
+dosificación, es preciso disponer de una estimación del aclaramiento de creatinina (CLcr) del paciente, en
+ml/min. El valor de CLcr (en ml/min) se puede estimar a partir de la determinación de creatinina en suero
+(mg/dl) mediante la siguiente fórmula:
+
+          [140 – edad (años)] x peso (kg)
+CLcr =                                        (x 0,85 para mujeres)
+         72 x creatinina en suero (mg/dl)
+
+Ajuste de dosis en pacientes con insuficiencia renal:
+
+                 Grupo                    Tasa de Filtración Glomerular            Dosis y frecuencia
+                                           estimada (TFGe) (ml/min)
+   Función renal normal                                 90                       10 mg una vez al día
+   Función renal levemente                          60 – < 90                     10 mg una vez al día
+   disminuida
+   Función renal moderadamente                      30 – < 60                     5 mg una vez al día
+   disminuida
+   Función renal gravemente                15 – < 30 sin necesidad de          5 mg una vez cada 2 días
+   disminuida                                         diálisis
+   Enfermedad renal en fase              < 15 en tratamiento con diálisis           Contraindicado
+   terminal
+
+En pacientes pediátricos con insuficiencia renal, se debe ajustar la dosis de modo individual en cada caso
+teniendo en cuenta el aclaramiento renal del paciente, la edad y el peso.
+
+Insuficiencia hepática:
+No es necesario ajustar la dosis en pacientes con únicamente insuficiencia hepática.
+
+Insuficiencia hepática y renal:
+Se recomienda ajustar la dosis (ver Insuficiencia renal).
+
+Población pediátrica:
+La formulación en comprimidos no debe utilizarse en niños menores de 6 años ya que no permite los
+necesarios ajustes de dosis.
+
+
+Forma de administración
+
+Los comprimidos tienen que tragarse con un vaso de líquido.
+
+4.3. Contraindicaciones
+
+Hipersensibilidad al principio activo, a cualquiera de los excipientes incluidos en la sección 6.1, a la
+hidroxizina o a cualquier derivado piperazínico.
+
+Pacientes con enfermedad renal en fase terminal con una Tasa de Filtración Glomerular estimada (TFGe)
+inferior a 15 ml/min.
+
+
+
+
+                                                    2 de 10
+4.4. Advertencias y precauciones especiales de empleo
+
+A dosis terapéuticas, no se ha demostrado interacción clínicamente significativa con alcohol (para un nivel
+de alcohol en sangre de 0,5 g/l). Sin embargo, se recomienda precaución si se toma concomitantemente
+alcohol.
+
+Se debe tener precaución en pacientes con factores de predisposición a la retención urinaria (p.ej., lesión de
+la médula espinal, hiperplasia de la próstata) ya que la cetirizina puede aumentar el riesgo de retención
+urinaria.
+
+Se recomienda precaución en pacientes epilépticos y pacientes con riesgo de convulsiones.
+
+Los medicamentos antihistamínicos inhiben las pruebas cutáneas de la alergia por lo que es necesario un
+periodo de descanso (de 3 días) antes de realizarlas.
+
+Cuando cesa el tratamiento con cetirizina puede aparecer prurito y/o urticaria, incluso si los síntomas no
+estaban presentes antes del inicio del tratamiento. En algunos casos, los síntomas pueden ser intensos y
+pueden requerir el reinicio del tratamiento. Los síntomas deberían resolverse cuando el tratamiento se
+reinicie.
+
+Población pediátrica
+No se recomienda el uso de la formulación de comprimidos recubiertos con película en niños menores de 6
+años, ya que esta formulación no permite realizar ajustes apropiados de la dosis. Se recomienda utilizar una
+formulación pediátrica de cetirizina.
+
+Excipientes:
+Este medicamento contiene lactosa. Los pacientes con intolerancia hereditaria a galactosa, deficiencia total
+de lactasa o problemas de absorción de glucosa o galactosa no deben tomar este medicamento.
+
+Este medicamento contiene entre 0,69 y 1,38 mg de propilenglicol en cada comprimido.
+
+4.5. Interacción con otros medicamentos y otras formas de interacción
+
+Debido a la farmacocinética, farmacodinamia y al perfil de tolerancia de la cetirizina, no se esperan
+interacciones con este antihistamínico. De hecho, no se han notificado ni interacciones farmacodinámicas
+ni farmacocinéticas significativas en los estudios de interacción fármaco-fármaco desarrollados,
+especialmente con pseudoefedrina o teofilina (400 mg/día).
+
+La absorción de cetirizina no se reduce con la comida, aunque la velocidad de absorción disminuye.
+
+En pacientes sensibles, el uso conjunto de alcohol o cualquier depresor del SNC puede causar
+disminuciones adicionales en la atención y alteración del rendimiento, aunque la cetirizina no potencia el
+efecto del alcohol (niveles en sangre de 0,5 g/l).
+
+4.6. Fertilidad, embarazo y lactancia
+
+Embarazo
+
+Los datos recogidos prospectivamente relativos al uso de cetirizina durante el embarazo, no sugieren un
+potencial tóxico para la madre o para el feto.
+
+
+
+
+                                                   3 de 10
+Los estudios en animales no muestran efectos dañinos directos o indirectos sobre el embarazo, desarrollo
+embrional/fetal, parto o desarrollo postnatal. Debe prestarse atención en la prescripción a mujeres
+embarazadas.
+
+Lactancia
+
+La cetirizina pasa a la leche materna. No se puede excluir un riesgo de reacciones adversas en los lactantes.
+La cetirizina se excreta en la leche materna en concentraciones que suponen del 25% al 90% de las medidas
+en el plasma, dependiendo del tiempo de muestreo después de la administración. Por tanto,
+Debe prestarse atención cuando se prescribe cetirizina mujeres en periodo de lactancia.
+
+Fertilidad
+
+Los datos disponibles sobre la fertilidad en humanos son limitados pero no se han identificado riesgos
+potenciales.
+Los datos en animales no sugieren riesgo de toxicidad para la reproducción en humanos.
+
+4.7. Efectos sobre la capacidad para conducir y utilizar máquinas
+
+Las medidas objetivas no han mostrado efectos clínicos relevantes de la cetirizina, a las dosis
+recomendadas de 10 mg, sobre la capacidad para conducir, la latencia al sueño y la respuesta motora. Sin
+embargo, los pacientes que experimenten somnolencia deben abstenerse de conducir, realizar actividades
+potencialmente peligrosas o utilizar maquinaria. No deben exceder la dosis recomendada y deben tener en
+cuenta su respuesta al medicamento.
+
+4.8. Reacciones adversas
+
+Estudios clínicos
+
+Los estudios clínicos han demostrado que cetirizina a la dosis recomendada tiene reacciones adversas
+menores sobre el SNC, incluyendo somnolencia, fatiga, mareo y dolor de cabeza. En algunos casos se ha
+notificado estimulación paradójica del SNC.
+
+Aunque la cetirizina es un antagonista selectivo de los receptores periféricos H1 y está relativamente libre
+de actividad anticolinérgica, se han notificado casos aislados de dificultad para la micción, trastornos de la
+acomodación ocular y sequedad de boca.
+
+Se ha notificado casos de función hepática anormal con aumento de las enzimas hepáticas, acompañadas
+por aumento de la bilirrubina. Muchos de estos casos se resuelven tras la interrupción del tratamiento.
+
+Listado de reacciones adversas
+
+Están disponibles los datos de los ensayos clínicos controlados doble ciego, que incluyeron más de
+3200 pacientes expuestos a cetirizina, que cuantificaron la seguridad comparando la cetirizina con un
+placebo u otro antihistamínico a la dosis recomendada (10 mg al día de cetirizina).
+
+En este conjunto, se notificaron en una proporción igual o superior al 1 % las siguientes reacciones
+adversas para 10 mg de cetirizina en los ensayos controlados con placebo:
+
+               Reacciones adversas (WHO-ART)                     10 mg de cetirizina        Placebo
+                                                                     (n = 3260)            (n = 3061)
+
+
+                                                   4 de 10
+       Trastornos generales y alteraciones en el lugar de
+       administración                                                 1,63 %               0,95 %
+       Fatiga
+       Trastornos del sistema nervioso central y periférico.
+       Mareos                                                         1,10 %               0,98 %
+       Dolor de cabeza                                                7,42 %               8,07 %
+       Trastornos gastrointestinales
+       Dolor abdominal                                                0,98 %               1,08 %
+       Sequedad de boca                                               2,09 %               0,82 %
+       Náuseas                                                        1,07 %               1,14 %
+       Trastornos psiquiátricos
+       Somnolencia                                                    9,63 %               5,00 %
+       Trastornos respiratorios, torácicos y mediastínicos
+       Faringitis                                                     1,29 %               1,34 %
+
+Aunque estadísticamente más frecuente que en el grupo placebo, la somnolencia fue de leve a moderada en
+la mayoría de los casos. Las pruebas objetivas han demostrado que las actividades usuales diarias no se ven
+afectadas por la dosis diaria recomendada en voluntarios jóvenes sanos, como se demostró por otros
+estudios.
+
+Población pediátrica
+
+Las reacciones adversas en una proporción igual o superior al 1 % en niños de 6 meses a 12 años, incluidos
+en los ensayos controlados con placebo, son:
+
+               Reacciones adversas (WHO-ART)                    10 mg de cetirizina       Placebo
+                                                                    (n = 1656)           (n = 1294)
+       Trastornos gastrointestinales
+       Diarrea                                                         1,0 %               0,6 %
+       Trastornos psiquiátricos
+       Somnolencia                                                     1,8 %               1,4 %
+       Trastornos respiratorios, mediastínicos y torácicos
+       Rinitis                                                         1,4 %               1,1 %
+       Trastornos generales y alteraciones en el lugar de
+       administración                                                  1,0 %               0,3 %
+       Fatiga
+
+
+
+Experiencia post-comercialización
+
+Además de las reacciones adversas notificadas durante los ensayos clínicos y mencionadas anteriormente,
+en la experiencia post-comercialización se han descrito casos aislados de las siguientes reacciones adversas.
+
+Las reacciones adversas se describen de acuerdo a la clasificación de MedDRA Órgano Sistema y la
+frecuencia estimada en base a la experiencia post-comercialización.
+
+
+
+
+                                                  5 de 10
+Las frecuencias se definen como sigue: Muy frecuentes (≥ 1/10); frecuentes (≥ 1/100 a < 1/10); poco
+frecuentes (≥ 1/1.000 a <1/100); raras (≥ 1/10.000 a <1/1.000); muy raras (< 1/10.000); frecuencia no
+conocida (no puede estimarse a partir de los datos disponibles).
+
+Trastornos de la sangre y del sistema linfático:
+Muy raro: trombocitopenia
+
+Trastornos del sistema inmune:
+Raro: hipersensibilidad
+Muy raro: shock anafiláctico
+
+Trastornos del metabolismo y de la nutrición
+No conocida: aumento del apetito
+
+Trastornos psiquiátricos:
+Poco frecuente: agitación,
+Raros: agresividad, confusión, depresión, alucinación, insomnio
+Muy raro: tic
+No conocida: pensamientos suicidas
+
+Trastornos del sistema nervioso:
+Poco frecuente: parestesia
+Raros: convulsiones,
+Muy raros: disgeusia, sincope, temblor, distonía, discinesia
+No conocidas: amnesia, deterioro de la memoria
+
+Trastornos oculares:
+Muy raros: trastornos de la acomodación, visión borrosa, crisis oculógiras
+
+Trastornos del oído y del laberinto
+No conocida: vértigo
+
+Trastornos cardiacos:
+Raro: taquicardia
+
+Trastornos gastrointestinales:
+Poco frecuente: diarrea
+
+Trastornos hepatobiliares:
+Raro: función hepática anormal (aumento de las transaminasas, fosfatasa alcalina, -GT y bilirrubina)
+No conocida: hepatitis
+
+Trastornos de la piel y del tejido subcutáneo:
+Poco frecuente: prurito, sarpullido
+Raro: urticaria
+Muy raros: edema angioneurótico, erupción debida al fármaco
+No conocida: pustulosis exantemática aguda generalizada
+
+Trastornos musculoesqueléticos y del tejido conjuntivo:
+
+                                                   6 de 10
+No conocida: artralgia, mialgia
+
+Trastornos renales y urinarios:
+Muy raros: disuria, enuresis
+No conocida: retención urinaria
+
+Trastornos generales y alteraciones en el lugar de administración:
+Poco frecuentes: astenia, malestar
+Raro: edema
+
+Exploraciones complementarias:
+Raro: aumento de peso
+
+Descripción de las reacciones adversas seleccionadas
+Después de la interrupción del tratamiento con cetirizina, se han notificado prurito (picor intenso) y /o
+urticaria.
+
+Notificación de sospechas de reacciones adversas
+Es importante notificar sospechas de reacciones adversas al medicamento tras su autorización. Ello
+permite una supervisión continuada de la relación beneficio/riesgo del medicamento. Se invita a los
+profesionales sanitarios a notificar las sospechas de reacciones adversas a través del Sistema Español de
+Farmacovigilancia de Medicamentos de Uso Humano. Website: ww.notificaram.es.
+
+4.9. Sobredosis
+
+Síntomas
+Los síntomas observados después de una sobredosis de cetirizina están principalmente asociados con
+efectos sobre el SNC o con efectos que podrían sugerir un efecto anticolinérgico.
+Los efectos adversos notificados después de la ingesta de al menos 5 veces la dosis diaria recomendada
+son: confusión, diarrea, mareo, fatiga, dolor de cabeza, malestar, midriasis, prurito, nerviosismo, sedación,
+somnolencia, estupor, taquicardia, temblor y retención urinaria.
+
+Tratamiento
+No hay un antídoto conocido específico para cetirizina.
+De producirse, se recomienda un tratamiento sintomático o de apoyo. El lavado gástrico se podrá realizar
+tras una ingesta reciente. La cetirizina no se elimina de forma efectiva por hemodiálisis.
+
+5. PROPIEDADES FARMACOLÓGICAS
+
+5.1. Propiedades farmacodinámicas
+
+Grupo farmacoterapéutico. Antihistamínicos para uso sistémico, derivados de la piperazina, código ATC:
+R06A E07
+
+Mecanismo de acción
+La cetirizina, un metabolito humano de la hidroxizina, es un potente y selectivo inhibidor de los receptores
+periféricos H1. Los estudios in vitro de unión a receptores no han mostrado afinidad medible nada más que
+por los receptores H1.
+
+Efectos farmacodinámicos
+
+
+                                                   7 de 10
+Además de su efecto anti-H1, la cetirizina demostró que exhibía actividades antialérgicas: a una dosis de
+10 mg una vez al día o dos veces al día, inhibe la última fase de reclutamiento de eosinófilos, en la piel y el
+tejido conjuntivo de sujetos a los que se sometió a un test de alergenos por vía tópica.
+
+Eficacia clínica y seguridad
+Estudios en voluntarios sanos muestran que la cetirizina a dosis de 5 y 10 mg inhibe estrechamente las
+pápulas y eritemas inducidos por altas concentraciones de histamina en la piel, pero no se establece la
+correlación con la eficacia.
+
+En un estudio de 6 semanas, controlado con placebo con 186 pacientes con rinitis alérgica y asma de leve a
+moderado, 10 mg de cetirizina administrados una vez al día, mejoraron los síntomas de la rinitis y no
+alteraron la función pulmonar. Este estudio avala la seguridad de la administración de cetirizina a pacientes
+alérgicos con asma de leve a moderado.
+
+En un estudio controlado con placebo, la cetirizina administrada a la dosis diaria mayor de 60 mg durante
+7 días no provocó una prolongación estadísticamente significativa del intervalo QT.
+
+A la dosis recomendada, la cetirizina ha demostrado que mejora la calidad de vida de de los pacientes con
+rinitis perenne o rinitis alérgica estacional.
+
+Población pediátrica
+En un estudio de 35 días en niños de 5 a 12 años, no se encontró tolerancia a los efectos antihistamínicos de
+cetirizina (supresión de la pápula y del eritema). Cuando se interrumpe el tratamiento con cetirizina
+después de una administración repetida, la piel recupera su reactividad normal a la histamina en 3 días.
+
+5.2. Propiedades farmacocinéticas
+
+Absorción
+La concentración plasmática en el estado de equilibrio es aproximadamente de 300 ng/ml y se alcanza en
+1,0  0,5 h. La distribución de los parámetros farmacocinéticos como la concentración máxima (C max) y el
+área bajo la curva (AUC) es monocompartimental.
+
+El grado de absorción de cetirizina no se reduce con la comida, aunque la velocidad de absorción
+disminuye.
+
+El grado de biodisponibilidad es similar cuando la cetirizina se administra como solución, cápsula o
+comprimido.
+
+Distribución
+El volumen aparente de distribución es 0,50 l/kg. La unión a proteínas plasmáticas de cetirizina es del
+93 ± 0,3 %. La cetirizina no modifica la unión de la warfarina a proteínas.
+
+Metabolismo o Biotransformación
+La cetirizina no sufre mayoritariamente efecto primer paso.
+
+Eliminación
+La semivida terminal es aproximadamente de 10 horas y no se observa acumulación de cetirizina tras la
+administración de dosis diarias de 10 mg durante 10 días. Dos terceras partes de la dosis se excreta sin
+modificación por la orina.
+
+
+
+                                                    8 de 10
+Linealidad/ No linealidad
+La cetirizina muestra una cinética lineal en el rango de 5 a 60 mg.
+
+Pacientes de edad avanzada:
+Tras una única administración de una dosis oral de 10 mg a 16 pacientes de edad avanzada, la semivida
+aumentó un 50 % y el aclaramiento disminuyó en un 40 % en comparación con los pacientes más jóvenes.
+La disminución en el aclaramiento de la cetirizina en estos voluntarios parece relacionarse con la
+disminución de su función renal.
+
+Población pediátrica:
+La semivida de la cetirizina fue de 6 horas en niños de 6-12 años y 5 horas en niños de 2-6 años. En
+lactantes y niños pequeños de 6 a 24 meses, se redujo a 3,1 horas.
+
+Insuficiencia renal:
+La farmacocinética del fármaco fue similar en pacientes con insuficiencia leve (aclaramiento de creatinina
+mayor de 40 ml/min) y voluntarios sanos. Los pacientes con insuficiencia renal moderada tuvieron un
+incremento de 3 veces en la semivida y una disminución del 70 % del aclaramiento comparado con
+voluntarios sanos. Los pacientes en hemodiálisis (aclaramiento de creatinina de menos de 7 ml/min) a los
+que se daba una única dosis oral de 10 mg de cetirizina tuvieron un aumento de 3 veces en la semivida y
+una disminución del 70 % en el aclaramiento comparados con los voluntarios sanos. La cetirizina se
+eliminaba poco por hemodiálisis. Es necesario el ajuste de dosis en pacientes con insuficiencia renal
+moderada o grave (ver sección 4.2).
+
+Insuficiencia hepática:
+Los pacientes con enfermedad hepática crónica (cirrosis hepatocelular, colestática y biliar) a los que se dio
+10 ó 20 mg de cetirizina en una única dosis, tuvieron un incremento del 50 % en la semivida con una
+disminución de un 40 % en el aclaramiento comparado como los voluntarios sanos.
+Solo es necesario el ajuste de la dosis en pacientes con la función hepática alterada si presentan daño renal
+concomitante.
+
+5.3. Datos preclínicos sobre seguridad
+
+Los datos en los estudios preclínicos no muestran riesgos especiales para los seres humanos, según los
+estudios convencionales sobre farmacología de seguridad, toxicidad de dosis repetida, genotoxicidad,
+potencial carcinogénico, toxicidad para la reproducción y el desarrollo.
+
+6 . DATOS FARMACÉUTICOS
+
+6.1. Lista de excipientes
+
+Sílice coloidal anhidra
+Crospovidona
+Estearato magnésico
+Lactosa monohidrato
+Celulosa microcristalina
+Propilenglicol
+Polietilenglicol estearato
+Hidroxipropil metilcelulosa (Hipromelosa)
+Dióxido de titanio (E-171)
+
+
+
+
+                                                   9 de 10
+6.2. Incompatibilidades
+
+No aplicable.
+
+6.3. Periodo de validez
+
+3 años.
+
+6.4. Precauciones especiales de conservación
+
+No requiere condiciones especiales de conservación.
+Conservar en el envase original.
+
+6.5. Naturaleza y contenido del envase
+
+Blister de Aluminio/PVC, en un envase de cartón.
+Envases de 20 comprimidos recubiertos con película.
+
+6.6. Precauciones especiales de eliminación y otras manipulaciones
+
+Ninguna especial.
+La eliminación del medicamento no utilizado y de todos los materiales que hayan estado en contacto con él,
+se realizará de acuerdo con la normativa local.
+
+7. TITULAR DE LA AUTORIZACIÓN DE COMERCIALIZACIÓN
+
+Almus Famacéutica, S.A.U.
+Marie Curie, 54
+08840 Viladecans (Barcelona), España
+
+8. NÚMERO(S) DE AUTORIZACIÓN DE COMERCIALIZACIÓN
+
+Cetirizina Almus comprimidos recubiertos con película EFG - 64636
+
+9. FECHA DE LA PRIMERA AUTORIZACIÓN/ RENOVACIÓN DE LA AUTORIZACIÓN
+
+Fecha de la primera autorización: 11/03/2002
+Fecha de la renovación de la autorización: 14/02/2013
+
+10. FECHA DE LA REVISIÓN DEL TEXTO
+
+Agosto 2023
+
+
+
+
+                                                10 de 10
+

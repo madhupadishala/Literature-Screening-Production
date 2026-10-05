@@ -1,0 +1,384 @@
+BRIEKA CAPSULE
+1. NAME OF THE MEDICINAL PRODUCT                                                                 events and pregabalin is not completely understood because the cases had
+BRIEKA CAPSULE                                                                                   documented factors that may have caused or contributed to these events.
+2. QUALITATIVE AND QUANTITATIVE COMPOSITION                                                      Pregabalin Capsule (pregabalin) should be discontinued if myopathy is
+Each hard capsule contains 25 mg, 75 mg or 150 mg of pregabalin.                                 diagnosed or suspected or if markedly elevated creatine kinase levels occur
+                                                                                                 in the context of symptoms of myopathy.
+3. PHARMACEUTICAL FORM
+25 mg: White cap and white body, hard gelatin capsules size 4. Markings on Suicidal ideation and behaviour have been reported in patients treated with
+body: “PGB 25”.                                                                                  anti-epileptic agents in several indications. A meta-analysis of randomised
+75 mg: Orange cap and white body, hard gelatin capsules size 4. Markings placebo controlled trials of anti-epileptic drugs has also shown a small
+on body: “PGB 75”.                                                                               increased risk of suicidal ideation and behaviour. The mechanism of this
+150 mg: White cap and white body, hard gelatin capsules size 2. Markings risk is not known and the available data do not exclude the possibility of an
+on body: “PGB 150”.                                                                              increased risk for pregabalin.
+4. CLINICAL PARTICULARS                                                                          Therefore, patients should be monitored for signs of suicidal ideation and
+4.1 Therapeutic indications                                                                      behaviours and appropriate treatment should be considered. Patients (and
+Neuropathic pain                                                                                 caregivers of patients) should be advised to seek medical advice should
+Pregabalin is indicated for the treatment of neuropathic pain which includes signs of suicidal ideation or behaviour emerge.
+diabetic peripheral neuropathy and post-herpetic neuralgia in adults.                            There is evidence from case reports, human studies, and animal studies
+Epilepsy                                                                                         associating pregabalin with serious, life-threatening, or fatal respiratory
+Pregabalin is indicated as adjunctive therapy of partial seizures, with or                       depression when co-administered with CNS depressants, including opioids,
+without secondary generalisation, in adults.                                                     or in the setting of underlying respiratory impairment. When the decision is
+Generalized anxiety disorder                                                                     made to co-prescribe pregabalin with another CNS depressant, particularly
+Pregabalin is indicated for the treatment of Generalized Anxiety Disorder                        an opioid, or to prescribe pregabalin to patients with underlying respiratory
+(GAD) in adults.                                                                                 impairment, monitor patients for symptoms of respiratory depression and
+Fibromyalgia                                                                                     sedation, and consider initiating pregabalin at a low dose. The management
+Pregabalin is indicated for the management of fibromyalgia.                                      of respiratory depression may include close observation, supportive
+4.2 Posology and method of administration                                                        measures, and reduction or withdrawal of CNS depressants (including
+The dose range is 150 to 600 mg per day given in either two or three                             pregabalin).
+divided doses. Pregabalin may be taken with or without food.                                     There is more limited evidence from case reports, animal studies, and
+Neuropathic pain                                                                                 human studies associating pregabalin with serious respiratory depression,
+Pregabalin treatment can be started at a dose of 150 mg per day. Based on without co-administered CNS depressants or without underlying respiratory
+individual patient response and tolerability, the dosage may be increased                        impairment. Patients with renal impairment might be at higher risk of
+to 300 mg per day after an interval of 3 to 7 days, and if needed, to a                          experiencing this severe adverse reaction.
+maximum dose of 600 mg per day after an additional 7-day interval.                               4.5 Interaction with other medicinal products and other forms of
+Epilepsy                                                                                              interaction
+Pregabalin treatment can be started with a dose of 150 mg per day.                               Since pregabalin is predominantly excreted unchanged in the urine,
+Based on individual patient response and tolerability, the dosage may                            undergoes negligible metabolism in humans (<2% of a dose recovered
+be increased to 300 mg per day after 1 week. The maximum dosage of                               in urine as metabolites), does not inhibit drug metabolism in vitro, and is
+600 mg per day may be achieved after an additional week.                                         not bound to plasma proteins, it is unlikely to produce, or be subject to,
+Generalized anxiety disorder                                                                     pharmacokinetic interactions.
+The dose range is 150 to 600 mg per day given as two or three divided                            Accordingly, in in vivo studies no clinically relevant pharmacokinetic
+doses. The need for treatment should be reassessed regularly.                                    interactions were observed between pregabalin and phenytoin,
+Pregabalin treatment can be started with a dose of 150 mg per day.                               carbamazepine, valproic acid, lamotrigine, gabapentin, lorazepam,
+Based on individual patient response and tolerability, the dosage may be                         oxycodone or ethanol. Population pharmacokinetic analysis indicated that
+increased to 300 mg per day after 1 week. Following an additional week                           oral antidiabetics, diuretics, insulin, phenobarbital, tiagabine and topiramate
+the dosage may be increased to 450 mg per day. The maximum dosage of had no clinically significant effect on pregabalin clearance.
+600 mg per day may be achieved after an additional week.                                         Co-administration of pregabalin with the oral contraceptives
+Fibromyalgia                                                                                     norethisterone and/or ethinyl estradiol does not influence the steady-state
+The recommended dose of pregabalin is 300 to 450 mg per day. Dosing                              pharmacokinetics of either substance. Pregabalin may potentiate the
+should begin at 75 mg two times a day (150 mg per day) and may be                                effects of ethanol and lorazepam. In controlled clinical trials, multiple oral
+increased to 150 mg two times a day (300 mg per day) within 1 week                               doses of pregabalin co-administered with oxycodone, lorazepam, or ethanol
+based on efficacy and tolerability. Patients who do not experience                               did not result in clinically important effects on respiration. Pregabalin
+sufficient benefit with 300 mg per day may be further increased to 225 mg appears to be additive in the impairment of cognitive and gross motor
+two times a day (450 mg per day). Although pregabalin was also studied                           function caused by oxycodone.
+at 600 mg per day, there is no evidence that this dose confers additional                        In the post-marketing experience, there are reports of respiratory failure
+benefit and that this dose was less tolerated.                                                   and coma in patients taking pregabalin and other CNS depressant
+In view of the dose-dependent adverse reactions, treatment with doses                            medications. There are post-marketing reports of events related to reduced
+above 450 mg per day is not recommended.                                                         lower gastrointestinal tract function (e.g., intestinal obstruction, paralytic
+Discontinuation of pregabalin                                                                    ileus, constipation) when pregabalin was co-administered with medications
+                                                                                                 that have the potential to produce constipation, such as opioid analgesics.
+If pregabalin has to be discontinued, it is recommended this should be done
+gradually over a minimum of 1 week independent of the indication.                                No specific pharmacodynamic interaction studies were conducted in elderly
+                                                                                                 volunteers.
+Patients with renal impairment
+                                                                                                 In the post-marketing experience, there are reports of respiratory failure,
+Dosage reduction in patients with compromised renal function must be                             coma and deaths in patients taking pregabalin and other CNS depressant
+individualised according to creatinine clearance (CLcr) (see Section 5.2                         medications, including in patients who are substance abusers.
+Pharmacokinetic properties, Pharmacokinetics in special patient groups,
+Renal impairment), as indicated in Table 1 determined using the following 4.6 Fertility, pregnancy and lactation
+formula:                                                                                         Pregnancy
+                                                                                                 There is a limited amount of data on the use of pregabalin in pregnant
+                 [140 - age (years)] x weight (kg)                                               women. Data from an observational study, which included more than 2,700
+CLcr(mL/min) = --------------------------------------------------- ( x 0.85 for female patients) pregnancies exposed to pregabalin based on routinely collected data from
+                  72 x serum creatinine (mg/dl)
+                                                                                                 administrative and medical registers in Denmark, Finland, Norway, and
+For patients receiving hemodialysis, the pregabalin daily dose should                            Sweden, is as follows:
+be adjusted based on renal function. In addition to the daily dose, a                            Major congenital malformations (MCM)
+supplementary dose should be given immediately following every 4-hour The risk of MCM among the paediatric population exposed to pregabalin in
+hemodialysis treatment (see Table 1).                                                            the first trimester was slightly higher compared to unexposed population
+Table 1. Pregabalin Dosage Adjustment Based on Renal Function                                    (adjusted prevalence ratio and 95% confidence interval: 1.14 (0.96-1.35)),
+                                                                                                 and compared to population exposed to lamotrigine (1.29 (1.01-1.65)) or to
+                            Total Pregabalin Daily Dose*                                         duloxetine (1.39 (1.07-1.82)).
+      Creatinine
+      Clearance           Starting Dose Maximum Dose Dose Regimen Birth and post-natal neurodevelopmental outcomes
+                              (mg/day)                    (mg/day)                               There were no statistically significant findings for stillbirth, low birth
+  (CLcr) (mL/min)                                                                                weight, preterm birth, small for gestational age (SGA), low Apgar score at
+          ≥60                      150                        600                 BID or TID     5 minutes, and microcephaly. Adjusted prevalence ratios (aPRs, and 95%
+                                                                                                 confidence intervals) results for the meta-analysis for stillbirth, low birth
+      ≥30 - <60                     75                        300                 BID or TID     weight, preterm birth, SGA, low Apgar score at 5 minutes, and microcephaly
+      ≥15 - <30                 25 – 50                       150                 QD or BID      for pregabalin-exposed compared to unexposed to antiepileptic drugs
+          <15                       25                         75                    QD          (AEDs) of 1.72 (1.02-2.91), 1.05 (0.91-1.21), 1.13 (0.99-1.29), 1.21
+                                                                                                 (1.01-1.44), 1.18 (0.95-1.48), and 1.09 (0.88-1.36) respectively.
+            Supplementary Dosage Following Hemodialysis (mg)
+                                                                                                 In paediatric population exposed in utero, the study did not provide
+                                    25                        100               Single dose+ evidence of an increased risk for attention deficit hyperactivity disorder
+                                                                                                 (ADHD), autism spectrum disorders (ASD), and intellectual disabilities (ID).
+TID = Three divided doses.                                                                       In the meta-analyses of the neurodevelopmental outcomes (ADHD, ASD,
+BID = Two divided doses. QD = Single daily dose.                                                 and ID), results for ADHD, ASD, and ID for pregabalin-exposed compared
+*Total daily dose (mg/day) should be divided as indicated by dose regimen to unexposed to AEDs were 1.32 (1.04-1.67), 1.00 (0.68-1.47), and 1.03
+to provide mg/dose.                                                                              (0.80-1.32) respectively.
++
+ Supplementary dose is a single additional dose.
+                                                                                                 Studies in animals have shown reproductive toxicity (see Section 5.3
+Use in patients with hepatic impairment                                                          Preclinical safety data). Pregabalin should not be used during pregnancy
+No dosage adjustment is required for patients with hepatic impairment                            unless the benefit to the mother clearly outweighs the potential risk to the
+(see Section 5.2 Pharmacokinetic properties, Pharmacokinetics in special foetus. Effective contraception must be used in women of child-bearing
+patient groups, Hepatic impairment).                                                             potential.
+Use in children and adolescents (12 to 17 years of age)                                          Lactation
+The safety and effectiveness of pregabalin in pediatric patients below the Pregabalin is excreted in the milk of lactating women (see Section 5.2
+age of 12 years and adolescents have not been established. The use in                            Pharmacokinetic properties). As the safety of pregabalin in infants is
+children and adolescents is not recommended (see Section 5.3 Preclinical not known, breast-feeding is not recommended during treatment with
+safety data).                                                                                    pregabalin. A decision must be made whether to discontinue breast-feeding
+Use in the elderly (over 65 years of age)                                                        or to discontinue from pregabalin therapy taking into account the benefit of
+Elderly patients may require a dose reduction of pregabalin due to                               breast-feeding for the child and the benefit of therapy for the woman.
+decreased renal function (see Section 5.2 Pharmacokinetic properties,                            4.7 Effects on ability to drive and use machines
+Pharmacokinetics in special patient groups, Elderly (over 65 years of age). Pregabalin may cause dizziness and somnolence and therefore may
+4.3 Contraindications                                                                            influence the ability to drive or use machines. Patients are advised not to
+Hypersensitivity to the active substance or to any of the excipients.                            drive, operate complex machinery or engage in other potentially hazardous
+4.4 Special warnings and special precautions for use                                             activities until it is known whether this medication affects their ability to
+Some diabetic patients who gain weight on pregabalin treatment may need perform these activities.
+to adjust hypoglycaemic medications.                                                             4.8 Undesirable effects
+There have been reports in the post-marketing experience of                                      The pregabalin clinical program involved over 12,000 patients who
+hypersensitivity reactions, including cases of angioedema. Pregabalin                            were exposed to pregabalin, of whom over 7000 were in double-blind
+should be discontinued immediately if symptoms of angioedema, such as placebo controlled trials. The most commonly reported adverse reactions
+facial, perioral, or upper airway swelling occur.                                                were dizziness and somnolence. Adverse reactions were usually mild to
+                                                                                                 moderate in intensity. In all controlled studies, the discontinuation rate due
+Pregabalin treatment has been associated with dizziness and somnolence, to adverse reactions was 14% for patients receiving pregabalin and 5% for
+which could increase the occurrence of accidental injury (fall) in the                           patients receiving placebo. The most common adverse reactions resulting
+elderly population. There have also been post-marketing reports of loss                          in discontinuation from pregabalin treatment groups were dizziness and
+of consciousness, confusion and mental impairment. Therefore, patients                           somnolence.
+should be advised to exercise caution until they are familiar with the
+potential effects of the medication.                                                             Selected adverse drug reactions that were treatment related in the
+                                                                                                 pooled analysis of clinical trials, are listed in the table below by System
+In the post-marketing experience, transient visual blurring and other                            Organ Class (SOC). The frequency of these terms has been based on all-
+changes in visual acuity have been reported in patients treated with                             causality adverse drug reactions in the clinical trial data set (very common
+pregabalin. Discontinuation of pregabalin may result in resolution or                            (≥1/10), common (≥1/100, <1/10), uncommon (≥1/1000, <1/100) and rare
+improvement of these visual symptoms.                                                            (<1/1000)).
+There are insufficient data for the withdrawal of concomitant antiepileptic The adverse reactions listed may also be associated with the underlying
+medicinal products, once seizure control with pregabalin in the add-on                           disease and/or concomitant medications.
+situation has been reached, in order to reach monotherapy on pregabalin.
+                                                                                                 Table 2. Adverse Drug Reactions from Clinical Trial Experience
+After discontinuation of short-term and long-term treatment with
+pregabalin, withdrawal symptoms have been observed in some patients.                               System Organ            Adverse Drug Reactions
+The following events have been mentioned: insomnia, headache, nausea,                              Class
+anxiety, hyperhidrosis, diarrhea, flu syndrome, nervousness, depression,                           Infections and infestations
+pain, sweating and dizziness. The patient should be informed about this at
+the start of the treatment.                                                                        Common                  Nasopharyngitis
+Pregabalin is not known to be active at receptor sites associated with                             Blood and lymphatic system disorders
+drugs of abuse. Cases of misuse and abuse have been reported in the
+post-marketing database. As with any CNS active drug, carefully evaluate                           Uncommon                Neutropenia
+patients for history of drug abuse and observe them for signs of pregabalin
+misuse or abuse (e.g., development of tolerance, dose escalation, drug-                            Metabolism      and   nutrition disorders
+seeking behavior).                                                                                 Common                  Appetite increased
+Concerning discontinuation of long-term treatment of pregabalin there are                          Uncommon                Anorexia, hypoglycemia
+no data of the incidence and severity of withdrawal symptoms in relation to
+duration of use and dosage of pregabalin.                                                          Psychiatric disorders
+Although the effects of discontinuation on the reversibility of renal failure                      Common                  Euphoric mood, confusion, irritability,
+have not been systematically studied, improved renal function following                                                    depression, disorientation, insomnia, libido
+discontinuation or dose reduction of pregabalin has been reported.                                                         decreased
+There have been post-marketing reports of congestive heart failure in
+some patients receiving pregabalin. In short-term trials of patients without Uncommon                                      Hallucination, restlessness, agitation,
+clinically significant heart or peripheral vascular disease, there was no                                                  depressed mood, elevated mood, mood swings,
+apparent association between peripheral edema and cardiovascular                                                           depersonalization, abnormal dreams, word
+complications such as hypertension or congestive heart failure. Because                                                    finding difficulty, libido increased, anorgasmia
+there are limited data on severe congestive heart failure patients,                                Rare                    Panic attack, disinhibition, apathy
+pregabalin should be used with caution in these patients (see Section 4.8
+Undesirable effects).                                                                              Nervous    system     disorders
+Treatment with Pregabalin Capsule (pregabalin) was associated with                                 Very Common             Dizziness, somnolence
+creatine kinase elevations. Mean changes in creatine kinase from baseline
+to the maximum values were 60 U/L for pregabalin-treated patients and 28 Common                                            Ataxia, co-ordination abnormal, tremor,
+U/L for the placebo patients. In all controlled trials across multiple patient                                             dysarthria, amnesia, memory impairment,
+populations, 2% of patients on pregabalin and 1% of placebo patients had                                                   disturbance in attention, paraesthesia,
+a value of creatine kinase at least three times the upper limit of normal.                                                 hypoesthesia, sedation, balance disorder,
+Three pregabalin-treated patients had events reported as rhabdomyolysis                                                    lethargy
+in pre-marketing clinical trials. The relationship between these myopathy
+
+
+
+
+             AAAO2591 - PREGABALIN ALL STRENGTHS -, PIL, SINGAPORE
+
+                                  02                                 190x600 mm                  1.                                1. black
+                                  18.08.2022                         Actavis Bulgaria Dupnitsa   2.                                2.
+                                  AN                                 9.5 pt                      3.                                3.
+                                  24.08.2022                                                                                       4.
+                                  KM                                                                                               5.
+                                                                                                                                   6.
+                                                   *Note that smaller packaging dimensions may result in lower point size than your required font size.
+                                                   Supplier Instructions: Artwork, text and content must NOT be altered. The only exceptions to this are: bleeds,
+                                                   chokes, spreads or other adjustments required for print reproduction purposes only. If you have any difficulties
+                                                   please conact the Teva Artwork Team. We must receive a copy of the 3rd Party Vendors Proof before final
+                                                   approval can be made.
+ Uncommon              Syncope, myoclonus, psychomotor                                 600 mg per day (BID).
+                       hyperactivity, dyskinesia, dizziness postural,                  In the three 12-week fixed-dose studies, 40% of pregabalin-treated
+                       intention tremor, nystagmus, cognitive disorder,                patients experienced a 30% or more improvement in pain score versus 28%
+                       speech disorder, hyporeflexia, hyperaesthesia,                  of the patients on placebo; 23% of treated patients experienced a 50% or
+                       burning sensation                                               more improvement in pain score versus 15% of the patients on placebo.
+                                                                                       Pregabalin produced significantly superior global assessment scores via
+ Rare                  Stupor, parosmia, hypokinesia, ageusia,                         the Patient Global Impression of Change (PGIC) in the three 12-week fixed-
+                       dysgraphia                                                      dose studies as compared to placebo treatment (41% patients feeling
+                                                                                       very much or much improved on pregabalin versus 29% on placebo). As
+ Eye disorders                                                                         measured by Fibromyalgia Impact Questionnaire (FIQ), pregabalin produced
+ Common                Vision blurred, diplopia                                        a statistically significant improvement in function versus placebo treatment
+                                                                                       in 2 out of the 3 fixed-dose studies in which it was evaluated.
+ Uncommon              Peripheral vision loss, visual disturbance, eye                 Pregabalin treatment produced significant improvements in patient-
+                       swelling, visual field defect, visual acuity                    reported sleep outcomes in the 4 fixed-dose studies as measured by
+                       reduced, eye pain, asthenopia, photopsia, dry                   Medical Outcomes Study Sleep Scale (MOS-SS) Sleep disturbance subscale,
+                       eye, lacrimation increased, eye irritation                      MOS-SS overall sleep problem index, and the daily sleep quality diary.
+ Rare                  Oscillopsia, altered visual depth perception,                   In the 6-month study, improvement in pain, global assessment (PGIC),
+                       mydriasis, strabismus, visual brightness                        function (FIQ total score) and sleep (MOS-SS Sleep disturbance subscale)
+                                                                                       were maintained for pregabalin-treated patients for a significantly longer
+ Ear and labyrinth disorders                                                           period compared to placebo.
+ Common                Vertigo                                                         Pregabalin 600 mg per day showed an additional improvement in patient-
+                                                                                       reported sleep outcomes as compared to 300 and 450 mg per day; mean
+ Uncommon              Hyperacusis                                                     effects on pain, global assessment, and FIQ were similar at 450 and
+                                                                                       600 mg per day, although the 600 mg per day dose was less well tolerated.
+ Cardiac disorders
+                                                                                       5.2 Pharmacokinetic properties
+ Uncommon              Tachycardia, atrioventricular block first degree,               Pregabalin steady-state pharmacokinetics are similar in healthy volunteers,
+                       sinus bradycardia                                               patients with epilepsy receiving anti-epileptic drugs, and patients with
+                                                                                       chronic pain.
+ Rare                  Sinus tachycardia, sinus arrhythmia
+                                                                                       Absorption
+ Vascular disorders                                                                    Pregabalin is rapidly absorbed when administered in the fasted state, with
+ Uncommon              Hypotension, hypertension, hot flushes,                         peak plasma concentrations occurring within 1 hour following both single
+                       flushing, peripheral coldness                                   and multiple dose administration. Pregabalin oral bioavailability is estimated
+                                                                                       to be ≥90% and is independent of dose. Following repeated administration,
+ Respiratory, thoracic and mediastinal disorders                                       steady state is achieved within 24 to 48 hours. The rate of pregabalin
+                                                                                       absorption is decreased when given with food resulting in a decrease
+ Uncommon              Dyspnoea, epistaxis, cough, nasal congestion,                   in Cmax by approximately 25%-30% and a delay in tmax to approximately
+                       rhinitis, snoring                                               2.5 hours. However, administration of pregabalin with food has no clinically
+ Rare                  Throat tightness, nasal dryness                                 significant effect on the extent of pregabalin absorption.
+ Gastrointestinal disorders                                                            Distribution
+                                                                                       In preclinical studies, pregabalin has been shown to cross the blood brain
+ Common                Vomiting, constipation, flatulence, abdominal                   barrier in mice, rats, and monkeys. Pregabalin has been shown to cross the
+                       distension, dry mouth                                           placenta in rats and is present in the milk of lactating rats. In humans, the
+                                                                                       apparent volume of distribution of pregabalin following oral administration
+ Uncommon              Gastro-oesophageal reflux disease, salivary                     is approximately 0.56 L/kg. Pregabalin is not bound to plasma proteins.
+                       hypersecretion, hypoaesthesia oral
+                                                                                       Metabolism
+ Rare                  Ascites, pancreatitis, dysphagia                                Pregabalin undergoes negligible metabolism in humans. Following a
+ Skin and subcutaneous tissue disorders                                                dose of radiolabelled pregabalin, approximately 98% of the radioactivity
+                                                                                       recovered in the urine was unchanged pregabalin. The N-methylated
+ Uncommon              Rash papular, urticaria, sweating                               derivative of pregabalin, the major metabolite of pregabalin found in
+                                                                                       urine, accounted for 0.9% of the dose. In preclinical studies, there was no
+ Rare                  Cold sweat, Stevens-Johnson syndrome                            indication of racemisation of pregabalin S-enantiomer to the R-enantiomer.
+ Musculoskeletal and connective tissue disorders                                       Elimination
+                                                                                       Pregabalin is eliminated from the systemic circulation primarily by renal
+ Common                Muscle cramp, arthralgia, back pain, pain in limb,              excretion as unchanged drug.
+                       cervical spasm                                                  Pregabalin mean elimination half-life is 6.3 hours. Pregabalin plasma
+ Uncommon              Joint swelling, myalgia, muscle twitching, neck                 clearance and renal clearance are directly proportional to creatinine
+                       pain, muscle stiffness                                          clearance (see Section 5.2 Pharmacokinetic properties, Pharmacokinetics
+                                                                                       in special patient groups, Renal impairment).
+ Rare                  Rhabdomyolysis
+                                                                                       Dosage adjustment in patients with reduced renal function or undergoing
+ Renal and urinary disorders                                                           hemodialysis is necessary (see Section 4.2 Posology and method of
+                                                                                       administration, Table 1).
+ Uncommon              Urinary incontinence, dysuria
+                                                                                       Linearity/Non-linearity
+ Rare                  Renal failure, oliguria                                         Pregabalin pharmacokinetics are linear over the recommended daily
+ Reproductive system and breast disorders                                              dose range. Inter-subject pharmacokinetic variability for pregabalin is
+                                                                                       low (<20%). Multiple dose pharmacokinetics are predictable from single-
+ Uncommon              Erectile dysfunction, sexual dysfunction,                       dose data. Therefore, there is no need for routine monitoring of plasma
+                       ejaculation delayed, Dysmenorrhea                               concentrations of pregabalin.
+ Rare                  Breast pain, amenorrhoea, breast discharge,                     Pharmacokinetics in special patient groups
+                       breast enlargement                                              Gender
+                                                                                       Clinical trials indicate that gender does not have a clinically significant
+ General disorders and administration site conditions                                  influence on the plasma concentrations of pregabalin.
+ Common                Oedema peripheral, oedema, gait abnormal, fall,        Renal impairment
+                       feeling drunk, feeling abnormal, fatigue               Pregabalin clearance is directly proportional to creatinine clearance. In
+  Uncommon                 Generalised oedema, chest tightness, pain,         addition, pregabalin is effectively removed from plasma by hemodialysis
+                           pyrexia, thirst, chills, asthenia                  (following a 4-hour hemodialysis treatment plasma pregabalin
+                                                                              concentrations are reduced by approximately 50%). Because renal
+  Investigations                                                              elimination is the major elimination pathway, dosage reduction in patients
+  Common                   Weight increased                                   with renal impairment and dosage supplementation following hemodialysis
+                                                                              is necessary (see Section 4.2 Posology and method of administration,
+  Uncommon                 Blood creatine phosphokinase increased,            Table 1).
+                           alanine aminotransferase increased, aspartate      Hepatic impairment
+                           aminotransferase increased, blood glucose          No specific pharmacokinetic studies were carried out in patients with
+                           increased, platelet count decreased, blood         impaired liver function. Since pregabalin does not undergo significant
+                           potassium decreased, weight decreased              metabolism and is excreted predominantly as unchanged drug in the
+  Rare                     White blood cell count decreased, blood            urine, impaired liver function would not be expected to significantly alter
+                           creatinine increased                               pregabalin plasma concentrations.
+The following adverse drug reactions were reported during POST-               Elderly (over 65 years of age)
+MARKETING SURVEILLANCE:                                                       Pregabalin clearance tends to decrease with increasing age. This
+Immune system disorder: Uncommon: Hypersensitivity; Rare:                     decrease in pregabalin oral clearance is consistent with decreases
+Angioedema, allergic reaction.                                                in creatinine clearance associated with increasing age. Reduction of
+Nervous system disorders: Very Common: Headache; Uncommon: Loss of pregabalin dose may be required in patients who have age-related
+consciousness, mental impairment.                                             compromised renal function (see Section 4.2 Posology and method of
+Eye disorders: Rare: Keratitis§                                               administration, Table 1).
+Cardiac disorders: Rare: Congestive heart failure                             Breast-feeding mothers
+Respiratory, thoracic and mediastinal disorders: Rare: Pulmonary oedema The pharmacokinetics of 150 mg pregabalin given every 12 hours (300 mg
+Gastrointestinal disorders: Common: Nausea, diarrhea; Rare: Swollen           daily dose) was evaluated in 10 lactating women who were at least
+tongue                                                                        12 weeks post-partum. Lactation had little to no influence on pregabalin
+Skin and subcutaneous tissue disorders: Uncommon: Face swelling,              pharmacokinetics. Pregabalin was excreted into breast milk with average
+pruritus                                                                      steady-state concentrations approximately 76% of those in maternal
+Renal and urinary disorders: Rare: Urinary retention                          plasma. The estimated average daily infant dose of pregabalin from breast
+Reproductive system and breast disorders: Rare: Gynaecomastia§                milk (assuming mean milk consumption of 150 mL/kg/day) was
+General disorders and administration site conditions: Uncommon:               0.31 mg/kg/day, which on a mg/kg basis would be approximately 7% of the
+Mailaise                                                                      maternal dose.
+§Adverse drug reaction frequency estimated using “The Rule of 3”.             5.3 Preclinical safety data
+4.9 Overdose                                                                  In conventional safety pharmacology studies in animals, pregabalin was
+In overdoses up to 15 g, no unexpected adverse reactions were reported. well-tolerated at clinically relevant doses. In repeated-dose toxicity studies
+In the post-marketing experience, the most commonly reported adverse          in rats and monkeys CNS effects were observed, including hypoactivity,
+events observed when pregabalin was taken in overdose included affective hyperactivity and ataxia. An increased incidence of retinal atrophy
+disorder, somnolence, confusional state, depression, agitation, and           commonly observed in aged albino rats was seen after long-term exposure
+restlessness. Seizures were also reported.                                    to pregabalin at exposures ≥5 times the mean human exposure at the
+Treatment of pregabalin overdose should include general supportive            maximum recommended clinical dose.
+measures and may include hemodialysis if necessary (see Section 4.2           Teratogenicity
+Posology and method of administration, Table 1).                              Pregabalin was not teratogenic in mice, rats or rabbits. Fetal toxicity in rats
+5. PHARMACOLOGICAL PROPERTIES                                                 and rabbits occurred only at exposures sufficiently above human exposure.
+5.1 Pharmacodynamic properties                                                In pre-natal/post-natal toxicity studies, pregabalin induced offspring
+Pharmacotherapeutic group: Antiepileptics, ATC code: N03AX16.                 developmental toxicity in rats at exposures >2 times the maximum
+The active substance, pregabalin, is a gamma-aminobutyric acid analogue recommended human exposure.
+((S)-3- (aminomethyl)-5-methylhexanoic acid).                                 Mutagenicity
+Mechanism of action                                                           Pregabalin is not genotoxic based on results of a battery of in vitro and in
+Pregabalin binds to an auxiliary subunit (α2-δ protein) of voltage-gated      vivo tests.
+calcium channels in the central nervous system.                               Carcinogenicity
+Evidence from animal models with nerve damage has shown that                  Two-year carcinogenicity studies with pregabalin were conducted in rats
+pregabalin reduces calcium dependent release of pronociceptive                and mice. No tumors were observed in rats at exposures up to 24 times
+neurotransmitters in the spinal cord possibly by disrupting calcium           the mean human exposure at the maximum recommended clinical dose
+trafficking and/or reducing calcium currents. Evidence from other animal      of 600 mg per day. In mice, no increased incidence of tumors was found
+models of nerve damage suggest the antinociceptive activities of              at exposures similar to the mean human exposure, but an increased
+pregabalin may also be mediated through interactions with the descending incidence of hemangiosarcoma was observed at higher exposures. The
+noradrenergic and serotinergic pathways.                                      non-genotoxic mechanism of pregabalin-induced tumor formation in mice
+Clinical experience                                                           involves platelet changes and associated endothelial cell proliferation.
+Neuropathic pain                                                              These platelet changes were not present in rats or in humans based on
+Efficacy has been shown in studies in diabetic neuropathy and post-           short-term and limited long-term clinical data. There is no evidence to
+herpetic neuralgia. Efficacy has not been studied in other models of          suggest an associated risk to humans.
+neuropathic pain.                                                             In juvenile rats the types of toxicity do not differ qualitatively from
+Pregabalin has been studied in 9 controlled clinical studies of up to         those observed in adult rats. However, juvenile rats are more sensitive.
+13 weeks with twice a day dosing and up to 8 weeks with three times a         At therapeutic exposures, there was evidence of CNS clinical signs of
+day dosing. Overall, the safety and efficacy profiles for twice a day and     hyperactivity and bruxism and some changes in growth (transient body
+three times a day dosing regimens were similar.                               weight gain suppression). Effects on the estrus cycle were observed at
+In clinical trials up to 13 weeks, a reduction in pain was seen by Week 1 and 5-fold the human therapeutic exposure. Neurobehavioral/cognitive effects
+was maintained throughout the treatment period.                               were observed in juvenile rats 1-2 weeks after exposure >2 times (acoustic
+In controlled clinical trials 35% of the pregabalin treated patients and      startle response) or >5 times (learning/memory) the human therapeutic
+18% of the patients on placebo had a 50% improvement in pain score.           exposure. Reduced acoustic startle response was observed in juvenile rats
+For patients, not experiencing somnolence, such an improvement was            1-2 weeks after exposure at >2 times the human therapeutic exposure.
+observed in 33% of patients treated with pregabalin and 18% of patients Nine weeks after exposure, this effect was no longer observable.
+on placebo. For patients who experienced somnolence the responder rates 6. PHARMACEUTICAL PARTICULARS
+were 48% on pregabalin and 16% on placebo.                                    6.1 List of excipients
+Epilepsy                                                                      Capsule content: Mannitol, Starch, Pregelatinized Corn Starch, Talc
+Pregabalin has been studied in 3 controlled clinical studies of 12-week       Capsule shell: Gelatin, Titanium dioxide (E171)
+duration with either twice a day dosing or three times a day dosing. Overall, Iron Oxide Red (E172) – For 75 mg shell only
+the safety and efficacy profiles for twice a day and three times a day        Printing ink: Shellac, Black Iron Oxide (E172), Potassium hydroxide
+dosing regimens were similar.                                                 6.2 Incompatibilities Not applicable.
+A reduction in seizure frequency was observed by Week 1.
+                                                                              6.3 Shelf life Please refer to outer carton.
+Generalized anxiety disorder.
+Pregabalin has been studied in 6 controlled studies of 4 to 6 weeks           6.4 Special precautions for storage
+duration, an elderly study of 8 weeks duration and a long-term relapse        25mg, 75mg and 150mg: Store below 30°C
+prevention study with a double-blind relapse prevention phase of 6 months 6.5 Nature and contents of container
+duration.                                                                     Aluminium/PVC blisters 60 hard capsules.
+Relief of the symptoms of GAD as reflected by the Hamilton Anxiety Rating 6.6 Instructions for use and handling No special requirements.
+Scale (HAM-A) was observed by Week 1.                                         7. MANUFACTURED BY
+In controlled clinical trials (4-8 weeks duration), 52% of the pregabalin-    Balkanpharma-Dupnitsa AD
+treated patients and 38% of the patients on placebo had at least a 50%        3 Samokovsko Shosse Str.,
+improvement in HAM-A total score from baseline to endpoint.                   Dupnitza 2600
+Fibromyalgia                                                                  Bulgaria
+Pregabalin as monotherapy has been studied in 5 placebo-controlled            8. DATE OF REVISION OF THE TEXT
+studies, three of 12 weeks fixed-dose duration, one of 7 weeks fixed-         Date of last revision: August 2022
+dose duration, and a 6-month study demonstrating long-term efficacy.
+Pregabalin treatment in all fixed-dose studies produced a significant
+reduction in pain associated with fibromyalgia at doses from 300 to
+                                                                                                                                                                AAAO2591
+
+
+
+
+            AAAO2591 - PREGABALIN ALL STRENGTHS -, PIL, SINGAPORE
+
+                              02                               190x600 mm                  1.                                1. black
+                              18.08.2022                       Actavis Bulgaria Dupnitsa   2.                                2.
+                              AN                               9.5 pt                      3.                                3.
+                              24.08.2022                                                                                     4.
+                              KM                                                                                             5.
+                                                                                                                             6.
+                                             *Note that smaller packaging dimensions may result in lower point size than your required font size.
+                                             Supplier Instructions: Artwork, text and content must NOT be altered. The only exceptions to this are: bleeds,
+                                             chokes, spreads or other adjustments required for print reproduction purposes only. If you have any difficulties
+                                             please conact the Teva Artwork Team. We must receive a copy of the 3rd Party Vendors Proof before final
+                                             approval can be made.
+

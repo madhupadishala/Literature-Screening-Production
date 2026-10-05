@@ -1,0 +1,81 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-006-United-Kingdom-SmPC-92316a1bd752",
+  "brandName": "Allerzen",
+  "genericName": "Cetirizine",
+  "country": "United-Kingdom",
+  "documentType": "SmPC",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-006",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "emcProductId": "100094",
+      "identityReview": "PENDING"
+    },
+    "sourceJurisdiction": "United-Kingdom",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html",
+    "canonicalUrl": "https://www.medicines.org.uk/emc/product/100094/smpc",
+    "resolvedUrl": "https://www.medicines.org.uk/emc/product/100094/smpc",
+    "sha256": "92316a1bd75220f1b43364f0f4cead22117c04996af39c233300316836fb139c",
+    "bytes": 104048,
+    "mimeType": "text/html",
+    "acquiredAt": "2026-10-05T12:53:05.314143+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": null,
+    "fullHtmlSmPC": true,
+    "pages": null,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Cetirizine"
+    ],
+    "strengths": [
+      "10 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

@@ -4,5 +4,9 @@
   "authority": "NMPA",
   "mah": "ClinixAI",
   "authorizationStatus": "CONFIGURED",
-  "labelingAcquisitionStatus": "PENDING_SOURCE_DOCUMENT_INGESTION"
+  "labelingAcquisitionStatus": "MATCHING_SOURCE_NOT_ACQUIRED",
+  "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED",
+  "legalAuthorizationVerified": false,
+  "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+  "sourceManifestPaths": []
 }
