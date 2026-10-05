@@ -69,6 +69,7 @@ export interface ListednessKnowledgeRequest {
   requestId?: string;
   correlationId?: string;
   requireDocumentEvidence?: boolean;
+  usageScope?: ReviewReferenceUsageScope;
 }
 
 export interface ListednessKnowledgeAssessment {
@@ -81,9 +82,45 @@ export interface ListednessKnowledgeAssessment {
       | "NONE";
     queryTerms: string[];
     matchedChunks: number;
+    searchedChunks: number;
+    documentAvailable: boolean;
     citationIds: string[];
     sourceDocument?: string;
   };
+}
+
+function documentTypeRank(country: string, labelType: string): number {
+  const market = normalize(country);
+  const type = normalize(labelType);
+
+  if (market === "united states" || market === "usa" || market === "us") {
+    if (type === "uspi") return 0;
+    if (type === "package insert") return 1;
+    if (type === "pi") return 2;
+  }
+
+  if (
+    market === "united kingdom" ||
+    market.includes("european union") ||
+    market.includes("eea")
+  ) {
+    if (type === "smpc" || type === "spc") return 0;
+    if (type === "ccds" || type === "ccsi" || type === "core safety information") return 1;
+    if (type === "pi") return 2;
+  }
+
+  if (market === "india" || market === "singapore" || market === "china") {
+    if (type === "pi") return 0;
+    if (type === "package insert") return 1;
+    if (type === "smpc") return 2;
+  }
+
+  if (type === "ccds" || type === "ccsi" || type === "core safety information") return 3;
+  if (type === "smpc" || type === "spc") return 4;
+  if (type === "uspi") return 5;
+  if (type === "pi" || type === "package insert") return 6;
+  if (type === "ib" || type === "rsi") return 7;
+  return 99;
 }
 
 export async function resolveListednessReference(input: {
@@ -91,19 +128,34 @@ export async function resolveListednessReference(input: {
   clientProductId: string;
   country: string;
   relevantDate?: string;
+  usageScope?: ReviewReferenceUsageScope;
 }): Promise<ActiveLabelReference | null> {
+  const usageScope = input.usageScope ?? "PRODUCTION";
   const references = (await activeReviewReferenceData(input.tenantId)).labelReferences;
 
   const candidates = references.filter((reference) =>
-    reference.usageScope === "PRODUCTION" &&
+    reference.usageScope === usageScope &&
     normalize(reference.clientProductId) === normalize(input.clientProductId) &&
     normalize(reference.country) === normalize(input.country) &&
-    dateInRange(input.relevantDate, reference.effectiveFrom, reference.effectiveTo),
+    (usageScope !== "PRODUCTION" || !reference.productionUseBlocked) &&
+    dateInRange(
+      input.relevantDate,
+      reference.effectiveFrom,
+      reference.effectiveTo,
+      usageScope,
+    ),
   );
 
-  candidates.sort((a, b) =>
-    Date.parse(b.effectiveFrom) - Date.parse(a.effectiveFrom),
-  );
+  candidates.sort((left, right) => {
+    const typeDifference =
+      documentTypeRank(input.country, left.labelType) -
+      documentTypeRank(input.country, right.labelType);
+    if (typeDifference !== 0) return typeDifference;
+
+    const leftDate = left.effectiveFrom ? Date.parse(left.effectiveFrom) : 0;
+    const rightDate = right.effectiveFrom ? Date.parse(right.effectiveFrom) : 0;
+    return rightDate - leftDate || left.labelKey.localeCompare(right.labelKey);
+  });
 
   return candidates[0] || null;
 }
@@ -111,63 +163,33 @@ export async function resolveListednessReference(input: {
 async function retrieveLabelEvidence(input: {
   request: ListednessKnowledgeRequest;
   reference: ActiveLabelReference;
-}): Promise<{
-  evidence: ListednessLabelEvidence[];
-  evidenceMode: "CONTROLLED_KNOWLEDGE_DOCUMENT" | "STRUCTURED_LABEL_REFERENCE";
-  queryTerms: string[];
-  citationIds: string[];
-}> {
-  const queryTerms = listednessSearchTerms(input.request.reportedEvent);
-  const query = queryTerms.join(" OR ");
-
-  const response = await searchControlledKnowledge({
+}) {
+  const usageScope = input.request.usageScope ?? "PRODUCTION";
+  const result = await searchBoundLabelDocument({
     tenantId: input.request.tenantId,
-    query,
-    topK: 30,
-    minScore: 0,
-    mode: "hybrid",
-    actorId: input.request.actorId,
-    requestId: input.request.requestId,
-    correlationId: input.request.correlationId,
-    knowledgeObjectIds: [input.reference.labelKey],
+    labelKey: input.reference.knowledgeObjectId || input.reference.labelKey,
+    labelType: input.reference.labelType,
+    labelVersion: input.reference.version,
+    clientProductId: input.reference.clientProductId,
+    reportedEvent: input.request.reportedEvent,
+    effectiveFrom: input.reference.effectiveFrom,
+    usageScope,
   });
 
-  let matching = response.results.filter((result) =>
-    sameSourceDocument(result, input.reference),
-  );
-
-  if (matching.length === 0 && input.reference.sourceDocument) {
-    const broad = await searchControlledKnowledge({
-      tenantId: input.request.tenantId,
-      query,
-      topK: 30,
-      minScore: 0,
-      mode: "hybrid",
-      actorId: input.request.actorId,
-      requestId: input.request.requestId,
-      correlationId: input.request.correlationId,
-    });
-    matching = broad.results.filter((result) =>
-      sameSourceDocument(result, input.reference),
-    );
-  }
-
-  if (matching.length > 0) {
+  if (result.documentAvailable) {
     return {
-      evidence: matching.map((result) =>
-        labelEvidenceFromKnowledge(result, input.reference),
-      ),
-      evidenceMode: "CONTROLLED_KNOWLEDGE_DOCUMENT",
-      queryTerms,
-      citationIds: matching.map((result) => result.citation.citationId),
+      ...result,
+      evidenceMode: "CONTROLLED_KNOWLEDGE_DOCUMENT" as const,
     };
   }
 
+  const fallback = structuredReferenceEvidence(input.reference);
   return {
-    evidence: structuredReferenceEvidence(input.reference),
-    evidenceMode: "STRUCTURED_LABEL_REFERENCE",
-    queryTerms,
-    citationIds: [],
+    ...result,
+    evidence: fallback,
+    evidenceMode: fallback.length
+      ? ("STRUCTURED_LABEL_REFERENCE" as const)
+      : ("NONE" as const),
   };
 }
 
