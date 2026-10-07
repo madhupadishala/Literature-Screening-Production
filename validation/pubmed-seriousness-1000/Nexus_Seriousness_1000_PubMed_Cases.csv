@@ -1,0 +1,1001 @@
+Case No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficulty,Bucket,Scenario,DOI,PMCID,PubMed URL,Status
+1,29808264,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/29808264/,CANDIDATE_UNREVIEWED
+2,27699455,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27699455/,CANDIDATE_UNREVIEWED
+3,29709266,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/29709266/,CANDIDATE_UNREVIEWED
+4,28735978,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28735978/,CANDIDATE_UNREVIEWED
+5,27922495,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27922495/,CANDIDATE_UNREVIEWED
+6,30850570,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/30850570/,CANDIDATE_UNREVIEWED
+7,15579349,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/15579349/,CANDIDATE_UNREVIEWED
+8,32341207,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32341207/,CANDIDATE_UNREVIEWED
+9,24196095,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/24196095/,CANDIDATE_UNREVIEWED
+10,32237124,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32237124/,CANDIDATE_UNREVIEWED
+11,32787381,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32787381/,CANDIDATE_UNREVIEWED
+12,27287503,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27287503/,CANDIDATE_UNREVIEWED
+13,12477993,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12477993/,CANDIDATE_UNREVIEWED
+14,15074317,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/15074317/,CANDIDATE_UNREVIEWED
+15,19462804,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/19462804/,CANDIDATE_UNREVIEWED
+16,28838925,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28838925/,CANDIDATE_UNREVIEWED
+17,12610851,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12610851/,CANDIDATE_UNREVIEWED
+18,32554527,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32554527/,CANDIDATE_UNREVIEWED
+19,34857963,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/34857963/,CANDIDATE_UNREVIEWED
+20,23328147,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/23328147/,CANDIDATE_UNREVIEWED
+21,24368863,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/24368863/,CANDIDATE_UNREVIEWED
+22,31343730,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/31343730/,CANDIDATE_UNREVIEWED
+23,23832734,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/23832734/,CANDIDATE_UNREVIEWED
+24,12096370,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12096370/,CANDIDATE_UNREVIEWED
+25,26150410,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26150410/,CANDIDATE_UNREVIEWED
+26,25053692,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25053692/,CANDIDATE_UNREVIEWED
+27,16015396,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/16015396/,CANDIDATE_UNREVIEWED
+28,33770414,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/33770414/,CANDIDATE_UNREVIEWED
+29,27979642,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27979642/,CANDIDATE_UNREVIEWED
+30,32881067,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32881067/,CANDIDATE_UNREVIEWED
+31,27692755,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27692755/,CANDIDATE_UNREVIEWED
+32,25801543,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25801543/,CANDIDATE_UNREVIEWED
+33,25263728,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25263728/,CANDIDATE_UNREVIEWED
+34,27381949,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27381949/,CANDIDATE_UNREVIEWED
+35,26380428,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26380428/,CANDIDATE_UNREVIEWED
+36,26095066,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26095066/,CANDIDATE_UNREVIEWED
+37,28599698,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28599698/,CANDIDATE_UNREVIEWED
+38,28687210,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28687210/,CANDIDATE_UNREVIEWED
+39,19723871,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/19723871/,CANDIDATE_UNREVIEWED
+40,16274814,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/16274814/,CANDIDATE_UNREVIEWED
+41,21108186,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21108186/,CANDIDATE_UNREVIEWED
+42,34152842,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/34152842/,CANDIDATE_UNREVIEWED
+43,21448106,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21448106/,CANDIDATE_UNREVIEWED
+44,30817863,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/30817863/,CANDIDATE_UNREVIEWED
+45,25114505,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25114505/,CANDIDATE_UNREVIEWED
+46,27438540,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27438540/,CANDIDATE_UNREVIEWED
+47,17937473,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17937473/,CANDIDATE_UNREVIEWED
+48,25377151,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25377151/,CANDIDATE_UNREVIEWED
+49,32097308,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32097308/,CANDIDATE_UNREVIEWED
+50,20737060,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/20737060/,CANDIDATE_UNREVIEWED
+51,28867523,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/28867523/,CANDIDATE_UNREVIEWED
+52,25873827,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25873827/,CANDIDATE_UNREVIEWED
+53,16731103,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/16731103/,CANDIDATE_UNREVIEWED
+54,32444438,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32444438/,CANDIDATE_UNREVIEWED
+55,14655691,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/14655691/,CANDIDATE_UNREVIEWED
+56,27234296,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27234296/,CANDIDATE_UNREVIEWED
+57,17989126,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17989126/,CANDIDATE_UNREVIEWED
+58,29745338,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/29745338/,CANDIDATE_UNREVIEWED
+59,32366239,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32366239/,CANDIDATE_UNREVIEWED
+60,32888664,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32888664/,CANDIDATE_UNREVIEWED
+61,32830568,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32830568/,CANDIDATE_UNREVIEWED
+62,27678383,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27678383/,CANDIDATE_UNREVIEWED
+63,26954774,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26954774/,CANDIDATE_UNREVIEWED
+64,16458177,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/16458177/,CANDIDATE_UNREVIEWED
+65,17007156,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17007156/,CANDIDATE_UNREVIEWED
+66,29307884,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/29307884/,CANDIDATE_UNREVIEWED
+67,26586148,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26586148/,CANDIDATE_UNREVIEWED
+68,24709224,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/24709224/,CANDIDATE_UNREVIEWED
+69,26510070,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26510070/,CANDIDATE_UNREVIEWED
+70,32690572,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32690572/,CANDIDATE_UNREVIEWED
+71,17167366,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17167366/,CANDIDATE_UNREVIEWED
+72,17576936,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17576936/,CANDIDATE_UNREVIEWED
+73,27399215,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27399215/,CANDIDATE_UNREVIEWED
+74,30165799,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/30165799/,CANDIDATE_UNREVIEWED
+75,26542320,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26542320/,CANDIDATE_UNREVIEWED
+76,25392292,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25392292/,CANDIDATE_UNREVIEWED
+77,32699878,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32699878/,CANDIDATE_UNREVIEWED
+78,17987545,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17987545/,CANDIDATE_UNREVIEWED
+79,32740115,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32740115/,CANDIDATE_UNREVIEWED
+80,27328474,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27328474/,CANDIDATE_UNREVIEWED
+81,25155731,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/25155731/,CANDIDATE_UNREVIEWED
+82,26844738,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26844738/,CANDIDATE_UNREVIEWED
+83,21815259,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/21815259/,CANDIDATE_UNREVIEWED
+84,28582959,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/28582959/,CANDIDATE_UNREVIEWED
+85,33413009,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33413009/,CANDIDATE_UNREVIEWED
+86,16104005,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/16104005/,CANDIDATE_UNREVIEWED
+87,33462046,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33462046/,CANDIDATE_UNREVIEWED
+88,33520070,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33520070/,CANDIDATE_UNREVIEWED
+89,30672492,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30672492/,CANDIDATE_UNREVIEWED
+90,19864092,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/19864092/,CANDIDATE_UNREVIEWED
+91,32823159,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/32823159/,CANDIDATE_UNREVIEWED
+92,23296582,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23296582/,CANDIDATE_UNREVIEWED
+93,15863582,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/15863582/,CANDIDATE_UNREVIEWED
+94,30852581,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30852581/,CANDIDATE_UNREVIEWED
+95,23443469,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23443469/,CANDIDATE_UNREVIEWED
+96,29908288,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/29908288/,CANDIDATE_UNREVIEWED
+97,25692795,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/25692795/,CANDIDATE_UNREVIEWED
+98,22996115,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22996115/,CANDIDATE_UNREVIEWED
+99,18225620,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18225620/,CANDIDATE_UNREVIEWED
+100,26969228,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26969228/,CANDIDATE_UNREVIEWED
+101,27035547,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/27035547/,CANDIDATE_UNREVIEWED
+102,22140078,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22140078/,CANDIDATE_UNREVIEWED
+103,11255824,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/11255824/,CANDIDATE_UNREVIEWED
+104,15691545,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/15691545/,CANDIDATE_UNREVIEWED
+105,12357029,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12357029/,CANDIDATE_UNREVIEWED
+106,24209970,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24209970/,CANDIDATE_UNREVIEWED
+107,22884750,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22884750/,CANDIDATE_UNREVIEWED
+108,33932019,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33932019/,CANDIDATE_UNREVIEWED
+109,24583054,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24583054/,CANDIDATE_UNREVIEWED
+110,26824921,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26824921/,CANDIDATE_UNREVIEWED
+111,23553378,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23553378/,CANDIDATE_UNREVIEWED
+112,24902867,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24902867/,CANDIDATE_UNREVIEWED
+113,30714702,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30714702/,CANDIDATE_UNREVIEWED
+114,31943124,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/31943124/,CANDIDATE_UNREVIEWED
+115,23928479,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23928479/,CANDIDATE_UNREVIEWED
+116,12022611,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12022611/,CANDIDATE_UNREVIEWED
+117,18626334,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18626334/,CANDIDATE_UNREVIEWED
+118,18074358,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18074358/,CANDIDATE_UNREVIEWED
+119,12186175,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12186175/,CANDIDATE_UNREVIEWED
+120,14745921,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/14745921/,CANDIDATE_UNREVIEWED
+121,10928395,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/10928395/,CANDIDATE_UNREVIEWED
+122,19299321,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19299321/,CANDIDATE_UNREVIEWED
+123,31154032,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31154032/,CANDIDATE_UNREVIEWED
+124,15663568,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/15663568/,CANDIDATE_UNREVIEWED
+125,34819140,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34819140/,CANDIDATE_UNREVIEWED
+126,26216470,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/26216470/,CANDIDATE_UNREVIEWED
+127,33118683,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/33118683/,CANDIDATE_UNREVIEWED
+128,31831926,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31831926/,CANDIDATE_UNREVIEWED
+129,25794419,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/25794419/,CANDIDATE_UNREVIEWED
+130,32757033,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/32757033/,CANDIDATE_UNREVIEWED
+131,19674349,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19674349/,CANDIDATE_UNREVIEWED
+132,19887766,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19887766/,CANDIDATE_UNREVIEWED
+133,34285756,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34285756/,CANDIDATE_UNREVIEWED
+134,31948907,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31948907/,CANDIDATE_UNREVIEWED
+135,28888256,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/28888256/,CANDIDATE_UNREVIEWED
+136,31969417,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31969417/,CANDIDATE_UNREVIEWED
+137,17620826,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/17620826/,CANDIDATE_UNREVIEWED
+138,12755725,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12755725/,CANDIDATE_UNREVIEWED
+139,12144085,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12144085/,CANDIDATE_UNREVIEWED
+140,22860305,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/22860305/,CANDIDATE_UNREVIEWED
+141,17039673,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/17039673/,CANDIDATE_UNREVIEWED
+142,28482886,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/28482886/,CANDIDATE_UNREVIEWED
+143,11195750,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/11195750/,CANDIDATE_UNREVIEWED
+144,25892213,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/25892213/,CANDIDATE_UNREVIEWED
+145,21527305,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/21527305/,CANDIDATE_UNREVIEWED
+146,15943602,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/15943602/,CANDIDATE_UNREVIEWED
+147,34695794,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34695794/,CANDIDATE_UNREVIEWED
+148,12776412,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12776412/,CANDIDATE_UNREVIEWED
+149,34050949,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34050949/,CANDIDATE_UNREVIEWED
+150,31574334,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31574334/,CANDIDATE_UNREVIEWED
+151,19232885,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19232885/,CANDIDATE_UNREVIEWED
+152,32490818,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/32490818/,CANDIDATE_UNREVIEWED
+153,30212990,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/30212990/,CANDIDATE_UNREVIEWED
+154,24262344,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/24262344/,CANDIDATE_UNREVIEWED
+155,15180012,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/15180012/,CANDIDATE_UNREVIEWED
+156,30639433,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/30639433/,CANDIDATE_UNREVIEWED
+157,18855892,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/18855892/,CANDIDATE_UNREVIEWED
+158,22791846,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/22791846/,CANDIDATE_UNREVIEWED
+159,25999169,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/25999169/,CANDIDATE_UNREVIEWED
+160,19322620,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19322620/,CANDIDATE_UNREVIEWED
+161,33731401,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/33731401/,CANDIDATE_UNREVIEWED
+162,31142491,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/31142491/,CANDIDATE_UNREVIEWED
+163,24733687,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/24733687/,CANDIDATE_UNREVIEWED
+164,20191055,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/20191055/,CANDIDATE_UNREVIEWED
+165,31879192,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/31879192/,CANDIDATE_UNREVIEWED
+166,15968741,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/15968741/,CANDIDATE_UNREVIEWED
+167,32595263,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/32595263/,CANDIDATE_UNREVIEWED
+168,30002466,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/30002466/,CANDIDATE_UNREVIEWED
+169,31543437,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/31543437/,CANDIDATE_UNREVIEWED
+170,30206065,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/30206065/,CANDIDATE_UNREVIEWED
+171,32919428,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/32919428/,CANDIDATE_UNREVIEWED
+172,29532602,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/29532602/,CANDIDATE_UNREVIEWED
+173,21945641,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/21945641/,CANDIDATE_UNREVIEWED
+174,32532617,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/32532617/,CANDIDATE_UNREVIEWED
+175,35461912,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/35461912/,CANDIDATE_UNREVIEWED
+176,33534133,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/33534133/,CANDIDATE_UNREVIEWED
+177,34423770,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/34423770/,CANDIDATE_UNREVIEWED
+178,14572599,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/14572599/,CANDIDATE_UNREVIEWED
+179,17483053,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/17483053/,CANDIDATE_UNREVIEWED
+180,36800743,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/36800743/,CANDIDATE_UNREVIEWED
+181,18626439,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/18626439/,CANDIDATE_UNREVIEWED
+182,29359844,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/29359844/,CANDIDATE_UNREVIEWED
+183,12361532,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/12361532/,CANDIDATE_UNREVIEWED
+184,22706757,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/22706757/,CANDIDATE_UNREVIEWED
+185,25544415,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/25544415/,CANDIDATE_UNREVIEWED
+186,19336961,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/19336961/,CANDIDATE_UNREVIEWED
+187,28474408,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/28474408/,CANDIDATE_UNREVIEWED
+188,28612320,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/28612320/,CANDIDATE_UNREVIEWED
+189,24275336,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/24275336/,CANDIDATE_UNREVIEWED
+190,33812894,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/33812894/,CANDIDATE_UNREVIEWED
+191,40675653,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/40675653/,CANDIDATE_UNREVIEWED
+192,34255596,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/34255596/,CANDIDATE_UNREVIEWED
+193,16702510,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/16702510/,CANDIDATE_UNREVIEWED
+194,30888761,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/30888761/,CANDIDATE_UNREVIEWED
+195,31894484,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/31894484/,CANDIDATE_UNREVIEWED
+196,35318201,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/35318201/,CANDIDATE_UNREVIEWED
+197,21544586,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/21544586/,CANDIDATE_UNREVIEWED
+198,32444440,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/32444440/,CANDIDATE_UNREVIEWED
+199,39163080,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/39163080/,CANDIDATE_UNREVIEWED
+200,29943563,,,,S08_HEPATOTOXICITY,medium,serious,DILI/hepatic injury,,,https://pubmed.ncbi.nlm.nih.gov/29943563/,CANDIDATE_UNREVIEWED
+201,34764131,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/34764131/,CANDIDATE_UNREVIEWED
+202,28488730,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/28488730/,CANDIDATE_UNREVIEWED
+203,31888912,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/31888912/,CANDIDATE_UNREVIEWED
+204,39603678,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/39603678/,CANDIDATE_UNREVIEWED
+205,17640191,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/17640191/,CANDIDATE_UNREVIEWED
+206,23151058,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/23151058/,CANDIDATE_UNREVIEWED
+207,15136708,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/15136708/,CANDIDATE_UNREVIEWED
+208,27461439,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/27461439/,CANDIDATE_UNREVIEWED
+209,28478684,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/28478684/,CANDIDATE_UNREVIEWED
+210,15847658,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/15847658/,CANDIDATE_UNREVIEWED
+211,30661042,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/30661042/,CANDIDATE_UNREVIEWED
+212,15466904,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/15466904/,CANDIDATE_UNREVIEWED
+213,16219892,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/16219892/,CANDIDATE_UNREVIEWED
+214,25337296,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/25337296/,CANDIDATE_UNREVIEWED
+215,33753395,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/33753395/,CANDIDATE_UNREVIEWED
+216,27174436,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/27174436/,CANDIDATE_UNREVIEWED
+217,29669774,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/29669774/,CANDIDATE_UNREVIEWED
+218,33509295,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/33509295/,CANDIDATE_UNREVIEWED
+219,22791479,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/22791479/,CANDIDATE_UNREVIEWED
+220,25153852,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/25153852/,CANDIDATE_UNREVIEWED
+221,30031506,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/30031506/,CANDIDATE_UNREVIEWED
+222,14608591,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/14608591/,CANDIDATE_UNREVIEWED
+223,26096756,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/26096756/,CANDIDATE_UNREVIEWED
+224,16140875,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/16140875/,CANDIDATE_UNREVIEWED
+225,35830519,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/35830519/,CANDIDATE_UNREVIEWED
+226,32448188,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/32448188/,CANDIDATE_UNREVIEWED
+227,14642024,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/14642024/,CANDIDATE_UNREVIEWED
+228,15088959,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/15088959/,CANDIDATE_UNREVIEWED
+229,11007735,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/11007735/,CANDIDATE_UNREVIEWED
+230,24433137,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/24433137/,CANDIDATE_UNREVIEWED
+231,16327720,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/16327720/,CANDIDATE_UNREVIEWED
+232,14615729,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/14615729/,CANDIDATE_UNREVIEWED
+233,25052053,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/25052053/,CANDIDATE_UNREVIEWED
+234,31570359,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/31570359/,CANDIDATE_UNREVIEWED
+235,18698009,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/18698009/,CANDIDATE_UNREVIEWED
+236,17633579,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/17633579/,CANDIDATE_UNREVIEWED
+237,34229529,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/34229529/,CANDIDATE_UNREVIEWED
+238,16952471,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/16952471/,CANDIDATE_UNREVIEWED
+239,39419595,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/39419595/,CANDIDATE_UNREVIEWED
+240,25810235,,,,S10_HEMATOLOGIC,medium,serious,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/25810235/,CANDIDATE_UNREVIEWED
+241,27806233,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/27806233/,CANDIDATE_UNREVIEWED
+242,30568130,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/30568130/,CANDIDATE_UNREVIEWED
+243,24604793,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/24604793/,CANDIDATE_UNREVIEWED
+244,34342500,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34342500/,CANDIDATE_UNREVIEWED
+245,25724248,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/25724248/,CANDIDATE_UNREVIEWED
+246,34097078,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34097078/,CANDIDATE_UNREVIEWED
+247,34670143,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34670143/,CANDIDATE_UNREVIEWED
+248,17090724,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/17090724/,CANDIDATE_UNREVIEWED
+249,34133884,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34133884/,CANDIDATE_UNREVIEWED
+250,20840915,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/20840915/,CANDIDATE_UNREVIEWED
+251,21125053,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/21125053/,CANDIDATE_UNREVIEWED
+252,26119456,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/26119456/,CANDIDATE_UNREVIEWED
+253,34740463,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34740463/,CANDIDATE_UNREVIEWED
+254,34290024,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34290024/,CANDIDATE_UNREVIEWED
+255,26243980,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/26243980/,CANDIDATE_UNREVIEWED
+256,34133885,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34133885/,CANDIDATE_UNREVIEWED
+257,24082383,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/24082383/,CANDIDATE_UNREVIEWED
+258,35383117,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/35383117/,CANDIDATE_UNREVIEWED
+259,27303242,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/27303242/,CANDIDATE_UNREVIEWED
+260,34118375,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34118375/,CANDIDATE_UNREVIEWED
+261,32413549,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/32413549/,CANDIDATE_UNREVIEWED
+262,22205017,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/22205017/,CANDIDATE_UNREVIEWED
+263,17907546,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/17907546/,CANDIDATE_UNREVIEWED
+264,35733299,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/35733299/,CANDIDATE_UNREVIEWED
+265,35851434,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/35851434/,CANDIDATE_UNREVIEWED
+266,34756746,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34756746/,CANDIDATE_UNREVIEWED
+267,34709227,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34709227/,CANDIDATE_UNREVIEWED
+268,34229940,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34229940/,CANDIDATE_UNREVIEWED
+269,35194974,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/35194974/,CANDIDATE_UNREVIEWED
+270,34407340,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34407340/,CANDIDATE_UNREVIEWED
+271,34588400,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34588400/,CANDIDATE_UNREVIEWED
+272,31036741,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/31036741/,CANDIDATE_UNREVIEWED
+273,35655235,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/35655235/,CANDIDATE_UNREVIEWED
+274,35466745,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/35466745/,CANDIDATE_UNREVIEWED
+275,35855294,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/35855294/,CANDIDATE_UNREVIEWED
+276,34402228,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34402228/,CANDIDATE_UNREVIEWED
+277,26897154,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/26897154/,CANDIDATE_UNREVIEWED
+278,34960761,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/34960761/,CANDIDATE_UNREVIEWED
+279,28679100,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/28679100/,CANDIDATE_UNREVIEWED
+280,35249920,,,,S12_CARDIAC,hard,serious,arrhythmia/QT/myocarditis/cardiac arrest,,,https://pubmed.ncbi.nlm.nih.gov/35249920/,CANDIDATE_UNREVIEWED
+281,24268951,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/24268951/,CANDIDATE_UNREVIEWED
+282,20396636,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/20396636/,CANDIDATE_UNREVIEWED
+283,16089244,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/16089244/,CANDIDATE_UNREVIEWED
+284,21733815,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/21733815/,CANDIDATE_UNREVIEWED
+285,31943612,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/31943612/,CANDIDATE_UNREVIEWED
+286,31907213,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/31907213/,CANDIDATE_UNREVIEWED
+287,11917821,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/11917821/,CANDIDATE_UNREVIEWED
+288,26857079,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/26857079/,CANDIDATE_UNREVIEWED
+289,34404650,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/34404650/,CANDIDATE_UNREVIEWED
+290,25828570,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/25828570/,CANDIDATE_UNREVIEWED
+291,25342892,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/25342892/,CANDIDATE_UNREVIEWED
+292,33795270,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/33795270/,CANDIDATE_UNREVIEWED
+293,21645801,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/21645801/,CANDIDATE_UNREVIEWED
+294,15134323,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/15134323/,CANDIDATE_UNREVIEWED
+295,32205001,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/32205001/,CANDIDATE_UNREVIEWED
+296,34403405,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/34403405/,CANDIDATE_UNREVIEWED
+297,34016227,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/34016227/,CANDIDATE_UNREVIEWED
+298,26021384,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/26021384/,CANDIDATE_UNREVIEWED
+299,15576293,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/15576293/,CANDIDATE_UNREVIEWED
+300,12468375,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/12468375/,CANDIDATE_UNREVIEWED
+301,11794425,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/11794425/,CANDIDATE_UNREVIEWED
+302,17726067,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/17726067/,CANDIDATE_UNREVIEWED
+303,30032805,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/30032805/,CANDIDATE_UNREVIEWED
+304,35383492,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/35383492/,CANDIDATE_UNREVIEWED
+305,11054326,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/11054326/,CANDIDATE_UNREVIEWED
+306,33518612,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/33518612/,CANDIDATE_UNREVIEWED
+307,32417798,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/32417798/,CANDIDATE_UNREVIEWED
+308,23256093,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/23256093/,CANDIDATE_UNREVIEWED
+309,32755257,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/32755257/,CANDIDATE_UNREVIEWED
+310,20047247,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/20047247/,CANDIDATE_UNREVIEWED
+311,18828334,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/18828334/,CANDIDATE_UNREVIEWED
+312,12502917,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/12502917/,CANDIDATE_UNREVIEWED
+313,15288986,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/15288986/,CANDIDATE_UNREVIEWED
+314,30852576,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/30852576/,CANDIDATE_UNREVIEWED
+315,29974124,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/29974124/,CANDIDATE_UNREVIEWED
+316,20410533,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/20410533/,CANDIDATE_UNREVIEWED
+317,27412313,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/27412313/,CANDIDATE_UNREVIEWED
+318,16889285,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/16889285/,CANDIDATE_UNREVIEWED
+319,30287443,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/30287443/,CANDIDATE_UNREVIEWED
+320,33242135,,,,S14_ELDERLY_POLYPHARMACY,hard,mixed,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/33242135/,CANDIDATE_UNREVIEWED
+321,24821217,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/24821217/,CANDIDATE_UNREVIEWED
+322,25066207,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/25066207/,CANDIDATE_UNREVIEWED
+323,27809899,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/27809899/,CANDIDATE_UNREVIEWED
+324,12160366,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/12160366/,CANDIDATE_UNREVIEWED
+325,16175930,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/16175930/,CANDIDATE_UNREVIEWED
+326,38264845,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/38264845/,CANDIDATE_UNREVIEWED
+327,12162160,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/12162160/,CANDIDATE_UNREVIEWED
+328,24033821,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/24033821/,CANDIDATE_UNREVIEWED
+329,25899236,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/25899236/,CANDIDATE_UNREVIEWED
+330,14692224,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/14692224/,CANDIDATE_UNREVIEWED
+331,24118367,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/24118367/,CANDIDATE_UNREVIEWED
+332,28293367,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/28293367/,CANDIDATE_UNREVIEWED
+333,26160051,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/26160051/,CANDIDATE_UNREVIEWED
+334,14770404,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/14770404/,CANDIDATE_UNREVIEWED
+335,29721129,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/29721129/,CANDIDATE_UNREVIEWED
+336,25540212,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/25540212/,CANDIDATE_UNREVIEWED
+337,21269413,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/21269413/,CANDIDATE_UNREVIEWED
+338,30798916,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/30798916/,CANDIDATE_UNREVIEWED
+339,16149266,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/16149266/,CANDIDATE_UNREVIEWED
+340,15329737,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/15329737/,CANDIDATE_UNREVIEWED
+341,28049556,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/28049556/,CANDIDATE_UNREVIEWED
+342,19198722,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/19198722/,CANDIDATE_UNREVIEWED
+343,21898573,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/21898573/,CANDIDATE_UNREVIEWED
+344,11125927,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/11125927/,CANDIDATE_UNREVIEWED
+345,29507014,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/29507014/,CANDIDATE_UNREVIEWED
+346,26314950,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/26314950/,CANDIDATE_UNREVIEWED
+347,27689206,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/27689206/,CANDIDATE_UNREVIEWED
+348,32201448,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/32201448/,CANDIDATE_UNREVIEWED
+349,25882468,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/25882468/,CANDIDATE_UNREVIEWED
+350,31553974,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/31553974/,CANDIDATE_UNREVIEWED
+351,22687674,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/22687674/,CANDIDATE_UNREVIEWED
+352,22718702,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/22718702/,CANDIDATE_UNREVIEWED
+353,18187538,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/18187538/,CANDIDATE_UNREVIEWED
+354,36621878,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/36621878/,CANDIDATE_UNREVIEWED
+355,12016535,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/12016535/,CANDIDATE_UNREVIEWED
+356,11933692,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/11933692/,CANDIDATE_UNREVIEWED
+357,32905627,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/32905627/,CANDIDATE_UNREVIEWED
+358,24142138,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/24142138/,CANDIDATE_UNREVIEWED
+359,12706140,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/12706140/,CANDIDATE_UNREVIEWED
+360,34167992,,,,S15_PREGNANCY,hard,special,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/34167992/,CANDIDATE_UNREVIEWED
+361,34046142,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/34046142/,CANDIDATE_UNREVIEWED
+362,15125754,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/15125754/,CANDIDATE_UNREVIEWED
+363,31381367,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/31381367/,CANDIDATE_UNREVIEWED
+364,26178001,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/26178001/,CANDIDATE_UNREVIEWED
+365,28371620,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/28371620/,CANDIDATE_UNREVIEWED
+366,15728443,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/15728443/,CANDIDATE_UNREVIEWED
+367,29928823,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/29928823/,CANDIDATE_UNREVIEWED
+368,27188077,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/27188077/,CANDIDATE_UNREVIEWED
+369,30852508,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/30852508/,CANDIDATE_UNREVIEWED
+370,35277297,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/35277297/,CANDIDATE_UNREVIEWED
+371,28051878,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/28051878/,CANDIDATE_UNREVIEWED
+372,30396888,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/30396888/,CANDIDATE_UNREVIEWED
+373,32606112,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/32606112/,CANDIDATE_UNREVIEWED
+374,31017819,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/31017819/,CANDIDATE_UNREVIEWED
+375,31479696,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/31479696/,CANDIDATE_UNREVIEWED
+376,31286616,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/31286616/,CANDIDATE_UNREVIEWED
+377,25558889,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/25558889/,CANDIDATE_UNREVIEWED
+378,33201760,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/33201760/,CANDIDATE_UNREVIEWED
+379,34193450,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/34193450/,CANDIDATE_UNREVIEWED
+380,25912080,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/25912080/,CANDIDATE_UNREVIEWED
+381,17018510,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/17018510/,CANDIDATE_UNREVIEWED
+382,28067687,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/28067687/,CANDIDATE_UNREVIEWED
+383,36446476,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/36446476/,CANDIDATE_UNREVIEWED
+384,25568270,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/25568270/,CANDIDATE_UNREVIEWED
+385,25514884,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/25514884/,CANDIDATE_UNREVIEWED
+386,28992839,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/28992839/,CANDIDATE_UNREVIEWED
+387,26513075,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/26513075/,CANDIDATE_UNREVIEWED
+388,29090362,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/29090362/,CANDIDATE_UNREVIEWED
+389,26185119,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/26185119/,CANDIDATE_UNREVIEWED
+390,31686425,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/31686425/,CANDIDATE_UNREVIEWED
+391,24196096,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/24196096/,CANDIDATE_UNREVIEWED
+392,28768674,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/28768674/,CANDIDATE_UNREVIEWED
+393,19291468,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/19291468/,CANDIDATE_UNREVIEWED
+394,19884236,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/19884236/,CANDIDATE_UNREVIEWED
+395,33008308,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/33008308/,CANDIDATE_UNREVIEWED
+396,33513241,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/33513241/,CANDIDATE_UNREVIEWED
+397,20170571,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/20170571/,CANDIDATE_UNREVIEWED
+398,29255138,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/29255138/,CANDIDATE_UNREVIEWED
+399,26052598,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/26052598/,CANDIDATE_UNREVIEWED
+400,29602889,,,,S16_LACTATION,hard,special,breastfeeding/lactation exposure,,,https://pubmed.ncbi.nlm.nih.gov/29602889/,CANDIDATE_UNREVIEWED
+401,30326170,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/30326170/,CANDIDATE_UNREVIEWED
+402,25716039,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/25716039/,CANDIDATE_UNREVIEWED
+403,31934921,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/31934921/,CANDIDATE_UNREVIEWED
+404,30879851,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/30879851/,CANDIDATE_UNREVIEWED
+405,34028728,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/34028728/,CANDIDATE_UNREVIEWED
+406,40998535,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/40998535/,CANDIDATE_UNREVIEWED
+407,26954412,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/26954412/,CANDIDATE_UNREVIEWED
+408,34918693,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/34918693/,CANDIDATE_UNREVIEWED
+409,24853572,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/24853572/,CANDIDATE_UNREVIEWED
+410,29698346,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/29698346/,CANDIDATE_UNREVIEWED
+411,23644168,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/23644168/,CANDIDATE_UNREVIEWED
+412,31274697,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/31274697/,CANDIDATE_UNREVIEWED
+413,21883506,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/21883506/,CANDIDATE_UNREVIEWED
+414,28728199,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/28728199/,CANDIDATE_UNREVIEWED
+415,24012083,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/24012083/,CANDIDATE_UNREVIEWED
+416,37992586,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/37992586/,CANDIDATE_UNREVIEWED
+417,29437313,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/29437313/,CANDIDATE_UNREVIEWED
+418,29452933,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/29452933/,CANDIDATE_UNREVIEWED
+419,26414971,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/26414971/,CANDIDATE_UNREVIEWED
+420,11494931,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/11494931/,CANDIDATE_UNREVIEWED
+421,29701931,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/29701931/,CANDIDATE_UNREVIEWED
+422,10755579,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/10755579/,CANDIDATE_UNREVIEWED
+423,20377803,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/20377803/,CANDIDATE_UNREVIEWED
+424,14970364,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/14970364/,CANDIDATE_UNREVIEWED
+425,31084937,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/31084937/,CANDIDATE_UNREVIEWED
+426,26529442,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/26529442/,CANDIDATE_UNREVIEWED
+427,18259965,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/18259965/,CANDIDATE_UNREVIEWED
+428,30550067,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/30550067/,CANDIDATE_UNREVIEWED
+429,38857915,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/38857915/,CANDIDATE_UNREVIEWED
+430,20544619,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/20544619/,CANDIDATE_UNREVIEWED
+431,25952604,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/25952604/,CANDIDATE_UNREVIEWED
+432,24894748,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/24894748/,CANDIDATE_UNREVIEWED
+433,30585575,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/30585575/,CANDIDATE_UNREVIEWED
+434,25407257,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/25407257/,CANDIDATE_UNREVIEWED
+435,30326188,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/30326188/,CANDIDATE_UNREVIEWED
+436,27145799,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/27145799/,CANDIDATE_UNREVIEWED
+437,35861498,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/35861498/,CANDIDATE_UNREVIEWED
+438,23998227,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/23998227/,CANDIDATE_UNREVIEWED
+439,25976185,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/25976185/,CANDIDATE_UNREVIEWED
+440,21641568,,,,S17_DRUG_INTERACTION,hard,special,drug-drug interaction/multi-drug,,,https://pubmed.ncbi.nlm.nih.gov/21641568/,CANDIDATE_UNREVIEWED
+441,33118775,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/33118775/,CANDIDATE_UNREVIEWED
+442,10611113,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/10611113/,CANDIDATE_UNREVIEWED
+443,32091178,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/32091178/,CANDIDATE_UNREVIEWED
+444,34428096,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/34428096/,CANDIDATE_UNREVIEWED
+445,16636945,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/16636945/,CANDIDATE_UNREVIEWED
+446,31751526,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/31751526/,CANDIDATE_UNREVIEWED
+447,40016450,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/40016450/,CANDIDATE_UNREVIEWED
+448,20305600,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/20305600/,CANDIDATE_UNREVIEWED
+449,26701876,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/26701876/,CANDIDATE_UNREVIEWED
+450,11401188,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/11401188/,CANDIDATE_UNREVIEWED
+451,21861209,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/21861209/,CANDIDATE_UNREVIEWED
+452,30055126,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/30055126/,CANDIDATE_UNREVIEWED
+453,30951409,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/30951409/,CANDIDATE_UNREVIEWED
+454,25664909,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/25664909/,CANDIDATE_UNREVIEWED
+455,11291572,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/11291572/,CANDIDATE_UNREVIEWED
+456,19238740,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/19238740/,CANDIDATE_UNREVIEWED
+457,29678667,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/29678667/,CANDIDATE_UNREVIEWED
+458,18281775,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/18281775/,CANDIDATE_UNREVIEWED
+459,11999571,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/11999571/,CANDIDATE_UNREVIEWED
+460,32165024,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/32165024/,CANDIDATE_UNREVIEWED
+461,10890138,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/10890138/,CANDIDATE_UNREVIEWED
+462,30581132,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/30581132/,CANDIDATE_UNREVIEWED
+463,14714757,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/14714757/,CANDIDATE_UNREVIEWED
+464,22414524,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/22414524/,CANDIDATE_UNREVIEWED
+465,38385520,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/38385520/,CANDIDATE_UNREVIEWED
+466,31691789,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/31691789/,CANDIDATE_UNREVIEWED
+467,16207683,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/16207683/,CANDIDATE_UNREVIEWED
+468,28635319,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/28635319/,CANDIDATE_UNREVIEWED
+469,14618357,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/14618357/,CANDIDATE_UNREVIEWED
+470,22439779,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/22439779/,CANDIDATE_UNREVIEWED
+471,25582377,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/25582377/,CANDIDATE_UNREVIEWED
+472,25298133,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/25298133/,CANDIDATE_UNREVIEWED
+473,27089602,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/27089602/,CANDIDATE_UNREVIEWED
+474,27001821,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/27001821/,CANDIDATE_UNREVIEWED
+475,22998721,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/22998721/,CANDIDATE_UNREVIEWED
+476,26546627,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/26546627/,CANDIDATE_UNREVIEWED
+477,27113129,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/27113129/,CANDIDATE_UNREVIEWED
+478,28620980,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/28620980/,CANDIDATE_UNREVIEWED
+479,15005251,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/15005251/,CANDIDATE_UNREVIEWED
+480,14705853,,,,S20_LACK_EFFICACY,hard,special,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/14705853/,CANDIDATE_UNREVIEWED
+481,31973836,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/31973836/,CANDIDATE_UNREVIEWED
+482,33793137,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/33793137/,CANDIDATE_UNREVIEWED
+483,19232568,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/19232568/,CANDIDATE_UNREVIEWED
+484,25259759,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/25259759/,CANDIDATE_UNREVIEWED
+485,18548805,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/18548805/,CANDIDATE_UNREVIEWED
+486,25205391,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/25205391/,CANDIDATE_UNREVIEWED
+487,27369104,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/27369104/,CANDIDATE_UNREVIEWED
+488,15461121,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/15461121/,CANDIDATE_UNREVIEWED
+489,25453780,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/25453780/,CANDIDATE_UNREVIEWED
+490,25666023,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/25666023/,CANDIDATE_UNREVIEWED
+491,20952221,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/20952221/,CANDIDATE_UNREVIEWED
+492,20535011,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/20535011/,CANDIDATE_UNREVIEWED
+493,18489556,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/18489556/,CANDIDATE_UNREVIEWED
+494,27389576,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/27389576/,CANDIDATE_UNREVIEWED
+495,15498154,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/15498154/,CANDIDATE_UNREVIEWED
+496,33455631,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/33455631/,CANDIDATE_UNREVIEWED
+497,27099254,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/27099254/,CANDIDATE_UNREVIEWED
+498,10971065,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/10971065/,CANDIDATE_UNREVIEWED
+499,17525564,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/17525564/,CANDIDATE_UNREVIEWED
+500,11602959,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/11602959/,CANDIDATE_UNREVIEWED
+501,30106872,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/30106872/,CANDIDATE_UNREVIEWED
+502,11141604,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/11141604/,CANDIDATE_UNREVIEWED
+503,27412294,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/27412294/,CANDIDATE_UNREVIEWED
+504,20842245,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/20842245/,CANDIDATE_UNREVIEWED
+505,31464920,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/31464920/,CANDIDATE_UNREVIEWED
+506,21483283,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/21483283/,CANDIDATE_UNREVIEWED
+507,29716778,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/29716778/,CANDIDATE_UNREVIEWED
+508,34030905,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/34030905/,CANDIDATE_UNREVIEWED
+509,15121520,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/15121520/,CANDIDATE_UNREVIEWED
+510,16567254,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/16567254/,CANDIDATE_UNREVIEWED
+511,30782129,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/30782129/,CANDIDATE_UNREVIEWED
+512,32807488,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/32807488/,CANDIDATE_UNREVIEWED
+513,18715841,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/18715841/,CANDIDATE_UNREVIEWED
+514,34117775,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/34117775/,CANDIDATE_UNREVIEWED
+515,29875964,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/29875964/,CANDIDATE_UNREVIEWED
+516,11988061,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/11988061/,CANDIDATE_UNREVIEWED
+517,26686962,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/26686962/,CANDIDATE_UNREVIEWED
+518,19059740,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/19059740/,CANDIDATE_UNREVIEWED
+519,32576363,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/32576363/,CANDIDATE_UNREVIEWED
+520,20521353,,,,S21_EXPOSURE,hard,special,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/20521353/,CANDIDATE_UNREVIEWED
+521,26031620,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/26031620/,CANDIDATE_UNREVIEWED
+522,36162715,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/36162715/,CANDIDATE_UNREVIEWED
+523,30954978,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/30954978/,CANDIDATE_UNREVIEWED
+524,27852659,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/27852659/,CANDIDATE_UNREVIEWED
+525,23291146,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/23291146/,CANDIDATE_UNREVIEWED
+526,34507437,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/34507437/,CANDIDATE_UNREVIEWED
+527,18408954,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/18408954/,CANDIDATE_UNREVIEWED
+528,37365498,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/37365498/,CANDIDATE_UNREVIEWED
+529,31656167,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/31656167/,CANDIDATE_UNREVIEWED
+530,31415373,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/31415373/,CANDIDATE_UNREVIEWED
+531,22429946,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/22429946/,CANDIDATE_UNREVIEWED
+532,18547381,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/18547381/,CANDIDATE_UNREVIEWED
+533,35012825,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/35012825/,CANDIDATE_UNREVIEWED
+534,23042059,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/23042059/,CANDIDATE_UNREVIEWED
+535,23328331,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/23328331/,CANDIDATE_UNREVIEWED
+536,29384772,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/29384772/,CANDIDATE_UNREVIEWED
+537,35996312,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/35996312/,CANDIDATE_UNREVIEWED
+538,19671293,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/19671293/,CANDIDATE_UNREVIEWED
+539,32482152,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/32482152/,CANDIDATE_UNREVIEWED
+540,18443402,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/18443402/,CANDIDATE_UNREVIEWED
+541,37199876,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/37199876/,CANDIDATE_UNREVIEWED
+542,21947732,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/21947732/,CANDIDATE_UNREVIEWED
+543,26923257,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/26923257/,CANDIDATE_UNREVIEWED
+544,36295570,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/36295570/,CANDIDATE_UNREVIEWED
+545,42173085,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/42173085/,CANDIDATE_UNREVIEWED
+546,11285406,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/11285406/,CANDIDATE_UNREVIEWED
+547,34085118,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/34085118/,CANDIDATE_UNREVIEWED
+548,20374320,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/20374320/,CANDIDATE_UNREVIEWED
+549,34404249,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/34404249/,CANDIDATE_UNREVIEWED
+550,25654396,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/25654396/,CANDIDATE_UNREVIEWED
+551,36536304,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/36536304/,CANDIDATE_UNREVIEWED
+552,15732522,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/15732522/,CANDIDATE_UNREVIEWED
+553,30573214,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/30573214/,CANDIDATE_UNREVIEWED
+554,33877137,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/33877137/,CANDIDATE_UNREVIEWED
+555,17931450,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/17931450/,CANDIDATE_UNREVIEWED
+556,11201466,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/11201466/,CANDIDATE_UNREVIEWED
+557,41261679,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/41261679/,CANDIDATE_UNREVIEWED
+558,18589348,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/18589348/,CANDIDATE_UNREVIEWED
+559,19514925,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/19514925/,CANDIDATE_UNREVIEWED
+560,27998307,,,,S23_NON_SERIOUS,easy,non_serious_candidate,mild/non-serious ADR candidate,,,https://pubmed.ncbi.nlm.nih.gov/27998307/,CANDIDATE_UNREVIEWED
+561,30654402,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/30654402/,CANDIDATE_UNREVIEWED
+562,21683825,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/21683825/,CANDIDATE_UNREVIEWED
+563,19363241,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/19363241/,CANDIDATE_UNREVIEWED
+564,34489258,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/34489258/,CANDIDATE_UNREVIEWED
+565,17965986,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/17965986/,CANDIDATE_UNREVIEWED
+566,42261188,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/42261188/,CANDIDATE_UNREVIEWED
+567,17667395,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/17667395/,CANDIDATE_UNREVIEWED
+568,33180345,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/33180345/,CANDIDATE_UNREVIEWED
+569,31211437,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/31211437/,CANDIDATE_UNREVIEWED
+570,34518192,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/34518192/,CANDIDATE_UNREVIEWED
+571,30777547,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/30777547/,CANDIDATE_UNREVIEWED
+572,14959920,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/14959920/,CANDIDATE_UNREVIEWED
+573,20071821,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/20071821/,CANDIDATE_UNREVIEWED
+574,24012078,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/24012078/,CANDIDATE_UNREVIEWED
+575,16805419,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/16805419/,CANDIDATE_UNREVIEWED
+576,26719300,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/26719300/,CANDIDATE_UNREVIEWED
+577,16396068,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/16396068/,CANDIDATE_UNREVIEWED
+578,35217557,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/35217557/,CANDIDATE_UNREVIEWED
+579,26600649,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/26600649/,CANDIDATE_UNREVIEWED
+580,25271183,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/25271183/,CANDIDATE_UNREVIEWED
+581,27608962,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/27608962/,CANDIDATE_UNREVIEWED
+582,19331724,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/19331724/,CANDIDATE_UNREVIEWED
+583,21908113,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/21908113/,CANDIDATE_UNREVIEWED
+584,26613737,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/26613737/,CANDIDATE_UNREVIEWED
+585,11465247,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/11465247/,CANDIDATE_UNREVIEWED
+586,23360382,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/23360382/,CANDIDATE_UNREVIEWED
+587,17694700,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/17694700/,CANDIDATE_UNREVIEWED
+588,12843947,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/12843947/,CANDIDATE_UNREVIEWED
+589,29778327,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/29778327/,CANDIDATE_UNREVIEWED
+590,15172512,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/15172512/,CANDIDATE_UNREVIEWED
+591,23377335,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/23377335/,CANDIDATE_UNREVIEWED
+592,21614834,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/21614834/,CANDIDATE_UNREVIEWED
+593,15899001,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/15899001/,CANDIDATE_UNREVIEWED
+594,21545623,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/21545623/,CANDIDATE_UNREVIEWED
+595,35837878,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/35837878/,CANDIDATE_UNREVIEWED
+596,34195619,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/34195619/,CANDIDATE_UNREVIEWED
+597,11434754,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/11434754/,CANDIDATE_UNREVIEWED
+598,25549077,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/25549077/,CANDIDATE_UNREVIEWED
+599,32446168,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/32446168/,CANDIDATE_UNREVIEWED
+600,14675610,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,mixed,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/14675610/,CANDIDATE_UNREVIEWED
+601,12075653,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/12075653/,CANDIDATE_UNREVIEWED
+602,34965050,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/34965050/,CANDIDATE_UNREVIEWED
+603,33608442,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/33608442/,CANDIDATE_UNREVIEWED
+604,32506071,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/32506071/,CANDIDATE_UNREVIEWED
+605,32920154,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/32920154/,CANDIDATE_UNREVIEWED
+606,28831316,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/28831316/,CANDIDATE_UNREVIEWED
+607,17187532,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/17187532/,CANDIDATE_UNREVIEWED
+608,12848112,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/12848112/,CANDIDATE_UNREVIEWED
+609,36712769,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/36712769/,CANDIDATE_UNREVIEWED
+610,22196068,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/22196068/,CANDIDATE_UNREVIEWED
+611,34148331,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/34148331/,CANDIDATE_UNREVIEWED
+612,30479035,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/30479035/,CANDIDATE_UNREVIEWED
+613,31277157,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/31277157/,CANDIDATE_UNREVIEWED
+614,16670363,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/16670363/,CANDIDATE_UNREVIEWED
+615,33999375,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/33999375/,CANDIDATE_UNREVIEWED
+616,41476983,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/41476983/,CANDIDATE_UNREVIEWED
+617,24117740,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/24117740/,CANDIDATE_UNREVIEWED
+618,37487126,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/37487126/,CANDIDATE_UNREVIEWED
+619,32793845,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/32793845/,CANDIDATE_UNREVIEWED
+620,31992329,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/31992329/,CANDIDATE_UNREVIEWED
+621,30904892,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/30904892/,CANDIDATE_UNREVIEWED
+622,34692307,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/34692307/,CANDIDATE_UNREVIEWED
+623,12716340,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/12716340/,CANDIDATE_UNREVIEWED
+624,30966811,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/30966811/,CANDIDATE_UNREVIEWED
+625,28107121,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/28107121/,CANDIDATE_UNREVIEWED
+626,30594249,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/30594249/,CANDIDATE_UNREVIEWED
+627,21474017,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/21474017/,CANDIDATE_UNREVIEWED
+628,34660157,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/34660157/,CANDIDATE_UNREVIEWED
+629,26210999,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/26210999/,CANDIDATE_UNREVIEWED
+630,33138853,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/33138853/,CANDIDATE_UNREVIEWED
+631,26242498,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/26242498/,CANDIDATE_UNREVIEWED
+632,27605198,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/27605198/,CANDIDATE_UNREVIEWED
+633,30992139,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/30992139/,CANDIDATE_UNREVIEWED
+634,28475657,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/28475657/,CANDIDATE_UNREVIEWED
+635,27012659,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/27012659/,CANDIDATE_UNREVIEWED
+636,27116335,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/27116335/,CANDIDATE_UNREVIEWED
+637,30410200,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/30410200/,CANDIDATE_UNREVIEWED
+638,34987932,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/34987932/,CANDIDATE_UNREVIEWED
+639,20634934,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/20634934/,CANDIDATE_UNREVIEWED
+640,23442182,,,,S25_MULTI_EVENT_COMPLEX,hard,mixed,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/23442182/,CANDIDATE_UNREVIEWED
+641,37715933,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/37715933/,CANDIDATE_UNREVIEWED
+642,29408722,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/29408722/,CANDIDATE_UNREVIEWED
+643,40338211,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/40338211/,CANDIDATE_UNREVIEWED
+644,30413252,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/30413252/,CANDIDATE_UNREVIEWED
+645,36069136,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/36069136/,CANDIDATE_UNREVIEWED
+646,31207121,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/31207121/,CANDIDATE_UNREVIEWED
+647,32065097,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/32065097/,CANDIDATE_UNREVIEWED
+648,19849743,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/19849743/,CANDIDATE_UNREVIEWED
+649,27412989,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/27412989/,CANDIDATE_UNREVIEWED
+650,27450867,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/27450867/,CANDIDATE_UNREVIEWED
+651,31664657,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/31664657/,CANDIDATE_UNREVIEWED
+652,11564124,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/11564124/,CANDIDATE_UNREVIEWED
+653,33185835,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/33185835/,CANDIDATE_UNREVIEWED
+654,34113531,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/34113531/,CANDIDATE_UNREVIEWED
+655,11192362,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/11192362/,CANDIDATE_UNREVIEWED
+656,34748441,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/34748441/,CANDIDATE_UNREVIEWED
+657,28223004,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/28223004/,CANDIDATE_UNREVIEWED
+658,28084963,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/28084963/,CANDIDATE_UNREVIEWED
+659,31398663,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/31398663/,CANDIDATE_UNREVIEWED
+660,34672214,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/34672214/,CANDIDATE_UNREVIEWED
+661,22780111,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/22780111/,CANDIDATE_UNREVIEWED
+662,33420800,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/33420800/,CANDIDATE_UNREVIEWED
+663,16370061,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/16370061/,CANDIDATE_UNREVIEWED
+664,25986032,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/25986032/,CANDIDATE_UNREVIEWED
+665,23454110,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/23454110/,CANDIDATE_UNREVIEWED
+666,28567525,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/28567525/,CANDIDATE_UNREVIEWED
+667,11457608,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/11457608/,CANDIDATE_UNREVIEWED
+668,12634885,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/12634885/,CANDIDATE_UNREVIEWED
+669,34609452,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/34609452/,CANDIDATE_UNREVIEWED
+670,30041198,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/30041198/,CANDIDATE_UNREVIEWED
+671,29278538,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/29278538/,CANDIDATE_UNREVIEWED
+672,19715960,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/19715960/,CANDIDATE_UNREVIEWED
+673,31773472,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/31773472/,CANDIDATE_UNREVIEWED
+674,32967928,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/32967928/,CANDIDATE_UNREVIEWED
+675,20938414,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/20938414/,CANDIDATE_UNREVIEWED
+676,21782762,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/21782762/,CANDIDATE_UNREVIEWED
+677,32919913,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/32919913/,CANDIDATE_UNREVIEWED
+678,20575633,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/20575633/,CANDIDATE_UNREVIEWED
+679,30654041,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/30654041/,CANDIDATE_UNREVIEWED
+680,34139230,,,,S01_FATAL_DEATH,hard,serious,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/34139230/,CANDIDATE_UNREVIEWED
+681,29573870,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/29573870/,CANDIDATE_UNREVIEWED
+682,31327369,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/31327369/,CANDIDATE_UNREVIEWED
+683,30586067,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/30586067/,CANDIDATE_UNREVIEWED
+684,41092926,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/41092926/,CANDIDATE_UNREVIEWED
+685,36797425,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/36797425/,CANDIDATE_UNREVIEWED
+686,33523739,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/33523739/,CANDIDATE_UNREVIEWED
+687,27602507,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/27602507/,CANDIDATE_UNREVIEWED
+688,41126238,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/41126238/,CANDIDATE_UNREVIEWED
+689,24866862,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/24866862/,CANDIDATE_UNREVIEWED
+690,21470008,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/21470008/,CANDIDATE_UNREVIEWED
+691,40993736,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/40993736/,CANDIDATE_UNREVIEWED
+692,20978258,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/20978258/,CANDIDATE_UNREVIEWED
+693,21451097,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/21451097/,CANDIDATE_UNREVIEWED
+694,26581670,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/26581670/,CANDIDATE_UNREVIEWED
+695,23171754,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/23171754/,CANDIDATE_UNREVIEWED
+696,30865215,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/30865215/,CANDIDATE_UNREVIEWED
+697,28699514,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/28699514/,CANDIDATE_UNREVIEWED
+698,26084666,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/26084666/,CANDIDATE_UNREVIEWED
+699,30193909,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/30193909/,CANDIDATE_UNREVIEWED
+700,25153811,,,,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/25153811/,CANDIDATE_UNREVIEWED
+701,33674458,Trends in inequalities in disability in Europe between 2002 and 2017.,2021 Aug,J Epidemiol Community Health,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1136/jech-2020-216141,PMC8292565,https://pubmed.ncbi.nlm.nih.gov/33674458/,CANDIDATE_UNREVIEWED
+702,31892321,Post-sepsis syndrome - an evolving entity that afflicts survivors of sepsis.,2019 Dec 31,Mol Med,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1186/s10020-019-0132-z,PMC6938630,https://pubmed.ncbi.nlm.nih.gov/31892321/,CANDIDATE_UNREVIEWED
+703,21422868,Pregnancy in women with physical disabilities.,2011 Apr,Obstet Gynecol,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1097/AOG.0b013e3182118d59,,https://pubmed.ncbi.nlm.nih.gov/21422868/,CANDIDATE_UNREVIEWED
+704,31033643,Insanity: A Legal and Cinematic Diagnosis.,2019 Sep,J Nerv Ment Dis,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1097/NMD.0000000000000979,,https://pubmed.ncbi.nlm.nih.gov/31033643/,CANDIDATE_UNREVIEWED
+705,26719143,Somatic memory and gain increase as preconditions for tinnitus: Insights from congenital deafness.,2016 Mar,Hear Res,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1016/j.heares.2015.12.018,,https://pubmed.ncbi.nlm.nih.gov/26719143/,CANDIDATE_UNREVIEWED
+706,11735348,Dual acting anti-inflammatory drugs: a reappraisal.,2001 Dec,Pharmacol Res,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1006/phrs.2001.0872,,https://pubmed.ncbi.nlm.nih.gov/11735348/,CANDIDATE_UNREVIEWED
+707,34831550,"Differences in Work Disability Duration for Immigrants and Canadian-Born Workers in British Columbia, Canada.",2021 Nov 10,Int J Environ Res Public Health,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.3390/ijerph182211794,PMC8625680,https://pubmed.ncbi.nlm.nih.gov/34831550/,CANDIDATE_UNREVIEWED
+708,24602575,Parental limited English proficiency and health outcomes for children with special health care needs: a systematic review.,2014 Mar-Apr,Acad Pediatr,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1016/j.acap.2013.10.003,,https://pubmed.ncbi.nlm.nih.gov/24602575/,CANDIDATE_UNREVIEWED
+709,36541303,[The dynamics of disability of population in the Russian Federation].,2022 Dec 15,Probl Sotsialnoi Gig Zdravookhranenniiai Istor Med,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.32687/0869-866X-2022-30-6-1249-1254,,https://pubmed.ncbi.nlm.nih.gov/36541303/,CANDIDATE_UNREVIEWED
+710,15001120,Management decisions in extremely premature infants.,2003 Dec,Semin Neonatol,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1016/S1084-2756(03)00118-0,,https://pubmed.ncbi.nlm.nih.gov/15001120/,CANDIDATE_UNREVIEWED
+711,34338064,Age-Associated Characteristics of Patients With Chronic Dizziness and Vertigo.,2022 Jul,J Geriatr Psychiatry Neurol,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1177/08919887211036185,PMC9210108,https://pubmed.ncbi.nlm.nih.gov/34338064/,CANDIDATE_UNREVIEWED
+712,32156489,Disparities in Suicidality by Gender Identity Among Medicare Beneficiaries.,2020 Jun,Am J Prev Med,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1016/j.amepre.2020.01.004,PMC7246148,https://pubmed.ncbi.nlm.nih.gov/32156489/,CANDIDATE_UNREVIEWED
+713,33542528,"The association between gambling and financial, social and health outcomes in big financial data.",2021 Mar,Nat Hum Behav,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1038/s41562-020-01045-w,,https://pubmed.ncbi.nlm.nih.gov/33542528/,CANDIDATE_UNREVIEWED
+714,32753147,Disorders of Consciousness and Disability Law.,2020 Aug,Mayo Clin Proc,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1016/j.mayocp.2020.02.008,,https://pubmed.ncbi.nlm.nih.gov/32753147/,CANDIDATE_UNREVIEWED
+715,33692323,Association Between Vertebral Dimensions and Lumbar Modic Changes.,2021 Apr 1,Spine (Phila Pa 1976),S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1097/BRS.0000000000003797,,https://pubmed.ncbi.nlm.nih.gov/33692323/,CANDIDATE_UNREVIEWED
+716,22222591,Autonomic dysreflexia: current evidence related to unstable arterial blood pressure control among athletes with spinal cord injury.,2012 Jan,Clin J Sport Med,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1097/JSM.0b013e3182420699,,https://pubmed.ncbi.nlm.nih.gov/22222591/,CANDIDATE_UNREVIEWED
+717,30856355,Prioritizing barriers and solutions to improve employment for persons with developmental disabilities.,2020 Sep,Disabil Rehabil,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1080/09638288.2019.1570356,,https://pubmed.ncbi.nlm.nih.gov/30856355/,CANDIDATE_UNREVIEWED
+718,12503047,Psychosocial factors in chronic disability.,2002 Dec,Med Sci Monit,S04_DISABILITY,hard,serious,persistent disability/sequelae,,,https://pubmed.ncbi.nlm.nih.gov/12503047/,CANDIDATE_UNREVIEWED
+719,32703737,Telemedicine barriers and challenges for persons with disabilities: COVID-19 and beyond.,2020 Oct,Disabil Health J,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1016/j.dhjo.2020.100973,PMC7346769,https://pubmed.ncbi.nlm.nih.gov/32703737/,CANDIDATE_UNREVIEWED
+720,30806085,Self-efficacy and acceptance of disability following mild traumatic brain injury: A pilot study.,2020 Sep-Oct,Appl Neuropsychol Adult,S04_DISABILITY,hard,serious,persistent disability/sequelae,10.1080/23279095.2019.1569523,,https://pubmed.ncbi.nlm.nih.gov/30806085/,CANDIDATE_UNREVIEWED
+721,29622670,Pharmacology behind Common Drug Nephrotoxicities.,2018 Dec 7,Clin J Am Soc Nephrol,S09_RENAL,medium,serious,acute kidney/renal injury,10.2215/CJN.00150118,PMC6302342,https://pubmed.ncbi.nlm.nih.gov/29622670/,CANDIDATE_UNREVIEWED
+722,31687105,Herbal Nephropathy.,2019 Jul-Sep,Methodist Debakey Cardiovasc J,S09_RENAL,medium,serious,acute kidney/renal injury,10.14797/mdcj-15-3-228,PMC6822647,https://pubmed.ncbi.nlm.nih.gov/31687105/,CANDIDATE_UNREVIEWED
+723,31483318,Drug-induced acute kidney injury: diverse mechanisms of tubular injury.,2019 Dec,Curr Opin Crit Care,S09_RENAL,medium,serious,acute kidney/renal injury,10.1097/MCC.0000000000000653,,https://pubmed.ncbi.nlm.nih.gov/31483318/,CANDIDATE_UNREVIEWED
+724,33121629,Acute Kidney Injury.,2020 Dec,Prim Care,S09_RENAL,medium,serious,acute kidney/renal injury,10.1016/j.pop.2020.08.008,,https://pubmed.ncbi.nlm.nih.gov/33121629/,CANDIDATE_UNREVIEWED
+725,23184849,Grapefruit-medication interactions: forbidden fruit or avoidable consequences?,2013 Mar 5,CMAJ,S09_RENAL,medium,serious,acute kidney/renal injury,10.1503/cmaj.120951,PMC3589309,https://pubmed.ncbi.nlm.nih.gov/23184849/,CANDIDATE_UNREVIEWED
+726,32931896,Kidney-targeted therapies: A quantitative perspective.,2020 Dec 10,J Control Release,S09_RENAL,medium,serious,acute kidney/renal injury,10.1016/j.jconrel.2020.09.022,,https://pubmed.ncbi.nlm.nih.gov/32931896/,CANDIDATE_UNREVIEWED
+727,33027145,New drugs for acute kidney injury.,2020 Dec,Curr Opin Crit Care,S09_RENAL,medium,serious,acute kidney/renal injury,10.1097/MCC.0000000000000778,,https://pubmed.ncbi.nlm.nih.gov/33027145/,CANDIDATE_UNREVIEWED
+728,33122045,Safety evaluation of Eucommia ulmoides extract.,2020 Dec,Regul Toxicol Pharmacol,S09_RENAL,medium,serious,acute kidney/renal injury,10.1016/j.yrtph.2020.104811,,https://pubmed.ncbi.nlm.nih.gov/33122045/,CANDIDATE_UNREVIEWED
+729,23958399,Triamterene crystalline nephropathy.,2014 Jan,Am J Kidney Dis,S09_RENAL,medium,serious,acute kidney/renal injury,10.1053/j.ajkd.2013.06.023,,https://pubmed.ncbi.nlm.nih.gov/23958399/,CANDIDATE_UNREVIEWED
+730,23197884,Expression and function of renal and hepatic organic anion transporters in extrahepatic cholestasis.,2012 Nov 28,World J Gastroenterol,S09_RENAL,medium,serious,acute kidney/renal injury,10.3748/wjg.v18.i44.6387,PMC3508633,https://pubmed.ncbi.nlm.nih.gov/23197884/,CANDIDATE_UNREVIEWED
+731,35920897,Targeting ferroptosis in ischemia/reperfusion renal injury.,2022 Nov,Naunyn Schmiedebergs Arch Pharmacol,S09_RENAL,medium,serious,acute kidney/renal injury,10.1007/s00210-022-02277-5,,https://pubmed.ncbi.nlm.nih.gov/35920897/,CANDIDATE_UNREVIEWED
+732,33503453,Cannabis roots: Pharmacological and toxicological studies in mice.,2021 May 10,J Ethnopharmacol,S09_RENAL,medium,serious,acute kidney/renal injury,10.1016/j.jep.2021.113868,,https://pubmed.ncbi.nlm.nih.gov/33503453/,CANDIDATE_UNREVIEWED
+733,40043544,Smilax glabra roxb. alleviates cisplatin-induced acute kidney injury in mice by activating the Nrf2/HO-1 Signalling Pathway.,2025 Apr,Phytomedicine,S09_RENAL,medium,serious,acute kidney/renal injury,10.1016/j.phymed.2025.156550,,https://pubmed.ncbi.nlm.nih.gov/40043544/,CANDIDATE_UNREVIEWED
+734,25503987,Keeping kidneys safe: the pharmacist's role in NSAID avoidance in high-risk patients.,2015 Jan-Feb,J Am Pharm Assoc (2003),S09_RENAL,medium,serious,acute kidney/renal injury,10.1331/JAPhA.2015.15506,,https://pubmed.ncbi.nlm.nih.gov/25503987/,CANDIDATE_UNREVIEWED
+735,40315322,A rationally designed injury kidney targeting peptide library and its application in rescuing acute kidney injury.,2025 May 2,Sci Adv,S09_RENAL,medium,serious,acute kidney/renal injury,10.1126/sciadv.adt3943,PMC12047437,https://pubmed.ncbi.nlm.nih.gov/40315322/,CANDIDATE_UNREVIEWED
+736,20694713,[Acute renal failure and sepsis : Just an organ dysfunction due to septic multiorgan failure?].,2010 Aug,Anaesthesist,S09_RENAL,medium,serious,acute kidney/renal injury,10.1007/s00101-010-1767-x,,https://pubmed.ncbi.nlm.nih.gov/20694713/,CANDIDATE_UNREVIEWED
+737,15286087,"Physiological, pharmacokinetic, and pharmacodynamic changes in space.",2004 Aug,J Clin Pharmacol,S09_RENAL,medium,serious,acute kidney/renal injury,10.1177/0091270004267193,,https://pubmed.ncbi.nlm.nih.gov/15286087/,CANDIDATE_UNREVIEWED
+738,36058263,"The Cannabinoid-2 receptor agonist, 1-phenylisatin, protects against cisplatin-induced nephrotoxicity in mice.",2022 Nov 1,Life Sci,S09_RENAL,medium,serious,acute kidney/renal injury,10.1016/j.lfs.2022.120928,,https://pubmed.ncbi.nlm.nih.gov/36058263/,CANDIDATE_UNREVIEWED
+739,29038395,Acute Interstitial Nephritis Induced by Citrullus Colocynthis.,2017 Oct,Iran J Kidney Dis,S09_RENAL,medium,serious,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/29038395/,CANDIDATE_UNREVIEWED
+740,10711385,Mechanisms of nephrotoxicity from metal combinations: a review.,2000 Feb,Drug Chem Toxicol,S09_RENAL,medium,serious,acute kidney/renal injury,10.1081/dct-100100098,,https://pubmed.ncbi.nlm.nih.gov/10711385/,CANDIDATE_UNREVIEWED
+741,34897282,Impact of nephrotoxic drugs on urinary biomarkers of renal function in very preterm infants.,2022 Jun,Pediatr Res,S09_RENAL,medium,serious,acute kidney/renal injury,10.1038/s41390-021-01905-9,,https://pubmed.ncbi.nlm.nih.gov/34897282/,CANDIDATE_UNREVIEWED
+742,24074057,The effects of acute renal failure on drug metabolism.,2014 Jan,Expert Opin Drug Metab Toxicol,S09_RENAL,medium,serious,acute kidney/renal injury,10.1517/17425255.2013.835802,,https://pubmed.ncbi.nlm.nih.gov/24074057/,CANDIDATE_UNREVIEWED
+743,34445781,"Protective Effects of Black Cumin (Nigella sativa) and Its Bioactive Constituent, Thymoquinone against Kidney Injury: An Aspect on Pharmacological Insights.",2021 Aug 23,Int J Mol Sci,S09_RENAL,medium,serious,acute kidney/renal injury,10.3390/ijms22169078,PMC8396533,https://pubmed.ncbi.nlm.nih.gov/34445781/,CANDIDATE_UNREVIEWED
+744,22486185,"The acute, genetic, developmental and inhalation toxicology of trans-1,3,3,3-tetrafluoropropene (HFO-1234ze).",2013 Apr,Drug Chem Toxicol,S09_RENAL,medium,serious,acute kidney/renal injury,10.3109/01480545.2012.661738,,https://pubmed.ncbi.nlm.nih.gov/22486185/,CANDIDATE_UNREVIEWED
+745,32611663,Adverse Drug Effects in Patients with CKD: Primum Non Nocere.,2020 Aug 7,Clin J Am Soc Nephrol,S09_RENAL,medium,serious,acute kidney/renal injury,10.2215/CJN.08890620,PMC7409750,https://pubmed.ncbi.nlm.nih.gov/32611663/,CANDIDATE_UNREVIEWED
+746,27487916,A mixed grape and blueberry extract is safe for dogs to consume.,2016 Aug 3,BMC Vet Res,S09_RENAL,medium,serious,acute kidney/renal injury,10.1186/s12917-016-0786-5,PMC4973095,https://pubmed.ncbi.nlm.nih.gov/27487916/,CANDIDATE_UNREVIEWED
+747,27661440,Medication-induced acute kidney injury.,2016 Dec,Curr Opin Crit Care,S09_RENAL,medium,serious,acute kidney/renal injury,10.1097/MCC.0000000000000355,,https://pubmed.ncbi.nlm.nih.gov/27661440/,CANDIDATE_UNREVIEWED
+748,31023496,Fatal acute arsenic poisoning by external use of realgar: Case report and 30 years literature retrospective study in China.,2019 Jul,Forensic Sci Int,S09_RENAL,medium,serious,acute kidney/renal injury,10.1016/j.forsciint.2019.03.012,,https://pubmed.ncbi.nlm.nih.gov/31023496/,CANDIDATE_UNREVIEWED
+749,36550840,Renal manifestations of recreational drugs: A narrative review of the literature.,2022 Dec 16,Medicine (Baltimore),S09_RENAL,medium,serious,acute kidney/renal injury,10.1097/MD.0000000000031888,PMC9771315,https://pubmed.ncbi.nlm.nih.gov/36550840/,CANDIDATE_UNREVIEWED
+750,33735856,Nephrotoxicity from Vancomycin Combined with Piperacillin-Tazobactam: A Comprehensive Review.,2021,Am J Nephrol,S09_RENAL,medium,serious,acute kidney/renal injury,10.1159/000513742,,https://pubmed.ncbi.nlm.nih.gov/33735856/,CANDIDATE_UNREVIEWED
+751,35809335,Nephroprotective effects of Helianthus annuus seeds extract in gentamicin induced nephrotoxic male mice.,2022 May 22,Cell Mol Biol (Noisy-le-grand),S09_RENAL,medium,serious,acute kidney/renal injury,10.14715/cmb/2022.68.1.1,,https://pubmed.ncbi.nlm.nih.gov/35809335/,CANDIDATE_UNREVIEWED
+752,33217444,Combination therapy of phosphatidylserine liposome with cyclosporine A improves nephrotoxicity and attenuates delayed-type hypersensitivity response.,2021 Jan 15,Life Sci,S09_RENAL,medium,serious,acute kidney/renal injury,10.1016/j.lfs.2020.118780,,https://pubmed.ncbi.nlm.nih.gov/33217444/,CANDIDATE_UNREVIEWED
+753,40988019,Fixed-dose vs loose-dose combination antidiabetic therapy and cardiorenal outcomes in type 2 diabetes: a nationwide comparative effectiveness study.,2025 Sep 23,Cardiovasc Diabetol,S09_RENAL,medium,serious,acute kidney/renal injury,10.1186/s12933-025-02936-w,PMC12455815,https://pubmed.ncbi.nlm.nih.gov/40988019/,CANDIDATE_UNREVIEWED
+754,28329870,Application of Imaging Techniques to Cases of Drug-Induced Crystal Nephropathy in Preclinical Studies.,2018 Jun 1,Toxicol Sci,S09_RENAL,medium,serious,acute kidney/renal injury,10.1093/toxsci/kfx044,,https://pubmed.ncbi.nlm.nih.gov/28329870/,CANDIDATE_UNREVIEWED
+755,27993859,Nephrotoxicity of Polymyxins: Is There Any Difference between Colistimethate and Polymyxin B?,2017 Mar,Antimicrob Agents Chemother,S09_RENAL,medium,serious,acute kidney/renal injury,10.1128/AAC.02319-16,PMC5328560,https://pubmed.ncbi.nlm.nih.gov/27993859/,CANDIDATE_UNREVIEWED
+756,32567362,Assessment of Kidney Function in Patients With Extreme Obesity: A Narrative Review.,2021 Jan,Ann Pharmacother,S09_RENAL,medium,serious,acute kidney/renal injury,10.1177/1060028020935580,,https://pubmed.ncbi.nlm.nih.gov/32567362/,CANDIDATE_UNREVIEWED
+757,25248758,Modulation of liver and kidney toxicity by herb Withania somnifera for silver nanoparticles: a novel approach for harmonizing between safety and use of nanoparticles.,2015 Mar,Protoplasma,S09_RENAL,medium,serious,acute kidney/renal injury,10.1007/s00709-014-0701-5,,https://pubmed.ncbi.nlm.nih.gov/25248758/,CANDIDATE_UNREVIEWED
+758,41097169,Bioinformatics-Guided Network Pharmacology Exploration of Taraxacum Officinale's Renoprotective Effects Against Cisplatin-Induced Nephrotoxicity.,2025 Sep 29,Nutrients,S09_RENAL,medium,serious,acute kidney/renal injury,10.3390/nu17193092,PMC12525703,https://pubmed.ncbi.nlm.nih.gov/41097169/,CANDIDATE_UNREVIEWED
+759,22066519,Nephrotoxicity of recreational party drugs.,2012 Feb,Nephrology (Carlton),S09_RENAL,medium,serious,acute kidney/renal injury,10.1111/j.1440-1797.2011.01537.x,,https://pubmed.ncbi.nlm.nih.gov/22066519/,CANDIDATE_UNREVIEWED
+760,22047711,Protective and therapeutic effects of licorice in rats with acute tubular necrosis.,2012 May,J Ren Nutr,S09_RENAL,medium,serious,acute kidney/renal injury,10.1053/j.jrn.2011.07.002,PMC7111674,https://pubmed.ncbi.nlm.nih.gov/22047711/,CANDIDATE_UNREVIEWED
+761,30303542,Intravenous Lidocaine for Acute Pain: A Systematic Review.,2018 Dec,Pharmacotherapy,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1002/phar.2189,,https://pubmed.ncbi.nlm.nih.gov/30303542/,CANDIDATE_UNREVIEWED
+762,41467650,An Intravenous Brain-Penetrant Enzyme Therapy for Mucopolysaccharidosis II.,2026 Jan 1,N Engl J Med,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1056/NEJMoa2508681,,https://pubmed.ncbi.nlm.nih.gov/41467650/,CANDIDATE_UNREVIEWED
+763,39547249,"Traditional Chinese medicine FYTF-919 (Zhongfeng Xingnao oral prescription) for the treatment of acute intracerebral haemorrhage: a multicentre, randomised, placebo-controlled, double-blind, clinical trial.",2024 Nov 30,Lancet,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1016/S0140-6736(24)02261-X,,https://pubmed.ncbi.nlm.nih.gov/39547249/,CANDIDATE_UNREVIEWED
+764,27737513,Pharmacologic interventions for treating phantom limb pain.,2016 Oct 14,Cochrane Database Syst Rev,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1002/14651858.CD006380.pub3,PMC6472447,https://pubmed.ncbi.nlm.nih.gov/27737513/,CANDIDATE_UNREVIEWED
+765,29897851,Clinical Trial of Fluid Infusion Rates for Pediatric Diabetic Ketoacidosis.,2018 Jun 14,N Engl J Med,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1056/NEJMoa1716816,PMC6051773,https://pubmed.ncbi.nlm.nih.gov/29897851/,CANDIDATE_UNREVIEWED
+766,20406607,Neurological complications following vaccinations.,2010 Apr,Neurol Res,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1179/016164110X12645013515214,,https://pubmed.ncbi.nlm.nih.gov/20406607/,CANDIDATE_UNREVIEWED
+767,35510826,Cannabis and cannabinoids for symptomatic treatment for people with multiple sclerosis.,2022 May 5,Cochrane Database Syst Rev,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1002/14651858.CD013444.pub2,PMC9069991,https://pubmed.ncbi.nlm.nih.gov/35510826/,CANDIDATE_UNREVIEWED
+768,40982270,Levodopa Added to Stroke Rehabilitation: The ESTREL Randomized Clinical Trial.,2025 Nov 4,JAMA,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1001/jama.2025.15185,PMC12455486,https://pubmed.ncbi.nlm.nih.gov/40982270/,CANDIDATE_UNREVIEWED
+769,29162153,Managing toxicities associated with immune checkpoint inhibitors: consensus recommendations from the Society for Immunotherapy of Cancer (SITC) Toxicity Management Working Group.,2017 Nov 21,J Immunother Cancer,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1186/s40425-017-0300-z,PMC5697162,https://pubmed.ncbi.nlm.nih.gov/29162153/,CANDIDATE_UNREVIEWED
+770,26004568,Deaths following vaccination: What does the evidence show?,2015 Jun 26,Vaccine,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1016/j.vaccine.2015.05.023,PMC4599698,https://pubmed.ncbi.nlm.nih.gov/26004568/,CANDIDATE_UNREVIEWED
+771,29923025,Cannabinoids for Treatment of MS Symptoms: State of the Evidence.,2018 Jun 19,Curr Neurol Neurosci Rep,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1007/s11910-018-0859-x,,https://pubmed.ncbi.nlm.nih.gov/29923025/,CANDIDATE_UNREVIEWED
+772,33562446,Cannabis: A Toxin-Producing Plant with Potential Therapeutic Uses.,2021 Feb 5,Toxins (Basel),S11_NEUROLOGIC,medium,serious,neurologic serious event,10.3390/toxins13020117,PMC7915118,https://pubmed.ncbi.nlm.nih.gov/33562446/,CANDIDATE_UNREVIEWED
+773,39518012,Cancer Therapy-Induced Encephalitis.,2024 Oct 23,Cancers (Basel),S11_NEUROLOGIC,medium,serious,neurologic serious event,10.3390/cancers16213571,PMC11545540,https://pubmed.ncbi.nlm.nih.gov/39518012/,CANDIDATE_UNREVIEWED
+774,33851398,Neurological Complications in Patients with Heart Transplantation.,2021 Aug,Semin Neurol,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1055/s-0041-1726285,,https://pubmed.ncbi.nlm.nih.gov/33851398/,CANDIDATE_UNREVIEWED
+775,39915776,Adverse events in the nervous system associated with blinatumomab: a real-world study.,2025 Feb 6,BMC Med,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1186/s12916-025-03913-6,PMC11804067,https://pubmed.ncbi.nlm.nih.gov/39915776/,CANDIDATE_UNREVIEWED
+776,39102153,Safety of procedural sedation in emergency department settings among the adult population: a systematic review and meta-analysis of randomized controlled trials.,2024 Aug,Intern Emerg Med,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1007/s11739-024-03697-2,,https://pubmed.ncbi.nlm.nih.gov/39102153/,CANDIDATE_UNREVIEWED
+777,26374073,FDA Approval: Blinatumomab.,2015 Sep 15,Clin Cancer Res,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1158/1078-0432.CCR-15-0612,,https://pubmed.ncbi.nlm.nih.gov/26374073/,CANDIDATE_UNREVIEWED
+778,35316815,The Impact of COVID-19 and Vaccine on the Human Nervous System.,2022,Neuroendocrinology,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1159/000524234,PMC9148879,https://pubmed.ncbi.nlm.nih.gov/35316815/,CANDIDATE_UNREVIEWED
+779,29813147,Evaluation of Galcanezumab for the Prevention of Episodic Migraine: The EVOLVE-1 Randomized Clinical Trial.,2018 Sep 1,JAMA Neurol,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1001/jamaneurol.2018.1212,PMC6143119,https://pubmed.ncbi.nlm.nih.gov/29813147/,CANDIDATE_UNREVIEWED
+780,40758339,Influenza With and Without Oseltamivir Treatment and Neuropsychiatric Events Among Children and Adolescents.,2025 Oct 1,JAMA Neurol,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1001/jamaneurol.2025.1995,PMC12322824,https://pubmed.ncbi.nlm.nih.gov/40758339/,CANDIDATE_UNREVIEWED
+781,27418809,"Clinical implications for substandard, nonproprietary medicines in multiple sclerosis: focus on fingolimod.",2016,Drug Des Devel Ther,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.2147/DDDT.S106802,PMC4933568,https://pubmed.ncbi.nlm.nih.gov/27418809/,CANDIDATE_UNREVIEWED
+782,31296449,Hepatotoxicity of immune check point inhibitors: Approach and management.,2019 Aug,Dig Liver Dis,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1016/j.dld.2019.06.017,,https://pubmed.ncbi.nlm.nih.gov/31296449/,CANDIDATE_UNREVIEWED
+783,42019018,Three Low-Dose Antihypertensive Agents in a Single Pill after Intracerebral Hemorrhage.,2026 Apr 23,N Engl J Med,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1056/NEJMoa2515043,,https://pubmed.ncbi.nlm.nih.gov/42019018/,CANDIDATE_UNREVIEWED
+784,34219224,Interventions for preventing diarrhoea-associated haemolytic uraemic syndrome.,2021 Jul 5,Cochrane Database Syst Rev,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1002/14651858.CD012997.pub2,PMC8255341,https://pubmed.ncbi.nlm.nih.gov/34219224/,CANDIDATE_UNREVIEWED
+785,32568023,"Management of Immunotherapy Adverse Events in Oncological Patients: Anti-CTLA-4, Anti-PD-1/PD-L1.",2020,Rev Recent Clin Trials,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.2174/1574887115666200622161418,,https://pubmed.ncbi.nlm.nih.gov/32568023/,CANDIDATE_UNREVIEWED
+786,37458698,Efficacy and safety of tonic motor activation (TOMAC) for medication-refractory restless legs syndrome: a randomized clinical trial.,2023 Oct 11,Sleep,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1093/sleep/zsad190,PMC10566236,https://pubmed.ncbi.nlm.nih.gov/37458698/,CANDIDATE_UNREVIEWED
+787,25499471,Safety of noninvasive brain stimulation in children and adolescents.,2015 Jan-Feb,Brain Stimul,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1016/j.brs.2014.10.012,PMC4459719,https://pubmed.ncbi.nlm.nih.gov/25499471/,CANDIDATE_UNREVIEWED
+788,31725440,Critical Care Management of Toxicities Associated With Targeted Agents and Immunotherapies for Cancer.,2020 Jan,Crit Care Med,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1097/CCM.0000000000004087,PMC7505092,https://pubmed.ncbi.nlm.nih.gov/31725440/,CANDIDATE_UNREVIEWED
+789,37338907,Efficacy and Safety of Panax notoginseng Saponins in the Treatment of Adults With Ischemic Stroke in China: A Randomized Clinical Trial.,2023 Jun 1,JAMA Netw Open,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1001/jamanetworkopen.2023.17574,PMC10282883,https://pubmed.ncbi.nlm.nih.gov/37338907/,CANDIDATE_UNREVIEWED
+790,37148170,Safety and effectiveness of the sodium-glucose cotransporter inhibitor bexagliflozin in cats newly diagnosed with diabetes mellitus.,2023 May-Jun,J Vet Intern Med,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1111/jvim.16730,PMC10229323,https://pubmed.ncbi.nlm.nih.gov/37148170/,CANDIDATE_UNREVIEWED
+791,21840152,Neurological complications of sclerotherapy for varicose veins.,2012 Jan,J Vasc Surg,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1016/j.jvs.2011.05.093,,https://pubmed.ncbi.nlm.nih.gov/21840152/,CANDIDATE_UNREVIEWED
+792,30042267,[Neuromuscular Adverse Events].,2018 Jul,Gan To Kagaku Ryoho,S11_NEUROLOGIC,medium,serious,neurologic serious event,,,https://pubmed.ncbi.nlm.nih.gov/30042267/,CANDIDATE_UNREVIEWED
+793,16159082,Management of intracranial pressure in tuberculous meningitis.,2005,Neurocrit Care,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1385/NCC:2:3:306,,https://pubmed.ncbi.nlm.nih.gov/16159082/,CANDIDATE_UNREVIEWED
+794,15841886,Evaluating the safety and tolerability profile of acute treatments for migraine.,2005 Mar,Am J Med,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1016/j.amjmed.2005.01.018,,https://pubmed.ncbi.nlm.nih.gov/15841886/,CANDIDATE_UNREVIEWED
+795,34319570,The Disease-Modifying Therapies of Relapsing-Remitting Multiple Sclerosis and Liver Injury: A Narrative Review.,2021 Aug,CNS Drugs,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1007/s40263-021-00842-9,PMC8354931,https://pubmed.ncbi.nlm.nih.gov/34319570/,CANDIDATE_UNREVIEWED
+796,33335717,Adverse events following measles-mumps-rubella-varicella vaccine: an independent perspective on Italian pharmacovigilance data.,2020,F1000Res,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.12688/f1000research.26523.2,PMC7721067,https://pubmed.ncbi.nlm.nih.gov/33335717/,CANDIDATE_UNREVIEWED
+797,40795646,Immune checkpoint inhibitor-related neurotoxicity: Incidence and management. A systematic review and meta-analysis.,2025 Nov,Cancer Treat Rev,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1016/j.ctrv.2025.103011,,https://pubmed.ncbi.nlm.nih.gov/40795646/,CANDIDATE_UNREVIEWED
+798,15032089,[Childhood vaccinations anno 2004. II. The real and presumed side effects of vaccination].,2004 Feb 21,Ned Tijdschr Geneeskd,S11_NEUROLOGIC,medium,serious,neurologic serious event,,,https://pubmed.ncbi.nlm.nih.gov/15032089/,CANDIDATE_UNREVIEWED
+799,39980035,"Comparison of serious adverse effects of methylphenidate, atomoxetine and amphetamine in the treatment of ADHD: an adverse event analysis based on the FAERS database.",2025 Feb 20,BMC Pharmacol Toxicol,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.1186/s40360-025-00868-5,PMC11844164,https://pubmed.ncbi.nlm.nih.gov/39980035/,CANDIDATE_UNREVIEWED
+800,35004543,A Review of Acute and Long-Term Neurological Complications Following Haematopoietic Stem Cell Transplant for Paediatric Acute Lymphoblastic Leukaemia.,2021,Front Pediatr,S11_NEUROLOGIC,medium,serious,neurologic serious event,10.3389/fped.2021.774853,PMC8734594,https://pubmed.ncbi.nlm.nih.gov/35004543/,CANDIDATE_UNREVIEWED
+801,39844329,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/39844329/,CANDIDATE_UNREVIEWED
+802,31514194,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/31514194/,CANDIDATE_UNREVIEWED
+803,37705676,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/37705676/,CANDIDATE_UNREVIEWED
+804,32105622,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/32105622/,CANDIDATE_UNREVIEWED
+805,27261963,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/27261963/,CANDIDATE_UNREVIEWED
+806,33115308,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/33115308/,CANDIDATE_UNREVIEWED
+807,35169303,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/35169303/,CANDIDATE_UNREVIEWED
+808,26924167,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26924167/,CANDIDATE_UNREVIEWED
+809,35859911,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/35859911/,CANDIDATE_UNREVIEWED
+810,35312791,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/35312791/,CANDIDATE_UNREVIEWED
+811,27540239,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/27540239/,CANDIDATE_UNREVIEWED
+812,31375398,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/31375398/,CANDIDATE_UNREVIEWED
+813,30965274,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/30965274/,CANDIDATE_UNREVIEWED
+814,21858432,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/21858432/,CANDIDATE_UNREVIEWED
+815,33468532,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/33468532/,CANDIDATE_UNREVIEWED
+816,40366453,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/40366453/,CANDIDATE_UNREVIEWED
+817,24808537,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/24808537/,CANDIDATE_UNREVIEWED
+818,17169874,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/17169874/,CANDIDATE_UNREVIEWED
+819,26739892,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26739892/,CANDIDATE_UNREVIEWED
+820,25395343,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/25395343/,CANDIDATE_UNREVIEWED
+821,40728401,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/40728401/,CANDIDATE_UNREVIEWED
+822,31949291,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/31949291/,CANDIDATE_UNREVIEWED
+823,26768830,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26768830/,CANDIDATE_UNREVIEWED
+824,40965672,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/40965672/,CANDIDATE_UNREVIEWED
+825,23860344,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/23860344/,CANDIDATE_UNREVIEWED
+826,27913837,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/27913837/,CANDIDATE_UNREVIEWED
+827,22761169,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/22761169/,CANDIDATE_UNREVIEWED
+828,26806565,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26806565/,CANDIDATE_UNREVIEWED
+829,17588130,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/17588130/,CANDIDATE_UNREVIEWED
+830,19246810,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/19246810/,CANDIDATE_UNREVIEWED
+831,26070796,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26070796/,CANDIDATE_UNREVIEWED
+832,35935867,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/35935867/,CANDIDATE_UNREVIEWED
+833,19646077,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/19646077/,CANDIDATE_UNREVIEWED
+834,26405817,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26405817/,CANDIDATE_UNREVIEWED
+835,21988288,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/21988288/,CANDIDATE_UNREVIEWED
+836,27503625,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/27503625/,CANDIDATE_UNREVIEWED
+837,29421929,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/29421929/,CANDIDATE_UNREVIEWED
+838,35185536,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/35185536/,CANDIDATE_UNREVIEWED
+839,37449964,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/37449964/,CANDIDATE_UNREVIEWED
+840,32510242,,,,S13_PEDIATRIC,hard,mixed,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/32510242/,CANDIDATE_UNREVIEWED
+841,37394254,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/37394254/,CANDIDATE_UNREVIEWED
+842,37516359,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/37516359/,CANDIDATE_UNREVIEWED
+843,26006718,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/26006718/,CANDIDATE_UNREVIEWED
+844,29803714,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/29803714/,CANDIDATE_UNREVIEWED
+845,34979270,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/34979270/,CANDIDATE_UNREVIEWED
+846,19371237,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/19371237/,CANDIDATE_UNREVIEWED
+847,38977212,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/38977212/,CANDIDATE_UNREVIEWED
+848,22014984,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/22014984/,CANDIDATE_UNREVIEWED
+849,36740326,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/36740326/,CANDIDATE_UNREVIEWED
+850,24819642,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/24819642/,CANDIDATE_UNREVIEWED
+851,21562486,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/21562486/,CANDIDATE_UNREVIEWED
+852,34463914,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/34463914/,CANDIDATE_UNREVIEWED
+853,34782090,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/34782090/,CANDIDATE_UNREVIEWED
+854,22803794,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/22803794/,CANDIDATE_UNREVIEWED
+855,26833523,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/26833523/,CANDIDATE_UNREVIEWED
+856,27558920,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/27558920/,CANDIDATE_UNREVIEWED
+857,30895730,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/30895730/,CANDIDATE_UNREVIEWED
+858,31696801,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/31696801/,CANDIDATE_UNREVIEWED
+859,26553194,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/26553194/,CANDIDATE_UNREVIEWED
+860,33623374,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/33623374/,CANDIDATE_UNREVIEWED
+861,34336873,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/34336873/,CANDIDATE_UNREVIEWED
+862,29445753,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/29445753/,CANDIDATE_UNREVIEWED
+863,21354501,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/21354501/,CANDIDATE_UNREVIEWED
+864,33341203,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/33341203/,CANDIDATE_UNREVIEWED
+865,25017673,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/25017673/,CANDIDATE_UNREVIEWED
+866,29574562,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/29574562/,CANDIDATE_UNREVIEWED
+867,24527369,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/24527369/,CANDIDATE_UNREVIEWED
+868,27106261,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/27106261/,CANDIDATE_UNREVIEWED
+869,15767024,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/15767024/,CANDIDATE_UNREVIEWED
+870,34273058,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/34273058/,CANDIDATE_UNREVIEWED
+871,24322785,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/24322785/,CANDIDATE_UNREVIEWED
+872,23792104,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/23792104/,CANDIDATE_UNREVIEWED
+873,34059239,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/34059239/,CANDIDATE_UNREVIEWED
+874,33717075,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/33717075/,CANDIDATE_UNREVIEWED
+875,39042477,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/39042477/,CANDIDATE_UNREVIEWED
+876,30573342,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/30573342/,CANDIDATE_UNREVIEWED
+877,24007777,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/24007777/,CANDIDATE_UNREVIEWED
+878,26110678,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/26110678/,CANDIDATE_UNREVIEWED
+879,31020549,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/31020549/,CANDIDATE_UNREVIEWED
+880,25458866,,,,S07_SCAR,hard,serious,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/25458866/,CANDIDATE_UNREVIEWED
+881,33752857,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/33752857/,CANDIDATE_UNREVIEWED
+882,32821608,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/32821608/,CANDIDATE_UNREVIEWED
+883,15378106,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/15378106/,CANDIDATE_UNREVIEWED
+884,26692393,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/26692393/,CANDIDATE_UNREVIEWED
+885,26072257,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/26072257/,CANDIDATE_UNREVIEWED
+886,29543144,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/29543144/,CANDIDATE_UNREVIEWED
+887,36352526,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/36352526/,CANDIDATE_UNREVIEWED
+888,35345746,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/35345746/,CANDIDATE_UNREVIEWED
+889,20455338,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/20455338/,CANDIDATE_UNREVIEWED
+890,36337813,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/36337813/,CANDIDATE_UNREVIEWED
+891,32923330,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/32923330/,CANDIDATE_UNREVIEWED
+892,16969448,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/16969448/,CANDIDATE_UNREVIEWED
+893,28236867,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/28236867/,CANDIDATE_UNREVIEWED
+894,31869482,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/31869482/,CANDIDATE_UNREVIEWED
+895,37260534,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/37260534/,CANDIDATE_UNREVIEWED
+896,24811394,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/24811394/,CANDIDATE_UNREVIEWED
+897,29135905,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/29135905/,CANDIDATE_UNREVIEWED
+898,33388821,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/33388821/,CANDIDATE_UNREVIEWED
+899,38719244,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/38719244/,CANDIDATE_UNREVIEWED
+900,41255343,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/41255343/,CANDIDATE_UNREVIEWED
+901,7175995,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/7175995/,CANDIDATE_UNREVIEWED
+902,22829250,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/22829250/,CANDIDATE_UNREVIEWED
+903,32491455,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/32491455/,CANDIDATE_UNREVIEWED
+904,28038759,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/28038759/,CANDIDATE_UNREVIEWED
+905,32850070,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/32850070/,CANDIDATE_UNREVIEWED
+906,19458202,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/19458202/,CANDIDATE_UNREVIEWED
+907,35482748,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/35482748/,CANDIDATE_UNREVIEWED
+908,35676987,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/35676987/,CANDIDATE_UNREVIEWED
+909,9127424,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/9127424/,CANDIDATE_UNREVIEWED
+910,4405537,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/4405537/,CANDIDATE_UNREVIEWED
+911,16634392,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/16634392/,CANDIDATE_UNREVIEWED
+912,19191213,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/19191213/,CANDIDATE_UNREVIEWED
+913,41193142,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/41193142/,CANDIDATE_UNREVIEWED
+914,30963738,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/30963738/,CANDIDATE_UNREVIEWED
+915,22678709,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/22678709/,CANDIDATE_UNREVIEWED
+916,32208947,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/32208947/,CANDIDATE_UNREVIEWED
+917,26913719,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/26913719/,CANDIDATE_UNREVIEWED
+918,31703306,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/31703306/,CANDIDATE_UNREVIEWED
+919,10977799,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/10977799/,CANDIDATE_UNREVIEWED
+920,29882461,,,,S18_OVERDOSE_ERROR,hard,special,overdose/medication error,,,https://pubmed.ncbi.nlm.nih.gov/29882461/,CANDIDATE_UNREVIEWED
+921,26186143,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/26186143/,CANDIDATE_UNREVIEWED
+922,25798731,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/25798731/,CANDIDATE_UNREVIEWED
+923,39448137,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/39448137/,CANDIDATE_UNREVIEWED
+924,25944990,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/25944990/,CANDIDATE_UNREVIEWED
+925,32628388,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/32628388/,CANDIDATE_UNREVIEWED
+926,33059460,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/33059460/,CANDIDATE_UNREVIEWED
+927,34846373,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/34846373/,CANDIDATE_UNREVIEWED
+928,27223416,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/27223416/,CANDIDATE_UNREVIEWED
+929,20587767,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/20587767/,CANDIDATE_UNREVIEWED
+930,16913164,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/16913164/,CANDIDATE_UNREVIEWED
+931,33179891,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/33179891/,CANDIDATE_UNREVIEWED
+932,2232043,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/2232043/,CANDIDATE_UNREVIEWED
+933,27931774,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/27931774/,CANDIDATE_UNREVIEWED
+934,19062773,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/19062773/,CANDIDATE_UNREVIEWED
+935,9262526,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/9262526/,CANDIDATE_UNREVIEWED
+936,25721705,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/25721705/,CANDIDATE_UNREVIEWED
+937,19567771,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/19567771/,CANDIDATE_UNREVIEWED
+938,15617293,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/15617293/,CANDIDATE_UNREVIEWED
+939,26721643,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/26721643/,CANDIDATE_UNREVIEWED
+940,7841860,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/7841860/,CANDIDATE_UNREVIEWED
+941,15725047,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/15725047/,CANDIDATE_UNREVIEWED
+942,25192903,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/25192903/,CANDIDATE_UNREVIEWED
+943,28458437,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/28458437/,CANDIDATE_UNREVIEWED
+944,27651709,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/27651709/,CANDIDATE_UNREVIEWED
+945,32386690,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/32386690/,CANDIDATE_UNREVIEWED
+946,29759276,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/29759276/,CANDIDATE_UNREVIEWED
+947,34000917,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/34000917/,CANDIDATE_UNREVIEWED
+948,15262744,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/15262744/,CANDIDATE_UNREVIEWED
+949,32641917,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/32641917/,CANDIDATE_UNREVIEWED
+950,26834969,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/26834969/,CANDIDATE_UNREVIEWED
+951,26664952,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/26664952/,CANDIDATE_UNREVIEWED
+952,39337929,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/39337929/,CANDIDATE_UNREVIEWED
+953,33856954,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/33856954/,CANDIDATE_UNREVIEWED
+954,24471206,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/24471206/,CANDIDATE_UNREVIEWED
+955,19263830,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/19263830/,CANDIDATE_UNREVIEWED
+956,10786215,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/10786215/,CANDIDATE_UNREVIEWED
+957,22885533,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/22885533/,CANDIDATE_UNREVIEWED
+958,6129120,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/6129120/,CANDIDATE_UNREVIEWED
+959,6087649,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/6087649/,CANDIDATE_UNREVIEWED
+960,27695599,,,,S19_WITHDRAWAL_REBOUND,hard,special,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/27695599/,CANDIDATE_UNREVIEWED
+961,32556170,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/32556170/,CANDIDATE_UNREVIEWED
+962,33336040,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/33336040/,CANDIDATE_UNREVIEWED
+963,38096475,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/38096475/,CANDIDATE_UNREVIEWED
+964,38839897,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/38839897/,CANDIDATE_UNREVIEWED
+965,34295675,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/34295675/,CANDIDATE_UNREVIEWED
+966,38901879,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/38901879/,CANDIDATE_UNREVIEWED
+967,33246634,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/33246634/,CANDIDATE_UNREVIEWED
+968,22566227,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/22566227/,CANDIDATE_UNREVIEWED
+969,31808887,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/31808887/,CANDIDATE_UNREVIEWED
+970,28497027,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/28497027/,CANDIDATE_UNREVIEWED
+971,34604551,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/34604551/,CANDIDATE_UNREVIEWED
+972,23183705,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/23183705/,CANDIDATE_UNREVIEWED
+973,38785396,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/38785396/,CANDIDATE_UNREVIEWED
+974,27009452,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/27009452/,CANDIDATE_UNREVIEWED
+975,26195220,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/26195220/,CANDIDATE_UNREVIEWED
+976,40714367,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/40714367/,CANDIDATE_UNREVIEWED
+977,21999163,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/21999163/,CANDIDATE_UNREVIEWED
+978,27716900,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/27716900/,CANDIDATE_UNREVIEWED
+979,26444523,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/26444523/,CANDIDATE_UNREVIEWED
+980,1332623,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/1332623/,CANDIDATE_UNREVIEWED
+981,32265166,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/32265166/,CANDIDATE_UNREVIEWED
+982,24762289,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/24762289/,CANDIDATE_UNREVIEWED
+983,24193169,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/24193169/,CANDIDATE_UNREVIEWED
+984,2044288,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/2044288/,CANDIDATE_UNREVIEWED
+985,18370456,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/18370456/,CANDIDATE_UNREVIEWED
+986,27743334,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/27743334/,CANDIDATE_UNREVIEWED
+987,3221437,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/3221437/,CANDIDATE_UNREVIEWED
+988,18844768,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/18844768/,CANDIDATE_UNREVIEWED
+989,28303374,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/28303374/,CANDIDATE_UNREVIEWED
+990,19821348,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/19821348/,CANDIDATE_UNREVIEWED
+991,30991262,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/30991262/,CANDIDATE_UNREVIEWED
+992,1972736,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/1972736/,CANDIDATE_UNREVIEWED
+993,32482765,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/32482765/,CANDIDATE_UNREVIEWED
+994,15140552,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/15140552/,CANDIDATE_UNREVIEWED
+995,11841360,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/11841360/,CANDIDATE_UNREVIEWED
+996,21401568,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/21401568/,CANDIDATE_UNREVIEWED
+997,1514709,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/1514709/,CANDIDATE_UNREVIEWED
+998,22410708,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/22410708/,CANDIDATE_UNREVIEWED
+999,11161227,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/11161227/,CANDIDATE_UNREVIEWED
+1000,28299283,,,,S22_CLINICAL_TRIAL,hard,clinical_trial,clinical-trial adverse event/case,,,https://pubmed.ncbi.nlm.nih.gov/28299283/,CANDIDATE_UNREVIEWED
