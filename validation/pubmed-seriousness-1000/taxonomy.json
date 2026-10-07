@@ -346,7 +346,33 @@
     "S09_RENAL": 40,
     "S11_NEUROLOGIC": 40,
     "S13_PEDIATRIC": 40,
-    "RESERVE_GENERAL": 160
+    "S07_SCAR": 40,
+    "S18_OVERDOSE_ERROR": 40,
+    "S19_WITHDRAWAL_REBOUND": 40,
+    "S22_CLINICAL_TRIAL": 40
   },
-  "final_unique_pmids": 1000
+  "final_unique_pmids": 1000,
+  "finalized_candidate_pull_utc": "2026-10-07T20:12:29.974Z",
+  "final_fill_stats": [
+    {
+      "stratum": "S07_SCAR",
+      "returned": 250,
+      "selected": 40
+    },
+    {
+      "stratum": "S18_OVERDOSE_ERROR",
+      "returned": 250,
+      "selected": 40
+    },
+    {
+      "stratum": "S19_WITHDRAWAL_REBOUND",
+      "returned": 250,
+      "selected": 40
+    },
+    {
+      "stratum": "S22_CLINICAL_TRIAL",
+      "returned": 250,
+      "selected": 40
+    }
+  ]
 }
