@@ -1,0 +1,279 @@
+{
+  "header": {
+    "generated_utc": "2026-10-07T20:09:54.522Z",
+    "source": "PubMed / NCBI E-utilities",
+    "target_count": 1000,
+    "actual_count": 1000,
+    "unique_pmids": 1000,
+    "duplicate_normalized_titles": 0,
+    "shortfalls": [
+      {
+        "stratum": "S01_FATAL_DEATH",
+        "selected": 0,
+        "returned": 0
+      },
+      {
+        "stratum": "S04_DISABILITY",
+        "selected": 0,
+        "returned": 0
+      },
+      {
+        "stratum": "S07_SCAR",
+        "selected": 0,
+        "returned": 0
+      },
+      {
+        "stratum": "S09_RENAL",
+        "selected": 0,
+        "returned": 0
+      },
+      {
+        "stratum": "S11_NEUROLOGIC",
+        "selected": 0,
+        "returned": 0
+      },
+      {
+        "stratum": "S13_PEDIATRIC",
+        "selected": 0,
+        "returned": 0
+      },
+      {
+        "stratum": "S18_OVERDOSE_ERROR",
+        "selected": 0,
+        "returned": 0
+      },
+      {
+        "stratum": "S19_WITHDRAWAL_REBOUND",
+        "selected": 0,
+        "returned": 0
+      },
+      {
+        "stratum": "S22_CLINICAL_TRIAL",
+        "selected": 0,
+        "returned": 0
+      }
+    ],
+    "counts": {
+      "S02_LIFE_THREATENING_ICU": 40,
+      "S03_HOSPITALIZATION": 40,
+      "S05_CONGENITAL_ANOMALY": 40,
+      "S06_ANAPHYLAXIS": 40,
+      "S08_HEPATOTOXICITY": 40,
+      "S10_HEMATOLOGIC": 40,
+      "S12_CARDIAC": 40,
+      "S14_ELDERLY_POLYPHARMACY": 40,
+      "S15_PREGNANCY": 40,
+      "S16_LACTATION": 40,
+      "S17_DRUG_INTERACTION": 40,
+      "S20_LACK_EFFICACY": 40,
+      "S21_EXPOSURE": 40,
+      "S23_NON_SERIOUS": 40,
+      "S24_DIAGNOSTIC_AMBIGUITY": 40,
+      "S25_MULTI_EVENT_COMPLEX": 40,
+      "RESERVE_GENERAL": 360
+    }
+  },
+  "strata": [
+    {
+      "id": "S01_FATAL_DEATH",
+      "difficulty": "hard",
+      "bucket": "serious",
+      "scenario": "death/fatal outcome",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication OR therapy) AND (death OR fatal OR died) AND adverse AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S02_LIFE_THREATENING_ICU",
+      "difficulty": "hard",
+      "bucket": "serious",
+      "scenario": "life-threatening/ICU/intubation",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (\"life-threatening\" OR ICU OR \"intensive care\" OR intubation OR ventilation) AND adverse AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S03_HOSPITALIZATION",
+      "difficulty": "medium",
+      "bucket": "serious",
+      "scenario": "hospitalization/admission/prolongation",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (hospitalization OR hospitalisation OR admitted OR admission) AND adverse AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S04_DISABILITY",
+      "difficulty": "hard",
+      "bucket": "serious",
+      "scenario": "persistent disability/sequelae",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (disability OR disabled OR \"permanent impairment\" OR sequelae) AND adverse AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S05_CONGENITAL_ANOMALY",
+      "difficulty": "hard",
+      "bucket": "serious",
+      "scenario": "congenital anomaly/birth defect",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication OR exposure) AND (congenital OR \"birth defect\" OR malformation OR teratogenic) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S06_ANAPHYLAXIS",
+      "difficulty": "medium",
+      "bucket": "serious",
+      "scenario": "anaphylaxis/acute hypersensitivity",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication OR vaccine) AND (anaphylaxis OR anaphylactic) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S07_SCAR",
+      "difficulty": "hard",
+      "bucket": "serious",
+      "scenario": "SJS/TEN/DRESS severe cutaneous reaction",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (\"Stevens-Johnson\" OR \"toxic epidermal necrolysis\" OR DRESS OR \"drug reaction with eosinophilia\") AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S08_HEPATOTOXICITY",
+      "difficulty": "medium",
+      "bucket": "serious",
+      "scenario": "DILI/hepatic injury",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication OR supplement) AND (\"drug-induced liver injury\" OR hepatotoxicity OR hepatitis) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S09_RENAL",
+      "difficulty": "medium",
+      "bucket": "serious",
+      "scenario": "acute kidney/renal injury",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (\"acute kidney injury\" OR \"renal failure\" OR nephrotoxicity OR nephritis) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S10_HEMATOLOGIC",
+      "difficulty": "medium",
+      "bucket": "serious",
+      "scenario": "hematologic serious ADR",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (agranulocytosis OR pancytopenia OR thrombocytopenia OR neutropenia OR hemolysis) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S11_NEUROLOGIC",
+      "difficulty": "medium",
+      "bucket": "serious",
+      "scenario": "neurologic serious event",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (seizure OR encephalopathy OR \"status epilepticus\" OR coma OR neuropathy) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S12_CARDIAC",
+      "difficulty": "hard",
+      "bucket": "serious",
+      "scenario": "arrhythmia/QT/myocarditis/cardiac arrest",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication OR vaccine) AND (arrhythmia OR \"QT prolongation\" OR myocarditis OR \"cardiac arrest\" OR torsades) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S13_PEDIATRIC",
+      "difficulty": "hard",
+      "bucket": "mixed",
+      "scenario": "pediatric ADR",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (child OR pediatric OR paediatric OR infant OR adolescent) AND adverse AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S14_ELDERLY_POLYPHARMACY",
+      "difficulty": "hard",
+      "bucket": "mixed",
+      "scenario": "elderly/polypharmacy",
+      "query": "\"case reports\"[Publication Type] AND (elderly OR aged OR geriatric) AND (polypharmacy OR \"drug interaction\" OR medication) AND adverse AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S15_PREGNANCY",
+      "difficulty": "hard",
+      "bucket": "special",
+      "scenario": "pregnancy/fetal exposure",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication OR exposure) AND (pregnancy OR pregnant OR fetal OR foetal) AND adverse AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S16_LACTATION",
+      "difficulty": "hard",
+      "bucket": "special",
+      "scenario": "breastfeeding/lactation exposure",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication OR exposure) AND (breastfeeding OR lactation OR \"breast milk\") AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S17_DRUG_INTERACTION",
+      "difficulty": "hard",
+      "bucket": "special",
+      "scenario": "drug-drug interaction/multi-drug",
+      "query": "\"case reports\"[Publication Type] AND (\"drug interaction\" OR \"drug-drug interaction\" OR polypharmacy) AND (adverse OR toxicity) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S18_OVERDOSE_ERROR",
+      "difficulty": "hard",
+      "bucket": "special",
+      "scenario": "overdose/medication error",
+      "query": "\"case reports\"[Publication Type] AND (overdose OR \"medication error\" OR \"wrong dose\" OR poisoning) AND (drug OR medication) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S19_WITHDRAWAL_REBOUND",
+      "difficulty": "hard",
+      "bucket": "special",
+      "scenario": "withdrawal/rebound",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (withdrawal OR rebound OR discontinuation) AND (syndrome OR adverse OR reaction) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S20_LACK_EFFICACY",
+      "difficulty": "hard",
+      "bucket": "special",
+      "scenario": "lack of efficacy/treatment failure",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication OR therapy) AND (\"lack of efficacy\" OR \"treatment failure\" OR \"therapeutic failure\") AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S21_EXPOSURE",
+      "difficulty": "hard",
+      "bucket": "special",
+      "scenario": "occupational/accidental exposure",
+      "query": "\"case reports\"[Publication Type] AND (occupational OR accidental OR exposure) AND (drug OR medication OR pharmaceutical) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S22_CLINICAL_TRIAL",
+      "difficulty": "hard",
+      "bucket": "clinical_trial",
+      "scenario": "clinical-trial adverse event/case",
+      "query": "(\"clinical trial\"[Publication Type] OR \"clinical trial\"[Title/Abstract]) AND (case OR patient) AND (\"adverse event\" OR \"adverse reaction\" OR toxicity) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S23_NON_SERIOUS",
+      "difficulty": "easy",
+      "bucket": "non_serious_candidate",
+      "scenario": "mild/non-serious ADR candidate",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (rash OR nausea OR vomiting OR headache OR pruritus OR dizziness) AND (mild OR transient OR self-limited OR \"self limited\") AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S24_DIAGNOSTIC_AMBIGUITY",
+      "difficulty": "hard",
+      "bucket": "mixed",
+      "scenario": "alternative cause/dechallenge/rechallenge/diagnostic ambiguity",
+      "query": "\"case reports\"[Publication Type] AND (drug OR medication) AND (dechallenge OR rechallenge OR \"differential diagnosis\" OR \"alternative cause\" OR causality) AND adverse AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    },
+    {
+      "id": "S25_MULTI_EVENT_COMPLEX",
+      "difficulty": "hard",
+      "bucket": "mixed",
+      "scenario": "multi-drug/multi-event complex case",
+      "query": "\"case reports\"[Publication Type] AND (polypharmacy OR \"multiple drugs\" OR \"multiple medications\" OR \"multiple adverse\") AND (toxicity OR adverse) AND (\"2000\"[Date - Publication] : \"2026\"[Date - Publication])",
+      "target": 40
+    }
+  ],
+  "duplicate_title_flags": []
+}
