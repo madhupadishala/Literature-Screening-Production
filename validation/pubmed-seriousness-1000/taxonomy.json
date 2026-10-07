@@ -275,5 +275,78 @@
       "target": 40
     }
   ],
-  "duplicate_title_flags": []
+  "duplicate_title_flags": [],
+  "rebalanced_utc": "2026-10-07T20:11:34.237Z",
+  "rebalance_stats": [
+    {
+      "stratum": "S01_FATAL_DEATH",
+      "returned": 0,
+      "selected": 40
+    },
+    {
+      "stratum": "S04_DISABILITY",
+      "returned": 0,
+      "selected": 40
+    },
+    {
+      "stratum": "S07_SCAR",
+      "returned": 0,
+      "selected": 0
+    },
+    {
+      "stratum": "S09_RENAL",
+      "returned": 0,
+      "selected": 40
+    },
+    {
+      "stratum": "S11_NEUROLOGIC",
+      "returned": 0,
+      "selected": 40
+    },
+    {
+      "stratum": "S13_PEDIATRIC",
+      "returned": 0,
+      "selected": 40
+    },
+    {
+      "stratum": "S18_OVERDOSE_ERROR",
+      "returned": 0,
+      "selected": 0
+    },
+    {
+      "stratum": "S19_WITHDRAWAL_REBOUND",
+      "returned": 0,
+      "selected": 0
+    },
+    {
+      "stratum": "S22_CLINICAL_TRIAL",
+      "returned": 0,
+      "selected": 0
+    }
+  ],
+  "final_counts": {
+    "S02_LIFE_THREATENING_ICU": 40,
+    "S03_HOSPITALIZATION": 40,
+    "S05_CONGENITAL_ANOMALY": 40,
+    "S06_ANAPHYLAXIS": 40,
+    "S08_HEPATOTOXICITY": 40,
+    "S10_HEMATOLOGIC": 40,
+    "S12_CARDIAC": 40,
+    "S14_ELDERLY_POLYPHARMACY": 40,
+    "S15_PREGNANCY": 40,
+    "S16_LACTATION": 40,
+    "S17_DRUG_INTERACTION": 40,
+    "S20_LACK_EFFICACY": 40,
+    "S21_EXPOSURE": 40,
+    "S23_NON_SERIOUS": 40,
+    "S24_DIAGNOSTIC_AMBIGUITY": 40,
+    "S25_MULTI_EVENT_COMPLEX": 40,
+    "S01_FATAL_DEATH": 40,
+    "S04_DISABILITY": 40,
+    "S09_RENAL": 40,
+    "S11_NEUROLOGIC": 40,
+    "S13_PEDIATRIC": 40,
+    "RESERVE_GENERAL": 160
+  },
+  "final_unique_pmids": 1000
 }
