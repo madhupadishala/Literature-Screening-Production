@@ -1,154 +1,154 @@
 Case No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficulty,Bucket,Scenario,DOI,PMCID,PubMed URL,Status
-1,29808264,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/29808264/,CANDIDATE_UNREVIEWED
-2,27699455,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27699455/,CANDIDATE_UNREVIEWED
-3,29709266,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/29709266/,CANDIDATE_UNREVIEWED
-4,28735978,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28735978/,CANDIDATE_UNREVIEWED
-5,27922495,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27922495/,CANDIDATE_UNREVIEWED
-6,30850570,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/30850570/,CANDIDATE_UNREVIEWED
-7,15579349,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/15579349/,CANDIDATE_UNREVIEWED
-8,32341207,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32341207/,CANDIDATE_UNREVIEWED
-9,24196095,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/24196095/,CANDIDATE_UNREVIEWED
-10,32237124,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32237124/,CANDIDATE_UNREVIEWED
-11,32787381,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32787381/,CANDIDATE_UNREVIEWED
-12,27287503,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27287503/,CANDIDATE_UNREVIEWED
-13,12477993,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12477993/,CANDIDATE_UNREVIEWED
-14,15074317,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/15074317/,CANDIDATE_UNREVIEWED
-15,19462804,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/19462804/,CANDIDATE_UNREVIEWED
-16,28838925,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28838925/,CANDIDATE_UNREVIEWED
-17,12610851,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12610851/,CANDIDATE_UNREVIEWED
-18,32554527,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32554527/,CANDIDATE_UNREVIEWED
-19,34857963,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/34857963/,CANDIDATE_UNREVIEWED
-20,23328147,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/23328147/,CANDIDATE_UNREVIEWED
-21,24368863,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/24368863/,CANDIDATE_UNREVIEWED
-22,31343730,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/31343730/,CANDIDATE_UNREVIEWED
+1,29808264,"Neonatal hypertension: cases, causes, and clinical approach",,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/29808264/,CANDIDATE_UNREVIEWED
+2,27699455,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27699455/,CANDIDATE_UNREVIEWED
+3,29709266,"Saprochaete capitata (Geotrichum capitatum), an emerging fungal infection in kidney transplant recipients",,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/29709266/,CANDIDATE_UNREVIEWED
+4,28735978,Ventilator-Induced Hiccups,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28735978/,CANDIDATE_UNREVIEWED
+5,27922495,Toxic and Endocrine Myopathies,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27922495/,CANDIDATE_UNREVIEWED
+6,30850570,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/30850570/,CANDIDATE_UNREVIEWED
+7,15579349,Defining and measuring patient safety,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/15579349/,CANDIDATE_UNREVIEWED
+8,32341207,"The effect of veno-arterial extracorporeal oxygenation and nasogastric tube administration on the pharmacokinetic profile of abacavir, lamivudine and dolutegravir: a case report",,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32341207/,CANDIDATE_UNREVIEWED
+9,24196095,Compounded ointment results in severe toxicity in a pediatric patient,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/24196095/,CANDIDATE_UNREVIEWED
+10,32237124,"One Bronchoscopy, Two Errors",,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32237124/,CANDIDATE_UNREVIEWED
+11,32787381,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32787381/,CANDIDATE_UNREVIEWED
+12,27287503,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27287503/,CANDIDATE_UNREVIEWED
+13,12477993,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12477993/,CANDIDATE_UNREVIEWED
+14,15074317,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/15074317/,CANDIDATE_UNREVIEWED
+15,19462804,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/19462804/,CANDIDATE_UNREVIEWED
+16,28838925,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28838925/,CANDIDATE_UNREVIEWED
+17,12610851,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12610851/,CANDIDATE_UNREVIEWED
+18,32554527,Piperacillin/tazobactam-induced coagulopathy in a patient through a vitamin K-dependent mechanism,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32554527/,CANDIDATE_UNREVIEWED
+19,34857963,Tracheal stenosis following endotracheal intubation in a dog,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/34857963/,CANDIDATE_UNREVIEWED
+20,23328147,Obstructive fibrinous tracheal pseudomembrane,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/23328147/,CANDIDATE_UNREVIEWED
+21,24368863,Removal of endotracheal tube obstruction with a secretion clearance device,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/24368863/,CANDIDATE_UNREVIEWED
+22,31343730,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/31343730/,CANDIDATE_UNREVIEWED
 23,23832734,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/23832734/,CANDIDATE_UNREVIEWED
-24,12096370,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12096370/,CANDIDATE_UNREVIEWED
-25,26150410,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26150410/,CANDIDATE_UNREVIEWED
-26,25053692,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25053692/,CANDIDATE_UNREVIEWED
-27,16015396,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/16015396/,CANDIDATE_UNREVIEWED
-28,33770414,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/33770414/,CANDIDATE_UNREVIEWED
-29,27979642,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27979642/,CANDIDATE_UNREVIEWED
-30,32881067,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32881067/,CANDIDATE_UNREVIEWED
-31,27692755,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27692755/,CANDIDATE_UNREVIEWED
-32,25801543,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25801543/,CANDIDATE_UNREVIEWED
-33,25263728,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25263728/,CANDIDATE_UNREVIEWED
-34,27381949,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27381949/,CANDIDATE_UNREVIEWED
-35,26380428,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26380428/,CANDIDATE_UNREVIEWED
-36,26095066,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26095066/,CANDIDATE_UNREVIEWED
-37,28599698,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28599698/,CANDIDATE_UNREVIEWED
-38,28687210,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28687210/,CANDIDATE_UNREVIEWED
-39,19723871,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/19723871/,CANDIDATE_UNREVIEWED
-40,16274814,,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/16274814/,CANDIDATE_UNREVIEWED
-41,21108186,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21108186/,CANDIDATE_UNREVIEWED
-42,34152842,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/34152842/,CANDIDATE_UNREVIEWED
-43,21448106,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21448106/,CANDIDATE_UNREVIEWED
-44,30817863,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/30817863/,CANDIDATE_UNREVIEWED
-45,25114505,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25114505/,CANDIDATE_UNREVIEWED
-46,27438540,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27438540/,CANDIDATE_UNREVIEWED
-47,17937473,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17937473/,CANDIDATE_UNREVIEWED
-48,25377151,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25377151/,CANDIDATE_UNREVIEWED
-49,32097308,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32097308/,CANDIDATE_UNREVIEWED
-50,20737060,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/20737060/,CANDIDATE_UNREVIEWED
-51,28867523,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/28867523/,CANDIDATE_UNREVIEWED
-52,25873827,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25873827/,CANDIDATE_UNREVIEWED
-53,16731103,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/16731103/,CANDIDATE_UNREVIEWED
-54,32444438,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32444438/,CANDIDATE_UNREVIEWED
-55,14655691,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/14655691/,CANDIDATE_UNREVIEWED
-56,27234296,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27234296/,CANDIDATE_UNREVIEWED
-57,17989126,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17989126/,CANDIDATE_UNREVIEWED
-58,29745338,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/29745338/,CANDIDATE_UNREVIEWED
-59,32366239,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32366239/,CANDIDATE_UNREVIEWED
-60,32888664,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32888664/,CANDIDATE_UNREVIEWED
-61,32830568,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32830568/,CANDIDATE_UNREVIEWED
-62,27678383,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27678383/,CANDIDATE_UNREVIEWED
-63,26954774,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26954774/,CANDIDATE_UNREVIEWED
-64,16458177,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/16458177/,CANDIDATE_UNREVIEWED
-65,17007156,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17007156/,CANDIDATE_UNREVIEWED
-66,29307884,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/29307884/,CANDIDATE_UNREVIEWED
-67,26586148,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26586148/,CANDIDATE_UNREVIEWED
-68,24709224,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/24709224/,CANDIDATE_UNREVIEWED
-69,26510070,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26510070/,CANDIDATE_UNREVIEWED
-70,32690572,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32690572/,CANDIDATE_UNREVIEWED
-71,17167366,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17167366/,CANDIDATE_UNREVIEWED
-72,17576936,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17576936/,CANDIDATE_UNREVIEWED
-73,27399215,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27399215/,CANDIDATE_UNREVIEWED
-74,30165799,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/30165799/,CANDIDATE_UNREVIEWED
-75,26542320,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26542320/,CANDIDATE_UNREVIEWED
-76,25392292,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25392292/,CANDIDATE_UNREVIEWED
-77,32699878,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32699878/,CANDIDATE_UNREVIEWED
-78,17987545,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17987545/,CANDIDATE_UNREVIEWED
-79,32740115,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32740115/,CANDIDATE_UNREVIEWED
-80,27328474,,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27328474/,CANDIDATE_UNREVIEWED
-81,25155731,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/25155731/,CANDIDATE_UNREVIEWED
-82,26844738,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26844738/,CANDIDATE_UNREVIEWED
-83,21815259,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/21815259/,CANDIDATE_UNREVIEWED
-84,28582959,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/28582959/,CANDIDATE_UNREVIEWED
-85,33413009,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33413009/,CANDIDATE_UNREVIEWED
-86,16104005,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/16104005/,CANDIDATE_UNREVIEWED
-87,33462046,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33462046/,CANDIDATE_UNREVIEWED
-88,33520070,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33520070/,CANDIDATE_UNREVIEWED
-89,30672492,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30672492/,CANDIDATE_UNREVIEWED
-90,19864092,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/19864092/,CANDIDATE_UNREVIEWED
-91,32823159,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/32823159/,CANDIDATE_UNREVIEWED
-92,23296582,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23296582/,CANDIDATE_UNREVIEWED
-93,15863582,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/15863582/,CANDIDATE_UNREVIEWED
-94,30852581,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30852581/,CANDIDATE_UNREVIEWED
-95,23443469,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23443469/,CANDIDATE_UNREVIEWED
-96,29908288,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/29908288/,CANDIDATE_UNREVIEWED
-97,25692795,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/25692795/,CANDIDATE_UNREVIEWED
-98,22996115,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22996115/,CANDIDATE_UNREVIEWED
-99,18225620,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18225620/,CANDIDATE_UNREVIEWED
-100,26969228,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26969228/,CANDIDATE_UNREVIEWED
-101,27035547,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/27035547/,CANDIDATE_UNREVIEWED
-102,22140078,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22140078/,CANDIDATE_UNREVIEWED
-103,11255824,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/11255824/,CANDIDATE_UNREVIEWED
-104,15691545,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/15691545/,CANDIDATE_UNREVIEWED
-105,12357029,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12357029/,CANDIDATE_UNREVIEWED
-106,24209970,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24209970/,CANDIDATE_UNREVIEWED
-107,22884750,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22884750/,CANDIDATE_UNREVIEWED
-108,33932019,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33932019/,CANDIDATE_UNREVIEWED
-109,24583054,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24583054/,CANDIDATE_UNREVIEWED
-110,26824921,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26824921/,CANDIDATE_UNREVIEWED
-111,23553378,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23553378/,CANDIDATE_UNREVIEWED
-112,24902867,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24902867/,CANDIDATE_UNREVIEWED
-113,30714702,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30714702/,CANDIDATE_UNREVIEWED
-114,31943124,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/31943124/,CANDIDATE_UNREVIEWED
-115,23928479,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23928479/,CANDIDATE_UNREVIEWED
-116,12022611,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12022611/,CANDIDATE_UNREVIEWED
-117,18626334,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18626334/,CANDIDATE_UNREVIEWED
-118,18074358,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18074358/,CANDIDATE_UNREVIEWED
-119,12186175,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12186175/,CANDIDATE_UNREVIEWED
-120,14745921,,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/14745921/,CANDIDATE_UNREVIEWED
-121,10928395,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/10928395/,CANDIDATE_UNREVIEWED
-122,19299321,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19299321/,CANDIDATE_UNREVIEWED
-123,31154032,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31154032/,CANDIDATE_UNREVIEWED
-124,15663568,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/15663568/,CANDIDATE_UNREVIEWED
-125,34819140,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34819140/,CANDIDATE_UNREVIEWED
-126,26216470,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/26216470/,CANDIDATE_UNREVIEWED
-127,33118683,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/33118683/,CANDIDATE_UNREVIEWED
-128,31831926,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31831926/,CANDIDATE_UNREVIEWED
-129,25794419,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/25794419/,CANDIDATE_UNREVIEWED
-130,32757033,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/32757033/,CANDIDATE_UNREVIEWED
-131,19674349,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19674349/,CANDIDATE_UNREVIEWED
-132,19887766,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19887766/,CANDIDATE_UNREVIEWED
-133,34285756,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34285756/,CANDIDATE_UNREVIEWED
-134,31948907,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31948907/,CANDIDATE_UNREVIEWED
-135,28888256,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/28888256/,CANDIDATE_UNREVIEWED
-136,31969417,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31969417/,CANDIDATE_UNREVIEWED
-137,17620826,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/17620826/,CANDIDATE_UNREVIEWED
-138,12755725,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12755725/,CANDIDATE_UNREVIEWED
-139,12144085,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12144085/,CANDIDATE_UNREVIEWED
-140,22860305,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/22860305/,CANDIDATE_UNREVIEWED
-141,17039673,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/17039673/,CANDIDATE_UNREVIEWED
-142,28482886,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/28482886/,CANDIDATE_UNREVIEWED
-143,11195750,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/11195750/,CANDIDATE_UNREVIEWED
-144,25892213,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/25892213/,CANDIDATE_UNREVIEWED
-145,21527305,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/21527305/,CANDIDATE_UNREVIEWED
-146,15943602,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/15943602/,CANDIDATE_UNREVIEWED
-147,34695794,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34695794/,CANDIDATE_UNREVIEWED
-148,12776412,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12776412/,CANDIDATE_UNREVIEWED
-149,34050949,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34050949/,CANDIDATE_UNREVIEWED
-150,31574334,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31574334/,CANDIDATE_UNREVIEWED
+24,12096370,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12096370/,CANDIDATE_UNREVIEWED
+25,26150410,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26150410/,CANDIDATE_UNREVIEWED
+26,25053692,"Easily missed, potentially fatal complication in an extremely preterm infant",,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25053692/,CANDIDATE_UNREVIEWED
+27,16015396,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/16015396/,CANDIDATE_UNREVIEWED
+28,33770414,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/33770414/,CANDIDATE_UNREVIEWED
+29,27979642,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27979642/,CANDIDATE_UNREVIEWED
+30,32881067,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32881067/,CANDIDATE_UNREVIEWED
+31,27692755,Apnea After Low-Dose Ketamine Sedation During Attempted Delayed Sequence Intubation,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27692755/,CANDIDATE_UNREVIEWED
+32,25801543,Drug fever caused by propofol in the intensive care unit,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25801543/,CANDIDATE_UNREVIEWED
+33,25263728,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/25263728/,CANDIDATE_UNREVIEWED
+34,27381949,Prehospital Endotracheal Intubation in Warm Climates: Caution is Required,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27381949/,CANDIDATE_UNREVIEWED
+35,26380428,An Unusual Case of Licorice-Induced Hypertensive Crisis,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26380428/,CANDIDATE_UNREVIEWED
+36,26095066,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/26095066/,CANDIDATE_UNREVIEWED
+37,28599698,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28599698/,CANDIDATE_UNREVIEWED
+38,28687210,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28687210/,CANDIDATE_UNREVIEWED
+39,19723871,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/19723871/,CANDIDATE_UNREVIEWED
+40,16274814,Checking your browser - reCAPTCHA,,,S02_LIFE_THREATENING_ICU,hard,serious,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/16274814/,CANDIDATE_UNREVIEWED
+41,21108186,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21108186/,CANDIDATE_UNREVIEWED
+42,34152842,Checking your browser - reCAPTCHA,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/34152842/,CANDIDATE_UNREVIEWED
+43,21448106,Checking your browser - reCAPTCHA,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21448106/,CANDIDATE_UNREVIEWED
+44,30817863,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/30817863/,CANDIDATE_UNREVIEWED
+45,25114505,Pustular drug eruption due to Panax notoginseng saponins,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25114505/,CANDIDATE_UNREVIEWED
+46,27438540,Cyclosporine Treatment of Drug-Induced Hypersensitivity Syndrome,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27438540/,CANDIDATE_UNREVIEWED
+47,17937473,Leflunomide-associated infections in rheumatoid arthritis,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17937473/,CANDIDATE_UNREVIEWED
+48,25377151,Paliperidone for the treatment of ketamine-induced psychosis: a case report,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25377151/,CANDIDATE_UNREVIEWED
+49,32097308,Checking your browser - reCAPTCHA,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32097308/,CANDIDATE_UNREVIEWED
+50,20737060,Dextromethorphan withdrawal and dependence syndrome,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/20737060/,CANDIDATE_UNREVIEWED
+51,28867523,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/28867523/,CANDIDATE_UNREVIEWED
+52,25873827,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25873827/,CANDIDATE_UNREVIEWED
+53,16731103,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/16731103/,CANDIDATE_UNREVIEWED
+54,32444438,Night-time confusion in an elderly woman post-stroke,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32444438/,CANDIDATE_UNREVIEWED
+55,14655691,[Hypercalcemia],,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/14655691/,CANDIDATE_UNREVIEWED
+56,27234296,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27234296/,CANDIDATE_UNREVIEWED
+57,17989126,Preoperative management of the pheochromocytoma patient,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17989126/,CANDIDATE_UNREVIEWED
+58,29745338,Hyponatraemia Associated with Tramadol Use: A Case Report,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/29745338/,CANDIDATE_UNREVIEWED
+59,32366239,Vaping induced pneumonitis: a small community hospital's case series and analysis,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32366239/,CANDIDATE_UNREVIEWED
+60,32888664,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32888664/,CANDIDATE_UNREVIEWED
+61,32830568,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32830568/,CANDIDATE_UNREVIEWED
+62,27678383,The Abdominal Reapproximation Anchor Device,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27678383/,CANDIDATE_UNREVIEWED
+63,26954774,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26954774/,CANDIDATE_UNREVIEWED
+64,16458177,Geriatric neutrophils: implications for older adults,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/16458177/,CANDIDATE_UNREVIEWED
+65,17007156,Advance care planning after lung transplantation: a case of missed opportunities,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17007156/,CANDIDATE_UNREVIEWED
+66,29307884,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/29307884/,CANDIDATE_UNREVIEWED
+67,26586148,[Overmedicalization: When too much medicine harms],,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26586148/,CANDIDATE_UNREVIEWED
+68,24709224,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/24709224/,CANDIDATE_UNREVIEWED
+69,26510070,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26510070/,CANDIDATE_UNREVIEWED
+70,32690572,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32690572/,CANDIDATE_UNREVIEWED
+71,17167366,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17167366/,CANDIDATE_UNREVIEWED
+72,17576936,Cutaneous adverse reactions to valdecoxib distinct from Stevens-Johnson syndrome and toxic epidermal necrolysis,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17576936/,CANDIDATE_UNREVIEWED
+73,27399215,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27399215/,CANDIDATE_UNREVIEWED
+74,30165799,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/30165799/,CANDIDATE_UNREVIEWED
+75,26542320,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/26542320/,CANDIDATE_UNREVIEWED
+76,25392292,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25392292/,CANDIDATE_UNREVIEWED
+77,32699878,Risperidone- and paliperidone-induced hepatotoxicity: Case report and review of literature,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32699878/,CANDIDATE_UNREVIEWED
+78,17987545,[Rapid inpatient tramadol-detoxification using oxcarbazepine],,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17987545/,CANDIDATE_UNREVIEWED
+79,32740115,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32740115/,CANDIDATE_UNREVIEWED
+80,27328474,pubmed.ncbi.nlm.nih.gov,,,S03_HOSPITALIZATION,medium,serious,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27328474/,CANDIDATE_UNREVIEWED
+81,25155731,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/25155731/,CANDIDATE_UNREVIEWED
+82,26844738,Managing Epilepsy in Women,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26844738/,CANDIDATE_UNREVIEWED
+83,21815259,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/21815259/,CANDIDATE_UNREVIEWED
+84,28582959,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/28582959/,CANDIDATE_UNREVIEWED
+85,33413009,Congenital Mirror Movements Associated With Brain Malformations,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33413009/,CANDIDATE_UNREVIEWED
+86,16104005,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/16104005/,CANDIDATE_UNREVIEWED
+87,33462046,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33462046/,CANDIDATE_UNREVIEWED
+88,33520070,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33520070/,CANDIDATE_UNREVIEWED
+89,30672492,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30672492/,CANDIDATE_UNREVIEWED
+90,19864092,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/19864092/,CANDIDATE_UNREVIEWED
+91,32823159,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/32823159/,CANDIDATE_UNREVIEWED
+92,23296582,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23296582/,CANDIDATE_UNREVIEWED
+93,15863582,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/15863582/,CANDIDATE_UNREVIEWED
+94,30852581,Checking your browser - reCAPTCHA,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30852581/,CANDIDATE_UNREVIEWED
+95,23443469,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23443469/,CANDIDATE_UNREVIEWED
+96,29908288,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/29908288/,CANDIDATE_UNREVIEWED
+97,25692795,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/25692795/,CANDIDATE_UNREVIEWED
+98,22996115,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22996115/,CANDIDATE_UNREVIEWED
+99,18225620,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18225620/,CANDIDATE_UNREVIEWED
+100,26969228,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26969228/,CANDIDATE_UNREVIEWED
+101,27035547,Severe holocord syrinx in a child with megalencephaly-capillary malformation syndrome,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/27035547/,CANDIDATE_UNREVIEWED
+102,22140078,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22140078/,CANDIDATE_UNREVIEWED
+103,11255824,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/11255824/,CANDIDATE_UNREVIEWED
+104,15691545,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/15691545/,CANDIDATE_UNREVIEWED
+105,12357029,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12357029/,CANDIDATE_UNREVIEWED
+106,24209970,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24209970/,CANDIDATE_UNREVIEWED
+107,22884750,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/22884750/,CANDIDATE_UNREVIEWED
+108,33932019,Checking your browser - reCAPTCHA,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/33932019/,CANDIDATE_UNREVIEWED
+109,24583054,Genomic and epigenomic analyses of monozygotic twins discordant for congenital renal agenesis,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24583054/,CANDIDATE_UNREVIEWED
+110,26824921,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/26824921/,CANDIDATE_UNREVIEWED
+111,23553378,Checking your browser - reCAPTCHA,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23553378/,CANDIDATE_UNREVIEWED
+112,24902867,'Double trouble': diagnostic challenges in genetic skin disorders,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/24902867/,CANDIDATE_UNREVIEWED
+113,30714702,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/30714702/,CANDIDATE_UNREVIEWED
+114,31943124,Outcomes in three cases after brivaracetam treatment during pregnancy,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/31943124/,CANDIDATE_UNREVIEWED
+115,23928479,Checking your browser - reCAPTCHA,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/23928479/,CANDIDATE_UNREVIEWED
+116,12022611,Dextrogastria,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12022611/,CANDIDATE_UNREVIEWED
+117,18626334,"An unusual association of perianal cutaneous vascular lesion, anogenital malformations, and tethered spinal cord",,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18626334/,CANDIDATE_UNREVIEWED
+118,18074358,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/18074358/,CANDIDATE_UNREVIEWED
+119,12186175,Medical genetics: 1. Clinical teratology in the age of genomics,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/12186175/,CANDIDATE_UNREVIEWED
+120,14745921,pubmed.ncbi.nlm.nih.gov,,,S05_CONGENITAL_ANOMALY,hard,serious,congenital anomaly/birth defect,,,https://pubmed.ncbi.nlm.nih.gov/14745921/,CANDIDATE_UNREVIEWED
+121,10928395,Cyclosporine-induced anaphylaxis,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/10928395/,CANDIDATE_UNREVIEWED
+122,19299321,Celecoxib-associated anaphylaxis,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19299321/,CANDIDATE_UNREVIEWED
+123,31154032,Identification and Management of Perioperative Anaphylaxis,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31154032/,CANDIDATE_UNREVIEWED
+124,15663568,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/15663568/,CANDIDATE_UNREVIEWED
+125,34819140,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34819140/,CANDIDATE_UNREVIEWED
+126,26216470,Clindamycin-induced hypersensitivity reaction,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/26216470/,CANDIDATE_UNREVIEWED
+127,33118683,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/33118683/,CANDIDATE_UNREVIEWED
+128,31831926,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31831926/,CANDIDATE_UNREVIEWED
+129,25794419,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/25794419/,CANDIDATE_UNREVIEWED
+130,32757033,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/32757033/,CANDIDATE_UNREVIEWED
+131,19674349,Shellfish allergy in children,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19674349/,CANDIDATE_UNREVIEWED
+132,19887766,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19887766/,CANDIDATE_UNREVIEWED
+133,34285756,Anaphylaxis following rivaroxaban ingestion: report of an extremely rare case,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34285756/,CANDIDATE_UNREVIEWED
+134,31948907,Anaphylaxis caused by maltose solution,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31948907/,CANDIDATE_UNREVIEWED
+135,28888256,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/28888256/,CANDIDATE_UNREVIEWED
+136,31969417,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31969417/,CANDIDATE_UNREVIEWED
+137,17620826,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/17620826/,CANDIDATE_UNREVIEWED
+138,12755725,Anaphylaxis to polyvinylpyrrolidone after vaginal application of povidone-iodine,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12755725/,CANDIDATE_UNREVIEWED
+139,12144085,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12144085/,CANDIDATE_UNREVIEWED
+140,22860305,[Case of anaphylactic reaction caused by sugammadex],,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/22860305/,CANDIDATE_UNREVIEWED
+141,17039673,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/17039673/,CANDIDATE_UNREVIEWED
+142,28482886,Adrenaline overdose in pediatric anaphylaxis: a case report,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/28482886/,CANDIDATE_UNREVIEWED
+143,11195750,Subconjunctival cephalosporin anaphylaxis,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/11195750/,CANDIDATE_UNREVIEWED
+144,25892213,Brentuximab vedotin desensitization in a patient with refractory Hodgkin's lymphoma,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/25892213/,CANDIDATE_UNREVIEWED
+145,21527305,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/21527305/,CANDIDATE_UNREVIEWED
+146,15943602,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/15943602/,CANDIDATE_UNREVIEWED
+147,34695794,Case Report: Anaphylactoid Shock Associated with Snakebite Envenoming in Portugal,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34695794/,CANDIDATE_UNREVIEWED
+148,12776412,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/12776412/,CANDIDATE_UNREVIEWED
+149,34050949,Checking your browser - reCAPTCHA,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/34050949/,CANDIDATE_UNREVIEWED
+150,31574334,Anaphylactic Shock After Indocyanine Green Video Angiography During Cerebrovascular Surgery,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/31574334/,CANDIDATE_UNREVIEWED
 151,19232885,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/19232885/,CANDIDATE_UNREVIEWED
 152,32490818,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/32490818/,CANDIDATE_UNREVIEWED
 153,30212990,,,,S06_ANAPHYLAXIS,medium,serious,anaphylaxis/acute hypersensitivity,,,https://pubmed.ncbi.nlm.nih.gov/30212990/,CANDIDATE_UNREVIEWED
