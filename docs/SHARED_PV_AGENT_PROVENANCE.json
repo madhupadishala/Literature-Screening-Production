@@ -1,0 +1,11 @@
+{
+  "repository": "madhupadishala/Literature-Screening-Production",
+  "base_main_commit": "8a924b2c043c8a7412550dcb27d68c9bfe84a4c0",
+  "imported_components": {
+    "drug_role": {"branch": "feat/drug-role-agent-v1", "commit": "693901999261823ae682172e3c97ec11fd38b234"},
+    "seriousness_client": {"branch": "feature/seriousness-agent-v090", "commit": "8866b3b2430180bf0597da1a9790bcc7883709c6"},
+    "causality_adapter": {"branch": "feature/causality-agent-v1-5", "commit": "485c8a22b89ebb518eb5795568590e016c0ed31f"}
+  },
+  "qualification_status": "NOT_RELEASE_APPROVED",
+  "production_deployed": false
+}

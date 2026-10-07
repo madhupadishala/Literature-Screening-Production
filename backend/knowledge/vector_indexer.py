@@ -56,7 +56,7 @@ class VectorIndexer:
                 if file.endswith(".md"):
                     parsed = self._parse_markdown_file(os.path.join(rules_dir, file))
                     rule_id = parsed.get("rule_id", file)
-                    all_ids.append(rule_id)
+                    all_ids.append(f"GLOBAL:{rule_id}")
                     all_documents.append(parsed["rule_text"])
                     all_metadatas.append({
                         "rule_id": rule_id,
@@ -66,7 +66,13 @@ class VectorIndexer:
                         "source_document": str(parsed.get("source_document", "")),
                         "source_section": str(parsed.get("source_section", "")),
                         "override_level": int(parsed.get("override_level", 0)),
-                        "tenant_id": "GLOBAL"
+                        "tenant_id": "GLOBAL",
+                        "client_id": "GLOBAL",
+                        "version": str(parsed.get("version", "")),
+                        "effective_date": str(parsed.get("effective_date", "")),
+                        "expiry_date": str(parsed.get("expiry_date", "")),
+                        "agent_scope": ",".join(parsed.get("agent_scope", ["GLOBAL"])) if isinstance(parsed.get("agent_scope", []), list) else str(parsed.get("agent_scope", "GLOBAL")),
+                        "country_scope": ",".join(parsed.get("country_scope", ["GLOBAL"])) if isinstance(parsed.get("country_scope", []), list) else str(parsed.get("country_scope", "GLOBAL"))
                     })
 
         # 2. Harvest Client Specific Overrides
@@ -76,7 +82,7 @@ class VectorIndexer:
                 if file.endswith(".md"):
                     parsed = self._parse_markdown_file(os.path.join(tenant_folder, file))
                     rule_id = parsed.get("rule_id", file)
-                    all_ids.append(rule_id)
+                    all_ids.append(f"{tenant_id}:{parsed.get('client_id', 'GLOBAL')}:{rule_id}")
                     all_documents.append(parsed["rule_text"])
                     all_metadatas.append({
                         "rule_id": rule_id,
@@ -86,7 +92,13 @@ class VectorIndexer:
                         "source_document": str(parsed.get("source_document", "")),
                         "source_section": str(parsed.get("source_section", "")),
                         "override_level": int(parsed.get("override_level", 100)),
-                        "tenant_id": tenant_id
+                        "tenant_id": tenant_id,
+                        "client_id": str(parsed.get("client_id", "GLOBAL")),
+                        "version": str(parsed.get("version", "")),
+                        "effective_date": str(parsed.get("effective_date", "")),
+                        "expiry_date": str(parsed.get("expiry_date", "")),
+                        "agent_scope": ",".join(parsed.get("agent_scope", ["GLOBAL"])) if isinstance(parsed.get("agent_scope", []), list) else str(parsed.get("agent_scope", "GLOBAL")),
+                        "country_scope": ",".join(parsed.get("country_scope", ["GLOBAL"])) if isinstance(parsed.get("country_scope", []), list) else str(parsed.get("country_scope", "GLOBAL"))
                     })
 
         # CRITICAL CACHE BUSTING FIX:
