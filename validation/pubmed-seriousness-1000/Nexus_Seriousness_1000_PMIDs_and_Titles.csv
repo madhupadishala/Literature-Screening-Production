@@ -4,11 +4,11 @@ Candidate No,PMID,Title,PubMed URL
 3,29709266,"Saprochaete capitata (Geotrichum capitatum), an emerging fungal infection in kidney transplant recipients.",https://pubmed.ncbi.nlm.nih.gov/29709266/
 4,28735978,Ventilator-Induced Hiccups.,https://pubmed.ncbi.nlm.nih.gov/28735978/
 5,27922495,Toxic and Endocrine Myopathies.,https://pubmed.ncbi.nlm.nih.gov/27922495/
-6,30850570,,https://pubmed.ncbi.nlm.nih.gov/30850570/
-7,15579349,,https://pubmed.ncbi.nlm.nih.gov/15579349/
-8,32341207,,https://pubmed.ncbi.nlm.nih.gov/32341207/
-9,24196095,,https://pubmed.ncbi.nlm.nih.gov/24196095/
-10,32237124,,https://pubmed.ncbi.nlm.nih.gov/32237124/
+6,30850570,Serotonin syndrome unmasking thyrotoxicosis.,https://pubmed.ncbi.nlm.nih.gov/30850570/
+7,15579349,Defining and measuring patient safety.,https://pubmed.ncbi.nlm.nih.gov/15579349/
+8,32341207,"The effect of veno-arterial extracorporeal oxygenation and nasogastric tube administration on the pharmacokinetic profile of abacavir, lamivudine and dolutegravir: a case report.",https://pubmed.ncbi.nlm.nih.gov/32341207/
+9,24196095,Compounded ointment results in severe toxicity in a pediatric patient.,https://pubmed.ncbi.nlm.nih.gov/24196095/
+10,32237124,"One Bronchoscopy, Two Errors.",https://pubmed.ncbi.nlm.nih.gov/32237124/
 11,32787381,Case report: tracheoesophageal fistula secondary to post-intubation tracheomegaly in a tetanus patient.,https://pubmed.ncbi.nlm.nih.gov/32787381/
 12,27287503,Status epilepticus following local anesthesia in a previously healthy adult.,https://pubmed.ncbi.nlm.nih.gov/27287503/
 13,12477993,A novel EEG artifact in the intensive care unit.,https://pubmed.ncbi.nlm.nih.gov/12477993/
@@ -19,61 +19,61 @@ Candidate No,PMID,Title,PubMed URL
 18,32554527,,https://pubmed.ncbi.nlm.nih.gov/32554527/
 19,34857963,,https://pubmed.ncbi.nlm.nih.gov/34857963/
 20,23328147,,https://pubmed.ncbi.nlm.nih.gov/23328147/
-21,24368863,,https://pubmed.ncbi.nlm.nih.gov/24368863/
-22,31343730,,https://pubmed.ncbi.nlm.nih.gov/31343730/
-23,23832734,,https://pubmed.ncbi.nlm.nih.gov/23832734/
-24,12096370,,https://pubmed.ncbi.nlm.nih.gov/12096370/
-25,26150410,,https://pubmed.ncbi.nlm.nih.gov/26150410/
+21,24368863,Removal of endotracheal tube obstruction with a secretion clearance device.,https://pubmed.ncbi.nlm.nih.gov/24368863/
+22,31343730,"Gabapentin for pain, movement disorders, and irritability in neonates and infants.",https://pubmed.ncbi.nlm.nih.gov/31343730/
+23,23832734,Is metoclopramide safe for the premature infant?,https://pubmed.ncbi.nlm.nih.gov/23832734/
+24,12096370,Building safety into ICU care.,https://pubmed.ncbi.nlm.nih.gov/12096370/
+25,26150410,Malassezia Pneumonia: A Rare Complication of Parenteral Nutrition Therapy.,https://pubmed.ncbi.nlm.nih.gov/26150410/
 26,25053692,"Easily missed, potentially fatal complication in an extremely preterm infant.",https://pubmed.ncbi.nlm.nih.gov/25053692/
 27,16015396,Adverse effects following the inadvertent administration of opioids to infants and children.,https://pubmed.ncbi.nlm.nih.gov/16015396/
 28,33770414,COVID-19 progression in kidney transplant recipients: a single-center case series.,https://pubmed.ncbi.nlm.nih.gov/33770414/
 29,27979642,Severe Carisoprodol Withdrawal After a 14-Year Addiction and Acute Overdose.,https://pubmed.ncbi.nlm.nih.gov/27979642/
 30,32881067,Detecting Ventilator-Induced Diaphragmatic Dysfunction Using Point-of-Care Ultrasound in Children With Long-term Mechanical Ventilation.,https://pubmed.ncbi.nlm.nih.gov/32881067/
-31,27692755,,https://pubmed.ncbi.nlm.nih.gov/27692755/
-32,25801543,,https://pubmed.ncbi.nlm.nih.gov/25801543/
-33,25263728,,https://pubmed.ncbi.nlm.nih.gov/25263728/
-34,27381949,,https://pubmed.ncbi.nlm.nih.gov/27381949/
-35,26380428,,https://pubmed.ncbi.nlm.nih.gov/26380428/
+31,27692755,Apnea After Low-Dose Ketamine Sedation During Attempted Delayed Sequence Intubation.,https://pubmed.ncbi.nlm.nih.gov/27692755/
+32,25801543,Drug fever caused by propofol in the intensive care unit.,https://pubmed.ncbi.nlm.nih.gov/25801543/
+33,25263728,Transient hypertrophic pyloric stenosis due to prostoglandin infusion.,https://pubmed.ncbi.nlm.nih.gov/25263728/
+34,27381949,Prehospital Endotracheal Intubation in Warm Climates: Caution is Required.,https://pubmed.ncbi.nlm.nih.gov/27381949/
+35,26380428,An Unusual Case of Licorice-Induced Hypertensive Crisis.,https://pubmed.ncbi.nlm.nih.gov/26380428/
 36,26095066,A case of rhabdomyolysis associated with severe opioid withdrawal.,https://pubmed.ncbi.nlm.nih.gov/26095066/
 37,28599698,Implementation of Ventilator Bundle in Pediatric Intensive Care Unit of a Developing Country.,https://pubmed.ncbi.nlm.nih.gov/28599698/
 38,28687210,Antimicrobial Stewardship Approaches in the Intensive Care Unit.,https://pubmed.ncbi.nlm.nih.gov/28687210/
 39,19723871,Cardiogenic oscillation and ventilator autotriggering in brain-dead patients: a case series.,https://pubmed.ncbi.nlm.nih.gov/19723871/
 40,16274814,Peppermint oil chemical burn.,https://pubmed.ncbi.nlm.nih.gov/16274814/
-41,21108186,,https://pubmed.ncbi.nlm.nih.gov/21108186/
-42,34152842,,https://pubmed.ncbi.nlm.nih.gov/34152842/
-43,21448106,,https://pubmed.ncbi.nlm.nih.gov/21448106/
-44,30817863,,https://pubmed.ncbi.nlm.nih.gov/30817863/
-45,25114505,,https://pubmed.ncbi.nlm.nih.gov/25114505/
+41,21108186,"[""Oseltamivir-induced delirium""].",https://pubmed.ncbi.nlm.nih.gov/21108186/
+42,34152842,Acute Pain Crisis Caused by Tramadol Remdesivir Drug-Drug Interaction.,https://pubmed.ncbi.nlm.nih.gov/34152842/
+43,21448106,Hyperprolactinaemia with amisulpride.,https://pubmed.ncbi.nlm.nih.gov/21448106/
+44,30817863,Paliperidone Injection-Associated Delayed-Onset Rash.,https://pubmed.ncbi.nlm.nih.gov/30817863/
+45,25114505,Pustular drug eruption due to Panax notoginseng saponins.,https://pubmed.ncbi.nlm.nih.gov/25114505/
 46,27438540,Cyclosporine Treatment of Drug-Induced Hypersensitivity Syndrome.,https://pubmed.ncbi.nlm.nih.gov/27438540/
 47,17937473,Leflunomide-associated infections in rheumatoid arthritis.,https://pubmed.ncbi.nlm.nih.gov/17937473/
 48,25377151,Paliperidone for the treatment of ketamine-induced psychosis: a case report.,https://pubmed.ncbi.nlm.nih.gov/25377151/
 49,32097308,Quantifying the Crisis: Opioid-Related Adverse Events in Outpatient Ambulatory Plastic Surgery.,https://pubmed.ncbi.nlm.nih.gov/32097308/
 50,20737060,Dextromethorphan withdrawal and dependence syndrome.,https://pubmed.ncbi.nlm.nih.gov/20737060/
-51,28867523,,https://pubmed.ncbi.nlm.nih.gov/28867523/
-52,25873827,,https://pubmed.ncbi.nlm.nih.gov/25873827/
-53,16731103,,https://pubmed.ncbi.nlm.nih.gov/16731103/
-54,32444438,,https://pubmed.ncbi.nlm.nih.gov/32444438/
-55,14655691,,https://pubmed.ncbi.nlm.nih.gov/14655691/
+51,28867523,Drip-and-Ship Thrombolytic Therapy for Acute Ischemic Stroke.,https://pubmed.ncbi.nlm.nih.gov/28867523/
+52,25873827,Conservative management of chylothorax after coronary artery bypass grafting.,https://pubmed.ncbi.nlm.nih.gov/25873827/
+53,16731103,Recognition and management of heparin-induced thrombocytopenia in pediatric cardiopulmonary bypass patients.,https://pubmed.ncbi.nlm.nih.gov/16731103/
+54,32444438,Night-time confusion in an elderly woman post-stroke.,https://pubmed.ncbi.nlm.nih.gov/32444438/
+55,14655691,[Hypercalcemia].,https://pubmed.ncbi.nlm.nih.gov/14655691/
 56,27234296,"Baclofen Toxicity Causing Acute, Reversible Dyskinesia.",https://pubmed.ncbi.nlm.nih.gov/27234296/
 57,17989126,Preoperative management of the pheochromocytoma patient.,https://pubmed.ncbi.nlm.nih.gov/17989126/
 58,29745338,Hyponatraemia Associated with Tramadol Use: A Case Report.,https://pubmed.ncbi.nlm.nih.gov/29745338/
 59,32366239,Vaping induced pneumonitis: a small community hospital's case series and analysis.,https://pubmed.ncbi.nlm.nih.gov/32366239/
 60,32888664,Trazodone-induced delirium: case report.,https://pubmed.ncbi.nlm.nih.gov/32888664/
-61,32830568,,https://pubmed.ncbi.nlm.nih.gov/32830568/
-62,27678383,,https://pubmed.ncbi.nlm.nih.gov/27678383/
-63,26954774,,https://pubmed.ncbi.nlm.nih.gov/26954774/
-64,16458177,,https://pubmed.ncbi.nlm.nih.gov/16458177/
-65,17007156,,https://pubmed.ncbi.nlm.nih.gov/17007156/
+61,32830568,Drug-Induced Liver Injury: A Unique Presentation of Single-Dose Administration of Propylthiouracil.,https://pubmed.ncbi.nlm.nih.gov/32830568/
+62,27678383,The Abdominal Reapproximation Anchor Device.,https://pubmed.ncbi.nlm.nih.gov/27678383/
+63,26954774,Misanalysis of Urinalysis: A Teachable Moment.,https://pubmed.ncbi.nlm.nih.gov/26954774/
+64,16458177,Geriatric neutrophils: implications for older adults.,https://pubmed.ncbi.nlm.nih.gov/16458177/
+65,17007156,Advance care planning after lung transplantation: a case of missed opportunities.,https://pubmed.ncbi.nlm.nih.gov/17007156/
 66,29307884,Streptococcus pneumoniae-Related Hemophagocytic Lymphohistiocytosis Treated with IVIG and Steroids.,https://pubmed.ncbi.nlm.nih.gov/29307884/
 67,26586148,[Overmedicalization: When too much medicine harms].,https://pubmed.ncbi.nlm.nih.gov/26586148/
 68,24709224,[Antipsychotic-induced priapism and management challenges: a case report].,https://pubmed.ncbi.nlm.nih.gov/24709224/
 69,26510070,Prescription Opioid Analgesics: Promoting Patient Safety with Better Patient Education.,https://pubmed.ncbi.nlm.nih.gov/26510070/
 70,32690572,Uneventful case of COVID-19 in a kidney transplant recipient.,https://pubmed.ncbi.nlm.nih.gov/32690572/
-71,17167366,,https://pubmed.ncbi.nlm.nih.gov/17167366/
-72,17576936,,https://pubmed.ncbi.nlm.nih.gov/17576936/
-73,27399215,,https://pubmed.ncbi.nlm.nih.gov/27399215/
-74,30165799,,https://pubmed.ncbi.nlm.nih.gov/30165799/
-75,26542320,,https://pubmed.ncbi.nlm.nih.gov/26542320/
+71,17167366,Care of patients with haemoglobin abnormalities: nursing management.,https://pubmed.ncbi.nlm.nih.gov/17167366/
+72,17576936,Cutaneous adverse reactions to valdecoxib distinct from Stevens-Johnson syndrome and toxic epidermal necrolysis.,https://pubmed.ncbi.nlm.nih.gov/17576936/
+73,27399215,Insomnia in the Hospital-Not Just a Bad Dream.,https://pubmed.ncbi.nlm.nih.gov/27399215/
+74,30165799,Endovascular extraction of entrapped long-term central feeding catheter: Case series.,https://pubmed.ncbi.nlm.nih.gov/30165799/
+75,26542320,[Very late drug-eluting stent thrombosis by stent fracture].,https://pubmed.ncbi.nlm.nih.gov/26542320/
 76,25392292,Use of synthetic cannabinoids in patients with psychotic disorders: case series.,https://pubmed.ncbi.nlm.nih.gov/25392292/
 77,32699878,Risperidone- and paliperidone-induced hepatotoxicity: Case report and review of literature.,https://pubmed.ncbi.nlm.nih.gov/32699878/
 78,17987545,[Rapid inpatient tramadol-detoxification using oxcarbazepine].,https://pubmed.ncbi.nlm.nih.gov/17987545/
@@ -89,11 +89,11 @@ Candidate No,PMID,Title,PubMed URL
 88,33520070,,https://pubmed.ncbi.nlm.nih.gov/33520070/
 89,30672492,,https://pubmed.ncbi.nlm.nih.gov/30672492/
 90,19864092,,https://pubmed.ncbi.nlm.nih.gov/19864092/
-91,32823159,,https://pubmed.ncbi.nlm.nih.gov/32823159/
-92,23296582,,https://pubmed.ncbi.nlm.nih.gov/23296582/
-93,15863582,,https://pubmed.ncbi.nlm.nih.gov/15863582/
-94,30852581,,https://pubmed.ncbi.nlm.nih.gov/30852581/
-95,23443469,,https://pubmed.ncbi.nlm.nih.gov/23443469/
+91,32823159,Clinical Presentation of Chiari-like Malformation in 2 Persian Cats.,https://pubmed.ncbi.nlm.nih.gov/32823159/
+92,23296582,Pregnancy and isotretinoin therapy.,https://pubmed.ncbi.nlm.nih.gov/23296582/
+93,15863582,Anomalies associated with failed methotrexate and misoprostol termination.,https://pubmed.ncbi.nlm.nih.gov/15863582/
+94,30852581,Congenital Renal Arteriovenous Malformation: A Rare but Treatable Cause of Hypertension.,https://pubmed.ncbi.nlm.nih.gov/30852581/
+95,23443469,Sprengel's deformity and spinal dysraphism: connecting the shoulder and the spine.,https://pubmed.ncbi.nlm.nih.gov/23443469/
 96,29908288,Pregnancy outcomes after maternal betahistine exposure: A case series.,https://pubmed.ncbi.nlm.nih.gov/29908288/
 97,25692795,Novel STAMBP mutation and additional findings in an Arabic family.,https://pubmed.ncbi.nlm.nih.gov/25692795/
 98,22996115,Perioperative evaluation in Herlyn-Werner-Wunderlich syndrome.,https://pubmed.ncbi.nlm.nih.gov/22996115/
@@ -104,16 +104,16 @@ Candidate No,PMID,Title,PubMed URL
 103,11255824,Taking a sexual history from and counseling women on teratogenic drugs.,https://pubmed.ncbi.nlm.nih.gov/11255824/
 104,15691545,Ocular manifestations of keratitis-ichthyosis-deafness (KID) syndrome.,https://pubmed.ncbi.nlm.nih.gov/15691545/
 105,12357029,6-Mercaptopurine teratogenicity.,https://pubmed.ncbi.nlm.nih.gov/12357029/
-106,24209970,,https://pubmed.ncbi.nlm.nih.gov/24209970/
-107,22884750,,https://pubmed.ncbi.nlm.nih.gov/22884750/
-108,33932019,,https://pubmed.ncbi.nlm.nih.gov/33932019/
-109,24583054,,https://pubmed.ncbi.nlm.nih.gov/24583054/
-110,26824921,,https://pubmed.ncbi.nlm.nih.gov/26824921/
-111,23553378,,https://pubmed.ncbi.nlm.nih.gov/23553378/
-112,24902867,,https://pubmed.ncbi.nlm.nih.gov/24902867/
-113,30714702,,https://pubmed.ncbi.nlm.nih.gov/30714702/
-114,31943124,,https://pubmed.ncbi.nlm.nih.gov/31943124/
-115,23928479,,https://pubmed.ncbi.nlm.nih.gov/23928479/
+106,24209970,Multiple complex congenital malformations in a rabbit kit (Oryctolagus cuniculi).,https://pubmed.ncbi.nlm.nih.gov/24209970/
+107,22884750,[Macrocephaly-capillary malformation. A neonatal case].,https://pubmed.ncbi.nlm.nih.gov/22884750/
+108,33932019,Mermaid syndrome associated with VACTERL-H syndrome.,https://pubmed.ncbi.nlm.nih.gov/33932019/
+109,24583054,Genomic and epigenomic analyses of monozygotic twins discordant for congenital renal agenesis.,https://pubmed.ncbi.nlm.nih.gov/24583054/
+110,26824921,Bleomycin sclerotherapy for lymphatic malformation after unsuccessful surgical excision: case report.,https://pubmed.ncbi.nlm.nih.gov/26824921/
+111,23553378,Five adult laryngeal venous malformation cases treated effectively with sclerotherapy.,https://pubmed.ncbi.nlm.nih.gov/23553378/
+112,24902867,'Double trouble': diagnostic challenges in genetic skin disorders.,https://pubmed.ncbi.nlm.nih.gov/24902867/
+113,30714702,[Arterial sinus pericranii. First case report].,https://pubmed.ncbi.nlm.nih.gov/30714702/
+114,31943124,Outcomes in three cases after brivaracetam treatment during pregnancy.,https://pubmed.ncbi.nlm.nih.gov/31943124/
+115,23928479,Duplicated uterus and hemivaginal or hemicervical atresia with ipsilateral renal agenesis: an institutional clinical series of 52 cases.,https://pubmed.ncbi.nlm.nih.gov/23928479/
 116,12022611,Dextrogastria.,https://pubmed.ncbi.nlm.nih.gov/12022611/
 117,18626334,"An unusual association of perianal cutaneous vascular lesion, anogenital malformations, and tethered spinal cord.",https://pubmed.ncbi.nlm.nih.gov/18626334/
 118,18074358,In utero exposure to mycophenolate mofetil: a characteristic phenotype?,https://pubmed.ncbi.nlm.nih.gov/18074358/
@@ -134,26 +134,26 @@ Candidate No,PMID,Title,PubMed URL
 133,34285756,Anaphylaxis following rivaroxaban ingestion: report of an extremely rare case.,https://pubmed.ncbi.nlm.nih.gov/34285756/
 134,31948907,Anaphylaxis caused by maltose solution.,https://pubmed.ncbi.nlm.nih.gov/31948907/
 135,28888256,Vaccine Reactions.,https://pubmed.ncbi.nlm.nih.gov/28888256/
-136,31969417,,https://pubmed.ncbi.nlm.nih.gov/31969417/
-137,17620826,,https://pubmed.ncbi.nlm.nih.gov/17620826/
-138,12755725,,https://pubmed.ncbi.nlm.nih.gov/12755725/
-139,12144085,,https://pubmed.ncbi.nlm.nih.gov/12144085/
-140,22860305,,https://pubmed.ncbi.nlm.nih.gov/22860305/
+136,31969417,Electrocardiographic alterations and raised procalcitonin levels during anaphylactic shock.,https://pubmed.ncbi.nlm.nih.gov/31969417/
+137,17620826,Cardiovascular disease and anaphylaxis.,https://pubmed.ncbi.nlm.nih.gov/17620826/
+138,12755725,Anaphylaxis to polyvinylpyrrolidone after vaginal application of povidone-iodine.,https://pubmed.ncbi.nlm.nih.gov/12755725/
+139,12144085,Acetaminophen (paracetamol)-induced anaphylactic shock.,https://pubmed.ncbi.nlm.nih.gov/12144085/
+140,22860305,[Case of anaphylactic reaction caused by sugammadex].,https://pubmed.ncbi.nlm.nih.gov/22860305/
 141,17039673,Meloxicam-associated anaphylactic reaction.,https://pubmed.ncbi.nlm.nih.gov/17039673/
 142,28482886,Adrenaline overdose in pediatric anaphylaxis: a case report.,https://pubmed.ncbi.nlm.nih.gov/28482886/
 143,11195750,Subconjunctival cephalosporin anaphylaxis.,https://pubmed.ncbi.nlm.nih.gov/11195750/
 144,25892213,Brentuximab vedotin desensitization in a patient with refractory Hodgkin's lymphoma.,https://pubmed.ncbi.nlm.nih.gov/25892213/
 145,21527305,Anaphylaxis following H1N1 pandemic vaccines: safety data in perspective.,https://pubmed.ncbi.nlm.nih.gov/21527305/
-146,15943602,,https://pubmed.ncbi.nlm.nih.gov/15943602/
-147,34695794,,https://pubmed.ncbi.nlm.nih.gov/34695794/
-148,12776412,,https://pubmed.ncbi.nlm.nih.gov/12776412/
-149,34050949,,https://pubmed.ncbi.nlm.nih.gov/34050949/
-150,31574334,,https://pubmed.ncbi.nlm.nih.gov/31574334/
-151,19232885,,https://pubmed.ncbi.nlm.nih.gov/19232885/
-152,32490818,,https://pubmed.ncbi.nlm.nih.gov/32490818/
-153,30212990,,https://pubmed.ncbi.nlm.nih.gov/30212990/
-154,24262344,,https://pubmed.ncbi.nlm.nih.gov/24262344/
-155,15180012,,https://pubmed.ncbi.nlm.nih.gov/15180012/
+146,15943602,Anaphylaxis to povidone in a child.,https://pubmed.ncbi.nlm.nih.gov/15943602/
+147,34695794,Case Report: Anaphylactoid Shock Associated with Snakebite Envenoming in Portugal.,https://pubmed.ncbi.nlm.nih.gov/34695794/
+148,12776412,Bugged.,https://pubmed.ncbi.nlm.nih.gov/12776412/
+149,34050949,Biphasic anaphylaxis after exposure to the first dose of Pfizer-BioNTech COVID-19 mRNA vaccine.,https://pubmed.ncbi.nlm.nih.gov/34050949/
+150,31574334,Anaphylactic Shock After Indocyanine Green Video Angiography During Cerebrovascular Surgery.,https://pubmed.ncbi.nlm.nih.gov/31574334/
+151,19232885,[Anaphylactic shock to iodinated povidone].,https://pubmed.ncbi.nlm.nih.gov/19232885/
+152,32490818,Anaphylaxis Due to Senna (Cassia angustifolia).,https://pubmed.ncbi.nlm.nih.gov/32490818/
+153,30212990,Maternal anaphylactic shock in pregnancy: A case report.,https://pubmed.ncbi.nlm.nih.gov/30212990/
+154,24262344,Levetiracetam-induced anaphylaxis in a neonate.,https://pubmed.ncbi.nlm.nih.gov/24262344/
+155,15180012,Anaphylaxis.,https://pubmed.ncbi.nlm.nih.gov/15180012/
 156,30639433,,https://pubmed.ncbi.nlm.nih.gov/30639433/
 157,18855892,,https://pubmed.ncbi.nlm.nih.gov/18855892/
 158,22791846,,https://pubmed.ncbi.nlm.nih.gov/22791846/
@@ -164,16 +164,16 @@ Candidate No,PMID,Title,PubMed URL
 163,24733687,Liraglutide-induced autoimmune hepatitis.,https://pubmed.ncbi.nlm.nih.gov/24733687/
 164,20191055,Aloe-induced toxic hepatitis.,https://pubmed.ncbi.nlm.nih.gov/20191055/
 165,31879192,Hepatotoxicity caused by Garcinia cambogia.,https://pubmed.ncbi.nlm.nih.gov/31879192/
-166,15968741,,https://pubmed.ncbi.nlm.nih.gov/15968741/
-167,32595263,,https://pubmed.ncbi.nlm.nih.gov/32595263/
-168,30002466,,https://pubmed.ncbi.nlm.nih.gov/30002466/
-169,31543437,,https://pubmed.ncbi.nlm.nih.gov/31543437/
-170,30206065,,https://pubmed.ncbi.nlm.nih.gov/30206065/
-171,32919428,,https://pubmed.ncbi.nlm.nih.gov/32919428/
-172,29532602,,https://pubmed.ncbi.nlm.nih.gov/29532602/
-173,21945641,,https://pubmed.ncbi.nlm.nih.gov/21945641/
-174,32532617,,https://pubmed.ncbi.nlm.nih.gov/32532617/
-175,35461912,,https://pubmed.ncbi.nlm.nih.gov/35461912/
+166,15968741,Prolonged acute hepatitis A mimicking autoimmune hepatitis.,https://pubmed.ncbi.nlm.nih.gov/15968741/
+167,32595263,HERBALIFE® ASSOCIATED SEVERE HEPATOTOXICITY IN A PREVIOUSLY HEALTHY WOMAN.,https://pubmed.ncbi.nlm.nih.gov/32595263/
+168,30002466,Current Management of Hepatic Encephalopathy.,https://pubmed.ncbi.nlm.nih.gov/30002466/
+169,31543437,Hepatitis A virus-associated fulminant hepatitis with human immunodeficiency virus coinfection.,https://pubmed.ncbi.nlm.nih.gov/31543437/
+170,30206065,Drug-induced autoimmune hepatitis associated with turmeric dietary supplement use.,https://pubmed.ncbi.nlm.nih.gov/30206065/
+171,32919428,SARS-CoV-2 and hepatitis.,https://pubmed.ncbi.nlm.nih.gov/32919428/
+172,29532602,Pantoprazole-induced autoimmune chronic hepatitis.,https://pubmed.ncbi.nlm.nih.gov/29532602/
+173,21945641,Immune-mediated myelitis associated with hepatitis virus infections.,https://pubmed.ncbi.nlm.nih.gov/21945641/
+174,32532617,"Bodybuilding supplements leading to copper toxicity, encephalopathy, fulminant hepatic failure and rhabdomyolysis.",https://pubmed.ncbi.nlm.nih.gov/32532617/
+175,35461912,SARS-CoV-2 vaccination can elicit a CD8 T-cell dominant hepatitis.,https://pubmed.ncbi.nlm.nih.gov/35461912/
 176,33534133,Deinduction of P-glycoprotein resulting in delayed viral response during hepatitis C treatment.,https://pubmed.ncbi.nlm.nih.gov/33534133/
 177,34423770,Drug-induced hepatotoxicity linked to zoledronic acid in the treatment of an elderly man with primary osteoporosis.,https://pubmed.ncbi.nlm.nih.gov/34423770/
 178,14572599,"""Green juice""-associated granulomatous hepatitis.",https://pubmed.ncbi.nlm.nih.gov/14572599/
@@ -194,21 +194,21 @@ Candidate No,PMID,Title,PubMed URL
 193,16702510,Peginterferon alfa-2b for mycosis fungoides.,https://pubmed.ncbi.nlm.nih.gov/16702510/
 194,30888761,Etanercept-induced granulomatous hepatitis as a rare cause of abnormal liver tests.,https://pubmed.ncbi.nlm.nih.gov/30888761/
 195,31894484,Dead Meat: Glecaprevir/Pibrentasvir-Induced Statin Myonecrosis.,https://pubmed.ncbi.nlm.nih.gov/31894484/
-196,35318201,,https://pubmed.ncbi.nlm.nih.gov/35318201/
-197,21544586,,https://pubmed.ncbi.nlm.nih.gov/21544586/
-198,32444440,,https://pubmed.ncbi.nlm.nih.gov/32444440/
-199,39163080,,https://pubmed.ncbi.nlm.nih.gov/39163080/
-200,29943563,,https://pubmed.ncbi.nlm.nih.gov/29943563/
+196,35318201,Toxic hepatitis-associated aplastic anaemia after dual homeopathic remedies and Gymnema sylvestre use.,https://pubmed.ncbi.nlm.nih.gov/35318201/
+197,21544586,Development of immunity against hepatitis B virus after donor lymphocyte infusion in a peripheral blood stem cell transplantation recipient with chronic hepatitis B.,https://pubmed.ncbi.nlm.nih.gov/21544586/
+198,32444440,Prolonged cholestasis after acute viral hepatitis: successfully treated with oral steroid.,https://pubmed.ncbi.nlm.nih.gov/32444440/
+199,39163080,Hypoglycemia and Multivitamins.,https://pubmed.ncbi.nlm.nih.gov/39163080/
+200,29943563,A Case of Graves' Disease Accompanied with Acute Hepatitis A Virus Infection.,https://pubmed.ncbi.nlm.nih.gov/29943563/
 201,34764131,Nitrofurantoin-induced agranulocytosis.,https://pubmed.ncbi.nlm.nih.gov/34764131/
 202,28488730,Octreotide-Associated Neutropenia.,https://pubmed.ncbi.nlm.nih.gov/28488730/
 203,31888912,Rituximab-induced late-onset neutropenia.,https://pubmed.ncbi.nlm.nih.gov/31888912/
 204,39603678,Bupropion-induced pancytopenia.,https://pubmed.ncbi.nlm.nih.gov/39603678/
 205,17640191,Toenails and agranulocytosis.,https://pubmed.ncbi.nlm.nih.gov/17640191/
-206,23151058,,https://pubmed.ncbi.nlm.nih.gov/23151058/
-207,15136708,,https://pubmed.ncbi.nlm.nih.gov/15136708/
-208,27461439,,https://pubmed.ncbi.nlm.nih.gov/27461439/
-209,28478684,,https://pubmed.ncbi.nlm.nih.gov/28478684/
-210,15847658,,https://pubmed.ncbi.nlm.nih.gov/15847658/
+206,23151058,Moxifloxacin-associated neutropenia.,https://pubmed.ncbi.nlm.nih.gov/23151058/
+207,15136708,Riluzole-induced neutropenia.,https://pubmed.ncbi.nlm.nih.gov/15136708/
+208,27461439,Polonium-210 poisoning: a first-hand account.,https://pubmed.ncbi.nlm.nih.gov/27461439/
+209,28478684,Lurasidone associated neutropenia.,https://pubmed.ncbi.nlm.nih.gov/28478684/
+210,15847658,Oxaliplatin-induced immune pancytopenia.,https://pubmed.ncbi.nlm.nih.gov/15847658/
 211,30661042,Monocytopenia in clozapine-induced agranulocytosis: insights into pathophysiology and treatment.,https://pubmed.ncbi.nlm.nih.gov/30661042/
 212,15466904,Probable vancomycin-induced neutropenia.,https://pubmed.ncbi.nlm.nih.gov/15466904/
 213,16219892,Thalidomide-associated thrombocytopenia.,https://pubmed.ncbi.nlm.nih.gov/16219892/
@@ -219,11 +219,11 @@ Candidate No,PMID,Title,PubMed URL
 218,33509295,,https://pubmed.ncbi.nlm.nih.gov/33509295/
 219,22791479,,https://pubmed.ncbi.nlm.nih.gov/22791479/
 220,25153852,,https://pubmed.ncbi.nlm.nih.gov/25153852/
-221,30031506,,https://pubmed.ncbi.nlm.nih.gov/30031506/
-222,14608591,,https://pubmed.ncbi.nlm.nih.gov/14608591/
-223,26096756,,https://pubmed.ncbi.nlm.nih.gov/26096756/
-224,16140875,,https://pubmed.ncbi.nlm.nih.gov/16140875/
-225,35830519,,https://pubmed.ncbi.nlm.nih.gov/35830519/
+221,30031506,A Woman With Severe Rash.,https://pubmed.ncbi.nlm.nih.gov/30031506/
+222,14608591,Morning pseudoneutropenia during clozapine treatment.,https://pubmed.ncbi.nlm.nih.gov/14608591/
+223,26096756,[Agranulocytosis related to fluindione: A case report].,https://pubmed.ncbi.nlm.nih.gov/26096756/
+224,16140875,Index of suspicion.,https://pubmed.ncbi.nlm.nih.gov/16140875/
+225,35830519,Brucellosis: A Rare Cause of Febrile Neutropenia in a Child.,https://pubmed.ncbi.nlm.nih.gov/35830519/
 226,32448188,Suspected Aripiprazole-induced neutropenia in a geriatric patient: a case report.,https://pubmed.ncbi.nlm.nih.gov/32448188/
 227,14642024,Clozapine-induced neutropenia in children: management with lithium carbonate.,https://pubmed.ncbi.nlm.nih.gov/14642024/
 228,15088959,Immune-mediated neutropenia suspected in five dogs.,https://pubmed.ncbi.nlm.nih.gov/15088959/
@@ -239,21 +239,21 @@ Candidate No,PMID,Title,PubMed URL
 238,16952471,Bilateral basal ganglia involvement in a patient with Griscelli syndrome.,https://pubmed.ncbi.nlm.nih.gov/16952471/
 239,39419595,Neutropenia possibly caused by cefoperazone/sulbactam.,https://pubmed.ncbi.nlm.nih.gov/39419595/
 240,25810235,Imatinib-induced agranulocytosis in patients with gastrointestinal stromal tumors.,https://pubmed.ncbi.nlm.nih.gov/25810235/
-241,27806233,,https://pubmed.ncbi.nlm.nih.gov/27806233/
-242,30568130,,https://pubmed.ncbi.nlm.nih.gov/30568130/
-243,24604793,,https://pubmed.ncbi.nlm.nih.gov/24604793/
-244,34342500,,https://pubmed.ncbi.nlm.nih.gov/34342500/
-245,25724248,,https://pubmed.ncbi.nlm.nih.gov/25724248/
+241,27806233,Fulminant Myocarditis with Combination Immune Checkpoint Blockade.,https://pubmed.ncbi.nlm.nih.gov/27806233/
+242,30568130,Successful Treatment of Acute Fulminant Eosinophilic Myocarditis in a Patient with Ulcerative Colitis Using Steroid Therapy and Percutaneous Cardiopulmonary Support.,https://pubmed.ncbi.nlm.nih.gov/30568130/
+243,24604793,"Hint of Lyme, an uncommon cause of syncope.",https://pubmed.ncbi.nlm.nih.gov/24604793/
+244,34342500,Myocarditis Following COVID-19 Vaccination.,https://pubmed.ncbi.nlm.nih.gov/34342500/
+245,25724248,[Clozapine-associated myocarditis].,https://pubmed.ncbi.nlm.nih.gov/25724248/
 246,34097078,[Dyspnea and palpitations in a 39-year-old male patient].,https://pubmed.ncbi.nlm.nih.gov/34097078/
 247,34670143,Sudden sensorineural hearing loss after COVID-19 vaccination.,https://pubmed.ncbi.nlm.nih.gov/34670143/
 248,17090724,Acute amphotericin B overdose.,https://pubmed.ncbi.nlm.nih.gov/17090724/
 249,34133884,Myocarditis After BNT162b2 and mRNA-1273 Vaccination.,https://pubmed.ncbi.nlm.nih.gov/34133884/
 250,20840915,[Acute atrioventricular block in chronic Lyme disease].,https://pubmed.ncbi.nlm.nih.gov/20840915/
-251,21125053,,https://pubmed.ncbi.nlm.nih.gov/21125053/
-252,26119456,,https://pubmed.ncbi.nlm.nih.gov/26119456/
-253,34740463,,https://pubmed.ncbi.nlm.nih.gov/34740463/
-254,34290024,,https://pubmed.ncbi.nlm.nih.gov/34290024/
-255,26243980,,https://pubmed.ncbi.nlm.nih.gov/26243980/
+251,21125053,Lyme carditis: a reversible cause of complete atrioventricular block.,https://pubmed.ncbi.nlm.nih.gov/21125053/
+252,26119456,A case of sudden cardiac death following Domperidone self-medication.,https://pubmed.ncbi.nlm.nih.gov/26119456/
+253,34740463,Acute Myocarditis after COVID-19 vaccination: A case report.,https://pubmed.ncbi.nlm.nih.gov/34740463/
+254,34290024,Loperamide-induced cardiotoxicity: a case overlooked?,https://pubmed.ncbi.nlm.nih.gov/34290024/
+255,26243980,Herb-induced cardiotoxicity from accidental aconitine overdose.,https://pubmed.ncbi.nlm.nih.gov/26243980/
 256,34133885,Myocarditis Temporally Associated With COVID-19 Vaccination.,https://pubmed.ncbi.nlm.nih.gov/34133885/
 257,24082383,Ventricular fibrillation cardiac arrest due to 5-fluorouracil cardiotoxicity.,https://pubmed.ncbi.nlm.nih.gov/24082383/
 258,35383117,Reversal of immune-checkpoint inhibitor fulminant myocarditis using personalized-dose-adjusted abatacept and ruxolitinib: proof of concept.,https://pubmed.ncbi.nlm.nih.gov/35383117/
@@ -264,16 +264,16 @@ Candidate No,PMID,Title,PubMed URL
 263,17907546,[Total atrioventricular block following a tick bite].,https://pubmed.ncbi.nlm.nih.gov/17907546/
 264,35733299,Giant cell myocarditis after first dose of BNT162b2 - a case report.,https://pubmed.ncbi.nlm.nih.gov/35733299/
 265,35851434,Vaccine-Induced Myocarditis in Two Intern Doctors in the Same Night Shift.,https://pubmed.ncbi.nlm.nih.gov/35851434/
-266,34756746,,https://pubmed.ncbi.nlm.nih.gov/34756746/
-267,34709227,,https://pubmed.ncbi.nlm.nih.gov/34709227/
-268,34229940,,https://pubmed.ncbi.nlm.nih.gov/34229940/
-269,35194974,,https://pubmed.ncbi.nlm.nih.gov/35194974/
-270,34407340,,https://pubmed.ncbi.nlm.nih.gov/34407340/
-271,34588400,,https://pubmed.ncbi.nlm.nih.gov/34588400/
-272,31036741,,https://pubmed.ncbi.nlm.nih.gov/31036741/
-273,35655235,,https://pubmed.ncbi.nlm.nih.gov/35655235/
-274,35466745,,https://pubmed.ncbi.nlm.nih.gov/35466745/
-275,35855294,,https://pubmed.ncbi.nlm.nih.gov/35855294/
+266,34756746,STEMI Mimic: Focal Myocarditis in an Adolescent Patient After mRNA COVID-19 Vaccine.,https://pubmed.ncbi.nlm.nih.gov/34756746/
+267,34709227,[Acute myocarditis in a young adult two days after Pfizer vaccination].,https://pubmed.ncbi.nlm.nih.gov/34709227/
+268,34229940,Myocarditis after BNT162b2 vaccination in a healthy male.,https://pubmed.ncbi.nlm.nih.gov/34229940/
+269,35194974,Myocarditis following mRNA COVID-19 vaccination: call for endomyocardial biopsy.,https://pubmed.ncbi.nlm.nih.gov/35194974/
+270,34407340,Myocarditis after Covid-19 mRNA Vaccination.,https://pubmed.ncbi.nlm.nih.gov/34407340/
+271,34588400,Myopericarditis After COVID-19 mRNA Vaccination.,https://pubmed.ncbi.nlm.nih.gov/34588400/
+272,31036741,Lyme carditis presenting as atrial fibrillation.,https://pubmed.ncbi.nlm.nih.gov/31036741/
+273,35655235,Acute cardiac side effects after COVID-19 mRNA vaccination: a case series.,https://pubmed.ncbi.nlm.nih.gov/35655235/
+274,35466745,Acute Myocarditis Following Vaccination With the First Dose of the mRNA-1273 Vaccine.,https://pubmed.ncbi.nlm.nih.gov/35466745/
+275,35855294,Myopericarditis in a Young Adult Secondary to COVID-19 Vaccination.,https://pubmed.ncbi.nlm.nih.gov/35855294/
 276,34402228,Cardiac Imaging of Acute Myocarditis Following COVID-19 mRNA Vaccination.,https://pubmed.ncbi.nlm.nih.gov/34402228/
 277,26897154,Persistent Atrial Standstill in Acute Myocarditis.,https://pubmed.ncbi.nlm.nih.gov/26897154/
 278,34960761,Cardiomyopathy Associated with Anti-SARS-CoV-2 Vaccination: What Do We Know?,https://pubmed.ncbi.nlm.nih.gov/34960761/
@@ -284,11 +284,11 @@ Candidate No,PMID,Title,PubMed URL
 283,16089244,Olanzapine-induced vasculitis.,https://pubmed.ncbi.nlm.nih.gov/16089244/
 284,21733815,Trimethoprim-sulfamethoxazole-induced hyponatremia.,https://pubmed.ncbi.nlm.nih.gov/21733815/
 285,31943612,Polypharmacy induced myositis.,https://pubmed.ncbi.nlm.nih.gov/31943612/
-286,31907213,,https://pubmed.ncbi.nlm.nih.gov/31907213/
-287,11917821,,https://pubmed.ncbi.nlm.nih.gov/11917821/
-288,26857079,,https://pubmed.ncbi.nlm.nih.gov/26857079/
-289,34404650,,https://pubmed.ncbi.nlm.nih.gov/34404650/
-290,25828570,,https://pubmed.ncbi.nlm.nih.gov/25828570/
+286,31907213,Medication-related osteonecrosis (MRONJ) of the mandible and maxilla.,https://pubmed.ncbi.nlm.nih.gov/31907213/
+287,11917821,Problems of polypharmacy.,https://pubmed.ncbi.nlm.nih.gov/11917821/
+288,26857079,[A resistant diarrhea].,https://pubmed.ncbi.nlm.nih.gov/26857079/
+289,34404650,Spontaneous retroperitoneal haemorrhage secondary to anticoagulation polypharmacy.,https://pubmed.ncbi.nlm.nih.gov/34404650/
+290,25828570,Dialysate and serum potassium in hemodialysis.,https://pubmed.ncbi.nlm.nih.gov/25828570/
 291,25342892,Bradyarrhythmias secondary to topical levobunolol hydrochloride solution.,https://pubmed.ncbi.nlm.nih.gov/25342892/
 292,33795270,Prednisolone: role in amoxicillin-clavulanate-induced cholestatic liver injury.,https://pubmed.ncbi.nlm.nih.gov/33795270/
 293,21645801,Anticoagulant polypharmacy.,https://pubmed.ncbi.nlm.nih.gov/21645801/
@@ -299,11 +299,11 @@ Candidate No,PMID,Title,PubMed URL
 298,26021384,Rowell's syndrome induced by terbinafine.,https://pubmed.ncbi.nlm.nih.gov/26021384/
 299,15576293,Systematic toxicological analysis by high-performance liquid chromatography with diode array detection (HPLC-DAD).,https://pubmed.ncbi.nlm.nih.gov/15576293/
 300,12468375,The solution was the problem.,https://pubmed.ncbi.nlm.nih.gov/12468375/
-301,11794425,,https://pubmed.ncbi.nlm.nih.gov/11794425/
-302,17726067,,https://pubmed.ncbi.nlm.nih.gov/17726067/
-303,30032805,,https://pubmed.ncbi.nlm.nih.gov/30032805/
-304,35383492,,https://pubmed.ncbi.nlm.nih.gov/35383492/
-305,11054326,,https://pubmed.ncbi.nlm.nih.gov/11054326/
+301,11794425,Possible ergotamine-caffeine-associated delirium.,https://pubmed.ncbi.nlm.nih.gov/11794425/
+302,17726067,Oral aloe vera-induced hepatitis.,https://pubmed.ncbi.nlm.nih.gov/17726067/
+303,30032805,Future development of a depot antiepileptic drug: What are the ethical implications?,https://pubmed.ncbi.nlm.nih.gov/30032805/
+304,35383492,The Twilight Zone: Oxybutynin Overuse Exacerbating Delirium.,https://pubmed.ncbi.nlm.nih.gov/35383492/
+305,11054326,Fluocinolone acetonide sustained drug delivery device to treat severe uveitis.,https://pubmed.ncbi.nlm.nih.gov/11054326/
 306,33518612,,https://pubmed.ncbi.nlm.nih.gov/33518612/
 307,32417798,,https://pubmed.ncbi.nlm.nih.gov/32417798/
 308,23256093,,https://pubmed.ncbi.nlm.nih.gov/23256093/
@@ -324,11 +324,11 @@ Candidate No,PMID,Title,PubMed URL
 323,27809899,Prenatal sonographic diagnosis of fetal valproate syndrome: a case report.,https://pubmed.ncbi.nlm.nih.gov/27809899/
 324,12160366,Emergency contraception.,https://pubmed.ncbi.nlm.nih.gov/12160366/
 325,16175930,Cyclophosphamide for lupus during pregnancy.,https://pubmed.ncbi.nlm.nih.gov/16175930/
-326,38264845,,https://pubmed.ncbi.nlm.nih.gov/38264845/
-327,12162160,,https://pubmed.ncbi.nlm.nih.gov/12162160/
-328,24033821,,https://pubmed.ncbi.nlm.nih.gov/24033821/
-329,25899236,,https://pubmed.ncbi.nlm.nih.gov/25899236/
-330,14692224,,https://pubmed.ncbi.nlm.nih.gov/14692224/
+326,38264845,Extended-release buprenorphine in pregnancy.,https://pubmed.ncbi.nlm.nih.gov/38264845/
+327,12162160,[Warfarin fetopathy].,https://pubmed.ncbi.nlm.nih.gov/12162160/
+328,24033821,Two nursing mothers treated with zonisamide: Should breast-feeding be avoided?,https://pubmed.ncbi.nlm.nih.gov/24033821/
+329,25899236,Importance of a multidisciplinary approach and monitoring in fetal warfarin syndrome.,https://pubmed.ncbi.nlm.nih.gov/25899236/
+330,14692224,Warfarin embryopathy.,https://pubmed.ncbi.nlm.nih.gov/14692224/
 331,24118367,Fetal intracranial injuries following motor vehicle accidents with airbag deployment.,https://pubmed.ncbi.nlm.nih.gov/24118367/
 332,28293367,[Maternal use of non-steroidal antiinflammatory drugs and closure of the ductus arteriosus].,https://pubmed.ncbi.nlm.nih.gov/28293367/
 333,26160051,Propranolol during pregnancy for large chorioangioma.,https://pubmed.ncbi.nlm.nih.gov/26160051/
@@ -359,21 +359,21 @@ Candidate No,PMID,Title,PubMed URL
 358,24142138,Cutaneous foetal injuries related to amniocentesis.,https://pubmed.ncbi.nlm.nih.gov/24142138/
 359,12706140,Successful jejunal nutrition therapy in a pregnant patient with apallic syndrome.,https://pubmed.ncbi.nlm.nih.gov/12706140/
 360,34167992,Premature closure of ductus arteriosus after a single dose of diclofenac during pregnancy.,https://pubmed.ncbi.nlm.nih.gov/34167992/
-361,34046142,,https://pubmed.ncbi.nlm.nih.gov/34046142/
-362,15125754,,https://pubmed.ncbi.nlm.nih.gov/15125754/
-363,31381367,,https://pubmed.ncbi.nlm.nih.gov/31381367/
-364,26178001,,https://pubmed.ncbi.nlm.nih.gov/26178001/
-365,28371620,,https://pubmed.ncbi.nlm.nih.gov/28371620/
+361,34046142,Vitamin B12 deficiency: case report and review of literature.,https://pubmed.ncbi.nlm.nih.gov/34046142/
+362,15125754,Postlactational microcalcifications.,https://pubmed.ncbi.nlm.nih.gov/15125754/
+363,31381367,Erenumab During Breastfeeding.,https://pubmed.ncbi.nlm.nih.gov/31381367/
+364,26178001,Hypoparathyroidism in pregnancy.,https://pubmed.ncbi.nlm.nih.gov/26178001/
+365,28371620,The Effect of Sexual Abuse and Prenatal Substance Use on Successful Breastfeeding.,https://pubmed.ncbi.nlm.nih.gov/28371620/
 366,15728443,Risperidone and breast-feeding.,https://pubmed.ncbi.nlm.nih.gov/15728443/
 367,29928823,Weaning and Mixed Mania-A Case Report.,https://pubmed.ncbi.nlm.nih.gov/29928823/
 368,27188077,Breastfeeding with cystic fibrosis.,https://pubmed.ncbi.nlm.nih.gov/27188077/
 369,30852508,Bilateral herpes simplex keratitis: lactation a trigger for recurrence!,https://pubmed.ncbi.nlm.nih.gov/30852508/
 370,35277297,Lactation ketoacidosis induced by breastfeeding while on a ketogenic diet.,https://pubmed.ncbi.nlm.nih.gov/35277297/
-371,28051878,,https://pubmed.ncbi.nlm.nih.gov/28051878/
-372,30396888,,https://pubmed.ncbi.nlm.nih.gov/30396888/
-373,32606112,,https://pubmed.ncbi.nlm.nih.gov/32606112/
-374,31017819,,https://pubmed.ncbi.nlm.nih.gov/31017819/
-375,31479696,,https://pubmed.ncbi.nlm.nih.gov/31479696/
+371,28051878,Teicoplanin Use During Breastfeeding.,https://pubmed.ncbi.nlm.nih.gov/28051878/
+372,30396888,Recurrent complications of PAAG implants during lactation.,https://pubmed.ncbi.nlm.nih.gov/30396888/
+373,32606112,Ketoacidosis associated with ketogenic diet in a non-diabetic lactating woman.,https://pubmed.ncbi.nlm.nih.gov/32606112/
+374,31017819,Transfer of Cyclobenzaprine into Human Milk and Subsequent Infant Exposure.,https://pubmed.ncbi.nlm.nih.gov/31017819/
+375,31479696,Ursodeoxycholic acid in pregnancy?,https://pubmed.ncbi.nlm.nih.gov/31479696/
 376,31286616,Fulminant gas-forming breast abscess associated with synergistic Veillonella infection.,https://pubmed.ncbi.nlm.nih.gov/31286616/
 377,25558889,Chickenpox infection during lactation.,https://pubmed.ncbi.nlm.nih.gov/25558889/
 378,33201760,Severe Lactational Mastitis With Complicated Wound Infection Caused by Streptococcus pyogenes.,https://pubmed.ncbi.nlm.nih.gov/33201760/
@@ -384,16 +384,16 @@ Candidate No,PMID,Title,PubMed URL
 383,36446476,Pneumococcal lactational mastitis in a healthy woman.,https://pubmed.ncbi.nlm.nih.gov/36446476/
 384,25568270,Persistent unilateral central serous chorioretinopathy in a breastfeeding woman.,https://pubmed.ncbi.nlm.nih.gov/25568270/
 385,25514884,A two-and-a-half-year-old breastfed toddler presenting with anemia: a case report.,https://pubmed.ncbi.nlm.nih.gov/25514884/
-386,28992839,,https://pubmed.ncbi.nlm.nih.gov/28992839/
-387,26513075,,https://pubmed.ncbi.nlm.nih.gov/26513075/
-388,29090362,,https://pubmed.ncbi.nlm.nih.gov/29090362/
-389,26185119,,https://pubmed.ncbi.nlm.nih.gov/26185119/
-390,31686425,,https://pubmed.ncbi.nlm.nih.gov/31686425/
-391,24196096,,https://pubmed.ncbi.nlm.nih.gov/24196096/
-392,28768674,,https://pubmed.ncbi.nlm.nih.gov/28768674/
-393,19291468,,https://pubmed.ncbi.nlm.nih.gov/19291468/
-394,19884236,,https://pubmed.ncbi.nlm.nih.gov/19884236/
-395,33008308,,https://pubmed.ncbi.nlm.nih.gov/33008308/
+386,28992839,[Symptomatic zinc deficiency in a breast-fed infant].,https://pubmed.ncbi.nlm.nih.gov/28992839/
+387,26513075,Phrynoderma and acquired acrodermatitis enteropathica in breastfeeding women after bariatric surgery.,https://pubmed.ncbi.nlm.nih.gov/26513075/
+388,29090362,Case report: domperidone use as a galactagogue resulting in withdrawal symptoms upon discontinuation.,https://pubmed.ncbi.nlm.nih.gov/29090362/
+389,26185119,Fatal Neonatal Herpes Simplex Infection Likely from Unrecognized Breast Lesions.,https://pubmed.ncbi.nlm.nih.gov/26185119/
+390,31686425,Idiopathic granulomatous mastitis responding to oral prednisone.,https://pubmed.ncbi.nlm.nih.gov/31686425/
+391,24196096,Involuntary movements misdiagnosed as seizure during vitamin B12 treatment.,https://pubmed.ncbi.nlm.nih.gov/24196096/
+392,28768674,Diagnosis of acrodermatitis enteropathica in resource limited settings.,https://pubmed.ncbi.nlm.nih.gov/28768674/
+393,19291468,Sudden infant death while awake.,https://pubmed.ncbi.nlm.nih.gov/19291468/
+394,19884236,"Bipolar II postpartum depression: Detection, diagnosis, and treatment.",https://pubmed.ncbi.nlm.nih.gov/19884236/
+395,33008308,Vaginal delivery in women with COVID-19: report of two cases.,https://pubmed.ncbi.nlm.nih.gov/33008308/
 396,33513241,Lactation Induction in a Transgender Woman Wanting to Breastfeed: Case Report.,https://pubmed.ncbi.nlm.nih.gov/33513241/
 397,20170571,[Problematic breastfeeding due to a short frenulum].,https://pubmed.ncbi.nlm.nih.gov/20170571/
 398,29255138,Transfer of Everolimus into Colostrum of a Kidney Transplant Mother.,https://pubmed.ncbi.nlm.nih.gov/29255138/
@@ -514,16 +514,16 @@ Candidate No,PMID,Title,PubMed URL
 513,18715841,Asthma arising in flavoring-exposed food production workers.,https://pubmed.ncbi.nlm.nih.gov/18715841/
 514,34117775,Macroscopic identification of visceral titanium pigment in an intravenous drug user.,https://pubmed.ncbi.nlm.nih.gov/34117775/
 515,29875964,Paracetamol self-poisoning: when oral N-acetylcysteine saves life? a case report.,https://pubmed.ncbi.nlm.nih.gov/29875964/
-516,11988061,,https://pubmed.ncbi.nlm.nih.gov/11988061/
-517,26686962,,https://pubmed.ncbi.nlm.nih.gov/26686962/
-518,19059740,,https://pubmed.ncbi.nlm.nih.gov/19059740/
-519,32576363,,https://pubmed.ncbi.nlm.nih.gov/32576363/
-520,20521353,,https://pubmed.ncbi.nlm.nih.gov/20521353/
-521,26031620,,https://pubmed.ncbi.nlm.nih.gov/26031620/
-522,36162715,,https://pubmed.ncbi.nlm.nih.gov/36162715/
-523,30954978,,https://pubmed.ncbi.nlm.nih.gov/30954978/
-524,27852659,,https://pubmed.ncbi.nlm.nih.gov/27852659/
-525,23291146,,https://pubmed.ncbi.nlm.nih.gov/23291146/
+516,11988061,Needlestick transmission of hepatitis C.,https://pubmed.ncbi.nlm.nih.gov/11988061/
+517,26686962,"Dendritiform Keratopathy Associated with Exposure to Polyquarternium-1, a Common Ophthalmic Preservative.",https://pubmed.ncbi.nlm.nih.gov/26686962/
+518,19059740,Forensic evaluation of occupational marks in establishing identity--a case report.,https://pubmed.ncbi.nlm.nih.gov/19059740/
+519,32576363,Renal impairment: an unnecessary barrier to HIV prevention.,https://pubmed.ncbi.nlm.nih.gov/32576363/
+520,20521353,Muscle spasm associated with therapeutic use of Cang Er Zi Wan.,https://pubmed.ncbi.nlm.nih.gov/20521353/
+521,26031620,Neuroimaging findings in pediatric sports-related concussion.,https://pubmed.ncbi.nlm.nih.gov/26031620/
+522,36162715,Pustular lesions and itching in a couple of young migrants.,https://pubmed.ncbi.nlm.nih.gov/36162715/
+523,30954978,[Vomiting as a symptom of epilepsy. Panayitopoulos Syndrome - review of the literature and own experience].,https://pubmed.ncbi.nlm.nih.gov/30954978/
+524,27852659,Case of Steven-Johnson Syndrome in a male with breast cancer secondary to docetaxel/cyclophosphamide therapy.,https://pubmed.ncbi.nlm.nih.gov/27852659/
+525,23291146,Determination of glyphosate and AMPA in blood and urine from humans: about 13 cases of acute intoxication.,https://pubmed.ncbi.nlm.nih.gov/23291146/
 526,34507437,,https://pubmed.ncbi.nlm.nih.gov/34507437/
 527,18408954,,https://pubmed.ncbi.nlm.nih.gov/18408954/
 528,37365498,,https://pubmed.ncbi.nlm.nih.gov/37365498/
@@ -534,11 +534,11 @@ Candidate No,PMID,Title,PubMed URL
 533,35012825,Pityriasis Rosea-like eruptions following COVID-19 mRNA-1273 vaccination: A case report and literature review.,https://pubmed.ncbi.nlm.nih.gov/35012825/
 534,23042059,Acute constant dizziness.,https://pubmed.ncbi.nlm.nih.gov/23042059/
 535,23328331,Transcranial direct current stimulation (tDCS) relieved itching in a patient with chronic neuropathic pain.,https://pubmed.ncbi.nlm.nih.gov/23328331/
-536,29384772,,https://pubmed.ncbi.nlm.nih.gov/29384772/
-537,35996312,,https://pubmed.ncbi.nlm.nih.gov/35996312/
-538,19671293,,https://pubmed.ncbi.nlm.nih.gov/19671293/
-539,32482152,,https://pubmed.ncbi.nlm.nih.gov/32482152/
-540,18443402,,https://pubmed.ncbi.nlm.nih.gov/18443402/
+536,29384772,Spontaneous Vertebral Artery Dissection in a Healthy 26 Year Old Female Patient: A Case Study.,https://pubmed.ncbi.nlm.nih.gov/29384772/
+537,35996312,Adult acetonemic vomiting complicated with low body weight in a subject with Mycobacterium avium complex pulmonary disease: a case report.,https://pubmed.ncbi.nlm.nih.gov/35996312/
+538,19671293,[Clinical manifestations and imaging features of peripheral vestibular paroxysmia: a report of 7 cases].,https://pubmed.ncbi.nlm.nih.gov/19671293/
+539,32482152,Intravenous Honokiol in Drug-Resistant Cancer: Two Case Reports.,https://pubmed.ncbi.nlm.nih.gov/32482152/
+540,18443402,[A case of herpetic facial paralysis in which cochleovestibular symptoms outweigh facial nerve symptoms].,https://pubmed.ncbi.nlm.nih.gov/18443402/
 541,37199876,Harlequin syndrome.,https://pubmed.ncbi.nlm.nih.gov/37199876/
 542,21947732,Naproxen-induced liver injury.,https://pubmed.ncbi.nlm.nih.gov/21947732/
 543,26923257,Mild forms of toxic shock syndrome toxin-1-mediated exanthematous disease related to Staphylococcus aureus infection.,https://pubmed.ncbi.nlm.nih.gov/26923257/
@@ -554,26 +554,26 @@ Candidate No,PMID,Title,PubMed URL
 553,30573214,Two cases of Tullio phenomenon in which oval and round window reinforcement surgery was effective.,https://pubmed.ncbi.nlm.nih.gov/30573214/
 554,33877137,Levetiracetam-induced systemic lupus erythematosus.,https://pubmed.ncbi.nlm.nih.gov/33877137/
 555,17931450,Auricular syncope.,https://pubmed.ncbi.nlm.nih.gov/17931450/
-556,11201466,,https://pubmed.ncbi.nlm.nih.gov/11201466/
-557,41261679,,https://pubmed.ncbi.nlm.nih.gov/41261679/
-558,18589348,,https://pubmed.ncbi.nlm.nih.gov/18589348/
-559,19514925,,https://pubmed.ncbi.nlm.nih.gov/19514925/
-560,27998307,,https://pubmed.ncbi.nlm.nih.gov/27998307/
-561,30654402,,https://pubmed.ncbi.nlm.nih.gov/30654402/
-562,21683825,,https://pubmed.ncbi.nlm.nih.gov/21683825/
-563,19363241,,https://pubmed.ncbi.nlm.nih.gov/19363241/
-564,34489258,,https://pubmed.ncbi.nlm.nih.gov/34489258/
-565,17965986,,https://pubmed.ncbi.nlm.nih.gov/17965986/
+556,11201466,Radionuclide cisternography in spontaneous intracranial hypotension with simultaneous leaks at the cervicothoracic and lumbar levels.,https://pubmed.ncbi.nlm.nih.gov/11201466/
+557,41261679,Vestibular schwannoma presenting as vestibular neuritis-like attack during the COVID-19 pandemic: A case report.,https://pubmed.ncbi.nlm.nih.gov/41261679/
+558,18589348,The syndrome of headache with neurologic deficits and cerebrospinal fluid lymphocytosis mimicking acute ischemic stroke.,https://pubmed.ncbi.nlm.nih.gov/18589348/
+559,19514925,Severe cutaneous reaction to cetuximab with possible association with the use of over-the-counter skin care products in a patient with oropharyngeal cancer.,https://pubmed.ncbi.nlm.nih.gov/19514925/
+560,27998307,Neuro-Behcet disease presenting as a solitary cerebellar hemorrhagic lesion: a case report and review of the literature.,https://pubmed.ncbi.nlm.nih.gov/27998307/
+561,30654402,"Tako-Tsubo Cardiomyopathy during a series of Electroconvulsive Therapy (ECT) applications: A case report, systematic literature research and discussion of specific risk factors.",https://pubmed.ncbi.nlm.nih.gov/30654402/
+562,21683825,Testosterone deficiency.,https://pubmed.ncbi.nlm.nih.gov/21683825/
+563,19363241,Yasmin and venous thromboembolism: new case reports.,https://pubmed.ncbi.nlm.nih.gov/19363241/
+564,34489258,Rare complication of ceftriaxone therapy: drug-induced thrombocytopenia (DITP).,https://pubmed.ncbi.nlm.nih.gov/34489258/
+565,17965986,"Zuclopenthixol-induced neuroleptic malignant syndrome presenting as fever of unknown origin, hyperglycaemia and acute myocardial infarction in a 60-year-old man.",https://pubmed.ncbi.nlm.nih.gov/17965986/
 566,42261188,Cerebral Venous Sinus Thrombosis Occurring During Estetrol/Drospirenone Combined Oral Contraceptive Use in a Woman With Multiple Thrombotic Risk Factors: A Case Report.,https://pubmed.ncbi.nlm.nih.gov/42261188/
 567,17667395,Infiltration and extravasation.,https://pubmed.ncbi.nlm.nih.gov/17667395/
 568,33180345,Case of vitiligo universalis as a sequela of drug-induced hypersensitivity syndrome.,https://pubmed.ncbi.nlm.nih.gov/33180345/
 569,31211437,A 'Natural' thyroid storm!,https://pubmed.ncbi.nlm.nih.gov/31211437/
 570,34518192,Zoledronic acid-induced symmetrical drug-related intertriginous and flexural exanthema (SDRIFE).,https://pubmed.ncbi.nlm.nih.gov/34518192/
-571,30777547,,https://pubmed.ncbi.nlm.nih.gov/30777547/
-572,14959920,,https://pubmed.ncbi.nlm.nih.gov/14959920/
-573,20071821,,https://pubmed.ncbi.nlm.nih.gov/20071821/
-574,24012078,,https://pubmed.ncbi.nlm.nih.gov/24012078/
-575,16805419,,https://pubmed.ncbi.nlm.nih.gov/16805419/
+571,30777547,Role of Diabetes Education Program in Controlling Posttransplant Diabetes in a Recent Renal Transplant Bodybuilder: Case Report and Review of the Literature.,https://pubmed.ncbi.nlm.nih.gov/30777547/
+572,14959920,Pneumocystis carinii pneumonia in a 3-month-old infant receiving high-dose corticosteroid therapy for airway hemangiomas.,https://pubmed.ncbi.nlm.nih.gov/14959920/
+573,20071821,Asthma and dental erosion.,https://pubmed.ncbi.nlm.nih.gov/20071821/
+574,24012078,Substance abuse and psychosis.,https://pubmed.ncbi.nlm.nih.gov/24012078/
+575,16805419,Risk of allergy to food proteins in topical medicinal agents and cosmetics.,https://pubmed.ncbi.nlm.nih.gov/16805419/
 576,26719300,Xanthoma striatum palmare.,https://pubmed.ncbi.nlm.nih.gov/26719300/
 577,16396068,Trimethoprim-sulfamethoxazole-induced aseptic meningitis.,https://pubmed.ncbi.nlm.nih.gov/16396068/
 578,35217557,Drug-induced hypersensitivity syndrome with lupus manifestations due to mesalazine in a patient with ulcerative colitis.,https://pubmed.ncbi.nlm.nih.gov/35217557/
@@ -594,31 +594,31 @@ Candidate No,PMID,Title,PubMed URL
 593,15899001,Peristomal allergic contact dermatitis--case report and review of the literature.,https://pubmed.ncbi.nlm.nih.gov/15899001/
 594,21545623,Possible long-acting risperidone-induced hypothermia precipitating phenytoin toxicity in an elderly patient.,https://pubmed.ncbi.nlm.nih.gov/21545623/
 595,35837878,Occupational allergic contact dermatitis to Piperamido Nitrotoluene in pharmaceutical workers: A case series.,https://pubmed.ncbi.nlm.nih.gov/35837878/
-596,34195619,,https://pubmed.ncbi.nlm.nih.gov/34195619/
-597,11434754,,https://pubmed.ncbi.nlm.nih.gov/11434754/
-598,25549077,,https://pubmed.ncbi.nlm.nih.gov/25549077/
-599,32446168,,https://pubmed.ncbi.nlm.nih.gov/32446168/
-600,14675610,,https://pubmed.ncbi.nlm.nih.gov/14675610/
+596,34195619,A Case Report of Antibiotic-Induced Aseptic Meningitis in Psoriasis.,https://pubmed.ncbi.nlm.nih.gov/34195619/
+597,11434754,Kava hepatotoxicity.,https://pubmed.ncbi.nlm.nih.gov/11434754/
+598,25549077,A Literature Review Revisiting Phenytoin-Induced Sinus Arrest.,https://pubmed.ncbi.nlm.nih.gov/25549077/
+599,32446168,A case of drug-induced bullous pemphigoid associated with teriflunomide: A patient with relapsing multiple sclerosis.,https://pubmed.ncbi.nlm.nih.gov/32446168/
+600,14675610,Ischemic stroke after using over the counter products containing ephedra.,https://pubmed.ncbi.nlm.nih.gov/14675610/
 601,12075653,Ketamine dependence.,https://pubmed.ncbi.nlm.nih.gov/12075653/
 602,34965050,An unusual recurrent ileocolonic injury.,https://pubmed.ncbi.nlm.nih.gov/34965050/
 603,33608442,Statin-induced autoimmune myopathy: a case report.,https://pubmed.ncbi.nlm.nih.gov/33608442/
 604,32506071,Risperidone-Induced Acute Laryngeal Dystonia: A Case Report.,https://pubmed.ncbi.nlm.nih.gov/32506071/
 605,32920154,Medication Reconciliation: The Foundation of Medication Safety for Patients Requiring Dialysis.,https://pubmed.ncbi.nlm.nih.gov/32920154/
-606,28831316,,https://pubmed.ncbi.nlm.nih.gov/28831316/
-607,17187532,,https://pubmed.ncbi.nlm.nih.gov/17187532/
-608,12848112,,https://pubmed.ncbi.nlm.nih.gov/12848112/
-609,36712769,,https://pubmed.ncbi.nlm.nih.gov/36712769/
-610,22196068,,https://pubmed.ncbi.nlm.nih.gov/22196068/
+606,28831316,Pravastatin-Induced Eczematous Eruption Mimicking Psoriasis.,https://pubmed.ncbi.nlm.nih.gov/28831316/
+607,17187532,A case of serotonin syndrome and mutism associated with methadone.,https://pubmed.ncbi.nlm.nih.gov/17187532/
+608,12848112,Drug eruptions: approaching the diagnosis of drug-induced skin diseases.,https://pubmed.ncbi.nlm.nih.gov/12848112/
+609,36712769,Lithium Intoxication in an Elderly Woman.,https://pubmed.ncbi.nlm.nih.gov/36712769/
+610,22196068,Fatal serotonin toxicity caused by moclobemide and fluoxetine overdose.,https://pubmed.ncbi.nlm.nih.gov/22196068/
 611,34148331,[Warfarin desensitization. A case report].,https://pubmed.ncbi.nlm.nih.gov/34148331/
 612,30479035,Nightmares and hallucinations with aprepitant and opium powder: a suspected drug-drug interaction.,https://pubmed.ncbi.nlm.nih.gov/30479035/
 613,31277157,Propylthiouracil-induced organizing pneumonia: A case report.,https://pubmed.ncbi.nlm.nih.gov/31277157/
 614,16670363,Clozapine-induced systemic lupus erythematosus.,https://pubmed.ncbi.nlm.nih.gov/16670363/
 615,33999375,Isolated angioedema of the bowel caused by aspirin.,https://pubmed.ncbi.nlm.nih.gov/33999375/
-616,41476983,,https://pubmed.ncbi.nlm.nih.gov/41476983/
-617,24117740,,https://pubmed.ncbi.nlm.nih.gov/24117740/
-618,37487126,,https://pubmed.ncbi.nlm.nih.gov/37487126/
-619,32793845,,https://pubmed.ncbi.nlm.nih.gov/32793845/
-620,31992329,,https://pubmed.ncbi.nlm.nih.gov/31992329/
+616,41476983,Case Report: Multiple immune related adverse events in a patient with metastatic melanoma.,https://pubmed.ncbi.nlm.nih.gov/41476983/
+617,24117740,Patch testing and sensitization to multiple drugs.,https://pubmed.ncbi.nlm.nih.gov/24117740/
+618,37487126,Dupilumab-Associated Sweet Syndrome.,https://pubmed.ncbi.nlm.nih.gov/37487126/
+619,32793845,Intravitreal methotrexate and fluocinolone acetonide implantation for Vogt-Koyanagi-Harada uveitis.,https://pubmed.ncbi.nlm.nih.gov/32793845/
+620,31992329,Acute kidney injury and hepatitis associated with energy drink consumption: a case report.,https://pubmed.ncbi.nlm.nih.gov/31992329/
 621,30904892,Reversible iatrogenic paraparesis secondary to masked hypokalaemia in thrombocytosis-associated pseudohyperkalaemia.,https://pubmed.ncbi.nlm.nih.gov/30904892/
 622,34692307,Acute Psychosis Following Corticosteroid Administration.,https://pubmed.ncbi.nlm.nih.gov/34692307/
 623,12716340,Eruption cyst formation associated with cyclosporin A.,https://pubmed.ncbi.nlm.nih.gov/12716340/
@@ -634,46 +634,46 @@ Candidate No,PMID,Title,PubMed URL
 633,30992139,[Severe methotrexate toxicity in elderly: 7 years experience].,https://pubmed.ncbi.nlm.nih.gov/30992139/
 634,28475657,Missed Opportunities for Deprescription: A Teachable Moment.,https://pubmed.ncbi.nlm.nih.gov/28475657/
 635,27012659,Reversible cerebral vasoconstriction syndrome associated with interferon beta-1a use for multiple sclerosis.,https://pubmed.ncbi.nlm.nih.gov/27012659/
-636,27116335,,https://pubmed.ncbi.nlm.nih.gov/27116335/
-637,30410200,,https://pubmed.ncbi.nlm.nih.gov/30410200/
-638,34987932,,https://pubmed.ncbi.nlm.nih.gov/34987932/
-639,20634934,,https://pubmed.ncbi.nlm.nih.gov/20634934/
-640,23442182,,https://pubmed.ncbi.nlm.nih.gov/23442182/
+636,27116335,Pyogenic granuloma in patients treated with selective BRAF inhibitors: another manifestation of paradoxical pathway activation.,https://pubmed.ncbi.nlm.nih.gov/27116335/
+637,30410200,Prophylaxis with melatonin for primary stabbing headache in pediatrics: a case report.,https://pubmed.ncbi.nlm.nih.gov/30410200/
+638,34987932,Serotonin Toxicity Precipitated by Tramadol in the Setting of Polypharmacy: A Case of Serotonin Syndrome.,https://pubmed.ncbi.nlm.nih.gov/34987932/
+639,20634934,Corneal deposit of ciprofloxacin after laser assisted subepithelial keratomileusis procedure: a case report.,https://pubmed.ncbi.nlm.nih.gov/20634934/
+640,23442182,Simvastatin and amlodipine induced thrombocytopenia in the same patient: double trouble and a literature review.,https://pubmed.ncbi.nlm.nih.gov/23442182/
 641,37715933,Postmortem redistribution of drugs: a literature review.,https://pubmed.ncbi.nlm.nih.gov/37715933/
 642,29408722,Is LSD toxic?,https://pubmed.ncbi.nlm.nih.gov/29408722/
 643,40338211,Pharmacokinetic and pharmacodynamic alterations in older people: what we know so far.,https://pubmed.ncbi.nlm.nih.gov/40338211/
 644,30413252,Dialysis Prescription and Sudden Death.,https://pubmed.ncbi.nlm.nih.gov/30413252/
 645,36069136,Sacubitril/valsartan: An antiarrhythmic drug?,https://pubmed.ncbi.nlm.nih.gov/36069136/
-646,31207121,,https://pubmed.ncbi.nlm.nih.gov/31207121/
-647,32065097,,https://pubmed.ncbi.nlm.nih.gov/32065097/
-648,19849743,,https://pubmed.ncbi.nlm.nih.gov/19849743/
-649,27412989,,https://pubmed.ncbi.nlm.nih.gov/27412989/
-650,27450867,,https://pubmed.ncbi.nlm.nih.gov/27450867/
-651,31664657,,https://pubmed.ncbi.nlm.nih.gov/31664657/
-652,11564124,,https://pubmed.ncbi.nlm.nih.gov/11564124/
-653,33185835,,https://pubmed.ncbi.nlm.nih.gov/33185835/
-654,34113531,,https://pubmed.ncbi.nlm.nih.gov/34113531/
-655,11192362,,https://pubmed.ncbi.nlm.nih.gov/11192362/
+646,31207121,Drug concentrations in post-mortem specimens.,https://pubmed.ncbi.nlm.nih.gov/31207121/
+647,32065097,Clinical and Forensic Aspects of Pharmacobezoars.,https://pubmed.ncbi.nlm.nih.gov/32065097/
+648,19849743,Post-mortem drug concentrations.,https://pubmed.ncbi.nlm.nih.gov/19849743/
+649,27412989,Ezetimibe-Statin Combination Therapy.,https://pubmed.ncbi.nlm.nih.gov/27412989/
+650,27450867,Preventing deaths due to haemorrhage.,https://pubmed.ncbi.nlm.nih.gov/27450867/
+651,31664657,All Across the Universe: Bioethics Across Cultures.,https://pubmed.ncbi.nlm.nih.gov/31664657/
+652,11564124,Safety profile of levetiracetam.,https://pubmed.ncbi.nlm.nih.gov/11564124/
+653,33185835,Emergence of Cumyl-PEGACLONE-related fatalities in the Northern Territory of Australia.,https://pubmed.ncbi.nlm.nih.gov/33185835/
+654,34113531,Alcohol Use Disorder: The Role of Medication in Recovery.,https://pubmed.ncbi.nlm.nih.gov/34113531/
+655,11192362,MERIT-HF mortality and morbidity data.,https://pubmed.ncbi.nlm.nih.gov/11192362/
 656,34748441,,https://pubmed.ncbi.nlm.nih.gov/34748441/
 657,28223004,,https://pubmed.ncbi.nlm.nih.gov/28223004/
 658,28084963,,https://pubmed.ncbi.nlm.nih.gov/28084963/
 659,31398663,,https://pubmed.ncbi.nlm.nih.gov/31398663/
 660,34672214,,https://pubmed.ncbi.nlm.nih.gov/34672214/
-661,22780111,,https://pubmed.ncbi.nlm.nih.gov/22780111/
-662,33420800,,https://pubmed.ncbi.nlm.nih.gov/33420800/
-663,16370061,,https://pubmed.ncbi.nlm.nih.gov/16370061/
-664,25986032,,https://pubmed.ncbi.nlm.nih.gov/25986032/
-665,23454110,,https://pubmed.ncbi.nlm.nih.gov/23454110/
+661,22780111,Medicalization of dying: are we turning the corner?,https://pubmed.ncbi.nlm.nih.gov/22780111/
+662,33420800,Advances in Research on the Toxicological Effects of Selenium.,https://pubmed.ncbi.nlm.nih.gov/33420800/
+663,16370061,Needed: closer scrutiny of clinical trials.,https://pubmed.ncbi.nlm.nih.gov/16370061/
+664,25986032,Marijuana use in pregnancy and lactation: a review of the evidence.,https://pubmed.ncbi.nlm.nih.gov/25986032/
+665,23454110,Prenatal exposure to substance of abuse: a worldwide problem.,https://pubmed.ncbi.nlm.nih.gov/23454110/
 666,28567525,Forensic entomotoxicology revisited-towards professional standardisation of study designs.,https://pubmed.ncbi.nlm.nih.gov/28567525/
 667,11457608,Entomotoxicology.,https://pubmed.ncbi.nlm.nih.gov/11457608/
 668,12634885,Antiarrhythmic therapy in heart failure.,https://pubmed.ncbi.nlm.nih.gov/12634885/
 669,34609452,Effect of Prophylactic Subcutaneous Scopolamine Butylbromide on Death Rattle in Patients at the End of Life: The SILENCE Randomized Clinical Trial.,https://pubmed.ncbi.nlm.nih.gov/34609452/
 670,30041198,Current Perspectives on Sudden Cardiac Death in Hemodialysis Patients.,https://pubmed.ncbi.nlm.nih.gov/30041198/
-671,29278538,,https://pubmed.ncbi.nlm.nih.gov/29278538/
-672,19715960,,https://pubmed.ncbi.nlm.nih.gov/19715960/
-673,31773472,,https://pubmed.ncbi.nlm.nih.gov/31773472/
-674,32967928,,https://pubmed.ncbi.nlm.nih.gov/32967928/
-675,20938414,,https://pubmed.ncbi.nlm.nih.gov/20938414/
+671,29278538,A Fire Extinguisher Death: The Macklin Effect.,https://pubmed.ncbi.nlm.nih.gov/29278538/
+672,19715960,Disseminated nocardiosis: a rare infectious complication following non-heart-beating donor liver transplantation.,https://pubmed.ncbi.nlm.nih.gov/19715960/
+673,31773472,Suicidal ligature strangulation: a systematic review of the published literature.,https://pubmed.ncbi.nlm.nih.gov/31773472/
+674,32967928,"Pharmacologic treatment and SUDEP risk: A nationwide, population-based, case-control study.",https://pubmed.ncbi.nlm.nih.gov/32967928/
+675,20938414,Pharmacological testing in the diagnosis of arrhythmias.,https://pubmed.ncbi.nlm.nih.gov/20938414/
 676,21782762,Liver transplantation using Donation after Cardiac Death donors.,https://pubmed.ncbi.nlm.nih.gov/21782762/
 677,32919913,Medications Are Important for Sudden Cardiac Death Prevention But So Is the Implantable Cardioverter-Defibrillator.,https://pubmed.ncbi.nlm.nih.gov/32919913/
 678,20575633,Drug-induced QT-interval prolongation: considerations for clinicians.,https://pubmed.ncbi.nlm.nih.gov/20575633/
@@ -799,11 +799,11 @@ Candidate No,PMID,Title,PubMed URL
 798,15032089,[Childhood vaccinations anno 2004. II. The real and presumed side effects of vaccination].,https://pubmed.ncbi.nlm.nih.gov/15032089/
 799,39980035,"Comparison of serious adverse effects of methylphenidate, atomoxetine and amphetamine in the treatment of ADHD: an adverse event analysis based on the FAERS database.",https://pubmed.ncbi.nlm.nih.gov/39980035/
 800,35004543,A Review of Acute and Long-Term Neurological Complications Following Haematopoietic Stem Cell Transplant for Paediatric Acute Lymphoblastic Leukaemia.,https://pubmed.ncbi.nlm.nih.gov/35004543/
-801,39844329,,https://pubmed.ncbi.nlm.nih.gov/39844329/
-802,31514194,,https://pubmed.ncbi.nlm.nih.gov/31514194/
-803,37705676,,https://pubmed.ncbi.nlm.nih.gov/37705676/
-804,32105622,,https://pubmed.ncbi.nlm.nih.gov/32105622/
-805,27261963,,https://pubmed.ncbi.nlm.nih.gov/27261963/
+801,39844329,Drug allergy.,https://pubmed.ncbi.nlm.nih.gov/39844329/
+802,31514194,"Diagnosis, Genetics, and Therapy of Short Stature in Children: A Growth Hormone Research Society International Perspective.",https://pubmed.ncbi.nlm.nih.gov/31514194/
+803,37705676,"Guideline for allergological diagnosis of drug hypersensitivity reactions: S2k Guideline of the German Society for Allergology and Clinical Immunology (DGAKI) in cooperation with the German Dermatological Society (DDG), the Association of German Allergologists (ÄDA), the German Society for Pediatric Allergology (GPA), the German Contact Dermatitis Research Group (DKG), the German Society for Pneumology (DGP), the German Society of Otorhinolaryngology, Head and Neck Surgery, the Austrian Society of Allergology and Immunology (ÖGAI), the Austrian Society of Dermatology and Venereology (ÖGDV), the German Academy of Allergology and Environmental Medicine (DAAU), and the German Documentation Center for Severe Skin Reactions (dZh).",https://pubmed.ncbi.nlm.nih.gov/37705676/
+804,32105622,Larotrectinib in patients with TRK fusion-positive solid tumours: a pooled analysis of three phase 1/2 clinical trials.,https://pubmed.ncbi.nlm.nih.gov/32105622/
+805,27261963,Normal Percentile Reference Curves and Correlation of Acetabular Index and Acetabular Depth Ratio in Children.,https://pubmed.ncbi.nlm.nih.gov/27261963/
 806,33115308,,https://pubmed.ncbi.nlm.nih.gov/33115308/
 807,35169303,,https://pubmed.ncbi.nlm.nih.gov/35169303/
 808,26924167,,https://pubmed.ncbi.nlm.nih.gov/26924167/
@@ -814,16 +814,16 @@ Candidate No,PMID,Title,PubMed URL
 813,30965274,Efficacy and safety of Levetiracetam as adjunctive treatment in children with focal onset seizures: A systematic review and meta-analysis.,https://pubmed.ncbi.nlm.nih.gov/30965274/
 814,21858432,Systematic review of safety in paediatric drug trials published in 2007.,https://pubmed.ncbi.nlm.nih.gov/21858432/
 815,33468532,Use of tyrosine kinase inhibitors for paediatric Philadelphia chromosome-positive acute lymphoblastic leukaemia: a systematic review and meta-analysis.,https://pubmed.ncbi.nlm.nih.gov/33468532/
-816,40366453,,https://pubmed.ncbi.nlm.nih.gov/40366453/
-817,24808537,,https://pubmed.ncbi.nlm.nih.gov/24808537/
-818,17169874,,https://pubmed.ncbi.nlm.nih.gov/17169874/
-819,26739892,,https://pubmed.ncbi.nlm.nih.gov/26739892/
-820,25395343,,https://pubmed.ncbi.nlm.nih.gov/25395343/
-821,40728401,,https://pubmed.ncbi.nlm.nih.gov/40728401/
-822,31949291,,https://pubmed.ncbi.nlm.nih.gov/31949291/
-823,26768830,,https://pubmed.ncbi.nlm.nih.gov/26768830/
-824,40965672,,https://pubmed.ncbi.nlm.nih.gov/40965672/
-825,23860344,,https://pubmed.ncbi.nlm.nih.gov/23860344/
+816,40366453,Fenfluramine: an effective treatment for developmental epileptic encephalopathies beyond Dravet and Lennox-Gastaut Syndromes.,https://pubmed.ncbi.nlm.nih.gov/40366453/
+817,24808537,Dysfunction of the PGC-1α-mitochondria axis confers adriamycin-induced podocyte injury.,https://pubmed.ncbi.nlm.nih.gov/24808537/
+818,17169874,Pralidoxime safety and toxicity in children.,https://pubmed.ncbi.nlm.nih.gov/17169874/
+819,26739892,mPGES-1-derived PGE2 contributes to adriamycin-induced podocyte injury.,https://pubmed.ncbi.nlm.nih.gov/26739892/
+820,25395343,Drug-induced acute kidney injury in children.,https://pubmed.ncbi.nlm.nih.gov/25395343/
+821,40728401,Safety of Gadolinium-based Contrast Agents in Children: A Systematic Review and Meta-Analysis.,https://pubmed.ncbi.nlm.nih.gov/40728401/
+822,31949291,Pharmacogenomic associations of adverse drug reactions in asthma: systematic review and research prioritisation.,https://pubmed.ncbi.nlm.nih.gov/31949291/
+823,26768830,Systematic review of the toxicity of short-course oral corticosteroids in children.,https://pubmed.ncbi.nlm.nih.gov/26768830/
+824,40965672,Xanthohumol exerts protective function on adriamycin-induced podocyte injury.,https://pubmed.ncbi.nlm.nih.gov/40965672/
+825,23860344,Adverse effects of antiepileptic drugs in North Indian pediatric outpatients.,https://pubmed.ncbi.nlm.nih.gov/23860344/
 826,27913837,Hospitalizations due to preventable adverse reactions-a systematic review.,https://pubmed.ncbi.nlm.nih.gov/27913837/
 827,22761169,Frequency of adverse drug reactions in hospitalized patients: a systematic review and meta-analysis.,https://pubmed.ncbi.nlm.nih.gov/22761169/
 828,26806565,The Safety of Drug Therapy in Children.,https://pubmed.ncbi.nlm.nih.gov/26806565/
@@ -839,11 +839,11 @@ Candidate No,PMID,Title,PubMed URL
 838,35185536,Adverse Drug Reactions in Pediatric Oncohematology: A Systematic Review.,https://pubmed.ncbi.nlm.nih.gov/35185536/
 839,37449964,Definition and Clinical Evaluation for Trimethoprim-Sulfamethoxazole Severe Acute Respiratory Failure.,https://pubmed.ncbi.nlm.nih.gov/37449964/
 840,32510242,An update on CYP2C9 polymorphisms and phenytoin metabolism: implications for adverse effects.,https://pubmed.ncbi.nlm.nih.gov/32510242/
-841,37394254,,https://pubmed.ncbi.nlm.nih.gov/37394254/
-842,37516359,,https://pubmed.ncbi.nlm.nih.gov/37516359/
-843,26006718,,https://pubmed.ncbi.nlm.nih.gov/26006718/
-844,29803714,,https://pubmed.ncbi.nlm.nih.gov/29803714/
-845,34979270,,https://pubmed.ncbi.nlm.nih.gov/34979270/
+841,37394254,Drug Hypersensitivity Reactions.,https://pubmed.ncbi.nlm.nih.gov/37394254/
+842,37516359,"Drug-induced hypersensitivity syndrome/drug reaction with eosinophilia and systemic symptoms. Part I. Epidemiology, pathogenesis, clinicopathological features, and prognosis.",https://pubmed.ncbi.nlm.nih.gov/37516359/
+843,26006718,Eosinophilic Drug Allergy.,https://pubmed.ncbi.nlm.nih.gov/26006718/
+844,29803714,High-risk drug rashes.,https://pubmed.ncbi.nlm.nih.gov/29803714/
+845,34979270,Annular drug eruptions.,https://pubmed.ncbi.nlm.nih.gov/34979270/
 846,19371237,"Severe drug-induced skin reactions: clinical pattern, diagnostics and therapy.",https://pubmed.ncbi.nlm.nih.gov/19371237/
 847,38977212,Delayed Skin Testing for Systemic Medications: Helpful or Not?,https://pubmed.ncbi.nlm.nih.gov/38977212/
 848,22014984,Iatrogenic skin injury in hospitalized patients.,https://pubmed.ncbi.nlm.nih.gov/22014984/
@@ -874,11 +874,11 @@ Candidate No,PMID,Title,PubMed URL
 873,34059239,,https://pubmed.ncbi.nlm.nih.gov/34059239/
 874,33717075,,https://pubmed.ncbi.nlm.nih.gov/33717075/
 875,39042477,,https://pubmed.ncbi.nlm.nih.gov/39042477/
-876,30573342,,https://pubmed.ncbi.nlm.nih.gov/30573342/
-877,24007777,,https://pubmed.ncbi.nlm.nih.gov/24007777/
-878,26110678,,https://pubmed.ncbi.nlm.nih.gov/26110678/
-879,31020549,,https://pubmed.ncbi.nlm.nih.gov/31020549/
-880,25458866,,https://pubmed.ncbi.nlm.nih.gov/25458866/
+876,30573342,Controversies in drug allergy: Testing for delayed reactions.,https://pubmed.ncbi.nlm.nih.gov/30573342/
+877,24007777,"""Cutaneous adverse drug reactions"" are not always drug-induced.",https://pubmed.ncbi.nlm.nih.gov/24007777/
+878,26110678,Monitoring the acute response in severe hypersensitivity reactions to drugs.,https://pubmed.ncbi.nlm.nih.gov/26110678/
+879,31020549,Mechanisms of Severe Cutaneous Adverse Reactions: Recent Advances.,https://pubmed.ncbi.nlm.nih.gov/31020549/
+880,25458866,[Cutaneous adverse drug reactions].,https://pubmed.ncbi.nlm.nih.gov/25458866/
 881,33752857,Nephrotoxin Stewardship.,https://pubmed.ncbi.nlm.nih.gov/33752857/
 882,32821608,Massive Acetaminophen Overdose.,https://pubmed.ncbi.nlm.nih.gov/32821608/
 883,15378106,Preventing vincristine sulfate medication errors.,https://pubmed.ncbi.nlm.nih.gov/15378106/
@@ -889,31 +889,31 @@ Candidate No,PMID,Title,PubMed URL
 888,35345746,A Small Dose Can Cause a Major Problem.,https://pubmed.ncbi.nlm.nih.gov/35345746/
 889,20455338,Fentanyl patches: preventable overdose.,https://pubmed.ncbi.nlm.nih.gov/20455338/
 890,36337813,Datura Poisoning in Trinidad: A Case Report.,https://pubmed.ncbi.nlm.nih.gov/36337813/
-891,32923330,,https://pubmed.ncbi.nlm.nih.gov/32923330/
-892,16969448,,https://pubmed.ncbi.nlm.nih.gov/16969448/
-893,28236867,,https://pubmed.ncbi.nlm.nih.gov/28236867/
-894,31869482,,https://pubmed.ncbi.nlm.nih.gov/31869482/
-895,37260534,,https://pubmed.ncbi.nlm.nih.gov/37260534/
-896,24811394,,https://pubmed.ncbi.nlm.nih.gov/24811394/
-897,29135905,,https://pubmed.ncbi.nlm.nih.gov/29135905/
-898,33388821,,https://pubmed.ncbi.nlm.nih.gov/33388821/
-899,38719244,,https://pubmed.ncbi.nlm.nih.gov/38719244/
-900,41255343,,https://pubmed.ncbi.nlm.nih.gov/41255343/
-901,7175995,,https://pubmed.ncbi.nlm.nih.gov/7175995/
-902,22829250,,https://pubmed.ncbi.nlm.nih.gov/22829250/
-903,32491455,,https://pubmed.ncbi.nlm.nih.gov/32491455/
-904,28038759,,https://pubmed.ncbi.nlm.nih.gov/28038759/
-905,32850070,,https://pubmed.ncbi.nlm.nih.gov/32850070/
-906,19458202,,https://pubmed.ncbi.nlm.nih.gov/19458202/
-907,35482748,,https://pubmed.ncbi.nlm.nih.gov/35482748/
-908,35676987,,https://pubmed.ncbi.nlm.nih.gov/35676987/
-909,9127424,,https://pubmed.ncbi.nlm.nih.gov/9127424/
-910,4405537,,https://pubmed.ncbi.nlm.nih.gov/4405537/
-911,16634392,,https://pubmed.ncbi.nlm.nih.gov/16634392/
-912,19191213,,https://pubmed.ncbi.nlm.nih.gov/19191213/
-913,41193142,,https://pubmed.ncbi.nlm.nih.gov/41193142/
-914,30963738,,https://pubmed.ncbi.nlm.nih.gov/30963738/
-915,22678709,,https://pubmed.ncbi.nlm.nih.gov/22678709/
+891,32923330,Delayed presentation of paracetamol overdose.,https://pubmed.ncbi.nlm.nih.gov/32923330/
+892,16969448,Medication errors: immunisation.,https://pubmed.ncbi.nlm.nih.gov/16969448/
+893,28236867,Medication errors in anesthesia: unacceptable or unavoidable?,https://pubmed.ncbi.nlm.nih.gov/28236867/
+894,31869482,Dexmedetomidine infusion overdose during anesthesia: A case report.,https://pubmed.ncbi.nlm.nih.gov/31869482/
+895,37260534,Investigation of Medication Safety Incidents Using Root Cause Analysis and Action.,https://pubmed.ncbi.nlm.nih.gov/37260534/
+896,24811394,Antiretroviral and Medication Errors in Hospitalized HIV-Positive Patients.,https://pubmed.ncbi.nlm.nih.gov/24811394/
+897,29135905,Unsuccessful Suicide Attempt With Tiapride.,https://pubmed.ncbi.nlm.nih.gov/29135905/
+898,33388821,Paracetamol overdose in the newborn and infant: a life-threatening event.,https://pubmed.ncbi.nlm.nih.gov/33388821/
+899,38719244,Brexpiprazole toxicity in a paediatric patient.,https://pubmed.ncbi.nlm.nih.gov/38719244/
+900,41255343,QT interval prolongation in acute antipsychotic poisoning: systematic review and recommendations.,https://pubmed.ncbi.nlm.nih.gov/41255343/
+901,7175995,Methyldopa poisoning.,https://pubmed.ncbi.nlm.nih.gov/7175995/
+902,22829250,Near fatal case of amlodipine poisoning in an infant.,https://pubmed.ncbi.nlm.nih.gov/22829250/
+903,32491455,Clinical Drug Testing.,https://pubmed.ncbi.nlm.nih.gov/32491455/
+904,28038759,[Medication errors in anesthesia: unacceptable or unavoidable?].,https://pubmed.ncbi.nlm.nih.gov/28038759/
+905,32850070,' Loperamide overdose induces ventricular tachycardia with catastrophic outcomes'.,https://pubmed.ncbi.nlm.nih.gov/32850070/
+906,19458202,"Medication errors: what they are, how they happen, and how to avoid them.",https://pubmed.ncbi.nlm.nih.gov/19458202/
+907,35482748,Medication errors in type 2 diabetes from patients' perspective.,https://pubmed.ncbi.nlm.nih.gov/35482748/
+908,35676987,A Rare Case of Metronidazole Overdose Causing Ventricular Fibrillation.,https://pubmed.ncbi.nlm.nih.gov/35676987/
+909,9127424,Acute dapsone intoxication: a pediatric case report.,https://pubmed.ncbi.nlm.nih.gov/9127424/
+910,4405537,Phenothiazine poisoning. A review of 48 cases.,https://pubmed.ncbi.nlm.nih.gov/4405537/
+911,16634392,Medication errors: professional issues and concerns.,https://pubmed.ncbi.nlm.nih.gov/16634392/
+912,19191213,Neuroleptic malignant syndrome developing after acute overdose with olanzapine and chlorpromazine.,https://pubmed.ncbi.nlm.nih.gov/19191213/
+913,41193142,Prevention of Childhood Poisoning.,https://pubmed.ncbi.nlm.nih.gov/41193142/
+914,30963738,Medication overdoses: changes over time.,https://pubmed.ncbi.nlm.nih.gov/30963738/
+915,22678709,Terms used in patient safety related to medication: a literature review.,https://pubmed.ncbi.nlm.nih.gov/22678709/
 916,32208947,Iatrogenic Oral Ketamine Overdose in Palliative Care.,https://pubmed.ncbi.nlm.nih.gov/32208947/
 917,26913719,Survival After Cardiac Arrest: ECMO Rescue Therapy After Amlodipine and Metoprolol Overdose.,https://pubmed.ncbi.nlm.nih.gov/26913719/
 918,31703306,Minimizing Medication Errors from Electronic Prescription Transmission-Digitizing Compounded Drug Preparations.,https://pubmed.ncbi.nlm.nih.gov/31703306/
@@ -934,11 +934,11 @@ Candidate No,PMID,Title,PubMed URL
 933,27931774,Neonatal venlafaxine discontinuation syndrome: A mini-review.,https://pubmed.ncbi.nlm.nih.gov/27931774/
 934,19062773,Withdrawing benzodiazepines in primary care.,https://pubmed.ncbi.nlm.nih.gov/19062773/
 935,9262526,Antidepressant withdrawal reactions.,https://pubmed.ncbi.nlm.nih.gov/9262526/
-936,25721705,,https://pubmed.ncbi.nlm.nih.gov/25721705/
-937,19567771,,https://pubmed.ncbi.nlm.nih.gov/19567771/
-938,15617293,,https://pubmed.ncbi.nlm.nih.gov/15617293/
-939,26721643,,https://pubmed.ncbi.nlm.nih.gov/26721643/
-940,7841860,,https://pubmed.ncbi.nlm.nih.gov/7841860/
+936,25721705,Withdrawal Symptoms after Selective Serotonin Reuptake Inhibitor Discontinuation: A Systematic Review.,https://pubmed.ncbi.nlm.nih.gov/25721705/
+937,19567771,Clonazepam withdrawal-induced catatonia.,https://pubmed.ncbi.nlm.nih.gov/19567771/
+938,15617293,The patient with daily headaches.,https://pubmed.ncbi.nlm.nih.gov/15617293/
+939,26721643,"Gabapentin: Abuse, Dependence, and Withdrawal.",https://pubmed.ncbi.nlm.nih.gov/26721643/
+940,7841860,Overview: a comparison of withdrawal symptoms from different drug classes.,https://pubmed.ncbi.nlm.nih.gov/7841860/
 941,15725047,Rhinitis medicamentosa: a review of causes and treatment.,https://pubmed.ncbi.nlm.nih.gov/15725047/
 942,25192903,Strategies for discontinuation of proton pump inhibitors: a systematic review.,https://pubmed.ncbi.nlm.nih.gov/25192903/
 943,28458437,Levetiracetam-induced leukocytoclastic vasculitis.,https://pubmed.ncbi.nlm.nih.gov/28458437/
@@ -979,23 +979,23 @@ Candidate No,PMID,Title,PubMed URL
 978,27716900,Measuring financial toxicity as a clinically relevant patient-reported outcome: The validation of the COmprehensive Score for financial Toxicity (COST).,https://pubmed.ncbi.nlm.nih.gov/27716900/
 979,26444523,PIMASERTIB AND SEROUS RETINAL DETACHMENTS.,https://pubmed.ncbi.nlm.nih.gov/26444523/
 980,1332623,[DNA topoisomerase inhibitor].,https://pubmed.ncbi.nlm.nih.gov/1332623/
-981,32265166,,https://pubmed.ncbi.nlm.nih.gov/32265166/
-982,24762289,,https://pubmed.ncbi.nlm.nih.gov/24762289/
-983,24193169,,https://pubmed.ncbi.nlm.nih.gov/24193169/
-984,2044288,,https://pubmed.ncbi.nlm.nih.gov/2044288/
+981,32265166,Cancer Clinical Trials: Implications for Oncology Nurses.,https://pubmed.ncbi.nlm.nih.gov/32265166/
+982,24762289,Joint WFH-ISTH session: issues in clinical trial design.,https://pubmed.ncbi.nlm.nih.gov/24762289/
+983,24193169,Strategies for postmarketing surveillance of drugs for rare diseases.,https://pubmed.ncbi.nlm.nih.gov/24193169/
+984,2044288,The effects of fluoride on bone.,https://pubmed.ncbi.nlm.nih.gov/2044288/
 985,18370456,,https://pubmed.ncbi.nlm.nih.gov/18370456/
-986,27743334,,https://pubmed.ncbi.nlm.nih.gov/27743334/
-987,3221437,,https://pubmed.ncbi.nlm.nih.gov/3221437/
-988,18844768,,https://pubmed.ncbi.nlm.nih.gov/18844768/
-989,28303374,,https://pubmed.ncbi.nlm.nih.gov/28303374/
-990,19821348,,https://pubmed.ncbi.nlm.nih.gov/19821348/
+986,27743334,Pharmaceutical Benefit-Risk Communication Tools: A Review of the Literature.,https://pubmed.ncbi.nlm.nih.gov/27743334/
+987,3221437,[A clinical study of rokitamycin in pediatrics].,https://pubmed.ncbi.nlm.nih.gov/3221437/
+988,18844768,Proactive compared with passive adverse event recognition: calcium channel blocker-associated edema.,https://pubmed.ncbi.nlm.nih.gov/18844768/
+989,28303374,Potentially reversible acute cerebellar toxicity associated with Minnelide.,https://pubmed.ncbi.nlm.nih.gov/28303374/
+990,19821348,Diclofenac for acute pain in children.,https://pubmed.ncbi.nlm.nih.gov/19821348/
 991,30991262,Buparlisib with thoracic radiotherapy and its effect on tumour hypoxia: A phase I study in patients with advanced non-small cell lung carcinoma.,https://pubmed.ncbi.nlm.nih.gov/30991262/
 992,1972736,Hypersensitivity reactions from taxol.,https://pubmed.ncbi.nlm.nih.gov/1972736/
 993,32482765,Methotrexate in Psoriasis and Psoriatic Arthritis.,https://pubmed.ncbi.nlm.nih.gov/32482765/
 994,15140552,Neutropenic enterocolitis (typhilitis) associated with docetaxel therapy in a patient with non-small-cell lung cancer: case report and review of literature.,https://pubmed.ncbi.nlm.nih.gov/15140552/
 995,11841360,Pharmacogenetics in clinical dermatology.,https://pubmed.ncbi.nlm.nih.gov/11841360/
-996,21401568,,https://pubmed.ncbi.nlm.nih.gov/21401568/
-997,1514709,,https://pubmed.ncbi.nlm.nih.gov/1514709/
-998,22410708,,https://pubmed.ncbi.nlm.nih.gov/22410708/
-999,11161227,,https://pubmed.ncbi.nlm.nih.gov/11161227/
-1000,28299283,,https://pubmed.ncbi.nlm.nih.gov/28299283/
+996,21401568,Optimizing the concentration and bolus of a drug delivered by continuous infusion.,https://pubmed.ncbi.nlm.nih.gov/21401568/
+997,1514709,Iomeprol vs iopamidol in intraarterial peripheral digital subtraction angiography.,https://pubmed.ncbi.nlm.nih.gov/1514709/
+998,22410708,Current treatment considerations in metastatic renal cell carcinoma.,https://pubmed.ncbi.nlm.nih.gov/22410708/
+999,11161227,"Interferon in oncological practice: review of interferon biology, clinical applications, and toxicities.",https://pubmed.ncbi.nlm.nih.gov/11161227/
+1000,28299283,Lenvatinib for Anaplastic Thyroid Cancer.,https://pubmed.ncbi.nlm.nih.gov/28299283/
