@@ -87,7 +87,8 @@
     "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts",
     "listedness:verify": "node --import tsx scripts/verify-listedness-engine.ts",
     "listedness:verify:kb": "node --import tsx scripts/verify-listedness-kb-e2e.ts",
-    "listedness:inventory:labels": "node --import tsx scripts/inventory-label-documents.ts"
+    "listedness:inventory:labels": "node --import tsx scripts/inventory-label-documents.ts",
+    "label:inventory:verify": "node --import tsx scripts/verify-label-inventory.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "1.18.0",
