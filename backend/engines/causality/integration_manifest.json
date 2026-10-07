@@ -1,0 +1,10 @@
+{
+  "component": "Nexus Causality Agent",
+  "integration_version": "1.5.0",
+  "status": "decision-support / HITL",
+  "production_auto_release": false,
+  "knowledge_owner": "backend.knowledge.knowledge_router.KnowledgeRouter",
+  "knowledge_contract": "backend/engines/causality/nexus_kb_adapter.py",
+  "orchestration_nodes": 12,
+  "release_policy": "fail-closed until all qualification gates pass"
+}
