@@ -1,8 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { resolveKnowledgeRoot } from "@/lib/knowledge/processing/knowledge-root";
-
 type LabelManifest = {
   labelId: string;
   brandName: string;
@@ -102,7 +100,9 @@ function blockersFor(manifest: LabelManifest): string[] {
 }
 
 export function listLabelReferenceCandidates(): LabelReferenceCandidate[] {
-  const knowledgeRoot = resolveKnowledgeRoot();
+  const knowledgeRoot = process.env.CLINIXAI_KNOWLEDGE_ROOT?.trim()
+    ? path.resolve(process.env.CLINIXAI_KNOWLEDGE_ROOT.trim())
+    : path.resolve(process.cwd(), "..", "knowledge");
   const labelingRoot = path.join(knowledgeRoot, "Labeling");
 
   if (!fs.existsSync(labelingRoot)) return [];
