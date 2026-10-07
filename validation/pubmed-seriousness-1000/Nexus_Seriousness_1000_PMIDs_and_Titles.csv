@@ -14,9 +14,9 @@ Candidate No,PMID,Title,PubMed URL
 13,12477993,A novel EEG artifact in the intensive care unit.,https://pubmed.ncbi.nlm.nih.gov/12477993/
 14,15074317,Applications of bispectral index monitoring in the pediatric intensive care unit.,https://pubmed.ncbi.nlm.nih.gov/15074317/
 15,19462804,[Case of laryngeal edema occurring after tracheal extubation presumably due to antihypertensive medications].,https://pubmed.ncbi.nlm.nih.gov/19462804/
-16,28838925,,https://pubmed.ncbi.nlm.nih.gov/28838925/
-17,12610851,,https://pubmed.ncbi.nlm.nih.gov/12610851/
-18,32554527,,https://pubmed.ncbi.nlm.nih.gov/32554527/
+16,28838925,Case of steroid-responsive encephalopathy from hypoglycaemia.,https://pubmed.ncbi.nlm.nih.gov/28838925/
+17,12610851,Colonic pseudo-obstruction: the dilated colon in the ICU.,https://pubmed.ncbi.nlm.nih.gov/12610851/
+18,32554527,Piperacillin/tazobactam-induced coagulopathy in a patient through a vitamin K-dependent mechanism.,https://pubmed.ncbi.nlm.nih.gov/32554527/
 19,34857963,,https://pubmed.ncbi.nlm.nih.gov/34857963/
 20,23328147,,https://pubmed.ncbi.nlm.nih.gov/23328147/
 21,24368863,Removal of endotracheal tube obstruction with a secretion clearance device.,https://pubmed.ncbi.nlm.nih.gov/24368863/
@@ -88,7 +88,7 @@ Candidate No,PMID,Title,PubMed URL
 87,33462046,,https://pubmed.ncbi.nlm.nih.gov/33462046/
 88,33520070,,https://pubmed.ncbi.nlm.nih.gov/33520070/
 89,30672492,,https://pubmed.ncbi.nlm.nih.gov/30672492/
-90,19864092,,https://pubmed.ncbi.nlm.nih.gov/19864092/
+90,19864092,Giant congenital auricular arteriovenous malformation.,https://pubmed.ncbi.nlm.nih.gov/19864092/
 91,32823159,Clinical Presentation of Chiari-like Malformation in 2 Persian Cats.,https://pubmed.ncbi.nlm.nih.gov/32823159/
 92,23296582,Pregnancy and isotretinoin therapy.,https://pubmed.ncbi.nlm.nih.gov/23296582/
 93,15863582,Anomalies associated with failed methotrexate and misoprostol termination.,https://pubmed.ncbi.nlm.nih.gov/15863582/
@@ -124,8 +124,8 @@ Candidate No,PMID,Title,PubMed URL
 123,31154032,Identification and Management of Perioperative Anaphylaxis.,https://pubmed.ncbi.nlm.nih.gov/31154032/
 124,15663568,Heparin-induced recurrent anaphylaxis.,https://pubmed.ncbi.nlm.nih.gov/15663568/
 125,34819140,Carboxymethylcellulose excipient allergy: a case report.,https://pubmed.ncbi.nlm.nih.gov/34819140/
-126,26216470,,https://pubmed.ncbi.nlm.nih.gov/26216470/
-127,33118683,,https://pubmed.ncbi.nlm.nih.gov/33118683/
+126,26216470,Clindamycin-induced hypersensitivity reaction.,https://pubmed.ncbi.nlm.nih.gov/26216470/
+127,33118683,Anaphylaxis-related hemoperitoneum in 11 dogs.,https://pubmed.ncbi.nlm.nih.gov/33118683/
 128,31831926,,https://pubmed.ncbi.nlm.nih.gov/31831926/
 129,25794419,,https://pubmed.ncbi.nlm.nih.gov/25794419/
 130,32757033,,https://pubmed.ncbi.nlm.nih.gov/32757033/
@@ -157,8 +157,8 @@ Candidate No,PMID,Title,PubMed URL
 156,30639433,,https://pubmed.ncbi.nlm.nih.gov/30639433/
 157,18855892,,https://pubmed.ncbi.nlm.nih.gov/18855892/
 158,22791846,,https://pubmed.ncbi.nlm.nih.gov/22791846/
-159,25999169,,https://pubmed.ncbi.nlm.nih.gov/25999169/
-160,19322620,,https://pubmed.ncbi.nlm.nih.gov/19322620/
+159,25999169,Anaphylactic-like reaction from trimethoprim-sulfamethoxazole in a patient with AIDS.,https://pubmed.ncbi.nlm.nih.gov/25999169/
+160,19322620,Stress-induced cardiomyopathy following cephalosporin-induced anaphylactic shock during general anesthesia.,https://pubmed.ncbi.nlm.nih.gov/19322620/
 161,33731401,Atypical case of syphilitic hepatitis.,https://pubmed.ncbi.nlm.nih.gov/33731401/
 162,31142491,Homeopathy-medicine induced severe alcoholic hepatitis.,https://pubmed.ncbi.nlm.nih.gov/31142491/
 163,24733687,Liraglutide-induced autoimmune hepatitis.,https://pubmed.ncbi.nlm.nih.gov/24733687/
@@ -214,11 +214,11 @@ Candidate No,PMID,Title,PubMed URL
 213,16219892,Thalidomide-associated thrombocytopenia.,https://pubmed.ncbi.nlm.nih.gov/16219892/
 214,25337296,Autoimmune neutropenia preceding Helicobacter pylori-negative MALT lymphoma with nodal dissemination.,https://pubmed.ncbi.nlm.nih.gov/25337296/
 215,33753395,Rare case of pancrelipase therapy-induced neutropaenia.,https://pubmed.ncbi.nlm.nih.gov/33753395/
-216,27174436,,https://pubmed.ncbi.nlm.nih.gov/27174436/
+216,27174436,Purpura and leukopenia in a cocaine user.,https://pubmed.ncbi.nlm.nih.gov/27174436/
 217,29669774,,https://pubmed.ncbi.nlm.nih.gov/29669774/
 218,33509295,,https://pubmed.ncbi.nlm.nih.gov/33509295/
 219,22791479,,https://pubmed.ncbi.nlm.nih.gov/22791479/
-220,25153852,,https://pubmed.ncbi.nlm.nih.gov/25153852/
+220,25153852,Levetiracetam-induced neutropenia following traumatic brain injury.,https://pubmed.ncbi.nlm.nih.gov/25153852/
 221,30031506,A Woman With Severe Rash.,https://pubmed.ncbi.nlm.nih.gov/30031506/
 222,14608591,Morning pseudoneutropenia during clozapine treatment.,https://pubmed.ncbi.nlm.nih.gov/14608591/
 223,26096756,[Agranulocytosis related to fluindione: A case report].,https://pubmed.ncbi.nlm.nih.gov/26096756/
@@ -304,8 +304,8 @@ Candidate No,PMID,Title,PubMed URL
 303,30032805,Future development of a depot antiepileptic drug: What are the ethical implications?,https://pubmed.ncbi.nlm.nih.gov/30032805/
 304,35383492,The Twilight Zone: Oxybutynin Overuse Exacerbating Delirium.,https://pubmed.ncbi.nlm.nih.gov/35383492/
 305,11054326,Fluocinolone acetonide sustained drug delivery device to treat severe uveitis.,https://pubmed.ncbi.nlm.nih.gov/11054326/
-306,33518612,,https://pubmed.ncbi.nlm.nih.gov/33518612/
-307,32417798,,https://pubmed.ncbi.nlm.nih.gov/32417798/
+306,33518612,Drug-induced Hypersensitivity Syndrome by EGFR-TKI in a Patient with Lung Cancer.,https://pubmed.ncbi.nlm.nih.gov/33518612/
+307,32417798,Biphasic Levodopa-Induced Freezing of Gait in Parkinson's Disease.,https://pubmed.ncbi.nlm.nih.gov/32417798/
 308,23256093,,https://pubmed.ncbi.nlm.nih.gov/23256093/
 309,32755257,,https://pubmed.ncbi.nlm.nih.gov/32755257/
 310,20047247,,https://pubmed.ncbi.nlm.nih.gov/20047247/
@@ -317,8 +317,8 @@ Candidate No,PMID,Title,PubMed URL
 316,20410533,,https://pubmed.ncbi.nlm.nih.gov/20410533/
 317,27412313,,https://pubmed.ncbi.nlm.nih.gov/27412313/
 318,16889285,,https://pubmed.ncbi.nlm.nih.gov/16889285/
-319,30287443,,https://pubmed.ncbi.nlm.nih.gov/30287443/
-320,33242135,,https://pubmed.ncbi.nlm.nih.gov/33242135/
+319,30287443,Lesson of the month 1: Sodium valproate-induced encephalopathy.,https://pubmed.ncbi.nlm.nih.gov/30287443/
+320,33242135,[Drug interactions in dermatological systemic treatment].,https://pubmed.ncbi.nlm.nih.gov/33242135/
 321,24821217,Natalizumab use during the third trimester of pregnancy.,https://pubmed.ncbi.nlm.nih.gov/24821217/
 322,25066207,Management of hypersensitivity reactions to anti-D immunoglobulin preparations.,https://pubmed.ncbi.nlm.nih.gov/25066207/
 323,27809899,Prenatal sonographic diagnosis of fetal valproate syndrome: a case report.,https://pubmed.ncbi.nlm.nih.gov/27809899/
@@ -344,7 +344,7 @@ Candidate No,PMID,Title,PubMed URL
 343,21898573,Therapeutic apheresis: a review of complications and recommendations for prevention and management.,https://pubmed.ncbi.nlm.nih.gov/21898573/
 344,11125927,Administration of interferon-alpha during pregnancy: effects on fetus.,https://pubmed.ncbi.nlm.nih.gov/11125927/
 345,29507014,Placental abruption after amnioreduction for polyhydramnios caused by chorioangioma.,https://pubmed.ncbi.nlm.nih.gov/29507014/
-346,26314950,,https://pubmed.ncbi.nlm.nih.gov/26314950/
+346,26314950,Sequential Amniotic Fluid Thyroid Hormone Changes Correlate with Goiter Shrinkage following in utero Thyroxine Therapy.,https://pubmed.ncbi.nlm.nih.gov/26314950/
 347,27689206,,https://pubmed.ncbi.nlm.nih.gov/27689206/
 348,32201448,,https://pubmed.ncbi.nlm.nih.gov/32201448/
 349,25882468,,https://pubmed.ncbi.nlm.nih.gov/25882468/
@@ -526,9 +526,9 @@ Candidate No,PMID,Title,PubMed URL
 525,23291146,Determination of glyphosate and AMPA in blood and urine from humans: about 13 cases of acute intoxication.,https://pubmed.ncbi.nlm.nih.gov/23291146/
 526,34507437,,https://pubmed.ncbi.nlm.nih.gov/34507437/
 527,18408954,,https://pubmed.ncbi.nlm.nih.gov/18408954/
-528,37365498,,https://pubmed.ncbi.nlm.nih.gov/37365498/
-529,31656167,,https://pubmed.ncbi.nlm.nih.gov/31656167/
-530,31415373,,https://pubmed.ncbi.nlm.nih.gov/31415373/
+528,37365498,Mallory-Weiss syndrome in four hemodialysis patients: a case study.,https://pubmed.ncbi.nlm.nih.gov/37365498/
+529,31656167,Persistent trigeminal artery in a patient with posterior circulation stroke treated with rt-PA: case report.,https://pubmed.ncbi.nlm.nih.gov/31656167/
+530,31415373,Fatal contrast medium-induced adverse response to iohexol in carotid artery angioplasty: A case report.,https://pubmed.ncbi.nlm.nih.gov/31415373/
 531,22429946,Efficacy and safety of bilateral posterior canal occlusion in patients with refractory benign paroxysmal positional vertigo: case report series.,https://pubmed.ncbi.nlm.nih.gov/22429946/
 532,18547381,An unusual presentation of canine distemper virus infection in a domestic ferret (Mustela putorius furo).,https://pubmed.ncbi.nlm.nih.gov/18547381/
 533,35012825,Pityriasis Rosea-like eruptions following COVID-19 mRNA-1273 vaccination: A case report and literature review.,https://pubmed.ncbi.nlm.nih.gov/35012825/
@@ -657,8 +657,8 @@ Candidate No,PMID,Title,PubMed URL
 656,34748441,,https://pubmed.ncbi.nlm.nih.gov/34748441/
 657,28223004,,https://pubmed.ncbi.nlm.nih.gov/28223004/
 658,28084963,,https://pubmed.ncbi.nlm.nih.gov/28084963/
-659,31398663,,https://pubmed.ncbi.nlm.nih.gov/31398663/
-660,34672214,,https://pubmed.ncbi.nlm.nih.gov/34672214/
+659,31398663,"Forensic entomotoxicology: Current concepts, trends and challenges.",https://pubmed.ncbi.nlm.nih.gov/31398663/
+660,34672214,Drug-induced pulmonary toxicity in breast cancer patients treated with systemic therapy: a systematic literature review.,https://pubmed.ncbi.nlm.nih.gov/34672214/
 661,22780111,Medicalization of dying: are we turning the corner?,https://pubmed.ncbi.nlm.nih.gov/22780111/
 662,33420800,Advances in Research on the Toxicological Effects of Selenium.,https://pubmed.ncbi.nlm.nih.gov/33420800/
 663,16370061,Needed: closer scrutiny of clinical trials.,https://pubmed.ncbi.nlm.nih.gov/16370061/
@@ -694,10 +694,10 @@ Candidate No,PMID,Title,PubMed URL
 693,21451097,Impact of psychological factors in the experience of pain.,https://pubmed.ncbi.nlm.nih.gov/21451097/
 694,26581670,Rehabilitation - a new approach. Part two: the underlying theories.,https://pubmed.ncbi.nlm.nih.gov/26581670/
 695,23171754,Mindfulness and bodily distress.,https://pubmed.ncbi.nlm.nih.gov/23171754/
-696,30865215,,https://pubmed.ncbi.nlm.nih.gov/30865215/
-697,28699514,,https://pubmed.ncbi.nlm.nih.gov/28699514/
-698,26084666,,https://pubmed.ncbi.nlm.nih.gov/26084666/
-699,30193909,,https://pubmed.ncbi.nlm.nih.gov/30193909/
+696,30865215,"Burden of Cardiovascular Diseases in China, 1990-2016: Findings From the 2016 Global Burden of Disease Study.",https://pubmed.ncbi.nlm.nih.gov/30865215/
+697,28699514,Monoterpenes as Perspective to Chronic Pain Management: A Systematic Review.,https://pubmed.ncbi.nlm.nih.gov/28699514/
+698,26084666,Bipolar disorder and ADHD: comorbidity and diagnostic distinctions.,https://pubmed.ncbi.nlm.nih.gov/26084666/
+699,30193909,Thinking outside the (pill) box: Does toxic metal exposure thwart antibiotic stewardship best practices?,https://pubmed.ncbi.nlm.nih.gov/30193909/
 700,25153811,,https://pubmed.ncbi.nlm.nih.gov/25153811/
 701,33674458,Trends in inequalities in disability in Europe between 2002 and 2017.,https://pubmed.ncbi.nlm.nih.gov/33674458/
 702,31892321,Post-sepsis syndrome - an evolving entity that afflicts survivors of sepsis.,https://pubmed.ncbi.nlm.nih.gov/31892321/
@@ -806,9 +806,9 @@ Candidate No,PMID,Title,PubMed URL
 805,27261963,Normal Percentile Reference Curves and Correlation of Acetabular Index and Acetabular Depth Ratio in Children.,https://pubmed.ncbi.nlm.nih.gov/27261963/
 806,33115308,,https://pubmed.ncbi.nlm.nih.gov/33115308/
 807,35169303,,https://pubmed.ncbi.nlm.nih.gov/35169303/
-808,26924167,,https://pubmed.ncbi.nlm.nih.gov/26924167/
-809,35859911,,https://pubmed.ncbi.nlm.nih.gov/35859911/
-810,35312791,,https://pubmed.ncbi.nlm.nih.gov/35312791/
+808,26924167,Medication use in childhood dystonia.,https://pubmed.ncbi.nlm.nih.gov/26924167/
+809,35859911,Effectiveness and Safety of Rifaximin-Containing Regimens for Helicobacter pylori Eradication: Systematic Review - Are They Potential Eradication Regimens?,https://pubmed.ncbi.nlm.nih.gov/35859911/
+810,35312791,A systematic review of the incidence of hypersensitivity reactions and post-contrast acute kidney injury after ioversol: part 2-intra-arterial administration.,https://pubmed.ncbi.nlm.nih.gov/35312791/
 811,27540239,LONG-COURSE ORAL CORTICOSTEROID TOXICITY IN CHILDREN.,https://pubmed.ncbi.nlm.nih.gov/27540239/
 812,31375398,Pegvaliase: Immunological profile and recommendations for the clinical management of hypersensitivity reactions in patients with phenylketonuria treated with this enzyme substitution therapy.,https://pubmed.ncbi.nlm.nih.gov/31375398/
 813,30965274,Efficacy and safety of Levetiracetam as adjunctive treatment in children with focal onset seizures: A systematic review and meta-analysis.,https://pubmed.ncbi.nlm.nih.gov/30965274/
@@ -872,8 +872,8 @@ Candidate No,PMID,Title,PubMed URL
 871,24322785,,https://pubmed.ncbi.nlm.nih.gov/24322785/
 872,23792104,,https://pubmed.ncbi.nlm.nih.gov/23792104/
 873,34059239,,https://pubmed.ncbi.nlm.nih.gov/34059239/
-874,33717075,,https://pubmed.ncbi.nlm.nih.gov/33717075/
-875,39042477,,https://pubmed.ncbi.nlm.nih.gov/39042477/
+874,33717075,The Roles of Immunoregulatory Networks in Severe Drug Hypersensitivity.,https://pubmed.ncbi.nlm.nih.gov/33717075/
+875,39042477,Systemic and skin-limited delayed-type drug hypersensitivity reactions associate with distinct resident and recruited T cell subsets.,https://pubmed.ncbi.nlm.nih.gov/39042477/
 876,30573342,Controversies in drug allergy: Testing for delayed reactions.,https://pubmed.ncbi.nlm.nih.gov/30573342/
 877,24007777,"""Cutaneous adverse drug reactions"" are not always drug-induced.",https://pubmed.ncbi.nlm.nih.gov/24007777/
 878,26110678,Monitoring the acute response in severe hypersensitivity reactions to drugs.,https://pubmed.ncbi.nlm.nih.gov/26110678/
@@ -944,10 +944,10 @@ Candidate No,PMID,Title,PubMed URL
 943,28458437,Levetiracetam-induced leukocytoclastic vasculitis.,https://pubmed.ncbi.nlm.nih.gov/28458437/
 944,27651709,Deprescription: The prescription metabolism.,https://pubmed.ncbi.nlm.nih.gov/27651709/
 945,32386690,Hypnotic Discontinuation in Chronic Insomnia.,https://pubmed.ncbi.nlm.nih.gov/32386690/
-946,29759276,,https://pubmed.ncbi.nlm.nih.gov/29759276/
-947,34000917,,https://pubmed.ncbi.nlm.nih.gov/34000917/
-948,15262744,,https://pubmed.ncbi.nlm.nih.gov/15262744/
-949,32641917,,https://pubmed.ncbi.nlm.nih.gov/32641917/
+946,29759276,Hypnotic Discontinuation in Chronic Insomnia.,https://pubmed.ncbi.nlm.nih.gov/29759276/
+947,34000917,Trastuzumab-emtansine induced pleural and pericardial effusions.,https://pubmed.ncbi.nlm.nih.gov/34000917/
+948,15262744,Barbiturate withdrawal following Internet purchase of Fioricet.,https://pubmed.ncbi.nlm.nih.gov/15262744/
+949,32641917,Olanzapine-Induced Withdrawal Oculogyric Crisis in an Adolescent With a Neurodevelopmental Disorder.,https://pubmed.ncbi.nlm.nih.gov/32641917/
 950,26834969,,https://pubmed.ncbi.nlm.nih.gov/26834969/
 951,26664952,Antiepileptic Drug Withdrawal in Dogs with Epilepsy.,https://pubmed.ncbi.nlm.nih.gov/26664952/
 952,39337929,Medication-Overuse Headache: Update on Management.,https://pubmed.ncbi.nlm.nih.gov/39337929/
@@ -967,8 +967,8 @@ Candidate No,PMID,Title,PubMed URL
 966,38901879,,https://pubmed.ncbi.nlm.nih.gov/38901879/
 967,33246634,,https://pubmed.ncbi.nlm.nih.gov/33246634/
 968,22566227,,https://pubmed.ncbi.nlm.nih.gov/22566227/
-969,31808887,,https://pubmed.ncbi.nlm.nih.gov/31808887/
-970,28497027,,https://pubmed.ncbi.nlm.nih.gov/28497027/
+969,31808887,Integrating patient-centered factors in the risk assessment of MDS.,https://pubmed.ncbi.nlm.nih.gov/31808887/
+970,28497027,Data-Based Radiation Oncology: Design of Clinical Trials in the Toxicity Biomarkers Era.,https://pubmed.ncbi.nlm.nih.gov/28497027/
 971,34604551,Assessing concordance between patient-reported and investigator-reported CTCAE after proton beam therapy for prostate cancer.,https://pubmed.ncbi.nlm.nih.gov/34604551/
 972,23183705,Cancer pharmacogenomics: strategies and challenges.,https://pubmed.ncbi.nlm.nih.gov/23183705/
 973,38785396,Unleashing patient voices: empowering adverse event assessment with complete patient-reported outcomes.,https://pubmed.ncbi.nlm.nih.gov/38785396/
