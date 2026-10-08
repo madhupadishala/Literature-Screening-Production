@@ -2,3 +2,10 @@
 chromadb==1.5.9
 
 anthropic==1.12.1
+
+# Shared evidence-first event agent runtime
+langgraph>=1,<2
+langchain-openai>=1,<2
+defusedxml==0.7.1
+pypdf>=5,<7
+python-docx>=1.1,<2
