@@ -224,3 +224,19 @@ def test_shared_sentence_cue_does_not_assign_all_drugs_as_suspects():
     result = classify('Aspirin was suspected while metformin continued unchanged.')
     assert len(result.classifications) == 2
     assert all(c.role == DrugRole.UNKNOWN and c.requires_human_review for c in result.classifications)
+
+
+def test_short_product_tokens_preserve_identity():
+    from backend.agents.drug_role.ownership import resolve_ownership
+    assert resolve_ownership('Vitamin B6',[{'generic_name':'Vitamin D3'}])[0]==Ownership.UNKNOWN
+    assert resolve_ownership('Amlodipine',[{'generic_name':'Co-Amlodipine'}])[0]==Ownership.UNKNOWN
+
+
+def test_reindex_removes_stale_scope_before_current_upsert(tmp_path):
+    from backend.knowledge.vector_indexer import VectorIndexer
+    class Collection:
+        def __init__(self): self.calls=[]
+        def delete(self,**kwargs):self.calls.append(kwargs)
+    index=VectorIndexer.__new__(VectorIndexer);index.base_path=str(tmp_path);index.collection=Collection()
+    assert index.rebuild_index('tenant')['indexed']==0
+    assert index.collection.calls==[{'where':{'$and':[{'tenant_id':'tenant'},{'knowledge_type':'tenant_override'}]}},{'where':{'$and':[{'tenant_id':'GLOBAL'},{'knowledge_type':'general_pv'}]}}]

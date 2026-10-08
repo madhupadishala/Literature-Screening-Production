@@ -108,14 +108,11 @@ class VectorIndexer:
                         "country_scope": ",".join(parsed.get("country_scope", ["GLOBAL"])) if isinstance(parsed.get("country_scope", []), list) else str(parsed.get("country_scope", "GLOBAL"))
                     })
 
-        # CRITICAL CACHE BUSTING FIX:
-        # If IDs exist, delete them first to force Chroma to rewrite the text content blocks fresh
+        # Remove stale, deleted, re-scoped and quarantined rule records. Keep other
+        # tenants and knowledge types intact; failed cleanup must abort the rebuild.
+        self.collection.delete(where={"$and": [{"tenant_id": tenant_id}, {"knowledge_type": "tenant_override"}]})
+        self.collection.delete(where={"$and": [{"tenant_id": "GLOBAL"}, {"knowledge_type": "general_pv"}]})
         if all_ids:
-            try:
-                self.collection.delete(ids=all_ids)
-            except Exception:
-                pass # Safe catch for blank collection starts
-                
             self.collection.upsert(
                 ids=all_ids,
                 documents=all_documents,

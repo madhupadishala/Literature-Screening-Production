@@ -1,10 +1,11 @@
+import re
 from typing import Any, Dict, Iterable, Optional, Tuple
 
 from .schemas import Ownership
 
 
 def _tokens(value: str):
-    return {t for t in value.lower().replace("-", " ").split() if len(t) > 2}
+    return set(re.findall(r"[^\W_]+", value.casefold()))
 
 
 def _matches(name: str, product: Dict[str, Any]) -> bool:

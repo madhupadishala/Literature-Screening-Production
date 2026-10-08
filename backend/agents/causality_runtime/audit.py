@@ -31,12 +31,12 @@ class AuditLog:
     def append(self, payload: dict, *, event_type: str = "assessment") -> int:
         body = json.dumps(payload, sort_keys=True, separators=(",", ":"))
         ts = datetime.now(timezone.utc).isoformat()
-        with self.lock:
+        with self.lock, self.db:
+            self.db.execute("BEGIN IMMEDIATE")
             row = self.db.execute("SELECT hash FROM audit ORDER BY id DESC LIMIT 1").fetchone()
             prev = row[0] if row else "GENESIS"
             cur = self.db.execute("INSERT INTO audit(ts,prev,hash,event_type,payload) VALUES(?,?,?,?,?)",
                                   (ts, prev, self._h(prev, ts, event_type, body), event_type, body))
-            self.db.commit()
             return cur.lastrowid
 
     def record_review(self, *, assessment_audit_id: int, reviewer_id: str,
@@ -63,7 +63,7 @@ class AuditLog:
 
     def export_manifest(self) -> dict:
         ok, bad_id = self.verify()
-        rows = self.db.execute("SELECT COUNT(*), COALESCE(MAX(id),0), COALESCE(MAX(hash),'GENESIS') FROM audit").fetchone()
+        rows = self.db.execute("SELECT COUNT(*), COALESCE(MAX(id),0), COALESCE((SELECT hash FROM audit ORDER BY id DESC LIMIT 1),'GENESIS') FROM audit").fetchone()
         return {
             "chain_valid": ok,
             "first_bad_id": bad_id,

@@ -4,6 +4,10 @@ export class PVServiceError extends Error {
   constructor(public readonly statusCode: number) { super("Shared PV service unavailable"); }
 }
 
+export function serviceFailureStatus(status: number): number {
+  return [400, 409, 503].includes(status) ? status : 502;
+}
+
 export type PVAgentName = "drug-role" | "causality";
 export interface SharedPVRequest {
   tenant_id: string; client_id: string; workspace_id: string; case_id: string;

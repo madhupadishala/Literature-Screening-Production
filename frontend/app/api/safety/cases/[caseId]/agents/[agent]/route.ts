@@ -1,7 +1,7 @@
 import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { assessSeriousness, seriousnessAgentEnabled } from "@/lib/ai/seriousness-agent-client";
-import { assessSharedPVAgent, PVServiceError } from "@/lib/ai/shared-pv-agent-client";
+import { assessSharedPVAgent, PVServiceError, serviceFailureStatus } from "@/lib/ai/shared-pv-agent-client";
 import { assertSafetyCaseInScope } from "@/lib/safety/common/safety-workspace-scope";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ ca
       : await assessSharedPVAgent(agent as "drug-role" | "causality", input);
     return Response.json({ success: true, data: result }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
-    if (error instanceof PVServiceError) return Response.json({ error: "Agent service unavailable; human review required.", route: "hitl" }, { status: error.statusCode });
+    if (error instanceof PVServiceError) return Response.json({ error: "Agent service unavailable; human review required.", route: "hitl" }, { status: serviceFailureStatus(error.statusCode) });
     return routeErrorResponse(error);
   }
 }

@@ -33,7 +33,7 @@ class Chunk:
 
     @property
     def key(self) -> str:
-        return f"{self.source}|{self.section_id}|{self.version}"
+        return f"{self.tenant_scope or 'GLOBAL'}|{self.jurisdiction}|{self.source}|{self.section_id}|{self.version}"
 
     @property
     def sha256(self) -> str:

@@ -34,3 +34,13 @@ test("shared client rejects scope mismatch", async () => {
   try { await assert.rejects(assessSharedPVAgent("drug-role", {tenant_id:"t",client_id:"c",workspace_id:"w",case_id:"case",narrative:"source",source_type:"spontaneous",event_terms:[]}),/scope/); }
   finally { globalThis.fetch=prior;delete process.env.NEXUS_DRUG_ROLE_ENABLED;delete process.env.NEXUS_PV_AGENT_URL;delete process.env.NEXUS_PV_AGENT_TOKEN; }
 });
+
+test('upstream service authentication errors do not masquerade as browser authentication errors', async () => {
+  const { serviceFailureStatus } = await import('../lib/ai/shared-pv-agent-client');
+  assert.equal(serviceFailureStatus(401), 502);
+  assert.equal(serviceFailureStatus(403), 502);
+  assert.equal(serviceFailureStatus(400), 400);
+  assert.equal(serviceFailureStatus(409), 409);
+  assert.equal(serviceFailureStatus(503), 503);
+  assert.equal(serviceFailureStatus(500), 502);
+});

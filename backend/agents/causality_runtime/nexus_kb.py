@@ -80,8 +80,8 @@ class GovernedRepositoryKnowledgeAdapter:
 
     Required production fields match the current Nexus knowledge_loader contract:
     chunk_id, ko_id, title, domain, version, status, section, text, content_hash_sha256.
-    Only Approved + effective_for_production=true content is eligible. Optional tenant/client fields are
-    honored when present; global content remains available to all tenants.
+    Only Approved + effective_for_production=true content is eligible. Retrieval requires explicit
+    tenant/client/jurisdiction scope and an effective date; GLOBAL must be declared explicitly.
     """
 
     REQUIRED = {"chunk_id", "ko_id", "title", "domain", "version", "status", "section", "text",
@@ -134,14 +134,21 @@ class GovernedRepositoryKnowledgeAdapter:
     def _scope_ok(rec: dict, req: RetrievalRequest) -> bool:
         tenant = rec.get("tenant_id") or rec.get("tenant")
         client = rec.get("client_id") or rec.get("client")
-        juris = str(rec.get("jurisdiction") or "global").lower()
-        if tenant not in (None, "", "global", req.tenant_id):
+        juris = rec.get("jurisdiction")
+        if not all(isinstance(x, str) and x.strip() for x in (tenant, client, juris)):
             return False
-        if client not in (None, "", "global", req.client_id):
+        if tenant.lower() != "global" and tenant != req.tenant_id:
             return False
-        if juris not in ("global", req.jurisdiction.lower()):
+        if client.lower() != "global" and client != req.client_id:
             return False
-        return True
+        if juris.lower() not in ("global", req.jurisdiction.lower()):
+            return False
+        try:
+            effective = date.fromisoformat(rec["effective_date"])
+            expires = date.fromisoformat(rec["expiry_date"]) if rec.get("expiry_date") else None
+        except (KeyError, TypeError, ValueError):
+            return False
+        return effective <= req.as_of and (expires is None or req.as_of <= expires)
 
     def retrieve(self, request: RetrievalRequest) -> RetrievalResponse:
         q = _tokens(request.query)
@@ -154,7 +161,7 @@ class GovernedRepositoryKnowledgeAdapter:
             kb_type = str(rec.get("knowledge_type", "")).lower()
             # Knowledge types are soft filters because the controlled repository currently uses domains.
             if wanted and not any(w in domain or w == kb_type for w in wanted):
-                if not any(w in ("regulatory", "methodology", "sop", "product", "governance") for w in wanted):
+                if not any(w in ("regulatory", "methodology") for w in wanted):
                     continue
             overlap = len(q & rec["_tokens"])
             if request.product:

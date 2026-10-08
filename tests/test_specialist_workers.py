@@ -78,3 +78,53 @@ def test_groq_truncated_extraction_is_rejected():
     class Client:
         def post(self,*args,**kwargs):return Response()
     with pytest.raises(ValueError):GroqExtractor('seriousness','configured-model','test-key',Client()).extract('source',0)
+
+
+def test_audit_manifest_anchors_latest_row_not_lexicographic_max(tmp_path):
+    log=CAudit(str(tmp_path/'manifest.sqlite'))
+    for i in range(8):log.append({'test':i})
+    manifest=log.export_manifest()
+    assert manifest['last_hash']==log.db.execute('select hash from audit order by id desc limit 1').fetchone()[0]
+    assert manifest['last_id']==8 and manifest['chain_valid']
+
+
+def test_scoped_chunk_keys_do_not_collide():
+    from backend.agents.causality_runtime.kb import Chunk
+    from dataclasses import replace
+    chunk=Chunk(kb='methodology',source='source',section_id='section',text='rule',version='1',tenant_scope='A',jurisdiction='IN')
+    assert len({chunk.key,replace(chunk,tenant_scope='B').key,replace(chunk,jurisdiction='US').key})==3
+
+
+def test_product_request_cannot_use_non_label_governed_chunks(tmp_path):
+    import json
+    from datetime import date
+    from backend.agents.causality_runtime.nexus_kb import GovernedRepositoryKnowledgeAdapter,RetrievalRequest
+    text='Aspirin bleeding appears in this SOP, which is not a product label.'
+    row={'chunk_id':'sop','ko_id':'sop','title':'SOP','domain':'sop','version':'1','status':'Approved','section':'1','text':text,'content_hash_sha256':hashlib.sha256(text.encode()).hexdigest(),'effective_for_production':True,'tenant_id':'GLOBAL','client_id':'GLOBAL','jurisdiction':'GLOBAL','effective_date':'2020-01-01'}
+    p=tmp_path/'chunks.jsonl';p.write_text(json.dumps(row)+'\n')
+    adapter=GovernedRepositoryKnowledgeAdapter(p)
+    result=adapter.retrieve(RetrievalRequest('tenant','client','Aspirin bleeding',('product','label','rsi'), 'IN', date.today(),product='Aspirin',event='bleeding'))
+    assert not result.citations
+
+
+def test_governed_retrieval_requires_explicit_current_scope():
+    from datetime import date
+    from backend.agents.causality_runtime.nexus_kb import GovernedRepositoryKnowledgeAdapter as Adapter, RetrievalRequest
+    req=RetrievalRequest('tenant','client','query',('regulatory',),'IN',date(2026,1,1))
+    row={'tenant_id':'tenant','client_id':'client','jurisdiction':'IN','effective_date':'2025-01-01'}
+    assert Adapter._scope_ok(row,req)
+    for change in ({'client_id':None},{'tenant_id':'other'},{'client_id':'other'},{'jurisdiction':'US'},{'effective_date':'2027-01-01'},{'expiry_date':'2025-12-31'},{'effective_date':'bad'}):
+        assert not Adapter._scope_ok({**row,**change},req)
+    assert not Adapter._scope_ok({},req)
+    assert Adapter._scope_ok({**row,'tenant_id':'GLOBAL','client_id':'GLOBAL','jurisdiction':'GLOBAL'},req)
+
+
+def test_multiple_audit_connections_share_one_chain(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    for kind in (SAudit,CAudit):
+        path=str(tmp_path/(kind.__module__.split('.')[-2]+'.sqlite'))
+        logs=[kind(path),kind(path)]
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            list(pool.map(lambda i:logs[i%2].append({'record':i}),range(60)))
+        assert logs[0].verify()==(True,None)
+        assert logs[0].db.execute('select count(*) from audit').fetchone()[0]==60
