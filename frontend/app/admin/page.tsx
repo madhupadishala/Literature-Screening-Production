@@ -5,7 +5,7 @@ import Navigation from "@/components/Navigation";
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 
 const modules = [
-  { title: "Agent Knowledge Centre", description: "Browse 40 draft PV rules with source references, version status, and review-only controls. PV/QA approval pending.", action: "/admin/pv-knowledge" },
+  { title: "Nexus Knowledge Centre", description: "Centralized regulatory, clinical, product, terminology, client and agent knowledge governance. Currently showing draft PV rules for review.", action: "/admin/pv-knowledge" },
   {
     title: "Product Master",
     description:
