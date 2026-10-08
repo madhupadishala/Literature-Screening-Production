@@ -34,7 +34,7 @@ export default function PvKnowledgeCentrePage() {
   const rules = useMemo(() => (pack?.rules ?? []).filter((r) => [r.id,r.title,r.statement,r.domain].join(" ").toLowerCase().includes(filter.toLowerCase())), [pack,filter]);
   return <main style={{ minHeight: "100vh", background: "#eef2f7", padding: 24, color: "#0f172a" }}>
     <Navigation />
-    <InvestorDemoHeader eyebrow="NEXUS KNOWLEDGE GOVERNANCE" title="Agent Knowledge Centre" subtitle="Read-only draft clinical and regulatory decision controls. No rule is approved or enabled for autonomous agent decisions." status="Review Pending" />
+    <InvestorDemoHeader eyebrow="CENTRALIZED NEXUS KNOWLEDGE GOVERNANCE" title="Nexus Knowledge Centre" subtitle="Read-only draft clinical and regulatory decision controls. No rule is approved or enabled for autonomous agent decisions." status="Review Pending" />
     {loading && <p role="status">Loading knowledge packs…</p>}
     {error && <p role="alert" style={{color:"#991b1b"}}>{error}</p>}
     {data && <>
