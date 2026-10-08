@@ -90,12 +90,15 @@
     "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts"
   },
   "dependencies": {
+    "@langchain/core": "1.2.17",
+    "@langchain/langgraph": "1.4.21",
     "@qdrant/js-client-rest": "1.18.0",
     "@types/papaparse": "^5.5.2",
     "bcryptjs": "^2.4.3",
     "cheerio": "^1.2.0",
     "exceljs": "4.4.0",
     "fast-xml-parser": "^5.10.1",
+    "i18n-iso-countries": "7.14.0",
     "js-tiktoken": "^1.0.21",
     "mammoth": "1.12.0",
     "next": "16.3.8",
@@ -106,7 +109,8 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "unpdf": "1.6.2",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
