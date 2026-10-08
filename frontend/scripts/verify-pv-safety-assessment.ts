@@ -203,6 +203,30 @@ assert.ok(
   "Aggregate-safety logic must not be represented as already covered by the existing controlled repository.",
 );
 
+
+const missingPatientWithEvent: PvSafetyAssessmentInput = {
+  ...noSafety,
+  adverseEventOrReaction: "PRESENT",
+  eventEvidence: [{ text: "A patient experienced acute liver injury." }],
+};
+const missingPatientResult = assessPvSafety(missingPatientWithEvent);
+assert.equal(missingPatientResult.safetyRelevance, "UNRESOLVED");
+assert.equal(missingPatientResult.exclusionCanBeFinalized, false);
+assert.equal(missingPatientResult.manualReviewRequired, true);
+
+const conflictingEvidenceResult = assessPvSafety({
+  ...noSafety,
+  adverseEventOrReaction: "CONFLICTING",
+});
+assert.equal(conflictingEvidenceResult.safetyRelevance, "UNRESOLVED");
+assert.equal(conflictingEvidenceResult.exclusionCanBeFinalized, false);
+
+const eventWithoutSourceSpan = assessPvSafety({
+  ...norco,
+  eventEvidence: [],
+});
+assert.equal(eventWithoutSourceSpan.manualReviewRequired, true);
+
 console.log("PV Safety Assessment Engine v1 verification passed.");
 console.table([
   { scenario: "Norco", safety: norcoResult.safetyRelevance, fullScreen: norcoResult.fullScreeningRequired },
