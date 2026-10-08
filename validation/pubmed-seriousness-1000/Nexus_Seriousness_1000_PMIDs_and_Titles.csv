@@ -1,14 +1,14 @@
 Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficulty,Scenario,DOI,PMCID,PubMed URL
-1,29808264,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/29808264/
-2,27699455,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27699455/
-3,29709266,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/29709266/
-4,28735978,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/28735978/
-5,27922495,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27922495/
-6,30850570,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/30850570/
-7,15579349,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/15579349/
-8,32341207,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32341207/
-9,24196095,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/24196095/
-10,32237124,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32237124/
+1,29808264,"Neonatal hypertension: cases, causes, and clinical approach.",2019 May,Pediatr Nephrol,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1007/s00467-018-3977-4,PMC6261698,https://pubmed.ncbi.nlm.nih.gov/29808264/
+2,27699455,Tardive tachypnea.,2016 Dec,Intensive Care Med,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1007/s00134-016-4555-5,,https://pubmed.ncbi.nlm.nih.gov/27699455/
+3,29709266,"Saprochaete capitata (Geotrichum capitatum), an emerging fungal infection in kidney transplant recipients.",2018 Jun,J Mycol Med,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1016/j.mycmed.2018.04.005,,https://pubmed.ncbi.nlm.nih.gov/29709266/
+4,28735978,Ventilator-Induced Hiccups.,2017 Oct,J Pediatr,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1016/j.jpeds.2017.06.065,,https://pubmed.ncbi.nlm.nih.gov/28735978/
+5,27922495,Toxic and Endocrine Myopathies.,2016 Dec,Continuum (Minneap Minn),S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1212/CON.0000000000000407,,https://pubmed.ncbi.nlm.nih.gov/27922495/
+6,30850570,Serotonin syndrome unmasking thyrotoxicosis.,2019 Mar 7,BMJ Case Rep,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1136/bcr-2018-228404,PMC6424276,https://pubmed.ncbi.nlm.nih.gov/30850570/
+7,15579349,Defining and measuring patient safety.,2005 Jan,Crit Care Clin,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1016/j.ccc.2004.07.006,,https://pubmed.ncbi.nlm.nih.gov/15579349/
+8,32341207,"The effect of veno-arterial extracorporeal oxygenation and nasogastric tube administration on the pharmacokinetic profile of abacavir, lamivudine and dolutegravir: a case report.",2020,Antivir Ther,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.3851/IMP3355,PMC8351529,https://pubmed.ncbi.nlm.nih.gov/32341207/
+9,24196095,Compounded ointment results in severe toxicity in a pediatric patient.,2013 Nov,Pediatr Emerg Care,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1097/PEC.0b013e3182aa4748,,https://pubmed.ncbi.nlm.nih.gov/24196095/
+10,32237124,"One Bronchoscopy, Two Errors.",2020 Apr,AORN J,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1002/aorn.12983,,https://pubmed.ncbi.nlm.nih.gov/32237124/
 11,32787381,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/32787381/
 12,27287503,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/27287503/
 13,12477993,,,,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,,,https://pubmed.ncbi.nlm.nih.gov/12477993/
@@ -39,16 +39,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 38,28687210,Antimicrobial Stewardship Approaches in the Intensive Care Unit.,2017 Sep,Infect Dis Clin North Am,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1016/j.idc.2017.05.002,,https://pubmed.ncbi.nlm.nih.gov/28687210/
 39,19723871,Cardiogenic oscillation and ventilator autotriggering in brain-dead patients: a case series.,2009 Sep,Am J Crit Care,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.4037/ajcc2009690,,https://pubmed.ncbi.nlm.nih.gov/19723871/
 40,16274814,Peppermint oil chemical burn.,2005 Nov,Otolaryngol Head Neck Surg,S02_LIFE_THREATENING_ICU,hard,life-threatening/ICU/intubation,10.1016/j.otohns.2005.05.047,,https://pubmed.ncbi.nlm.nih.gov/16274814/
-41,21108186,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21108186/
-42,34152842,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/34152842/
-43,21448106,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21448106/
-44,30817863,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/30817863/
-45,25114505,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25114505/
-46,27438540,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/27438540/
-47,17937473,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17937473/
-48,25377151,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/25377151/
-49,32097308,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/32097308/
-50,20737060,,,,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/20737060/
+41,21108186,"[""Oseltamivir-induced delirium""].",2010 Dec,Ther Umsch,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.1024/0040-5930/a000106,,https://pubmed.ncbi.nlm.nih.gov/21108186/
+42,34152842,Acute Pain Crisis Caused by Tramadol Remdesivir Drug-Drug Interaction.,2021 Sep,J Palliat Med,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.1089/jpm.2021.0123,,https://pubmed.ncbi.nlm.nih.gov/34152842/
+43,21448106,Hyperprolactinaemia with amisulpride.,2011 Mar,Psychiatr Danub,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/21448106/
+44,30817863,Paliperidone Injection-Associated Delayed-Onset Rash.,2019 Jan 24,Prim Care Companion CNS Disord,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.4088/PCC.18l02323,,https://pubmed.ncbi.nlm.nih.gov/30817863/
+45,25114505,Pustular drug eruption due to Panax notoginseng saponins.,2014,Drug Des Devel Ther,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.2147/DDDT.S67015,PMC4109629,https://pubmed.ncbi.nlm.nih.gov/25114505/
+46,27438540,Cyclosporine Treatment of Drug-Induced Hypersensitivity Syndrome.,2016 Nov 1,JAMA Dermatol,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.1001/jamadermatol.2016.2220,,https://pubmed.ncbi.nlm.nih.gov/27438540/
+47,17937473,Leflunomide-associated infections in rheumatoid arthritis.,2007 Nov,J Rheumatol,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,,,https://pubmed.ncbi.nlm.nih.gov/17937473/
+48,25377151,Paliperidone for the treatment of ketamine-induced psychosis: a case report.,2014,Int J Psychiatry Med,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.2190/PM.48.2.c,,https://pubmed.ncbi.nlm.nih.gov/25377151/
+49,32097308,Quantifying the Crisis: Opioid-Related Adverse Events in Outpatient Ambulatory Plastic Surgery.,2020 Mar,Plast Reconstr Surg,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.1097/PRS.0000000000006570,,https://pubmed.ncbi.nlm.nih.gov/32097308/
+50,20737060,Dextromethorphan withdrawal and dependence syndrome.,2010 Jul,Dtsch Arztebl Int,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.3238/arztebl.2010.0537,PMC2925345,https://pubmed.ncbi.nlm.nih.gov/20737060/
 51,28867523,Drip-and-Ship Thrombolytic Therapy for Acute Ischemic Stroke.,2018 Jan,J Stroke Cerebrovasc Dis,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.1016/j.jstrokecerebrovasdis.2017.07.033,,https://pubmed.ncbi.nlm.nih.gov/28867523/
 52,25873827,Conservative management of chylothorax after coronary artery bypass grafting.,2015 Apr,Tex Heart Inst J,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.14503/THIJ-13-3532,PMC4382882,https://pubmed.ncbi.nlm.nih.gov/25873827/
 53,16731103,Recognition and management of heparin-induced thrombocytopenia in pediatric cardiopulmonary bypass patients.,2006 Jun,Ann Thorac Surg,S03_HOSPITALIZATION,medium,hospitalization/admission/prolongation,10.1016/j.athoracsur.2006.02.075,,https://pubmed.ncbi.nlm.nih.gov/16731103/
@@ -219,26 +219,26 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 218,33509295,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/33509295/
 219,22791479,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/22791479/
 220,25153852,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/25153852/
-221,30031506,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/30031506/
-222,14608591,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/14608591/
-223,26096756,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/26096756/
-224,16140875,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/16140875/
-225,35830519,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/35830519/
-226,32448188,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/32448188/
-227,14642024,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/14642024/
-228,15088959,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/15088959/
-229,11007735,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/11007735/
-230,24433137,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/24433137/
-231,16327720,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/16327720/
-232,14615729,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/14615729/
-233,25052053,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/25052053/
-234,31570359,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/31570359/
-235,18698009,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/18698009/
-236,17633579,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/17633579/
-237,34229529,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/34229529/
-238,16952471,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/16952471/
-239,39419595,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/39419595/
-240,25810235,,,,S10_HEMATOLOGIC,medium,hematologic serious ADR,,,https://pubmed.ncbi.nlm.nih.gov/25810235/
+221,30031506,A Woman With Severe Rash.,2018 Aug,Ann Emerg Med,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1016/j.annemergmed.2018.01.046,,https://pubmed.ncbi.nlm.nih.gov/30031506/
+222,14608591,Morning pseudoneutropenia during clozapine treatment.,2003 Oct,World J Biol Psychiatry,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1080/15622970310029918,,https://pubmed.ncbi.nlm.nih.gov/14608591/
+223,26096756,[Agranulocytosis related to fluindione: A case report].,2016 Jan,Rev Med Interne,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1016/j.revmed.2015.05.013,,https://pubmed.ncbi.nlm.nih.gov/26096756/
+224,16140875,Index of suspicion.,2005 Sep,Pediatr Rev,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1542/pir.26-9-329,,https://pubmed.ncbi.nlm.nih.gov/16140875/
+225,35830519,Brucellosis: A Rare Cause of Febrile Neutropenia in a Child.,2022 Oct 1,Pediatr Infect Dis J,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1097/INF.0000000000003630,,https://pubmed.ncbi.nlm.nih.gov/35830519/
+226,32448188,Suspected Aripiprazole-induced neutropenia in a geriatric patient: a case report.,2020 May 24,BMC Geriatr,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1186/s12877-020-01514-x,PMC7245737,https://pubmed.ncbi.nlm.nih.gov/32448188/
+227,14642024,Clozapine-induced neutropenia in children: management with lithium carbonate.,2003 Fall,J Child Adolesc Psychopharmacol,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1089/104454603322572697,,https://pubmed.ncbi.nlm.nih.gov/14642024/
+228,15088959,Immune-mediated neutropenia suspected in five dogs.,2004 Jan-Feb,Aust Vet J,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1111/j.1751-0813.2004.tb14641.x,,https://pubmed.ncbi.nlm.nih.gov/15088959/
+229,11007735,Agranulocytosis associated with lamotrigine.,2000 Oct,Am J Psychiatry,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1176/appi.ajp.157.10.1704,,https://pubmed.ncbi.nlm.nih.gov/11007735/
+230,24433137,Ticagrelor as an alternative in clopidogrel-associated neutropenia.,2015,Platelets,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.3109/09537104.2013.867427,,https://pubmed.ncbi.nlm.nih.gov/24433137/
+231,16327720,[Topical silver sulfadiazine-induced acute renal failure].,2005 Nov,Ann Dermatol Venereol,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1016/s0151-9638(05)79509-0,,https://pubmed.ncbi.nlm.nih.gov/16327720/
+232,14615729,Rituximab therapy for multisystem autoimmune diseases in pediatric patients.,2003 Nov,J Pediatr,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1067/s0022-3476(03)00382-2,,https://pubmed.ncbi.nlm.nih.gov/14615729/
+233,25052053,Amitriptyline-induced agranulocytosis with bone marrow confirmation.,2014 Oct,Clin Lymphoma Myeloma Leuk,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1016/j.clml.2014.06.001,,https://pubmed.ncbi.nlm.nih.gov/25052053/
+234,31570359,A fatal case of levamisole induced bone marrow failure.,2019 Sep 30,BMJ Case Rep,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1136/bcr-2019-231167,PMC6768367,https://pubmed.ncbi.nlm.nih.gov/31570359/
+235,18698009,Delayed-onset neutropenia with divalproex sodium.,2008 Oct,Ann Pharmacother,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1345/aph.1L239,,https://pubmed.ncbi.nlm.nih.gov/18698009/
+236,17633579,Chemotherapy induced myelosuppression.,2007 Jan,East Afr Med J,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.4314/eamj.v84i1.9485,,https://pubmed.ncbi.nlm.nih.gov/17633579/
+237,34229529,Clozapine rechallenge following neutropenia using granulocyte colony-stimulating factor: A Quebec case series.,2021 Sep,J Psychopharmacol,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1177/02698811211029737,PMC8436292,https://pubmed.ncbi.nlm.nih.gov/34229529/
+238,16952471,Bilateral basal ganglia involvement in a patient with Griscelli syndrome.,2006 Jul,Eur J Paediatr Neurol,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1016/j.ejpn.2006.07.005,,https://pubmed.ncbi.nlm.nih.gov/16952471/
+239,39419595,Neutropenia possibly caused by cefoperazone/sulbactam.,2025 Aug 21,Eur J Hosp Pharm,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1136/ejhpharm-2024-004188,PMC12418546,https://pubmed.ncbi.nlm.nih.gov/39419595/
+240,25810235,Imatinib-induced agranulocytosis in patients with gastrointestinal stromal tumors.,2015 Aug,J Clin Pharmacol,S10_HEMATOLOGIC,medium,hematologic serious ADR,10.1002/jcph.498,,https://pubmed.ncbi.nlm.nih.gov/25810235/
 241,27806233,Fulminant Myocarditis with Combination Immune Checkpoint Blockade.,2016 Nov 3,N Engl J Med,S12_CARDIAC,hard,arrhythmia/QT/myocarditis/cardiac arrest,10.1056/NEJMoa1609214,PMC5247797,https://pubmed.ncbi.nlm.nih.gov/27806233/
 242,30568130,Successful Treatment of Acute Fulminant Eosinophilic Myocarditis in a Patient with Ulcerative Colitis Using Steroid Therapy and Percutaneous Cardiopulmonary Support.,2019 Apr 15,Intern Med,S12_CARDIAC,hard,arrhythmia/QT/myocarditis/cardiac arrest,10.2169/internalmedicine.1528-18,PMC6522398,https://pubmed.ncbi.nlm.nih.gov/30568130/
 243,24604793,"Hint of Lyme, an uncommon cause of syncope.",2014 Mar 6,BMJ Case Rep,S12_CARDIAC,hard,arrhythmia/QT/myocarditis/cardiac arrest,10.1136/bcr-2013-201547,PMC3948432,https://pubmed.ncbi.nlm.nih.gov/24604793/
@@ -279,16 +279,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 278,34960761,Cardiomyopathy Associated with Anti-SARS-CoV-2 Vaccination: What Do We Know?,2021 Dec 13,Viruses,S12_CARDIAC,hard,arrhythmia/QT/myocarditis/cardiac arrest,10.3390/v13122493,PMC8708989,https://pubmed.ncbi.nlm.nih.gov/34960761/
 279,28679100,"Beating, Fast and Slow.",2017 Jul 6,N Engl J Med,S12_CARDIAC,hard,arrhythmia/QT/myocarditis/cardiac arrest,10.1056/NEJMcps1608688,,https://pubmed.ncbi.nlm.nih.gov/28679100/
 280,35249920,Acute Myocarditis in a Patient Following mRNA-1273 SARS-CoV-2 Vaccination.,2022 May 1,Intern Med,S12_CARDIAC,hard,arrhythmia/QT/myocarditis/cardiac arrest,10.2169/internalmedicine.9000-21,PMC9152871,https://pubmed.ncbi.nlm.nih.gov/35249920/
-281,24268951,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/24268951/
-282,20396636,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/20396636/
-283,16089244,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/16089244/
-284,21733815,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/21733815/
-285,31943612,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/31943612/
-286,31907213,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/31907213/
-287,11917821,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/11917821/
-288,26857079,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/26857079/
-289,34404650,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/34404650/
-290,25828570,,,,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/25828570/
+281,24268951,Trimethoprim-sulfamethoxazole-related hallucinations.,2014 Mar-Apr,Gen Hosp Psychiatry,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1016/j.genhosppsych.2013.10.016,,https://pubmed.ncbi.nlm.nih.gov/24268951/
+282,20396636,Laxative-induced rhabdomyolysis.,2010 Apr 7,Clin Interv Aging,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.2147/cia.s8832,PMC2854053,https://pubmed.ncbi.nlm.nih.gov/20396636/
+283,16089244,Olanzapine-induced vasculitis.,2005 Mar,Am J Geriatr Pharmacother,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1016/j.amjopharm.2005.03.003,,https://pubmed.ncbi.nlm.nih.gov/16089244/
+284,21733815,Trimethoprim-sulfamethoxazole-induced hyponatremia.,2011 May,Consult Pharm,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.4140/TCP.n.2011.342,,https://pubmed.ncbi.nlm.nih.gov/21733815/
+285,31943612,Polypharmacy induced myositis.,2020 Jan,Intern Med J,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1111/imj.14687,,https://pubmed.ncbi.nlm.nih.gov/31943612/
+286,31907213,Medication-related osteonecrosis (MRONJ) of the mandible and maxilla.,2020 Jan 5,BMJ Case Rep,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1136/bcr-2018-224455,PMC6954753,https://pubmed.ncbi.nlm.nih.gov/31907213/
+287,11917821,Problems of polypharmacy.,2002 Feb,Aust Fam Physician,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,,,https://pubmed.ncbi.nlm.nih.gov/11917821/
+288,26857079,[A resistant diarrhea].,2016 Mar,Presse Med,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1016/j.lpm.2016.01.007,,https://pubmed.ncbi.nlm.nih.gov/26857079/
+289,34404650,Spontaneous retroperitoneal haemorrhage secondary to anticoagulation polypharmacy.,2021 Aug 17,BMJ Case Rep,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1136/bcr-2021-242934,PMC8375756,https://pubmed.ncbi.nlm.nih.gov/34404650/
+290,25828570,Dialysate and serum potassium in hemodialysis.,2015 Jul,Am J Kidney Dis,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1053/j.ajkd.2015.02.322,,https://pubmed.ncbi.nlm.nih.gov/25828570/
 291,25342892,Bradyarrhythmias secondary to topical levobunolol hydrochloride solution.,2014,Clin Interv Aging,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.2147/CIA.S69420,PMC4206249,https://pubmed.ncbi.nlm.nih.gov/25342892/
 292,33795270,Prednisolone: role in amoxicillin-clavulanate-induced cholestatic liver injury.,2021 Apr 1,BMJ Case Rep,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1136/bcr-2020-239488,PMC8021575,https://pubmed.ncbi.nlm.nih.gov/33795270/
 293,21645801,Anticoagulant polypharmacy.,2011 May-Jun,Geriatr Nurs,S14_ELDERLY_POLYPHARMACY,hard,elderly/polypharmacy,10.1016/j.gerinurse.2011.04.002,,https://pubmed.ncbi.nlm.nih.gov/21645801/
@@ -349,16 +349,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 348,32201448,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/32201448/
 349,25882468,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/25882468/
 350,31553974,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/31553974/
-351,22687674,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/22687674/
-352,22718702,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/22718702/
-353,18187538,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/18187538/
-354,36621878,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/36621878/
-355,12016535,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/12016535/
-356,11933692,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/11933692/
-357,32905627,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/32905627/
-358,24142138,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/24142138/
-359,12706140,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/12706140/
-360,34167992,,,,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/34167992/
+351,22687674,Severe consequences of carbamazepine exposure in utero.,2011 Aug 4,BMJ Case Rep,S15_PREGNANCY,hard,pregnancy/fetal exposure,10.1136/bcr.05.2011.4243,PMC4545117,https://pubmed.ncbi.nlm.nih.gov/22687674/
+352,22718702,Duloxetine withdrawal syndrome in a newborn.,2013 Oct,Clin Pediatr (Phila),S15_PREGNANCY,hard,pregnancy/fetal exposure,10.1177/0009922812450509,,https://pubmed.ncbi.nlm.nih.gov/22718702/
+353,18187538,Clozapine use in two women with schizophrenia during pregnancy.,2008 Jan,J Psychopharmacol,S15_PREGNANCY,hard,pregnancy/fetal exposure,10.1177/0269881107079171,,https://pubmed.ncbi.nlm.nih.gov/18187538/
+354,36621878,Atypical severe intrauterine growth retardation and affected placental function after COVID-19 infection.,2022 Dec 19,Ugeskr Laeger,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/36621878/
+355,12016535,Temporal bone pathology in fetuses exposed to isotretinoin.,2002 Jul-Aug,Pediatr Dev Pathol,S15_PREGNANCY,hard,pregnancy/fetal exposure,10.1007/s10024-001-0258-0,,https://pubmed.ncbi.nlm.nih.gov/12016535/
+356,11933692,Extreme caudal agenesis. Possible drug-related etiology?,2002 Mar,J Reprod Med,S15_PREGNANCY,hard,pregnancy/fetal exposure,,,https://pubmed.ncbi.nlm.nih.gov/11933692/
+357,32905627,Varying clinical presentations of umbilical venous catheter extravasation: A case series.,2021 Jul,J Paediatr Child Health,S15_PREGNANCY,hard,pregnancy/fetal exposure,10.1111/jpc.15137,,https://pubmed.ncbi.nlm.nih.gov/32905627/
+358,24142138,Cutaneous foetal injuries related to amniocentesis.,2013 Oct,J Wound Care,S15_PREGNANCY,hard,pregnancy/fetal exposure,10.12968/jowc.2013.22.Sup10.S23,,https://pubmed.ncbi.nlm.nih.gov/24142138/
+359,12706140,Successful jejunal nutrition therapy in a pregnant patient with apallic syndrome.,2003 Apr,Clin Nutr,S15_PREGNANCY,hard,pregnancy/fetal exposure,10.1054/clnu.2002.0633,,https://pubmed.ncbi.nlm.nih.gov/12706140/
+360,34167992,Premature closure of ductus arteriosus after a single dose of diclofenac during pregnancy.,2021 Jun 24,BMJ Case Rep,S15_PREGNANCY,hard,pregnancy/fetal exposure,10.1136/bcr-2021-243485,PMC8231045,https://pubmed.ncbi.nlm.nih.gov/34167992/
 361,34046142,Vitamin B12 deficiency: case report and review of literature.,2021,Pan Afr Med J,S16_LACTATION,hard,breastfeeding/lactation exposure,10.11604/pamj.2021.38.237.20967,PMC8140678,https://pubmed.ncbi.nlm.nih.gov/34046142/
 362,15125754,Postlactational microcalcifications.,2004 May-Jun,Breast J,S16_LACTATION,hard,breastfeeding/lactation exposure,10.1111/j.1075-122X.2004.21420.x,,https://pubmed.ncbi.nlm.nih.gov/15125754/
 363,31381367,Erenumab During Breastfeeding.,2019 Sep,Breastfeed Med,S16_LACTATION,hard,breastfeeding/lactation exposure,10.1089/bfm.2019.0162,,https://pubmed.ncbi.nlm.nih.gov/31381367/
@@ -449,16 +449,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 448,20305600,Side-effects of generic.,2010 Mar,Psychiatr Danub,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/20305600/
 449,26701876,"Cough, codeine and confusion.",2015 Dec 23,BMJ Case Rep,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1136/bcr-2015-212727,PMC4691881,https://pubmed.ncbi.nlm.nih.gov/26701876/
 450,11401188,Pegylated liposomal doxorubicin: tolerability and toxicity.,2001 Jun,Pharmacotherapy,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1592/phco.21.7.751.34572,,https://pubmed.ncbi.nlm.nih.gov/11401188/
-451,21861209,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/21861209/
-452,30055126,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/30055126/
-453,30951409,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/30951409/
-454,25664909,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/25664909/
-455,11291572,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/11291572/
-456,19238740,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/19238740/
-457,29678667,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/29678667/
-458,18281775,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/18281775/
-459,11999571,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/11999571/
-460,32165024,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/32165024/
+451,21861209,Imaging of recurrent intramuscular granulomatous masses induced by depot injection of leuprorelin.,2012 Mar,Skeletal Radiol,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1007/s00256-011-1254-8,,https://pubmed.ncbi.nlm.nih.gov/21861209/
+452,30055126,Successful in utero transesophageal pacing for severe drug-resistant tachyarrhythmia.,2018 Oct,Am J Obstet Gynecol,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1016/j.ajog.2018.07.018,,https://pubmed.ncbi.nlm.nih.gov/30055126/
+453,30951409,Critical care escalation for treatment-refractory haematological malignancies.,2019 Apr 2,Br J Hosp Med (Lond),S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.12968/hmed.2019.80.4.238,,https://pubmed.ncbi.nlm.nih.gov/30951409/
+454,25664909,Fear and trembling.,2015 Mar,J Palliat Med,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1089/jpm.2014.0256,,https://pubmed.ncbi.nlm.nih.gov/25664909/
+455,11291572,[Invasive aspergillosis on a surgical intensive care unit].,2000,Mycoses,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/11291572/
+456,19238740,Portal vein thrombosis related to Cassia angustifolia.,2008 Sep,Clin Toxicol (Phila),S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1080/15563650701682097,,https://pubmed.ncbi.nlm.nih.gov/19238740/
+457,29678667,Successful use of azathioprine in glucocorticoid refractory immune amegakaryocytic thrombocytopenia of lupus.,2020 May-Jun,Reumatol Clin (Engl Ed),S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1016/j.reuma.2018.03.005,,https://pubmed.ncbi.nlm.nih.gov/29678667/
+458,18281775,[A 23-year delayed locoregional recurrence of breast carcinoma following mastectomy].,2008 Feb,Gan To Kagaku Ryoho,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/18281775/
+459,11999571,Cladribine underdosing in hairy-cell leukemia: a cause for apparent response failure.,2002 Feb,Leuk Lymphoma,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1080/10428190290006170,,https://pubmed.ncbi.nlm.nih.gov/11999571/
+460,32165024,Therapeutic failure with itraconazole in sporotrichosis due to bariatric surgery.,2020 Mar-Apr,An Bras Dermatol,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1016/j.abd.2019.04.015,PMC7175040,https://pubmed.ncbi.nlm.nih.gov/32165024/
 461,10890138,"Imported malaria: six cases of severe Plasmodium falciparum infection in Innsbruck, Austria, within a period of five weeks (February/March 1999).",2000 May 19,Wien Klin Wochenschr,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/10890138/
 462,30581132,Vernal Keratoconjunctivitis-When Medication Fails.,2019 Apr,J Allergy Clin Immunol Pract,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1016/j.jaip.2018.11.016,,https://pubmed.ncbi.nlm.nih.gov/30581132/
 463,14714757,Adrenocortical adenoma associated with inadequately treated congenital adrenal hyperplasia.,2003 Dec,J Pediatr Endocrinol Metab,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1515/jpem.2003.16.9.1311,,https://pubmed.ncbi.nlm.nih.gov/14714757/
@@ -469,16 +469,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 468,28635319,A Case of Topical Ruxolitinib Treatment Failure in Alopecia Areata.,2017 Nov/Dec,J Cutan Med Surg,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1177/1203475417716363,,https://pubmed.ncbi.nlm.nih.gov/28635319/
 469,14618357,[Acute angle-closure glaucoma despite previous Nd:YAG laser iridotomy: a report on 13 cases].,2003 Oct,Ophthalmologe,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1007/s00347-003-0805-3,,https://pubmed.ncbi.nlm.nih.gov/14618357/
 470,22439779,Chronic pelvic osteomyelitis.,2012 Apr,Surg Infect (Larchmt),S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1089/sur.2011.106,,https://pubmed.ncbi.nlm.nih.gov/22439779/
-471,25582377,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/25582377/
-472,25298133,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/25298133/
-473,27089602,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/27089602/
-474,27001821,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/27001821/
-475,22998721,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/22998721/
-476,26546627,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/26546627/
-477,27113129,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/27113129/
-478,28620980,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/28620980/
-479,15005251,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/15005251/
-480,14705853,,,,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/14705853/
+471,25582377,Failure of atovaquone-proguanil malaria chemoprophylaxis in a traveler to Ghana.,2015 Jan-Feb,Travel Med Infect Dis,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1016/j.tmaid.2014.12.010,,https://pubmed.ncbi.nlm.nih.gov/25582377/
+472,25298133,Complicated type B aortic dissection causing ischemia in the celiac and inferior mesenteric artery distribution despite patent superior mesenteric artery bypass.,2015 Aug,Vascular,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1177/1708538114548262,,https://pubmed.ncbi.nlm.nih.gov/25298133/
+473,27089602,[Is it possible to decrease cholesterol levels with dietary supplements?].,2016 Mar 2,Rev Med Suisse,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,,,https://pubmed.ncbi.nlm.nih.gov/27089602/
+474,27001821,Advanced Molecular Detection of Malarone Resistance.,2016 Jun,Antimicrob Agents Chemother,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1128/AAC.00171-16,PMC4879379,https://pubmed.ncbi.nlm.nih.gov/27001821/
+475,22998721,Travel and fake artesunate: a risky business.,2012 Sep 22,Lancet,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1016/S0140-6736(12)60649-7,,https://pubmed.ncbi.nlm.nih.gov/22998721/
+476,26546627,Think beyond simple pneumonia.,2015 Nov 5,BMJ Case Rep,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1136/bcr-2015-213119,PMC4654021,https://pubmed.ncbi.nlm.nih.gov/26546627/
+477,27113129,When extracorporeal CPR fails-fatal ionized hypocalcemia during cardiac arrest.,2016 Nov,Am J Emerg Med,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1016/j.ajem.2016.03.060,,https://pubmed.ncbi.nlm.nih.gov/27113129/
+478,28620980,Case of autoimmune autonomic ganglionopathy manifesting anhidrosis.,2017 Oct,J Dermatol,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1111/1346-8138.13870,,https://pubmed.ncbi.nlm.nih.gov/28620980/
+479,15005251,Unresectable alpha fetoprotein-producing gastric cancer successfully treated with irinotecan and mitomycin C after S-1 failure.,2004 Feb,Intern Med,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.2169/internalmedicine.43.106,,https://pubmed.ncbi.nlm.nih.gov/15005251/
+480,14705853,Irreversible ischemic hand following intraarterial injection of zolpidem powder.,2003,J Toxicol Clin Toxicol,S20_LACK_EFFICACY,hard,lack of efficacy/treatment failure,10.1081/clt-120026529,,https://pubmed.ncbi.nlm.nih.gov/14705853/
 481,31973836,Nightclub Photokeratitis.,2020 Feb,Ophthalmology,S21_EXPOSURE,hard,occupational/accidental exposure,10.1016/j.ophtha.2019.10.027,,https://pubmed.ncbi.nlm.nih.gov/31973836/
 482,33793137,[Ingested medication blister packs].,2021 Mar 25,Ned Tijdschr Geneeskd,S21_EXPOSURE,hard,occupational/accidental exposure,,,https://pubmed.ncbi.nlm.nih.gov/33793137/
 483,19232568,[Bilateral hypopharyngocele].,2009 Mar,Ann Otolaryngol Chir Cervicofac,S21_EXPOSURE,hard,occupational/accidental exposure,10.1016/j.aorl.2008.12.002,,https://pubmed.ncbi.nlm.nih.gov/19232568/
@@ -559,16 +559,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 558,18589348,The syndrome of headache with neurologic deficits and cerebrospinal fluid lymphocytosis mimicking acute ischemic stroke.,2008 Jul-Aug,J Stroke Cerebrovasc Dis,S23_NON_SERIOUS,easy,mild/non-serious ADR candidate,10.1016/j.jstrokecerebrovasdis.2008.02.010,,https://pubmed.ncbi.nlm.nih.gov/18589348/
 559,19514925,Severe cutaneous reaction to cetuximab with possible association with the use of over-the-counter skin care products in a patient with oropharyngeal cancer.,2009,Cutan Ocul Toxicol,S23_NON_SERIOUS,easy,mild/non-serious ADR candidate,10.1080/15569520802646552,,https://pubmed.ncbi.nlm.nih.gov/19514925/
 560,27998307,Neuro-Behcet disease presenting as a solitary cerebellar hemorrhagic lesion: a case report and review of the literature.,2016 Dec 20,J Med Case Rep,S23_NON_SERIOUS,easy,mild/non-serious ADR candidate,10.1186/s13256-016-1151-9,PMC5175309,https://pubmed.ncbi.nlm.nih.gov/27998307/
-561,30654402,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/30654402/
-562,21683825,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/21683825/
-563,19363241,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/19363241/
-564,34489258,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/34489258/
-565,17965986,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/17965986/
-566,42261188,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/42261188/
-567,17667395,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/17667395/
-568,33180345,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/33180345/
-569,31211437,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/31211437/
-570,34518192,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/34518192/
+561,30654402,"Tako-Tsubo Cardiomyopathy during a series of Electroconvulsive Therapy (ECT) applications: A case report, systematic literature research and discussion of specific risk factors.",2018 Nov,Fortschr Neurol Psychiatr,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1055/a-0653-7063,,https://pubmed.ncbi.nlm.nih.gov/30654402/
+562,21683825,Testosterone deficiency.,2011 Jul,Am J Med,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1016/j.amjmed.2010.12.027,,https://pubmed.ncbi.nlm.nih.gov/21683825/
+563,19363241,Yasmin and venous thromboembolism: new case reports.,2009,Clin Hemorheol Microcirc,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.3233/CH-2009-1190,,https://pubmed.ncbi.nlm.nih.gov/19363241/
+564,34489258,Rare complication of ceftriaxone therapy: drug-induced thrombocytopenia (DITP).,2021 Sep 6,BMJ Case Rep,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1136/bcr-2021-245228,PMC8422296,https://pubmed.ncbi.nlm.nih.gov/34489258/
+565,17965986,"Zuclopenthixol-induced neuroleptic malignant syndrome presenting as fever of unknown origin, hyperglycaemia and acute myocardial infarction in a 60-year-old man.",2009,World J Biol Psychiatry,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1080/15622970701714347,,https://pubmed.ncbi.nlm.nih.gov/17965986/
+566,42261188,Cerebral Venous Sinus Thrombosis Occurring During Estetrol/Drospirenone Combined Oral Contraceptive Use in a Woman With Multiple Thrombotic Risk Factors: A Case Report.,2026 Jun,J Obstet Gynaecol Res,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1111/jog.70366,,https://pubmed.ncbi.nlm.nih.gov/42261188/
+567,17667395,Infiltration and extravasation.,2007 Aug,Am J Nurs,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1097/01.NAJ.0000282299.03441.c7,,https://pubmed.ncbi.nlm.nih.gov/17667395/
+568,33180345,Case of vitiligo universalis as a sequela of drug-induced hypersensitivity syndrome.,2021 Jan,J Dermatol,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1111/1346-8138.15562,,https://pubmed.ncbi.nlm.nih.gov/33180345/
+569,31211437,A 'Natural' thyroid storm!,2019 Oct,J Clin Pharm Ther,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1111/jcpt.12996,,https://pubmed.ncbi.nlm.nih.gov/31211437/
+570,34518192,Zoledronic acid-induced symmetrical drug-related intertriginous and flexural exanthema (SDRIFE).,2021 Sep 13,BMJ Case Rep,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1136/bcr-2021-245326,PMC8438827,https://pubmed.ncbi.nlm.nih.gov/34518192/
 571,30777547,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/30777547/
 572,14959920,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/14959920/
 573,20071821,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/20071821/
@@ -579,16 +579,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 578,35217557,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/35217557/
 579,26600649,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/26600649/
 580,25271183,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/25271183/
-581,27608962,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/27608962/
-582,19331724,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/19331724/
-583,21908113,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/21908113/
-584,26613737,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/26613737/
-585,11465247,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/11465247/
-586,23360382,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/23360382/
-587,17694700,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/17694700/
-588,12843947,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/12843947/
-589,29778327,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/29778327/
-590,15172512,,,,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/15172512/
+581,27608962,Low-dose oral contraceptive-induced acute myocardial infarction.,2016 Dec,Eur J Contracept Reprod Health Care,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1080/13625187.2016.1225715,,https://pubmed.ncbi.nlm.nih.gov/27608962/
+582,19331724,Carmine hypersensitivity masquerading as azithromycin hypersensitivity.,2009 Jan-Feb,Allergy Asthma Proc,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.2500/aap.2009.30.3199,,https://pubmed.ncbi.nlm.nih.gov/19331724/
+583,21908113,Suicide by multiple blunt head traumatisation using a stone.,2012 Jan 10,Forensic Sci Int,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1016/j.forsciint.2011.08.014,,https://pubmed.ncbi.nlm.nih.gov/21908113/
+584,26613737,Colloidal silica-induced hypersensitivity: myth or reality.,2016 Feb,Int J Clin Pharm,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1007/s11096-015-0225-x,,https://pubmed.ncbi.nlm.nih.gov/26613737/
+585,11465247,Doxylamine overdose as a potential cause of rhabdomyolysis.,2001 Jul,Am J Med Sci,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1097/00000441-200107000-00009,,https://pubmed.ncbi.nlm.nih.gov/11465247/
+586,23360382,Patients with a history of spine surgery or spinal injury may have a higher chance of intrathecal catheter granuloma formation.,2014 Jan,Pain Pract,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1111/papr.12024,,https://pubmed.ncbi.nlm.nih.gov/23360382/
+587,17694700,Recurrent angioedema due to lysozyme allergy.,2007,J Investig Allergol Clin Immunol,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/17694700/
+588,12843947,[Non-viral fulminant hepatitis].,2003 May,Gastroenterol Clin Biol,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/12843947/
+589,29778327,An Unusual Etiology of Vocal Tremor in a Professional Singer.,2019 Sep,J Voice,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1016/j.jvoice.2018.03.007,,https://pubmed.ncbi.nlm.nih.gov/29778327/
+590,15172512,Medication overuse headache.,2004 Jun,Prim Care,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1016/j.pop.2004.02.008,,https://pubmed.ncbi.nlm.nih.gov/15172512/
 591,23377335,Medication dyes as a source of drug allergy.,2013 Jan,J Drugs Dermatol,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/23377335/
 592,21614834,[Ephedron dependence--case report].,2011 Jan-Feb,Psychiatr Pol,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,,,https://pubmed.ncbi.nlm.nih.gov/21614834/
 593,15899001,Peristomal allergic contact dermatitis--case report and review of the literature.,2005 May,Contact Dermatitis,S24_DIAGNOSTIC_AMBIGUITY,hard,alternative cause/dechallenge/rechallenge/diagnostic ambiguity,10.1111/j.0105-1873.2005.00579.x,,https://pubmed.ncbi.nlm.nih.gov/15899001/
@@ -629,16 +629,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 628,34660157,Synergistic Effects of Psychotropics Leading to Extraordinary Weight Gain.,2021 Sep,Cureus,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.7759/cureus.17978,PMC8507601,https://pubmed.ncbi.nlm.nih.gov/34660157/
 629,26210999,Colchicine-clarithromycin-induced rhabdomyolysis in Familial Mediterranean Fever patients under treatment for Helicobacter pylori.,2015 Nov,Rheumatol Int,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1007/s00296-015-3325-y,,https://pubmed.ncbi.nlm.nih.gov/26210999/
 630,33138853,Acute generalized exanthematous pustulosis and Stevens-Johnson syndrome overlap due to hydroxychloroquine: a case report.,2020 Nov 3,J Med Case Rep,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1186/s13256-020-02504-8,PMC7605900,https://pubmed.ncbi.nlm.nih.gov/33138853/
-631,26242498,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/26242498/
-632,27605198,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/27605198/
-633,30992139,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/30992139/
-634,28475657,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/28475657/
-635,27012659,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/27012659/
-636,27116335,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/27116335/
-637,30410200,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/30410200/
-638,34987932,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/34987932/
-639,20634934,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/20634934/
-640,23442182,,,,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,,,https://pubmed.ncbi.nlm.nih.gov/23442182/
+631,26242498,[Proton Pump Inhibitor and High-dose Methotrexate: Two Cases Reports].,2015 Nov-Dec,Therapie,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.2515/therapie/2015047,,https://pubmed.ncbi.nlm.nih.gov/26242498/
+632,27605198,Statin-associated rhabdomyolysis triggered by drug-drug interaction with itraconazole.,2016 Sep 7,BMJ Case Rep,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1136/bcr-2016-216457,PMC5020717,https://pubmed.ncbi.nlm.nih.gov/27605198/
+633,30992139,[Severe methotrexate toxicity in elderly: 7 years experience].,2019 Sep-Oct,Rev Esp Geriatr Gerontol,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1016/j.regg.2019.02.002,,https://pubmed.ncbi.nlm.nih.gov/30992139/
+634,28475657,Missed Opportunities for Deprescription: A Teachable Moment.,2017 Jul 1,JAMA Intern Med,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1001/jamainternmed.2017.1435,,https://pubmed.ncbi.nlm.nih.gov/28475657/
+635,27012659,Reversible cerebral vasoconstriction syndrome associated with interferon beta-1a use for multiple sclerosis.,2016 Oct,Mult Scler,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1177/1352458516641774,,https://pubmed.ncbi.nlm.nih.gov/27012659/
+636,27116335,Pyogenic granuloma in patients treated with selective BRAF inhibitors: another manifestation of paradoxical pathway activation.,2016 Jun,Melanoma Res,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1097/CMR.0000000000000248,,https://pubmed.ncbi.nlm.nih.gov/27116335/
+637,30410200,Prophylaxis with melatonin for primary stabbing headache in pediatrics: a case report.,2018 Sep 30,Colomb Med (Cali),S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.25100/cm.v49i2.3857,PMC6220483,https://pubmed.ncbi.nlm.nih.gov/30410200/
+638,34987932,Serotonin Toxicity Precipitated by Tramadol in the Setting of Polypharmacy: A Case of Serotonin Syndrome.,2021 Nov,Cureus,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.7759/cureus.20059,PMC8718375,https://pubmed.ncbi.nlm.nih.gov/34987932/
+639,20634934,Corneal deposit of ciprofloxacin after laser assisted subepithelial keratomileusis procedure: a case report.,2010,J Ophthalmol,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1155/2010/296034,PMC2903952,https://pubmed.ncbi.nlm.nih.gov/20634934/
+640,23442182,Simvastatin and amlodipine induced thrombocytopenia in the same patient: double trouble and a literature review.,2013 Jun,J Clin Pharm Ther,S25_MULTI_EVENT_COMPLEX,hard,multi-drug/multi-event complex case,10.1111/jcpt.12051,,https://pubmed.ncbi.nlm.nih.gov/23442182/
 641,37715933,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/37715933/
 642,29408722,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/29408722/
 643,40338211,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/40338211/
@@ -669,16 +669,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 668,12634885,Antiarrhythmic therapy in heart failure.,2002,Heart Fail Monit,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/12634885/
 669,34609452,Effect of Prophylactic Subcutaneous Scopolamine Butylbromide on Death Rattle in Patients at the End of Life: The SILENCE Randomized Clinical Trial.,2021 Oct 5,JAMA,S01_FATAL_DEATH,hard,death/fatal outcome,10.1001/jama.2021.14785,PMC8493437,https://pubmed.ncbi.nlm.nih.gov/34609452/
 670,30041198,Current Perspectives on Sudden Cardiac Death in Hemodialysis Patients.,2018,Contrib Nephrol,S01_FATAL_DEATH,hard,death/fatal outcome,10.1159/000485690,,https://pubmed.ncbi.nlm.nih.gov/30041198/
-671,29278538,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/29278538/
-672,19715960,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/19715960/
-673,31773472,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/31773472/
-674,32967928,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/32967928/
-675,20938414,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/20938414/
-676,21782762,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/21782762/
-677,32919913,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/32919913/
-678,20575633,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/20575633/
-679,30654041,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/30654041/
-680,34139230,,,,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/34139230/
+671,29278538,A Fire Extinguisher Death: The Macklin Effect.,2018 Jun,Am J Forensic Med Pathol,S01_FATAL_DEATH,hard,death/fatal outcome,10.1097/PAF.0000000000000374,,https://pubmed.ncbi.nlm.nih.gov/29278538/
+672,19715960,Disseminated nocardiosis: a rare infectious complication following non-heart-beating donor liver transplantation.,2009 Jul-Aug,Transplant Proc,S01_FATAL_DEATH,hard,death/fatal outcome,10.1016/j.transproceed.2009.05.011,,https://pubmed.ncbi.nlm.nih.gov/19715960/
+673,31773472,Suicidal ligature strangulation: a systematic review of the published literature.,2020 Mar,Forensic Sci Med Pathol,S01_FATAL_DEATH,hard,death/fatal outcome,10.1007/s12024-019-00187-2,,https://pubmed.ncbi.nlm.nih.gov/31773472/
+674,32967928,"Pharmacologic treatment and SUDEP risk: A nationwide, population-based, case-control study.",2020 Nov 3,Neurology,S01_FATAL_DEATH,hard,death/fatal outcome,10.1212/WNL.0000000000010874,PMC7682832,https://pubmed.ncbi.nlm.nih.gov/32967928/
+675,20938414,Pharmacological testing in the diagnosis of arrhythmias.,2010 Aug,Minerva Cardioangiol,S01_FATAL_DEATH,hard,death/fatal outcome,,,https://pubmed.ncbi.nlm.nih.gov/20938414/
+676,21782762,Liver transplantation using Donation after Cardiac Death donors.,2012 Feb,J Hepatol,S01_FATAL_DEATH,hard,death/fatal outcome,10.1016/j.jhep.2011.07.004,,https://pubmed.ncbi.nlm.nih.gov/21782762/
+677,32919913,Medications Are Important for Sudden Cardiac Death Prevention But So Is the Implantable Cardioverter-Defibrillator.,2020 Oct,JACC Heart Fail,S01_FATAL_DEATH,hard,death/fatal outcome,10.1016/j.jchf.2020.07.003,,https://pubmed.ncbi.nlm.nih.gov/32919913/
+678,20575633,Drug-induced QT-interval prolongation: considerations for clinicians.,2010 Jul,Pharmacotherapy,S01_FATAL_DEATH,hard,death/fatal outcome,10.1592/phco.30.7.684,,https://pubmed.ncbi.nlm.nih.gov/20575633/
+679,30654041,The safety of atovaquone-proguanil for the prevention and treatment of malaria in pregnancy: A systematic review.,2019 Jan-Feb,Travel Med Infect Dis,S01_FATAL_DEATH,hard,death/fatal outcome,10.1016/j.tmaid.2019.01.008,PMC9074802,https://pubmed.ncbi.nlm.nih.gov/30654041/
+680,34139230,Anti-arrhythmic drugs in arrhythmogenic right ventricular cardiomyopathy: The importance of optimal beta-blocker dose titration.,2021 Sep 1,Int J Cardiol,S01_FATAL_DEATH,hard,death/fatal outcome,10.1016/j.ijcard.2021.06.009,,https://pubmed.ncbi.nlm.nih.gov/34139230/
 681,29573870,What low back pain is and why we need to pay attention.,2018 Jun 9,Lancet,S04_DISABILITY,hard,persistent disability/sequelae,10.1016/S0140-6736(18)30480-X,,https://pubmed.ncbi.nlm.nih.gov/29573870/
 682,31327369,Oral diseases: a global public health challenge.,2019 Jul 20,Lancet,S04_DISABILITY,hard,persistent disability/sequelae,10.1016/S0140-6736(19)31146-8,,https://pubmed.ncbi.nlm.nih.gov/31327369/
 683,30586067,Chronic pain as a symptom or a disease: the IASP Classification of Chronic Pain for the International Classification of Diseases (ICD-11).,2019 Jan,Pain,S04_DISABILITY,hard,persistent disability/sequelae,10.1097/j.pain.0000000000001384,,https://pubmed.ncbi.nlm.nih.gov/30586067/
@@ -739,16 +739,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 738,36058263,"The Cannabinoid-2 receptor agonist, 1-phenylisatin, protects against cisplatin-induced nephrotoxicity in mice.",2022 Nov 1,Life Sci,S09_RENAL,medium,acute kidney/renal injury,10.1016/j.lfs.2022.120928,,https://pubmed.ncbi.nlm.nih.gov/36058263/
 739,29038395,Acute Interstitial Nephritis Induced by Citrullus Colocynthis.,2017 Oct,Iran J Kidney Dis,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/29038395/
 740,10711385,Mechanisms of nephrotoxicity from metal combinations: a review.,2000 Feb,Drug Chem Toxicol,S09_RENAL,medium,acute kidney/renal injury,10.1081/dct-100100098,,https://pubmed.ncbi.nlm.nih.gov/10711385/
-741,34897282,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/34897282/
-742,24074057,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/24074057/
-743,34445781,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/34445781/
-744,22486185,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/22486185/
-745,32611663,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/32611663/
-746,27487916,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/27487916/
-747,27661440,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/27661440/
-748,31023496,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/31023496/
-749,36550840,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/36550840/
-750,33735856,,,,S09_RENAL,medium,acute kidney/renal injury,,,https://pubmed.ncbi.nlm.nih.gov/33735856/
+741,34897282,Impact of nephrotoxic drugs on urinary biomarkers of renal function in very preterm infants.,2022 Jun,Pediatr Res,S09_RENAL,medium,acute kidney/renal injury,10.1038/s41390-021-01905-9,,https://pubmed.ncbi.nlm.nih.gov/34897282/
+742,24074057,The effects of acute renal failure on drug metabolism.,2014 Jan,Expert Opin Drug Metab Toxicol,S09_RENAL,medium,acute kidney/renal injury,10.1517/17425255.2013.835802,,https://pubmed.ncbi.nlm.nih.gov/24074057/
+743,34445781,"Protective Effects of Black Cumin (Nigella sativa) and Its Bioactive Constituent, Thymoquinone against Kidney Injury: An Aspect on Pharmacological Insights.",2021 Aug 23,Int J Mol Sci,S09_RENAL,medium,acute kidney/renal injury,10.3390/ijms22169078,PMC8396533,https://pubmed.ncbi.nlm.nih.gov/34445781/
+744,22486185,"The acute, genetic, developmental and inhalation toxicology of trans-1,3,3,3-tetrafluoropropene (HFO-1234ze).",2013 Apr,Drug Chem Toxicol,S09_RENAL,medium,acute kidney/renal injury,10.3109/01480545.2012.661738,,https://pubmed.ncbi.nlm.nih.gov/22486185/
+745,32611663,Adverse Drug Effects in Patients with CKD: Primum Non Nocere.,2020 Aug 7,Clin J Am Soc Nephrol,S09_RENAL,medium,acute kidney/renal injury,10.2215/CJN.08890620,PMC7409750,https://pubmed.ncbi.nlm.nih.gov/32611663/
+746,27487916,A mixed grape and blueberry extract is safe for dogs to consume.,2016 Aug 3,BMC Vet Res,S09_RENAL,medium,acute kidney/renal injury,10.1186/s12917-016-0786-5,PMC4973095,https://pubmed.ncbi.nlm.nih.gov/27487916/
+747,27661440,Medication-induced acute kidney injury.,2016 Dec,Curr Opin Crit Care,S09_RENAL,medium,acute kidney/renal injury,10.1097/MCC.0000000000000355,,https://pubmed.ncbi.nlm.nih.gov/27661440/
+748,31023496,Fatal acute arsenic poisoning by external use of realgar: Case report and 30 years literature retrospective study in China.,2019 Jul,Forensic Sci Int,S09_RENAL,medium,acute kidney/renal injury,10.1016/j.forsciint.2019.03.012,,https://pubmed.ncbi.nlm.nih.gov/31023496/
+749,36550840,Renal manifestations of recreational drugs: A narrative review of the literature.,2022 Dec 16,Medicine (Baltimore),S09_RENAL,medium,acute kidney/renal injury,10.1097/MD.0000000000031888,PMC9771315,https://pubmed.ncbi.nlm.nih.gov/36550840/
+750,33735856,Nephrotoxicity from Vancomycin Combined with Piperacillin-Tazobactam: A Comprehensive Review.,2021,Am J Nephrol,S09_RENAL,medium,acute kidney/renal injury,10.1159/000513742,,https://pubmed.ncbi.nlm.nih.gov/33735856/
 751,35809335,Nephroprotective effects of Helianthus annuus seeds extract in gentamicin induced nephrotoxic male mice.,2022 May 22,Cell Mol Biol (Noisy-le-grand),S09_RENAL,medium,acute kidney/renal injury,10.14715/cmb/2022.68.1.1,,https://pubmed.ncbi.nlm.nih.gov/35809335/
 752,33217444,Combination therapy of phosphatidylserine liposome with cyclosporine A improves nephrotoxicity and attenuates delayed-type hypersensitivity response.,2021 Jan 15,Life Sci,S09_RENAL,medium,acute kidney/renal injury,10.1016/j.lfs.2020.118780,,https://pubmed.ncbi.nlm.nih.gov/33217444/
 753,40988019,Fixed-dose vs loose-dose combination antidiabetic therapy and cardiorenal outcomes in type 2 diabetes: a nationwide comparative effectiveness study.,2025 Sep 23,Cardiovasc Diabetol,S09_RENAL,medium,acute kidney/renal injury,10.1186/s12933-025-02936-w,PMC12455815,https://pubmed.ncbi.nlm.nih.gov/40988019/
@@ -819,16 +819,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 818,17169874,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/17169874/
 819,26739892,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26739892/
 820,25395343,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/25395343/
-821,40728401,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/40728401/
-822,31949291,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/31949291/
-823,26768830,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26768830/
-824,40965672,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/40965672/
-825,23860344,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/23860344/
-826,27913837,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/27913837/
-827,22761169,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/22761169/
-828,26806565,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/26806565/
-829,17588130,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/17588130/
-830,19246810,,,,S13_PEDIATRIC,hard,pediatric ADR,,,https://pubmed.ncbi.nlm.nih.gov/19246810/
+821,40728401,Safety of Gadolinium-based Contrast Agents in Children: A Systematic Review and Meta-Analysis.,2025 Jul,Radiology,S13_PEDIATRIC,hard,pediatric ADR,10.1148/radiol.241224,,https://pubmed.ncbi.nlm.nih.gov/40728401/
+822,31949291,Pharmacogenomic associations of adverse drug reactions in asthma: systematic review and research prioritisation.,2020 Oct,Pharmacogenomics J,S13_PEDIATRIC,hard,pediatric ADR,10.1038/s41397-019-0140-y,PMC7502355,https://pubmed.ncbi.nlm.nih.gov/31949291/
+823,26768830,Systematic review of the toxicity of short-course oral corticosteroids in children.,2016 Apr,Arch Dis Child,S13_PEDIATRIC,hard,pediatric ADR,10.1136/archdischild-2015-309522,PMC4819633,https://pubmed.ncbi.nlm.nih.gov/26768830/
+824,40965672,Xanthohumol exerts protective function on adriamycin-induced podocyte injury.,2025 Sep 18,Eur J Nutr,S13_PEDIATRIC,hard,pediatric ADR,10.1007/s00394-025-03799-3,,https://pubmed.ncbi.nlm.nih.gov/40965672/
+825,23860344,Adverse effects of antiepileptic drugs in North Indian pediatric outpatients.,2013 Jul-Aug,Clin Neuropharmacol,S13_PEDIATRIC,hard,pediatric ADR,10.1097/WNF.0b013e31829a498d,,https://pubmed.ncbi.nlm.nih.gov/23860344/
+826,27913837,Hospitalizations due to preventable adverse reactions-a systematic review.,2017 Apr,Eur J Clin Pharmacol,S13_PEDIATRIC,hard,pediatric ADR,10.1007/s00228-016-2170-6,,https://pubmed.ncbi.nlm.nih.gov/27913837/
+827,22761169,Frequency of adverse drug reactions in hospitalized patients: a systematic review and meta-analysis.,2012 Nov,Pharmacoepidemiol Drug Saf,S13_PEDIATRIC,hard,pediatric ADR,10.1002/pds.3309,,https://pubmed.ncbi.nlm.nih.gov/22761169/
+828,26806565,The Safety of Drug Therapy in Children.,2015 Nov 13,Dtsch Arztebl Int,S13_PEDIATRIC,hard,pediatric ADR,10.3238/arztebl.2015.0781,PMC4671328,https://pubmed.ncbi.nlm.nih.gov/26806565/
+829,17588130,Use and tolerability of newer antipsychotics and antidepressants: a chart review in a paediatric setting.,2008 Jan,Pharm World Sci,S13_PEDIATRIC,hard,pediatric ADR,10.1007/s11096-007-9139-6,,https://pubmed.ncbi.nlm.nih.gov/17588130/
+830,19246810,Hydrogen sulfide regulates cardiac function and structure in adriamycin-induced cardiomyopathy.,2009 Apr,Circ J,S13_PEDIATRIC,hard,pediatric ADR,10.1253/circj.cj-08-0636,,https://pubmed.ncbi.nlm.nih.gov/19246810/
 831,26070796,Safety of lamotrigine in paediatrics: a systematic review.,2015 Jun 12,BMJ Open,S13_PEDIATRIC,hard,pediatric ADR,10.1136/bmjopen-2015-007711,PMC4466618,https://pubmed.ncbi.nlm.nih.gov/26070796/
 832,35935867,Individualized medication based on pharmacogenomics and treatment progress in children with IgAV nephritis.,2022,Front Pharmacol,S13_PEDIATRIC,hard,pediatric ADR,10.3389/fphar.2022.956397,PMC9355498,https://pubmed.ncbi.nlm.nih.gov/35935867/
 833,19646077,Adverse reactions to over-the-counter cough and cold products among children: the cases managed out of hospitals.,2009 Jun,J Clin Pharm Ther,S13_PEDIATRIC,hard,pediatric ADR,10.1111/j.1365-2710.2008.01010.x,,https://pubmed.ncbi.nlm.nih.gov/19646077/
@@ -839,16 +839,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 838,35185536,Adverse Drug Reactions in Pediatric Oncohematology: A Systematic Review.,2021,Front Pharmacol,S13_PEDIATRIC,hard,pediatric ADR,10.3389/fphar.2021.777498,PMC8850382,https://pubmed.ncbi.nlm.nih.gov/35185536/
 839,37449964,Definition and Clinical Evaluation for Trimethoprim-Sulfamethoxazole Severe Acute Respiratory Failure.,2023 Dec 1,Crit Care Med,S13_PEDIATRIC,hard,pediatric ADR,10.1097/CCM.0000000000006002,PMC10787807,https://pubmed.ncbi.nlm.nih.gov/37449964/
 840,32510242,An update on CYP2C9 polymorphisms and phenytoin metabolism: implications for adverse effects.,2020 Aug,Expert Opin Drug Metab Toxicol,S13_PEDIATRIC,hard,pediatric ADR,10.1080/17425255.2020.1780209,,https://pubmed.ncbi.nlm.nih.gov/32510242/
-841,37394254,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/37394254/
-842,37516359,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/37516359/
-843,26006718,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/26006718/
-844,29803714,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/29803714/
-845,34979270,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/34979270/
-846,19371237,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/19371237/
-847,38977212,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/38977212/
-848,22014984,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/22014984/
-849,36740326,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/36740326/
-850,24819642,,,,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/24819642/
+841,37394254,Drug Hypersensitivity Reactions.,2023 Aug,Immunol Allergy Clin North Am,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1016/j.iac.2022.10.005,,https://pubmed.ncbi.nlm.nih.gov/37394254/
+842,37516359,"Drug-induced hypersensitivity syndrome/drug reaction with eosinophilia and systemic symptoms. Part I. Epidemiology, pathogenesis, clinicopathological features, and prognosis.",2024 May,J Am Acad Dermatol,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1016/j.jaad.2023.02.072,,https://pubmed.ncbi.nlm.nih.gov/37516359/
+843,26006718,Eosinophilic Drug Allergy.,2016 Apr,Clin Rev Allergy Immunol,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1007/s12016-015-8491-x,,https://pubmed.ncbi.nlm.nih.gov/26006718/
+844,29803714,High-risk drug rashes.,2018 Nov,Ann Allergy Asthma Immunol,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1016/j.anai.2018.05.022,,https://pubmed.ncbi.nlm.nih.gov/29803714/
+845,34979270,Annular drug eruptions.,2022 Sep-Oct,Clin Dermatol,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1016/j.clindermatol.2021.12.008,,https://pubmed.ncbi.nlm.nih.gov/34979270/
+846,19371237,"Severe drug-induced skin reactions: clinical pattern, diagnostics and therapy.",2009 Feb,J Dtsch Dermatol Ges,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1111/j.1610-0387.2008.06878.x,,https://pubmed.ncbi.nlm.nih.gov/19371237/
+847,38977212,Delayed Skin Testing for Systemic Medications: Helpful or Not?,2024 Sep,J Allergy Clin Immunol Pract,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1016/j.jaip.2024.06.047,,https://pubmed.ncbi.nlm.nih.gov/38977212/
+848,22014984,Iatrogenic skin injury in hospitalized patients.,2011 Nov-Dec,Clin Dermatol,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1016/j.clindermatol.2011.08.006,,https://pubmed.ncbi.nlm.nih.gov/22014984/
+849,36740326,Updates on the immunopathology and genomics of severe cutaneous adverse drug reactions.,2023 Feb,J Allergy Clin Immunol,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1016/j.jaci.2022.12.005,PMC9976545,https://pubmed.ncbi.nlm.nih.gov/36740326/
+850,24819642,Epidemiology of cutaneous drug-induced reactions.,2014 Apr,G Ital Dermatol Venereol,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,,,https://pubmed.ncbi.nlm.nih.gov/24819642/
 851,21562486,Phenotype standardization for immune-mediated drug-induced skin injury.,2011 Jun,Clin Pharmacol Ther,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1038/clpt.2011.79,,https://pubmed.ncbi.nlm.nih.gov/21562486/
 852,34463914,Non-IgE-Mediated Drug Hypersensitivity Reactions.,2021 Aug 31,Curr Allergy Asthma Rep,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1007/s11882-021-01018-7,,https://pubmed.ncbi.nlm.nih.gov/34463914/
 853,34782090,Drug Hypersensitivity Reactions.,2022 Feb,Emerg Med Clin North Am,S07_SCAR,hard,SJS/TEN/DRESS severe cutaneous reaction,10.1016/j.emc.2021.09.001,,https://pubmed.ncbi.nlm.nih.gov/34782090/
@@ -919,16 +919,16 @@ Candidate No,PMID,Title,Publication Date,Journal/Source,Scenario Family,Difficul
 918,31703306,Minimizing Medication Errors from Electronic Prescription Transmission-Digitizing Compounded Drug Preparations.,2019 Nov 7,Pharmacy (Basel),S18_OVERDOSE_ERROR,hard,overdose/medication error,10.3390/pharmacy7040149,PMC6958393,https://pubmed.ncbi.nlm.nih.gov/31703306/
 919,10977799,Effectiveness of hemodialysis in the extracorporeal therapy of phenobarbital overdose.,2000 Sep,Am J Kidney Dis,S18_OVERDOSE_ERROR,hard,overdose/medication error,10.1053/ajkd.2000.16207,,https://pubmed.ncbi.nlm.nih.gov/10977799/
 920,29882461,Delayed increase in serum acetaminophen concentration after ingestion of a combination medications: a case report.,2018 Aug,J Int Med Res,S18_OVERDOSE_ERROR,hard,overdose/medication error,10.1177/0300060518777860,PMC6134647,https://pubmed.ncbi.nlm.nih.gov/29882461/
-921,26186143,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/26186143/
-922,25798731,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/25798731/
-923,39448137,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/39448137/
-924,25944990,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/25944990/
-925,32628388,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/32628388/
-926,33059460,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/33059460/
-927,34846373,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/34846373/
-928,27223416,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/27223416/
-929,20587767,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/20587767/
-930,16913164,,,,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/16913164/
+921,26186143,[Medication-overuse headache].,2015 Jul 26,Orv Hetil,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.1556/650.2015.30209,,https://pubmed.ncbi.nlm.nih.gov/26186143/
+922,25798731,Reducing inappropriate polypharmacy: the process of deprescribing.,2015 May,JAMA Intern Med,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.1001/jamainternmed.2015.0324,,https://pubmed.ncbi.nlm.nih.gov/25798731/
+923,39448137,Prevention and Management of Denosumab Discontinuation Rebound Fractures.,2024 Dec,Endocrinol Metab Clin North Am,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.1016/j.ecl.2024.08.002,,https://pubmed.ncbi.nlm.nih.gov/39448137/
+924,25944990,Withdrawal of anti-tumour necrosis factor α therapy in inflammatory bowel disease.,2015 Apr 28,World J Gastroenterol,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.3748/wjg.v21.i16.4773,PMC4408449,https://pubmed.ncbi.nlm.nih.gov/25944990/
+925,32628388,[Rhinitis medicamentosa].,2020,Vestn Otorinolaringol,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.17116/otorino20208503175,,https://pubmed.ncbi.nlm.nih.gov/32628388/
+926,33059460,Quetiapine withdrawal: A systematic review.,2021 Aug,Aust N Z J Psychiatry,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.1177/0004867420965693,,https://pubmed.ncbi.nlm.nih.gov/33059460/
+927,34846373,Valproate-induced Periorbital Edema.,2021 Dec 1,R I Med J (2013),S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/34846373/
+928,27223416,[Benzodiazepine Dependency in the Elderly: How to Deal with it].,2016 May 25,Praxis (Bern 1994),S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.1024/1661-8157/a002363,,https://pubmed.ncbi.nlm.nih.gov/27223416/
+929,20587767,Clozapine-withdrawal catatonia.,2010 Jul-Aug,Psychosomatics,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.1176/appi.psy.51.4.355,,https://pubmed.ncbi.nlm.nih.gov/20587767/
+930,16913164,Antidepressant discontinuation syndrome.,2006 Aug 1,Am Fam Physician,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/16913164/
 931,33179891,Oral Manifestations of Commonly Prescribed Drugs.,2020 Nov 15,Am Fam Physician,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/33179891/
 932,2232043,Diclofenac-associated hepatotoxicity.,1990 Nov 28,JAMA,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,,,https://pubmed.ncbi.nlm.nih.gov/2232043/
 933,27931774,Neonatal venlafaxine discontinuation syndrome: A mini-review.,2017 Mar,Eur J Paediatr Neurol,S19_WITHDRAWAL_REBOUND,hard,withdrawal/rebound,10.1016/j.ejpn.2016.11.003,,https://pubmed.ncbi.nlm.nih.gov/27931774/
