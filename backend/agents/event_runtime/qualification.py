@@ -7,7 +7,11 @@ def qualify(reference_path, predictions_path):
     if not Path(reference_path).is_file():
         return {'status':'blocked','reason':'adjudicated_expert_reference_missing','clinical_qualification':False}
     reference=json.loads(Path(reference_path).read_text())
-    if reference.get('dataset_kind')!='expert_adjudicated' or reference.get('split')!='blinded_test' or len(set(reference.get('reviewer_ids',[])))<2 or not reference.get('adjudication_complete'):
+    reviewers = reference.get('reviewer_ids')
+    valid_reviewers = (isinstance(reviewers, list) and len(reviewers) >= 2
+                       and all(isinstance(r, str) and r.strip() for r in reviewers)
+                       and len({r.strip() for r in reviewers}) >= 2)
+    if reference.get('dataset_kind')!='expert_adjudicated' or reference.get('split')!='blinded_test' or not valid_reviewers or not reference.get('adjudication_complete'):
         raise ValueError('Two reviewers, completed adjudication and blinded test reference required')
     if not Path(predictions_path).is_file():
         return {'status':'blocked','reason':'live_model_predictions_missing','clinical_qualification':False}

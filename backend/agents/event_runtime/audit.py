@@ -37,7 +37,18 @@ class AuditStore:
     def verify(self, tenant):
         with self.connect() as db:
             rows = db.execute("SELECT at,run_id,previous,digest FROM audit WHERE tenant=? ORDER BY id", (tenant,)).fetchall()
-            payloads = {json.loads(p)["run_id"]: p for (p,) in db.execute("SELECT payload FROM runs WHERE tenant=?", (tenant,))}
+            payload_rows = db.execute("SELECT payload FROM runs WHERE tenant=?", (tenant,)).fetchall()
+            try:
+                payload_ids = [json.loads(p)["run_id"] for (p,) in payload_rows]
+            except (ValueError, KeyError, TypeError):
+                return False
+            audit_ids = [row[1] for row in rows]
+            if (any(not isinstance(run_id, str) or not run_id for run_id in payload_ids)
+                    or len(set(payload_ids)) != len(payload_ids)
+                    or len(set(audit_ids)) != len(audit_ids)
+                    or set(payload_ids) != set(audit_ids)):
+                return False
+            payloads = dict(zip(payload_ids, (p for (p,) in payload_rows)))
             previous = "0" * 64
             for at, run_id, recorded_previous, digest in rows:
                 if run_id not in payloads or recorded_previous != previous:

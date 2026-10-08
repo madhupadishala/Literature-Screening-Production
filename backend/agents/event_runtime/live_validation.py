@@ -8,6 +8,12 @@ from .models import Request, Document
 from .providers import LangChainProvider
 from .engine import EventEngine
 
+def smoke_passed(result):
+    return (result.status != 'incomplete' and len(result.events) == 1
+            and result.events[0].verbatim.casefold() == 'nausea'
+            and result.events[0].patient_id == 'synthetic-source:P001'
+            and result.events[0].assertion == 'affirmed')
+
 async def validate():
     key=os.getenv('AE_LLM_API_KEY') or os.getenv('GROQ_API_KEY')
     model=os.getenv('AE_MODEL') or os.getenv('AI_MODEL')
@@ -22,13 +28,16 @@ async def validate():
     result=await EventEngine(provider).run(Request(case_id='synthetic-smoke-test',documents=[Document(
         id='synthetic-source',media_type='text/plain',language='en',content_base64=base64.b64encode(text.encode()).decode())]))
     terms=[e.verbatim.casefold() for e in result.events]
-    passed='nausea' in terms and 'rash' not in terms and 'diabetes' not in terms and result.status!='incomplete'
+    passed=smoke_passed(result) and 'rash' not in terms and 'diabetes' not in terms
     return {'status':'passed' if passed else 'failed','model':model,'run':result.model_dump(),
             'clinical_qualification':False,'test_type':'synthetic_live_model_smoke'}
 
 if __name__=='__main__':
     import sys
     output=asyncio.run(validate())
-    Path('live-validation.json').write_text(json.dumps(output,indent=2))
+    default_path = Path(__file__).resolve().parents[3] / 'docs/validation/event-extraction/live-validation.json'
+    output_path = Path(sys.argv[1]) if len(sys.argv) > 1 else default_path
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(output,indent=2))
     print(json.dumps({k:v for k,v in output.items() if k!='run'},indent=2))
     sys.exit(0 if output['status']=='passed' else 3)
