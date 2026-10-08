@@ -79,6 +79,15 @@ function determineSafetyRelevance(input: PvSafetyAssessmentInput): {
   aggregateSafetyPresent: boolean | null;
 } {
   const specialSituationPresent = input.specialSituations.length > 0;
+  const conflictingSafetyInputs = [input.humanPopulation, input.identifiablePatient, input.adverseEventOrReaction].some((status) => status === "CONFLICTING");
+  // Conflicting source evidence must never produce an automatic negative decision.
+  if (conflictingSafetyInputs) {
+    return {
+      relevance: "UNRESOLVED",
+      caseSafetyPresent: null,
+      aggregateSafetyPresent: (input.aggregateSafetyEvidence?.length ?? 0) > 0 ? true : null,
+    };
+  }
   const aggregateSafetyPresent =
     (input.aggregateSafetyEvidence?.length ?? 0) > 0 ? true : false;
 
@@ -107,6 +116,11 @@ function determineSafetyRelevance(input: PvSafetyAssessmentInput): {
     return { relevance: "AGGREGATE_SAFETY", caseSafetyPresent, aggregateSafetyPresent };
   }
   if (caseSafetyPresent === false) {
+    // Missing patient identifiers do not establish that an observed event or
+    // special situation is clinically irrelevant; route for follow-up instead.
+    if (input.adverseEventOrReaction !== "ABSENT" || specialSituationPresent) {
+      return { relevance: "UNRESOLVED", caseSafetyPresent, aggregateSafetyPresent };
+    }
     return { relevance: "NONE", caseSafetyPresent, aggregateSafetyPresent };
   }
 
@@ -146,7 +160,8 @@ export function assessPvSafety(
     Boolean(seriousness?.manualReviewRequired) ||
     safety.relevance === "UNRESOLVED" ||
     unresolvedProduct ||
-    input.sourceCoverage !== "FULL_TEXT";
+    input.sourceCoverage !== "FULL_TEXT" ||
+    (input.adverseEventOrReaction === "PRESENT" && (input.eventEvidence?.length ?? 0) === 0);
 
   const fullScreeningRequired =
     safety.relevance === "CASE_SAFETY" ||
