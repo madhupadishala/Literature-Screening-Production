@@ -1,0 +1,25 @@
+{
+  "runs": [
+    {
+      "case_id": "1903245115",
+      "article": "PMC3787171",
+      "input_sha256": "7d7e2b6b43510690bebd4d034d088206557d1b647a1f9ccac868b592254a1043",
+      "output_sha256": "3c23aaaf614f7f06d479d9db6e24996940b46c1c265b1156a2a1c82819a784fa",
+      "extracted_drugs": 8,
+      "status": "SOURCE_ONLY_RUN_LINKAGE_UNADJUDICATED",
+      "expert_review_completed": false
+    },
+    {
+      "case_id": "214562884",
+      "article": "PMC8127514",
+      "input_sha256": "1e8c8056951a21664fc8b2c002ad235a26e0f6fa3e54e221cd8a675ca8491cdb",
+      "output_sha256": "a7e14a9addbd1bd675e203dca1fe3a0882b28e3623b1a8d30b216893e0383994",
+      "extracted_drugs": 14,
+      "status": "SOURCE_ONLY_RUN_LINKAGE_UNADJUDICATED",
+      "expert_review_completed": false
+    }
+  ],
+  "qualified_blinded_cases": 0,
+  "expert_reviews": 0,
+  "production_ready": false
+}

@@ -54,10 +54,14 @@ class DrugRoleOrchestrator:
 
         mentions: List[DrugMention] = []
         windows = sentence_windows(text)
+        claimed = []
 
         for drug in sorted(candidates, key=lambda x: (-len(x), x.lower())):
             rx = re.compile(rf"(?<!\w){re.escape(drug)}(?!\w)", re.IGNORECASE)
             for match in rx.finditer(text):
+                if any(match.start() < end and start < match.end() for start, end in claimed):
+                    continue
+                claimed.append((match.start(), match.end()))
                 sentence_start, sentence_end, sentence = 0, len(text), text
                 for ws, we, content in windows:
                     if ws <= match.start() < we:
@@ -104,7 +108,11 @@ class DrugRoleOrchestrator:
             for mention in group:
                 # Anchor evidence locations to the sentence containing the drug.
                 sentence_start = mention.context_start
-                decisions.append(classify_context(mention.context, sentence_start))
+                window_drugs = {m.normalized_name.casefold() for m in mentions if m.context_start == mention.context_start and m.context_end == mention.context_end}
+                if len(window_drugs) > 1:
+                    decisions.append((DrugRole.UNKNOWN, 0.0, "Multiple drugs share a role cue; drug-specific attribution requires review.", []))
+                else:
+                    decisions.append(classify_context(mention.context, sentence_start))
 
             role, confidence, rationale, evidence = merge_role_decisions(decisions)
             ownership, pm_match, ownership_reason = resolve_ownership(

@@ -1,4 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
+import { PVServiceError } from "./shared-pv-agent-client";
 
 export type SeriousnessCriterion = "death" | "life_threatening" | "hospitalization" | "disability" | "congenital_anomaly" | "medically_important";
 export interface SeriousnessAssessmentRequest {
@@ -74,6 +75,6 @@ export async function assessSeriousness(request: SeriousnessAssessmentRequest, c
     method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${context.bearerToken}`, "x-request-id": payload.request_id, "x-input-sha256": hash },
     body: serialized, cache: "no-store", signal: AbortSignal.timeout(15_000), redirect: "error",
   });
-  if (!response.ok) throw new Error(`Seriousness Agent request failed (${response.status})`);
+  if (!response.ok) throw new PVServiceError(response.status);
   return validateSeriousnessResponse(await response.json(), { ...payload, input_sha256: hash });
 }

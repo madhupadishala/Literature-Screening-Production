@@ -95,6 +95,9 @@ class PVAgentService:
             if not isinstance(span, dict) or not isinstance(span.get('start'), int) or not isinstance(span.get('end'), int) or not 0 <= span['start'] <= span['end'] <= len(request['narrative']) or request['narrative'][span['start']:span['end']] != span.get('text'):
                 raise ServiceError(502, 'Ungrounded worker evidence')
         output = {'schema_version':'nexus.pv-agent/1','agent':agent, **{k:request[k] for k in ['tenant_id','client_id','workspace_id','request_id','case_id']}, 'input_sha256':digest, 'confidence':confidence, 'route':'hitl', 'review_required':True, 'evidence_spans':evidence, 'knowledge_version':version, 'result':result}
+        if agent == 'seriousness':
+            output.update({k: result[k] for k in ('decision', 'criteria_met', 'review_reasons', 'explanation')})
+            output['execution_id'] = str(uuid4())
         return self.audit.append(request, agent, output)
 
     def __call__(self, environ, start_response):
@@ -110,6 +113,8 @@ class PVAgentService:
             auth=environ.get('HTTP_AUTHORIZATION','')
             if not auth.startswith('Bearer '):raise ServiceError(401,'Service authentication required')
             request=json.loads(environ['wsgi.input'].read(length))
+            if isinstance(request, dict) and 'input_sha256' not in request and environ.get('HTTP_X_INPUT_SHA256'):
+                request['input_sha256'] = environ['HTTP_X_INPUT_SHA256']
             output=self.assess(path[3],request,auth[7:]);status=200
         except ServiceError as exc:status=exc.status;output={'error':exc.message,'route':'hitl'}
         except (ValueError, TypeError):status=400;output={'error':'Invalid request','route':'hitl'}
@@ -120,4 +125,8 @@ class PVAgentService:
 
 
 def create_application():
-    return PVAgentService(json.loads(os.environ['NEXUS_PV_SERVICE_TOKEN_SCOPES']), AuditStore(os.environ['NEXUS_PV_AUDIT_DB']))
+    app = PVAgentService(json.loads(os.environ['NEXUS_PV_SERVICE_TOKEN_SCOPES']), AuditStore(os.environ['NEXUS_PV_AUDIT_DB']))
+    if os.environ.get('NEXUS_PV_REGISTER_SPECIALISTS') == 'true':
+        from .workers import build_specialist_workers
+        app.workers = build_specialist_workers(app.drug_agent, app.causality_adapter, os.environ['NEXUS_PV_SPECIALIST_AUDIT_DIR'])
+    return app

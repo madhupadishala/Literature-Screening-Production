@@ -24,7 +24,7 @@ def _matches(name: str, product: Dict[str, Any]) -> bool:
         if name_l == candidate_l:
             return True
         c_tokens = _tokens(candidate_l)
-        if name_tokens and c_tokens and (name_tokens <= c_tokens or c_tokens <= name_tokens):
+        if name_tokens and c_tokens and name_tokens == c_tokens:
             return True
     return False
 

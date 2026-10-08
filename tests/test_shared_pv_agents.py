@@ -65,7 +65,7 @@ class Collection:
 def test_retrieval_prefilters_and_enforces_scope_dates():
     c=Collection();r=HybridRetriever(collection=c).retrieve_relevant_rules('q','causality','tenant',client_id='client',knowledge_types=('general_pv',),jurisdiction='IN',as_of=date(2026,1,1))
     assert [x['rule_id'] for x in r]==['ok']
-    assert c.kwargs['where']=={'$or':[{'tenant_id':'GLOBAL'},{'$and':[{'tenant_id':'tenant'},{'client_id':{'$in':['client','GLOBAL']}}]}]}
+    assert c.kwargs['where']=={'$and':[{'$or':[{'tenant_id':'GLOBAL'},{'$and':[{'tenant_id':'tenant'},{'client_id':{'$in':['client','GLOBAL']}}]}]}, {'knowledge_type': {'$in': ['general_pv']}}]}
     assert r[0]['version']=='2'
 
 
@@ -194,3 +194,33 @@ def test_http_source_to_drug_engine_to_durable_audit(tmp_path, monkeypatch):
             assert db.execute('SELECT count(*) FROM pv_agent_audit').fetchone()[0]==1
     finally:
         server.shutdown();server.server_close();thread.join(timeout=2)
+
+
+def test_combination_product_does_not_prove_single_ingredient_ownership():
+    from backend.agents.drug_role.ownership import resolve_ownership
+    assert resolve_ownership('Amoxicillin', [{'generic_name': 'Amoxicillin Clavulanate'}])[0] == Ownership.UNKNOWN
+
+
+def test_longest_drug_mention_claims_overlapping_shorter_names():
+    mentions = DrugRoleOrchestrator().extract_mentions('Amoxicillin Clavulanate was suspected. Amoxicillin was historical.', ['Amoxicillin Clavulanate', 'Amoxicillin'])
+    assert [(m.reported_name, m.start) for m in mentions] == [('Amoxicillin Clavulanate', 0), ('Amoxicillin', 39)]
+
+
+def test_indexer_quarantines_ownerless_client_rules(tmp_path):
+    from backend.knowledge.vector_indexer import VectorIndexer
+    folder = tmp_path / 'Clients' / 'tenant'; folder.mkdir(parents=True)
+    (folder / 'unsafe.md').write_text('---\nrule_id: unsafe\n---\nA client rule without ownership.')
+    (folder / 'safe.md').write_text('---\nrule_id: safe\nclient_id: client\nagent_scope: [causality]\ncountry_scope: [IN]\n---\nControlled client rule.')
+    class Index:
+        def delete(self, **kwargs): pass
+        def upsert(self, **kwargs): self.data = kwargs
+    indexer = VectorIndexer.__new__(VectorIndexer); indexer.base_path = str(tmp_path); indexer.collection = Index()
+    report = indexer.rebuild_index('tenant')
+    assert report == {'indexed': 1, 'skipped': [{'file': 'unsafe.md', 'missing': ['client_id', 'agent_scope', 'country_scope']}]}
+    assert indexer.collection.data['ids'] == ['tenant:client:safe']
+
+
+def test_shared_sentence_cue_does_not_assign_all_drugs_as_suspects():
+    result = classify('Aspirin was suspected while metformin continued unchanged.')
+    assert len(result.classifications) == 2
+    assert all(c.role == DrugRole.UNKNOWN and c.requires_human_review for c in result.classifications)

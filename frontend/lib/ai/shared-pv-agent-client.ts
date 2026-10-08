@@ -1,5 +1,9 @@
 import { createHash, randomUUID } from "node:crypto";
 
+export class PVServiceError extends Error {
+  constructor(public readonly statusCode: number) { super("Shared PV service unavailable"); }
+}
+
 export type PVAgentName = "drug-role" | "causality";
 export interface SharedPVRequest {
   tenant_id: string; client_id: string; workspace_id: string; case_id: string;
@@ -18,7 +22,7 @@ export async function assessSharedPVAgent(agent: PVAgentName, request: SharedPVR
   if (!url || !token) throw new Error("Shared PV service configuration required");
   const payload = { ...request, request_id: request.request_id || randomUUID(), input_sha256: createHash("sha256").update(request.narrative, "utf8").digest("hex") };
   const response = await fetch(`${url.replace(/\/$/, "")}/v1/agents/${agent}/assess`, { method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${token}` }, body: JSON.stringify(payload), signal: AbortSignal.timeout(15_000), cache: "no-store", redirect: "error" });
-  if (!response.ok) throw new Error(`Shared PV service failed (${response.status})`);
+  if (!response.ok) throw new PVServiceError(response.status);
   const value: unknown = await response.json();
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Invalid shared PV response");
   const r = value as Record<string, unknown>;

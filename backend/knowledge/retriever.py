@@ -31,6 +31,8 @@ class HybridRetriever:
         effective_on = date.fromisoformat(str(as_of)) if as_of else None
         tenant_filter = {"$and": [{"tenant_id": tenant_id}, {"client_id": {"$in": [client_id or "GLOBAL", "GLOBAL"]}}]}
         where = {"$or": [{"tenant_id": "GLOBAL"}, tenant_filter]}
+        if knowledge_types:
+            where = {"$and": [where, {"knowledge_type": {"$in": list(knowledge_types)}}]}
         results = self.collection.query(query_texts=[query], n_results=limit,
                                         where=where, include=["metadatas", "documents"])
         if not results or not results.get("ids") or not results["ids"][0]:

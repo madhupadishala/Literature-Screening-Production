@@ -2,10 +2,31 @@
   "repository": "madhupadishala/Literature-Screening-Production",
   "base_main_commit": "8a924b2c043c8a7412550dcb27d68c9bfe84a4c0",
   "imported_components": {
-    "drug_role": {"branch": "feat/drug-role-agent-v1", "commit": "693901999261823ae682172e3c97ec11fd38b234"},
-    "seriousness_client": {"branch": "feature/seriousness-agent-v090", "commit": "8866b3b2430180bf0597da1a9790bcc7883709c6"},
-    "causality_adapter": {"branch": "feature/causality-agent-v1-5", "commit": "485c8a22b89ebb518eb5795568590e016c0ed31f"}
+    "drug_role": {
+      "branch": "feat/drug-role-agent-v1",
+      "commit": "693901999261823ae682172e3c97ec11fd38b234"
+    },
+    "seriousness_client": {
+      "branch": "feature/seriousness-agent-v090",
+      "commit": "8866b3b2430180bf0597da1a9790bcc7883709c6"
+    },
+    "causality_adapter": {
+      "branch": "feature/causality-agent-v1-5",
+      "commit": "485c8a22b89ebb518eb5795568590e016c0ed31f"
+    }
   },
   "qualification_status": "NOT_RELEASE_APPROVED",
-  "production_deployed": false
+  "production_deployed": false,
+  "recovered_specialists": {
+    "seriousness": {
+      "library_file_id": "libfile_0838aeaad18481919c8fa133c9f0d5cb",
+      "source_sha256": "bd38a65930ce5e55f9d4bcaba1710d77dbe900cef1e0a607f1b356c3ad1f9664",
+      "namespace": "backend.agents.seriousness_runtime"
+    },
+    "causality": {
+      "library_file_id": "libfile_d5e2ee49d5588191a595807dca43a737",
+      "source_sha256": "7efef17a30d7713c4a56e1d5b666849447059dafe69d7c9718c6b144bce9fbd3",
+      "namespace": "backend.agents.causality_runtime"
+    }
+  }
 }

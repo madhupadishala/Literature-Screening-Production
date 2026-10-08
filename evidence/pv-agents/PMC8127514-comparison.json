@@ -1,0 +1,204 @@
+{
+  "status": "UNADJUDICATED_REPORT_LEVEL_COMPARISON",
+  "dialect": "faers_ascii",
+  "extraction": {
+    "tp": 3,
+    "fp": 11,
+    "fn": 28,
+    "precision": 0.21428571428571427,
+    "recall": 0.0967741935483871,
+    "f1": 0.13333333333333333
+  },
+  "roles": {
+    "SUSPECT": {
+      "tp": 3,
+      "fp": 11,
+      "fn": 28,
+      "precision": 0.21428571428571427,
+      "recall": 0.0967741935483871,
+      "f1": 0.13333333333333333
+    },
+    "CONCOMITANT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "INTERACTING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    }
+  },
+  "mismatches": [
+    [
+      "acetazolamide",
+      "SUSPECT"
+    ],
+    [
+      "alprostadil",
+      "SUSPECT"
+    ],
+    [
+      "anakinra",
+      "SUSPECT"
+    ],
+    [
+      "azithromycin",
+      "SUSPECT"
+    ],
+    [
+      "ceftriaxone",
+      "SUSPECT"
+    ],
+    [
+      "cisatracurium besylate",
+      "SUSPECT"
+    ],
+    [
+      "clonazepam",
+      "SUSPECT"
+    ],
+    [
+      "clonidine",
+      "SUSPECT"
+    ],
+    [
+      "enoxaparin sodium",
+      "SUSPECT"
+    ],
+    [
+      "ethacrynic acid",
+      "SUSPECT"
+    ],
+    [
+      "fentanyl",
+      "SUSPECT"
+    ],
+    [
+      "fluconazole",
+      "SUSPECT"
+    ],
+    [
+      "fluvoxamine",
+      "SUSPECT"
+    ],
+    [
+      "furosemide",
+      "SUSPECT"
+    ],
+    [
+      "hydroxychloroquine",
+      "SUSPECT"
+    ],
+    [
+      "hydroxyzine",
+      "SUSPECT"
+    ],
+    [
+      "iopamidol",
+      "SUSPECT"
+    ],
+    [
+      "iopromide",
+      "SUSPECT"
+    ],
+    [
+      "labetalol",
+      "SUSPECT"
+    ],
+    [
+      "linezolid",
+      "SUSPECT"
+    ],
+    [
+      "lopinavir",
+      "SUSPECT"
+    ],
+    [
+      "lopinavir\\ritonavir",
+      "SUSPECT"
+    ],
+    [
+      "lorazepam",
+      "SUSPECT"
+    ],
+    [
+      "midazolam",
+      "SUSPECT"
+    ],
+    [
+      "nebivolol",
+      "SUSPECT"
+    ],
+    [
+      "norepinephrine",
+      "SUSPECT"
+    ],
+    [
+      "oseltamivir",
+      "SUSPECT"
+    ],
+    [
+      "paracetamol",
+      "SUSPECT"
+    ],
+    [
+      "piperacillin",
+      "SUSPECT"
+    ],
+    [
+      "piperacillin and tazobactam",
+      "SUSPECT"
+    ],
+    [
+      "prednisone",
+      "SUSPECT"
+    ],
+    [
+      "promazine",
+      "SUSPECT"
+    ],
+    [
+      "propofol",
+      "SUSPECT"
+    ],
+    [
+      "quetiapine",
+      "SUSPECT"
+    ],
+    [
+      "ritonavir",
+      "SUSPECT"
+    ],
+    [
+      "sarilumab",
+      "SUSPECT"
+    ],
+    [
+      "thiamine",
+      "SUSPECT"
+    ],
+    [
+      "tigecycline",
+      "SUSPECT"
+    ],
+    [
+      "vitamin b1",
+      "SUSPECT"
+    ]
+  ],
+  "ownership_accuracy": null,
+  "drug_event_pair_accuracy": null,
+  "expert_review_completed": false,
+  "limitations": [
+    "Exact names only; normalization requires a separately controlled mapping.",
+    "FAERS roles do not label historical, treatment, ownership, or drug-event pairs.",
+    "Article-to-patient linkage and source-visible versus follow-up-only drugs require adjudication."
+  ]
+}

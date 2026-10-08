@@ -1,7 +1,7 @@
 import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { assessSeriousness, seriousnessAgentEnabled } from "@/lib/ai/seriousness-agent-client";
-import { assessSharedPVAgent } from "@/lib/ai/shared-pv-agent-client";
+import { assessSharedPVAgent, PVServiceError } from "@/lib/ai/shared-pv-agent-client";
 import { assertSafetyCaseInScope } from "@/lib/safety/common/safety-workspace-scope";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
@@ -15,7 +15,8 @@ export async function POST(request: NextRequest, context: { params: Promise<{ ca
     const { caseId, agent } = await context.params;
     await assertSafetyCaseInScope(principal, caseId);
     if (!["seriousness", "drug-role", "causality"].includes(agent)) return Response.json({ error: "Unknown agent." }, { status: 404 });
-    const body: unknown = await request.json();
+    let body: unknown;
+    try { body = await request.json(); } catch { return Response.json({ error: "Invalid JSON." }, { status: 400 }); }
     if (!body || typeof body !== "object" || Array.isArray(body)) throw new Error("Invalid request");
     const b = body as Record<string, unknown>;
     // Scope, candidate drug/ownership and gold fields are never accepted from the browser.
@@ -28,5 +29,8 @@ export async function POST(request: NextRequest, context: { params: Promise<{ ca
       ? await assessSeriousness(input, { bearerToken: process.env.NEXUS_SERIOUSNESS_AGENT_TOKEN || "" })
       : await assessSharedPVAgent(agent as "drug-role" | "causality", input);
     return Response.json({ success: true, data: result }, { headers: { "Cache-Control": "no-store" } });
-  } catch (error) { return routeErrorResponse(error); }
+  } catch (error) {
+    if (error instanceof PVServiceError) return Response.json({ error: "Agent service unavailable; human review required.", route: "hitl" }, { status: error.statusCode });
+    return routeErrorResponse(error);
+  }
 }

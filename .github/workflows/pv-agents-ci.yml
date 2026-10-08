@@ -22,7 +22,7 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r requirements-agents.txt -r requirements-agents-test.txt
       - run: python -c "import chromadb; from backend.agents.drug_role.nexus_agent import NexusDrugRoleAgent; from backend.engines.causality.nexus_kb_adapter import NexusCausalityKnowledgeAdapter"
-      - run: python -m pytest tests/test_drug_role_agent.py tests/test_shared_pv_agents.py -q
+      - run: python -m pytest tests/test_drug_role_agent.py tests/test_shared_pv_agents.py tests/test_specialist_workers.py tests/test_drug_role_benchmark.py -q
   typed-agent-contracts:
     runs-on: ubuntu-latest
     timeout-minutes: 10
