@@ -16,6 +16,9 @@ def plan(root):
             if data.get('effective_date'):
                 try:date.fromisoformat(str(data['effective_date']))
                 except ValueError:missing.append('valid_effective_date')
+            if data.get('expiry_date'):
+                try:date.fromisoformat(str(data['expiry_date']))
+                except ValueError:missing.append('valid_expiry_date')
             if kind=='tenant_override' and len(path.relative_to(root/'Clients').parts)!=2:missing.append('unambiguous_tenant_folder')
             records.append({'path':str(path.relative_to(root)), 'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
                 'knowledge_type':kind,'tenant_id':path.parent.name if kind=='tenant_override' else 'GLOBAL',

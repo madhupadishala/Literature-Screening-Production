@@ -240,3 +240,21 @@ def test_reindex_removes_stale_scope_before_current_upsert(tmp_path):
     index=VectorIndexer.__new__(VectorIndexer);index.base_path=str(tmp_path);index.collection=Collection()
     assert index.rebuild_index('tenant')['indexed']==0
     assert index.collection.calls==[{'where':{'$and':[{'tenant_id':'tenant'},{'knowledge_type':'tenant_override'}]}},{'where':{'$and':[{'tenant_id':'GLOBAL'},{'knowledge_type':'general_pv'}]}}]
+
+
+def test_migration_quarantines_invalid_expiry_and_indexes_nested_rules(tmp_path):
+    from backend.validation.knowledge_migration import plan
+    from backend.knowledge.vector_indexer import VectorIndexer
+    rules=tmp_path/'Rules'/'nested';rules.mkdir(parents=True)
+    base='---\nrule_id: nested\nversion: 1\neffective_date: 2020-01-01\nagent_scope: [GLOBAL]\ncountry_scope: [GLOBAL]\nsource_document: approved-rule\n'
+    path=rules/'rule.md';path.write_text(base+'expiry_date: invalid\n---\nRule text')
+    inventory=plan(tmp_path)
+    assert inventory['quarantined']==1 and 'valid_expiry_date' in inventory['records'][0]['missing']
+    path.write_text(base+'---\nRule text')
+    assert plan(tmp_path)['eligible']==1
+    class Collection:
+        def delete(self,**kwargs):pass
+        def upsert(self,**kwargs):self.rows=kwargs
+    index=VectorIndexer.__new__(VectorIndexer);index.base_path=str(tmp_path);index.collection=Collection()
+    assert index.rebuild_index('tenant')['indexed']==1
+    assert index.collection.rows['ids']==['GLOBAL:nested']

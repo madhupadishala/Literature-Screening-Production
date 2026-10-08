@@ -4,7 +4,7 @@ The original drug-role engine and recovered seriousness/causality pipelines now 
 
 ## Verification
 
-45 Python tests and 16 Node tests (including TypeScript clients, real HTTP integration and the lint dependency adapter) passed locally. These cover specialist execution, scoped audit writes, reference-separated scoring, empty-metric rejection, cross-client retrieval and overlap/ownership regressions. TypeScript and targeted lint are checked separately. Offline extraction is exclusively a contract fixture and does not establish clinical accuracy.
+48 Python tests and 16 Node tests (including TypeScript clients, real HTTP integration and the lint dependency adapter) passed locally. These cover specialist execution, scoped audit writes, reference-separated scoring, empty-metric rejection, cross-client retrieval and overlap/ownership regressions. TypeScript and targeted lint are checked separately. Offline extraction is exclusively a contract fixture and does not establish clinical accuracy.
 
 ## Additional corrections
 
@@ -34,3 +34,5 @@ Full frontend lint passed with one existing unused-component warning; TypeScript
 The synchronous causality route rejects more than 25 pairs, and specialist narratives are bounded at 50,000 characters. Larger workloads need a queued assessment; they are not silently truncated.
 
 All five subsequent review findings on ad319 are corrected: the audit manifest anchors the latest row, knowledge keys include tenant and jurisdiction, product retrieval excludes non-label domains, index rebuild removes stale scoped records, and upstream service authentication failures map to HTTP 502. Additional checks enforce explicit effective knowledge scope and serialize audit chain writes across database connections. Existing knowledge pins must be regenerated and reviewed for the new scoped key format; no production pin migration is claimed.
+
+The strict Groq model allowlist is based on the provider documentation reviewed on 2026-10-08. Registration now probes each enabled schema against its actual selected model with synthetic non-patient input and aborts on failure. These live startup probes have not been executed in this workspace, which has no provider credentials. Migration inventory validates expiry dates and indexing traverses nested general-rule paths accepted by staging.

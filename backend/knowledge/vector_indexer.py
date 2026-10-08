@@ -2,6 +2,7 @@ import os
 import re
 import json
 import chromadb
+from pathlib import Path
 from typing import Dict, Any, List
 
 class VectorIndexer:
@@ -55,7 +56,8 @@ class VectorIndexer:
 
         # 1. Harvest General PV Rules
         if os.path.exists(rules_dir):
-            for file in os.listdir(rules_dir):
+            for path in sorted(Path(rules_dir).rglob("*.md")):
+                file = str(path.relative_to(rules_dir))
                 if file.endswith(".md"):
                     parsed = self._parse_markdown_file(os.path.join(rules_dir, file))
                     rule_id = parsed.get("rule_id", file)

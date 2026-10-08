@@ -62,7 +62,7 @@ def test_groq_mentions_are_strict_and_source_grounded():
         def json(self): return {'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'mentions':[{'name':'Aspirin','quote':'Aspirin was suspected.'}]})}}]}
     class Client:
         def post(self, url, **kwargs): self.payload=kwargs['json']; return Response()
-    client=Client();extractor=GroqExtractor('drug-mentions','configured-model','test-key',client)
+    client=Client();extractor=GroqExtractor('drug-mentions','openai/gpt-oss-120b','test-key',client)
     assert extractor.extract_names('Aspirin was suspected.')==['Aspirin']
     assert client.payload['response_format']['json_schema']['strict'] is True
     import pytest
@@ -77,7 +77,7 @@ def test_groq_truncated_extraction_is_rejected():
         def json(self): return {'choices':[{'finish_reason':'length','message':{'content':'{}'}}]}
     class Client:
         def post(self,*args,**kwargs):return Response()
-    with pytest.raises(ValueError):GroqExtractor('seriousness','configured-model','test-key',Client()).extract('source',0)
+    with pytest.raises(ValueError):GroqExtractor('seriousness','openai/gpt-oss-120b','test-key',Client()).extract('source',0)
 
 
 def test_audit_manifest_anchors_latest_row_not_lexicographic_max(tmp_path):
@@ -128,3 +128,28 @@ def test_multiple_audit_connections_share_one_chain(tmp_path):
             list(pool.map(lambda i:logs[i%2].append({'record':i}),range(60)))
         assert logs[0].verify()==(True,None)
         assert logs[0].db.execute('select count(*) from audit').fetchone()[0]==60
+
+
+def test_unsupported_groq_model_is_rejected_before_network():
+    import pytest
+    from backend.services.pv_agents.groq_extraction import GroqExtractor
+    for kind in ('seriousness','causality','drug-mentions'):
+        with pytest.raises(ValueError,match='not verified'):
+            GroqExtractor(kind,'unsupported-model','test-key')
+
+
+def test_groq_registration_probes_all_enabled_schemas(monkeypatch,tmp_path):
+    from backend.services.pv_agents.workers import build_specialist_workers
+    from backend.services.pv_agents.groq_extraction import GroqExtractor
+    for key,value in {'NEXUS_PV_PROVIDER':'groq','AI_MODEL':'openai/gpt-oss-120b','GROQ_API_KEY':'test-key','NEXUS_DRUG_NER_ENABLED':'true'}.items():monkeypatch.setenv(key,value)
+    for key in ('SERIOUSNESS_MODEL','CAUSALITY_MODEL','DRUG_NER_MODEL'):monkeypatch.delenv(key,raising=False)
+    probes=[]
+    monkeypatch.setattr(GroqExtractor,'preflight',lambda self:probes.append((self.kind,self.model)))
+    drug=type('Drug',(),{})()
+    workers=build_specialist_workers(drug,None,str(tmp_path))
+    assert list(workers)==['seriousness','causality']
+    assert [kind for kind,_ in probes]==['seriousness','causality','drug-mentions']
+    def fail(self):raise ValueError('schema probe failed')
+    monkeypatch.setattr(GroqExtractor,'preflight',fail)
+    import pytest
+    with pytest.raises(ValueError,match='schema probe failed'):build_specialist_workers(type('Drug',(),{})(),None,str(tmp_path))

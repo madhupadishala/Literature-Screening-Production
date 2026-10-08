@@ -97,8 +97,13 @@ def build_specialist_workers(drug_agent, adapter, audit_dir):
         key = os.environ.get('GROQ_API_KEY', '')
         s_extractor = GroqExtractor('seriousness', s_cfg.model, key)
         c_extractor = GroqExtractor('causality', c_cfg.model, key)
+        mention_extractor = None
         if os.environ.get('NEXUS_DRUG_NER_ENABLED') == 'true':
-            drug_agent.mention_extractor = GroqExtractor('drug-mentions', os.environ.get('DRUG_NER_MODEL') or os.environ.get('AI_MODEL', ''), key)
+            mention_extractor = GroqExtractor('drug-mentions', os.environ.get('DRUG_NER_MODEL') or os.environ.get('AI_MODEL', ''), key)
+        # No specialist is registered if any model/schema/credential probe fails.
+        for extractor in (s_extractor, c_extractor, mention_extractor):
+            if extractor is not None: extractor.preflight()
+        if mention_extractor is not None: drug_agent.mention_extractor = mention_extractor
     else:
         if not os.environ.get('ANTHROPIC_API_KEY'): raise ValueError('Provider credentials required')
         s_extractor, c_extractor = SeriousnessExtractor(s_cfg.model), CausalityExtractor(c_cfg.model)

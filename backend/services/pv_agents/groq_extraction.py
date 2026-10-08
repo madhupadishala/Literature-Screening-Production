@@ -32,13 +32,26 @@ def strict_schema(model):
             for child in value:walk(child)
     walk(schema);return schema
 
+# Verified against https://console.groq.com/docs/structured-outputs (2026-10-08).
+# Fail closed; additional models require documentation review and a real schema probe.
+STRICT_MODELS=frozenset({'openai/gpt-oss-20b','openai/gpt-oss-120b','qwen/qwen3.8-27b'})
+
 class GroqExtractor:
     name='groq-strict-source-extraction'
     def __init__(self, kind, model, api_key, client=None):
         if kind not in ('seriousness','causality','drug-mentions') or not model or not api_key:
             raise ValueError('Explicit extraction kind, model and provider credentials required')
+        if model not in STRICT_MODELS:
+            raise ValueError('Selected Groq model is not verified for strict structured outputs')
         self.kind,self.model,self.api_key,self.client=kind,model,api_key,client
         self.schema=Extraction if kind=='seriousness' else PairExtraction if kind=='causality' else Candidates
+    def preflight(self):
+        """Synthetic, non-patient startup probe of the actual selected extraction schema."""
+        narrative='Aspirin was suspected. The patient was hospitalized for bleeding.'
+        if self.kind=='causality': self.extract(narrative,'Aspirin','bleeding',0)
+        elif self.kind=='drug-mentions': self.extract_names(narrative)
+        else: self.extract(narrative,0)
+
     def extract(self,narrative,*args):
         if self.kind=='seriousness':system=SERIOUSNESS_SYSTEM;context={'sample':args[0] if args else 0}
         elif self.kind=='causality':
