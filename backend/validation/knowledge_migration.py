@@ -31,3 +31,19 @@ if __name__=='__main__':
     import argparse
     p=argparse.ArgumentParser();p.add_argument('root');p.add_argument('output');a=p.parse_args()
     Path(a.output).write_text(json.dumps(plan(a.root),indent=2))
+
+
+def build_staged_index(root, destination, tenant_id):
+    """Build a fresh staging directory; never mutate or switch the production index."""
+    import shutil
+    destination=Path(destination)
+    if destination.exists(): raise ValueError('Staging destination must be new')
+    inventory=plan(root); destination.mkdir(parents=True)
+    for row in inventory['records']:
+        if row['action']=='ELIGIBLE_FOR_STAGED_INDEX' and row['tenant_id'] in ('GLOBAL',tenant_id):
+            target=destination/row['path'];target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copy2(Path(root)/row['path'],target)
+    index=VectorIndexer(str(destination)); index.rebuild_index(tenant_id)
+    receipt={**inventory,'staged_index_records':index.collection.count(),'production_applied':False}
+    (destination/'migration-receipt.json').write_text(json.dumps(receipt,indent=2))
+    return receipt

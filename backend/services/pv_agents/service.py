@@ -67,6 +67,10 @@ class PVAgentService:
                 raise ServiceError(400, f"{key} required")
         if not any(all(s.get(k) == request[k] for k in ['tenant_id','client_id','workspace_id']) for s in scopes):
             raise ServiceError(403, "Service token scope mismatch")
+        if len(request['narrative']) > 50_000 and agent in ('seriousness', 'causality'):
+            raise ServiceError(400, 'Specialist narrative exceeds supported 50000 character limit')
+        if not isinstance(request.get('event_terms', []), list) or len(request.get('event_terms', [])) > 50 or any(not isinstance(e, str) or not e.strip() or len(e) > 200 for e in request.get('event_terms', [])):
+            raise ServiceError(400, 'Invalid event terms')
         digest = hashlib.sha256(request['narrative'].encode()).hexdigest()
         if digest != request['input_sha256']:
             raise ServiceError(400, "Source hash mismatch")

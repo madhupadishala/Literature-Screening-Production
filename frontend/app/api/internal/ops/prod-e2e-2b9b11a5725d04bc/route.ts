@@ -34,8 +34,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 const TEST_ID = "PROD-E2E-HITS-L2A-42573610-20261003-B";
-const EXPECTED_TOKEN_SHA256 =
-  "e3c4fb9dfa8a958b4e1af8c76f649176efef713a0b8c2937dc775efd59143cd8";
+const EXPECTED_TOKEN_SHA256 = process.env.NEXUS_PROD_E2E_TOKEN_SHA256 || "";
 const TENANT_ID = "c3570ce0-6492-4dac-ba40-c0363b2835a4";
 const TENANT_KEY = "clinixai-prod";
 const WORKSPACE_ID = "8c2b32e2-6816-4265-9e71-48411d5207c4";
@@ -45,7 +44,7 @@ const ROLE_KEY = "CLINIXAI_SUPER_ADMIN";
 const PMID = "42573610";
 
 function authorized(token: string | null): boolean {
-  if (!token) return false;
+  if (process.env.NEXUS_ENABLE_PRODUCTION_E2E !== "true" || !token || !/^[a-f0-9]{64}$/.test(EXPECTED_TOKEN_SHA256)) return false;
   return (
     createHash("sha256").update(token, "utf8").digest("hex") ===
     EXPECTED_TOKEN_SHA256

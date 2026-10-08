@@ -32,6 +32,9 @@
     },
     "minimatch@10.2.5": {
       "brace-expansion": "5.0.12"
+    },
+    "@next/eslint-plugin-next": {
+      "fast-glob": "file:../../../vendor/next-root-glob"
     }
   },
   "scripts": {

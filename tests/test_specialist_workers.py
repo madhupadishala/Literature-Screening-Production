@@ -51,3 +51,30 @@ def test_silence_in_offline_seriousness_is_unknown():
     from backend.agents.seriousness_runtime.schemas import Criterion
     extraction = OfflineBaselineExtractor().extract('The patient reported an itchy rash.')
     assert all(f.status=='unknown' for f in extraction.findings if f.criterion==Criterion.DEATH)
+
+
+def test_groq_mentions_are_strict_and_source_grounded():
+    import json
+    from types import SimpleNamespace
+    from backend.services.pv_agents.groq_extraction import GroqExtractor
+    class Response:
+        def raise_for_status(self): pass
+        def json(self): return {'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'mentions':[{'name':'Aspirin','quote':'Aspirin was suspected.'}]})}}]}
+    class Client:
+        def post(self, url, **kwargs): self.payload=kwargs['json']; return Response()
+    client=Client();extractor=GroqExtractor('drug-mentions','configured-model','test-key',client)
+    assert extractor.extract_names('Aspirin was suspected.')==['Aspirin']
+    assert client.payload['response_format']['json_schema']['strict'] is True
+    import pytest
+    with pytest.raises(ValueError):extractor.extract_names('Metformin was administered.')
+
+
+def test_groq_truncated_extraction_is_rejected():
+    from backend.services.pv_agents.groq_extraction import GroqExtractor
+    import pytest
+    class Response:
+        def raise_for_status(self): pass
+        def json(self): return {'choices':[{'finish_reason':'length','message':{'content':'{}'}}]}
+    class Client:
+        def post(self,*args,**kwargs):return Response()
+    with pytest.raises(ValueError):GroqExtractor('seriousness','configured-model','test-key',Client()).extract('source',0)

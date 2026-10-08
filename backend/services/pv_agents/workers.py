@@ -61,6 +61,9 @@ class CausalityWorker:
     def __call__(self, request):
         classified = self.drug_agent.run(request['tenant_id'], {'case_id': request['case_id'], 'text': request['narrative'], 'source_type': request.get('source_type', 'other')}, client_id=request['client_id'])
         drugs = [{'name': d['normalized_name'], 'role': 'suspect'} for d in classified['classifications'] if d['role'] == 'SUSPECT']
+        if len(drugs) * len(request.get('event_terms', [])) > 25:
+            from .service import ServiceError
+            raise ServiceError(400, 'More than 25 pairs requires a queued specialist assessment')
         case = CausalityCase(case_id=request['case_id'], narrative=request['narrative'], drugs=drugs,
             events=[{'term': e} for e in request.get('event_terms', [])], client_id=request['client_id'], as_of=date.today(),
             source_type=request.get('source_type') if request.get('source_type') in ('spontaneous','literature','clinical_trial','social_media') else 'other')
@@ -84,12 +87,22 @@ def build_specialist_workers(drug_agent, adapter, audit_dir):
     from backend.agents.causality_runtime.config import Config as CausalityConfig
     from backend.agents.causality_runtime.audit import AuditLog as CausalityAudit
     from backend.agents.causality_runtime.kb import KnowledgeStore
-    if not os.environ.get('ANTHROPIC_API_KEY'):
-        raise ValueError('ANTHROPIC_API_KEY required for configured specialist extraction')
+    provider = os.environ.get('NEXUS_PV_PROVIDER') or os.environ.get('AI_PROVIDER') or 'anthropic'
+    if provider not in ('groq', 'anthropic'): raise ValueError('Supported provider configuration required')
     root = Path(audit_dir); root.mkdir(parents=True, exist_ok=True)
-    s_cfg = SeriousnessConfig(model=os.environ.get('SERIOUSNESS_MODEL', ''))
-    c_cfg = CausalityConfig(model=os.environ.get('CAUSALITY_MODEL', ''))
-    seriousness = SeriousnessPipeline(SeriousnessExtractor(s_cfg.model), SeriousnessAudit(str(root / 'seriousness.sqlite')), s_cfg)
-    causality = CausalityPipeline(CausalityExtractor(c_cfg.model), CausalityAudit(str(root / 'causality.sqlite')), c_cfg,
+    s_cfg = SeriousnessConfig(model=os.environ.get('SERIOUSNESS_MODEL') or os.environ.get('AI_MODEL', ''))
+    c_cfg = CausalityConfig(model=os.environ.get('CAUSALITY_MODEL') or os.environ.get('AI_MODEL', ''))
+    if provider == 'groq':
+        from .groq_extraction import GroqExtractor
+        key = os.environ.get('GROQ_API_KEY', '')
+        s_extractor = GroqExtractor('seriousness', s_cfg.model, key)
+        c_extractor = GroqExtractor('causality', c_cfg.model, key)
+        if os.environ.get('NEXUS_DRUG_NER_ENABLED') == 'true':
+            drug_agent.mention_extractor = GroqExtractor('drug-mentions', os.environ.get('DRUG_NER_MODEL') or os.environ.get('AI_MODEL', ''), key)
+    else:
+        if not os.environ.get('ANTHROPIC_API_KEY'): raise ValueError('Provider credentials required')
+        s_extractor, c_extractor = SeriousnessExtractor(s_cfg.model), CausalityExtractor(c_cfg.model)
+    seriousness = SeriousnessPipeline(s_extractor, SeriousnessAudit(str(root / 'seriousness.sqlite')), s_cfg)
+    causality = CausalityPipeline(c_extractor, CausalityAudit(str(root / 'causality.sqlite')), c_cfg,
                                  KnowledgeStore(), nexus_client=ScopedRuntimeKnowledge(adapter))
     return {'seriousness': SeriousnessWorker(seriousness), 'causality': CausalityWorker(causality, drug_agent)}

@@ -20,9 +20,9 @@
     },
     "CONCOMITANT": {
       "tp": 0,
-      "fp": 5,
+      "fp": 0,
       "fn": 6,
-      "precision": 0.0,
+      "precision": null,
       "recall": 0.0,
       "f1": 0.0
     },
@@ -38,11 +38,11 @@
   "mismatches": [
     [
       "acebutolol",
-      "CONCOMITANT"
+      "SUSPECT"
     ],
     [
       "acebutolol",
-      "SUSPECT"
+      "UNKNOWN"
     ],
     [
       "acebutolol hydrochloride",
@@ -198,11 +198,11 @@
     ],
     [
       "oxazepam",
-      "CONCOMITANT"
+      "SUSPECT"
     ],
     [
       "oxazepam",
-      "SUSPECT"
+      "UNKNOWN"
     ],
     [
       "persantine",
@@ -218,7 +218,7 @@
     ],
     [
       "quinapril",
-      "CONCOMITANT"
+      "UNKNOWN"
     ],
     [
       "quinapril hydrochloride",
@@ -226,15 +226,15 @@
     ],
     [
       "rabeprazole",
-      "CONCOMITANT"
-    ],
-    [
-      "rosuvastatin",
-      "CONCOMITANT"
+      "UNKNOWN"
     ],
     [
       "rosuvastatin",
       "SUSPECT"
+    ],
+    [
+      "rosuvastatin",
+      "UNKNOWN"
     ],
     [
       "spiriva",

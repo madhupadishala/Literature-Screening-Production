@@ -12,9 +12,10 @@ class NexusDrugRoleAgent:
 
     AGENT_NAME = "drug_role_classification"
 
-    def __init__(self, knowledge_router: KnowledgeRouter = None):
+    def __init__(self, knowledge_router: KnowledgeRouter = None, mention_extractor=None):
         self.knowledge_router = knowledge_router or KnowledgeRouter()
         self.engine = DrugRoleOrchestrator()
+        self.mention_extractor = mention_extractor
 
     def run(
         self,
@@ -41,6 +42,9 @@ class NexusDrugRoleAgent:
                 evidence_package.get("text", ""),
             ) if part
         )
+
+        if candidate_drugs is None and self.mention_extractor is not None:
+            candidate_drugs = self.mention_extractor.extract_names(text)
 
         result = self.engine.classify(
             case_id=evidence_package.get("case_id") or evidence_package.get("evidence_package_id", "UNKNOWN"),
