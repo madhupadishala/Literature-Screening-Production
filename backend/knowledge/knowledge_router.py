@@ -1,11 +1,13 @@
 import os
 import json
+import re
+from datetime import date
 from typing import Dict, Any
 from backend.knowledge.agent_context_pack import AgentContextPack
 from backend.knowledge.retriever import HybridRetriever
 
 class KnowledgeRouter:
-    def __init__(self, base_path: str = None):
+    def __init__(self, base_path: str = None, retriever=None):
         # Anchor absolutely to the real project directory structure
         if base_path is None:
             current_dir = os.path.dirname(os.path.abspath(__file__)) # backend/knowledge
@@ -14,7 +16,7 @@ class KnowledgeRouter:
         else:
             self.base_path = base_path
             
-        self.retriever = HybridRetriever(base_path=self.base_path)
+        self.retriever = retriever or HybridRetriever(base_path=self.base_path)
 
     def _load_json_file(self, path: str) -> Dict[str, Any]:
         if os.path.exists(path):
@@ -22,7 +24,13 @@ class KnowledgeRouter:
                 return json.load(f)
         return {}
 
-    def build_context_pack(self, tenant_id: str, agent_name: str, task: str, evidence_package: Dict[str, Any]) -> AgentContextPack:
+    def build_context_pack(self, tenant_id: str, agent_name: str, task: str, evidence_package: Dict[str, Any], *, client_id=None, knowledge_types=None, jurisdiction=None, as_of=None) -> AgentContextPack:
+        for identifier in (tenant_id, client_id):
+            if identifier is not None and (not isinstance(identifier, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", identifier)):
+                raise ValueError("Invalid tenant/client scope identifier")
+        if not tenant_id or tenant_id == "GLOBAL":
+            raise ValueError("An actual tenant_id is required")
+        effective_on = date.fromisoformat(str(as_of)) if as_of else None
         context_pack = AgentContextPack(
             tenant_id=tenant_id,
             agent=agent_name,
@@ -39,11 +47,25 @@ class KnowledgeRouter:
         prod_data = self._load_json_file(prod_path)
         
         for prod in prod_data.get("products", []):
+            product_client = prod.get("client_id", prod_data.get("client_id"))
+            if product_client not in ((client_id, "GLOBAL") if client_id else ("GLOBAL",)):
+                continue
+            if jurisdiction and jurisdiction not in prod.get("country_scope", ["GLOBAL"]):
+                if "GLOBAL" not in prod.get("country_scope", []):
+                    continue
+            if effective_on:
+                try:
+                    if date.fromisoformat(prod["effective_date"]) > effective_on:
+                        continue
+                    if prod.get("expiry_date") and date.fromisoformat(prod["expiry_date"]) < effective_on:
+                        continue
+                except (KeyError, ValueError):
+                    continue
             trade_name = prod.get("trade_name", "").lower()
             aliases = [a.lower() for a in prod.get("aliases", [])]
             ingredients = [i.lower() for i in prod.get("active_ingredients", [])]
             
-            if trade_name in search_corpus or any(a in search_corpus for a in aliases) or any(i in search_corpus for i in ingredients):
+            if any(value and re.search(r"(?<!\w)" + re.escape(value) + r"(?!\w)", search_corpus) for value in [trade_name, *aliases, *ingredients]):
                 context_pack.product_master_matches.append(prod)
 
         # 2. Country Identification Pathing Check
@@ -61,13 +83,14 @@ class KnowledgeRouter:
         retrieved_rules = self.retriever.retrieve_relevant_rules(
             query=search_corpus, 
             agent_name=agent_name, 
-            tenant_id=tenant_id
+            tenant_id=tenant_id,
+            client_id=client_id, knowledge_types=knowledge_types, jurisdiction=jurisdiction, as_of=as_of
         )
 
         for rule in retrieved_rules:
             citation = {
                 "rule_id": rule["rule_id"],
-                "source": f"{rule['source_document']} Sec: {rule['source_section']}"
+                "source": f"{rule.get('source_document', 'UNKNOWN')} Sec: {rule.get('source_section', 'UNKNOWN')}"
             }
             context_pack.citations.append(citation)
 

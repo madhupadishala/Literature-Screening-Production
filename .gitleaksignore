@@ -1,0 +1,22 @@
+# Exact reviewed historical findings only. See evidence/pv-agents/secret-scan-triage.json.
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:905
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:910
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Cardionex/Amlodipine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:905
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:913
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:901
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Glycora/Metformin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:908
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Lipirex/Atorvastatin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:905
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:917
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Respira-L/Montelukast/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:909
+61c706c0b4968b86920d3523a34deabe5f9b1e50:knowledge/Labeling/Serovex/Sertraline/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:901
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:901
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Cardionex/Amlodipine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:905
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:910
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:905
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:913
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Glycora/Metformin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:908
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Lipirex/Atorvastatin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:905
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:917
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Respira-L/Montelukast/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:909
+3268afa8c50e34319cf739fabdd018584b422a5b:knowledge/Labeling/Serovex/Sertraline/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html:generic-api-key:901
+4e8fa8ce6e92b856c552a2f1ccf17087a2cb76d3:frontend/app/api/internal/ops/prod-e2e-2b9b11a5725d04bc/route.ts:generic-api-key:37

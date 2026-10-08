@@ -1,0 +1,264 @@
+{
+  "status": "UNADJUDICATED_REPORT_LEVEL_COMPARISON",
+  "dialect": "faers_ascii",
+  "extraction": {
+    "tp": 6,
+    "fp": 2,
+    "fn": 38,
+    "precision": 0.75,
+    "recall": 0.13636363636363635,
+    "f1": 0.23076923076923078
+  },
+  "roles": {
+    "SUSPECT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 40,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CONCOMITANT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 6,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "INTERACTING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    }
+  },
+  "mismatches": [
+    [
+      "acebutolol",
+      "SUSPECT"
+    ],
+    [
+      "acebutolol",
+      "UNKNOWN"
+    ],
+    [
+      "acebutolol hydrochloride",
+      "SUSPECT"
+    ],
+    [
+      "acetaminophen",
+      "SUSPECT"
+    ],
+    [
+      "acetaminophen",
+      "UNKNOWN"
+    ],
+    [
+      "acetaminophen and caffeine",
+      "SUSPECT"
+    ],
+    [
+      "acetaminophen and codeine",
+      "SUSPECT"
+    ],
+    [
+      "acetaminophen, aspirin and caffeine",
+      "SUSPECT"
+    ],
+    [
+      "aggrenox",
+      "SUSPECT"
+    ],
+    [
+      "albuterol sulfate",
+      "SUSPECT"
+    ],
+    [
+      "amitriptyline hydrochloride",
+      "SUSPECT"
+    ],
+    [
+      "amlodipine besylate",
+      "SUSPECT"
+    ],
+    [
+      "ascorbic acid",
+      "CONCOMITANT"
+    ],
+    [
+      "aspirin",
+      "CONCOMITANT"
+    ],
+    [
+      "aspirin",
+      "SUSPECT"
+    ],
+    [
+      "caffeine",
+      "SUSPECT"
+    ],
+    [
+      "calcium carbonate",
+      "SUSPECT"
+    ],
+    [
+      "carbamazepine",
+      "SUSPECT"
+    ],
+    [
+      "carbamazepine",
+      "UNKNOWN"
+    ],
+    [
+      "chondroitin sulfate (bovine)",
+      "SUSPECT"
+    ],
+    [
+      "chondroitin sulfate (bovine)\\glucosamine sulfate",
+      "SUSPECT"
+    ],
+    [
+      "cranberry",
+      "CONCOMITANT"
+    ],
+    [
+      "cranberry",
+      "SUSPECT"
+    ],
+    [
+      "cyclobenzaprine",
+      "SUSPECT"
+    ],
+    [
+      "cyclobenzaprine hydrochloride",
+      "SUSPECT"
+    ],
+    [
+      "diltiazem",
+      "SUSPECT"
+    ],
+    [
+      "dulcolax (bisacodyl)",
+      "SUSPECT"
+    ],
+    [
+      "furosemide",
+      "SUSPECT"
+    ],
+    [
+      "galantamine hydrobromide",
+      "SUSPECT"
+    ],
+    [
+      "glucosamine",
+      "SUSPECT"
+    ],
+    [
+      "glycerin",
+      "SUSPECT"
+    ],
+    [
+      "herbals\\plantago indica whole",
+      "CONCOMITANT"
+    ],
+    [
+      "lactulose",
+      "SUSPECT"
+    ],
+    [
+      "levofloxacin",
+      "SUSPECT"
+    ],
+    [
+      "levothyroxine sodium",
+      "SUSPECT"
+    ],
+    [
+      "magnesium hydroxide",
+      "SUSPECT"
+    ],
+    [
+      "morphine sulfate",
+      "SUSPECT"
+    ],
+    [
+      "nitroglycerin",
+      "SUSPECT"
+    ],
+    [
+      "omeprazole",
+      "SUSPECT"
+    ],
+    [
+      "omeprazole",
+      "UNKNOWN"
+    ],
+    [
+      "oxazepam",
+      "SUSPECT"
+    ],
+    [
+      "oxazepam",
+      "UNKNOWN"
+    ],
+    [
+      "persantine",
+      "SUSPECT"
+    ],
+    [
+      "polysorbate 85",
+      "SUSPECT"
+    ],
+    [
+      "potassium sorbate",
+      "SUSPECT"
+    ],
+    [
+      "quinapril",
+      "UNKNOWN"
+    ],
+    [
+      "quinapril hydrochloride",
+      "SUSPECT"
+    ],
+    [
+      "rabeprazole",
+      "UNKNOWN"
+    ],
+    [
+      "rosuvastatin",
+      "SUSPECT"
+    ],
+    [
+      "rosuvastatin",
+      "UNKNOWN"
+    ],
+    [
+      "spiriva",
+      "SUSPECT"
+    ],
+    [
+      "tocopherol",
+      "SUSPECT"
+    ],
+    [
+      "vitamin c",
+      "CONCOMITANT"
+    ],
+    [
+      "zinc",
+      "CONCOMITANT"
+    ]
+  ],
+  "ownership_accuracy": null,
+  "drug_event_pair_accuracy": null,
+  "expert_review_completed": false,
+  "limitations": [
+    "Exact names only; normalization requires a separately controlled mapping.",
+    "FAERS roles do not label historical, treatment, ownership, or drug-event pairs.",
+    "Article-to-patient linkage and source-visible versus follow-up-only drugs require adjudication."
+  ]
+}

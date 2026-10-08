@@ -1,0 +1,9 @@
+{
+  "staged_index_records": 6,
+  "query_results": 6,
+  "scope_check_passed": true,
+  "embedding_model": "all-MiniLM-L6-v2 ONNX",
+  "model_sha256": "913d7300ceae3b2dbc2c50d1de4baacab4be7b9380491c27fab7418616a16ec3",
+  "production_promoted": false,
+  "quarantined_client_override": 1
+}

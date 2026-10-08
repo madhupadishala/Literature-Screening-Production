@@ -1,0 +1,346 @@
+{
+  "records": [
+    {
+      "primaryid": "268849211",
+      "caseid": "26884921",
+      "caseversion": "1",
+      "drug_record_count": 115,
+      "unique_reported_names": 55,
+      "literature_reference": "Golonko J... Falls in an elderly person with multiple diseases.. MEDICINE AFTER DIPLOMA.. 2021;11:36836",
+      "reference_filename": "bulk_268849211.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "1903245115",
+      "caseid": "19032451",
+      "caseversion": "15",
+      "drug_record_count": 84,
+      "unique_reported_names": 44,
+      "literature_reference": "Farrell B, Merkley V, Thompson W. Managing polypharmacy in a 77-year-old woman with multiple prescribers. CMAJ. 2013;185 Issue: 14:1240-1245",
+      "reference_filename": "bulk_1903245115.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "266933721",
+      "caseid": "26693372",
+      "caseversion": "1",
+      "drug_record_count": 72,
+      "unique_reported_names": 5,
+      "literature_reference": "Cummings A.M., Konkol S.B., Mihalek A.D., Roth M.E.. Transitioning from oral to intravenous treprostinil in pulmonary arterial hypertension: A case report. Clin Case Rep. 2026;14(4):e72499",
+      "reference_filename": "bulk_266933721.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "1798737423",
+      "caseid": "17987374",
+      "caseversion": "23",
+      "drug_record_count": 65,
+      "unique_reported_names": 40,
+      "literature_reference": "Khazaka M, Laverdiere J, Bouchard A, Ferreira V, Mathieu A.. Identification of Possible Causative Agents in a Polymedicated Patient Presenting With Toxic Epidermal Necrolysis. Journal of Pharmacy Practice. 2020;1-5",
+      "reference_filename": "bulk_1798737423.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "269192571",
+      "caseid": "26919257",
+      "caseversion": "1",
+      "drug_record_count": 42,
+      "unique_reported_names": 32,
+      "literature_reference": "Grassi L, Bruschelli C.. Appropriatezza clinica e deprescrizione farmacologica nel paziente complesso multimorbido in medicina generale: prendersi cura della persona?(Clinical appropriateness and pharmacological deprescription in the complex multimorbid patient in medicine general: take care of the person. La Rivista Medica Italiana Online. 2021;N.1:1-8",
+      "reference_filename": "bulk_269192571.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "268203312",
+      "caseid": "26820331",
+      "caseversion": "2",
+      "drug_record_count": 38,
+      "unique_reported_names": 25,
+      "literature_reference": "Farrell B, Merkley V, Thompson W.. Managing polypharmacy in a 77-year-old woman with multiple prescribers..CMAJ. . 2013;185(14):1240-5. doi:10.1503 /cmaj.122012",
+      "reference_filename": "bulk_268203312.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "191838185",
+      "caseid": "19183818",
+      "caseversion": "5",
+      "drug_record_count": 37,
+      "unique_reported_names": 31,
+      "literature_reference": "Luca G, Carla Bruschelli. et.al. Clinical appropriateness and pharmacological deprescription in the multimorbid complex patient in general medicine: take care of the person. Rivista medica italiana online [The Italian Online Medical Journal]. 2021",
+      "reference_filename": "bulk_191838185.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "266046651",
+      "caseid": "26604665",
+      "caseversion": "1",
+      "drug_record_count": 36,
+      "unique_reported_names": 20,
+      "literature_reference": "Sherlock D, Kashlan B, Starykowicz J, Aagaard P.. Ketamine with a twist: The first reported case of ketamine-induced torsades de pointes.. HeartRhythm Case Reports. 2026;12:272-276",
+      "reference_filename": "bulk_266046651.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "264943073",
+      "caseid": "26494307",
+      "caseversion": "3",
+      "drug_record_count": 36,
+      "unique_reported_names": 33,
+      "literature_reference": "Iturgoyen-Fuentes DP. Drug-induced renal function deterioration in a patient with polyarteritis nodosa. Community Pharmacists. 2026;18(2):e242",
+      "reference_filename": "bulk_264943073.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "221803946",
+      "caseid": "22180394",
+      "caseversion": "6",
+      "drug_record_count": 35,
+      "unique_reported_names": 9,
+      "literature_reference": "Hoogslag I, Van Es S, Hardi L, Lorsheyd A. Diffuus Grootcellig B-cellymfoompresentatie als primaire cardiale tumor. NVTH. 2023;20 (2):45-48",
+      "reference_filename": "bulk_221803946.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "226124487",
+      "caseid": "22612448",
+      "caseversion": "7",
+      "drug_record_count": 35,
+      "unique_reported_names": 13,
+      "literature_reference": "Parnowski T.. Mianseryna ? miejsce i rola w leczeniu depresji.. Medycyna Faktow. 2022;15(4) (57):451-455",
+      "reference_filename": "bulk_226124487.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "247682629",
+      "caseid": "24768262",
+      "caseversion": "9",
+      "drug_record_count": 35,
+      "unique_reported_names": 26,
+      "literature_reference": "Lafreniere S, Blier P. Remission from severe treatment-resistant depression with moclobemide: A case report. L^Encephale. 2023;49:649?50. doi.org/10.1016/j.encep.2023.01.014",
+      "reference_filename": "bulk_247682629.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "201556866",
+      "caseid": "20155686",
+      "caseversion": "6",
+      "drug_record_count": 34,
+      "unique_reported_names": 15,
+      "literature_reference": "Gerhardt K, Jentzsch M, Georgi T, Sretenovic A, Cross M, Bach E et al.. Salvage therapy with polatuzumab, vedotin, bendamustine, and rituximab prior to allogeneic hematopoietic transplantation in patients with aggressive lymphomas relapsing after therapy with chimeric antigen receptor T-cells-report on two cases. FRONTIERS IN ONCOLOGY. 2021;11(737645):1-6",
+      "reference_filename": "bulk_201556866.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "266487211",
+      "caseid": "26648721",
+      "caseversion": "1",
+      "drug_record_count": 32,
+      "unique_reported_names": 20,
+      "literature_reference": "URL: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13005078",
+      "reference_filename": "bulk_266487211.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "263047922",
+      "caseid": "26304792",
+      "caseversion": "2",
+      "drug_record_count": 32,
+      "unique_reported_names": 12,
+      "literature_reference": "Resina Sierra E, Gisbert JP. Successful eradication of multidrug-resistant Helicobacter pylori with nitazoxanide-based therapy after eight treatment failures. Gastroenterol-Hepatol-Barcelona. 2025",
+      "reference_filename": "bulk_263047922.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "247958572",
+      "caseid": "24795857",
+      "caseversion": "2",
+      "drug_record_count": 32,
+      "unique_reported_names": 32,
+      "literature_reference": "Zhao W, Ma S, Zhang T, Cao D. Immunotherapy-based treatment patterns and clinical outcomes across lines of therapy in microsatellite stable metastatic colorectal cancer: A real-world study.. Oncology Letters. 2026-May-01;31 (5):1-13. doi:10.3892/ol.2026.15553.",
+      "reference_filename": "bulk_247958572.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "178734794",
+      "caseid": "17873479",
+      "caseversion": "4",
+      "drug_record_count": 31,
+      "unique_reported_names": 13,
+      "literature_reference": "Pham YV, Cotteret C, Marcais A, Driessen M, Schlatter J, Cisternino S.. MATERNAL ABVD CHEMOTHERAPY FOR HODGKIN LYMPHOMA IN A DICHORIONIC DIAMNIOTIC PREGNANCY. 4th Edition of the European Conference of Oncology Pharmacy. 2018;13(1):34",
+      "reference_filename": "bulk_178734794.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "268366601",
+      "caseid": "26836660",
+      "caseversion": "1",
+      "drug_record_count": 31,
+      "unique_reported_names": 22,
+      "literature_reference": "Gallucci A, Bolick J, Thelmo F. Refractory seizures as a manifestation of anti-epileptic drug induced hypocalcemia and vitamin D deficiency.. JCEM case reports. 2026;4(6):1-5",
+      "reference_filename": "bulk_268366601.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "264611024",
+      "caseid": "26461102",
+      "caseversion": "4",
+      "drug_record_count": 31,
+      "unique_reported_names": 30,
+      "literature_reference": "Salgado NK, Patel J, Moy S. Stevens-Johnson Syndrome And Toxic Epidermal Necrolysis Possibly Related to Daptomycin And Ceftaroline in a Patient With Persistent Methicillin-Resistant Staphylococcus aureus Bacteremia: A Case Report and Brief Review. Journal of Pharmacy Technology. 2026;87551225261422617. Doi:10.1177/87551225261422617",
+      "reference_filename": "bulk_264611024.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "259604133",
+      "caseid": "25960413",
+      "caseversion": "3",
+      "drug_record_count": 31,
+      "unique_reported_names": 24,
+      "literature_reference": "Podraza Z. Management of pharmacotherapy in a patient with ANCA-associated vasculitis and multimorbidity, prevention of polypharmacy - a case report. Military Physician. 2025 Jan 28;103(3): 238-42. doi:10.53301/lw/200573.",
+      "reference_filename": "bulk_259604133.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "268196481",
+      "caseid": "26819648",
+      "caseversion": "1",
+      "drug_record_count": 31,
+      "unique_reported_names": 31,
+      "literature_reference": "Archer H, Lu A, Arrington E, Collett G, Nodzo S, Chen A. Periprosthetic Joint Infections After Unicompartmental Knee Arthroplasty Occur More Commonly in Patients Who Have Rheumatoid Arthritis. Journal of Arthroplasty. 2026;41(6):1836-1841.e1.doi:10.1016/j.arth.2025.10.030.",
+      "reference_filename": "bulk_268196481.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "primaryid": "214562884",
+      "caseid": "21456288",
+      "caseversion": "4",
+      "drug_record_count": 31,
+      "unique_reported_names": 31,
+      "literature_reference": "Ramirez GA, Della-Torre E, Tresoldi M, Scarpellini P, Ciceri F, Dagna L, et al. Drug reaction with eosinophilia and systemic symptoms (DRESS) in patients with COVID-19. Clin-Microbiol-Infect. 2021;27(8):1190-1192",
+      "reference_filename": "bulk_214562884.json",
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10014483",
+      "version": "8",
+      "drug_record_count": 43,
+      "literature_reference": "Jaworsky D, Thompson C, Yudin MH, Bitnun A, Brophy J, Samson L, et al.. Use of newer antiretroviral agents, darunavir and etravirine with or without raltegravir, in pregnancy, a report of two cases. Antiviral Therapy. 2010;15 (4):585-8",
+      "source_file": "page_0.json",
+      "reference_filename": "api_10014483.json",
+      "unique_reported_names": 26,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10031306",
+      "version": "6",
+      "drug_record_count": 32,
+      "literature_reference": "Nomoto M, et al.. Two cases where it was difficult to control PT-INR because of concomitant use of aprepitant and Warfarin. The 66th Annual Congress of the Japan Society of Obstetrics and Gynecology. 2014;66(2):655",
+      "source_file": "page_0.json",
+      "reference_filename": "api_10031306.json",
+      "unique_reported_names": 8,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10047567",
+      "version": "6",
+      "drug_record_count": 44,
+      "literature_reference": "HIRAKAWA T. A CASE OF MALIGNANT TONGUE CANCER WHICH DEVELOPED AFER A LONG-TERM TREATMENT WITH LIPOSOMAL DOXORUBICIN. 2015?49. MIYAHARA D. A CASE OF MALIGNANT TONGUE CANCER DEVELOPED AFTER LONG-TERM LIPOSOMAL DOXORUBICIN TREATMENT BY DAISUKE MIYAHARA, ET AL.. JAPANESE JOURNAL OF GYNECOLOGICAL ONCOLOGY 2015?33(3):618.",
+      "source_file": "page_100.json",
+      "reference_filename": "api_10047567.json",
+      "unique_reported_names": 15,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10069682",
+      "version": "18",
+      "drug_record_count": 39,
+      "literature_reference": "STEPHANIE CHO. DEVELOPMENT OF NEOPLASMS IN PEDIATRIC PATIENTS WITH RHEUMATIC DISEASE EXPOSED TO ANTI-TUMOR NECROSIS FACTOR THERAPIES: A SINGLE CENTRE RETROSPECTIVE STUDY. PEDIATR. RHEUMATOL.. 2018?16 (1)",
+      "source_file": "page_200.json",
+      "reference_filename": "api_10069682.json",
+      "unique_reported_names": 23,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10087932",
+      "version": "5",
+      "drug_record_count": 34,
+      "literature_reference": "REPORTER KNOWN TO LICENSEE, PONTHIEUX ANNE, MIMOUN GERARD, EBRAN JEAN-MARC, GRENET TYPHAINE, DONATI ALAIN, COHEN SALOMON-YVES. RANIBIZUMAB FOR CHOROIDAL NEOVASCULARIZATION SECONDARY TO PSEUDOXANTHOMA ELASTICUM: 4-YEAR RESULTS FROM THE PIXEL STUDY IN FRANCE.. GRAEFES ARCH CLIN EXP OPHTHALMOL. 2017 ;:-.",
+      "source_file": "page_300.json",
+      "reference_filename": "api_10087932.json",
+      "unique_reported_names": 7,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10149383",
+      "version": "6",
+      "drug_record_count": 63,
+      "literature_reference": "KARASAWA K, UCHIDA K, ASAMIYA Y, MORIYAMA T, ITABASHI M, TAKEI T, ET AL.. LONG-TERM PROSPECTIVE STUDY OF TACROLIMUS-BASED TREATMENT IN LUPUS NEPHRITIS PATIENTS. JOURNAL OF THE AMERICAN SOCIETY OF NEPHROLOGY. 2015?26(SUPPL.):268A",
+      "source_file": "page_400.json",
+      "reference_filename": "api_10149383.json",
+      "unique_reported_names": 36,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10187298",
+      "version": "2",
+      "drug_record_count": 49,
+      "literature_reference": "UIKE N,ABE Y,SUEHIRO Y,CHOI I,TOYODA K,HAJI S. LENALIDOMIDE/DEXAMETHASONE THERAPY FOR RELAPSED MYELOMA AFTER AUTO-PBSCT..",
+      "source_file": "page_600.json",
+      "reference_filename": "api_10187298.json",
+      "unique_reported_names": 28,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10193003",
+      "version": "7",
+      "drug_record_count": 63,
+      "literature_reference": "Watson CPN, Mackinnon SE, Dostrovsky JO, Bennett GJ, Farran RP, Carlson T.. Nerve resection, crush and re-location relieve complex regional pain syndrome type II: A case report. Pain. 2014;155(6):1-6",
+      "source_file": "page_600.json",
+      "reference_filename": "api_10193003.json",
+      "unique_reported_names": 40,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10196695",
+      "version": "3",
+      "drug_record_count": 57,
+      "literature_reference": "UIKE N,ABE Y,SUEHIRO Y,CHOI I,TOYODA K,HAJI S. LENALIDOMIDE/ DEXAMETHASONE THERAPY FOR RELAPSED MYELOMA AFTER AUTO-PBSCT.. 2014 MAR 07;271-271.",
+      "source_file": "page_600.json",
+      "reference_filename": "api_10196695.json",
+      "unique_reported_names": 18,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10219086",
+      "version": "5",
+      "drug_record_count": 32,
+      "literature_reference": "UNKNOWN",
+      "source_file": "page_700.json",
+      "reference_filename": "api_10219086.json",
+      "unique_reported_names": 28,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10247927",
+      "version": "2",
+      "drug_record_count": 31,
+      "literature_reference": "SASAKI K, KANTARJIAN H, O^BRIEN S, THOMAS D, RAVANDI F, GARCIA-MANERO G, KADIA T, JAIN N, KONOPLEVA M, ESTROV Z, TAKAHASHI K, KHOURI M, JACOB J, GARRIS R, CORTES J, JABBOUR E. SALVAGE CHEMOTHERAPY WITH INOTUZUMAB OZOGAMICIN (INO) COMBINED WITH MINI-HYPER-CVD FOR ADULT PATIENTS WITH RELAPSED/REFRACTORY (R/R) ACUTE LYMPHOBLASTIC LEUKEMIA (ALL). BLOOD. 2015 JAN 01;126(23):3721-3721.",
+      "source_file": "page_900.json",
+      "reference_filename": "api_10247927.json",
+      "unique_reported_names": 21,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    },
+    {
+      "case_id": "10249695",
+      "version": "8",
+      "drug_record_count": 37,
+      "literature_reference": "ETCHEVERRIGARAY F, GRALL?BRONNEC  M, BLANCHET  M, JOLLIET  P, VICTORRI?VIGNEAU  C. IBUPROFEN DEPENDENCE: A CASE REPORT. PHARMACOPSYCHIATRY 2014?47(3):115?117.",
+      "source_file": "page_900.json",
+      "reference_filename": "api_10249695.json",
+      "unique_reported_names": 2,
+      "linkage_status": "PENDING_EXPERT_VERIFICATION"
+    }
+  ],
+  "expert_review_completed": false,
+  "eligibility_requires_distinct_source_visible_drugs_and_patient_linkage": true
+}

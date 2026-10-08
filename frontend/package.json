@@ -32,6 +32,9 @@
     },
     "minimatch@10.2.5": {
       "brace-expansion": "5.0.12"
+    },
+    "@next/eslint-plugin-next": {
+      "fast-glob": "file:../../../vendor/next-root-glob"
     }
   },
   "scripts": {
@@ -118,7 +121,7 @@
     "@types/react-dom": "^19",
     "dependency-cruiser": "^18.4.0",
     "eslint": "^9",
-    "eslint-config-next": "16.3.8",
+    "eslint-config-next": "16.4.0",
     "tailwindcss": "^4",
     "tsx": "^4.20.6",
     "typescript": "^5"

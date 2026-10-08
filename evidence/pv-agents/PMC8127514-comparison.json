@@ -1,0 +1,228 @@
+{
+  "status": "UNADJUDICATED_REPORT_LEVEL_COMPARISON",
+  "dialect": "faers_ascii",
+  "extraction": {
+    "tp": 3,
+    "fp": 11,
+    "fn": 28,
+    "precision": 0.21428571428571427,
+    "recall": 0.0967741935483871,
+    "f1": 0.13333333333333333
+  },
+  "roles": {
+    "SUSPECT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 31,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "CONCOMITANT": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "INTERACTING": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    }
+  },
+  "mismatches": [
+    [
+      "acetazolamide",
+      "SUSPECT"
+    ],
+    [
+      "alprostadil",
+      "SUSPECT"
+    ],
+    [
+      "anakinra",
+      "SUSPECT"
+    ],
+    [
+      "azithromycin",
+      "UNKNOWN"
+    ],
+    [
+      "ceftriaxone",
+      "SUSPECT"
+    ],
+    [
+      "cisatracurium besylate",
+      "SUSPECT"
+    ],
+    [
+      "clonazepam",
+      "UNKNOWN"
+    ],
+    [
+      "clonidine",
+      "SUSPECT"
+    ],
+    [
+      "daptomycin",
+      "SUSPECT"
+    ],
+    [
+      "daptomycin",
+      "UNKNOWN"
+    ],
+    [
+      "enoxaparin sodium",
+      "SUSPECT"
+    ],
+    [
+      "ethacrynic acid",
+      "SUSPECT"
+    ],
+    [
+      "fentanyl",
+      "SUSPECT"
+    ],
+    [
+      "fluconazole",
+      "UNKNOWN"
+    ],
+    [
+      "fluvoxamine",
+      "SUSPECT"
+    ],
+    [
+      "furosemide",
+      "SUSPECT"
+    ],
+    [
+      "hydroxychloroquine",
+      "SUSPECT"
+    ],
+    [
+      "hydroxyzine",
+      "SUSPECT"
+    ],
+    [
+      "iopamidol",
+      "SUSPECT"
+    ],
+    [
+      "iopromide",
+      "SUSPECT"
+    ],
+    [
+      "labetalol",
+      "SUSPECT"
+    ],
+    [
+      "linezolid",
+      "SUSPECT"
+    ],
+    [
+      "lopinavir",
+      "UNKNOWN"
+    ],
+    [
+      "lopinavir\\ritonavir",
+      "SUSPECT"
+    ],
+    [
+      "lorazepam",
+      "UNKNOWN"
+    ],
+    [
+      "midazolam",
+      "SUSPECT"
+    ],
+    [
+      "nebivolol",
+      "UNKNOWN"
+    ],
+    [
+      "norepinephrine",
+      "SUSPECT"
+    ],
+    [
+      "omeprazole",
+      "SUSPECT"
+    ],
+    [
+      "omeprazole",
+      "UNKNOWN"
+    ],
+    [
+      "oseltamivir",
+      "UNKNOWN"
+    ],
+    [
+      "paracetamol",
+      "UNKNOWN"
+    ],
+    [
+      "piperacillin",
+      "UNKNOWN"
+    ],
+    [
+      "piperacillin and tazobactam",
+      "SUSPECT"
+    ],
+    [
+      "prednisone",
+      "SUSPECT"
+    ],
+    [
+      "promazine",
+      "SUSPECT"
+    ],
+    [
+      "propofol",
+      "SUSPECT"
+    ],
+    [
+      "quetiapine",
+      "SUSPECT"
+    ],
+    [
+      "ritonavir",
+      "UNKNOWN"
+    ],
+    [
+      "sarilumab",
+      "UNKNOWN"
+    ],
+    [
+      "thiamine",
+      "SUSPECT"
+    ],
+    [
+      "tigecycline",
+      "SUSPECT"
+    ],
+    [
+      "vancomycin",
+      "SUSPECT"
+    ],
+    [
+      "vancomycin",
+      "UNKNOWN"
+    ],
+    [
+      "vitamin b1",
+      "SUSPECT"
+    ]
+  ],
+  "ownership_accuracy": null,
+  "drug_event_pair_accuracy": null,
+  "expert_review_completed": false,
+  "limitations": [
+    "Exact names only; normalization requires a separately controlled mapping.",
+    "FAERS roles do not label historical, treatment, ownership, or drug-event pairs.",
+    "Article-to-patient linkage and source-visible versus follow-up-only drugs require adjudication."
+  ]
+}

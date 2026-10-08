@@ -1,0 +1,88 @@
+{
+  "schema_version": "nexus.knowledge-migration/1",
+  "production_applied": false,
+  "records": [
+    {
+      "path": "Rules/exclusion_rules.md",
+      "sha256": "e4537b4c7cfdb1a4a68bfd9251963e0808b5ce8a712481a56896697f2da678b2",
+      "knowledge_type": "general_pv",
+      "tenant_id": "GLOBAL",
+      "client_id": "GLOBAL",
+      "action": "ELIGIBLE_FOR_STAGED_INDEX",
+      "missing": [],
+      "version": "1.0.0",
+      "effective_date": "2026-07-04"
+    },
+    {
+      "path": "Rules/patient_identification_rules.md",
+      "sha256": "89989a3a84e9535eaf162c60138b48e59e97da67e9e2afd66e6c65069aefb581",
+      "knowledge_type": "general_pv",
+      "tenant_id": "GLOBAL",
+      "client_id": "GLOBAL",
+      "action": "ELIGIBLE_FOR_STAGED_INDEX",
+      "missing": [],
+      "version": "1.0.0",
+      "effective_date": "2026-07-04"
+    },
+    {
+      "path": "Rules/reporter_rules.md",
+      "sha256": "a8b6488c28067e26f6ea075d463a628cf0116ad75693d9159aaf53db82271068",
+      "knowledge_type": "general_pv",
+      "tenant_id": "GLOBAL",
+      "client_id": "GLOBAL",
+      "action": "ELIGIBLE_FOR_STAGED_INDEX",
+      "missing": [],
+      "version": "1.0.0",
+      "effective_date": "2026-07-04"
+    },
+    {
+      "path": "Rules/seriousness_logic.md",
+      "sha256": "70787e2183d4278d1d478c7bdfbd1d0241c784cb18ccd94f8376cd397f7a1bc9",
+      "knowledge_type": "general_pv",
+      "tenant_id": "GLOBAL",
+      "client_id": "GLOBAL",
+      "action": "ELIGIBLE_FOR_STAGED_INDEX",
+      "missing": [],
+      "version": "1.0.0",
+      "effective_date": "2026-07-04"
+    },
+    {
+      "path": "Rules/special_situations.md",
+      "sha256": "3a7915d4951b2d30276a21838320285b1b1c6fa6a700aa97a73b7a8d757151e4",
+      "knowledge_type": "general_pv",
+      "tenant_id": "GLOBAL",
+      "client_id": "GLOBAL",
+      "action": "ELIGIBLE_FOR_STAGED_INDEX",
+      "missing": [],
+      "version": "1.0.0",
+      "effective_date": "2026-07-04"
+    },
+    {
+      "path": "Rules/validity_rules.md",
+      "sha256": "16a0e9404d59085ab0a028070369619558abdb775b13d939474dacf0f3e2008b",
+      "knowledge_type": "general_pv",
+      "tenant_id": "GLOBAL",
+      "client_id": "GLOBAL",
+      "action": "ELIGIBLE_FOR_STAGED_INDEX",
+      "missing": [],
+      "version": "1.0.0",
+      "effective_date": "2026-07-04"
+    },
+    {
+      "path": "Clients/demo-tenant/client_screening_rules.md",
+      "sha256": "29f9b8b78f5294cef16ea85272596aac4eea2fc4b9a06d145af258adca2c55b6",
+      "knowledge_type": "tenant_override",
+      "tenant_id": "demo-tenant",
+      "client_id": null,
+      "action": "QUARANTINE",
+      "missing": [
+        "client_id"
+      ],
+      "version": "1.0.0",
+      "effective_date": "2026-07-04"
+    }
+  ],
+  "eligible": 6,
+  "quarantined": 1,
+  "promotion_requirement": "Build a new index, verify scope and retrieval, then switch the configured knowledge path. Preserve the old index for rollback."
+}

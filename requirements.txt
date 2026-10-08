@@ -12,3 +12,4 @@ python-dotenv
 thefuzz>=0.20.0
 python-Levenshtein>=0.21.0
 requests
+-r requirements-agents.txt

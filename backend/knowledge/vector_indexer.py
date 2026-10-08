@@ -2,6 +2,7 @@ import os
 import re
 import json
 import chromadb
+from pathlib import Path
 from typing import Dict, Any, List
 
 class VectorIndexer:
@@ -43,20 +44,24 @@ class VectorIndexer:
         return frontmatter
 
     def rebuild_index(self, tenant_id: str):
+        if not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", tenant_id) or tenant_id == "GLOBAL":
+            raise ValueError("Actual tenant identifier required")
         rules_dir = os.path.join(self.base_path, "Rules")
         clients_dir = os.path.join(self.base_path, "Clients")
         
         all_documents = []
         all_metadatas = []
         all_ids = []
+        skipped = []
 
         # 1. Harvest General PV Rules
         if os.path.exists(rules_dir):
-            for file in os.listdir(rules_dir):
+            for path in sorted(Path(rules_dir).rglob("*.md")):
+                file = str(path.relative_to(rules_dir))
                 if file.endswith(".md"):
                     parsed = self._parse_markdown_file(os.path.join(rules_dir, file))
                     rule_id = parsed.get("rule_id", file)
-                    all_ids.append(rule_id)
+                    all_ids.append(f"GLOBAL:{rule_id}")
                     all_documents.append(parsed["rule_text"])
                     all_metadatas.append({
                         "rule_id": rule_id,
@@ -66,7 +71,13 @@ class VectorIndexer:
                         "source_document": str(parsed.get("source_document", "")),
                         "source_section": str(parsed.get("source_section", "")),
                         "override_level": int(parsed.get("override_level", 0)),
-                        "tenant_id": "GLOBAL"
+                        "tenant_id": "GLOBAL",
+                        "client_id": "GLOBAL",
+                        "version": str(parsed.get("version", "")),
+                        "effective_date": str(parsed.get("effective_date", "")),
+                        "expiry_date": str(parsed.get("expiry_date", "")),
+                        "agent_scope": ",".join(parsed.get("agent_scope", ["GLOBAL"])) if isinstance(parsed.get("agent_scope", []), list) else str(parsed.get("agent_scope", "GLOBAL")),
+                        "country_scope": ",".join(parsed.get("country_scope", ["GLOBAL"])) if isinstance(parsed.get("country_scope", []), list) else str(parsed.get("country_scope", "GLOBAL"))
                     })
 
         # 2. Harvest Client Specific Overrides
@@ -75,8 +86,12 @@ class VectorIndexer:
             for file in os.listdir(tenant_folder):
                 if file.endswith(".md"):
                     parsed = self._parse_markdown_file(os.path.join(tenant_folder, file))
+                    missing = [key for key in ("client_id", "agent_scope", "country_scope") if not parsed.get(key)]
+                    if missing:
+                        skipped.append({"file": file, "missing": missing})
+                        continue
                     rule_id = parsed.get("rule_id", file)
-                    all_ids.append(rule_id)
+                    all_ids.append(f"{tenant_id}:{parsed['client_id']}:{rule_id}")
                     all_documents.append(parsed["rule_text"])
                     all_metadatas.append({
                         "rule_id": rule_id,
@@ -86,19 +101,23 @@ class VectorIndexer:
                         "source_document": str(parsed.get("source_document", "")),
                         "source_section": str(parsed.get("source_section", "")),
                         "override_level": int(parsed.get("override_level", 100)),
-                        "tenant_id": tenant_id
+                        "tenant_id": tenant_id,
+                        "client_id": str(parsed["client_id"]),
+                        "version": str(parsed.get("version", "")),
+                        "effective_date": str(parsed.get("effective_date", "")),
+                        "expiry_date": str(parsed.get("expiry_date", "")),
+                        "agent_scope": ",".join(parsed.get("agent_scope", ["GLOBAL"])) if isinstance(parsed.get("agent_scope", []), list) else str(parsed.get("agent_scope", "GLOBAL")),
+                        "country_scope": ",".join(parsed.get("country_scope", ["GLOBAL"])) if isinstance(parsed.get("country_scope", []), list) else str(parsed.get("country_scope", "GLOBAL"))
                     })
 
-        # CRITICAL CACHE BUSTING FIX:
-        # If IDs exist, delete them first to force Chroma to rewrite the text content blocks fresh
+        # Remove stale, deleted, re-scoped and quarantined rule records. Keep other
+        # tenants and knowledge types intact; failed cleanup must abort the rebuild.
+        self.collection.delete(where={"$and": [{"tenant_id": tenant_id}, {"knowledge_type": "tenant_override"}]})
+        self.collection.delete(where={"$and": [{"tenant_id": "GLOBAL"}, {"knowledge_type": "general_pv"}]})
         if all_ids:
-            try:
-                self.collection.delete(ids=all_ids)
-            except Exception:
-                pass # Safe catch for blank collection starts
-                
             self.collection.upsert(
                 ids=all_ids,
                 documents=all_documents,
                 metadatas=all_metadatas
             )
+        return {"indexed": len(all_ids), "skipped": skipped}

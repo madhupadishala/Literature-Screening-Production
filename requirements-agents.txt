@@ -1,0 +1,4 @@
+# Versioned runtime for shared PV agents; base Streamlit dependencies remain separate.
+chromadb==1.5.9
+
+anthropic==1.12.1

@@ -1,0 +1,12 @@
+{
+  "production_service_configuration_present": false,
+  "existing_platform_provider": "groq",
+  "existing_platform_model": "openai/gpt-oss-120b",
+  "specialist_provider_adapter_implemented": true,
+  "live_provider_execution_verified": false,
+  "staged_semantic_index_verified": true,
+  "production_index_promoted": false,
+  "expert_reviews_completed": 0,
+  "independent_holdout_qualified_cases": 0,
+  "agent_flags_enabled": false
+}

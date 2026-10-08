@@ -1,0 +1,17 @@
+{
+  "component": "Nexus Causality Agent",
+  "integration_version": "1.5.1-boundary-review",
+  "status": "unqualified decision-support / HITL",
+  "production_auto_release": false,
+  "knowledge_owner": "backend.knowledge.knowledge_router.KnowledgeRouter",
+  "knowledge_contract": "backend/engines/causality/nexus_kb_adapter.py",
+  "orchestration_nodes": 12,
+  "release_policy": "fail-closed until all qualification gates pass",
+  "external_package": {
+    "filename": "nexus-causality-agent-v1.5-hardening-validation.zip",
+    "sha256": "7efef17a30d7713c4a56e1d5b666849447059dafe69d7c9718c6b144bce9fbd3",
+    "qualification_status": "NOT_APPROVED",
+    "source_commit": null
+  },
+  "external_decision_worker_configured": false
+}
