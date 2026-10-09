@@ -23,5 +23,29 @@ class DrugPolicyTests(unittest.TestCase):
         self.assertIsNone(indexed["metformin"].product_master_match)
         self.assertIsNone(indexed["cetirizine"].product_master_match)
 
+
+    def test_nexus_agent_exposes_validated_regimens(self):
+        from backend.agents.drug_role.nexus_agent import NexusDrugRoleAgent
+        from backend.knowledge.agent_context_pack import AgentContextPack
+        class Router:
+            def build_context_pack(self, **kw):
+                return AgentContextPack(tenant_id=kw["tenant_id"], agent=kw["agent_name"], evidence_package_id="case02")
+        packet = {
+            "case_id":"case02",
+            "text":"Metformin was a historical medication.",
+            "validated_drug_exposures":[
+                {"reported_name":"Metformin","strength":"500 mg","formulation":"tablet",
+                 "role":"HISTORICAL","start_date":"2022-01","end_date":"2022-12","source_evidence":"span A"},
+                {"reported_name":"Metformin","strength":"500 mg","formulation":"tablet",
+                 "role":"HISTORICAL","start_date":"2023-02","end_date":"2023-08","source_evidence":"span B"}
+            ]
+        }
+        result = NexusDrugRoleAgent(knowledge_router=Router()).run(
+            tenant_id="tenant01",client_id="client01",evidence_package=packet,
+            candidate_drugs=["Metformin"])
+        self.assertEqual(len(result["exposure_products"]),1)
+        self.assertEqual(len(result["exposure_products"][0]["regimens"]),2)
+        self.assertIn("DR-011",result["exposure_policy_rules"])
+
 if __name__ == "__main__":
     unittest.main()
