@@ -6,6 +6,8 @@ on:
       - "backend/knowledge/**"
       - "tests/test_postgres_clinical_rule_store.py"
       - "tests/test_executable_clinical_gates.py"
+      - "tests/test_drug_role_policy_integration.py"
+      - "backend/agents/drug_role/**"
       - "docs/agents/step-02/clinical_rule_traceability.json"
       - "scripts/setup_clinical_rule_postgres_ci.py"
       - ".github/workflows/nexus-clinical-rules-postgres.yml"
@@ -62,3 +64,4 @@ jobs:
           python -m unittest discover -s tests -p test_clinical_rule_store.py -v
           python -m unittest discover -s tests -p test_postgres_clinical_rule_store.py -v
           python -m unittest discover -s tests -p test_executable_clinical_gates.py -v
+          python -m unittest discover -s tests -p test_drug_role_policy_integration.py -v
