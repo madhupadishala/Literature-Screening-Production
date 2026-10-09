@@ -1,13 +1,13 @@
 """Verify imported agent source files are present at their actual GitHub paths.
 
 Run: python -m unittest discover -s tests -p test_uploaded_agent_sources.py
-This is a source-presence check, NOT an integration or clinical qualification test.
+This checks source presence, NOT integrated runtime or clinical qualification.
 """
 from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-KIMI = "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents"
+KIMI = "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents"
 V2 = "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents"
 
 AGENT_FILES = [
