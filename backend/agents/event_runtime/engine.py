@@ -145,6 +145,19 @@ class EventEngine:
                             "AE-004", {"figurative_death_statement": True})
                         obs["disposition"] = "figurative_death_requires_review"
                         issues.append(f"clinical_review_figurative_death:{block.id}:{i}")
+                    elif (finding.disposition == "supported"
+                          and mention.role == "unknown"
+                          and mention.diagnosis_status == "other"
+                          and any(phrase in mention.verbatim.casefold() for phrase in
+                                  ("damaged packaging", "broken packaging",
+                                   "missing tablets", "incorrect label"))):
+                        # AE-003: validated non-clinical product complaints are
+                        # observations, not inferred patient adverse events.
+                        # Do not apply this gate to an explicitly reported AE.
+                        obs["clinical_rule"] = evaluate_approved_gate(
+                            "AE-003", {"nonclinical_complaint_only": True,
+                                       "explicit_clinical_event": False})
+                        obs["disposition"] = "nonclinical_complaint"
                     elif finding.disposition != "supported":
                         obs["disposition"] = finding.disposition
                         issues.append(f"verification_{finding.disposition}:{block.id}:{i}")
