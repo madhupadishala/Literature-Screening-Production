@@ -276,7 +276,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -338,7 +338,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -403,7 +403,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -465,7 +465,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -530,7 +530,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -592,7 +592,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -657,7 +657,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -719,7 +719,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 23.0,
+          "age_value": 23,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "F",
@@ -784,7 +784,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -846,7 +846,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "F",
@@ -911,7 +911,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 54.0,
+          "age_value": 54,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -1759,7 +1759,7 @@
       }
     },
     {
-      "label": "unresolved",
+      "label": "unknown",
       "case": {
         "case_id": "CASE-6f8b1791d62b",
         "worldwide_unique_id": null,
@@ -1816,7 +1816,7 @@
       }
     },
     {
-      "label": "not_assessable",
+      "label": "unknown",
       "case": {
         "case_id": "CASE-acd0e44fcd8d",
         "worldwide_unique_id": null,
@@ -1873,7 +1873,7 @@
       }
     },
     {
-      "label": "confounded",
+      "label": "not_applicable",
       "case": {
         "case_id": "CASE-022cf6879168",
         "worldwide_unique_id": null,
@@ -2464,7 +2464,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 40.0,
+          "age_value": 40,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "F",
@@ -2536,7 +2536,7 @@
         "report_type": "spontaneous",
         "patient": {
           "initials": null,
-          "age_value": 60.0,
+          "age_value": 60,
           "age_unit": "years",
           "date_of_birth": null,
           "sex": "M",
@@ -2838,13 +2838,13 @@
     "literature_pairs": [
       {
         "label": "duplicate_bibliographic_record",
-        "note": "translated title, same DOI \u2014 deterministic identifiers must win",
+        "note": "translated title, same DOI — deterministic identifiers must win",
         "a": {
           "record_id": "LIT-24b14655e44c",
           "source_database": null,
           "pmid": "991",
           "doi": "10.1000/trans.7",
-          "title": "R\u00e9action cutan\u00e9e s\u00e9v\u00e8re associ\u00e9e au nexiumab",
+          "title": "Réaction cutanée sévère associée au nexiumab",
           "abstract": "",
           "full_text": null,
           "authors": [
