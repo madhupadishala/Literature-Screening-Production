@@ -1,0 +1,40 @@
+name: PV Specialist Agent Integration
+on:
+  pull_request:
+    paths:
+      - "backend/services/pv_agents/**"
+      - "nexus_actual_agent_source_consolidation/**"
+      - "tests/test_uploaded_agent_sources.py"
+      - "tests/test_specialist_graph_contract.py"
+      - ".github/workflows/pv-agent-integration.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  specialist-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install specialist runtime dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/services/pv_agents/requirements-specialist-graph.txt
+      - name: Syntax check
+        run: |
+          python -m compileall -q backend/services/pv_agents
+          python -m compileall -q nexus_actual_agent_source_consolidation/packages/pv_specialist_core
+      - name: Source and scoping contract tests
+        run: |
+          python -m unittest discover -s tests -p test_uploaded_agent_sources.py -v
+          python -m unittest discover -s tests -p test_specialist_graph_contract.py -v
+      - name: Run specialist package tests
+        env:
+          PYTHONPATH: nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents
+        run: |
+          python nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/tests/run_tests.py
