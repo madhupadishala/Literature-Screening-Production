@@ -5,6 +5,7 @@ import json
 
 from backend.knowledge.knowledge_router import KnowledgeRouter
 from .orchestrator import DrugRoleOrchestrator
+from .exposure_policy import normalize_product_exposures
 
 
 class NexusDrugRoleAgent:
@@ -58,6 +59,11 @@ class NexusDrugRoleAgent:
         )
 
         payload = result.to_dict()
+        # Explicit validated source-extraction evidence only; never invent regimens
+        # from narrative dates/route or bypass upstream clinical extraction.
+        if evidence_package.get("validated_drug_exposures") is not None:
+            payload["exposure_products"] = normalize_product_exposures(evidence_package["validated_drug_exposures"])
+            payload["exposure_policy_rules"] = ["DR-004", "DR-005", "DR-006", "DR-007", "DR-008", "DR-011"]
         payload["knowledge_context"] = {
             "citations": context_pack.citations,
             "matched_company_products": context_pack.product_master_matches,
