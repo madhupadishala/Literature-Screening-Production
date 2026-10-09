@@ -1,0 +1,80 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-010-United-Kingdom-PIL-bef7dbbd3143",
+  "brandName": "Serovex",
+  "genericName": "Sertraline",
+  "country": "United-Kingdom",
+  "documentType": "PIL",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-010",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "emcProductId": "13523",
+      "identityReview": "PENDING"
+    },
+    "sourceJurisdiction": "United-Kingdom",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/PIL/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://www.medicines.org.uk/emc/files/pil.13523.pdf",
+    "resolvedUrl": "https://www.medicines.org.uk/emc/files/pil.13523.pdf",
+    "sha256": "bef7dbbd314337602ca5276ac28e9a336165f4c80fcadc7d5c6427e653818c23",
+    "bytes": 548104,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:51:41.445105+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/PIL/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/PIL/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/PIL/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/PIL/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 1,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Sertraline"
+    ],
+    "strengths": [
+      "50 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

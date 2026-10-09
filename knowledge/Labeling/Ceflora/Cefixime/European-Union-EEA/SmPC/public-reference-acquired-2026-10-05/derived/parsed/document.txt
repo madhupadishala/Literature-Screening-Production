@@ -1,0 +1,493 @@
+                                            FICHA TÉCNICA
+
+1. NOMBRE DEL MEDICAMENTO
+
+Cefixima Sandoz 200 mg comprimidos recubiertos con película EFG
+
+2. COMPOSICIÓN CUALITATIVA Y CUANTITATIVA
+
+Cada comprimido recubierto con película contiene 200 mg de cefixima (como cefixima trihidrato).
+
+Para consultar la lista completa de excipientes, ver sección 6.1
+
+3. FORMA FARMACÉUTICA
+
+Comprimido recubierto con película (comprimido).
+
+De color blanco a blanquecino, oblongo, biconvexo y de aproximadamente de 6,5 x 16 mm.
+
+4. DATOS CLÍNICOS
+
+4.1 Indicaciones terapéuticas
+
+Cefixima Sandoz está indicado para el tratamiento en adultos y adolescentes mayores de 12 años en las
+siguientes infecciones bacterianas cuando están causadas por organismos susceptibles y cuando estas
+indicaciones se pueden tratar por vía oral (ver secciones 4.4 y 5.1):
+
+ -    otitis media aguda,
+ -    sinusitis bacteriana aguda,
+ -    faringitis bacteriana aguda,
+ -    exacerbación aguda de bronquitis crónica,
+ -    neumonía adquirida en la comunidad,
+ -    infecciones urinarias no complicadas,
+ -    gonorrea aguda no complicada.
+
+El uso de cefixima se debe reservar para infecciones en las que se sabe o se sospecha que el organismo
+causante es resistente a otros agentes antibacterianos de uso común.
+
+Se deben tener en cuenta las directrices oficiales sobre el uso adecuado de agentes antibacterianos.
+
+4.2 Posología y forma de administración
+
+Posología
+
+Adultos y adolescentes mayores de 12 años de edad
+La posología recomendada es de 400 mg de cefixima al día, como una sola dosis.
+
+La duración del tratamiento es de 7 días, se puede prolongar hasta 14 días en caso necesario.
+ -    400 mg (en 1 dosis) durante 7 a 10 días para otitis media aguda y faringitis bacteriana aguda, cuando
+      este uso en faringitis esté en consonancia con la recomendación terapéutica,
+ -    400 mg (en 1 o 2 dosis) durante 1 a 3 días para cistitis aguda no complicada en pacientes femeninas,
+      cuando este uso esté en consonancia con la recomendación terapéutica,
+ -    400 mg (en 1 dosis) durante 1 día para la gonorrea no complicada.
+
+Se deben tener en cuenta las recomendaciones oficiales sobre el uso adecuado de agentes antibacterianos.
+
+Población pediátrica
+
+
+                                                    1 de 9
+Cefixima no es adecuada para niños menores de 12 años. Se debe comprobar la disponibilidad de otras
+formas farmacéuticas.
+
+Edad avanzada
+Los pacientes de edad avanzada pueden recibir la misma dosis que se recomienda para los adultos. Hay que
+evaluar la función renal, ajustando la posología en caso de alteración de la función renal grave (ver
+"Insuficiencia renal”)
+
+Insuficiencia renal
+Cefixima se puede administrar a pacientes con alteración de la función renal. En pacientes con
+aclaramiento de creatinina ≥ 20 ml/min se puede administrar la dosis normal en la pauta habitual. En
+pacientes con aclaramiento de creatinina < 20 ml/min, se recomienda no superar la dosis de 200 mg una
+vez al día.
+Cefixima no es dializable mediante hemodiálisis o diálisis peritoneal. En pacientes que reciben diálisis
+peritoneal ambulatoria crónica o hemodiálisis se deben utilizar la dosis y la pauta recomendadas para
+pacientes con aclaramiento de creatinina < a 20 ml/min.
+
+No hay datos suficientes en relación con el uso de cefixima en grupos de pacientes pediátricos y
+adolescentes en presencia de alteración de la función renal. Por consiguiente, no se recomienda utilizar
+cefixima en estos grupos de pacientes.
+
+Insuficiencia hepática
+No es necesario ajustar la dosis en pacientes con función hepática alterada.
+
+Forma de administración
+Vía oral.
+Los comprimidos se deben tragar con la suficiente cantidad de agua y los comprimidos deben tragarse
+enteros.
+Cefixima Sandoz se puede tomar con o sin alimentos (ver sección 5.2).
+
+4.3 Contraindicaciones
+
+Hipersensibilidad a cefixima o a un antibiótico cefalosporínico, o a cualquiera de los excipientes incluidos
+en la sección 6.1.
+
+4.4 Advertencias y precauciones especiales de empleo
+
+La selección de cefixima para tratar a un paciente individual, debe tener en cuenta la conveniencia de
+utilizar un agente cefalosporínico oral de tercera generación, considerando en particular, la naturaleza de la
+infección y el riesgo de seleccionar bacterias resistentes.
+
+Hipersensibilidad
+Antes de iniciar el tratamiento con este medicamento se debe realizar una historia clínica completa para
+detectar cualquier reacción previa de hipersensibilidad a las cefalosporinas, penicilinas u otros
+medicamentos. Este medicamento se debe utilizar con precaución en personas alérgicas a penicilinas. Se ha
+establecido una alergenicidad cruzada parcial entre la penicilina y las cefalosporinas tanto in vivo (en
+humanos) como in vitro y, aunque raros, se han notificado casos de pacientes que presentan reacciones
+anafilácticas, especialmente tras la administración parenteral.
+
+Los antibióticos se deben administrar con precaución a todos aquellos pacientes que hayan mostrado
+previamente alergia, especialmente a fármacos. La aparición de cualquier reacción alérgica requiere la
+interrupción del tratamiento.
+
+Reacciones adversas cutáneas graves (SCAR)
+Se han notificado reacciones adversas cutáneas graves, como necrólisis epidérmica tóxica (NET), síndrome
+de Stevens-Johnson (SJS) y exantema con eosinofilia y síntomas sistémicos (DRESS) en algunos pacientes
+
+
+                                                    2 de 9
+en tratamiento con cefixima. Cuando se producen reacciones adversas cutáneas graves, se debe suspender
+la administración de cefixima y se deben tomar las medidas y/o las medidas de precaución adecuadas.
+
+Diarrea y colitis asociadas a Clostridioides difficile
+El uso prolongado de antibióticos puede provocar el desarrollo de gérmenes insensibles y, en particular,
+una alteración de la flora normal del colon y puede conducir a la colonización por Clostridioides difficile.
+
+Los estudios demuestran que la toxina producida por C. difficile es la principal causa de la diarrea asociada
+a los antibióticos. Por lo tanto, es importante tener en cuenta este diagnóstico en pacientes que desarrollan
+diarrea durante o después de la administración de cefixima. Se debe considerar la interrupción de cefixima
+y la administración de medidas de tratamiento adecuadas contra C. difficile. Las medidas de tratamiento
+secundario incluyen líquidos, electrolitos y suplementos de proteínas. No se deben administrar inhibidores
+del peristaltismo.
+
+Insuficiencia renal
+En pacientes con insuficiencia renal grave, en hemodiálisis o diálisis peritoneal, la posología de este
+medicamento se debe reducir según proceda (ver sección 4.2).
+
+Al igual que con otras cefalosporinas, cefixima puede causar insuficiencia renal aguda, incluida nefritis del
+túbulo intersticial como afección patológica subyacente. Si se produce insuficiencia renal aguda, se debe
+suspender el tratamiento con cefixima y se deben tomar las medidas adecuadas.
+
+Anemia hemolítica
+Se han notificado casos graves de anemia hemolítica, incluyendo muerte, en pacientes tratados con
+antibacterianos de la clase de las cefalosporinas (efecto de la clase). También se ha descrito la reaparición
+de anemia hemolítica tras la reintroducción de una cefalosporina en un paciente con antecedentes de
+anemia hemolítica con cefalosporinas, incluida cefixima. Si un paciente desarrolla anemia con cefixima, se
+debe considerar el diagnóstico de anemia asociada a cefalosporinas y suspender el tratamiento con cefixima
+hasta que se establezca la etiología (ver sección 4.8).
+
+Encelopatía
+Los antibióticos betalactámicos, incluido cefixima, predisponen a los pacientes al riesgo de encefalopatía
+(que puede incluir convulsiones, confusión, alteración de la conciencia o movimientos anormales),
+especialmente en caso de sobredosis o deterioro de la función renal.
+
+Cefixima Sandoz contiene sodio
+Este medicamento contiene menos de 1 mmol de sodio (23 mg) por comprimido; esto es, esencialmente
+“exento de sodio”.
+
+4.5 Interacción con otros medicamentos y otras formas de interacción
+
+Interacciones con otros medicamentosLos antiácidos no interfieren en la absorción de cefixima. Los
+inhibidores de la resorción tubular como el probenecid pueden dificultar la excreción urinaria de cefixima,
+aumentando los valores de Cmax y AUC24. La administración concomitante de sustancias potencialmente
+nefrotóxicas (como antibióticos p. ej., glucosamidas, colistina, polimixina y viomicina) y diuréticos de
+acción intensa (p.ej., ácido etacrínico o furosemida) inducen un aumento del riesgo de deterioro de la
+función renal (ver sección 4.4).
+
+Nifedipino, un antagonista del calcio, puede aumentar la biodisponibilidad de cefixima hasta en un 70%.
+
+Tratamiento anticoagulante
+Se ha notificado un aumento del tiempo de protrombina en pacientes que reciben antibióticos
+(particularmente a fluoroquinolonas, macrólidos, ciclinas, cotrimoxazol y ciertas cefalosporinas), por lo
+que se recomienda precaución al administrar cefixima a pacientes en tratamiento anticoagulante para el
+ajuste de la frecuencia de control del INR (International Normalized Ratio). Los antecedentes infecciosos o
+inflamatorios del paciente, la edad y el estado general parecen ser factores de riesgo. En estas
+
+
+                                                    3 de 9
+circunstancias, es difícil distinguir entre la patología infecciosa y su tratamiento en la aparición de un
+desequilibrio del INR.
+
+Interacciones con las pruebas de laboratorio
+Se puede producir un resultado falso positivo en el análisis de cetonas en orina (utilizando el método de
+reacción con nitroprusiato, pero no con nitroferricianuro).
+
+Se puede producir un resultado falso positivo en las pruebas de glucosa en orina con reactivos a base de
+cobre, pero no con pruebas basadas en reacciones enzimáticas con glucosa oxidasa. Se ha notificado un
+falso positivo en la prueba de Coombs, al igual que con las cefalosporinas en general.
+
+4.6 Fertilidad, embarazo y lactancia
+
+
+Embarazo
+No existen datos, o éstos son limitados, sobre el uso de cefixima en mujeres embarazadas. Los estudios en
+animales no indican efectos nocivos directos o indirectos con respecto a la toxicidad para la reproducción
+(ver sección 5.3).
+Como medida de precaución, es preferible evitar el uso de cefixima durante el embarazo, a menos que el
+estado clínico de la mujer requiera el tratamiento con cefixima.
+
+Lactancia
+Se desconoce si cefixima se excreta en la leche humana. Los estudios en animales han demostrado la
+excreción de cefixima en la leche de rata. Cefixima sólo se debe utilizar durante la lactancia tras una
+cuidadosa evaluación beneficio/riesgo. Si se produce diarrea o candidiasis en el lactante durante la
+lactancia, se debe decidir si se interrumpe la lactancia o se interrumpe/abstiene el tratamiento con cefixima
+teniendo en cuenta el beneficio de la lactancia para el niño y el beneficio del tratamiento para la mujer.
+
+Fertilidad
+No se ha estudiado el efecto de cefixima sobre la fertilidad en humanos. Los estudios de reproducción
+animal no indican efectos perjudiciales con respecto a la fertilidad (ver sección 5.3)
+
+
+4.7 Efectos sobre la capacidad para conducir y utilizar máquinas
+
+Cefixima no influye o influye de forma insignificante en la capacidad para conducir o utilizar máquinas.
+En caso de reacciones adversas como encefalopatía (que puede incluir convulsiones, confusión,
+alteraciones de la conciencia o movimientos anormales) (ver secciones 4.4, 4.8, 4.9), los pacientes no
+deben conducir ni utilizar máquinas.
+
+
+
+
+                                                     4 de 9
+4.8 Reacciones adversas
+
+En esta sección se ha utilizado la siguiente convención para clasificar las reacciones adversas en términos
+de frecuencia:
+    - Muy frecuentes (≥1/10),
+    - Frecuentes (≥1/100 a <1/10),
+    - Poco frecuentes (≥1/1.000 a <1/100),
+    - Raras (≥1/10.000 a <1/1.000),
+    - Muy raras (<1/10.000),
+    - Frecuencia no conocida (no puede estimarse a partir de los datos disponibles).
+
+Infecciones e infestaciones
+Raras:                           El uso prolongado o repetido puede dar lugar a sobreinfecciones
+                                 secundarias causadas por bacterias u hongos insusceptibles
+Muy raras:                       Colitis asociada a antibióticos
+Frecuencia no conocida:          Vaginitis
+
+Trastornos de la sangre y del sistema linfático
+Raros:                           Eosinofilia, hipereosinofilia
+Muy raros:                       Alteración del recuento hemático como, p.ej., leucopenia, agranulocitosis,
+                                 pancitopenia o trombocitopenia. Alteración de la coagulación sanguínea,
+                                 anemia hemolítica
+Frecuencia no conocida:          Trombocitosis, neutropenia
+
+Trastornos del sistema inmunológico
+Raros:                         Reacciones anafilácticas como urticaria o angioedema, enfermedad del
+                               suero
+
+Trastornos del metabolismo y la nutrición
+Raros:                         Anorexia
+
+Trastornos del sistema nervioso
+Poco frecuentes:                Dolor de cabeza
+Raros:                          Mareos
+Muy raros:                      Hiperactividad transitoria
+Frecuencia no conocida:         Convulsiones, encefalopatía (ver sección 4.4)
+
+Trastornos gastrointestinales
+Frecuentes:                      Heces blandas y diarrea
+Poco frecuentes:                 Trastornos en forma de dolor de estómago, trastornos digestivos, náuseas,
+vómitos
+Raros:                           Falta de apetito, flatulencia, dispepsia
+Muy raros:                       Colitis pseudomembranosa
+
+Trastornos hepatobiliares
+Muy raros:                       Hepatitis e ictericia colestásica
+
+Trastornos de la piel y del tejido subcutáneo
+Poco frecuentes:                  Erupciones cutáneas (eritema, exantema)
+Raros:                            Prurito e inflamación de las mucosas
+Muy raros:                        Eritema exudativo multiforme, síndrome de Stevens-Johnson, necrólisis
+                                  epidérmica tóxica, pustulosis exantemática generalizada aguda (AGEP)
+                                  (ver sección 4.4)
+Frecuencia no conocida:           Síndrome DRESS
+
+Trastornos renales y urinarios
+
+
+                                                    5 de 9
+Raros:                          Insuficiencia renal aguda debida a nefritis intersticial
+
+Trastornos generales y alteraciones en el lugar de administración
+Raros:                          Fiebre medicamentosa, artralgia, pirexia, edema facial, prurito genital
+
+Exploraciones complementarias
+Poco frecuentes:              Aumento de las enzimas hepáticas (transaminasa, fosfatasa alcalina)
+Raros:                        Aumento de la urea en sangre
+Muy raros:                    Aumento de la creatinina en sangre
+Frecuencia no conocida:       Aumento de la bilirrubina sanguínea
+
+Notificación de sospechas de reacciones adversas
+Es importante notificar sospechas de reacciones adversas al medicamento tras su autorización. Ello permite
+una supervisión continuada de la relación beneficio/riesgo del medicamento. Se invita a los profesionales
+sanitarios a notificar las sospechas de reacciones adversas a través del Sistema Español de
+Farmacovigilancia de Medicamentos de Uso Humano: https://www.notificaRAM.es.
+
+4.9 Sobredosis
+
+No existe un antídoto específico.
+Si se ingieren grandes cantidades de cefixima, se debe iniciar un tratamiento sintomático.
+
+Cefixima no se elimina de la circulación en cantidades significativas por diálisis.
+En voluntarios sanos, hasta 2 g al día, cefixima presentó el mismo perfil de tolerabilidad observado en
+pacientes tratados con las dosis terapéuticas recomendadas.
+
+5. PROPIEDADES FARMACOLÓGICAS
+
+5.1 Propiedades farmacodinámicas
+
+Grupo farmacoterapéutico: cefalosporinas de tercera generación, antibacterianos de uso sistémico, otros
+antibacterianos betalactámicos.
+
+Código ATC: J01DD08.
+
+Mecanismo de acción
+Cefixima demuestra una actividad de acción bactericida in vitro contra bacterias tanto Gram-positivas
+como Gram-negativas y tiene un alto nivel de estabilidad frente a muchas betalactamasas clínicamente
+relevantes. Cefixima actúa inhibiendo la síntesis de la pared celular bacteriana mediante el bloqueo de las
+proteínas de unión a penicilina (PBP3, 1a y 1b). Sin embargo, el espectro antibacteriano de cefixima no es
+tan amplio como el de las cefalosporinas parenterales de tercera generación.
+
+Relación farmacocinética/farmacodinámica
+La eficacia antibacteriana de cefixima depende principalmente del periodo de tiempo en el que su nivel está
+por encima de la concentración inhibitoria mínima (CIM).
+
+Mecanismos de resistencia
+    Inactivación de β-lactamasas: Cefixima puede ser hidrolizada por ciertas β-lactamasas,
+       especialmente por β-lactamasas de amplio espectro extendido (ESBL) de, p.ej., Escherichia coli o
+       Klebsiella pneumoniae o por β-lactamasas de tipo AmpC expresadas constitutivamente de, p.ej.,
+       Enterobacter cloacae. El uso de cefixima para infecciones, causadas por bacterias con β-
+       lactamasas de tipo AmpC inducibles y susceptibilidad in vitro frente a cefixima, puede causar el
+       riesgo de selección de mutantes bacterianos, que expresan constitutivamente β-lactamasas de tipo
+       AmpC.
+    Afinidad reducida de las PBP a cefixima: la resistencia adquirida de las cepas de Pneumococcus u
+       otros Streptococcus se basa en la modificación de las PBP tras la mutación.
+
+
+                                                   6 de 9
+         La menor penetración de cefixima en la pared celular externa de las bacterias Gram negativas
+          provoca un bloqueo insuficiente de las PBPs.
+         Transporte activo de cefixima al exterior de la célula a través de bombas de flujo.
+
+Existe una resistencia cruzada parcial o completa entre cefixima y otras cefalosporinas y penicilinas.
+
+Criterios interpretativos de las pruebas de susceptibilidad
+El Comité Europeo de Pruebas de Susceptibilidad a los Antimicrobianos (EUCAST) ha establecido los
+criterios interpretativos de la CIM (concentración inhibitoria mínima) para cefixima y se enumeran a
+continuación: https://www.ema.europa.eu/documents/other/minimum-inhibitory-concentration-mic-
+breakpoints_en.xlsx
+
+5.2 Propiedades farmacocinéticas
+
+Absorción
+
+ -       Tras el uso por vía oral de una dosis única de 200 mg, las concentraciones séricas máximas (C max)
+         alcanzan una media de 3 µg/ml y se alcanzan (Tmax) en unas 3 a 4 horas.
+
+ -       Tras la administración de una dosis de 400 mg, las concentraciones séricas máximas son más
+         elevadas (3,4 - 5 µg/ml), pero no proporcionalmente con el aumento de las dosis.
+
+ -       Tras 15 días de administración repetida de 400 mg/día en una o dos dosis, las concentraciones séricas
+         y la biodisponibilidad permanecieron inalteradas, lo que refleja la ausencia de acumulación del
+         principio activo.
+
+ -       La biodisponibilidad de cefixima es de aproximadamente el 50% a una dosis de 200 mg. No se ve
+         afectada por las comidas. Sin embargo, el inicio de las concentraciones séricas máximas se retrasa
+         aproximadamente una hora.
+
+Distribución
+ -     El volumen aparente de distribución es de 15 litros. En animales, cefixima se difunde en la gran
+       mayoría de los tejidos estudiados, con excepción del cerebro. En los seres humanos, tras dosis de 200
+       mg tomadas con 12 horas de intervalo, las concentraciones pulmonares 4 y 8 horas después de la
+       última dosis es de 1 µg/g de tejido, por encima de la MICI del 90% de los microorganismos
+       susceptibles responsables de infecciones pulmonares.
+
+
+
+
+                                                     7 de 9
+Eliminación
+
+-     La eliminación de cefixima se caracteriza por una semivida (T½) de entre 3 y 4 horas (media: 3,3
+      horas). El producto se elimina por vía renal en forma inalterada (16-20% de la dosis ingerida),
+      mientras que la eliminación extrarrenal es esencialmente biliar (25%).
+
+-     No se han identificado metabolitos séricos ni urinarios ni en animales ni en humanos.
+
+-     La unión a proteínas séricas es de alrededor del 70%, principalmente a albúmina,
+      independientemente de la concentración (a dosis terapéuticas).
+
+Poblaciones especiales
+
+Insuficiencia renal
+En casos de insuficiencia renal grave (aclaramiento de creatinina < 20 ml/min), el aumento de la
+semivida de eliminación plasmática y de las concentraciones séricas máximas requiere una reducción de la
+dosis diaria de 400 a 200 mg/día.
+
+Insuficiencia hepática
+En pacientes con insuficiencia hepática, la eliminación es más lenta (T½ = 6,4 horas), pero no es
+necesario ajustar la dosis.
+
+Edad avanzada
+La farmacocinética de cefixima se modifica ligeramente en los pacientes de edad avanzada. El ligero
+aumento de las concentraciones séricas máximas y de la biodisponibilidad, así como la pequeña
+disminución de la cantidad excretada (15-25%), no requieren ninguna reducción de la posología en esta
+población.
+
+
+5.3 Datos preclínicos sobre seguridad
+
+No existen datos preclínicos de relevancia para el prescriptor que sean adicionales a los ya incluidos en
+otras secciones de la Ficha Técnica.
+
+6 . DATOS FARMACÉUTICOS
+
+6.1 Lista de excipientes
+
+Núcleo
+Hidrogenofosfato de calcio
+Celulosa microcristalina
+Croscarmelosa sódica
+Laurilsulfato de sodio
+Estearato de magnesio
+
+Recubrimiento del comprimido
+Copolímero macrogolinjertado de poli(alcohol vinílico)
+Talco
+Mono/di-glicéridos
+Dióxido de titanio (E171)
+Poli(alcohol vinílico)
+
+
+
+
+                                                   8 de 9
+6.2 Incompatibilidades
+
+No procede.
+
+6.3 Periodo de validez
+
+2 años.
+
+6.4 Precauciones especiales de conservación
+
+No conservar a temperatura superior a 30ºC.
+
+6.5 Naturaleza y contenido del envase
+
+Este medicamento está disponible en blíster de Al/Al.
+Tamaño de envases: 4, 5, 6, 7, 8, 10, 12, 14, 16 y 21 comprimidos recubiertos con película.
+
+Puede que solamente estén comercializados algunos tamaños de envases.
+
+6.6 Precauciones especiales de eliminación y otras manipulaciones
+
+Ninguna especial.
+La eliminación del medicamento no utilizado y de todos los materiales que hayan estado en contacto con él
+se realizará de acuerdo con la normativa local.
+
+7. TITULAR DE LA AUTORIZACIÓN DE COMERCIALIZACIÓN
+
+Sandoz Farmacéutica, S.A
+Centro Empresarial Parque Norte
+Edificio Roble
+C/ Serrano Galvache, 56
+28033 Madrid
+España
+
+
+8. NÚMERO(S) DE AUTORIZACIÓN DE COMERCIALIZACIÓN
+
+
+Cefixima Sandoz 200 mg comprimidos recubiertos con película EFG: 90.331
+
+9. FECHA DE LA PRIMERA AUTORIZACIÓN/ RENOVACIÓN DE LA AUTORIZACIÓN
+
+
+Fecha de la primera autorización: Mayo 2025
+
+10. FECHA DE LA REVISIÓN DEL TEXTO
+
+03/2025
+
+La información detallada de este medicamento está disponible en la página web de la Agencia Española de
+Medicamentos y Productos Sanitarios (AEMPS) http://www.aemps.gob.es/.
+
+
+
+
+                                                  9 de 9
+

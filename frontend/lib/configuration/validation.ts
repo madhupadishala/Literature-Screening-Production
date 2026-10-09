@@ -542,21 +542,51 @@ export function validateConfigurationPayload(
       if (!version) {
         errors.push(issue("error", `records[${index}].version`, "Label version is required."));
       }
-      if (!effectiveFrom) {
+      const knowledgeObjectId = String(value.knowledgeObjectId || "").trim();
+      const sourceDocument = String(value.sourceDocument || value.sourceFilename || "").trim();
+
+      if (!effectiveFrom && usageScope === "PRODUCTION") {
         errors.push(
           issue(
             "error",
             `records[${index}].effectiveFrom`,
-            "Label effective-from date is required for date-specific expectedness.",
+            "Production Label / RSI references require an approved effective-from date for date-specific listedness.",
+          ),
+        );
+      } else if (!effectiveFrom) {
+        warnings.push(
+          issue(
+            "warning",
+            `records[${index}].effectiveFrom`,
+            "Validation-only reference has no approved effective-from date; it cannot be promoted to production until one is approved.",
           ),
         );
       }
-      if (eventTerms.length === 0) {
+
+      if (usageScope === "PRODUCTION" && !knowledgeObjectId && !sourceDocument) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}].sourceDocument`,
+            "Production Label / RSI references must bind to a governed knowledge object or source document.",
+          ),
+        );
+      } else if (!knowledgeObjectId && !sourceDocument && eventTerms.length === 0) {
+        errors.push(
+          issue(
+            "error",
+            `records[${index}]`,
+            "Label reference requires governed document evidence or configured event terms.",
+          ),
+        );
+      }
+
+      if (eventTerms.length === 0 && !knowledgeObjectId && !sourceDocument) {
         warnings.push(
           issue(
             "warning",
             `records[${index}].eventTerms`,
-            "No expected event terms are configured; automated expectedness will remain UNRESOLVED.",
+            "No event terms or governed document evidence are configured; automated listedness will remain UNRESOLVED.",
           ),
         );
       }

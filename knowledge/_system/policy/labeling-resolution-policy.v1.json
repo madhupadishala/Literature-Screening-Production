@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0",
+  "status": "TARGET_RUNTIME_POLICY",
+  "sourceRoot": "knowledge/Labeling",
+  "purpose": "Resolve the exact labeling/reference-safety document applicable to a product decision.",
+  "resolutionOrder": [
+    "tenant/client",
+    "product brand",
+    "generic/active ingredient",
+    "country/jurisdiction",
+    "label document type",
+    "version/effective date",
+    "strength/dosage form/route where applicable"
+  ],
+  "rules": {
+    "exactProductMatchPreferred": true,
+    "exactCountryMatchPreferred": true,
+    "historicalVersioningRequired": true,
+    "supersededLabelNotUsedForCurrentDecision": true,
+    "futureEffectiveLabelNotUsedForHistoricalCase": true,
+    "crossCountryFallbackRequiresApprovedPolicy": true,
+    "crossBrandFallbackRequiresApprovedPolicy": true,
+    "documentTypeFallbackRequiresApprovedPolicy": true,
+    "missingApplicableLabelFailsClosed": true,
+    "rawLabelNeverStoredAsControlledRule": true
+  },
+  "decisionUses": {
+    "LISTEDNESS_EXPECTEDNESS": [
+      "CCDS",
+      "SmPC",
+      "USPI",
+      "PI",
+      "IB",
+      "Core-Safety-Information"
+    ],
+    "INDICATION": [
+      "SmPC",
+      "USPI",
+      "PI",
+      "IB",
+      "CCDS"
+    ],
+    "DOSING_ROUTE_FORM": [
+      "SmPC",
+      "USPI",
+      "PI",
+      "IB",
+      "CCDS"
+    ],
+    "WARNINGS_PRECAUTIONS": [
+      "SmPC",
+      "USPI",
+      "PI",
+      "IB",
+      "CCDS"
+    ],
+    "ADVERSE_REACTIONS": [
+      "SmPC",
+      "USPI",
+      "PI",
+      "IB",
+      "CCDS"
+    ],
+    "PREGNANCY_LACTATION": [
+      "SmPC",
+      "USPI",
+      "PI",
+      "IB",
+      "CCDS"
+    ],
+    "INTERACTIONS": [
+      "SmPC",
+      "USPI",
+      "PI",
+      "IB",
+      "CCDS"
+    ],
+    "OVERDOSE": [
+      "SmPC",
+      "USPI",
+      "PI",
+      "IB",
+      "CCDS"
+    ]
+  },
+  "retrieval": {
+    "mandatoryMetadataFiltering": true,
+    "semanticRetrievalAfterExactResolution": true,
+    "sectionAwareChunks": true,
+    "sourceCitationRequired": true,
+    "vectorStore": "POSTGRES_PGVECTOR",
+    "hybridRetrieval": true
+  },
+  "audit": {
+    "recordLabelId": true,
+    "recordBrand": true,
+    "recordGeneric": true,
+    "recordCountry": true,
+    "recordDocumentType": true,
+    "recordVersion": true,
+    "recordEffectiveDate": true,
+    "recordSourceHash": true,
+    "recordChunksUsed": true
+  }
+}
