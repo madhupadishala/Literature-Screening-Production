@@ -89,6 +89,13 @@ class DechallengeAgent(BaseAgent):
             r"(?:after|following)\\s+(?:the\\s+)?(?:withdrawal|stopping|discontinuation|dose reduction).{0,130}?(?:improv\\w+|resolv\\w+|recover\\w+)"
             r"|(?:improv\\w+|resolv\\w+|recover\\w+).{0,100}?(?:after|following)\\s+(?:the\\s+)?(?:withdrawal|stopping|discontinuation|dose reduction)",
             narrative, re.I))
+        # Explicit outcome linked to a bounded interval after withdrawal.
+        # Example: "rash resolved within 5 days of withdrawal".
+        linked_improvement = linked_improvement or bool(re.search(
+            r"(?:improv\\w+|resolv\\w+|recover\\w+).{0,100}?"
+            r"within\\s+\\d+\\s+(?:hours?|days?|weeks?)\\s+of\\s+"
+            r"(?:withdrawal|stopping|discontinuation|dose reduction)",
+            narrative, re.I))
         if not linked_improvement:
             return self._pair(drug, ev, Dechallenge.UNRESOLVED, evidence,
                 "withdrawal reported; temporal drug-event response not established",
