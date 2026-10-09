@@ -4,11 +4,11 @@
   "base_uploaded_commit": "d304da1824812519f6d46b6b723fc1689bc91520",
   "source_directory": "nexus_actual_agent_source_consolidation/packages",
   "inventory": {
-    "kimi_source_modules": 8,
-    "additional_source_modules": 5,
+    "specialist_core_agents": 8,
+    "clinical_context_agents": 5,
     "uploaded_source_modules": 13,
-    "previously_developed_nexus_agents": "requires independent live verification",
-    "unique_clinical_agents": "not established due to functional overlap"
+    "previously_developed_nexus_agents": "requires live verification",
+    "unique_clinical_agents": "not established due to overlapping responsibilities"
   },
   "status": {
     "source_committed": true,
@@ -18,12 +18,19 @@
     "all_agents_registered": false,
     "all_agents_integrated": false,
     "clinical_qualification": false,
-    "vercel_deployment_ready": false
+    "vercel_deployment_ready": false,
+    "specialist_source_renamed": true,
+    "langgraph_bridge_code_committed": true,
+    "langgraph_runtime_verified": false,
+    "knowledge_router_bridge_code_committed": true,
+    "live_knowledge_backend_verified": false,
+    "production_qualified": false
   },
   "notes": [
     "Source imported on main by user, branch created afterwards from main.",
     "Previously developed Nexus agents remain in platform; no duplication/replacement performed.",
     "Source presence does not mean runtime integration.",
-    "Clinical feature flags must remain disabled pending qualification."
+    "Clinical feature flags must remain disabled pending qualification.",
+    "Specialist package renamed to pv_specialist_core on this branch; prior commit history retains original upload names."
   ]
 }
