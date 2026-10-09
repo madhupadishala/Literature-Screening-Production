@@ -82,7 +82,18 @@ class DechallengeAgent(BaseAgent):
                               "concurrent interventions documented; improvement cannot be "
                               "attributed to withdrawal of this drug alone", e2b_action)
 
-        improved = outcome in ("1", "2", "4") or (outcome is None and improved_txt and not not_improved_txt)
+        # E.i.7 event outcome does not, by itself, establish dechallenge timing.
+        # Case-wide narrative improvement must not be attributed to a specific
+        # drug-event pair without an explicit source-linked chronology.
+        linked_improvement = bool(re.search(
+            r"(?:after|following)\\s+(?:the\\s+)?(?:withdrawal|stopping|discontinuation|dose reduction).{0,130}?(?:improv\\w+|resolv\\w+|recover\\w+)"
+            r"|(?:improv\\w+|resolv\\w+|recover\\w+).{0,100}?(?:after|following)\\s+(?:the\\s+)?(?:withdrawal|stopping|discontinuation|dose reduction)",
+            narrative, re.I))
+        if not linked_improvement:
+            return self._pair(drug, ev, Dechallenge.UNRESOLVED, evidence,
+                "withdrawal reported; temporal drug-event response not established",
+                e2b_action)
+        improved = linked_improvement and (outcome in ("1", "2", "4") or (outcome is None and improved_txt and not not_improved_txt))
         not_improved = outcome in ("3", "5") or not_improved_txt or worsened_txt
 
         if improved and not not_improved:
