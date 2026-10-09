@@ -18,9 +18,8 @@ from .base import BaseAgent
 class Dechallenge(str, Enum):
     POSITIVE = "positive"          # withdrawn/reduced AND event improved/resolved
     NEGATIVE = "negative"          # withdrawn/reduced AND no improvement / worsened / fatal
-    UNRESOLVED = "unresolved"      # action known, course unknown
-    CONFOUNDED = "confounded"      # simultaneous interventions prevent attribution
-    NOT_ASSESSABLE = "not_assessable"  # no withdrawal/reduction documented
+    UNKNOWN = "unknown"          # no qualifying action or insufficient course evidence
+    NOT_APPLICABLE = "not_applicable"  # event-specific therapy confounds withdrawal response
 
 
 _IMPROVE = re.compile(r"\b(improv\w+|resolv\w+|recover\w+|subsided|abated|normalized|normalised|cleared|settled)\b", re.I)
@@ -53,10 +52,10 @@ class DechallengeAgent(BaseAgent):
                 act = actions.get(drug.name, {})
                 pairs.append(self._assess_pair(case, drug, ev, act, narrative))
 
-        if any(p["dechallenge"] == Dechallenge.CONFOUNDED.value for p in pairs):
+        if any(p["dechallenge"] == Dechallenge.NOT_APPLICABLE.value for p in pairs):
             r.status = ResultStatus.HUMAN_REVIEW_REQUIRED
-            r.uncertainties.append("simultaneous interventions prevent single-drug attribution")
-        if any(p["dechallenge"] == Dechallenge.UNRESOLVED.value for p in pairs):
+            r.uncertainties.append("event-specific therapy may confound the dechallenge assessment")
+        if any(p["dechallenge"] == Dechallenge.UNKNOWN.value for p in pairs):
             r.status = ResultStatus.UNRESOLVED
         r.payload = {"case_id": case.case_id, "drug_event_pairs": pairs,
                      "e2b_note": "Dechallenge is derived from G.k.8 + E.i.7; no separate E2B element exists (REQ-ICH-E2B-R3-DECHALLENGE)."}
@@ -68,7 +67,7 @@ class DechallengeAgent(BaseAgent):
         evidence = act.get("evidence_quote")
 
         if not withdrawn_or_reduced:
-            return self._pair(drug, ev, Dechallenge.NOT_ASSESSABLE, evidence,
+            return self._pair(drug, ev, Dechallenge.UNKNOWN, evidence,
                               "no withdrawal or dose reduction documented", e2b_action)
 
         outcome = ev.outcome_e2b  # 1/2 improved; 3 not resolved; 5 fatal; 4 resolved w/ sequelae
@@ -77,10 +76,14 @@ class DechallengeAgent(BaseAgent):
         worsened_txt = bool(_WORSEN.search(narrative))
         confounded = bool(_CONFOUNDERS.search(narrative))
 
-        if confounded:
-            return self._pair(drug, ev, Dechallenge.CONFOUNDED, evidence,
-                              "concurrent interventions documented; improvement cannot be "
-                              "attributed to withdrawal of this drug alone", e2b_action)
+        # Expert-proposed convention: when AE-directed treatment accompanies improvement,
+        # classify N/A while preserving treatment context. A keyword elsewhere in a
+        # multi-event report cannot establish that the treatment was for THIS event.
+        event_treated = confounded and len(case.events) == 1 and len(case.drugs) == 1
+        if event_treated and (ev.outcome_e2b in ("1", "2", "4") or improved_txt):
+            return self._pair(drug, ev, Dechallenge.NOT_APPLICABLE, evidence,
+                              "AE treatment documented alongside recovery; response to withdrawal "
+                              "cannot be isolated under proposed Nexus rule", e2b_action)
 
         # E.i.7 event outcome does not, by itself, establish dechallenge timing.
         # Case-wide narrative improvement must not be attributed to a specific
@@ -123,7 +126,7 @@ class DechallengeAgent(BaseAgent):
                 "single drug-event report documents withdrawal and persistent event",
                 e2b_action)
         if not linked_improvement:
-            return self._pair(drug, ev, Dechallenge.UNRESOLVED, evidence,
+            return self._pair(drug, ev, Dechallenge.UNKNOWN, evidence,
                 "withdrawal reported; temporal drug-event response not established",
                 e2b_action)
         improved = linked_improvement and (outcome in ("1", "2", "4") or (outcome is None and improved_txt and not not_improved_txt))
@@ -141,7 +144,7 @@ class DechallengeAgent(BaseAgent):
             return self._pair(drug, ev, Dechallenge.NEGATIVE, evidence,
                               "drug withdrawn/reduced but event did not improve (or worsened/fatal)",
                               e2b_action)
-        return self._pair(drug, ev, Dechallenge.UNRESOLVED, evidence,
+        return self._pair(drug, ev, Dechallenge.UNKNOWN, evidence,
                           "withdrawal documented but clinical course not described", e2b_action)
 
     @staticmethod
