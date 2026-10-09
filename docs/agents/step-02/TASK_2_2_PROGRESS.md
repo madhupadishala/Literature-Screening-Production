@@ -53,3 +53,16 @@
 - **Still required for full closure:** scoped runtime LOGIN provisioning and authenticated principal mapping, database-backed application integration smoke tests in CI (must execute, not skip), validation of approved synthetic test decision tables and client isolation under separate roles, as well as a final full quality-gate review. Existing Nexus production settings remain unchanged.
 
 **Status:** Implemented security foundation and direct database tests; Task 2.2 remains open pending credentials and executed application-level DB tests.
+
+
+## 2026-10-10 — Executed PostgreSQL router integration gate
+
+A new independent CI job was added at `.github/workflows/nexus-clinical-rules-postgres.yml`. It provisions disposable PostgreSQL 16 with restricted reader/approver logins, executes the two version-controlled migrations, imports all 35 expert rules as inactive drafts, creates CI-only synthetic approved and draft policies, and runs application-to-PostgreSQL tests. It requires no user or production credentials.
+
+**Evidence:** GitHub Actions run `37980889794` at commit `3a194e7b831a630f615d5b4bc44c46db546ad524`, **SUCCESS**. 9 local rule-store tests passed; 6 live PostgreSQL-router/security tests passed; 0 skips in this dedicated job. Nexus Knowledge Router retrieved a scoped synthetic approved rule for the expected tenant/client and denied an unrelated tenant/client; the system rejected unauthorized approval, a non-executable placeholder, and privileged bypass-RLS connections.
+
+**Separate real Neon validation:** `clinixai-validation-db` / `wave3-033-039-rehearsal` / `neondb`: 35 DRAFT, 0 APPROVED; RLS and FORCE RLS verified on clinical rules and principal mapping; restricted reader saw no drafts and had no rule-write or approval grants. No live clinical policies activated.
+
+**Deployment/authorization boundary:** This is a verified staging schema and application-to-PostgreSQL test gate, not production clinical qualification. User-specific deployment credentials, a controlled approver assignment, and production database rollout are deliberately unprovisioned. Wave 3's `literature_screening_prod` remains preserved.
+
+The PostgreSQL schema/evaluator/auth tests therefore pass as Task 2.2 engineering acceptance checks. A full unrelated platform release gate is not inferred from those tests.
