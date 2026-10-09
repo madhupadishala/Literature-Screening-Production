@@ -31,6 +31,10 @@ def normalize_product_exposures(items: list[dict[str, Any]]) -> list[dict[str, A
             "start_date":item.get("start_date"),"end_date":item.get("end_date"),
             "dose":item.get("dose"),"frequency":item.get("frequency"),
             "route":item.get("route"),"role":item.get("role","UNKNOWN"),
+            # DR-012: Preserve source-validated vaccine dose distinctions. A past
+            # dose must not inherit the suspect status of a later dose.
+            "vaccine_dose_id": item.get("vaccine_dose_id"),
+            "vaccine_dose_role": item.get("vaccine_dose_role"),
             "source_evidence":item["source_evidence"],
         })
         if record["reported_name"] != drug and item.get("is_verified_brand"):
