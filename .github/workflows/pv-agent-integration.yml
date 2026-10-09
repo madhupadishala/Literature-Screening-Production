@@ -5,6 +5,7 @@ on:
       - "backend/services/pv_agents/**"
       - "backend/agents/event_runtime/**"
       - "tests/test_event_clinical_agent_integration.py"
+      - "tests/test_event_outcome_policy.py"
       - "backend/knowledge/clinical_rule_store.py"
       - "tests/test_clinical_rule_store.py"
       - "tests/test_postgres_clinical_rule_store.py"
@@ -46,6 +47,7 @@ jobs:
           python -m unittest discover -s tests -p test_clinical_output_contracts.py -v
           python -m unittest discover -s tests -p test_clinical_rule_store.py -v
           python -m unittest discover -s tests -p test_event_clinical_agent_integration.py -v
+          python -m unittest discover -s tests -p test_event_outcome_policy.py -v
           python -m unittest discover -s tests -p test_postgres_clinical_rule_store.py -v
       - name: Run specialist package tests
         env:
