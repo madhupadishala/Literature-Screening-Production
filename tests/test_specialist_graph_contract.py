@@ -48,6 +48,23 @@ class SpecialistBridgeContractTests(unittest.TestCase):
         self.assertEqual(params["tenant_id"], "t1")
         self.assertEqual(params["client_id"], "c1")
 
+    def test_real_langgraph_executes_specialist_nodes(self):
+        suite = Mock()
+        suite.action_taken.extract.return_value = {"action": "unknown"}
+        suite.dechallenge.assess.return_value = {"dechallenge": "unknown"}
+        suite.rechallenge.assess.return_value = {"rechallenge": "unknown"}
+        suite.med_history.extract.return_value = {"history": []}
+        suite.followup.generate.return_value = {"questions": []}
+        bridge = NexusSpecialistBridge(knowledge_router=self.router, suite=suite)
+        report = bridge.assess(self.request)
+        self.assertTrue(report["review_required"])
+        self.assertFalse(report["clinical_release_authorized"])
+        self.assertEqual(set(report["assessments"]), {
+            "action_taken", "dechallenge", "rechallenge", "medical_history", "followup"
+        })
+        self.assertEqual(report["knowledge_context"]["tenant_id"], "t1")
+        suite.dechallenge.assess.assert_called_once()
+
     def test_requires_document_ingestion_for_oversize_input(self):
         req = dict(self.request, narrative="X" * 100001)
         with self.assertRaises(ValueError):
