@@ -56,5 +56,18 @@
     "source_event_runtime_imported": true,
     "agent_level_coverage_claim": "partial; per-rule details in report",
     "pending": "unimplemented detailed clinical rules, database activation and clinical qualification"
+  },
+  "tasks_2_6_to_2_10": {
+    "state": "ENGINEERING_CODE_COMMITTED_PARTIAL_DOMAIN_COVERAGE",
+    "commit": "56d393d771fe537a7209e7757fd63c30e9724bda",
+    "details": {
+      "2.6": "pair-level dechallenge/rechallenge service with evidence and chronology checks",
+      "2.7": "valid-case Day Zero candidate selection with source-policy guard",
+      "2.8": "unified medical/social history source-evidence adapter",
+      "2.9": "dedicated callable Nexus specialist service entrypoints",
+      "2.10": "versioned shared packet schemas and tenant/client-scoped boundaries"
+    },
+    "deferred_consolidated_phase": "live model invocation, full 35 rule synthetic ICSR agent acceptance, clinical expert benchmark and production authorization",
+    "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   }
 }
