@@ -1,0 +1,29 @@
+{
+  "schema_version": "nexus.agent-source/1",
+  "verified_on": "2026-10-09",
+  "base_uploaded_commit": "d304da1824812519f6d46b6b723fc1689bc91520",
+  "source_directory": "nexus_actual_agent_source_consolidation/packages",
+  "inventory": {
+    "kimi_source_modules": 8,
+    "additional_source_modules": 5,
+    "uploaded_source_modules": 13,
+    "previously_developed_nexus_agents": "requires independent live verification",
+    "unique_clinical_agents": "not established due to functional overlap"
+  },
+  "status": {
+    "source_committed": true,
+    "source_paths_verified_from_commit": true,
+    "source_presence_test_added": true,
+    "source_presence_test_executed_in_ci": false,
+    "all_agents_registered": false,
+    "all_agents_integrated": false,
+    "clinical_qualification": false,
+    "vercel_deployment_ready": false
+  },
+  "notes": [
+    "Source imported on main by user, branch created afterwards from main.",
+    "Previously developed Nexus agents remain in platform; no duplication/replacement performed.",
+    "Source presence does not mean runtime integration.",
+    "Clinical feature flags must remain disabled pending qualification."
+  ]
+}
