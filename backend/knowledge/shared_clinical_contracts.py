@@ -5,6 +5,7 @@ facts from narrative, imply clinical qualification, or activate draft rules.
 """
 from __future__ import annotations
 from typing import Any
+from datetime import date
 
 DOMAINS = {
     "2.6": ("dechallenge_rechallenge", ("DCH-001", "DCH-002", "DCH-003", "RCH-001")),
@@ -53,6 +54,29 @@ def medical_history(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [evidence_record(item, required=("patient_id", "reported_condition"))
             for item in items]
 
+def derive_day_zero(items: list[dict[str, Any]]) -> dict[str, Any]:
+    """Determine a candidate ONLY from explicitly validated qualifying receipts.
+
+    Validity completion and jurisdiction/client interpretation must be supplied
+    upstream; an unqualified receipt must never become Day Zero by date alone.
+    """
+    candidates = []
+    for row in day_zero_receipts(items):
+        try:
+            parsed = date.fromisoformat(row["receipt_date"])
+        except ValueError as exc:
+            raise ValueError("receipt_date must be an exact ISO calendar date") from exc
+        if row.get("qualifying_mah_receipt") is True and row.get("icsr_valid_at_receipt") is True:
+            candidates.append((parsed, row))
+    if not candidates:
+        return {"day_zero": None, "status": "REVIEW_REQUIRED",
+                "rationale": "No source-validated qualifying receipt with all ICSR validity criteria"}
+    first = min(candidates, key=lambda pair: pair[0])
+    return {"day_zero": first[0].isoformat(), "status": "CANDIDATE_FOR_REVIEW",
+            "source_evidence": first[1]["source_evidence"],
+            "rationale": "Earliest validated qualifying MAH receipt; policy review still required"}
+
+
 def normalize_clinical_packet(packet: dict[str, Any]) -> dict[str, Any]:
     """Stable plug-in boundary for clinical modules; preserve provenance."""
     if not isinstance(packet, dict) or not isinstance(packet.get("case_id"), str):
@@ -65,6 +89,7 @@ def normalize_clinical_packet(packet: dict[str, Any]) -> dict[str, Any]:
         "case_id": packet["case_id"],
         "dechallenge_rechallenge": dechallenge_rechallenge(packet.get("dechallenge_rechallenge", [])),
         "receipt_events": day_zero_receipts(packet.get("receipt_events", [])),
+        "day_zero_candidate": derive_day_zero(packet.get("receipt_events", [])),
         "medical_history": medical_history(packet.get("medical_history", [])),
         "requires_clinical_review": True,
         "clinical_release_authorized": False,
