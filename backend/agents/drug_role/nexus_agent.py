@@ -76,7 +76,7 @@ class NexusDrugRoleAgent:
             packet = evidence_package["validated_shared_clinical_packet"]
             if packet.get("case_id") != payload["case_id"]:
                 raise ValueError("Shared clinical packet case_id must match drug agent case")
-            payload["shared_clinical_packet"] = NexusClinicalDecisionAdapter("shared_clinical_services").run(tenant_id=tenant_id, client_id=client_id or "UNSCOPED", packet=packet)
+            if not client_id:\n                raise ValueError("client_id required for shared clinical decisions")\n            payload["shared_clinical_packet"] = NexusClinicalDecisionAdapter("shared_clinical_services").run(tenant_id=tenant_id, client_id=client_id, packet=packet)
         payload["knowledge_context"] = {
             "citations": context_pack.citations,
             "matched_company_products": context_pack.product_master_matches,
