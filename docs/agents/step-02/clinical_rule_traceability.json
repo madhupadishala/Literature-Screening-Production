@@ -1,7 +1,7 @@
 {
   "schema_version": "nexus.step2.clinical-traceability/1",
   "date": "2026-10-09",
-  "status": "BASELINED_NOT_ACTIVATED",
+  "status": "EXPERT_APPROVED_EXECUTION_PENDING",
   "intended_stage": "Step 2.1 inventory only; no claim of runtime KB deployment or ruleset execution",
   "source_inventory": {
     "agent_source_entries": 17,
@@ -169,7 +169,8 @@
         "DR-001-NEG",
         "DR-001-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-002",
@@ -186,7 +187,8 @@
         "DR-002-NEG",
         "DR-002-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-003",
@@ -203,7 +205,8 @@
         "DR-003-NEG",
         "DR-003-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-004",
@@ -227,7 +230,8 @@
         "DR-004-NEG",
         "DR-004-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-005",
@@ -244,7 +248,8 @@
         "DR-005-NEG",
         "DR-005-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-006",
@@ -261,7 +266,8 @@
         "DR-006-NEG",
         "DR-006-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-007",
@@ -278,7 +284,8 @@
         "DR-007-NEG",
         "DR-007-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-008",
@@ -295,7 +302,8 @@
         "DR-008-NEG",
         "DR-008-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-009",
@@ -312,7 +320,8 @@
         "DR-009-NEG",
         "DR-009-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-010",
@@ -329,7 +338,8 @@
         "DR-010-NEG",
         "DR-010-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-011",
@@ -353,7 +363,8 @@
         "DR-011-NEG",
         "DR-011-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DR-012",
@@ -377,7 +388,8 @@
         "DR-012-NEG",
         "DR-012-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-001",
@@ -394,7 +406,8 @@
         "AE-001-NEG",
         "AE-001-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-002",
@@ -411,7 +424,8 @@
         "AE-002-NEG",
         "AE-002-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-003",
@@ -428,7 +442,8 @@
         "AE-003-NEG",
         "AE-003-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-004",
@@ -445,7 +460,8 @@
         "AE-004-NEG",
         "AE-004-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-005",
@@ -462,7 +478,8 @@
         "AE-005-NEG",
         "AE-005-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-006",
@@ -479,7 +496,8 @@
         "AE-006-NEG",
         "AE-006-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-007",
@@ -496,7 +514,8 @@
         "AE-007-NEG",
         "AE-007-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-008",
@@ -513,7 +532,8 @@
         "AE-008-NEG",
         "AE-008-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-009",
@@ -530,7 +550,8 @@
         "AE-009-NEG",
         "AE-009-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-010",
@@ -547,7 +568,8 @@
         "AE-010-NEG",
         "AE-010-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "AE-011",
@@ -564,7 +586,8 @@
         "AE-011-NEG",
         "AE-011-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "IRD-001",
@@ -581,7 +604,8 @@
         "IRD-001-NEG",
         "IRD-001-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "IRD-002",
@@ -598,7 +622,8 @@
         "IRD-002-NEG",
         "IRD-002-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "IRD-003",
@@ -615,7 +640,8 @@
         "IRD-003-NEG",
         "IRD-003-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "IRD-004",
@@ -632,7 +658,8 @@
         "IRD-004-NEG",
         "IRD-004-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "IRD-005",
@@ -649,7 +676,8 @@
         "IRD-005-NEG",
         "IRD-005-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "IRD-006",
@@ -666,7 +694,8 @@
         "IRD-006-NEG",
         "IRD-006-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "ACT-001",
@@ -690,7 +719,8 @@
         "ACT-001-NEG",
         "ACT-001-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DCH-001",
@@ -707,7 +737,8 @@
         "DCH-001-NEG",
         "DCH-001-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DCH-002",
@@ -724,7 +755,8 @@
         "DCH-002-NEG",
         "DCH-002-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "DCH-003",
@@ -741,7 +773,8 @@
         "DCH-003-NEG",
         "DCH-003-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "RCH-001",
@@ -758,7 +791,8 @@
         "RCH-001-NEG",
         "RCH-001-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     },
     {
       "rule_id": "HIST-001",
@@ -775,7 +809,8 @@
         "HIST-001-NEG",
         "HIST-001-AMB"
       ],
-      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION"
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
     }
   ],
   "open_topics": [
@@ -785,5 +820,11 @@
     "Nexus treatment-confounded dechallenge/rechallenge convention requires regulatory applicability review before live clinical activation.",
     "Partial event dates must not use IRD as anchor if source indicates a different reference date.",
     "Company-suspect market applicability needs time-specific MAH authorization information."
-  ]
+  ],
+  "expert_approval": {
+    "scope": "all_35_rule_ids",
+    "approved_on": "2026-10-10",
+    "approved_by": "Nexus clinical owner (explicit user authorization)",
+    "meaning": "Requirements approved for implementation; not an assertion that placeholder execution is validated or clinically production-qualified"
+  }
 }
