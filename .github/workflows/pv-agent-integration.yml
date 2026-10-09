@@ -33,6 +33,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p test_uploaded_agent_sources.py -v
           python -m unittest discover -s tests -p test_specialist_graph_contract.py -v
+          python -m unittest discover -s tests -p test_clinical_dechallenge_regression.py -v
       - name: Run specialist package tests
         env:
           PYTHONPATH: nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents
