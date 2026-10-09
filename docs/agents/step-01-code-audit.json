@@ -137,7 +137,8 @@
       "source_path": null,
       "entrypoint": null,
       "code_verified": false,
-      "blocker": "Exact live agent path not established"
+      "blocker": "Exact live agent path not established",
+      "historical_branch": "feat/pv-safety-assessment-engine-v1"
     },
     {
       "name": "adverse_event_extraction",
@@ -145,7 +146,8 @@
       "source_path": null,
       "entrypoint": null,
       "code_verified": false,
-      "blocker": "Exact live agent path not established"
+      "blocker": "Exact live agent path not established",
+      "historical_branch": "feat/event-extraction-agent"
     }
   ],
   "defects": [
@@ -245,8 +247,46 @@
         "specialist_core"
       ],
       "action": "Define explicit cross-runtime service contract and shared case/evidence keys"
+    },
+    {
+      "id": "AUD-011",
+      "severity": "high",
+      "finding": "Cleanup Baseline Benchmark GitHub workflow failed for tested integration commit while other specialized workflows passed",
+      "affected": [
+        "repository_quality_gates"
+      ],
+      "action": "Inspect failing CI job logs, resolve in Step 7/9; do not claim full green status"
     }
   ],
-  "step1_status": "BLOCKED_FOR_COMPLETE_17_ENTRY_SOURCE_VERIFICATION",
-  "next_step_authorized": false
+  "step1_status": "IN_PROGRESS_SOURCE_TRACING_AND_COMPLETE_CLINICAL_AUDIT_OPEN",
+  "next_step_authorized": false,
+  "audit_method_details": {
+    "source_path_verification": "15 implementation entry points fetched and inspected directly from the integration branch",
+    "historical_branches": {
+      "adverse_event_extraction": "feat/event-extraction-agent",
+      "literature_safety_assessment": "feat/pv-safety-assessment-engine-v1"
+    },
+    "historical_branch_limitation": "Branch names and README presence verified; exact source file paths and current branch integration were not established; neither counts as a verified source implementation",
+    "baseline_ci": {
+      "commit": "e7e1ae59ba6a8e91748d011bdd915711583a47ac",
+      "specialist_integration": "success",
+      "shared_pv_agents": "success",
+      "frontend": "success",
+      "cleanup_baseline": "failure"
+    },
+    "non_executed_checks": [
+      "No direct line-by-line clinical gold-label audit across all 17 entries",
+      "No live approved Knowledge Base retrieval proven",
+      "No independent CLI execution of all 17 from this audit session"
+    ]
+  },
+  "step1_acceptance": {
+    "inventory_17_entries_recorded": true,
+    "all_17_sources_located": false,
+    "all_17_clinical_logic_audited": false,
+    "shared_dependencies_inspected": true,
+    "baseline_ci_status_collected": true,
+    "individual_local_unit_tests_reexecuted_in_current_audit": false,
+    "step1_completed": false
+  }
 }
