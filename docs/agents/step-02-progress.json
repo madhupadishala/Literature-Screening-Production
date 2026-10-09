@@ -11,19 +11,25 @@
       "tests/test_clinical_dechallenge_regression.py",
       "tests/test_clinical_rechallenge_attribution.py",
       "tests/test_clinical_output_contracts.py"
-    ]
+    ],
+    "dechallenge_expert_draft": "95ee33acbbf588a3376079001c198fa6e428cca2",
+    "dechallenge_regression": "e3f097418e74ac232c0fe30689aaf891afa2e613"
   },
   "completed_work": [
     "Added evidence-linked Pydantic clinical finding contract and fail-closed review invariants",
     "Guarded rechallenge assessment against cross-pair attribution in ambiguous multi-drug/multi-event cases",
-    "Corrected dechallenge positive inference to require temporal support; patched negated improvement handling"
+    "Corrected dechallenge positive inference to require temporal support; patched negated improvement handling",
+    "Updated dechallenge outcome categories: unknown instead of not_assessable; added conservative single-pair event-treatment N/A classification under expert-proposed convention and regression expectations"
   ],
   "outstanding_work": [
     "Independent code-level clinical logic corrections across remaining agents",
     "Migrate two divergent agent implementations in later integration step before full cross-suite execution",
     "Cross-agent schema adoption across all retained agents",
     "Full task-specific clinical regression and expert reference benchmark",
-    "Passing CI on the final correction commit"
+    "Passing CI on the final correction commit",
+    "Validate nuanced treated-AE temporal attribution, multi-pair behavior and independent rechallenge evidence under expert convention",
+    "Implement reviewed drug extraction, AE extraction, historical vaccine, day-zero and medical-history rules in their respective source agents",
+    "Complete latest CI run and cross-agent test execution before any closure"
   ],
   "step3_started": false
 }
