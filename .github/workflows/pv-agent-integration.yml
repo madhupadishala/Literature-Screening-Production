@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - "backend/services/pv_agents/**"
+      - "backend/knowledge/clinical_rule_store.py"
+      - "tests/test_clinical_rule_store.py"
       - "nexus_actual_agent_source_consolidation/**"
       - "tests/test_uploaded_agent_sources.py"
       - "tests/test_specialist_graph_contract.py"
@@ -36,6 +38,7 @@ jobs:
           python -m unittest discover -s tests -p test_clinical_dechallenge_regression.py -v
           python -m unittest discover -s tests -p test_clinical_rechallenge_attribution.py -v
           python -m unittest discover -s tests -p test_clinical_output_contracts.py -v
+          python -m unittest discover -s tests -p test_clinical_rule_store.py -v
       - name: Run specialist package tests
         env:
           PYTHONPATH: nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents
