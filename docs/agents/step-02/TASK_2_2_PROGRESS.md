@@ -37,3 +37,19 @@
 5. **Final verification:** PV Specialist Agent Integration CI SUCCESS on commit `578512f6bbe28cc2a14bf40a454fa596a220fcc4` including the rule store/import/router regressions. Broader CI and latest migration commit are NOT claimed to have full release green gates. No production deployment.
 
 **Overall Task 2.2:** PARTIAL, NOT CLOSED. Remaining blocking gates: approved isolated Neon branch or other safe database target; PostgreSQL migration validation; row-level security/role enforcement; controlled policy approval/activation and coverage tests; final integrated CI evidence on the deployment commit. No changes to production clinical decision logic were made in this recovery.
+
+
+## 2026-10-10 — RLS, approval control and PostgreSQL verification
+
+- Security migration committed: `backend/knowledge/migrations/20261010_nexus_clinical_rule_security.sql` and executed on Neon project `clinixai-validation-db`, branch `wave3-033-039-rehearsal`, database `neondb` ONLY.
+- Both `nexus_clinical_rule_revisions` and `nexus_clinical_rule_principals` have **ENABLE RLS** and **FORCE RLS** in PostgreSQL catalogs.
+- `nexus_clinical_rule_reader` (NOLOGIN, NOBYPASSRLS) is SELECT-only and does not possess INSERT, UPDATE or clinical approval function execution rights.
+- Reader access requires a matching role-to-tenant/client principal mapping, is limited to APPROVED rules, and principal mapping visibility itself is restricted.
+- `nexus_clinical_rule_approver` (NOLOGIN, NOBYPASSRLS) may execute an audited SECURITY DEFINER approval function; it rejects missing rationale and placeholder-only decision tables.
+- DB query evidence: 35 total rules, 35 DRAFT, 0 APPROVED, 0 approval audit entries, 0 principal rows; switched restricted-reader role returned zero clinical rows and zero principal rows; reader approval privilege false, approver privilege true. No actual user clinical rules approved.
+- `backend/knowledge/postgres_clinical_rule_store.py` provides parameterized, scoped PostgreSQL resolution and explicitly rejects database credentials with BYPASSRLS. Existing `KnowledgeRouter.evaluate_clinical_rule` accepts this adapter. The optional `tests/test_postgres_clinical_rule_store.py` is included in the specialist CI workflow.
+- Specialist integration CI succeeded for security hardening commit `9a616eae6cbf9014414660c819fb64f1deeb7d4b`, workflow run `37980590253`.
+- **Remaining limitation:** application-level PostgreSQL smoke tests require `NEXUS_CLINICAL_RULE_TEST_DSN` for a legitimate scoped non-owner runtime user. No such connection has been provisioned into CI, therefore those tests skip rather than exercise the live database. PostgreSQL role-scoped data-access checks were run directly through Neon. Do NOT claim complete application-to-database qualification or production release from this evidence.
+- **Still required for full closure:** scoped runtime LOGIN provisioning and authenticated principal mapping, database-backed application integration smoke tests in CI (must execute, not skip), validation of approved synthetic test decision tables and client isolation under separate roles, as well as a final full quality-gate review. Existing Nexus production settings remain unchanged.
+
+**Status:** Implemented security foundation and direct database tests; Task 2.2 remains open pending credentials and executed application-level DB tests.
