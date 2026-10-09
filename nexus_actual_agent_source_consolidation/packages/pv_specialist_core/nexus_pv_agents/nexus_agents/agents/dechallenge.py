@@ -96,6 +96,13 @@ class DechallengeAgent(BaseAgent):
             r"within\s+\d+\s+(?:hours?|days?|weeks?)\s+of\s+"
             r"(?:withdrawal|stopping|discontinuation|dose reduction)",
             narrative, re.I))
+        # Explicit persistence after cessation in a single drug/event case is
+        # negative dechallenge; never project case-wide persistence across pairs.
+        single_pair = len(case.drugs) == 1 and len(case.events) == 1
+        if single_pair and not_improved_txt and not improved_txt and not confounded:
+            return self._pair(drug, ev, Dechallenge.NEGATIVE, evidence,
+                "single drug-event report documents withdrawal and persistent event",
+                e2b_action)
         if not linked_improvement:
             return self._pair(drug, ev, Dechallenge.UNRESOLVED, evidence,
                 "withdrawal reported; temporal drug-event response not established",
