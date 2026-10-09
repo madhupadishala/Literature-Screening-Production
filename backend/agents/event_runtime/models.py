@@ -75,6 +75,7 @@ class Event(StrictModel):
     evidence: list[Evidence]
     onset_quote: str | None = None
     outcome_quote: str | None = None
+    outcome: str = "unknown"
     coding: dict | None = None
     review_required: bool = True
 
