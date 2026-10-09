@@ -23,7 +23,8 @@ class KnowledgeRouter:
                                rule_id: str, facts: Dict[str, Any]) -> Dict[str, Any]:
         """Evaluate approved, scoped structured knowledge, never raw retrieved text."""
         from backend.knowledge.clinical_rule_store import ClinicalRuleStore, RuleScope
-        if not isinstance(rule_store, ClinicalRuleStore):
+        from backend.knowledge.postgres_clinical_rule_store import PostgresClinicalRuleStore
+        if not isinstance(rule_store, (ClinicalRuleStore, PostgresClinicalRuleStore)):
             raise TypeError("An explicitly authorized ClinicalRuleStore is required")
         return rule_store.decide(RuleScope(tenant_id, client_id, jurisdiction,
                                            agent_name, as_of), rule_id, facts)
