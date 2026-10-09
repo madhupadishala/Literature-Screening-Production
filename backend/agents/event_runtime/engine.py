@@ -13,6 +13,7 @@ from langgraph.graph import StateGraph, START, END
 from .models import Request, Result, Event, Evidence
 from .ingestion import unpack
 from .prompts import PROMPT_VERSION
+from .outcome_policy import outcome_from_quote
 from backend.knowledge.executable_clinical_gates import evaluate_approved_gate
 
 class State(TypedDict, total=False):
@@ -161,7 +162,8 @@ class EventEngine:
                         events.append(Event(id=eid, patient_id=f"{block.document_id}:{mention.patient_id}",
                             verbatim=mention.verbatim, assertion=mention.assertion,
                             diagnosis_status=mention.diagnosis_status, role=mention.role,
-                            onset_quote=mention.onset_quote, outcome_quote=mention.outcome_quote, coding=coding,
+                            onset_quote=mention.onset_quote, outcome_quote=mention.outcome_quote,
+                            outcome=outcome_from_quote(mention.outcome_quote), coding=coding,
                             evidence=[Evidence(document_id=block.document_id, block_id=block.id,
                             locator=block.locator, start=mention.start, end=mention.end,
                             quote=mention.verbatim, context_quote=mention.context_quote)]))
