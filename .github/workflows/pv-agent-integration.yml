@@ -32,6 +32,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r backend/services/pv_agents/requirements-specialist-graph.txt
+          python -m pip install defusedxml pypdf python-docx
       - name: Syntax check
         run: |
           python -m compileall -q backend/services/pv_agents
