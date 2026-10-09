@@ -45,5 +45,36 @@ class AEClinicalIntegration(unittest.TestCase):
         self.assertEqual(len(output["events"]),1)
         self.assertEqual(output["events"][0].verbatim,"rash")
 
+
+    def test_two_explicit_reported_events_are_not_collapsed(self):
+        text="P1 experienced rash and itching."
+        block=Block(id="b1",document_id="doc1",locator="plain/chars:0-100",text=text)
+        mentions=[]
+        for event in ("rash","itching"):
+            start=text.index(event)
+            mentions.append(Mention(block_id="b1",start=start,end=start+len(event),
+              verbatim=event,patient_id="P1",patient_evidence="P1",
+              assertion="affirmed",role="event",diagnosis_status="symptom_sign",
+              context_quote=text,rationale="explicitly reported",
+              onset_quote=None,outcome_quote=None))
+        class Provider:
+            async def extract(self, block):
+                return Extraction(mentions=mentions,unresolved=[])
+            async def verify(self, block, extracted):
+                return Verification(findings=[
+                    Finding(mention_index=i,disposition="supported",reason="exact quote")
+                    for i in range(len(mentions))],missed_evidence=[])
+        engine=object.__new__(EventEngine)
+        engine.provider=Provider()
+        engine.dictionary=None
+        engine.semaphore=asyncio.Semaphore(1)
+        request=Request(case_id="case1",documents=[Document(
+            id="doc1",media_type="text/plain",
+            content_base64=base64.b64encode(text.encode()).decode())])
+        output=asyncio.run(engine.extract_verify(
+            {"blocks":[block],"issues":[],"failed":[],"request":request}))
+        self.assertEqual({e.verbatim for e in output["events"]},{"rash","itching"})
+        self.assertEqual(len(output["events"]),2)
+
 if __name__=="__main__":
     unittest.main()
