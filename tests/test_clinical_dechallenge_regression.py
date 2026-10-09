@@ -58,7 +58,14 @@ class ClinicalDechallengeTests(unittest.TestCase):
         self.assertNotEqual(result.payload["drug_event_pairs"][0]["dechallenge"], "positive")
 
     def test_no_withdrawal_is_not_assessable(self):
-        self.assertEqual(self._assess("Headache resolved.", action="4"), "not_assessable")
+        self.assertEqual(self._assess("Headache resolved.", action="4"), "unknown")
+
+    def test_ae_treated_and_recovered_is_not_applicable(self):
+        narrative = "Drug A was stopped. Headache was treated with antihistamines and recovered."
+        self.assertEqual(self._assess(narrative, outcome="1"), "not_applicable")
+
+    def test_no_outcome_information_is_unknown(self):
+        self.assertEqual(self._assess("Drug A was stopped.", outcome=None), "unknown")
 
 
 if __name__ == "__main__":
