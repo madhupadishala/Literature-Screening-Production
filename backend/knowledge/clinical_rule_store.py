@@ -163,6 +163,35 @@ class ClinicalRuleStore:
                         _canonical(references), _canonical(decision_table), digest))
         return digest
 
+    def import_inventory_drafts(self, inventory: dict, *, effective_from: str = "2026-10-09") -> dict:
+        """Stage inventory requirements without manufacturing executable clinical decisions.
+
+        Each placeholder remains DRAFT and is therefore never resolved by decide().
+        Repeated invocation is idempotent for the same inventory revision.
+        """
+        if inventory.get("schema_version") != "nexus.step2.clinical-traceability/1":
+            raise ClinicalRuleError("Unsupported clinical inventory schema")
+        inserted = skipped = 0
+        placeholder = {"clauses": [{"when": [{"field": "never_activate_placeholder",
+                                               "op": "eq", "value": True}],
+                                    "decision": "MANUAL_REVIEW"}],
+                       "on_no_match": "MANUAL_REVIEW"}
+        for item in inventory.get("rules", []):
+            rid = item["rule_id"]
+            try:
+                self.add_revision(rule_id=rid, version=1, owner_agent=item["owner"],
+                    domain=item["domain"], scope="NEXUS", status="DRAFT",
+                    rule_text=item["requirement"], decision_table=placeholder,
+                    references=item.get("citations", []), effective_from=effective_from)
+                inserted += 1
+            except sqlite3.IntegrityError:
+                with self._connect() as db:
+                    row = db.execute("SELECT rule_text, status FROM clinical_rule_revisions WHERE rule_id=? AND version=1", (rid,)).fetchone()
+                if not row or row["rule_text"] != item["requirement"] or row["status"] != "DRAFT":
+                    raise ClinicalRuleError(f"Conflicting revision for {rid}")
+                skipped += 1
+        return {"inserted": inserted, "already_present": skipped, "activated": 0}
+
     def resolve(self, scope: RuleScope, rule_id: str) -> dict[str, Any] | None:
         _scope_id(rule_id, "rule_id")
         for name in ("tenant_id", "client_id", "jurisdiction", "agent"):
