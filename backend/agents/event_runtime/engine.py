@@ -13,6 +13,7 @@ from langgraph.graph import StateGraph, START, END
 from .models import Request, Result, Event, Evidence
 from .ingestion import unpack
 from .prompts import PROMPT_VERSION
+from backend.knowledge.executable_clinical_gates import evaluate_approved_gate
 
 class State(TypedDict, total=False):
     request: Request
@@ -128,6 +129,21 @@ class EventEngine:
                     if not valid:
                         obs["disposition"] = "invalid_evidence"
                         issues.append(f"invalid_evidence:{block.id}:{i}")
+                    elif mention.role == "event" and mention.diagnosis_status == "lab_finding":
+                        # AE-002: lab observations alone are not inferred as AEs.
+                        # Retain verbatim evidence for a clinician to confirm an
+                        # explicitly reported clinical event rather than generating one.
+                        obs["clinical_rule"] = evaluate_approved_gate(
+                            "AE-002", {"measurement_only": True,
+                                       "explicit_ae_reported": False})
+                        obs["disposition"] = "lab_observation_requires_review"
+                        issues.append(f"clinical_review_lab_observation:{block.id}:{i}")
+                    elif mention.role == "event" and "felt like i died" in mention.verbatim.casefold():
+                        # AE-004: don't turn a figurative statement into death.
+                        obs["clinical_rule"] = evaluate_approved_gate(
+                            "AE-004", {"figurative_death_statement": True})
+                        obs["disposition"] = "figurative_death_requires_review"
+                        issues.append(f"clinical_review_figurative_death:{block.id}:{i}")
                     elif finding.disposition != "supported":
                         obs["disposition"] = finding.disposition
                         issues.append(f"verification_{finding.disposition}:{block.id}:{i}")
