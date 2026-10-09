@@ -31,7 +31,7 @@
     "Implement reviewed drug extraction, AE extraction, historical vaccine, day-zero and medical-history rules in their respective source agents",
     "Complete latest CI run and cross-agent test execution before any closure"
   ],
-  "step3_started": false,
+  "step3_started": true,
   "task_2_1": {
     "status": "COMPLETED_INVENTORY_ONLY",
     "rules": 35,
@@ -69,5 +69,16 @@
     },
     "deferred_consolidated_phase": "live model invocation, full 35 rule synthetic ICSR agent acceptance, clinical expert benchmark and production authorization",
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
+  },
+  "step3": {
+    "status": "STARTED_SCOPE_AND_EXISTING_WORKFLOW_IDENTIFIED",
+    "module": "Literature Screening",
+    "plan": "docs/agents/step-03-literature-module.md",
+    "baseline_sources": [
+      "backend/workflow/literature_workflow.py",
+      "backend/api/run_screening_package.py"
+    ],
+    "next_deliverable": "controlled literature-to-intake handoff with tenant/client authorization and provenance",
+    "step2_remains_open": true
   }
 }
