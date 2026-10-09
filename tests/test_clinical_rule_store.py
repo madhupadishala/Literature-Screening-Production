@@ -29,6 +29,32 @@ class ClinicalRuleStoreTests(unittest.TestCase):
         args.update(override)
         return self.store.add_revision(**args)
 
+    def test_inventory_import_is_draft_only_and_idempotent(self):
+        import json
+        inventory_path = Path(__file__).resolve().parents[1] / "docs" / "agents" / "step-02" / "clinical_rule_traceability.json"
+        inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+        first = self.store.import_inventory_drafts(inventory)
+        self.assertEqual(first["inserted"], 35)
+        self.assertEqual(first["activated"], 0)
+        second = self.store.import_inventory_drafts(inventory)
+        self.assertEqual(second["already_present"], 35)
+        self.assertEqual(self.store.decide(self.scope, "AE-002", {"explicit_ae": True})["state"], "NO_APPROVED_RULE")
+
+    def test_router_uses_explicit_scoped_store(self):
+        from backend.knowledge.knowledge_router import KnowledgeRouter
+        self.add(status="APPROVED", scope="CLIENT", tenant_id="tenant_A", client_id="client_A")
+        router = object.__new__(KnowledgeRouter)
+        answer = router.evaluate_clinical_rule(rule_store=self.store,
+            tenant_id="tenant_A", client_id="client_A", jurisdiction="IN",
+            agent_name="adverse_event_extraction", as_of="2026-10-09",
+            rule_id="AE-002", facts={"explicit_ae": True})
+        self.assertEqual(answer["decision"], "EXTRACT")
+        unauthorized = router.evaluate_clinical_rule(rule_store=self.store,
+            tenant_id="tenant_A", client_id="client_B", jurisdiction="IN",
+            agent_name="adverse_event_extraction", as_of="2026-10-09",
+            rule_id="AE-002", facts={"explicit_ae": True})
+        self.assertEqual(unauthorized["state"], "NO_APPROVED_RULE")
+
     def test_draft_rule_is_not_executable(self):
         self.add()
         self.assertEqual(self.store.decide(self.scope, "AE-002", {"explicit_ae": True})["state"], "NO_APPROVED_RULE")
