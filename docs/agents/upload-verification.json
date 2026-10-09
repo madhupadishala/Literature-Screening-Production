@@ -24,13 +24,20 @@
     "langgraph_runtime_verified": false,
     "knowledge_router_bridge_code_committed": true,
     "live_knowledge_backend_verified": false,
-    "production_qualified": false
+    "production_qualified": false,
+    "authenticated_specialist_service_route_committed": true,
+    "icsr_graph_code_committed": true,
+    "knowledge_router_called_from_graph": true,
+    "runtime_graph_test_passed": false,
+    "real_retrieval_query_test_passed": false
   },
   "notes": [
     "Source imported on main by user, branch created afterwards from main.",
     "Previously developed Nexus agents remain in platform; no duplication/replacement performed.",
     "Source presence does not mean runtime integration.",
     "Clinical feature flags must remain disabled pending qualification.",
-    "Specialist package renamed to pv_specialist_core on this branch; prior commit history retains original upload names."
+    "Specialist package renamed to pv_specialist_core on this branch; prior commit history retains original upload names.",
+    "Specialist ICSR endpoint is feature gated behind NEXUS_PV_SPECIALIST_GRAPH_ENABLED and NEXUS_PV_AGENTS_ENABLED; specialist outputs route to human review.",
+    "Runtime LangGraph, hosted Python service, ChromaDB and tenant-specific approved knowledge must be independently verified before release."
   ]
 }
