@@ -7,7 +7,7 @@ from backend.knowledge.knowledge_router import KnowledgeRouter
 from .orchestrator import DrugRoleOrchestrator
 from .exposure_policy import normalize_product_exposures
 from .indication_action_policy import normalize_indications_actions
-from backend.knowledge.shared_clinical_contracts import normalize_clinical_packet
+from backend.knowledge.clinical_decision_adapters import NexusClinicalDecisionAdapter
 
 
 class NexusDrugRoleAgent:
@@ -76,7 +76,7 @@ class NexusDrugRoleAgent:
             packet = evidence_package["validated_shared_clinical_packet"]
             if packet.get("case_id") != payload["case_id"]:
                 raise ValueError("Shared clinical packet case_id must match drug agent case")
-            payload["shared_clinical_packet"] = normalize_clinical_packet(packet)
+            payload["shared_clinical_packet"] = NexusClinicalDecisionAdapter("shared_clinical_services").run(tenant_id=tenant_id, client_id=client_id or "UNSCOPED", packet=packet)
         payload["knowledge_context"] = {
             "citations": context_pack.citations,
             "matched_company_products": context_pack.product_master_matches,
