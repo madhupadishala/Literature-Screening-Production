@@ -20,6 +20,23 @@ class SharedClinicalContractsTests(unittest.TestCase):
         self.assertEqual(len(p["receipt_events"]),1)
         self.assertFalse(p["clinical_release_authorized"])
 
+    def test_day_zero_requires_both_qualifying_receipt_and_validity(self):
+        packet = normalize_clinical_packet({"case_id":"SYN-D0", "receipt_events":[
+            {"receipt_date":"2026-10-01","recipient_type":"employee",
+             "source_evidence":"initial phone record","qualifying_mah_receipt":True,
+             "icsr_valid_at_receipt":False},
+            {"receipt_date":"2026-10-03","recipient_type":"safety team",
+             "source_evidence":"follow-up confirming final validity criterion",
+             "qualifying_mah_receipt":True,"icsr_valid_at_receipt":True}]})
+        self.assertEqual(packet["day_zero_candidate"]["day_zero"], "2026-10-03")
+        self.assertEqual(packet["day_zero_candidate"]["status"], "CANDIDATE_FOR_REVIEW")
+
+    def test_no_qualified_receipt_yields_review_not_fabricated_day_zero(self):
+        packet=normalize_clinical_packet({"case_id":"SYN-NO-D0", "receipt_events":[
+            {"receipt_date":"2026-10-01","recipient_type":"employee",
+             "source_evidence":"initial incomplete report"}]})
+        self.assertIsNone(packet["day_zero_candidate"]["day_zero"])
+
     def test_withdrawal_alone_cannot_be_positive_dechallenge(self):
         with self.assertRaises(ValueError):
             normalize_clinical_packet({"case_id":"SYN-002", "dechallenge_rechallenge":[{
