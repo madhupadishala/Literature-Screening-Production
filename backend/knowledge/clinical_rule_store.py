@@ -157,7 +157,7 @@ class ClinicalRuleStore:
                         references=references, decision_table=decision_table)
         digest = hashlib.sha256(_canonical(identity).encode()).hexdigest()
         with self._connect() as db:
-            db.execute("""INSERT INTO clinical_rule_revisions VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            db.execute("""INSERT INTO clinical_rule_revisions VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                        (rule_id, version, owner_agent, domain, scope, tenant_id, client_id,
                         jurisdiction, effective_from, effective_until, status, rule_text,
                         _canonical(references), _canonical(decision_table), digest))
