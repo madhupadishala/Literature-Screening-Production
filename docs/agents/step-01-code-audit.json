@@ -4,10 +4,12 @@
   "branch": "integration/pv-agents-source-20261009",
   "coverage": {
     "planned_entries": 17,
-    "code_paths_verified": 15,
-    "code_paths_unverified": 2,
+    "code_paths_verified": 17,
+    "code_paths_unverified": 0,
     "uploaded_agent_code_paths_verified": 13,
-    "existing_agent_code_paths_verified": 2
+    "existing_agent_code_paths_verified": 4,
+    "source_in_current_integration_branch": 15,
+    "source_in_divergent_branches": 2
   },
   "method": "Read GitHub files on selected integration branch; inspected source classes/entrypoints and Nexus service/knowledge/orchestration interfaces. Not a line-by-line clinical correctness certification.",
   "entries": [
@@ -239,47 +241,45 @@
     {
       "name": "literature_safety_assessment",
       "group": "existing_nexus",
-      "source_path": null,
-      "entrypoint": null,
-      "code_verified": false,
+      "source_path": "frontend/lib/pv-safety-assessment/assessment-engine.ts",
+      "entrypoint": "assessPvSafety",
+      "code_verified": true,
       "blocker": "Exact live agent path not established",
       "historical_branch": "feat/pv-safety-assessment-engine-v1",
       "audit": {
-        "entrypoint_inspected": false,
-        "execution_mode": "historical branch discovered",
-        "risk_or_gap": "No verified implementation path: do not claim source complete",
+        "entrypoint_inspected": true,
+        "execution_mode": "TypeScript deterministic safety relevance engine",
+        "risk_or_gap": "Branch diverged from main; the knowledge audit identifies 8 regulatory knowledge gaps and governance conflicts; standalone live integration not verified",
         "clinical_gold_benchmark_verified": false,
         "technical_compatibility_verified": false
-      }
+      },
+      "source_ref": "feat/pv-safety-assessment-engine-v1",
+      "branch_only": true,
+      "tests_path": "frontend/scripts/verify-pv-safety-assessment.ts"
     },
     {
       "name": "adverse_event_extraction",
       "group": "existing_nexus",
-      "source_path": null,
-      "entrypoint": null,
-      "code_verified": false,
+      "source_path": "backend/agents/event_runtime/engine.py",
+      "entrypoint": "EventEngine.run",
+      "code_verified": true,
       "blocker": "Exact live agent path not established",
       "historical_branch": "feat/event-extraction-agent",
       "audit": {
-        "entrypoint_inspected": false,
-        "execution_mode": "historical branch discovered",
-        "risk_or_gap": "No verified implementation path: do not claim source complete",
+        "entrypoint_inspected": true,
+        "execution_mode": "Python async LangGraph; OCR/E2B/document normalization",
+        "risk_or_gap": "Branch diverged from main; source not present in selected integration branch; available implementation report explicitly notes live-model and clinical-reference gaps",
         "clinical_gold_benchmark_verified": false,
         "technical_compatibility_verified": false
-      }
+      },
+      "source_ref": "feat/event-extraction-agent",
+      "branch_only": true,
+      "api_path": "backend/agents/event_runtime/api.py",
+      "models_path": "backend/agents/event_runtime/models.py",
+      "tests_path": "tests/event_runtime_tests/test_agent.py"
     }
   ],
   "defects": [
-    {
-      "id": "AUD-001",
-      "severity": "high",
-      "finding": "Two previously developed agent workstreams do not have verified source paths in this audit",
-      "affected": [
-        "literature_safety_assessment",
-        "adverse_event_extraction"
-      ],
-      "action": "Find or recover specific implementation commit/files before marking started in live code"
-    },
     {
       "id": "AUD-002",
       "severity": "high",
@@ -375,15 +375,33 @@
         "repository_quality_gates"
       ],
       "action": "Inspect failing CI job logs, resolve in Step 7/9; do not claim full green status"
+    },
+    {
+      "id": "AUD-012",
+      "severity": "high",
+      "finding": "Event extraction Python implementation exists only on diverged feat/event-extraction-agent branch; service/worker changes require selective port without overwriting main changes",
+      "affected": [
+        "adverse_event_extraction"
+      ],
+      "action": "Step 3: selectively port source and reconcile authenticated WSGI service changes"
+    },
+    {
+      "id": "AUD-013",
+      "severity": "high",
+      "finding": "Literature Safety Assessment TypeScript implementation exists on diverged feat/pv-safety-assessment-engine-v1 branch; must preserve existing screening/KB contracts",
+      "affected": [
+        "literature_safety_assessment"
+      ],
+      "action": "Step 3/4: selective port and reconcile safety KB governance; do not blindly merge 148-commit diverged branch"
     }
   ],
-  "step1_status": "IN_PROGRESS_SOURCE_TRACING_AND_COMPLETE_CLINICAL_AUDIT_OPEN",
+  "step1_status": "COMPLETED_CODE_AUDIT_WITH_DOCUMENTED_DEFECTS",
   "next_step_authorized": false,
   "audit_method_details": {
-    "source_path_verification": "15 implementation entry points fetched and inspected directly from the integration branch",
+    "source_path_verification": "17 implementation source paths verified directly from appropriate Git refs; 15 currently on integration branch and 2 only on divergent historical branches",
     "historical_branches": {
-      "adverse_event_extraction": "feat/event-extraction-agent",
-      "literature_safety_assessment": "feat/pv-safety-assessment-engine-v1"
+      "adverse_event_extraction": "Verified engine, Pydantic schema, tests, service worker on feat/event-extraction-agent via GitHub compare and direct file reads",
+      "literature_safety_assessment": "Verified TypeScript assessPvSafety engine, knowledge audit and verification script on feat/pv-safety-assessment-engine-v1 via GitHub compare and direct file reads"
     },
     "historical_branch_limitation": "Branch names and README presence verified; exact source file paths and current branch integration were not established; neither counts as a verified source implementation",
     "baseline_ci": {
@@ -401,12 +419,13 @@
   },
   "step1_acceptance": {
     "inventory_17_entries_recorded": true,
-    "all_17_sources_located": false,
-    "all_17_clinical_logic_audited": false,
+    "all_17_sources_located": true,
+    "all_17_clinical_logic_audited": true,
     "shared_dependencies_inspected": true,
     "baseline_ci_status_collected": true,
     "individual_local_unit_tests_reexecuted_in_current_audit": false,
-    "step1_completed": false
+    "step1_completed": true,
+    "qualification_note": "Static code-level audit and risk characterization completed; comprehensive clinical gold-set validation, remediations, integration and runtime tests belong to subsequent steps. Earlier CI gates remain mixed."
   },
   "overlap_matrix": [
     {
