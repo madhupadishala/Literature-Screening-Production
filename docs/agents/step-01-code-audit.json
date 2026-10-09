@@ -4,10 +4,10 @@
   "branch": "integration/pv-agents-source-20261009",
   "coverage": {
     "planned_entries": 17,
-    "code_paths_verified": 14,
-    "code_paths_unverified": 3,
+    "code_paths_verified": 15,
+    "code_paths_unverified": 2,
     "uploaded_agent_code_paths_verified": 13,
-    "existing_agent_code_paths_verified": 1
+    "existing_agent_code_paths_verified": 2
   },
   "method": "Read GitHub files on selected integration branch; inspected source classes/entrypoints and Nexus service/knowledge/orchestration interfaces. Not a line-by-line clinical correctness certification.",
   "entries": [
@@ -126,10 +126,10 @@
     {
       "name": "country_of_incidence",
       "group": "existing_nexus",
-      "source_path": null,
-      "entrypoint": null,
-      "code_verified": false,
-      "blocker": "Exact live agent path not established; historical commit message mentions COI"
+      "source_path": "frontend/lib/ai/coi/coi-agent.ts",
+      "entrypoint": "runCOI",
+      "code_verified": true,
+      "api_route": "frontend/app/api/ai/coi/route.ts"
     },
     {
       "name": "literature_safety_assessment",
@@ -152,9 +152,8 @@
     {
       "id": "AUD-001",
       "severity": "high",
-      "finding": "Three previously developed agent workstreams do not have verified source paths in this audit",
+      "finding": "Two previously developed agent workstreams do not have verified source paths in this audit",
       "affected": [
-        "country_of_incidence",
         "literature_safety_assessment",
         "adverse_event_extraction"
       ],
@@ -236,6 +235,16 @@
         "all"
       ],
       "action": "Dedicated runtime/integration tests and evidence register"
+    },
+    {
+      "id": "AUD-010",
+      "severity": "medium",
+      "finding": "Country-of-Incidence uses TypeScript LangGraph in Next.js, while the imported specialist graph runs Python LangGraph; shared evidence contracts and cross-runtime routing are not verified",
+      "affected": [
+        "country_of_incidence",
+        "specialist_core"
+      ],
+      "action": "Define explicit cross-runtime service contract and shared case/evidence keys"
     }
   ],
   "step1_status": "BLOCKED_FOR_COMPLETE_17_ENTRY_SOURCE_VERIFICATION",
