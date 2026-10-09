@@ -34,6 +34,38 @@ class PostgresRuleTests(unittest.TestCase):
             scope=RuleScope(tenant,"client_A","IN","adverse_event_extraction","2026-10-10")
             self.assertIsNone(self.db.resolve(scope,"AE-002"))
 
+    def test_approved_synthetic_client_rule_and_cross_tenant_denial(self):
+        router=object.__new__(KnowledgeRouter)
+        common=dict(rule_store=self.db,jurisdiction="IN",
+                    agent_name="adverse_event_extraction",as_of="2026-10-10",
+                    rule_id="QA-002",facts={"explicit_ae":True})
+        a=router.evaluate_clinical_rule(tenant_id="tenant_A",client_id="client_A",**common)
+        self.assertEqual(a["state"],"EVALUATED")
+        self.assertEqual(a["decision"],"EXTRACT")
+        b=router.evaluate_clinical_rule(tenant_id="tenant_B",client_id="client_B",**common)
+        self.assertEqual(b["state"],"NO_APPROVED_RULE")
+        c=router.evaluate_clinical_rule(tenant_id="tenant_A",client_id="client_B",**common)
+        self.assertEqual(c["state"],"NO_APPROVED_RULE")
+
+    def test_restricted_reader_cannot_approve(self):
+        import psycopg
+        dsn=os.environ["NEXUS_CLINICAL_RULE_TEST_DSN"]
+        with psycopg.connect(dsn,connect_timeout=8) as db:
+            with db.cursor() as cursor:
+                cursor.execute("SELECT has_function_privilege(current_user, 'public.nexus_approve_clinical_rule(text,integer,text)', 'EXECUTE')")
+                self.assertFalse(cursor.fetchone()[0])
+
+    def test_approver_rejects_placeholder(self):
+        dsn=os.getenv("NEXUS_CLINICAL_RULE_APPROVER_TEST_DSN")
+        if not dsn:
+            self.skipTest("Scoped approver diagnostic DSN not configured")
+        import psycopg
+        with psycopg.connect(dsn,connect_timeout=8) as db:
+            with db.cursor() as cursor:
+                with self.assertRaises(psycopg.Error):
+                    cursor.execute("SELECT public.nexus_approve_clinical_rule(%s,%s,%s)",
+                                   ("QA-PLACEHOLDER",1,"Review completed for CI synthetic scenario"))
+
     def test_owner_connection_is_rejected(self):
         owner_dsn=os.getenv("NEXUS_CLINICAL_RULE_OWNER_TEST_DSN")
         if not owner_dsn:
