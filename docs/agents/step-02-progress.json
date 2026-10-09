@@ -31,5 +31,18 @@
     "Implement reviewed drug extraction, AE extraction, historical vaccine, day-zero and medical-history rules in their respective source agents",
     "Complete latest CI run and cross-agent test execution before any closure"
   ],
-  "step3_started": false
+  "step3_started": false,
+  "task_2_1": {
+    "status": "COMPLETED_INVENTORY_ONLY",
+    "rules": 35,
+    "source_entries": 17,
+    "clinical_functions": 16,
+    "inventory_path": "docs/agents/step-02/clinical_rule_traceability.json",
+    "closure_path": "docs/agents/step-02/TASK_2_1_CLOSURE.md",
+    "commits": [
+      "83c224fe25588ab7b7e93e2db2e210f0523477c5",
+      "9829ebc212d85047f67db12092acc6816fb448d5"
+    ]
+  },
+  "task_2_2_started": false
 }
