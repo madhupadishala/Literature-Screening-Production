@@ -66,3 +66,10 @@ BEGIN
 END $$;
 REVOKE ALL ON FUNCTION nexus_approve_clinical_rule(text,integer,text) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION nexus_approve_clinical_rule(text,integer,text) TO nexus_clinical_rule_approver;
+
+-- The mapping of database principals to tenants is itself tenant-sensitive.
+ALTER TABLE nexus_clinical_rule_principals ENABLE ROW LEVEL SECURITY;
+ALTER TABLE nexus_clinical_rule_principals FORCE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS clinical_principal_self ON nexus_clinical_rule_principals;
+CREATE POLICY clinical_principal_self ON nexus_clinical_rule_principals
+ FOR SELECT TO nexus_clinical_rule_reader USING (role_name=current_user);
