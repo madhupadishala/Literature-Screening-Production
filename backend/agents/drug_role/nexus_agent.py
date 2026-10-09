@@ -7,6 +7,7 @@ from backend.knowledge.knowledge_router import KnowledgeRouter
 from .orchestrator import DrugRoleOrchestrator
 from .exposure_policy import normalize_product_exposures
 from .indication_action_policy import normalize_indications_actions
+from backend.knowledge.shared_clinical_contracts import normalize_clinical_packet
 
 
 class NexusDrugRoleAgent:
@@ -69,6 +70,13 @@ class NexusDrugRoleAgent:
             payload["indications_actions"] = normalize_indications_actions(
                 evidence_package["validated_drug_indications_actions"])
             payload["indication_action_policy_rules"] = ["ACT-001"]
+        # Shared Nexus Step 2.6–2.10 contract: only explicitly validated facts.
+        # No synthetic or inferred clinical assertions enter this interface.
+        if evidence_package.get("validated_shared_clinical_packet") is not None:
+            packet = evidence_package["validated_shared_clinical_packet"]
+            if packet.get("case_id") != payload["case_id"]:
+                raise ValueError("Shared clinical packet case_id must match drug agent case")
+            payload["shared_clinical_packet"] = normalize_clinical_packet(packet)
         payload["knowledge_context"] = {
             "citations": context_pack.citations,
             "matched_company_products": context_pack.product_master_matches,
