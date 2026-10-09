@@ -59,7 +59,7 @@ class PVAgentService:
         scopes = next((v for k, v in self.token_scopes.items() if hmac.compare_digest(k, token)), None)
         if not scopes:
             raise ServiceError(401, "Service authentication required")
-        allowed = {'tenant_id','client_id','workspace_id','request_id','case_id','narrative','source_type','event_terms','input_sha256'}
+        allowed = {'tenant_id','client_id','workspace_id','request_id','case_id','narrative','source_type','event_terms','input_sha256','structured_case','jurisdiction','as_of'}
         if not isinstance(request, dict) or set(request) - allowed:
             raise ServiceError(400, "Invalid agent request fields")
         for key in ['tenant_id','client_id','workspace_id','request_id','case_id','narrative','input_sha256']:
@@ -67,10 +67,12 @@ class PVAgentService:
                 raise ServiceError(400, f"{key} required")
         if not any(all(s.get(k) == request[k] for k in ['tenant_id','client_id','workspace_id']) for s in scopes):
             raise ServiceError(403, "Service token scope mismatch")
-        if len(request['narrative']) > 50_000 and agent in ('seriousness', 'causality'):
+        if len(request['narrative']) > 50_000 and agent in ('seriousness', 'causality', 'specialist-icsr'):
             raise ServiceError(400, 'Specialist narrative exceeds supported 50000 character limit')
         if not isinstance(request.get('event_terms', []), list) or len(request.get('event_terms', [])) > 50 or any(not isinstance(e, str) or not e.strip() or len(e) > 200 for e in request.get('event_terms', [])):
             raise ServiceError(400, 'Invalid event terms')
+        if 'structured_case' in request and (not isinstance(request['structured_case'], dict) or len(json.dumps(request['structured_case'])) > 100_000):
+            raise ServiceError(400, 'Invalid structured ICSR payload')
         digest = hashlib.sha256(request['narrative'].encode()).hexdigest()
         if digest != request['input_sha256']:
             raise ServiceError(400, "Source hash mismatch")
@@ -79,7 +81,7 @@ class PVAgentService:
             confidence = min((c['confidence'] for c in result['classifications']), default=0.0)
             evidence = [e for c in result['classifications'] for e in c['evidence']]
             version = result['knowledge_context'].get('version', 'unqualified-nexus-kb')
-        elif agent in ('seriousness', 'causality') and agent in self.workers:
+        elif agent in ('seriousness', 'causality', 'specialist-icsr') and agent in self.workers:
             worker_request = dict(request)
             if agent == 'causality':
                 context = self.causality_adapter.retrieve(CausalityKnowledgeRequest(
@@ -133,4 +135,19 @@ def create_application():
     if os.environ.get('NEXUS_PV_REGISTER_SPECIALISTS') == 'true':
         from .workers import build_specialist_workers
         app.workers = build_specialist_workers(app.drug_agent, app.causality_adapter, os.environ['NEXUS_PV_SPECIALIST_AUDIT_DIR'])
+    if os.environ.get('NEXUS_PV_SPECIALIST_GRAPH_ENABLED') == 'true':
+        from .specialist_graph import NexusSpecialistBridge
+        bridge = NexusSpecialistBridge()
+
+        def specialist_worker(req):
+            report = bridge.assess(req)
+            return {
+                'review_required': True,
+                'confidence': 0.0,
+                'evidence_spans': [],
+                'knowledge_version': 'nexus-knowledge-router-scoped',
+                'assessment': report,
+            }
+
+        app.workers['specialist-icsr'] = specialist_worker
     return app
