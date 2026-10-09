@@ -40,6 +40,20 @@ class AEClinicalIntegration(unittest.TestCase):
         self.assertEqual(len(output["events"]),0)
         self.assertEqual(output["observations"][0]["disposition"],"figurative_death_requires_review")
 
+    def test_source_verified_nonclinical_complaint_not_event(self):
+        output = self.simulate(
+            "P1 reported damaged packaging, without any patient symptom.",
+            "damaged packaging", "other", role="unknown")
+        self.assertEqual(len(output["events"]), 0)
+        self.assertEqual(output["observations"][0]["disposition"], "nonclinical_complaint")
+        self.assertEqual(output["observations"][0]["clinical_rule"]["rule_id"], "AE-003")
+
+    def test_explicit_clinical_event_not_blocked_by_complaint_guard(self):
+        output = self.simulate(
+            "P1 developed rash after reporting damaged packaging.",
+            "rash", "symptom_sign", role="event")
+        self.assertEqual(len(output["events"]), 1)
+
     def test_explicit_reported_rash_retained(self):
         output=self.simulate("P1 developed rash.","rash","symptom_sign")
         self.assertEqual(len(output["events"]),1)
