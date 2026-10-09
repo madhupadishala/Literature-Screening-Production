@@ -115,15 +115,20 @@ class DrugRoleOrchestrator:
                     decisions.append(classify_context(mention.context, sentence_start))
 
             role, confidence, rationale, evidence = merge_role_decisions(decisions)
-            ownership, pm_match, ownership_reason = resolve_ownership(
-                normalized,
-                company_products or [],
-                known_non_company_products,
-            )
+            # DR-009: company suspect classification is applicable to SUSPECT drugs only.
+            if role == DrugRole.SUSPECT:
+                ownership, pm_match, ownership_reason = resolve_ownership(
+                    normalized,
+                    company_products or [],
+                    known_non_company_products,
+                )
+            else:
+                ownership, pm_match = Ownership.UNKNOWN, None
+                ownership_reason = "Company suspect classification not applicable to non-suspect drug role."
 
             requires_review = (
                 role == DrugRole.UNKNOWN
-                or ownership == Ownership.UNKNOWN
+                or (role == DrugRole.SUSPECT and ownership == Ownership.UNKNOWN)
                 or confidence < 0.80
                 or "Conflicting" in rationale
             )
