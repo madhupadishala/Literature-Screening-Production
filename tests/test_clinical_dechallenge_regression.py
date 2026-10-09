@@ -30,7 +30,7 @@ class ClinicalDechallengeTests(unittest.TestCase):
         return result.payload["drug_event_pairs"][0]["dechallenge"]
 
     def test_resolved_outcome_alone_does_not_prove_dechallenge(self):
-        self.assertEqual(self._assess("Drug A was stopped. Headache reported resolved."), "unresolved")
+        self.assertEqual(self._assess("Drug A was stopped. Headache reported resolved."), "unknown")
 
     def test_temporal_link_with_resolution(self):
         self.assertEqual(self._assess("Following discontinuation, the headache resolved."), "positive")
