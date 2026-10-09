@@ -1,0 +1,2917 @@
+{
+  "label_basis": "scenario-design labels (not expert-adjudicated ground truth)",
+  "literature_pairs": [
+    {
+      "label": "duplicate_bibliographic_record",
+      "a": {
+        "record_id": "LIT-ecd31eaa10fe",
+        "source_database": null,
+        "pmid": "38001122",
+        "doi": "10.1000/xyz.123",
+        "title": "Severe cutaneous reaction associated with nexiumab: a case report",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J",
+          "Doe A",
+          "Lee K"
+        ],
+        "journal": "J Clin Pharmacol",
+        "year": 2024,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "54-year-old man"
+        ],
+        "patient_count": 1,
+        "has_full_text": false
+      },
+      "b": {
+        "record_id": "LIT-f868823a035a",
+        "source_database": "Embase",
+        "pmid": "38001122",
+        "doi": "https://doi.org/10.1000/xyz.123.",
+        "title": "Severe cutaneous reaction associated with nexiumab: a case report",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J",
+          "Doe A",
+          "Lee K"
+        ],
+        "journal": "J Clin Pharmacol",
+        "year": 2024,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "54-year-old man"
+        ],
+        "patient_count": 1,
+        "has_full_text": false
+      }
+    },
+    {
+      "label": "duplicate_bibliographic_record",
+      "a": {
+        "record_id": "LIT-07928142e977",
+        "source_database": null,
+        "pmid": null,
+        "doi": "10.1000/abc.9",
+        "title": "Severe cutaneous reaction associated with nexiumab: a case report",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J",
+          "Doe A",
+          "Lee K"
+        ],
+        "journal": "J Clin Pharmacol",
+        "year": 2024,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "54-year-old man"
+        ],
+        "patient_count": 1,
+        "has_full_text": false
+      },
+      "b": {
+        "record_id": "LIT-dd757c16cf00",
+        "source_database": null,
+        "pmid": null,
+        "doi": "10.1000/ABC.9;",
+        "title": "Severe cutaneous reaction associated with nexiumab: a case report",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J",
+          "Doe A",
+          "Lee K"
+        ],
+        "journal": "J Clin Pharmacol",
+        "year": 2024,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "54-year-old man"
+        ],
+        "patient_count": 1,
+        "has_full_text": false
+      }
+    },
+    {
+      "label": "duplicate_publication_content",
+      "a": {
+        "record_id": "LIT-f2105e914874",
+        "source_database": null,
+        "pmid": null,
+        "doi": "10.1101/pre.55",
+        "title": "Severe cutaneous reaction associated with nexiumab: a case report",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J",
+          "Doe A",
+          "Lee K"
+        ],
+        "journal": "medRxiv",
+        "year": 2024,
+        "publication_types": [
+          "Preprint"
+        ],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "54-year-old man"
+        ],
+        "patient_count": 1,
+        "has_full_text": false
+      },
+      "b": {
+        "record_id": "LIT-22eeedbca1ea",
+        "source_database": null,
+        "pmid": null,
+        "doi": "10.1000/final.55",
+        "title": "Severe cutaneous reaction associated with nexiumab: a case report",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J",
+          "Doe A",
+          "Lee K"
+        ],
+        "journal": "J Clin Pharmacol",
+        "year": 2024,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "54-year-old man"
+        ],
+        "patient_count": 1,
+        "has_full_text": false
+      }
+    },
+    {
+      "label": "new_independent_case",
+      "a": {
+        "record_id": "LIT-d87e54bfce08",
+        "source_database": null,
+        "pmid": "1",
+        "doi": "10.1/a",
+        "title": "Nexiumab-induced hepatitis in a 54-year-old man",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J"
+        ],
+        "journal": null,
+        "year": 2024,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "54-year-old man"
+        ],
+        "patient_count": null,
+        "has_full_text": false
+      },
+      "b": {
+        "record_id": "LIT-cd29ef878e5f",
+        "source_database": null,
+        "pmid": "2",
+        "doi": "10.2/b",
+        "title": "Pharmacokinetics of nexiumab in healthy volunteers",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Garcia M"
+        ],
+        "journal": null,
+        "year": 2023,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [],
+        "patient_count": null,
+        "has_full_text": false
+      }
+    },
+    {
+      "label": "overlapping_patient_case",
+      "a": {
+        "record_id": "LIT-49afb26d183a",
+        "source_database": null,
+        "pmid": "3",
+        "doi": "10.1/c",
+        "title": "Immune-mediated colitis during nexiumab therapy",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J",
+          "Doe A"
+        ],
+        "journal": null,
+        "year": 2024,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "61-year-old woman"
+        ],
+        "patient_count": null,
+        "has_full_text": false
+      },
+      "b": {
+        "record_id": "LIT-73210070829d",
+        "source_database": null,
+        "pmid": "4",
+        "doi": "10.2/d",
+        "title": "Successful retreatment after nexiumab colitis",
+        "abstract": "",
+        "full_text": null,
+        "authors": [
+          "Smith J",
+          "Lee K"
+        ],
+        "journal": null,
+        "year": 2025,
+        "publication_types": [],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "61-year-old woman"
+        ],
+        "patient_count": null,
+        "has_full_text": false
+      }
+    }
+  ],
+  "icsr_pairs": [
+    {
+      "label": "exact_duplicate",
+      "a": {
+        "case_id": "CASE-79f109b453fe",
+        "worldwide_unique_id": "FR-ACME-2024-000111",
+        "sender_case_id": "ACME-111",
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "b": {
+        "case_id": "CASE-90a352e7dc8f",
+        "worldwide_unique_id": "FR-ACME-2024-000111",
+        "sender_case_id": "ACME-111",
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "follow_up_to_existing_icsr",
+      "a": {
+        "case_id": "CASE-a58946c9bc8c",
+        "worldwide_unique_id": "FR-ACME-2024-000111",
+        "sender_case_id": "ACME-111",
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "b": {
+        "case_id": "CASE-270061b037cc",
+        "worldwide_unique_id": "FR-ACME-2024-000111",
+        "sender_case_id": "ACME-111",
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 2,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab. Follow-up: recovered.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "probable_duplicate",
+      "a": {
+        "case_id": "CASE-8f37c1d7ee6b",
+        "worldwide_unique_id": "FR-ACME-2024-000111",
+        "sender_case_id": "ACME-111",
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "b": {
+        "case_id": "CASE-7d91dd9227fa",
+        "worldwide_unique_id": null,
+        "sender_case_id": "HOSP-998",
+        "sender_organization": "Lyon General",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "new_case",
+      "a": {
+        "case_id": "CASE-268c3d1ad0bf",
+        "worldwide_unique_id": "FR-ACME-2024-000111",
+        "sender_case_id": "ACME-111",
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "b": {
+        "case_id": "CASE-1a5813e9e6e6",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "DE",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 23.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "F",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "consumer",
+            "organization": null,
+            "country": "DE",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-c341fc604186",
+            "verbatim": "nausea",
+            "coded_term": null,
+            "onset_date": "2024-09-01",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "23-year-old woman reported nausea while taking nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "related_but_distinct_case",
+      "a": {
+        "case_id": "CASE-9c66199b5750",
+        "worldwide_unique_id": "FR-ACME-2024-000111",
+        "sender_case_id": "ACME-111",
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "b": {
+        "case_id": "CASE-db33f672a9c5",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "F",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "unresolved",
+      "a": {
+        "case_id": "CASE-e248632c4e07",
+        "worldwide_unique_id": "FR-ACME-2024-000111",
+        "sender_case_id": "ACME-111",
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": "FR",
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 54.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": "Lyon General",
+            "country": "FR",
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-65629aa819a8",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eda1895db82c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": "2024-05-03",
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "54-year-old man developed hepatitis three weeks after starting nexiumab.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "b": {
+        "case_id": "CASE-512043023809",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": "ACME Pharma",
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-396505edcf76",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-de8228dd704a",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    }
+  ],
+  "screening": [
+    {
+      "label": "INCLUDE",
+      "article": {
+        "record_id": "LIT-2bf854246ed8",
+        "source_database": null,
+        "pmid": null,
+        "doi": null,
+        "title": "Nexiumab-associated anaphylaxis: a case report",
+        "abstract": "We report a 54-year-old man who developed anaphylaxis after the second infusion of nexiumab. The reaction resolved after withdrawal.",
+        "full_text": null,
+        "authors": [],
+        "journal": null,
+        "year": null,
+        "publication_types": [
+          "Case Reports"
+        ],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [
+          "54-year-old man"
+        ],
+        "patient_count": 1,
+        "has_full_text": true
+      },
+      "product_scope": [
+        "nexiumab"
+      ]
+    },
+    {
+      "label": "EXCLUDE",
+      "article": {
+        "record_id": "LIT-74a893ce96b4",
+        "source_database": null,
+        "pmid": null,
+        "doi": null,
+        "title": "Advances in monoclonal antibody engineering",
+        "abstract": "A technical overview of antibody engineering platforms and manufacturing improvements.",
+        "full_text": null,
+        "authors": [],
+        "journal": null,
+        "year": null,
+        "publication_types": [
+          "Review"
+        ],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [],
+        "patient_count": null,
+        "has_full_text": false
+      },
+      "product_scope": [
+        "nexiumab"
+      ]
+    },
+    {
+      "label": "FULL_TEXT_REQUIRED",
+      "article": {
+        "record_id": "LIT-db4a6acb6e31",
+        "source_database": null,
+        "pmid": null,
+        "doi": null,
+        "title": "Unexpected hepatic injury in a patient receiving nexiumab",
+        "abstract": "We report a case of hepatotoxicity temporally associated with nexiumab in a 47-year-old woman.",
+        "full_text": null,
+        "authors": [],
+        "journal": null,
+        "year": null,
+        "publication_types": [
+          "Case Reports"
+        ],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [],
+        "patient_count": 1,
+        "has_full_text": false
+      },
+      "product_scope": [
+        "nexiumab"
+      ]
+    },
+    {
+      "label": "MEDICAL_REVIEW_REQUIRED",
+      "article": {
+        "record_id": "LIT-2707aeae1a92",
+        "source_database": null,
+        "pmid": null,
+        "doi": null,
+        "title": "Severe skin reaction with competitor drug zalutumab",
+        "abstract": "A case report of Stevens-Johnson syndrome in a patient treated with zalutumab, a drug in the same class.",
+        "full_text": null,
+        "authors": [],
+        "journal": null,
+        "year": null,
+        "publication_types": [
+          "Case Reports"
+        ],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [],
+        "patient_count": 1,
+        "has_full_text": true
+      },
+      "product_scope": [
+        "nexiumab"
+      ]
+    },
+    {
+      "label": "DUPLICATE_REVIEW_REQUIRED",
+      "article": {
+        "record_id": "LIT-55629b331339",
+        "source_database": null,
+        "pmid": null,
+        "doi": null,
+        "title": "Nexiumab-associated anaphylaxis: a case report",
+        "abstract": "We report a 54-year-old man who developed anaphylaxis.",
+        "full_text": null,
+        "authors": [],
+        "journal": null,
+        "year": null,
+        "publication_types": [
+          "Case Reports"
+        ],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [],
+        "patient_count": 1,
+        "has_full_text": false
+      },
+      "product_scope": [
+        "nexiumab"
+      ],
+      "duplicate_suspected": true
+    },
+    {
+      "label": "EXCLUDE",
+      "article": {
+        "record_id": "LIT-28dbd02ab9bf",
+        "source_database": null,
+        "pmid": null,
+        "doi": null,
+        "title": "Systematic review of TNF inhibitor safety",
+        "abstract": "Pooled analysis of adverse reactions across five trials.",
+        "full_text": null,
+        "authors": [],
+        "journal": null,
+        "year": null,
+        "publication_types": [
+          "Review"
+        ],
+        "language": "en",
+        "mentions_products": [],
+        "mentioned_events": [],
+        "described_patients": [],
+        "patient_count": null,
+        "has_full_text": false
+      },
+      "product_scope": [
+        "placebo-x"
+      ]
+    }
+  ],
+  "action_taken": [
+    {
+      "label": "1",
+      "case": {
+        "case_id": "CASE-22e7a52741a8",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-70fa981973b6",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-ad87eaf9a40b",
+            "verbatim": "event",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "The patient developed a rash. Nexiumab was discontinued.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "2",
+      "case": {
+        "case_id": "CASE-f4da94ea213f",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-94029d1e3891",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-823650a12b43",
+            "verbatim": "event",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "The dose of nexiumab was reduced to 100 mg after the event.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "3",
+      "case": {
+        "case_id": "CASE-0f387a7c0fbe",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-45b86df2cb5d",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-eea49e0b484b",
+            "verbatim": "event",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab dose was increased to manage the underlying disease.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "4",
+      "case": {
+        "case_id": "CASE-80faa2ed6604",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-6e5102a9e0b4",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-780588eb37b4",
+            "verbatim": "event",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was continued at the same dose.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "0",
+      "case": {
+        "case_id": "CASE-303453ac9d77",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-035e8650e7c1",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-b340c3d6ba3b",
+            "verbatim": "event",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "The patient reported nausea last week.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "9",
+      "case": {
+        "case_id": "CASE-6f2cee0fd6e0",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-b63543b2ffde",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-222d416868c5",
+            "verbatim": "event",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "The patient had completed the course of nexiumab prior to the event.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "1",
+      "case": {
+        "case_id": "CASE-b8adc58632d8",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-5eb6f8fcc8b0",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-25ac5c0b1ec5",
+            "verbatim": "event",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was temporarily held and later restarted.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "expect_raw": "temporary_interruption"
+    },
+    {
+      "label": "1",
+      "case": {
+        "case_id": "CASE-1687026a0a8e",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-4135df5fb7e9",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-a856b7d35891",
+            "verbatim": "event",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was withdrawn and restarted after recovery.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    }
+  ],
+  "dechallenge": [
+    {
+      "label": "positive",
+      "case": {
+        "case_id": "CASE-ecd4d738f697",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-b653a95265b1",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-c641ec92342f",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": "1",
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was discontinued. The rash resolved within 5 days of withdrawal.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "negative",
+      "case": {
+        "case_id": "CASE-1edf97b1916a",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-f12b37b9ca04",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-5fce6758e157",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": "3",
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was discontinued. The rash did not improve and persisted.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "unresolved",
+      "case": {
+        "case_id": "CASE-6f8b1791d62b",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-4945e3584356",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-9c1dbe2d2af8",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was discontinued. The patient was discharged.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "not_assessable",
+      "case": {
+        "case_id": "CASE-acd0e44fcd8d",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-a6e04aaa6fac",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-433bab91e368",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": "1",
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was continued at the same dose. The rash improved.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "confounded",
+      "case": {
+        "case_id": "CASE-022cf6879168",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-fd9142ed9c6b",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-b0df825d6a70",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": "1",
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was discontinued and corticosteroids were started. The rash resolved.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    }
+  ],
+  "rechallenge": [
+    {
+      "label": "positive",
+      "case": {
+        "case_id": "CASE-805fa4cfad33",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-a3dc730295e4",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-4eaa5b069231",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was discontinued and the hepatitis resolved. Nexiumab was restarted and the hepatitis recurred within 3 days.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "negative",
+      "case": {
+        "case_id": "CASE-c8d18533148a",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-ce37a44e9fdf",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-b8740619033e",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was withdrawn, then restarted after recovery; the event did not recur.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "unresolved",
+      "case": {
+        "case_id": "CASE-1f29cbe8a0bb",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-472dd5249c8b",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-805ac65cb57c",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was withdrawn and later reintroduced; the subsequent course was not documented.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "not_rechallenged",
+      "case": {
+        "case_id": "CASE-415201346bc4",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-047b0cdd1117",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-0dcce2727c7f",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was discontinued. The patient was not rechallenged.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "not_rechallenged",
+      "case": {
+        "case_id": "CASE-34fd091b41fa",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-2fbd72c73b1f",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-de8fdea642b1",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Nexiumab was continued throughout without interruption; the hepatitis persisted.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      }
+    },
+    {
+      "label": "positive",
+      "case": {
+        "case_id": "CASE-50863a16f6f2",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-6339cb442cde",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-edc7f5e683e9",
+            "verbatim": "hepatitis",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "After inadvertent re-exposure to nexiumab, the hepatitis recurred.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "expect_note": "accidental"
+    }
+  ],
+  "medical_history": [
+    {
+      "label": "standard",
+      "case": {
+        "case_id": "CASE-1200091cd3c9",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-ace1184cd234",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": "rheumatoid arthritis",
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-6e435bd1ea61",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "",
+        "literature": [],
+        "medical_history_text": "Past medical history: hypertension and type 2 diabetes. No history of epilepsy. Allergy to penicillin. Family history of stroke. Currently on treatment for hyperlipidaemia.",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "expect": {
+        "negated_contains": "epilepsy",
+        "allergy_contains": "penicillin",
+        "family_contains": "stroke",
+        "current_contains": "hyperlipidaemia",
+        "coded_contains": "PLACEHOLDER:Hypertension",
+        "indication": "rheumatoid arthritis"
+      }
+    },
+    {
+      "label": "sparse",
+      "case": {
+        "case_id": "CASE-3db8309dbcae",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [
+          {
+            "drug_id": "DRG-8074761d72fa",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": "rheumatoid arthritis",
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-a8159dfdd2bb",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "expect": {
+        "no_items_from_narrative_without_history": true
+      }
+    }
+  ],
+  "followup": [
+    {
+      "label": "missing_minimum",
+      "case": {
+        "case_id": "CASE-c436d7a25607",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": null,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "UNK",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [],
+        "drugs": [],
+        "events": [
+          {
+            "event_id": "EVT-fa06a7834e17",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": null,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "expect_gaps": [
+        "suspect_product",
+        "identifiable_patient",
+        "identifiable_reporter"
+      ]
+    },
+    {
+      "label": "serious_priorities",
+      "case": {
+        "case_id": "CASE-acde4425b268",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 40.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "F",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "physician",
+            "organization": null,
+            "country": null,
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-86471c7b42c1",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": null,
+            "route": null,
+            "indication": null,
+            "start_date": null,
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": null
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-7ef61e94971c",
+            "verbatim": "anaphylaxis",
+            "coded_term": null,
+            "onset_date": null,
+            "end_date": null,
+            "outcome_e2b": null,
+            "serious": true,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Severe anaphylaxis after second dose.",
+        "literature": [],
+        "medical_history_text": "",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "expect_gaps": [
+        "onset_date",
+        "outcome",
+        "seriousness",
+        "dechallenge",
+        "pregnancy"
+      ]
+    },
+    {
+      "label": "complete_case_no_questions",
+      "case": {
+        "case_id": "CASE-d814191081a8",
+        "worldwide_unique_id": null,
+        "sender_case_id": null,
+        "sender_organization": null,
+        "other_case_identifiers": [],
+        "version": 1,
+        "receipt_date": null,
+        "country_of_occurrence": null,
+        "report_type": "spontaneous",
+        "patient": {
+          "initials": null,
+          "age_value": 60.0,
+          "age_unit": "years",
+          "date_of_birth": null,
+          "sex": "M",
+          "weight_kg": null,
+          "identifiable": null
+        },
+        "reporters": [
+          {
+            "reporter_id": null,
+            "qualification": "pharmacist",
+            "organization": null,
+            "country": null,
+            "identifiable": null
+          }
+        ],
+        "drugs": [
+          {
+            "drug_id": "DRG-6dc6debf7a4c",
+            "name": "nexiumab",
+            "verbatim": null,
+            "role": "suspect",
+            "dose": "200 mg",
+            "route": null,
+            "indication": "RA",
+            "start_date": "2024-01-05",
+            "end_date": null,
+            "batch": null,
+            "action_taken_raw": null,
+            "action_taken_e2b": "1"
+          }
+        ],
+        "events": [
+          {
+            "event_id": "EVT-6f6216d20afd",
+            "verbatim": "rash",
+            "coded_term": null,
+            "onset_date": "2024-02-01",
+            "end_date": null,
+            "outcome_e2b": "1",
+            "serious": false,
+            "seriousness_criteria": []
+          }
+        ],
+        "narrative": "Rash resolved after withdrawal.",
+        "literature": [],
+        "medical_history_text": "Past medical history: hypertension.",
+        "followup_to_case_id": null,
+        "source_document_ids": []
+      },
+      "expect_gaps_absent": [
+        "suspect_product",
+        "onset_date",
+        "outcome",
+        "action_taken",
+        "indication",
+        "medical_history"
+      ]
+    }
+  ],
+  "adversarial": {
+    "action_taken": [
+      {
+        "label": "1",
+        "case": {
+          "case_id": "CASE-09a36fb38f9b",
+          "worldwide_unique_id": null,
+          "sender_case_id": null,
+          "sender_organization": null,
+          "other_case_identifiers": [],
+          "version": 1,
+          "receipt_date": null,
+          "country_of_occurrence": null,
+          "report_type": "spontaneous",
+          "patient": {
+            "initials": null,
+            "age_value": null,
+            "age_unit": "years",
+            "date_of_birth": null,
+            "sex": "UNK",
+            "weight_kg": null,
+            "identifiable": null
+          },
+          "reporters": [],
+          "drugs": [
+            {
+              "drug_id": "DRG-eb750d177496",
+              "name": "nexiumab",
+              "verbatim": null,
+              "role": "suspect",
+              "dose": null,
+              "route": null,
+              "indication": null,
+              "start_date": null,
+              "end_date": null,
+              "batch": null,
+              "action_taken_raw": null,
+              "action_taken_e2b": null
+            }
+          ],
+          "events": [
+            {
+              "event_id": "EVT-e2e790a3eede",
+              "verbatim": "event",
+              "coded_term": null,
+              "onset_date": null,
+              "end_date": null,
+              "outcome_e2b": null,
+              "serious": null,
+              "seriousness_criteria": []
+            }
+          ],
+          "narrative": "She was taken off nexiumab.",
+          "literature": [],
+          "medical_history_text": "",
+          "followup_to_case_id": null,
+          "source_document_ids": []
+        },
+        "note": "colloquial withdrawal phrasing"
+      },
+      {
+        "label": "1",
+        "case": {
+          "case_id": "CASE-3f60b66748ea",
+          "worldwide_unique_id": null,
+          "sender_case_id": null,
+          "sender_organization": null,
+          "other_case_identifiers": [],
+          "version": 1,
+          "receipt_date": null,
+          "country_of_occurrence": null,
+          "report_type": "spontaneous",
+          "patient": {
+            "initials": null,
+            "age_value": null,
+            "age_unit": "years",
+            "date_of_birth": null,
+            "sex": "UNK",
+            "weight_kg": null,
+            "identifiable": null
+          },
+          "reporters": [],
+          "drugs": [
+            {
+              "drug_id": "DRG-5b7950812eef",
+              "name": "nexiumab",
+              "verbatim": null,
+              "role": "suspect",
+              "dose": null,
+              "route": null,
+              "indication": null,
+              "start_date": null,
+              "end_date": null,
+              "batch": null,
+              "action_taken_raw": null,
+              "action_taken_e2b": null
+            }
+          ],
+          "events": [
+            {
+              "event_id": "EVT-f2e20a934f81",
+              "verbatim": "event",
+              "coded_term": null,
+              "onset_date": null,
+              "end_date": null,
+              "outcome_e2b": null,
+              "serious": null,
+              "seriousness_criteria": []
+            }
+          ],
+          "narrative": "Nexiumab was withheld prior to surgery; the rash had started the week before.",
+          "literature": [],
+          "medical_history_text": "",
+          "followup_to_case_id": null,
+          "source_document_ids": []
+        },
+        "note": "procedure-withholding with prior event onset"
+      }
+    ],
+    "dechallenge": [
+      {
+        "label": "confounded",
+        "case": {
+          "case_id": "CASE-6e4f9b3b8d0b",
+          "worldwide_unique_id": null,
+          "sender_case_id": null,
+          "sender_organization": null,
+          "other_case_identifiers": [],
+          "version": 1,
+          "receipt_date": null,
+          "country_of_occurrence": null,
+          "report_type": "spontaneous",
+          "patient": {
+            "initials": null,
+            "age_value": null,
+            "age_unit": "years",
+            "date_of_birth": null,
+            "sex": "UNK",
+            "weight_kg": null,
+            "identifiable": null
+          },
+          "reporters": [],
+          "drugs": [
+            {
+              "drug_id": "DRG-47555906cd1a",
+              "name": "nexiumab",
+              "verbatim": null,
+              "role": "suspect",
+              "dose": null,
+              "route": null,
+              "indication": null,
+              "start_date": null,
+              "end_date": null,
+              "batch": null,
+              "action_taken_raw": null,
+              "action_taken_e2b": null
+            }
+          ],
+          "events": [
+            {
+              "event_id": "EVT-0dff47c535cb",
+              "verbatim": "rash",
+              "coded_term": null,
+              "onset_date": null,
+              "end_date": null,
+              "outcome_e2b": "1",
+              "serious": null,
+              "seriousness_criteria": []
+            }
+          ],
+          "narrative": "Nexiumab was stopped; the hepatitis resolved after plasmapheresis.",
+          "literature": [],
+          "medical_history_text": "",
+          "followup_to_case_id": null,
+          "source_document_ids": []
+        },
+        "note": "unlisted confounding intervention"
+      }
+    ],
+    "rechallenge": [
+      {
+        "label": "positive",
+        "case": {
+          "case_id": "CASE-165c77c8b5b8",
+          "worldwide_unique_id": null,
+          "sender_case_id": null,
+          "sender_organization": null,
+          "other_case_identifiers": [],
+          "version": 1,
+          "receipt_date": null,
+          "country_of_occurrence": null,
+          "report_type": "spontaneous",
+          "patient": {
+            "initials": null,
+            "age_value": null,
+            "age_unit": "years",
+            "date_of_birth": null,
+            "sex": "UNK",
+            "weight_kg": null,
+            "identifiable": null
+          },
+          "reporters": [],
+          "drugs": [
+            {
+              "drug_id": "DRG-79c61b540e1d",
+              "name": "nexiumab",
+              "verbatim": null,
+              "role": "suspect",
+              "dose": null,
+              "route": null,
+              "indication": null,
+              "start_date": null,
+              "end_date": null,
+              "batch": null,
+              "action_taken_raw": null,
+              "action_taken_e2b": null
+            }
+          ],
+          "events": [
+            {
+              "event_id": "EVT-a2adfbcc7093",
+              "verbatim": "hepatitis",
+              "coded_term": null,
+              "onset_date": null,
+              "end_date": null,
+              "outcome_e2b": null,
+              "serious": null,
+              "seriousness_criteria": []
+            }
+          ],
+          "narrative": "On reintroduction of nexiumab, liver enzymes rose again.",
+          "literature": [],
+          "medical_history_text": "",
+          "followup_to_case_id": null,
+          "source_document_ids": []
+        },
+        "note": "recurrence expressed as objective finding, not the word 'recurred'"
+      }
+    ],
+    "literature_pairs": [
+      {
+        "label": "duplicate_bibliographic_record",
+        "note": "translated title, same DOI \u2014 deterministic identifiers must win",
+        "a": {
+          "record_id": "LIT-24b14655e44c",
+          "source_database": null,
+          "pmid": "991",
+          "doi": "10.1000/trans.7",
+          "title": "R\u00e9action cutan\u00e9e s\u00e9v\u00e8re associ\u00e9e au nexiumab",
+          "abstract": "",
+          "full_text": null,
+          "authors": [
+            "Smith J"
+          ],
+          "journal": "Rev Fr Dermatol",
+          "year": 2024,
+          "publication_types": [],
+          "language": "fr",
+          "mentions_products": [],
+          "mentioned_events": [],
+          "described_patients": [],
+          "patient_count": null,
+          "has_full_text": false
+        },
+        "b": {
+          "record_id": "LIT-9700179d5903",
+          "source_database": null,
+          "pmid": "992",
+          "doi": "10.1000/trans.7",
+          "title": "Severe cutaneous reaction associated with nexiumab",
+          "abstract": "",
+          "full_text": null,
+          "authors": [
+            "Smith J"
+          ],
+          "journal": "J Clin Pharmacol",
+          "year": 2024,
+          "publication_types": [],
+          "language": "en",
+          "mentions_products": [],
+          "mentioned_events": [],
+          "described_patients": [],
+          "patient_count": null,
+          "has_full_text": false
+        }
+      }
+    ],
+    "screening": [
+      {
+        "label": "UNRESOLVED",
+        "note": "correction notice mentioning an adverse event but containing no case",
+        "article": {
+          "record_id": "LIT-774e4d76b93a",
+          "source_database": null,
+          "pmid": null,
+          "doi": null,
+          "title": "Correction to: nexiumab trial safety results",
+          "abstract": "Erratum: adverse event numbers in the previously published trial report were misstated.",
+          "full_text": null,
+          "authors": [],
+          "journal": null,
+          "year": null,
+          "publication_types": [
+            "Correction"
+          ],
+          "language": "en",
+          "mentions_products": [],
+          "mentioned_events": [],
+          "described_patients": [],
+          "patient_count": null,
+          "has_full_text": false
+        },
+        "product_scope": [
+          "nexiumab"
+        ]
+      }
+    ]
+  }
+}

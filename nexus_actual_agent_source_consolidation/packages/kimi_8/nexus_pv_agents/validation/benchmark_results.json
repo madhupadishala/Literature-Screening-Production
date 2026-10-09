@@ -1,0 +1,367 @@
+{
+  "label_basis": "scenario-design labels (not expert-adjudicated ground truth)",
+  "literature_duplicate_detection": {
+    "n": 5,
+    "accuracy": 1.0,
+    "per_class": {
+      "duplicate_bibliographic_record": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 2
+      },
+      "duplicate_publication_content": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "new_independent_case": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "overlapping_patient_case": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      }
+    }
+  },
+  "icsr_duplicate_detection": {
+    "n": 6,
+    "accuracy": 1.0,
+    "per_class": {
+      "exact_duplicate": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "follow_up_to_existing_icsr": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "new_case": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "probable_duplicate": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "related_but_distinct_case": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "unresolved": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      }
+    }
+  },
+  "inclusion_exclusion": {
+    "n": 6,
+    "accuracy": 1.0,
+    "per_class": {
+      "DUPLICATE_REVIEW_REQUIRED": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "EXCLUDE": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 2
+      },
+      "FULL_TEXT_REQUIRED": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "INCLUDE": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "MEDICAL_REVIEW_REQUIRED": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      }
+    }
+  },
+  "action_taken": {
+    "n": 8,
+    "accuracy": 1.0,
+    "per_class": {
+      "0": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 3
+      },
+      "2": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "3": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "4": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "9": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      }
+    }
+  },
+  "dechallenge": {
+    "n": 5,
+    "accuracy": 1.0,
+    "per_class": {
+      "confounded": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "negative": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "not_assessable": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "positive": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "unresolved": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      }
+    }
+  },
+  "rechallenge": {
+    "n": 6,
+    "accuracy": 1.0,
+    "per_class": {
+      "negative": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      },
+      "not_rechallenged": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 2
+      },
+      "positive": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 2
+      },
+      "unresolved": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fnr": 0.0,
+        "support": 1
+      }
+    }
+  },
+  "followup_questionnaire": {
+    "n": 14,
+    "gap_detection_accuracy": 1.0
+  },
+  "adversarial_holdout": {
+    "action_taken": {
+      "metrics": {
+        "n": 2,
+        "accuracy": 0.5,
+        "per_class": {
+          "0": {
+            "precision": 0.0,
+            "recall": null,
+            "f1": null,
+            "fnr": null,
+            "support": 0
+          },
+          "1": {
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "fnr": 0.5,
+            "support": 2
+          }
+        }
+      },
+      "predictions": [
+        "0",
+        "1"
+      ]
+    },
+    "dechallenge": {
+      "metrics": {
+        "n": 1,
+        "accuracy": 0.0,
+        "per_class": {
+          "confounded": {
+            "precision": null,
+            "recall": 0.0,
+            "f1": null,
+            "fnr": 1.0,
+            "support": 1
+          },
+          "positive": {
+            "precision": 0.0,
+            "recall": null,
+            "f1": null,
+            "fnr": null,
+            "support": 0
+          }
+        }
+      },
+      "predictions": [
+        "positive"
+      ]
+    },
+    "rechallenge": {
+      "metrics": {
+        "n": 1,
+        "accuracy": 0.0,
+        "per_class": {
+          "positive": {
+            "precision": null,
+            "recall": 0.0,
+            "f1": null,
+            "fnr": 1.0,
+            "support": 1
+          },
+          "unresolved": {
+            "precision": 0.0,
+            "recall": null,
+            "f1": null,
+            "fnr": null,
+            "support": 0
+          }
+        }
+      },
+      "predictions": [
+        "unresolved"
+      ]
+    },
+    "literature_duplicate_detection": {
+      "metrics": {
+        "n": 1,
+        "accuracy": 1.0,
+        "per_class": {
+          "duplicate_bibliographic_record": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "fnr": 0.0,
+            "support": 1
+          }
+        }
+      },
+      "predictions": [
+        "duplicate_bibliographic_record"
+      ]
+    },
+    "inclusion_exclusion": {
+      "metrics": {
+        "n": 1,
+        "accuracy": 1.0,
+        "per_class": {
+          "UNRESOLVED": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "fnr": 0.0,
+            "support": 1
+          }
+        }
+      },
+      "predictions": [
+        "UNRESOLVED"
+      ]
+    }
+  }
+}

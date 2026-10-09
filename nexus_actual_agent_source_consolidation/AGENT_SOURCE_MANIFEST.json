@@ -1,0 +1,104 @@
+{
+  "schema_version": "nexus.agent-source-manifest/1.0",
+  "based_on": "user uploaded archives 2026-10-09",
+  "source_agent_module_count": 13,
+  "test_results": {
+    "kimi_8": "33 passed",
+    "v2_5": "9 passed"
+  },
+  "deployment_status": "not_deployed",
+  "github_status": "not_uploaded",
+  "modules": [
+    {
+      "group": "kimi_8",
+      "file": "packages/kimi_8/nexus_pv_agents/nexus_agents/agents/action_taken.py",
+      "sha256": "6baf48cbf345efaa4f86b6e1265c9f38c762c9fb6b39668405a8a05414f85a36",
+      "bytes": 6891,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "kimi_8",
+      "file": "packages/kimi_8/nexus_pv_agents/nexus_agents/agents/inclusion_exclusion.py",
+      "sha256": "9df61b289f4ac34091e88e3890ececaac042e0a7ed482d6c690b91b46b980052",
+      "bytes": 8790,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "kimi_8",
+      "file": "packages/kimi_8/nexus_pv_agents/nexus_agents/agents/lit_duplicate.py",
+      "sha256": "6e6640d06691218bba967b88aee9ca2d2758d297298bf013b6161ce4cf87994b",
+      "bytes": 8105,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "kimi_8",
+      "file": "packages/kimi_8/nexus_pv_agents/nexus_agents/agents/rechallenge.py",
+      "sha256": "6d28c1bd6c60fa42465f698837323f42c9a108d536877172835cfea9a24f9df0",
+      "bytes": 5423,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "kimi_8",
+      "file": "packages/kimi_8/nexus_pv_agents/nexus_agents/agents/med_history.py",
+      "sha256": "7cc28ff3704ffb330b970478782d464278d380dd119da918c85445eb55e37c7e",
+      "bytes": 6010,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "kimi_8",
+      "file": "packages/kimi_8/nexus_pv_agents/nexus_agents/agents/dechallenge.py",
+      "sha256": "23eccbc2e726e574b7d18937d3648903376e102d45754f7369c6753f432e39b2",
+      "bytes": 5935,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "kimi_8",
+      "file": "packages/kimi_8/nexus_pv_agents/nexus_agents/agents/icsr_duplicate.py",
+      "sha256": "cd28a71da5563128066f0e16e99e8db433744f919ae1d6d27b543e705329f9db",
+      "bytes": 10665,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "kimi_8",
+      "file": "packages/kimi_8/nexus_pv_agents/nexus_agents/agents/followup.py",
+      "sha256": "dd94ff85f2f9d3a05013bfe877739e77ad0add6a385e8dd7ec092eb7904e51ee",
+      "bytes": 9688,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "v2_5",
+      "file": "packages/v2_5/nexus_agents_v2/nexus_agents/day_zero/agent.py",
+      "sha256": "63b0fed27c4a9104bd4663945814c146430a1244da9daeba5a750d6c9b2a098b",
+      "bytes": 8818,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "v2_5",
+      "file": "packages/v2_5/nexus_agents_v2/nexus_agents/reporter/agent.py",
+      "sha256": "2aed024fa3c8f9acea0f4c28e3acc1d06651b74b0f4c1e9d54b8817a4639a7e9",
+      "bytes": 5350,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "v2_5",
+      "file": "packages/v2_5/nexus_agents_v2/nexus_agents/current/agent.py",
+      "sha256": "244ce9f7d0dc2b21a412fe531e0ab91abea98accf10c3aa331e7e6aec144b2ae",
+      "bytes": 1478,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "v2_5",
+      "file": "packages/v2_5/nexus_agents_v2/nexus_agents/history/agent.py",
+      "sha256": "0c8dfda17814296b0a5783b3cbdad50e39f064b4581e35952f74d88f20ee3a16",
+      "bytes": 1101,
+      "status": "source_extracted_tests_passed_not_integrated"
+    },
+    {
+      "group": "v2_5",
+      "file": "packages/v2_5/nexus_agents_v2/nexus_agents/patient/agent.py",
+      "sha256": "7afb4f51c1403dece83df583f5d69eae30c6fb08b654ed1503f9703aeb968063",
+      "bytes": 6949,
+      "status": "source_extracted_tests_passed_not_integrated"
+    }
+  ]
+}

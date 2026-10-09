@@ -1,0 +1,37 @@
+Executed: 2026-10-09, python 3.12.12, command: python3 tests/run_tests.py
+
+PASS test_agents::test_action_taken_corpus_labels
+PASS test_agents::test_action_taken_fields_separate
+PASS test_agents::test_action_taken_na_requires_precondition
+PASS test_agents::test_dechallenge_corpus_labels
+PASS test_agents::test_dechallenge_withdrawal_alone_not_positive
+PASS test_agents::test_doi_normalization
+PASS test_agents::test_followup_contradiction_detected
+PASS test_agents::test_followup_missing_minimum_criteria
+PASS test_agents::test_followup_no_redundant_questions
+PASS test_agents::test_followup_serious_priorities_and_pregnancy
+PASS test_agents::test_icsr_corpus_labels
+PASS test_agents::test_icsr_merge_reversible_auditable
+PASS test_agents::test_icsr_sex_contradiction_blocks_merge
+PASS test_agents::test_icsr_sparse_case_unresolved_not_new
+PASS test_agents::test_lit_corpus_labels
+PASS test_agents::test_lit_followup_to_existing_icsr
+PASS test_agents::test_lit_never_auto_discards_potential_new_info
+PASS test_agents::test_med_history_cap_scope_enforced
+PASS test_agents::test_med_history_distinctions
+PASS test_agents::test_med_history_uncoded_flagged_not_invented
+PASS test_agents::test_pmid_normalization
+PASS test_agents::test_processing_failure_never_false_negative
+PASS test_agents::test_rechallenge_corpus_labels
+PASS test_agents::test_rechallenge_e2b_mapping
+PASS test_agents::test_rechallenge_never_suggests_performing_one
+PASS test_agents::test_register_gate_blocks_unapproved
+PASS test_agents::test_screening_corpus_labels
+PASS test_agents::test_screening_non_company_product_not_auto_excluded_when_case
+PASS test_agents::test_screening_reason_codes_controlled
+PASS test_e2e::test_followup_icsr_workflow_matches_and_reassesses
+PASS test_e2e::test_literature_workflow_end_to_end
+PASS test_e2e::test_orchestration_contracts_and_adapter
+PASS test_e2e::test_spontaneous_icsr_workflow_end_to_end
+
+33 passed, 0 failed in 0.36s
