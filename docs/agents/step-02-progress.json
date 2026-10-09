@@ -44,5 +44,17 @@
       "9829ebc212d85047f67db12092acc6816fb448d5"
     ]
   },
-  "task_2_2_started": false
+  "task_2_2_started": false,
+  "clinical_policy_approval": {
+    "count": 35,
+    "status": "USER_APPROVED_FOR_IMPLEMENTATION",
+    "database_activation_count": 0
+  },
+  "drug_ae_agent_execution": {
+    "status": "PARTIALLY_IMPLEMENTED_TESTED",
+    "report": "docs/agents/step-02/DRUG_AE_AGENT_IMPLEMENTATION_STATUS.md",
+    "source_event_runtime_imported": true,
+    "agent_level_coverage_claim": "partial; per-rule details in report",
+    "pending": "unimplemented detailed clinical rules, database activation and clinical qualification"
+  }
 }
