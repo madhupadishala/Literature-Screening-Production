@@ -6,6 +6,7 @@ import json
 from backend.knowledge.knowledge_router import KnowledgeRouter
 from .orchestrator import DrugRoleOrchestrator
 from .exposure_policy import normalize_product_exposures
+from .indication_action_policy import normalize_indications_actions
 
 
 class NexusDrugRoleAgent:
@@ -64,6 +65,10 @@ class NexusDrugRoleAgent:
         if evidence_package.get("validated_drug_exposures") is not None:
             payload["exposure_products"] = normalize_product_exposures(evidence_package["validated_drug_exposures"])
             payload["exposure_policy_rules"] = ["DR-004", "DR-005", "DR-006", "DR-007", "DR-008", "DR-011"]
+        if evidence_package.get("validated_drug_indications_actions") is not None:
+            payload["indications_actions"] = normalize_indications_actions(
+                evidence_package["validated_drug_indications_actions"])
+            payload["indication_action_policy_rules"] = ["ACT-001"]
         payload["knowledge_context"] = {
             "citations": context_pack.citations,
             "matched_company_products": context_pack.product_master_matches,
