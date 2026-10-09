@@ -8,13 +8,13 @@ from backend.agents.event_runtime.models import (
 )
 
 class AEClinicalIntegration(unittest.TestCase):
-    def simulate(self, text, verbatim, diagnosis, role="event"):
+    def simulate(self, text, verbatim, diagnosis, role="event", outcome_quote=None):
         block=Block(id="b1",document_id="doc1",locator="plain/chars:0-100",text=text)
         start=text.index(verbatim)
         m=Mention(block_id="b1",start=start,end=start+len(verbatim),verbatim=verbatim,
            patient_id="P1",patient_evidence="P1",assertion="affirmed",role=role,
            diagnosis_status=diagnosis,context_quote=text,rationale="explicit source quote",
-           onset_quote=None,outcome_quote=None)
+           onset_quote=None,outcome_quote=outcome_quote)
         # Anchor patient evidence directly in the source.
         class Provider:
             async def extract(self, block):
@@ -45,6 +45,14 @@ class AEClinicalIntegration(unittest.TestCase):
         self.assertEqual(len(output["events"]),1)
         self.assertEqual(output["events"][0].verbatim,"rash")
 
+
+
+    def test_reported_outcome_is_mapped_not_inferred(self):
+        output=self.simulate("P1 developed rash and the rash resolved.","rash",
+                             "symptom_sign",outcome_quote="the rash resolved")
+        self.assertEqual(len(output["events"]),1)
+        self.assertEqual(output["events"][0].outcome,"recovered_resolved")
+        self.assertEqual(output["events"][0].outcome_quote,"the rash resolved")
 
     def test_two_explicit_reported_events_are_not_collapsed(self):
         text="P1 experienced rash and itching."
