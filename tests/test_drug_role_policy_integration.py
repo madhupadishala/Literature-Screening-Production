@@ -47,5 +47,16 @@ class DrugPolicyTests(unittest.TestCase):
         self.assertEqual(len(result["exposure_products"][0]["regimens"]),2)
         self.assertIn("DR-011",result["exposure_policy_rules"])
 
+
+    def test_ae_treatment_role_retained_despite_later_attribution(self):
+        text=("Cetirizine was given for treatment of the rash. "
+              "Later dizziness was attributed to Cetirizine.")
+        result=DrugRoleOrchestrator().classify(
+            case_id="case03", tenant_id="tenant01",source_type="spontaneous",
+            text=text,candidate_drugs=["Cetirizine"])
+        item=result.classifications[0]
+        self.assertEqual(item.role, DrugRole.TREATMENT)
+        self.assertIn("treatment",item.rationale.lower())
+
 if __name__ == "__main__":
     unittest.main()
