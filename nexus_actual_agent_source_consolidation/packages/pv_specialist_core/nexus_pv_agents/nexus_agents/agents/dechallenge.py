@@ -96,9 +96,28 @@ class DechallengeAgent(BaseAgent):
             r"within\s+\d+\s+(?:hours?|days?|weeks?)\s+of\s+"
             r"(?:withdrawal|stopping|discontinuation|dose reduction)",
             narrative, re.I))
+        # PV rule: documented cessation/dose reduction followed by event
+        # improvement or recovery is a positive dechallenge. Structured dates
+        # can establish chronology even when narrative lacks linking phrases.
+        # Do not require complete resolution; recovery in progress also counts.
+        dated_response = (
+            drug.end_date is not None and ev.end_date is not None
+            and ev.end_date >= drug.end_date
+            and outcome in ("1", "2", "4")
+        )
+        # Explicitly sequential event statements in a single drug/event report
+        # can also supply chronology without repeating "after withdrawal".
+        # Multi-pair cases still need pair-specific temporal evidence.
+        single_pair = len(case.drugs) == 1 and len(case.events) == 1
+        narrative_sequence = False
+        if single_pair and evidence and _IMPROVE.search(narrative) and not not_improved_txt:
+            action_pos = narrative.lower().find(str(evidence).lower())
+            if action_pos >= 0:
+                following = narrative[action_pos + len(str(evidence)):]
+                narrative_sequence = bool(_IMPROVE.search(following))
+        linked_improvement = linked_improvement or dated_response or narrative_sequence
         # Explicit persistence after cessation in a single drug/event case is
         # negative dechallenge; never project case-wide persistence across pairs.
-        single_pair = len(case.drugs) == 1 and len(case.events) == 1
         if single_pair and not_improved_txt and not confounded:
             return self._pair(drug, ev, Dechallenge.NEGATIVE, evidence,
                 "single drug-event report documents withdrawal and persistent event",
