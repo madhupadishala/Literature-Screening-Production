@@ -1,0 +1,243 @@
+{
+  "schema_version": "nexus.agent-audit/1",
+  "audit_date": "2026-10-09",
+  "branch": "integration/pv-agents-source-20261009",
+  "coverage": {
+    "planned_entries": 17,
+    "code_paths_verified": 14,
+    "code_paths_unverified": 3,
+    "uploaded_agent_code_paths_verified": 13,
+    "existing_agent_code_paths_verified": 1
+  },
+  "method": "Read GitHub files on selected integration branch; inspected source classes/entrypoints and Nexus service/knowledge/orchestration interfaces. Not a line-by-line clinical correctness certification.",
+  "entries": [
+    {
+      "name": "action_taken",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/action_taken.py",
+      "entrypoint": "extract",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)"
+    },
+    {
+      "name": "dechallenge",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/dechallenge.py",
+      "entrypoint": "assess",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)"
+    },
+    {
+      "name": "rechallenge",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/rechallenge.py",
+      "entrypoint": "assess",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)"
+    },
+    {
+      "name": "followup",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/followup.py",
+      "entrypoint": "generate",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)"
+    },
+    {
+      "name": "icsr_duplicate",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/icsr_duplicate.py",
+      "entrypoint": "compare",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)"
+    },
+    {
+      "name": "inclusion_exclusion",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/inclusion_exclusion.py",
+      "entrypoint": "screen",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)"
+    },
+    {
+      "name": "lit_duplicate",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/lit_duplicate.py",
+      "entrypoint": "assess_pair",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)"
+    },
+    {
+      "name": "med_history",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/med_history.py",
+      "entrypoint": "extract",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)"
+    },
+    {
+      "name": "day_zero",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/day_zero/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM"
+    },
+    {
+      "name": "history",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/history/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM"
+    },
+    {
+      "name": "current",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/current/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM"
+    },
+    {
+      "name": "patient",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/patient/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM"
+    },
+    {
+      "name": "reporter",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/reporter/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM"
+    },
+    {
+      "name": "drug_extraction_and_classification",
+      "group": "existing_nexus",
+      "source_path": "backend/agents/drug_role/nexus_agent.py",
+      "entrypoint": "NexusDrugRoleAgent.run",
+      "code_verified": true,
+      "contract": "Nexus drug classification payload"
+    },
+    {
+      "name": "country_of_incidence",
+      "group": "existing_nexus",
+      "source_path": null,
+      "entrypoint": null,
+      "code_verified": false,
+      "blocker": "Exact live agent path not established; historical commit message mentions COI"
+    },
+    {
+      "name": "literature_safety_assessment",
+      "group": "existing_nexus",
+      "source_path": null,
+      "entrypoint": null,
+      "code_verified": false,
+      "blocker": "Exact live agent path not established"
+    },
+    {
+      "name": "adverse_event_extraction",
+      "group": "existing_nexus",
+      "source_path": null,
+      "entrypoint": null,
+      "code_verified": false,
+      "blocker": "Exact live agent path not established"
+    }
+  ],
+  "defects": [
+    {
+      "id": "AUD-001",
+      "severity": "high",
+      "finding": "Three previously developed agent workstreams do not have verified source paths in this audit",
+      "affected": [
+        "country_of_incidence",
+        "literature_safety_assessment",
+        "adverse_event_extraction"
+      ],
+      "action": "Find or recover specific implementation commit/files before marking started in live code"
+    },
+    {
+      "id": "AUD-002",
+      "severity": "high",
+      "finding": "Specialist Pydantic AgentResult and context-package output contracts are incompatible without explicit normalized adapters",
+      "affected": [
+        "specialist_core",
+        "clinical_context"
+      ],
+      "action": "Create versioned canonical contracts with evidence-span validation"
+    },
+    {
+      "id": "AUD-003",
+      "severity": "high",
+      "finding": "Five-agent clinical context API needs injected LLM but the current Nexus specialist ICSR graph only initializes first suite",
+      "affected": [
+        "clinical_context"
+      ],
+      "action": "Provider injection, authorization and graph node registration"
+    },
+    {
+      "id": "AUD-004",
+      "severity": "high",
+      "finding": "Current LangGraph covers five first-package agent functions; duplicate and screening agents plus all five context agents not routed",
+      "affected": [
+        "specialist_core",
+        "clinical_context"
+      ],
+      "action": "Map full dependency graph and every supported workflow"
+    },
+    {
+      "id": "AUD-005",
+      "severity": "high",
+      "finding": "KnowledgeRouter on this branch uses persistent Chroma collection and JSON masters; real approved-index readiness is unverified",
+      "affected": [
+        "all"
+      ],
+      "action": "Run actual KB read and tenant/client/jurisdiction isolation tests with approved index"
+    },
+    {
+      "id": "AUD-006",
+      "severity": "high",
+      "finding": "Bridge uses GLOBAL agent scope during retrieval; knowledge agent-scope least privilege must be reviewed",
+      "affected": [
+        "backend/services/pv_agents/specialist_graph.py"
+      ],
+      "action": "Agent-specific scoped retrieval per specialist"
+    },
+    {
+      "id": "AUD-007",
+      "severity": "high",
+      "finding": "Graph currently permits unstructured narrative with empty ICSR drugs/events and does not itself extract canonical ICSR entities",
+      "affected": [
+        "backend/services/pv_agents/specialist_graph.py"
+      ],
+      "action": "Document parsing/extraction plus explicit unknown handling; never infer no AE from missing fields"
+    },
+    {
+      "id": "AUD-008",
+      "severity": "medium",
+      "finding": "Overlapping clinical domains med_history vs history, current medication vs drug_role need authority and precedence model",
+      "affected": [
+        "med_history",
+        "history",
+        "current",
+        "drug_extraction_and_classification"
+      ],
+      "action": "Retain distinct outputs; define role/temporal classification ownership"
+    },
+    {
+      "id": "AUD-009",
+      "severity": "high",
+      "finding": "No verified live hosted clinical-context LLM provider, graph checkpoint persistence, agent-specific benchmark or approved labeling link",
+      "affected": [
+        "all"
+      ],
+      "action": "Dedicated runtime/integration tests and evidence register"
+    }
+  ],
+  "step1_status": "BLOCKED_FOR_COMPLETE_17_ENTRY_SOURCE_VERIFICATION",
+  "next_step_authorized": false
+}
