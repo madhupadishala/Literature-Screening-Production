@@ -51,6 +51,12 @@ BEGIN
  IF length(trim(coalesce(p_reason,''))) < 12 THEN
    RAISE EXCEPTION 'Approval rationale required';
  END IF;
+ IF EXISTS (SELECT 1 FROM public.nexus_clinical_rule_revisions
+            WHERE rule_id=p_rule_id AND version=p_version AND
+            (decision_table->>'on_no_match'='MANUAL_REVIEW'
+             AND decision_table::text LIKE '%never_activate_placeholder%')) THEN
+   RAISE EXCEPTION 'Placeholder decision tables cannot be approved';
+ END IF;
  UPDATE public.nexus_clinical_rule_revisions SET approval_status='APPROVED'
  WHERE rule_id=p_rule_id AND version=p_version AND approval_status='DRAFT';
  IF NOT FOUND THEN RAISE EXCEPTION 'Rule not found or no longer draft'; END IF;
