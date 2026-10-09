@@ -1,0 +1,29 @@
+{
+  "schema_version": "nexus.step2-progress/1",
+  "scope": "Clinical decision logic and standardized schemas across 17 identified workstreams",
+  "status": "IN_PROGRESS_NOT_CLOSED",
+  "source_inventory": 17,
+  "implementation_commits": {
+    "dechallenge": "1e66f6ba525603930ea42d553fa626e3434aa399",
+    "rechallenge": "4f6543bcea31c167f2956632b572a932a5f816ab",
+    "canonical_schema": "bb6ee0f9e5ea7a21f652c04cf2fa4e48454275f2",
+    "regression_tests": [
+      "tests/test_clinical_dechallenge_regression.py",
+      "tests/test_clinical_rechallenge_attribution.py",
+      "tests/test_clinical_output_contracts.py"
+    ]
+  },
+  "completed_work": [
+    "Added evidence-linked Pydantic clinical finding contract and fail-closed review invariants",
+    "Guarded rechallenge assessment against cross-pair attribution in ambiguous multi-drug/multi-event cases",
+    "Corrected dechallenge positive inference to require temporal support; patched negated improvement handling"
+  ],
+  "outstanding_work": [
+    "Independent code-level clinical logic corrections across remaining agents",
+    "Migrate two divergent agent implementations in later integration step before full cross-suite execution",
+    "Cross-agent schema adoption across all retained agents",
+    "Full task-specific clinical regression and expert reference benchmark",
+    "Passing CI on the final correction commit"
+  ],
+  "step3_started": false
+}
