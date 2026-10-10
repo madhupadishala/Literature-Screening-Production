@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_2_STARTED",
+    "status": "SPRINT_3_2_CLOSED_SPRINT_3_3_READY",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -101,10 +101,15 @@
     },
     "step3_started": true,
     "sprint_3_2": {
-      "status": "SOURCE_ASSESSMENT_STARTED",
+      "status": "CLOSED_ENGINEERING_GATES_PASSED",
       "report": "docs/agents/step-03-sprint-3.2-search-hits-screening.md",
       "scope": "URS-LIT-010–020, 030–032, 040–044 / FRS-LIT-004–010",
-      "commit": "6ee636077063c65df139042b47e74bfef1132fcb"
+      "commit": "6ee636077063c65df139042b47e74bfef1132fcb",
+      "closeout_document": "docs/agents/step-03-sprint-3.2-search-hits-screening.md",
+      "frontend_ci_run": 38061677036,
+      "postgres_ci_run": 38061677077,
+      "concurrency": "two concurrent session conditional claims passed against isolated PostgreSQL table",
+      "limitations": "Does not execute full production worker live or clinically qualify shared AI agents"
     }
   }
 }
