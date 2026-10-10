@@ -22,3 +22,20 @@ URS-LIT-060–066, URS-LIT-106–110; FRS-LIT-012–016 and 021–022. Existing 
 - The committed static assertions verify source contract presence, ordering and audit/permission dependencies. They do not simulate an actual clinical reviewer or database mutation.
 - QC paths and specialist shared contracts should be separately assessed before marking the full Sprint 3.3 **CLOSED**. No new duplicate assessment agent should be built just to fulfill this sprint.
 - Do not infer that passing frontend CI constitutes medical clinical validation.
+
+
+## Sprint 3.3 formal engineering closeout
+
+**Status: CLOSED — SCOPED ENGINEERING VERIFICATION PASSED.** This is a code-level closure, not a claim of completed clinical agent qualification or production UAT.
+
+**Passing quality gate:** [ClinixAI Frontend Quality Gate run 38062206548](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38062206548), `head_sha=e9a0d2e35e1eeafd1a9396a1f3bf1bc8d6535160`, completed **success**. The gate executes existing Literature Sprint 4 source checks, including the new finalization assertions, plus TypeScript/Next.js build and other frontend checks.
+
+**Additional confirmed state defect and correction:** Screening review modification previously lacked a finalized-case check. A subsequent Screening review could reset the package workflow after completed Medical Review. Correction `79ff9e8e` checks joined workflow state and rejects `REVIEW_COMPLETE` / `INTAKE_INPUT_CREATED` before persistence; correction `e9a0d2e3` also locks the workflow-state row during that check. Regression assertions added in `51ebc7b4`.
+
+**QC evidence:** `backend/services/qc/qc_flag_engine.py` emits source-dependent human-verification flags for product, MAH, author, PII and confidence uncertainty, without independently issuing final decisions. The frontend Screening worklist also exposes `qcRequired` for execution failure, review outcome or low confidence. No evidence of a missing standalone QC module was inferred merely from the absence of a distinct Medical Review QC route.
+
+**Reviewed control boundaries:** Scoped `MEDICAL_REVIEW` route permission; tenant-scoped review workspace and SQL locking; patient segmentation, Label/RSI, causality prerequisites for MR approval; attributable audit records with version increments; Intake generation gate requiring `APPROVED` MR; finalized-MR and Screening mutation protections.
+
+**Caveats:** The CI assertions are code/contract checks; they do not simulate database-level MR amendments or user acceptance. Shared seriousness, listedness and causality specialist-agent live invocation remains part of the agreed consolidated validation. Formal regulatory CSV/clinical qualification and live model acceptance are **not** claimed as part of this engineering closeout.
+
+**Next sprint:** 3.4 Literature-to-Intake handoff evidence, idempotency, source provenance and authorization. Existing MR/Intake clinical logic must be preserved unless a reproducible defect is found.
