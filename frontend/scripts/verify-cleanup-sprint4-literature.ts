@@ -200,6 +200,20 @@ const literatureExport = read("lib/literature/intake-input/intake-input-service.
 assert.ok(literatureExport.includes("source_lineage_sha256"));
 assert.ok(literatureExport.includes("requireSafetyWorkspaceScope(input.principal)"));
 
+// Sprint 3.5: prevent intra-tenant, cross-client Medical Review access.
+const medicalReviewList = read("lib/literature/review/review-workflow-service.ts");
+assert.ok(medicalReviewList.includes("requireSafetyWorkspaceScope(input.principal)"));
+assert.ok(medicalReviewList.includes("AND package.workspace_id = $3"));
+assert.ok(medicalReviewList.includes("AND package.environment = $4"));
+const medicalReviewMutationsScoped = read("lib/literature/review/review-mutation-service.ts");
+assert.ok(medicalReviewMutationsScoped.includes("const scope = requireSafetyWorkspaceScope(input.principal)"));
+assert.ok(medicalReviewMutationsScoped.includes("AND package.workspace_id = $3"));
+assert.ok(medicalReviewMutationsScoped.includes("AND package.environment = $4"));
+const denialGuard = read("lib/rbac/workspace-guard.ts");
+assert.ok(denialGuard.includes("WORKSPACE_AUTHORIZATION_DENIED"));
+assert.ok(denialGuard.includes("WORKSPACE_CONTEXT_INVALID"));
+assert.ok(denialGuard.includes("TENANT_PERMISSION_DENIED"));
+
 console.log(
   `Sprint 4 Literature reconciliation verification passed: ${literatureRoutes.length} workspace-scoped routes and tenant-bound transient histories.`,
 );
