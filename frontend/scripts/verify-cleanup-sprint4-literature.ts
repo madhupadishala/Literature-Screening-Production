@@ -158,6 +158,29 @@ for (const doc of [
   assert.ok(read(doc).length > 500, `Controlled Sprint 4 document is missing/incomplete: ${doc}`);
 }
 
+// Sprint 3.3: finalized Medical Review is locked under the tenant-scoped row transaction.
+const medicalReviewMutations = read("lib/literature/review/review-mutation-service.ts");
+const medicalReviewSave = medicalReviewMutations.slice(
+  medicalReviewMutations.indexOf("export async function saveMedicalReview("),
+);
+assert.ok(
+  medicalReviewSave.includes('workspace.status === "REVIEW_COMPLETE"'),
+  "Medical Review must reject silent mutation of finalized workspace",
+);
+assert.ok(
+  medicalReviewSave.indexOf('workspace.status === "REVIEW_COMPLETE"') <
+    medicalReviewSave.indexOf("INSERT INTO literature_medical_reviews"),
+  "Finalized review guard must precede Medical Review persistence",
+);
+assert.ok(
+  medicalReviewSave.includes('MEDICAL_REVIEW_SAVED'),
+  "Medical Review decisions must preserve audit attribution",
+);
+const medicalReviewRoute = read("app/api/literature/review/medical/route.ts");
+assert.ok(medicalReviewRoute.includes("PERMISSIONS.MEDICAL_REVIEW"));
+const intakeRules = read("lib/literature/intake-input/intake-input-governance.ts");
+assert.ok(intakeRules.includes('input.mrReviewStatus !== "APPROVED"'));
+
 console.log(
   `Sprint 4 Literature reconciliation verification passed: ${literatureRoutes.length} workspace-scoped routes and tenant-bound transient histories.`,
 );
