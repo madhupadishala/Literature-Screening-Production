@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_3_IMPLEMENTATION_COMMITTED_CI_PENDING",
+    "status": "SPRINT_3_3_ENGINEERING_CLOSED_SPRINT_3_4_READY",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -112,13 +112,14 @@
       "limitations": "Does not execute full production worker live or clinically qualify shared AI agents"
     },
     "sprint_3_3": {
-      "status": "TARGETED_FIX_COMMITTED_VERIFICATION_PENDING",
-      "scope": "Medical Review state, QC interfaces, immutable completed review, approved handoff",
-      "fix_commit": "a1bb315214f1402c80c3d61b76b379410d430294",
-      "regression_commit": "5b892f9f23ab5032475f6aa822d9fecd559ede29",
+      "status": "CLOSED_SCOPED_ENGINEERING_CI_PASSED",
       "report": "docs/agents/step-03-sprint-3.3-medical-review-qc.md",
-      "frontend_ci_run": 38061976627,
-      "remaining": "Check latest frontend CI and complete QC transition evidence before full closure"
+      "mr_lock": "a1bb315214f1402c80c3d61b76b379410d430294",
+      "screening_finalization_guard": "79ff9e8e248b2cedd3264c33db6e3f71c3bab85f",
+      "workflow_row_lock": "e9a0d2e35e1eeafd1a9396a1f3bf1bc8d6535160",
+      "frontend_ci_run": 38062206548,
+      "frontend_ci_conclusion": "success",
+      "remaining_outside_scope": "Live shared agent and clinical CSV/UAT qualification is deferred; Sprint 3.4 handles full handoff contract"
     }
   }
 }
