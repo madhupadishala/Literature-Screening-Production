@@ -1,0 +1,43 @@
+{
+  "schema_version": "nexus.agent-source/1",
+  "verified_on": "2026-10-09",
+  "base_uploaded_commit": "d304da1824812519f6d46b6b723fc1689bc91520",
+  "source_directory": "nexus_actual_agent_source_consolidation/packages",
+  "inventory": {
+    "specialist_core_agents": 8,
+    "clinical_context_agents": 5,
+    "uploaded_source_modules": 13,
+    "previously_developed_nexus_agents": "requires live verification",
+    "unique_clinical_agents": "not established due to overlapping responsibilities"
+  },
+  "status": {
+    "source_committed": true,
+    "source_paths_verified_from_commit": true,
+    "source_presence_test_added": true,
+    "source_presence_test_executed_in_ci": false,
+    "all_agents_registered": false,
+    "all_agents_integrated": false,
+    "clinical_qualification": false,
+    "vercel_deployment_ready": false,
+    "specialist_source_renamed": true,
+    "langgraph_bridge_code_committed": true,
+    "langgraph_runtime_verified": false,
+    "knowledge_router_bridge_code_committed": true,
+    "live_knowledge_backend_verified": false,
+    "production_qualified": false,
+    "authenticated_specialist_service_route_committed": true,
+    "icsr_graph_code_committed": true,
+    "knowledge_router_called_from_graph": true,
+    "runtime_graph_test_passed": false,
+    "real_retrieval_query_test_passed": false
+  },
+  "notes": [
+    "Source imported on main by user, branch created afterwards from main.",
+    "Previously developed Nexus agents remain in platform; no duplication/replacement performed.",
+    "Source presence does not mean runtime integration.",
+    "Clinical feature flags must remain disabled pending qualification.",
+    "Specialist package renamed to pv_specialist_core on this branch; prior commit history retains original upload names.",
+    "Specialist ICSR endpoint is feature gated behind NEXUS_PV_SPECIALIST_GRAPH_ENABLED and NEXUS_PV_AGENTS_ENABLED; specialist outputs route to human review.",
+    "Runtime LangGraph, hosted Python service, ChromaDB and tenant-specific approved knowledge must be independently verified before release."
+  ]
+}

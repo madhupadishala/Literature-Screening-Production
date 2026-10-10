@@ -1,0 +1,136 @@
+{
+  "schema_version": "nexus.step2-progress/1",
+  "scope": "Clinical decision logic and standardized schemas across 17 identified workstreams",
+  "status": "IN_PROGRESS_NOT_CLOSED",
+  "source_inventory": 17,
+  "implementation_commits": {
+    "dechallenge": "1e66f6ba525603930ea42d553fa626e3434aa399",
+    "rechallenge": "4f6543bcea31c167f2956632b572a932a5f816ab",
+    "canonical_schema": "bb6ee0f9e5ea7a21f652c04cf2fa4e48454275f2",
+    "regression_tests": [
+      "tests/test_clinical_dechallenge_regression.py",
+      "tests/test_clinical_rechallenge_attribution.py",
+      "tests/test_clinical_output_contracts.py"
+    ],
+    "dechallenge_expert_draft": "95ee33acbbf588a3376079001c198fa6e428cca2",
+    "dechallenge_regression": "e3f097418e74ac232c0fe30689aaf891afa2e613"
+  },
+  "completed_work": [
+    "Added evidence-linked Pydantic clinical finding contract and fail-closed review invariants",
+    "Guarded rechallenge assessment against cross-pair attribution in ambiguous multi-drug/multi-event cases",
+    "Corrected dechallenge positive inference to require temporal support; patched negated improvement handling",
+    "Updated dechallenge outcome categories: unknown instead of not_assessable; added conservative single-pair event-treatment N/A classification under expert-proposed convention and regression expectations"
+  ],
+  "outstanding_work": [
+    "Independent code-level clinical logic corrections across remaining agents",
+    "Migrate two divergent agent implementations in later integration step before full cross-suite execution",
+    "Cross-agent schema adoption across all retained agents",
+    "Full task-specific clinical regression and expert reference benchmark",
+    "Passing CI on the final correction commit",
+    "Validate nuanced treated-AE temporal attribution, multi-pair behavior and independent rechallenge evidence under expert convention",
+    "Implement reviewed drug extraction, AE extraction, historical vaccine, day-zero and medical-history rules in their respective source agents",
+    "Complete latest CI run and cross-agent test execution before any closure"
+  ],
+  "step3_started": true,
+  "task_2_1": {
+    "status": "COMPLETED_INVENTORY_ONLY",
+    "rules": 35,
+    "source_entries": 17,
+    "clinical_functions": 16,
+    "inventory_path": "docs/agents/step-02/clinical_rule_traceability.json",
+    "closure_path": "docs/agents/step-02/TASK_2_1_CLOSURE.md",
+    "commits": [
+      "83c224fe25588ab7b7e93e2db2e210f0523477c5",
+      "9829ebc212d85047f67db12092acc6816fb448d5"
+    ]
+  },
+  "task_2_2_started": false,
+  "clinical_policy_approval": {
+    "count": 35,
+    "status": "USER_APPROVED_FOR_IMPLEMENTATION",
+    "database_activation_count": 0
+  },
+  "drug_ae_agent_execution": {
+    "status": "PARTIALLY_IMPLEMENTED_TESTED",
+    "report": "docs/agents/step-02/DRUG_AE_AGENT_IMPLEMENTATION_STATUS.md",
+    "source_event_runtime_imported": true,
+    "agent_level_coverage_claim": "partial; per-rule details in report",
+    "pending": "unimplemented detailed clinical rules, database activation and clinical qualification"
+  },
+  "tasks_2_6_to_2_10": {
+    "state": "ENGINEERING_CODE_COMMITTED_PARTIAL_DOMAIN_COVERAGE",
+    "commit": "56d393d771fe537a7209e7757fd63c30e9724bda",
+    "details": {
+      "2.6": "pair-level dechallenge/rechallenge service with evidence and chronology checks",
+      "2.7": "valid-case Day Zero candidate selection with source-policy guard",
+      "2.8": "unified medical/social history source-evidence adapter",
+      "2.9": "dedicated callable Nexus specialist service entrypoints",
+      "2.10": "versioned shared packet schemas and tenant/client-scoped boundaries"
+    },
+    "deferred_consolidated_phase": "live model invocation, full 35 rule synthetic ICSR agent acceptance, clinical expert benchmark and production authorization",
+    "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
+  },
+  "step3": {
+    "status": "SPRINT_3_4_ENGINEERING_CLOSED_SPRINT_3_5_READY",
+    "module": "Literature Screening",
+    "plan": "docs/agents/step-03-literature-module.md",
+    "baseline_sources": [
+      "backend/workflow/literature_workflow.py",
+      "backend/api/run_screening_package.py"
+    ],
+    "next_deliverable": "controlled literature-to-intake handoff with tenant/client authorization and provenance",
+    "step2_remains_open": true,
+    "sprint_plan": "docs/agents/step-03-literature-sprint-plan.md",
+    "sprints": [
+      "3.1-baseline-urs-traceability",
+      "3.2-search-hits-screening",
+      "3.3-mr-qc-governance",
+      "3.4-intake-handoff",
+      "3.5-security-audit",
+      "3.6-engineering-qualification"
+    ],
+    "preserve_existing_workflow": true,
+    "shared_agents_deferred": true,
+    "sprint_3_1": {
+      "status": "ENGINEERING_BASELINE_AND_TRACEABILITY_CLOSED",
+      "urs_mapped": 64,
+      "frs_mapped": 22,
+      "handler_evidence": "docs/agents/step-03-sprint-3.1-handler-evidence.md",
+      "requirements_inventory": "docs/agents/step-03-literature-urs-frs-traceability.md",
+      "qualifications": "Static code presence only, no verified runtime/CI security PASS; next sprints hold functional and negative tests"
+    },
+    "step3_started": true,
+    "sprint_3_2": {
+      "status": "CLOSED_ENGINEERING_GATES_PASSED",
+      "report": "docs/agents/step-03-sprint-3.2-search-hits-screening.md",
+      "scope": "URS-LIT-010–020, 030–032, 040–044 / FRS-LIT-004–010",
+      "commit": "6ee636077063c65df139042b47e74bfef1132fcb",
+      "closeout_document": "docs/agents/step-03-sprint-3.2-search-hits-screening.md",
+      "frontend_ci_run": 38061677036,
+      "postgres_ci_run": 38061677077,
+      "concurrency": "two concurrent session conditional claims passed against isolated PostgreSQL table",
+      "limitations": "Does not execute full production worker live or clinically qualify shared AI agents"
+    },
+    "sprint_3_3": {
+      "status": "CLOSED_SCOPED_ENGINEERING_CI_PASSED",
+      "report": "docs/agents/step-03-sprint-3.3-medical-review-qc.md",
+      "mr_lock": "a1bb315214f1402c80c3d61b76b379410d430294",
+      "screening_finalization_guard": "79ff9e8e248b2cedd3264c33db6e3f71c3bab85f",
+      "workflow_row_lock": "e9a0d2e35e1eeafd1a9396a1f3bf1bc8d6535160",
+      "frontend_ci_run": 38062206548,
+      "frontend_ci_conclusion": "success",
+      "remaining_outside_scope": "Live shared agent and clinical CSV/UAT qualification is deferred; Sprint 3.4 handles full handoff contract"
+    },
+    "sprint_3_4": {
+      "status": "CLOSED_SCOPED_ENGINEERING_CI_PASSED",
+      "report": "docs/agents/step-03-sprint-3.4-intake-handoff.md",
+      "producer": "frontend/lib/literature/intake-input/intake-input-service.ts",
+      "consumer": "frontend/lib/safety/common/safety-backbone-service.ts",
+      "consumer_contract_fix": "8b973e263f74e325253393547d09c103daa57eea",
+      "fixture_fix": "85ebc3cd97e0356585c036bbfdcd78364e4b5bfc",
+      "frontend_ci_run": 38063574503,
+      "conclusion": "success",
+      "limitation": "No full live database import/clinical qualification claimed; deferred to consolidated integration/qualification"
+    }
+  }
+}

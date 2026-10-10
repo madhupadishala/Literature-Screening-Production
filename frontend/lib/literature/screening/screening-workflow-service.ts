@@ -597,15 +597,21 @@ export async function saveScreeningReview(input: {
     const target = await client.query<{
       id: string;
       result_payload: Record<string, unknown>;
+      workflow_state: string;
     }>(
-      `SELECT result.id, result.result_payload
+      `SELECT result.id, result.result_payload, workflow.workflow_state
        FROM screening_results result
        JOIN literature_packages package ON package.id = result.package_id
+       JOIN literature_workflow_state workflow ON workflow.package_id = package.id
+         AND workflow.tenant_id = package.tenant_id
        WHERE result.tenant_id = $1 AND package.id = $2 AND result.id = $3
-       FOR UPDATE OF result, package`,
+       FOR UPDATE OF result, package, workflow`,
       [input.principal.tenantId, review.packageId, review.screeningResultId],
     );
     if (!target.rows[0]) throw new Error("Screening result was not found in the active tenant.");
+    if (["REVIEW_COMPLETE", "INTAKE_INPUT_CREATED"].includes(target.rows[0].workflow_state)) {
+      throw new Error("Finalized screening decisions require a controlled amendment.");
+    }
 
     if (review.status === "approved" && review.finalDecision === "INCLUDE") {
       const storedPayload = recordValue(target.rows[0].result_payload);

@@ -710,6 +710,12 @@ export async function saveMedicalReview(input: {
       client,
     });
 
+    // URS-LIT-064: completed Medical Reviews are immutable outside a controlled amendment.
+    // Apply after the tenant-scoped row lock to prevent concurrent finalization bypass.
+    if (workspace.status === "REVIEW_COMPLETE") {
+      throw new Error("Completed Medical Review cannot be changed without a controlled amendment.");
+    }
+
     if (workspace.patient_segmentation_status !== "COMPLETE") {
       throw new Error("Medical Review requires completed patient segmentation.");
     }

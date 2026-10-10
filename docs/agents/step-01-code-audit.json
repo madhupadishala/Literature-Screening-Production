@@ -1,0 +1,481 @@
+{
+  "schema_version": "nexus.agent-audit/1",
+  "audit_date": "2026-10-09",
+  "branch": "integration/pv-agents-source-20261009",
+  "coverage": {
+    "planned_entries": 17,
+    "code_paths_verified": 17,
+    "code_paths_unverified": 0,
+    "uploaded_agent_code_paths_verified": 13,
+    "existing_agent_code_paths_verified": 4,
+    "source_in_current_integration_branch": 15,
+    "source_in_divergent_branches": 2
+  },
+  "method": "Read GitHub files on selected integration branch; inspected source classes/entrypoints and Nexus service/knowledge/orchestration interfaces. Not a line-by-line clinical correctness certification.",
+  "entries": [
+    {
+      "name": "action_taken",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/action_taken.py",
+      "entrypoint": "extract",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "safe_run",
+        "risk_or_gap": "Role and drug-event linkage depend on upstream structured ICSR; verify action codification and chronology",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "dechallenge",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/dechallenge.py",
+      "entrypoint": "assess",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "safe_run",
+        "risk_or_gap": "Pair-level dechallenge vulnerable to timing and therapeutic intervention ambiguity",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "rechallenge",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/rechallenge.py",
+      "entrypoint": "assess",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "safe_run",
+        "risk_or_gap": "Need explicit re-exposure, recurrence, alternative cause and unknown distinctions",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "followup",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/followup.py",
+      "entrypoint": "generate",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "safe_run",
+        "risk_or_gap": "Generated questions require de-duplication and evidence-linked missingness",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "icsr_duplicate",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/icsr_duplicate.py",
+      "entrypoint": "compare",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "safe_run",
+        "risk_or_gap": "Keep probable duplicate versus confirmed identity and merge provenance distinct",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "inclusion_exclusion",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/inclusion_exclusion.py",
+      "entrypoint": "screen",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "safe_run",
+        "risk_or_gap": "Ensure source completeness, in-scope product and title-only handling",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "lit_duplicate",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/lit_duplicate.py",
+      "entrypoint": "assess_pair",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "safe_run",
+        "risk_or_gap": "Differentiate same PMID, same article, overlapping cases and independent cases",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "med_history",
+      "group": "specialist_core",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/med_history.py",
+      "entrypoint": "extract",
+      "code_verified": true,
+      "contract": "AgentResult (Pydantic)",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "safe_run",
+        "risk_or_gap": "Overlaps Historical Conditions; may infer chronology from free text",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "day_zero",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/day_zero/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "LLM injected",
+        "risk_or_gap": "Date/source/validity criteria and precision need clinical edge-case benchmarking",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "history",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/history/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "LLM injected",
+        "risk_or_gap": "Uses shared medical-context partition and overlaps med_history",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "current",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/current/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "LLM injected",
+        "risk_or_gap": "Timing and drug role must not override authoritative drug classifier",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "patient",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/patient/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "LLM injected",
+        "risk_or_gap": "Personally identifying patient information and unknown-field grounding must be tested",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "reporter",
+      "group": "clinical_context",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/reporter/agent.py",
+      "entrypoint": "run",
+      "code_verified": true,
+      "contract": "module-specific Pydantic result; injected LLM",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "LLM injected",
+        "risk_or_gap": "Qualification and identifiability claims require exact source evidence",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "drug_extraction_and_classification",
+      "group": "existing_nexus",
+      "source_path": "backend/agents/drug_role/nexus_agent.py",
+      "entrypoint": "NexusDrugRoleAgent.run",
+      "code_verified": true,
+      "contract": "Nexus drug classification payload",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "Nexus KnowledgeRouter",
+        "risk_or_gap": "Company-product matching is tenant scoped; role classification requires benchmark",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "country_of_incidence",
+      "group": "existing_nexus",
+      "source_path": "frontend/lib/ai/coi/coi-agent.ts",
+      "entrypoint": "runCOI",
+      "code_verified": true,
+      "api_route": "frontend/app/api/ai/coi/route.ts",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "TS LangGraph",
+        "risk_or_gap": "Country per patient/event with quote validation; not same runtime as Python specialists",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      }
+    },
+    {
+      "name": "literature_safety_assessment",
+      "group": "existing_nexus",
+      "source_path": "frontend/lib/pv-safety-assessment/assessment-engine.ts",
+      "entrypoint": "assessPvSafety",
+      "code_verified": true,
+      "blocker": "Exact live agent path not established",
+      "historical_branch": "feat/pv-safety-assessment-engine-v1",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "TypeScript deterministic safety relevance engine",
+        "risk_or_gap": "Branch diverged from main; the knowledge audit identifies 8 regulatory knowledge gaps and governance conflicts; standalone live integration not verified",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      },
+      "source_ref": "feat/pv-safety-assessment-engine-v1",
+      "branch_only": true,
+      "tests_path": "frontend/scripts/verify-pv-safety-assessment.ts"
+    },
+    {
+      "name": "adverse_event_extraction",
+      "group": "existing_nexus",
+      "source_path": "backend/agents/event_runtime/engine.py",
+      "entrypoint": "EventEngine.run",
+      "code_verified": true,
+      "blocker": "Exact live agent path not established",
+      "historical_branch": "feat/event-extraction-agent",
+      "audit": {
+        "entrypoint_inspected": true,
+        "execution_mode": "Python async LangGraph; OCR/E2B/document normalization",
+        "risk_or_gap": "Branch diverged from main; source not present in selected integration branch; available implementation report explicitly notes live-model and clinical-reference gaps",
+        "clinical_gold_benchmark_verified": false,
+        "technical_compatibility_verified": false
+      },
+      "source_ref": "feat/event-extraction-agent",
+      "branch_only": true,
+      "api_path": "backend/agents/event_runtime/api.py",
+      "models_path": "backend/agents/event_runtime/models.py",
+      "tests_path": "tests/event_runtime_tests/test_agent.py"
+    }
+  ],
+  "defects": [
+    {
+      "id": "AUD-002",
+      "severity": "high",
+      "finding": "Specialist Pydantic AgentResult and context-package output contracts are incompatible without explicit normalized adapters",
+      "affected": [
+        "specialist_core",
+        "clinical_context"
+      ],
+      "action": "Create versioned canonical contracts with evidence-span validation"
+    },
+    {
+      "id": "AUD-003",
+      "severity": "high",
+      "finding": "Five-agent clinical context API needs injected LLM but the current Nexus specialist ICSR graph only initializes first suite",
+      "affected": [
+        "clinical_context"
+      ],
+      "action": "Provider injection, authorization and graph node registration"
+    },
+    {
+      "id": "AUD-004",
+      "severity": "high",
+      "finding": "Current LangGraph covers five first-package agent functions; duplicate and screening agents plus all five context agents not routed",
+      "affected": [
+        "specialist_core",
+        "clinical_context"
+      ],
+      "action": "Map full dependency graph and every supported workflow"
+    },
+    {
+      "id": "AUD-005",
+      "severity": "high",
+      "finding": "KnowledgeRouter on this branch uses persistent Chroma collection and JSON masters; real approved-index readiness is unverified",
+      "affected": [
+        "all"
+      ],
+      "action": "Run actual KB read and tenant/client/jurisdiction isolation tests with approved index"
+    },
+    {
+      "id": "AUD-006",
+      "severity": "high",
+      "finding": "Bridge uses GLOBAL agent scope during retrieval; knowledge agent-scope least privilege must be reviewed",
+      "affected": [
+        "backend/services/pv_agents/specialist_graph.py"
+      ],
+      "action": "Agent-specific scoped retrieval per specialist"
+    },
+    {
+      "id": "AUD-007",
+      "severity": "high",
+      "finding": "Graph currently permits unstructured narrative with empty ICSR drugs/events and does not itself extract canonical ICSR entities",
+      "affected": [
+        "backend/services/pv_agents/specialist_graph.py"
+      ],
+      "action": "Document parsing/extraction plus explicit unknown handling; never infer no AE from missing fields"
+    },
+    {
+      "id": "AUD-008",
+      "severity": "medium",
+      "finding": "Overlapping clinical domains med_history vs history, current medication vs drug_role need authority and precedence model",
+      "affected": [
+        "med_history",
+        "history",
+        "current",
+        "drug_extraction_and_classification"
+      ],
+      "action": "Retain distinct outputs; define role/temporal classification ownership"
+    },
+    {
+      "id": "AUD-009",
+      "severity": "high",
+      "finding": "No verified live hosted clinical-context LLM provider, graph checkpoint persistence, agent-specific benchmark or approved labeling link",
+      "affected": [
+        "all"
+      ],
+      "action": "Dedicated runtime/integration tests and evidence register"
+    },
+    {
+      "id": "AUD-010",
+      "severity": "medium",
+      "finding": "Country-of-Incidence uses TypeScript LangGraph in Next.js, while the imported specialist graph runs Python LangGraph; shared evidence contracts and cross-runtime routing are not verified",
+      "affected": [
+        "country_of_incidence",
+        "specialist_core"
+      ],
+      "action": "Define explicit cross-runtime service contract and shared case/evidence keys"
+    },
+    {
+      "id": "AUD-011",
+      "severity": "high",
+      "finding": "Cleanup Baseline Benchmark GitHub workflow failed for tested integration commit while other specialized workflows passed",
+      "affected": [
+        "repository_quality_gates"
+      ],
+      "action": "Inspect failing CI job logs, resolve in Step 7/9; do not claim full green status"
+    },
+    {
+      "id": "AUD-012",
+      "severity": "high",
+      "finding": "Event extraction Python implementation exists only on diverged feat/event-extraction-agent branch; service/worker changes require selective port without overwriting main changes",
+      "affected": [
+        "adverse_event_extraction"
+      ],
+      "action": "Step 3: selectively port source and reconcile authenticated WSGI service changes"
+    },
+    {
+      "id": "AUD-013",
+      "severity": "high",
+      "finding": "Literature Safety Assessment TypeScript implementation exists on diverged feat/pv-safety-assessment-engine-v1 branch; must preserve existing screening/KB contracts",
+      "affected": [
+        "literature_safety_assessment"
+      ],
+      "action": "Step 3/4: selective port and reconcile safety KB governance; do not blindly merge 148-commit diverged branch"
+    }
+  ],
+  "step1_status": "COMPLETED_CODE_AUDIT_WITH_DOCUMENTED_DEFECTS",
+  "next_step_authorized": false,
+  "audit_method_details": {
+    "source_path_verification": "17 implementation source paths verified directly from appropriate Git refs; 15 currently on integration branch and 2 only on divergent historical branches",
+    "historical_branches": {
+      "adverse_event_extraction": "Verified engine, Pydantic schema, tests, service worker on feat/event-extraction-agent via GitHub compare and direct file reads",
+      "literature_safety_assessment": "Verified TypeScript assessPvSafety engine, knowledge audit and verification script on feat/pv-safety-assessment-engine-v1 via GitHub compare and direct file reads"
+    },
+    "historical_branch_limitation": "Branch names and README presence verified; exact source file paths and current branch integration were not established; neither counts as a verified source implementation",
+    "baseline_ci": {
+      "commit": "e7e1ae59ba6a8e91748d011bdd915711583a47ac",
+      "specialist_integration": "success",
+      "shared_pv_agents": "success",
+      "frontend": "success",
+      "cleanup_baseline": "failure"
+    },
+    "non_executed_checks": [
+      "No direct line-by-line clinical gold-label audit across all 17 entries",
+      "No live approved Knowledge Base retrieval proven",
+      "No independent CLI execution of all 17 from this audit session"
+    ]
+  },
+  "step1_acceptance": {
+    "inventory_17_entries_recorded": true,
+    "all_17_sources_located": true,
+    "all_17_clinical_logic_audited": true,
+    "shared_dependencies_inspected": true,
+    "baseline_ci_status_collected": true,
+    "individual_local_unit_tests_reexecuted_in_current_audit": false,
+    "step1_completed": true,
+    "qualification_note": "Static code-level audit and risk characterization completed; comprehensive clinical gold-set validation, remediations, integration and runtime tests belong to subsequent steps. Earlier CI gates remain mixed."
+  },
+  "overlap_matrix": [
+    {
+      "a": "med_history",
+      "b": "history",
+      "relationship": "overlapping historic medical conditions; verify shared extraction, retain distinct review views"
+    },
+    {
+      "a": "current",
+      "b": "drug_extraction_and_classification",
+      "relationship": "current medication context only; definitive suspect/concomitant/MAH ownership belongs drug classifier"
+    },
+    {
+      "a": "action_taken",
+      "b": "dechallenge",
+      "relationship": "dechallenge consumes action-taking evidence; action alone does not establish response"
+    },
+    {
+      "a": "rechallenge",
+      "b": "dechallenge",
+      "relationship": "separate phases and timing; do not infer one from the other"
+    },
+    {
+      "a": "lit_duplicate",
+      "b": "icsr_duplicate",
+      "relationship": "article-record duplicate distinct from person-level ICSR duplicate"
+    },
+    {
+      "a": "country_of_incidence",
+      "b": "reporter",
+      "relationship": "reporter country distinct from event occurrence location"
+    },
+    {
+      "a": "literature_safety_assessment",
+      "b": "inclusion_exclusion",
+      "relationship": "scope overlap must be mapped after original implementation is located"
+    },
+    {
+      "a": "adverse_event_extraction",
+      "b": "current",
+      "relationship": "events/reactions must not collapse into treatment-of-event medication context"
+    }
+  ],
+  "technical_component_evidence": {
+    "agent_router": "backend/knowledge/knowledge_router.py",
+    "retriever": "backend/knowledge/retriever.py",
+    "specialist_python_graph": "backend/services/pv_agents/specialist_graph.py",
+    "pv_service": "backend/services/pv_agents/service.py",
+    "specialist_workers": "backend/services/pv_agents/workers.py",
+    "coi_typescript_graph": "frontend/lib/ai/coi/coi-agent.ts",
+    "coi_route": "frontend/app/api/ai/coi/route.ts"
+  }
+}

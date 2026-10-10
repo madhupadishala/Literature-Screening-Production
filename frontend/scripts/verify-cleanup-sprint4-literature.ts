@@ -158,6 +158,48 @@ for (const doc of [
   assert.ok(read(doc).length > 500, `Controlled Sprint 4 document is missing/incomplete: ${doc}`);
 }
 
+// Sprint 3.3: finalized Medical Review is locked under the tenant-scoped row transaction.
+const medicalReviewMutations = read("lib/literature/review/review-mutation-service.ts");
+const medicalReviewSave = medicalReviewMutations.slice(
+  medicalReviewMutations.indexOf("export async function saveMedicalReview("),
+);
+assert.ok(
+  medicalReviewSave.includes('workspace.status === "REVIEW_COMPLETE"'),
+  "Medical Review must reject silent mutation of finalized workspace",
+);
+assert.ok(
+  medicalReviewSave.indexOf('workspace.status === "REVIEW_COMPLETE"') <
+    medicalReviewSave.indexOf("INSERT INTO literature_medical_reviews"),
+  "Finalized review guard must precede Medical Review persistence",
+);
+assert.ok(
+  medicalReviewSave.includes('MEDICAL_REVIEW_SAVED'),
+  "Medical Review decisions must preserve audit attribution",
+);
+const medicalReviewRoute = read("app/api/literature/review/medical/route.ts");
+assert.ok(medicalReviewRoute.includes("PERMISSIONS.MEDICAL_REVIEW"));
+const screeningWorkflow = read("lib/literature/screening/screening-workflow-service.ts");
+const screeningReviewWrite = screeningWorkflow.slice(screeningWorkflow.indexOf("export async function saveScreeningReview("));
+assert.ok(
+  screeningReviewWrite.includes('["REVIEW_COMPLETE", "INTAKE_INPUT_CREATED"].includes(target.rows[0].workflow_state)'),
+  "A finalized case must reject Screening review mutation outside a controlled amendment",
+);
+assert.ok(screeningReviewWrite.includes("FOR UPDATE OF result, package"));
+const intakeRules = read("lib/literature/intake-input/intake-input-governance.ts");
+assert.ok(intakeRules.includes('input.mrReviewStatus !== "APPROVED"'));
+
+const literatureIntakeAdapter = read("lib/safety/common/literature-intake-adapter.ts");
+assert.ok(literatureIntakeAdapter.includes('payload.schema_version !== "clinixai.literature.intake-input.v1"'));
+assert.ok(literatureIntakeAdapter.includes("payload.intake_input_id !== input.exportId"));
+assert.ok(literatureIntakeAdapter.includes("payload.export_version !== input.exportVersion"));
+assert.ok(literatureIntakeAdapter.includes('review.medical_review_status !== "APPROVED"'));
+const literatureConsumer = read("app/api/safety/intake/literature/route.ts");
+assert.ok(literatureConsumer.includes("PERMISSIONS.INTAKE_CREATE"));
+assert.ok(literatureConsumer.includes("importLiteratureIntakeExport"));
+const literatureExport = read("lib/literature/intake-input/intake-input-service.ts");
+assert.ok(literatureExport.includes("source_lineage_sha256"));
+assert.ok(literatureExport.includes("requireSafetyWorkspaceScope(input.principal)"));
+
 console.log(
   `Sprint 4 Literature reconciliation verification passed: ${literatureRoutes.length} workspace-scoped routes and tenant-bound transient histories.`,
 );

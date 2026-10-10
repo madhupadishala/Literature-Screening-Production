@@ -1,0 +1,69 @@
+name: Nexus Clinical Rules PostgreSQL Gate
+
+on:
+  pull_request:
+    paths:
+      - "backend/knowledge/**"
+      - "tests/test_postgres_clinical_rule_store.py"
+      - "tests/test_executable_clinical_gates.py"
+      - "tests/test_drug_role_policy_integration.py"
+      - "tests/test_drug_exposure_policy.py"
+      - "backend/agents/drug_role/**"
+      - "docs/agents/step-02/clinical_rule_traceability.json"
+      - "scripts/setup_clinical_rule_postgres_ci.py"
+      - ".github/workflows/nexus-clinical-rules-postgres.yml"
+  push:
+    branches: ["integration/pv-agents-source-20261009"]
+    paths:
+      - "backend/knowledge/**"
+      - "tests/test_postgres_clinical_rule_store.py"
+      - "docs/agents/step-02/clinical_rule_traceability.json"
+      - "scripts/setup_clinical_rule_postgres_ci.py"
+      - ".github/workflows/nexus-clinical-rules-postgres.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-clinical-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ci_postgres_password
+          POSTGRES_DB: neondb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d neondb"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      PGPASSWORD: ci_postgres_password
+      NEXUS_CLINICAL_RULE_ADMIN_DSN: postgresql://postgres:ci_postgres_password@localhost:5432/neondb
+      NEXUS_CLINICAL_RULE_OWNER_TEST_DSN: postgresql://postgres:ci_postgres_password@localhost:5432/neondb
+      NEXUS_CLINICAL_RULE_TEST_DSN: postgresql://nexus_ci_reader:ci_reader_password@localhost:5432/neondb
+      NEXUS_CLINICAL_RULE_APPROVER_TEST_DSN: postgresql://nexus_ci_approver:ci_approver_password@localhost:5432/neondb
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PostgreSQL driver
+        run: python -m pip install "psycopg[binary]>=3.2,<4"
+      - name: Apply production-shaped schema and security migrations to isolated CI database
+        run: |
+          psql -h localhost -U postgres -d neondb -v ON_ERROR_STOP=1 -f backend/knowledge/migrations/20261009_nexus_clinical_rule_revisions.sql
+          psql -h localhost -U postgres -d neondb -v ON_ERROR_STOP=1 -f backend/knowledge/migrations/20261010_nexus_clinical_rule_security.sql
+      - name: Seed approved synthetic and draft-only expert fixtures
+        run: python scripts/setup_clinical_rule_postgres_ci.py
+      - name: Execute real PostgreSQL router and authorization regressions
+        run: |
+          python -m unittest discover -s tests -p test_clinical_rule_store.py -v
+          python -m unittest discover -s tests -p test_postgres_clinical_rule_store.py -v
+          python -m unittest discover -s tests -p test_executable_clinical_gates.py -v
+          python -m unittest discover -s tests -p test_drug_role_policy_integration.py -v
+          python -m unittest discover -s tests -p test_drug_exposure_policy.py -v

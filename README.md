@@ -1216,3 +1216,14 @@ It is done only when:
 10. the source snapshot is exported with provenance into the clean repository.
 
 **Goal: not merely cleaner code — a controlled, next-generation, regulator-aware PV platform foundation.**
+
+
+## Wave 3 rehearsal branch and Task 2.2 validation (2026-10-10)
+
+Neon project `clinixai-validation-db` contains branch `wave3-033-039-rehearsal` (`br-quiet-mode-b301q52w`). This branch is **not completely empty**: the `literature_screening_prod` database contained 100 public tables at inspection. **Do not reset, delete, or overwrite that database** to perform clinical-rule validation.
+
+The separate default database `neondb` on this branch contained zero public tables at inspection and is allocated for the isolated **Nexus Task 2.2 clinical-rule schema validation only**. Always connect with explicit database name `neondb` and the exact branch ID. Do not point running application DATABASE_URL values to this database or use it for live patient data. Preserve database evidence and validate RLS and approval boundaries before service integration.
+
+**Wave 3 recovery instruction:** If Wave 3 rehearsal is needed again, **create a fresh purpose-named Neon branch from the appropriate approved Wave 3/UAT snapshot** instead of relying on the Task 2.2 validation database or overwriting its artifacts. Confirm source snapshot, release commit and required migration baseline with the Wave 3 owner first. If the Neon branch quota blocks a new branch, resolve capacity safely—do not delete rollback/backup branches without owner authorization. Reproduce Wave 3 rehearsal from documented artifacts and validate before use.
+
+This allocation does not establish that the Wave 3 branch is retired; GitHub secret values and deployment metadata could not be conclusively inspected with the connected repository permissions.

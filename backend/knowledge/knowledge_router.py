@@ -18,6 +18,17 @@ class KnowledgeRouter:
             
         self.retriever = retriever or HybridRetriever(base_path=self.base_path)
 
+    def evaluate_clinical_rule(self, *, rule_store, tenant_id: str, client_id: str,
+                               jurisdiction: str, agent_name: str, as_of: str,
+                               rule_id: str, facts: Dict[str, Any]) -> Dict[str, Any]:
+        """Evaluate approved, scoped structured knowledge, never raw retrieved text."""
+        from backend.knowledge.clinical_rule_store import ClinicalRuleStore, RuleScope
+        from backend.knowledge.postgres_clinical_rule_store import PostgresClinicalRuleStore
+        if not isinstance(rule_store, (ClinicalRuleStore, PostgresClinicalRuleStore)):
+            raise TypeError("An explicitly authorized ClinicalRuleStore is required")
+        return rule_store.decide(RuleScope(tenant_id, client_id, jurisdiction,
+                                           agent_name, as_of), rule_id, facts)
+
     def _load_json_file(self, path: str) -> Dict[str, Any]:
         if os.path.exists(path):
             with open(path, 'r', encoding='utf-8') as f:

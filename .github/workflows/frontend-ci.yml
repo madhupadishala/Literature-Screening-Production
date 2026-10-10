@@ -74,6 +74,9 @@ jobs:
       - name: Verify governed Screening and Product/MAH logic
         run: npm run screening:verify
 
+      - name: Verify Sprint 3.2 Literature source contracts
+        run: node --import tsx scripts/verify-step3-2-source-contracts.ts
+
       - name: Verify governed Screening-to-Intake handoff
         run: npm run intake:verify
 
