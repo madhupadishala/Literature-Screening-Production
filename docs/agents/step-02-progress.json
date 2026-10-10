@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_1_BASELINE_INVENTORY_CLOSED_SPRINT_3_2_READY",
+    "status": "SPRINT_3_2_STARTED",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -99,6 +99,12 @@
       "requirements_inventory": "docs/agents/step-03-literature-urs-frs-traceability.md",
       "qualifications": "Static code presence only, no verified runtime/CI security PASS; next sprints hold functional and negative tests"
     },
-    "step3_started": true
+    "step3_started": true,
+    "sprint_3_2": {
+      "status": "SOURCE_ASSESSMENT_STARTED",
+      "report": "docs/agents/step-03-sprint-3.2-search-hits-screening.md",
+      "scope": "URS-LIT-010–020, 030–032, 040–044 / FRS-LIT-004–010",
+      "commit": "6ee636077063c65df139042b47e74bfef1132fcb"
+    }
   }
 }
