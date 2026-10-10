@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "STARTED_SCOPE_AND_EXISTING_WORKFLOW_IDENTIFIED",
+    "status": "SPRINT_3_1_STARTED",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -79,6 +79,17 @@
       "backend/api/run_screening_package.py"
     ],
     "next_deliverable": "controlled literature-to-intake handoff with tenant/client authorization and provenance",
-    "step2_remains_open": true
+    "step2_remains_open": true,
+    "sprint_plan": "docs/agents/step-03-literature-sprint-plan.md",
+    "sprints": [
+      "3.1-baseline-urs-traceability",
+      "3.2-search-hits-screening",
+      "3.3-mr-qc-governance",
+      "3.4-intake-handoff",
+      "3.5-security-audit",
+      "3.6-engineering-qualification"
+    ],
+    "preserve_existing_workflow": true,
+    "shared_agents_deferred": true
   }
 }
