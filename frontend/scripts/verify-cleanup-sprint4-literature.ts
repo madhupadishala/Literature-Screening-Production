@@ -188,6 +188,18 @@ assert.ok(screeningReviewWrite.includes("FOR UPDATE OF result, package"));
 const intakeRules = read("lib/literature/intake-input/intake-input-governance.ts");
 assert.ok(intakeRules.includes('input.mrReviewStatus !== "APPROVED"'));
 
+const literatureIntakeAdapter = read("lib/safety/common/literature-intake-adapter.ts");
+assert.ok(literatureIntakeAdapter.includes('payload.schema_version !== "clinixai.literature.intake-input.v1"'));
+assert.ok(literatureIntakeAdapter.includes("payload.intake_input_id !== input.exportId"));
+assert.ok(literatureIntakeAdapter.includes("payload.export_version !== input.exportVersion"));
+assert.ok(literatureIntakeAdapter.includes('review.medical_review_status !== "APPROVED"'));
+const literatureConsumer = read("app/api/safety/intake/literature/route.ts");
+assert.ok(literatureConsumer.includes("PERMISSIONS.INTAKE_CREATE"));
+assert.ok(literatureConsumer.includes("importLiteratureIntakeExport"));
+const literatureExport = read("lib/literature/intake-input/intake-input-service.ts");
+assert.ok(literatureExport.includes("source_lineage_sha256"));
+assert.ok(literatureExport.includes("requireSafetyWorkspaceScope(input.principal)"));
+
 console.log(
   `Sprint 4 Literature reconciliation verification passed: ${literatureRoutes.length} workspace-scoped routes and tenant-bound transient histories.`,
 );
