@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_5_STARTED",
+    "status": "SPRINT_3_5_TECHNICAL_AUTOMATION_COMMITTED_LIVE_UAT_ACCESS_BLOCKED",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -133,10 +133,14 @@
       "limitation": "No full live database import/clinical qualification claimed; deferred to consolidated integration/qualification"
     },
     "sprint_3_5": {
-      "status": "STARTED_SECURITY_SOURCE_BASELINE",
+      "status": "ISOLATED_DB_PASSED_LIVE_HTTP_AND_REAL_AUDIT_BLOCKED",
       "report": "docs/agents/step-03-sprint-3.5-security-audit.md",
       "initial_commit": "4f666a263d8075c84fab59a8488d002f058d5ddd",
-      "remaining": "Complete route audit, tenant/workspace negative tests, audit trail verification, CI and confirmed remediation"
+      "remaining": "UAT URL accessible past Vercel SSO plus authorized test identities and read-only UAT DB for actual audit persistence evidence",
+      "database_test_run": 38074023407,
+      "http_runner": "frontend/scripts/verify-step3-5-http.mjs",
+      "http_runner_commit": "1c1da07ed36fce583bae6456d441d7b91d183dcc",
+      "security_gate_run": 38074582368
     }
   }
 }
