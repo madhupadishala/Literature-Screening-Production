@@ -1,0 +1,643 @@
+{
+  "schema_version": "1.0",
+  "purpose": "source-consolidation-only",
+  "base_commit": "d304da1824812519f6d46b6b723fc1689bc91520",
+  "files": [
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/article_fetch_agent.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/article_fetch_agent.py",
+      "sha": "921a8b4b1b3e3cc3f74accae883e175f0c35e627"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/__init__.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/audit.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/audit.py",
+      "sha": "54ae46c6daabeaf8c5c17b30a85f131f3a29a7b1"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/clinical.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/clinical.py",
+      "sha": "d0706f7d150b1cd55e387f4f398202434c94c4f8"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/config.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/config.py",
+      "sha": "31e771d995e8aa02b57251104d087523d29f83bc"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/data/policy_links.json",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/data/policy_links.json",
+      "sha": "271526016daa214856520160ffca145dc91a0b9f"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/data/regulatory_sources.json",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/data/regulatory_sources.json",
+      "sha": "74dd3618f16286cd5d6a24687916cba807e9f880"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/extraction.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/extraction.py",
+      "sha": "2c833c602afb9943671bd9673ad084d313305665"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/kb.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/kb.py",
+      "sha": "590ad06931dd33fb31f33235439c6488cba97b8b"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/main.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/main.py",
+      "sha": "cb21152d3d413196147aecf3729d5c260738676d"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/nexus_kb.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/nexus_kb.py",
+      "sha": "7a0e6b7d1f3e219933cd0e8f8c535b4684249d72"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/orchestrator.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/orchestrator.py",
+      "sha": "afb02dbafcab55030daf8d1e23ce25b46ffad89b"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/pipeline.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/pipeline.py",
+      "sha": "ff0f8f1b12639a346764c2c264f357f6e37ae821"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/release_gates.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/release_gates.py",
+      "sha": "95ba46b0545c526f989119c1571cb4f01a907a45"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/rulepacks.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/rulepacks.py",
+      "sha": "aa395e9ec0f3cabfe1e2ad063b06ff355fae6126"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/schema.sql",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/schema.sql",
+      "sha": "640b1a45c409550e8cf635dd92e12b48229f32bc"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/schemas.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/schemas.py",
+      "sha": "6aa1635e95e4a4d6088ee54dbd7d8d962437b6ab"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/timeline.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/timeline.py",
+      "sha": "6195c61dcdf41224e30e577d4a2f19be4b314658"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/causality_runtime/verification.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/causality_runtime/verification.py",
+      "sha": "83b495be739ca1a161e0610fd01864cb827a0231"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/drug_role/__init__.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/drug_role/__init__.py",
+      "sha": "b4fb1dc4a537a29889791362062184516d75f73b"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/drug_role/nexus_agent.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/drug_role/nexus_agent.py",
+      "sha": "7aec5789fdea54fff7fbf14d0b6177ed5e584c2c"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/drug_role/orchestrator.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/drug_role/orchestrator.py",
+      "sha": "ce557777481f7b7ead3f50bcd166b74a613f2158"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/drug_role/ownership.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/drug_role/ownership.py",
+      "sha": "324a37e995c69b5a668a80901c2f0c8ccc6d83f3"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/drug_role/rules.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/drug_role/rules.py",
+      "sha": "7051debfa2c3845b0cafbc8c12b67dab1e30d248"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/drug_role/schemas.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/drug_role/schemas.py",
+      "sha": "4246f9381e8da23bed9c7dc35ececee3476345f3"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/full_text_resolver.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/full_text_resolver.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/hits/orchestrator.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/hits/orchestrator.py",
+      "sha": "b98924918f927a1491e0ad471bde0a6f619266de"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/product_resolver_agent.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/product_resolver_agent.py",
+      "sha": "4dc9695dc487e5f332ed29dc1534ed5cee10609a"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/pubmed_search_executor.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/pubmed_search_executor.py",
+      "sha": "90acc1925f168aa65066c9523245591db979ff8f"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/screening/__init__.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/screening/__init__.py",
+      "sha": "e2616c48369949898dd86316354b97668ed4ed53"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/screening/orchestrator.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/screening/orchestrator.py",
+      "sha": "4c06fa3e06583d066eb619f5867b4f502cf9cb3b"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/screening/rules.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/screening/rules.py",
+      "sha": "c81fb82d38b6db255b9727591dc3802714536a5d"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/search_builder_agent.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/search_builder_agent.py",
+      "sha": "a74c9991953c5e675b9457788793ddc04600db4e"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/__init__.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/audit.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/audit.py",
+      "sha": "f59d76ce350f3ad71f2086da7deb4c0d3499b37e"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/config.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/config.py",
+      "sha": "455248170cc80a55c2db8e812da7b0516d868923"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/data/ime_seed.json",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/data/ime_seed.json",
+      "sha": "5a2ecce3a6af50f53bbc93670ec28007fae4db5e"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/extraction.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/extraction.py",
+      "sha": "a7dd895f37040f22367d07c2213d95b2c1ddd8d9"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/ime.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/ime.py",
+      "sha": "fd7dcb10038cd4e5cdcb1c455ca6bbea754f3c52"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/lexical.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/lexical.py",
+      "sha": "6d08865eeec1a20650eeae92fbd47eb014c2c2fb"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/main.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/main.py",
+      "sha": "1c8e2b9e063ab155f27744e96a077e153cba5c32"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/pipeline.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/pipeline.py",
+      "sha": "321ad2e9c81b38788b9430bd3a0b144560bc5427"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/rules.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/rules.py",
+      "sha": "a2b3f6e8e5e6319050e0165aeb89ce68f84c3adf"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/schemas.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/schemas.py",
+      "sha": "5d3484c5796a26a95c89e799df8e3f983c91e348"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "backend/agents/seriousness_runtime/verification.py",
+      "consolidated_path": "platform/shared-agents/legacy-backend/seriousness_runtime/verification.py",
+      "sha": "83b495be739ca1a161e0610fd01864cb827a0231"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "frontend/lib/ai/coi/coi-agent.ts",
+      "consolidated_path": "platform/shared-agents/frontend/coi/coi-agent.ts",
+      "sha": "0470408706ff99b184099058cd592314006e6f2f"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "frontend/lib/ai/hits-agent.ts",
+      "consolidated_path": "platform/shared-agents/frontend/hits-agent.ts",
+      "sha": "faa58ad2385bd012ffacac631e4c5f73626034c8"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "frontend/lib/ai/patient-extraction-agent.ts",
+      "consolidated_path": "platform/shared-agents/frontend/patient-extraction-agent.ts",
+      "sha": "12911cb38499f82ce2eadd180c323fdc8cea9cdf"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "frontend/lib/ai/screening-agent.ts",
+      "consolidated_path": "platform/shared-agents/frontend/screening-agent.ts",
+      "sha": "f142fdbebc70feaa4be889fb2f005b66e8bac647"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "frontend/lib/ai/seriousness-agent-client.ts",
+      "consolidated_path": "platform/shared-agents/frontend/seriousness-agent-client.ts",
+      "sha": "f0f3d2527f2f53bfb80d251644ee25e3e15ba44d"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "frontend/lib/ai/shared-pv-agent-client.ts",
+      "consolidated_path": "platform/shared-agents/frontend/shared-pv-agent-client.ts",
+      "sha": "be519c3c3b82a5394f40574c0c335ca8e2ad635a"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/__init__.py",
+      "sha": "7c57c55fde3b957fbfe760f442dc4a336d1be5ee"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/__init__.py",
+      "sha": "503c1fe06140d055f98b21d96fde8cab338ddf86"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/action_taken.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/action_taken.py",
+      "sha": "227870f3cd8db92321e0365343c6475679e7c54a"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/base.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/base.py",
+      "sha": "4c64461d9d2bf3837d60f5d9acb3adc43041090d"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/dechallenge.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/dechallenge.py",
+      "sha": "ab7275baa4dc63f88020751e18cfb91b32ce65d7"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/followup.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/followup.py",
+      "sha": "f7f83eae8dfec04c674ff3f13aec355dcbdc8222"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/icsr_duplicate.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/icsr_duplicate.py",
+      "sha": "d074161238986a58e0120844e847476a27afeb76"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/inclusion_exclusion.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/inclusion_exclusion.py",
+      "sha": "66927e15f29d0945ab0143bb147d8f8c12547129"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/lit_duplicate.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/lit_duplicate.py",
+      "sha": "95c009d34934fb6daf0c728f82725390b5ca9fb7"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/med_history.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/med_history.py",
+      "sha": "e78893a0e3f2e6597168d767989805ff8d41fbd4"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/agents/rechallenge.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/agents/rechallenge.py",
+      "sha": "80019856b544bea58394b6b322d84dc5d9456ffb"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/knowledge_register.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/knowledge_register.py",
+      "sha": "9a18c0187cf7c3c34ad6c20fa7842f200a656815"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/orchestration.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/orchestration.py",
+      "sha": "16c602a92549b287f8399a0769662bb075b531d7"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/schemas.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/schemas.py",
+      "sha": "b2c25a8210f987a7bf01ba2042823cfa23aae8e7"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/terminology.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/terminology.py",
+      "sha": "ffb0057f2c2976639fac25ad58273233e094c6e3"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents/nexus_agents/textnorm.py",
+      "consolidated_path": "platform/shared-agents/recovered/kimi/textnorm.py",
+      "sha": "c0b8cd191f23ef4d109c8aec7fb278ce929a9690"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/api.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/api.py",
+      "sha": "deb2df7cee23710d1042514402d765d751cb4c6b"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/common/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/common/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/common/base.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/common/base.py",
+      "sha": "4048a86ebbb8810a7e3564b88da2f049af17978a"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/common/medctx.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/common/medctx.py",
+      "sha": "49d16151608a72adf7ad2aede507102e160813b9"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/common/pdate.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/common/pdate.py",
+      "sha": "fa388d61c8ca08cdb0e57631790a460bdef3410a"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/current/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/current/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/current/agent.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/current/agent.py",
+      "sha": "12452259944c2c19db4b719628e1278a114a3594"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/day_zero/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/day_zero/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/day_zero/agent.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/day_zero/agent.py",
+      "sha": "f252853ce88849bde07c6302b793901842e310cc"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/history/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/history/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/history/agent.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/history/agent.py",
+      "sha": "481628a3c56f8a980ae0cd0e36c5a7a902085102"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/patient/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/patient/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/patient/agent.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/patient/agent.py",
+      "sha": "1ebf6fabe27deb9872808d9d2c4ed4ebe063b47f"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/reporter/__init__.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/reporter/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "source_branch": "main",
+      "source_path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/reporter/agent.py",
+      "consolidated_path": "platform/shared-agents/recovered/v2/reporter/agent.py",
+      "sha": "77617a36ffbc455c223bf1446472e455ad609eac"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/__init__.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/__init__.py",
+      "sha": "b22007059ff40b9515af1de54eaa020a7ecbe8d5"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/api.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/api.py",
+      "sha": "d3bcb7858cb60a6fed4b65e67a0933e73c8aeead"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/audit.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/audit.py",
+      "sha": "af47e983f28676b5755b831ddcdf3bfd85f68cca"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/benchmark.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/benchmark.py",
+      "sha": "a1bd4d5035e4d048685a87f54b1a8d5b9a14c565"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/coding.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/coding.py",
+      "sha": "749512aa04cea2f6d5054ba5b91c8d18400aea95"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/e2b.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/e2b.py",
+      "sha": "8340b968208ea7f133ebf7cc3e4c372d185cf169"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/engine.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/engine.py",
+      "sha": "b645776a0fa68d7e8e9b29d37f15fb714a500005"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/ingestion.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/ingestion.py",
+      "sha": "fd0fcdea41e5d6aac751662041ad57b4815be28e"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/live_validation.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/live_validation.py",
+      "sha": "ea298dbd399e4c9ca283e52c3d7cafae5fdaf6dd"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/models.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/models.py",
+      "sha": "906d3ff0bd5d347029d9d1bf33e172c2ba0005e6"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/ocr.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/ocr.py",
+      "sha": "bb5e993badcccac52a77f35288c9a5b33d7fc96f"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/prompts.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/prompts.py",
+      "sha": "c7eddca8c5331128dfa804634bf14f5ee5f3ced6"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/providers.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/providers.py",
+      "sha": "104a69e34f3687daa08096ebb672a0998e01f8ee"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/qualification.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/qualification.py",
+      "sha": "c2473722da07fe29df6b0b41ddb343e7060b608f"
+    },
+    {
+      "source_branch": "event",
+      "source_path": "backend/agents/event_runtime/xml_validation.py",
+      "consolidated_path": "platform/shared-agents/candidates/event-runtime/xml_validation.py",
+      "sha": "abd8a207509704944566ee775be643302ac1f0b5"
+    },
+    {
+      "source_branch": "listed",
+      "source_path": "frontend/lib/listedness-intelligence/faers-gold-scenarios.json",
+      "consolidated_path": "platform/shared-agents/candidates/listedness/faers-gold-scenarios.json",
+      "sha": "4d650b3f65b59a2ff25c2b6d63aa87e3fee1cab2"
+    },
+    {
+      "source_branch": "listed",
+      "source_path": "frontend/lib/listedness-intelligence/knowledge-base-listedness-service.ts",
+      "consolidated_path": "platform/shared-agents/candidates/listedness/knowledge-base-listedness-service.ts",
+      "sha": "78feeb4024db615aef4af64d14259decd8188138"
+    },
+    {
+      "source_branch": "listed",
+      "source_path": "frontend/lib/listedness-intelligence/label-document-inventory-service.ts",
+      "consolidated_path": "platform/shared-agents/candidates/listedness/label-document-inventory-service.ts",
+      "sha": "4a49dee22b861baf9cbedb5dd44850680ed54fb1"
+    },
+    {
+      "source_branch": "listed",
+      "source_path": "frontend/lib/listedness-intelligence/label-knowledge-bootstrap.ts",
+      "consolidated_path": "platform/shared-agents/candidates/listedness/label-knowledge-bootstrap.ts",
+      "sha": "fd0843ccd55c2197d0de2afdd97974ad0388db31"
+    },
+    {
+      "source_branch": "listed",
+      "source_path": "frontend/lib/listedness-intelligence/label-knowledge-search.ts",
+      "consolidated_path": "platform/shared-agents/candidates/listedness/label-knowledge-search.ts",
+      "sha": "5255b57e50dc2351d1dc74c9686b67b1f13fc12d"
+    },
+    {
+      "source_branch": "listed",
+      "source_path": "frontend/lib/listedness-intelligence/label-reference-candidate-service.ts",
+      "consolidated_path": "platform/shared-agents/candidates/listedness/label-reference-candidate-service.ts",
+      "sha": "9a23ce414325d3c82531868bc1662a4c0621f4e4"
+    },
+    {
+      "source_branch": "listed",
+      "source_path": "frontend/lib/listedness-intelligence/listedness-engine.ts",
+      "consolidated_path": "platform/shared-agents/candidates/listedness/listedness-engine.ts",
+      "sha": "333543c92e6f8c71d548d87718d4a4371c40e435"
+    },
+    {
+      "source_branch": "listed",
+      "source_path": "frontend/lib/listedness-intelligence/types.ts",
+      "consolidated_path": "platform/shared-agents/candidates/listedness/types.ts",
+      "sha": "d282c2a96206709430387f8291e3236d0352b501"
+    }
+  ]
+}
