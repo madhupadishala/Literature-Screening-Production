@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_1_STARTED",
+    "status": "SPRINT_3_1_BASELINE_INVENTORY_CLOSED_SPRINT_3_2_READY",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -90,6 +90,15 @@
       "3.6-engineering-qualification"
     ],
     "preserve_existing_workflow": true,
-    "shared_agents_deferred": true
+    "shared_agents_deferred": true,
+    "sprint_3_1": {
+      "status": "ENGINEERING_BASELINE_AND_TRACEABILITY_CLOSED",
+      "urs_mapped": 64,
+      "frs_mapped": 22,
+      "handler_evidence": "docs/agents/step-03-sprint-3.1-handler-evidence.md",
+      "requirements_inventory": "docs/agents/step-03-literature-urs-frs-traceability.md",
+      "qualifications": "Static code presence only, no verified runtime/CI security PASS; next sprints hold functional and negative tests"
+    },
+    "step3_started": true
   }
 }
