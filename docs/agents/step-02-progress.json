@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_3_ENGINEERING_CLOSED_SPRINT_3_4_READY",
+    "status": "SPRINT_3_4_STARTED",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -120,6 +120,13 @@
       "frontend_ci_run": 38062206548,
       "frontend_ci_conclusion": "success",
       "remaining_outside_scope": "Live shared agent and clinical CSV/UAT qualification is deferred; Sprint 3.4 handles full handoff contract"
+    },
+    "sprint_3_4": {
+      "status": "STARTED_BASELINE_SOURCE_INSPECTED",
+      "report": "docs/agents/step-03-sprint-3.4-intake-handoff.md",
+      "commit": "202f1988e42733343f149aee89efe3570ce5cddf",
+      "next": "Trace actual Intake consumer and verify idempotency, provenance, authorization, error cases and CI",
+      "claim": "No CI or end-to-end execution claimed"
     }
   }
 }
