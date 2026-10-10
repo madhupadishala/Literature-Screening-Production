@@ -24,3 +24,13 @@ URS-LIT-050–053, 070–073, 080–082; FRS-LIT-011, 017–018. Preserve existi
 5. Commit change impact, URS/FRS evidence, CI run ID and formally close Sprint 3.4 only when engineering gates pass.
 
 No replacement pipeline, private-table coupling or live specialist-agent integration is authorized by this sprint.
+
+## Implementation update — consumer contract hardening
+
+Actual downstream route: `frontend/app/api/safety/intake/literature/route.ts` with `INTAKE_CREATE`, forwarding only the export ID to `importLiteratureIntakeExport` in `frontend/lib/safety/common/safety-backbone-service.ts`. The importer uses a tenant/workspace/environment-filtered `FOR UPDATE` query, reuses an already linked Intake record and records a linked source evidence artifact. Source adapter: `frontend/lib/safety/common/literature-intake-adapter.ts`.
+
+**Confirmed defect corrected:** The adapter accepted a structured payload without checking its schema identifier, export ID/version correspondence, or that a human-approved completed MR and INCLUDE screening were present inside the document. These fields are now checked fail-closed at the Intake consumer boundary (commit `8b973e26`). Source-contract regression assertions were added to existing frontend CI script `verify-cleanup-sprint4-literature.ts` (commit `2adef966`).
+
+**Preserved:** Existing versioned export schema, SHA-256 lineage reuse, transaction scope, source article and PMID/DOI, clinical assessment payload, audit trail, and downstream shared Intake adapter.
+
+**Verification:** CI at [run 38063423944](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38063423944) (check run conclusion). This is static code/CI verification, not a claim of replayed full literature-to-Intake UAT. Formal Sprint 3.4 closure remains conditional on passing current frontend CI and contract/lineage test disposition.
