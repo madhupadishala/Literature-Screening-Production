@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_6_STARTED_DEFERRED_QUALIFICATION_REGISTERED",
+    "status": "SPRINT_3_6_TRACEABILITY_COMPLETE_QUALIFICATION_OPEN",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -143,7 +143,7 @@
       "security_gate_run": 38074582368
     },
     "sprint_3_6": {
-      "status": "STARTED_EVIDENCE_CONSOLIDATION",
+      "status": "TRACEABILITY_AND_DEVIATION_RECONCILIATION_COMMITTED_RC_PENDING",
       "report": "docs/agents/step-03-sprint-3.6-engineering-qualification.md",
       "deferred_register": "docs/agents/step-03-deferred-qualification-register.md",
       "deferred_count": 20,
@@ -159,7 +159,20 @@
         38074615920
       ],
       "closure": "NOT_YET_VERIFIED",
-      "leadership_scheduling": "TBD"
+      "leadership_scheduling": "TBD",
+      "traceability": "docs/agents/step-03-requirements-traceability.csv",
+      "requirements_URS": 64,
+      "requirements_FRS": 22,
+      "requirements_total": 86,
+      "qualification_note": "86 controlled requirements mapped to code/test areas, not 86 independently verified PASS; D01 remains open",
+      "ci_head_sha": "db12a60827391f8f4e40aec3707a0cc77e2ae628",
+      "ci_frontend_run": 38076939057,
+      "ci_postgres_runs": [
+        38076939106,
+        38076939090
+      ],
+      "known_platform_failures": "Nexus Step 2 Shared Clinical Engineering, Shared PV Agent Quality, Nexus Clinical Rules PostgreSQL, Cleanup Baseline Benchmark",
+      "release_candidate_status": "NOT_QUALIFIED_WAIT_CI_AND_DEFERRED_VALIDATION"
     }
   }
 }
