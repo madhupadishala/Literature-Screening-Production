@@ -605,7 +605,7 @@ export async function saveScreeningReview(input: {
        JOIN literature_workflow_state workflow ON workflow.package_id = package.id
          AND workflow.tenant_id = package.tenant_id
        WHERE result.tenant_id = $1 AND package.id = $2 AND result.id = $3
-       FOR UPDATE OF result, package`,
+       FOR UPDATE OF result, package, workflow`,
       [input.principal.tenantId, review.packageId, review.screeningResultId],
     );
     if (!target.rows[0]) throw new Error("Screening result was not found in the active tenant.");
