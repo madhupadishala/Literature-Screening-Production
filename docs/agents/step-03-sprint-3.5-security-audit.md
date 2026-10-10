@@ -39,3 +39,13 @@ URS-LIT-001–006, 017, 022–026, 063, 090–093 and URS-LIT-103; FRS-LIT-001�
 **5. Regression/CI.** `frontend/scripts/verify-cleanup-sprint4-literature.ts` now checks Review worklist/Review mutation scope and existing denial markers. [Current frontend quality gate](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38073459218) at `2074fc3b` needs completed-success confirmation. These are static source contracts, not exhaustive live security penetration or row-level database tests.
 
 **Disposition:** **IN PROGRESS — confirmed cross-client vulnerabilities fixed in source; static CI underway.** Do not certify all negative security checks or production deployment from source assertions alone.
+
+
+## Security verification follow-up — isolated database and deployment smoke check
+
+- PostgreSQL isolation/audit regression implemented at `frontend/scripts/verify-step3-5-postgres.sql`, commit `df1da120`. Tests active client list filter, cross-client write denial, cross-tenant write denial and presence of attributable denied audit record in temporary database tables. No patient data or production mutations.
+- Dedicated GitHub Actions workflow `.github/workflows/literature-sprint3-5-security.yml`, commit `ea8ac277`.
+- [Run 38074023407](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38074023407): **SUCCESS** for isolated PostgreSQL security/audit scenarios.
+- Existing Vercel READY deployment found at `literature-screening-production-lq7e-q458zvcwg.vercel.app`, deployment source commit `4ae28281`, which **precedes the fixes in this sprint**. Unauthenticated GET probes to `/api/literature/review` and `/api/literature/intake-input` returned upstream `login_required` from browser fetch, so the protected application route's actual 401/403 status and application audit writing **could not be observed**.
+- Thus, no assertion that the security patches are deployed. Verified isolated SQL/audit persistence is distinct from a real production audit insert. Further HTTP testing requires access to a dedicated UAT deployment using the patched commit, with test identities for two client workspaces and an auditable database.
+- **Disposition:** controlled PostgreSQL regression **PASS**; live unauthorized HTTP application outcome and persisted app audit **BLOCKED BY UPSTREAM LOGIN/DEPLOYMENT**. Do not mark comprehensive Sprint 3.5 security qualification complete.
