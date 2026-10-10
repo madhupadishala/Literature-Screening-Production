@@ -34,3 +34,16 @@ Actual downstream route: `frontend/app/api/safety/intake/literature/route.ts` wi
 **Preserved:** Existing versioned export schema, SHA-256 lineage reuse, transaction scope, source article and PMID/DOI, clinical assessment payload, audit trail, and downstream shared Intake adapter.
 
 **Verification:** CI at [run 38063423944](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38063423944) (check run conclusion). This is static code/CI verification, not a claim of replayed full literature-to-Intake UAT. Formal Sprint 3.4 closure remains conditional on passing current frontend CI and contract/lineage test disposition.
+
+## Engineering closure record — 2026-10-10
+
+**Status: CLOSED — scope-specific source contract and frontend engineering CI passed.** This does not claim a separately executed full database literature-to-Intake end-to-end run or clinical qualification.
+
+- Producer: `frontend/lib/literature/intake-input/intake-input-service.ts`, version `clinixai.literature.intake-input.v1`, SHA-256 lineage reuse, tenant/workspace/environment scoped row lock, preserved source/clinical provenance and export audit.
+- Consumer: `frontend/app/api/safety/intake/literature/route.ts` → `frontend/lib/safety/common/safety-backbone-service.ts` → `frontend/lib/safety/common/literature-intake-adapter.ts`. Import validates `INTAKE_CREATE` authorization, scoped export lookup with row lock, prior-import reuse, and downstream source evidence link.
+- Verified correction: reject unsupported schema, mismatched document export ID/version, unapproved medical review or non-INCLUDE screening at consumer boundary (`8b973e26`).
+- Regression: existing `verify-cleanup-sprint4-literature.ts` now enforces producer/consumer contract markers and guards (`2adef966`). Existing `verify-nexus-sprint2.ts` fixture was aligned with the approved versioned export schema (`85ebc3cd`), after initial CI failed specifically due to an outdated fixture.
+- **PASS**: [ClinixAI Frontend Quality Gate 38063574503](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38063574503), head `85ebc3cd97e0356585c036bbfdcd78364e4b5bfc`. This includes the Nexus Sprint 2 handoff characterization, Literature source-contract checks and frontend production build.
+- **Limitations:** no newly executed production tenant database consumer import/replay in this sprint, and no claim of live model clinical validation; these are maintained under later integrated qualification and release gates. Existing workflow intentionally preserved.
+
+**Next:** Sprint 3.5 — authorization, tenant/workspace/environment isolation, negative access and audit hardening.
