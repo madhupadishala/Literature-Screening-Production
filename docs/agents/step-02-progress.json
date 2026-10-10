@@ -174,5 +174,17 @@
       "known_platform_failures": "Nexus Step 2 Shared Clinical Engineering, Shared PV Agent Quality, Nexus Clinical Rules PostgreSQL, Cleanup Baseline Benchmark",
       "release_candidate_status": "NOT_QUALIFIED_WAIT_CI_AND_DEFERRED_VALIDATION"
     }
+  },
+  "step4": {
+    "status": "STARTED_SOURCE_INVENTORY",
+    "report": "docs/agents/step-04-shared-agent-integration-baseline.md",
+    "baseline_sha": "6d3d16a11129610cb81b37e9dd0d45394f7caf85",
+    "literature_gates": {
+      "frontend": "PASS",
+      "postgres_sprint_3_2": "PASS",
+      "postgres_sprint_3_5": "PASS"
+    },
+    "broader_gates": "FOUR_FAILED_UNRESOLVED",
+    "next": "Select canonical contract and build gated Next.js-to-shared-PV-agent adapter; clinical UAT remains deferred"
   }
 }
