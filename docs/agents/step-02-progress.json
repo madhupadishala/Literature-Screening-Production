@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_5_TECHNICAL_AUTOMATION_COMMITTED_LIVE_UAT_ACCESS_BLOCKED",
+    "status": "SPRINT_3_6_STARTED_DEFERRED_QUALIFICATION_REGISTERED",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -141,6 +141,25 @@
       "http_runner": "frontend/scripts/verify-step3-5-http.mjs",
       "http_runner_commit": "1c1da07ed36fce583bae6456d441d7b91d183dcc",
       "security_gate_run": 38074582368
+    },
+    "sprint_3_6": {
+      "status": "STARTED_EVIDENCE_CONSOLIDATION",
+      "report": "docs/agents/step-03-sprint-3.6-engineering-qualification.md",
+      "deferred_register": "docs/agents/step-03-deferred-qualification-register.md",
+      "deferred_count": 20,
+      "prior_passing_frontend_ci_run": 38074615915,
+      "prior_passing_pg_gates": [
+        38074615950,
+        38074615910
+      ],
+      "known_failed_adjacent_ci": [
+        38074615914,
+        38074615896,
+        38074615900,
+        38074615920
+      ],
+      "closure": "NOT_YET_VERIFIED",
+      "leadership_scheduling": "TBD"
     }
   }
 }
