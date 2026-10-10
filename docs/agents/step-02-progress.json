@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_4_ENGINEERING_CLOSED_SPRINT_3_5_READY",
+    "status": "SPRINT_3_5_STARTED",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -131,6 +131,12 @@
       "frontend_ci_run": 38063574503,
       "conclusion": "success",
       "limitation": "No full live database import/clinical qualification claimed; deferred to consolidated integration/qualification"
+    },
+    "sprint_3_5": {
+      "status": "STARTED_SECURITY_SOURCE_BASELINE",
+      "report": "docs/agents/step-03-sprint-3.5-security-audit.md",
+      "initial_commit": "4f666a263d8075c84fab59a8488d002f058d5ddd",
+      "remaining": "Complete route audit, tenant/workspace negative tests, audit trail verification, CI and confirmed remediation"
     }
   }
 }
