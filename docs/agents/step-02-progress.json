@@ -71,7 +71,7 @@
     "engineering_caveat": "These services do not constitute complete source NLP, full regional receipt-policy mapping, every specialist agent orchestration edge, or activation of 35 Neon draft rules."
   },
   "step3": {
-    "status": "SPRINT_3_4_STARTED",
+    "status": "SPRINT_3_4_ENGINEERING_CLOSED_SPRINT_3_5_READY",
     "module": "Literature Screening",
     "plan": "docs/agents/step-03-literature-module.md",
     "baseline_sources": [
@@ -122,11 +122,15 @@
       "remaining_outside_scope": "Live shared agent and clinical CSV/UAT qualification is deferred; Sprint 3.4 handles full handoff contract"
     },
     "sprint_3_4": {
-      "status": "STARTED_BASELINE_SOURCE_INSPECTED",
+      "status": "CLOSED_SCOPED_ENGINEERING_CI_PASSED",
       "report": "docs/agents/step-03-sprint-3.4-intake-handoff.md",
-      "commit": "202f1988e42733343f149aee89efe3570ce5cddf",
-      "next": "Trace actual Intake consumer and verify idempotency, provenance, authorization, error cases and CI",
-      "claim": "No CI or end-to-end execution claimed"
+      "producer": "frontend/lib/literature/intake-input/intake-input-service.ts",
+      "consumer": "frontend/lib/safety/common/safety-backbone-service.ts",
+      "consumer_contract_fix": "8b973e263f74e325253393547d09c103daa57eea",
+      "fixture_fix": "85ebc3cd97e0356585c036bbfdcd78364e4b5bfc",
+      "frontend_ci_run": 38063574503,
+      "conclusion": "success",
+      "limitation": "No full live database import/clinical qualification claimed; deferred to consolidated integration/qualification"
     }
   }
 }
