@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getPostgresPool } from "@/lib/database/postgres";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 import { activeReviewReferenceData } from "@/lib/literature/review/review-reference-service";
 import type { PatientExtractionExecution } from "@/lib/literature/review/patient-extraction-types";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
@@ -44,6 +45,7 @@ export async function listReviewWorklist(input: {
   limit?: number;
 }): Promise<ReviewWorklistRecord[]> {
   const limit = Math.max(1, Math.min(input.limit ?? 250, 500));
+  const scope = requireSafetyWorkspaceScope(input.principal);
   const result = await getPostgresPool().query<Record<string, unknown>>(
     `
       WITH latest_screening AS (
@@ -86,12 +88,14 @@ export async function listReviewWorklist(input: {
        AND review.screening_result_id = screening.id
       LEFT JOIN application_users reviewer ON reviewer.id = review.reviewed_by
       WHERE workspace.tenant_id = $1
+        AND package.workspace_id = $3
+        AND package.environment = $4
         AND review.review_status = 'approved'
         AND review.final_decision = 'INCLUDE'
       ORDER BY workspace.updated_at DESC
       LIMIT $2
     `,
-    [input.principal.tenantId, limit],
+    [input.principal.tenantId, limit, scope.workspaceId, scope.environment],
   );
 
   return result.rows.map((row) => {
