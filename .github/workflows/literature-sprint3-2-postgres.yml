@@ -1,0 +1,40 @@
+name: Literature Sprint 3.2 PostgreSQL Concurrency Gate
+on:
+  pull_request:
+    paths:
+      - "frontend/lib/literature/hits/**"
+      - "frontend/scripts/verify-step3-2-*"
+      - ".github/workflows/literature-sprint3-2-postgres.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retry-concurrency:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: nexus_test
+          POSTGRES_PASSWORD: nexus_test
+          POSTGRES_DB: nexus_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U nexus_test -d nexus_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Verify atomic retry predicate and single-claim behavior
+        env:
+          PGPASSWORD: nexus_test
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+          psql -h localhost -U nexus_test -d nexus_test -v ON_ERROR_STOP=1 -f frontend/scripts/verify-step3-2-postgres.sql
