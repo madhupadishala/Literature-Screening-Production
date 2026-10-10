@@ -178,6 +178,13 @@ assert.ok(
 );
 const medicalReviewRoute = read("app/api/literature/review/medical/route.ts");
 assert.ok(medicalReviewRoute.includes("PERMISSIONS.MEDICAL_REVIEW"));
+const screeningWorkflow = read("lib/literature/screening/screening-workflow-service.ts");
+const screeningReviewWrite = screeningWorkflow.slice(screeningWorkflow.indexOf("export async function saveScreeningReview("));
+assert.ok(
+  screeningReviewWrite.includes('["REVIEW_COMPLETE", "INTAKE_INPUT_CREATED"].includes(target.rows[0].workflow_state)'),
+  "A finalized case must reject Screening review mutation outside a controlled amendment",
+);
+assert.ok(screeningReviewWrite.includes("FOR UPDATE OF result, package"));
 const intakeRules = read("lib/literature/intake-input/intake-input-governance.ts");
 assert.ok(intakeRules.includes('input.mrReviewStatus !== "APPROVED"'));
 
