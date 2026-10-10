@@ -35,3 +35,27 @@ Each run predates this documentation-only commit. New code/test changes require 
 5. Clinical and regulatory release signoffs remain separate. An engineering evidence package does not waive UAT, GxP CSV, clinical review or deployment verification.
 
 **Disposition:** Sprint 3.6 consolidation *started*, evidence inventory and pending register committed. Full engineering and clinical qualification **not yet completed**. Leadership selects the timing of deferred validation, but cannot claim release sign-off before gates complete.
+
+## Requirement traceability reconciliation — current engineering stage
+
+Controlled source baseline: `docs/requirements/URS/URS_LITERATURE_SCREENING.md` at blob `2d17b896`, and `docs/requirements/FRS/FRS_LITERATURE_SCREENING.md` at blob `50b7fa91`.
+
+**86 unique controlled requirement rows identified: 64 URS and 22 FRS**, each present in `docs/agents/step-03-requirements-traceability.csv`. Each row identifies a relevant implementation or evidence family, prior verification script, assessment state, linked deferred register IDs and explicit qualification caveat. This is comprehensive *inventory mapping*, not 86 independently executed pass results. The final pairwise URS↔FRS review, requirement-specific acceptance tests and QA approval remain **D01**.
+
+### Deviations reconciled from Sprints 3.2–3.5
+| Deviation | Corrective evidence | Engineering disposition | Outstanding |
+|---|---|---|---|
+| Search connector failure not structured | `aea74dff` | FIX_COMMITTED; CI source contracts passed previously | Real provider failure and retry D02–03 |
+| Duplicate simultaneous failed-Hits retry | `2b388d4e`, isolated concurrency CI 38074615950 | ISOLATED_PASS | Production service replay and worker recovery D03 |
+| Completed MR could be saved again | `a1bb3152`, frontend CI 38062206548 | SOURCE_FIX_PASS | Controlled amendment design and reviewer UAT D06–07 |
+| Screening could reopen completed workflow | `79ff9e8e`, row lock `e9a0d2e3` | SOURCE_FIX_PASS | Multi-actor state race D07 |
+| Intake consumer lacked schema/identity/approved-review checks | `8b973e26`, frontend CI 38063574503 | SOURCE_FIX_PASS | Full scoped import and tamper tests D08–09 |
+| Review list/update could span client workspaces inside tenant | `744484c7`, `c1627e5c`, DB gate 38074615910 | ISOLATED_PASS | Live two-client access and audited denial D10–14 |
+| Application denied-access audit | Source best effort, isolated test rows | PARTIAL — not qualified | App-originated audit persistence D12 |
+| Transient in-memory history workspace filtering | Scope of existing source inventory | NOT VERIFIED | D04 |
+| Four failing adjacent CI gates | Runs 38074615914, 38074615896, 38074615900, 38074615920 | OPEN_PLATFORM_FAILURE | D16 |
+
+No confirmed code-level finding is silently waived. The presence of passing Literature-scoped CI is not equivalent to platform-wide release approval.
+
+### Release-candidate evidence interpretation
+At time of this document update, the only **verified passing baseline** is the last inspected SHA `463c822a`, with frontend and dedicated 3.2/3.5 PostgreSQL gates passing. Subsequent commits are documentation and workflow changes and **must not inherit a pass label without checking current SHA CI**. A true release candidate requires the full relevant gate set on a single pinned SHA and a reproducible artifact. See D15–16. No regulated release qualification is represented here.
