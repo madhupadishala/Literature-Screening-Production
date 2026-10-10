@@ -36,3 +36,6 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
           psql -h localhost -U nexus_test -d nexus_test -v ON_ERROR_STOP=1 -f frontend/scripts/verify-step3-5-postgres.sql
+
+      - name: Verify HTTP UAT runner syntax
+        run: node --check frontend/scripts/verify-step3-5-http.mjs
