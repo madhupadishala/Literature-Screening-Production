@@ -43,3 +43,21 @@ Source-level review (not a current runtime or PostgreSQL verification run):
 Source-contract assertions added in `frontend/scripts/verify-step3-2-source-contracts.ts` (commit `06069693`), checking search failure output, atomic retry claim, screening state/locking and Intake review prerequisites. **The script has been committed but not executed in this session**. A current-commit database-backed concurrency test is still necessary before representing retries as verified in production. Failed-worker recovery and review timestamp audit should be evaluated with the larger workflow integration suite.
 
 **Sprint classification: ENGINEERING_FIXES_COMMITTED; VERIFICATION_NOT_CONFIRMED.** No specialist agent live run is necessary for this sprint.
+
+
+## Formal engineering closeout — Sprint 3.2
+
+**Status: CLOSED — scoped engineering gates passed.**
+
+| Closure gate | Evidence | Disposition |
+|---|---|---|
+| Existing frontend quality/step 3.2 source contract verification | GitHub Actions run [38061677036](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38061677036), head `b19ff0a61cc045dd15d665b0401c107b863b8c06` | PASS |
+| Isolated PostgreSQL retry eligibility/tenant-isolation test | GitHub Actions run [38061677077](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38061677077), same head | PASS |
+| Two separate simultaneous PostgreSQL claims of same row | `frontend/scripts/verify-step3-2-parallel-claim.sh`; step 'Verify simultaneous competing PostgreSQL claims' in run 38061677077 | PASS |
+| Source-level governance characterization | Hits review / Screening state / Intake eligibility and source merging inspected in this sprint | NO CONFIRMED UNRESOLVED DEFECT in scoped review |
+
+**Limitations:** The two-session test exercises the same conditional UPDATE/row-lock semantics with a dedicated isolated test table. It does not independently run the entire production `retryProductionHits` service against a real ICSR corpus and it does not qualify the live AI model. These belong to subsequent integration/consolidated qualification. Other unrelated CI workflows may have their own failures, which are not implicitly waived here.
+
+**Corrections:** `aea74dff` structured PubMed failure; `2b388d4e` atomic conditional failed Hits retry; `06069693` regression assertions; `34af9c3c` CI wiring; `07873d31` PostgreSQL predicate test; `1844eca6` simultaneous-session script; `b19ff0a6` concurrency CI wiring.
+
+**Next:** Sprint 3.3 — Medical Review, QC, and specialist contract boundary; do not rebuild or alter previously successful Literature steps without proven failure.
