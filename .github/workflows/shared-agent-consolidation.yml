@@ -1,0 +1,31 @@
+name: Shared Agent Consolidation Gate
+on:
+  push:
+    branches: ["consolidate/nexus-shared-agents"]
+  pull_request:
+    paths:
+      - "platform/shared-agents/**"
+      - ".github/workflows/shared-agent-consolidation.yml"
+jobs:
+  source-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python platform/shared-agents/scripts/verify_sources.py
+  recovered-regressions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pytest pydantic
+      - name: Kimi 8 agent package
+        working-directory: nexus_actual_agent_source_consolidation/packages/kimi_8/nexus_pv_agents
+        run: PYTHONPATH=. python -m pytest -q tests
+      - name: V2 5 agent package
+        working-directory: nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2
+        run: PYTHONPATH=. python -m pytest -q tests
