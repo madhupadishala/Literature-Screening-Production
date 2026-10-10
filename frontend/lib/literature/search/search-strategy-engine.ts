@@ -13,6 +13,7 @@ export interface SearchWorkflowResult
   searchExecuted: boolean;
   workflowStage: "SEARCH_STRATEGY_COMPLETED";
   pubmedResult?: unknown;
+  searchExecutionError?: string;
 }
 
 function createStrategyId(): string {
@@ -69,10 +70,10 @@ class SearchStrategyEngine {
       result.searchExecuted = true;
       result.pubmedResult = pubmedResult;
     } catch (error) {
-      console.error(
-        "PubMed Search Execution Failed",
-        error,
-      );
+      // Return a controlled connector outcome; avoid raw provider errors/PHI in responses.
+      result.searchExecuted = false;
+      result.searchExecutionError = "PUBMED_EXECUTION_FAILED";
+      console.error("PubMed Search Execution Failed");
     }
 
     this.history.unshift(result);
