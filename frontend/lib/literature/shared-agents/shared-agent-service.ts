@@ -43,8 +43,7 @@ export async function proposeSharedAgent(input: {
       !(process.env.NODE_ENV === "test" && endpoint.hostname === "127.0.0.1")) {
       throw new Error("Insecure service origin");
     }
-    if (endpoint.username || endpoint.password || !endpoint.hostname ||
-        !["443", ""].includes(endpoint.port) && process.env.NODE_ENV !== "test") {
+    if (endpoint.username || endpoint.password || !endpoint.hostname) {
       throw new Error("Invalid service origin");
     }
   } catch { throw new SharedAgentUnavailable(); }
