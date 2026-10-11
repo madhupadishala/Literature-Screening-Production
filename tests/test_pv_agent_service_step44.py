@@ -194,5 +194,30 @@ class Step44KnowledgeScopeQualification(unittest.TestCase):
         self.assertEqual(router.build_context_pack.call_args.kwargs["client_id"], "client-a")
 
 
+class Step44PostgresAuditAdapterTests(unittest.TestCase):
+    def test_postgres_audit_appends_scoped_json_and_keeps_id(self):
+        from backend.services.pv_agents.postgres_audit import PostgresAuditStore
+        import psycopg
+        fake_connection = Mock()
+        context = Mock()
+        context.__enter__ = Mock(return_value=fake_connection)
+        context.__exit__ = Mock(return_value=False)
+        with patch.object(psycopg, "connect", return_value=context):
+            store = PostgresAuditStore("postgresql://staging.invalid/db")
+            output = store.append(request(), "seriousness",
+                                  {"input_sha256": request()["input_sha256"], "route": "hitl"})
+        self.assertIn("audit_id", output)
+        self.assertEqual(fake_connection.execute.call_count, 2)
+        params = fake_connection.execute.call_args.args[1]
+        self.assertEqual(params[1:4], ("tenant-a", "client-a", "workspace-a"))
+        self.assertEqual(str(params[-1].obj["audit_id"]), output["audit_id"])
+
+    def test_postgres_audit_rejects_empty_url(self):
+        from backend.services.pv_agents.postgres_audit import PostgresAuditStore
+        for value in (None, "", "sqlite:///local", "file:/tmp/audit"):
+            with self.assertRaises(ValueError):
+                PostgresAuditStore(value)
+
+
 if __name__ == "__main__":
     unittest.main()
