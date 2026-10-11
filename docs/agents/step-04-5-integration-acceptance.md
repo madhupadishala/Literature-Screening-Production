@@ -36,3 +36,14 @@
 - Prepare evidence bundle for independent review and record real results once obtained.
 
 **Next phase:** This is final sprint of Nexus Step 4 roadmap (4.1–4.5); it does not complete all Nexus business modules or clinical AI-agent qualification.
+
+
+## Sprint 4.5 engineering verification — 2026-10-11
+
+- GitHub draft PR: https://github.com/madhupadishala/Literature-Screening-Production/pull/98
+- Regression commit: `94fbcc20b576fac905eb33de4c444e6a3a67175e`
+- CI workflow: PV Specialist Agent Integration, run `38142019673`, completed **SUCCESS**.
+- Executed: `tests/test_step45_release_gates.py` as a mandatory specialist integration workflow gate.
+- Coverage: HTTP bearer auth denial, tenant/client/workspace denial, altered source hash denial, no request dispatch when disabled, no unaudited success on database outage, no acceptance of unqualified worker output, SQLite audit continuity across reinitialized processes and replay rejection. Synthetic offline tests only.
+- Existing live Render controlled staging: HTTPS liveness and readiness previously confirmed; specialist execution remains disabled. No new production deploy for Step 4.5.
+- Cannot mark 4.5-01, 4.5-04, 4.5-05 (hosted), 4.5-07 or 4.5-08 as PASS without actual live validated responses and independent acceptance. Pending statuses are deliberate regulatory controls.
