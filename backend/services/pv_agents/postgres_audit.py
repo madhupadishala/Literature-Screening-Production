@@ -16,20 +16,10 @@ class PostgresAuditStore:
             raise ValueError("A PostgreSQL audit database URL is required")
         import psycopg
         self.database_url = database_url
+        # Migrations run using a separate administrative role. The service role
+        # intentionally has SELECT/INSERT only: never grant it CREATE or UPDATE.
         with psycopg.connect(self.database_url, connect_timeout=8) as db:
-            db.execute("""CREATE TABLE IF NOT EXISTS pv_agent_service_audit (
-                audit_id uuid PRIMARY KEY,
-                tenant_id text NOT NULL,
-                client_id text NOT NULL,
-                workspace_id text NOT NULL,
-                request_id text NOT NULL,
-                agent text NOT NULL,
-                input_sha256 char(64) NOT NULL,
-                output_json jsonb NOT NULL,
-                created_at timestamptz NOT NULL DEFAULT now(),
-                CONSTRAINT pv_agent_service_audit_request_unique
-                  UNIQUE (tenant_id, client_id, request_id)
-            )""")
+            db.execute("SELECT 1 FROM public.pv_agent_service_audit LIMIT 0")
 
     def append(self, request, agent, output):
         from psycopg.errors import UniqueViolation
