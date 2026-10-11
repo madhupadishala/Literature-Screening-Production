@@ -101,13 +101,16 @@ class NexusSpecialistBridge:
             raise IntegrationUnavailable("KnowledgeRouter returned wrong tenant")
         if context.get("client_id") is not None and context["client_id"] != request["client_id"]:
             raise IntegrationUnavailable("KnowledgeRouter returned wrong client")
-        for collection in ("client_rules", "product_master_matches"):
+        for collection in ("client_rules", "general_rules", "product_master_matches"):
             records = context.get(collection, [])
             if not isinstance(records, list):
                 raise IntegrationUnavailable("Invalid controlled knowledge records")
             for record in records:
                 if not isinstance(record, dict):
                     raise IntegrationUnavailable("Invalid controlled knowledge record")
+                record_tenant = record.get("tenant_id")
+                if record_tenant not in (None, request["tenant_id"], "GLOBAL"):
+                    raise IntegrationUnavailable("Cross-tenant knowledge was returned")
                 record_client = record.get("client_id")
                 if record_client is not None and record_client not in (request["client_id"], "GLOBAL"):
                     raise IntegrationUnavailable("Cross-client knowledge was returned")
