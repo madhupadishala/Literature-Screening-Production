@@ -24,9 +24,9 @@ test('real Python service satisfies TypeScript specialist contracts', { timeout:
     process.env.NEXUS_CAUSALITY_ENABLED = 'true';
     process.env.NEXUS_SERIOUSNESS_AGENT_URL = url;
     process.env.NEXUS_PV_AGENT_URL = url;
-    process.env.NEXUS_PV_AGENT_TOKEN = 'contract-test-only';
+    process.env.NEXUS_PV_AGENT_TOKEN = 'contract-fixture-token-minimum-24';
     const input = { tenant_id: 'tenant', client_id: 'client', workspace_id: 'workspace', case_id: 'case', narrative: 'Aspirin was suspected. The patient was hospitalized for bleeding.', source_type: 'literature', event_terms: ['bleeding'] };
-    const seriousness = await assessSeriousness(input, { bearerToken: 'contract-test-only' });
+    const seriousness = await assessSeriousness(input, { bearerToken: 'contract-fixture-token-minimum-24' });
     assert.equal(seriousness.decision, 'serious');
     assert.equal(seriousness.route, 'hitl');
     assert.ok(seriousness.audit_id);
