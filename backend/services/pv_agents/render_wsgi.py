@@ -45,6 +45,31 @@ def application(environ, start_response):
             "clinical_execution_enabled": os.environ.get("NEXUS_PV_AGENTS_ENABLED") == "true",
         })
 
+    if path == "/v1/staging/synthetic-assess" and method == "POST":
+        from .service import ServiceError
+        from .staging_probe import assess_probe
+        try:
+            size = int(environ.get("CONTENT_LENGTH") or 0)
+            if not 1 <= size <= 512:
+                raise ServiceError(400, "Invalid test payload size")
+            raw = environ["wsgi.input"].read(size)
+            body = json.loads(raw)
+            if not isinstance(body, dict) or set(body) != {"request_id"}:
+                raise ServiceError(400, "Only a synthetic request ID is allowed")
+            authorization = environ.get("HTTP_AUTHORIZATION", "")
+            if not authorization.startswith("Bearer "):
+                raise ServiceError(401, "Service authentication required")
+            result = assess_probe(authorization[7:], body["request_id"])
+            return _json(start_response, "200 OK", result)
+        except ServiceError as exc:
+            status = {400: "400 Bad Request", 401: "401 Unauthorized",
+                      403: "403 Forbidden", 409: "409 Conflict",
+                      503: "503 Service Unavailable"}.get(exc.status, "503 Service Unavailable")
+            return _json(start_response, status, {"error": exc.message, "route": "hitl"})
+        except Exception:
+            return _json(start_response, "503 Service Unavailable",
+                         {"error": "Staging probe unavailable", "route": "hitl"})
+
     if os.environ.get("NEXUS_PV_AGENTS_ENABLED") != "true":
         return _json(start_response, "503 Service Unavailable", {
             "error": "Specialist service disabled pending staging qualification",
