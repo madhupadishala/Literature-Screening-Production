@@ -74,3 +74,11 @@ This is not a platform-wide green release candidate.
 6. Fix separately failing platform-wide Step 2/shared agent/clinical rules/cleanup CI before platform release; isolated frontend PASS is not enough.
 
 **Current engineering disposition:** Step 4 adapter, guarded suggestion endpoint and source/contract CI **IMPLEMENTED AND FRONTEND-PASSED**. Live specialist invocation and clinical production qualification **NOT COMPLETE**. No existing Literature decision flow replaced.
+
+## Sprint 4.1 — Canonical contract reconciliation and secure adapter
+
+**Existing canonical implementation discovered after baseline:** `frontend/lib/literature/shared-agents/shared-agent-contract.ts` and `shared-agent-service.ts`, plus frontend CI script `verify-step4-shared-agent-contract.ts`. They already contain `nexus.pv-agent/1`, scoped identity verification, source evidence offsets and audit ID validation, feature flag `NEXUS_LITERATURE_SHARED_AGENTS_ENABLED`, authenticated server-side bearer token, timeout and fail-closed behavior. Do **not** duplicate these contracts.
+
+A redundant adapter and test created during exploration were removed in commits `fd69f767`, `e039a793`. The existing canonical service was hardened to reject service URLs with an unexpected path/query/fragment before constructing the specialist route (`48a5bf7e`, follow-up `c2b0eab3` preserves legitimate private HTTPS ports). Existing Step 4 contract verification now asserts the canonical service remains feature-gated and validates responses (`b05f7e5b`).
+
+**Current engineering disposition:** contract source and origin hardening committed; CI outcome on `b05f7e5b` must be checked before declaring 4.1 passing. No forced activation of workers, no Literature screening mutation, no autonomous acceptance or live specialist invocation. **Next:** trace existing calling sites and safely wire reviewed suggestions only if an actual missing integration is evidenced, with full targeted tests before activation.
