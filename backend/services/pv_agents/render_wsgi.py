@@ -1,6 +1,7 @@
 """Render staging WSGI entrypoint with non-clinical liveness and readiness."""
 import json
 import os
+import logging
 
 
 def _json(start_response, status, payload):
@@ -32,7 +33,10 @@ def application(environ, start_response):
             scopes = json.loads(os.environ["NEXUS_PV_SERVICE_TOKEN_SCOPES"])
             if not isinstance(scopes, dict) or not scopes:
                 raise RuntimeError("Scoped tokens required")
-        except Exception:
+        except Exception as exc:
+            # Log exception type only. Never log database URLs, passwords, or source text.
+            logging.getLogger("nexus.pv.readiness").warning(
+                "Staging readiness unavailable: %s", type(exc).__name__)
             return _json(start_response, "503 Service Unavailable", {
                 "service": "nexus-pv-agents", "ready": False,
             })
