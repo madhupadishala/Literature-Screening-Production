@@ -25,6 +25,7 @@ for (const altered of [
   {...suggestion,tenant_id:"tenant-b"},
   {...suggestion,workspace_id:"client-b"},
   {...suggestion,client_id:"client-b"},
+  {...suggestion,case_id:"wrong-case"},
   {...suggestion,review_required:false},
   {...suggestion,route:"auto-release"},
   {...suggestion,knowledge_version:""},
