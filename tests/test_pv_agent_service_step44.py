@@ -131,6 +131,24 @@ class Step44ServiceQualification(unittest.TestCase):
         self.assertEqual(invoke(request(request_id="request-4"), enabled="false")[0], 503)
         self.assertEqual(invoke(request())[0], 409)
 
+    def test_audit_survives_service_restart_and_replay_stays_blocked(self):
+        original = self.app.assess("seriousness", request(), TOKEN)
+        restarted = PVAgentService(
+            {TOKEN: [SCOPE]}, AuditStore(self.path),
+            drug_agent=Mock(), workers={"seriousness": Mock(return_value=worker_result())},
+            causality_adapter=Mock())
+        with sqlite3.connect(self.path) as db:
+            record = db.execute(
+                "SELECT output_json FROM pv_agent_audit WHERE audit_id = ?",
+                (original["audit_id"],)).fetchone()
+        self.assertIsNotNone(record)
+        self.assertEqual(json.loads(record[0])["input_sha256"], request()["input_sha256"])
+        with self.assertRaises(ServiceError) as replay:
+            restarted.assess("seriousness", request(), TOKEN)
+        self.assertEqual(replay.exception.status, 409)
+        second = restarted.assess("seriousness", request(request_id="request-2"), TOKEN)
+        self.assertNotEqual(second["audit_id"], original["audit_id"])
+
     def test_invalid_token_registration_fails_at_startup(self):
         for scopes in [{}, {"short": [SCOPE]}, {TOKEN: []},
                        {TOKEN: [{"tenant_id": "tenant-a"}]}]:
