@@ -111,6 +111,17 @@ class NexusSpecialistBridge:
                 record_client = record.get("client_id")
                 if record_client is not None and record_client not in (request["client_id"], "GLOBAL"):
                     raise IntegrationUnavailable("Cross-client knowledge was returned")
+        # Citation scope must be checked independently of rule/product collections.
+        citations = context.get("citations", [])
+        if not isinstance(citations, list):
+            raise IntegrationUnavailable("Invalid controlled knowledge citations")
+        for citation in citations:
+            if not isinstance(citation, dict):
+                raise IntegrationUnavailable("Invalid controlled knowledge citation")
+            if citation.get("tenant_id") not in (None, request["tenant_id"], "GLOBAL"):
+                raise IntegrationUnavailable("Cross-tenant citation was returned")
+            if citation.get("client_id") not in (None, request["client_id"], "GLOBAL"):
+                raise IntegrationUnavailable("Cross-client citation was returned")
         # A missing KB document is UNKNOWN, never negative safety evidence.
         return context
 
