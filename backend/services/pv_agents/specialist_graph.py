@@ -15,8 +15,8 @@ from backend.knowledge.knowledge_router import KnowledgeRouter
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 SPECIALIST_PACKAGE = (
-    PROJECT_ROOT / "nexus_actual_agent_source_consolidation" / "packages"
-    / "pv_specialist_core" / "nexus_pv_agents" / "nexus_agents"
+    PROJECT_ROOT / "backend" / "shared_agents" / "vendor"
+    / "kimi_8" / "nexus_pv_agents" / "nexus_agents"
 )
 
 
