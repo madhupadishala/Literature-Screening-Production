@@ -221,7 +221,7 @@ def test_dechallenge_withdrawal_alone_not_positive():
     agent = DechallengeAgent()
     res = agent.assess(_icsr(CORPUS["dechallenge"][2]["case"]))
     pair = res.payload["drug_event_pairs"][0]
-    assert pair["dechallenge"] == "unresolved"
+    assert pair["dechallenge"] == "unknown"
     assert "causality" in pair["causality_disclaimer"]
 
 

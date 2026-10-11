@@ -130,6 +130,20 @@ export function literatureIntakeToSafetyDraft(
   input: LiteratureIntakeAdapterInput,
 ): IntakeDraft {
   const payload = input.payload;
+  if (payload.schema_version !== "clinixai.literature.intake-input.v1") {
+    throw new Error("Unsupported Literature Intake export schema version.");
+  }
+  if (payload.intake_input_id !== input.exportId || payload.export_version !== input.exportVersion) {
+    throw new Error("Literature Intake export identity/version mismatch.");
+  }
+  const review = record(payload.review_assessment);
+  const screening = record(payload.screening_assessment);
+  if (review.workspace_status !== "REVIEW_COMPLETE" ||
+      review.medical_review_status !== "APPROVED" ||
+      screening.review_status !== "approved" ||
+      screening.final_decision !== "INCLUDE") {
+    throw new Error("Literature Intake export lacks completed approved review.");
+  }
   const packageRecord = record(payload.package);
   const article = record(payload.article);
   const reviewAssessment = record(payload.review_assessment);

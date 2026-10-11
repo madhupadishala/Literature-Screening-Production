@@ -74,6 +74,12 @@ jobs:
       - name: Verify governed Screening and Product/MAH logic
         run: npm run screening:verify
 
+      - name: Verify Step 4 shared PV agent adapter contracts
+        run: node --import tsx scripts/verify-step4-shared-agent-contract.ts
+
+      - name: Verify Sprint 3.2 Literature source contracts
+        run: node --import tsx scripts/verify-step3-2-source-contracts.ts
+
       - name: Verify governed Screening-to-Intake handoff
         run: npm run intake:verify
 

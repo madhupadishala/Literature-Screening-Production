@@ -1,0 +1,36 @@
+name: Nexus Step 2 Shared Clinical Engineering
+on:
+  push:
+    branches: ["integration/pv-agents-source-20261009"]
+    paths:
+      - "backend/knowledge/shared_clinical_contracts.py"
+      - "backend/knowledge/clinical_decision_adapters.py"
+      - "backend/knowledge/nexus_specialist_clinical_agents.py"
+      - "backend/agents/drug_role/nexus_agent.py"
+      - "tests/test_shared_clinical_contracts.py"
+      - "tests/test_clinical_decision_adapters.py"
+      - "tests/test_nexus_specialist_clinical_agents.py"
+      - ".github/workflows/nexus-step2-shared-clinical.yml"
+  pull_request:
+    paths:
+      - "backend/knowledge/**"
+      - "backend/agents/drug_role/**"
+      - "tests/test_clinical_decision_adapters.py"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  shared-clinical:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile decision and shared contracts
+        run: python -m compileall -q backend/knowledge/clinical_decision_adapters.py backend/knowledge/shared_clinical_contracts.py backend/agents/drug_role/nexus_agent.py
+      - name: Check shared clinical engineering contracts
+        run: |
+          python -m unittest discover -s tests -p test_shared_clinical_contracts.py -v
+          python -m unittest discover -s tests -p test_clinical_decision_adapters.py -v
+          python -m unittest discover -s tests -p test_nexus_specialist_clinical_agents.py -v

@@ -64,6 +64,9 @@ const literatureDraft = literatureIntakeToSafetyDraft({
   exportSha256: "a".repeat(64),
   generatedAt: "2026-09-22T00:00:00.000Z",
   payload: {
+    schema_version: "clinixai.literature.intake-input.v1",
+    intake_input_id: "11111111-1111-4111-8111-111111111111",
+    export_version: 2,
     package: {
       package_id: "22222222-2222-4222-8222-222222222222",
       package_key: "LIT-PKG-42",
@@ -92,6 +95,7 @@ const literatureDraft = literatureIntakeToSafetyDraft({
         },
       },
       final_decision: "INCLUDE",
+      review_status: "approved",
     },
     review_assessment: {
       patient_segments: [
@@ -102,6 +106,7 @@ const literatureDraft = literatureIntakeToSafetyDraft({
           ageUnit: "year",
         },
       ],
+      workspace_status: "REVIEW_COMPLETE",
       medical_review_status: "APPROVED",
     },
     duplicate_intelligence: [],

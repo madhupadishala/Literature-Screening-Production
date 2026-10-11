@@ -69,6 +69,24 @@ class RechallengeAgent(BaseAgent):
                     or _RECUR.search(s) or _NO_RECUR.search(s)]
         blob = " ".join(relevant) if relevant else narrative
 
+        # Pair-level attribution: a readministration/recurrence elsewhere in a
+        # multi-drug or multi-event report must never be assigned to this pair.
+        # Do not infer a negative rechallenge merely because this pair is silent.
+        if len(case.drugs) > 1 or len(case.events) > 1:
+            source_sentences = [s for s in sentences if drug.name.lower() in s.lower()
+                                and ev.verbatim.lower() in s.lower()]
+            if not source_sentences:
+                return {
+                    "drug": drug.name, "event": ev.verbatim,
+                    "rechallenge": Rechallenge.UNRESOLVED.value,
+                    "e2b_gk9i4": E2B_GK9I4[Rechallenge.UNRESOLVED],
+                    "readministration_documented": False,
+                    "recurrence_documented": False,
+                    "note": "rechallenge evidence not linked to this drug-event pair",
+                    "evidence_quote": None,
+                }
+            blob = " ".join(source_sentences)
+
         hypothetical = bool(_HYPOTHETICAL.search(blob))
         continuation = bool(_CONTINUATION.search(blob))
         accidental = bool(_ACCIDENTAL.search(blob))
