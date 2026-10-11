@@ -1,0 +1,14 @@
+{
+  "policy.reporter_causality_preserved": {
+    "kb": "regulatory",
+    "source": "EMA GVP Module VI",
+    "section_id": "VI.C.6.2.2.4",
+    "version": "Rev 2"
+  },
+  "policy.disagreement_rationale_required": {
+    "kb": "regulatory",
+    "source": "EMA GVP Module VI",
+    "section_id": "VI.C.6.2.2.4",
+    "version": "Rev 2"
+  }
+}
