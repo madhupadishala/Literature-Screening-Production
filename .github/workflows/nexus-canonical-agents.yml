@@ -19,4 +19,4 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m unittest discover -s tests -p "test_canonical_shared_agents.py" -v
-      - run: python -m compileall -q backend/shared_agents backend/services/pv_agents/specialist_graph.py backend/agents/drug_role/nexus_agent.py
+      - run: python -m compileall -q backend/shared_agents/vendor backend/shared_agents/registry.py backend/services/pv_agents/specialist_graph.py backend/agents/drug_role/nexus_agent.py
