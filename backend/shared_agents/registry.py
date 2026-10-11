@@ -40,3 +40,28 @@ def source_inventory() -> dict[str, dict[str, str | bool]]:
                "runtime_registered": False, "clinically_qualified": False}
         for name, path in AGENT_SOURCES.items()
     }
+
+# Earlier engines are preserved at their original import locations while
+# mirrored in this unified custody layer; no silent runtime switch.
+LEGACY_COMPONENTS: dict[str, str] = {
+    "drug_role": "drug_role/nexus_agent.py",
+    "adverse_event": "event_runtime/engine.py",
+    "seriousness": "seriousness_runtime/pipeline.py",
+    "causality": "causality_runtime/pipeline.py",
+    "literature_screening": "screening/orchestrator.py",
+    "literature_hits": "hits/orchestrator.py",
+    "product_resolver": "product_resolver_agent.py",
+    "article_fetch": "article_fetch_agent.py",
+}
+
+def legacy_source_inventory() -> dict[str, dict[str, str | bool]]:
+    """Record old import path and mirrored shared-layer source only."""
+    return {
+        name: {
+            "runtime_path": f"backend/agents/{path}",
+            "shared_mirror_path": f"backend/shared_agents/legacy/{path}",
+            "mirror_present": (ROOT / "legacy" / path).is_file(),
+            "runtime_migrated": False,
+        }
+        for name, path in LEGACY_COMPONENTS.items()
+    }
