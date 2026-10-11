@@ -64,6 +64,24 @@ class SpecialistBridgeContractTests(unittest.TestCase):
         }
         self.assertEqual(len(self.bridge._knowledge(self.request)["citations"]), 2)
 
+    def test_rejects_cross_tenant_shared_rules_and_product_master(self):
+        for collection in ("client_rules", "general_rules", "product_master_matches"):
+            with self.subTest(collection=collection):
+                self.pack.to_dict.return_value = {
+                    "tenant_id": "t1", "client_id": "c1",
+                    collection: [{"tenant_id": "foreign-tenant", "client_id": "c1"}],
+                }
+                with self.assertRaises(IntegrationUnavailable):
+                    self.bridge._knowledge(self.request)
+
+    def test_rejects_cross_client_general_rules(self):
+        self.pack.to_dict.return_value = {
+            "tenant_id": "t1", "client_id": "c1",
+            "general_rules": [{"tenant_id": "t1", "client_id": "foreign-client"}],
+        }
+        with self.assertRaises(IntegrationUnavailable):
+            self.bridge._knowledge(self.request)
+
     def test_rejects_cross_client_product_master(self):
         self.pack.to_dict.return_value = {"tenant_id": "t1", "product_master_matches": [{"client_id": "other"}]}
         with self.assertRaises(IntegrationUnavailable):
