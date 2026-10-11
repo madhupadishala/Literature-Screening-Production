@@ -7,8 +7,6 @@
     }
   ],
   "git": {
-    "deploymentEnabled": {
-      "cleanup/zero-deviation-baseline-20260930": false
-    }
+    "deploymentEnabled": false
   }
 }
