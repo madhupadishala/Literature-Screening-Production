@@ -57,12 +57,20 @@ for (const marker of [
   "package.workspace_id = $2",
   "package.environment = $3",
   "review.tenant_id = $1",
+  "NEXUS_PV_AGENT_DATA_TRANSFER_APPROVED",
+  "NEXUS_PV_AGENT_CLIENT_MAPPING_CONFIRMED",
+  "INSERT INTO audit_events",
+  "LITERATURE_SHARED_AGENT_SUGGESTION",
+  "sourceSha256",
+  "auditId",
+  "knowledgeVersion",
   "proposeSharedAgent",
   'status: "SUGGESTION_ONLY"',
   "reviewRequired: true",
 ]) assert.ok(suggestionRoute.includes(marker), `Missing Step 4 review control: ${marker}`);
 assert.equal(suggestionRoute.includes("UPDATE literature_"), false);
-assert.equal(suggestionRoute.includes("INSERT INTO"), false);
+assert.equal(suggestionRoute.includes("UPDATE literature_"), false);
+assert.equal(suggestionRoute.includes("INSERT INTO literature_"), false);
 
 // Sprint 4.3: opt-in Medical Review UI cannot incorporate specialist output into clinical fields.
 const reviewPage = readFileSync("app/review/page.tsx", "utf8");
