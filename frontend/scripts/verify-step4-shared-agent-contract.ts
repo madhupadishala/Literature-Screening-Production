@@ -64,4 +64,40 @@ for (const marker of [
 assert.equal(suggestionRoute.includes("UPDATE literature_"), false);
 assert.equal(suggestionRoute.includes("INSERT INTO"), false);
 
+// Sprint 4.3: opt-in Medical Review UI cannot incorporate specialist output into clinical fields.
+const reviewPage = readFileSync("app/review/page.tsx", "utf8");
+const suggestionPanel = readFileSync("components/literature/shared-agent-review-panel.tsx", "utf8");
+for (const required of [
+  'import { SharedAgentReviewPanel }',
+  'NEXT_PUBLIC_NEXUS_LITERATURE_SHARED_AGENTS_ENABLED === "true"',
+  'reviewWorkspaceId={selected.workspaceId}',
+  '<SharedAgentReviewPanel',
+  '/api/literature/review/medical',
+]) assert.ok(reviewPage.includes(required), `Medical Review UI integration missing ${required}`);
+for (const required of [
+  '"use client"',
+  '"/api/literature/review/shared-agent"',
+  'reviewRequired !== true',
+  'envelope.data.route !== "hitl"',
+  'evidence_spans',
+  'knowledge_version',
+  'audit_id',
+  'generation.current',
+  'credentials: "same-origin"',
+]) assert.ok(suggestionPanel.includes(required), `Suggestion panel control missing ${required}`);
+for (const forbidden of [
+  '/api/literature/review/medical',
+  '/api/literature/review/causality',
+  '/api/literature/review/labeling',
+  '/api/literature/intake-input',
+  'setMrStatus(',
+  'setMrDecision(',
+  'setCausality(',
+  'setLabels(',
+  'setPatients(',
+]) assert.equal(suggestionPanel.includes(forbidden), false,
+  `Read-only specialist panel must not mutate decisions: ${forbidden}`);
+assert.ok(reviewPage.indexOf('<SharedAgentReviewPanel') < reviewPage.indexOf('4 · Medical Reviewer Finalization'),
+  "Specialist suggestions must remain separate from clinical finalization.");
+
 console.log("Step 4 shared PV agent contract negative verification passed.");
