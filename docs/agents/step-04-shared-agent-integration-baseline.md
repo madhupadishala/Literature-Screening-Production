@@ -82,3 +82,15 @@ This is not a platform-wide green release candidate.
 A redundant adapter and test created during exploration were removed in commits `fd69f767`, `e039a793`. The existing canonical service was hardened to reject service URLs with an unexpected path/query/fragment before constructing the specialist route (`48a5bf7e`, follow-up `c2b0eab3` preserves legitimate private HTTPS ports). Existing Step 4 contract verification now asserts the canonical service remains feature-gated and validates responses (`b05f7e5b`).
 
 **Current engineering disposition:** contract source and origin hardening committed; CI outcome on `b05f7e5b` must be checked before declaring 4.1 passing. No forced activation of workers, no Literature screening mutation, no autonomous acceptance or live specialist invocation. **Next:** trace existing calling sites and safely wire reviewed suggestions only if an actual missing integration is evidenced, with full targeted tests before activation.
+
+## Sprint 4.2 — Scoped Literature invocation (implementation)
+
+New opt-in endpoint: `frontend/app/api/literature/review/shared-agent/route.ts` (commit `d4a40644`).
+- POST requires identity, selected Literature workspace and `MEDICAL_REVIEW` permission through the canonical `requireWorkspaceModulePermission`.
+- Payload accepts only `reviewWorkspaceId` and a canonical agent name; tenant/client, source and case content **cannot be supplied as authorization context** by the caller.
+- DB lookup joins `literature_review_workspaces` to `literature_packages` by tenant, filtering principal tenant, selected client workspace and environment. Missing/unavailable article abstract does not invoke an agent.
+- Server-side `proposeSharedAgent` already feature-gated: `NEXUS_LITERATURE_SHARED_AGENTS_ENABLED` must be true, and the bearer token is server-only. External results must match scope, source hash, evidence and audit ID, and require human review.
+- Response is explicitly `SUGGESTION_ONLY`, `reviewRequired=true`. No update to Literature review, case or Intake state. The new route was included in the existing Literature route-authorization inventory (`075ef301`).
+- `verify-step4-shared-agent-contract.ts` now checks scope and no mutation markers for the route (`38c2e7e4`).
+
+**Release safeguards:** This exposes an optional controlled review suggestion call, not automatic clinical incorporation or production agent activation. Endpoint remains unavailable while feature flag is off. In later Sprint 4.3, assess whether the MR UI should expose a deliberate reviewer action and evidence panel; do not infer readiness from an endpoint alone. Sprint 4.4 must verify audit, failure and retry handling under a real specialist service. Clinical expert acceptance remains deferred per the controlled register.
