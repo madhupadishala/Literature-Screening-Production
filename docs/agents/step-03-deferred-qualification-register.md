@@ -27,6 +27,12 @@
 | D19 | Clinical qualification | Expert-labeled blind benchmark, challenging literature/FAERS cases, confidence, audit, hallucination and human escalation, including long-document processing | Expert-approved reference labels, scored error analysis, qualification report | Clinical AI acceptance | OPEN |
 | D20 | Release | QA validation package, URS/FRS traceability, controlled SOPs, UAT signoff, change control, rollback, security approvals and release authority | Signed CSV/UAT/release evidence | Before regulated production release | OPEN |
 
+| D21 | Step 4 | Confirm authoritative tenant/workspace → client_id mapping for shared PV KnowledgeRouter; reject any conflicting mapping | Signed mapping specification and cross-client adapter tests | Before enabling shared agents | OPEN |
+| D22 | Step 4 | Approve use of regulated source text for internal agent transfer, including privacy/PII de-identification, service TLS, tokens and per-tenant limits | Security/privacy review, approved data flow and redaction test evidence | Before enabling shared agents | OPEN |
+| D23 | Step 4 | Verify real shared-PV endpoint, worker registration, tenant token scopes, audited source citations, timeouts and downstream response versions in UAT | Live integration replay including denial/timeout/invalid evidence and KB retrieval | Shared-agent UAT | OPEN |
+| D24 | Step 4 | Provide reviewer-visible optional specialist suggestion panel, explicit accept/reject rationale, and controlled audit/version linkage to MR without autonomous disposition | Role-sensitive UI/UX test, review audit trail, clinician approval | Before clinical rollout | OPEN |
+| D25 | Step 4 | Repair current failing Shared PV Agent Quality Gate and other affected shared clinical CI; blind cross-agent expert evaluation and authorization before use | Pinned-SHA CI and clinical benchmark signed reports | Before regulated shared-agent release | OPEN |
+
 ## Evidence already attained (do not reclassify as open)
 - Sprint 3.2 isolated PostgreSQL predicate + two-session contention, and frontend verification passed on previously recorded runs.
 - Sprint 3.3 frontend CI passed [38062206548](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38062206548); code-level Medical Review and Screening finalization guards committed.
