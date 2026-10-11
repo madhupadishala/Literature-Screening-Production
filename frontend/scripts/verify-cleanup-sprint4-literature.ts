@@ -46,6 +46,7 @@ const literatureRoutes = [
   "app/api/literature/review/patient-segmentation/route.ts",
   "app/api/literature/review/route.ts",
   "app/api/literature/screening/route.ts",
+  "app/api/literature/shared-agents/route.ts",
   "app/api/literature/search-strategy/route.ts",
   "app/api/literature/translation/route.ts",
   "app/api/literature/workflow/route.ts",
@@ -213,6 +214,23 @@ const denialGuard = read("lib/rbac/workspace-guard.ts");
 assert.ok(denialGuard.includes("WORKSPACE_AUTHORIZATION_DENIED"));
 assert.ok(denialGuard.includes("WORKSPACE_CONTEXT_INVALID"));
 assert.ok(denialGuard.includes("TENANT_PERMISSION_DENIED"));
+
+// Step 4: shared agents remain human-reviewed, scoped and feature-gated.
+const sharedAgentRoute = read("app/api/literature/shared-agents/route.ts");
+const sharedAgentTransport = read("lib/literature/shared-agents/shared-agent-service.ts");
+const sharedAgentContract = read("lib/literature/shared-agents/shared-agent-contract.ts");
+assert.ok(sharedAgentRoute.includes("PERMISSIONS.MEDICAL_REVIEW"));
+assert.ok(sharedAgentRoute.includes("getReviewWorkspaceDetail"));
+assert.ok(sharedAgentRoute.includes("NEXUS_PV_AGENT_DATA_TRANSFER_APPROVED"));
+assert.ok(sharedAgentRoute.includes("NEXUS_PV_AGENT_CLIENT_MAPPING_CONFIRMED"));
+assert.ok(sharedAgentRoute.includes('decisionStatus:"SUGGESTION_ONLY"'));
+assert.ok(sharedAgentRoute.includes("LITERATURE_SHARED_AGENT_SUGGESTION"));
+assert.ok(sharedAgentTransport.includes("requireSafetyWorkspaceScope(input.principal)"));
+assert.ok(sharedAgentTransport.includes("NEXUS_LITERATURE_SHARED_AGENTS_ENABLED"));
+assert.ok(sharedAgentTransport.includes("AbortSignal.timeout(TIMEOUT_MS)"));
+assert.ok(sharedAgentTransport.includes("validateAgentSuggestion(body, input.agent, request)"));
+assert.ok(sharedAgentContract.includes('route: "hitl"'));
+assert.ok(sharedAgentContract.includes("review_required: true"));
 
 console.log(
   `Sprint 4 Literature reconciliation verification passed: ${literatureRoutes.length} workspace-scoped routes and tenant-bound transient histories.`,
