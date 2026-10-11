@@ -2,6 +2,7 @@ import "server-only";
 
 import type { PoolClient } from "pg";
 import { getPostgresPool } from "@/lib/database/postgres";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 import { validateAuditReason } from "@/lib/audit/reason";
 import {
   activeReviewReferenceData,
@@ -63,6 +64,7 @@ async function getWorkspaceForUpdate(input: {
   workspaceId: string;
   client: PoolClient;
 }) {
+  const scope = requireSafetyWorkspaceScope(input.principal);
   const result = await input.client.query(
     `SELECT workspace.*, package.package_key, package.product_context
      FROM literature_review_workspaces workspace
@@ -71,8 +73,10 @@ async function getWorkspaceForUpdate(input: {
       AND package.tenant_id = workspace.tenant_id
      WHERE workspace.id = $1
        AND workspace.tenant_id = $2
+       AND package.workspace_id = $3
+       AND package.environment = $4
      FOR UPDATE OF workspace, package`,
-    [input.workspaceId, input.principal.tenantId],
+    [input.workspaceId, input.principal.tenantId, scope.workspaceId, scope.environment],
   );
   if (!result.rows[0]) {
     throw new Error("Review workspace was not found in the active tenant.");
@@ -709,6 +713,12 @@ export async function saveMedicalReview(input: {
       workspaceId: input.workspaceId,
       client,
     });
+
+    // URS-LIT-064: completed Medical Reviews are immutable outside a controlled amendment.
+    // Apply after the tenant-scoped row lock to prevent concurrent finalization bypass.
+    if (workspace.status === "REVIEW_COMPLETE") {
+      throw new Error("Completed Medical Review cannot be changed without a controlled amendment.");
+    }
 
     if (workspace.patient_segmentation_status !== "COMPLETE") {
       throw new Error("Medical Review requires completed patient segmentation.");

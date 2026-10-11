@@ -74,6 +74,10 @@ class NexusCausalityKnowledgeAdapter:
         seen: set[str] = set()
 
         for rule in [*pack.client_rules, *pack.general_rules]:
+            if rule.get("tenant_id") not in (None, req.tenant_id, "GLOBAL"):
+                raise ValueError("Cross-tenant causality rule returned by KnowledgeRouter")
+            if rule.get("client_id") not in (None, req.client_id, "GLOBAL"):
+                raise ValueError("Cross-client causality rule returned by KnowledgeRouter")
             rid = str(rule.get("rule_id") or "")
             if not rid or rid in seen:
                 continue
@@ -97,6 +101,10 @@ class NexusCausalityKnowledgeAdapter:
             )
 
         for product in pack.product_master_matches if "product_master" in req.knowledge_types else []:
+            if product.get("tenant_id") not in (None, req.tenant_id):
+                raise ValueError("Cross-tenant Product Master record returned")
+            if product.get("client_id") not in (None, req.client_id):
+                raise ValueError("Cross-client Product Master record returned")
             rid = f"product:{product.get('product_id') or product.get('trade_name') or 'unknown'}"
             if rid in seen:
                 continue

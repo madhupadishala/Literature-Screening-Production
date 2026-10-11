@@ -1,0 +1,162 @@
+"""AGENT 6 — Dechallenge Assessment.
+
+Per drug-event pair: combines the action taken (G.k.8) with the documented
+clinical course / outcome (E.i.7) — exactly how the ICH IG defines dechallenge.
+Withdrawal alone is NOT positive dechallenge; improvement alone does NOT
+establish causality.
+"""
+from __future__ import annotations
+
+import re
+from enum import Enum
+
+from ..schemas import ICSR, Inference, ResultStatus
+from .action_taken import ActionTakenAgent
+from .base import BaseAgent
+
+
+class Dechallenge(str, Enum):
+    POSITIVE = "positive"          # withdrawn/reduced AND event improved/resolved
+    NEGATIVE = "negative"          # withdrawn/reduced AND no improvement / worsened / fatal
+    UNKNOWN = "unknown"          # no qualifying action or insufficient course evidence
+    NOT_APPLICABLE = "not_applicable"  # event-specific therapy confounds withdrawal response
+
+
+_IMPROVE = re.compile(r"\b(improv\w+|resolv\w+|recover\w+|subsided|abated|normalized|normalised|cleared|settled)\b", re.I)
+_NO_IMPROVE = re.compile(r"\b(did not improve|no improvement|persist\w+|ongoing|not resolved|continued to (worsen|decline))\b", re.I)
+_WORSEN = re.compile(r"\b(worsen\w+|deteriorat\w+|progressed|aggravat\w+)\b", re.I)
+_TIME_TO_IMPROVE = re.compile(r"(?:within|after)\s+(\d+)\s+(day|days|week|weeks|hour|hours)\s+(?:of|following|after)?\s*(?:discontinu\w+|withdrawal|stopping|cessation|dose reduction)", re.I)
+_CONFOUNDERS = re.compile(r"\b(supportive care|treated with (iv )?fluids|corticosteroid\w*|steroid\w* (were )?(started|given|administered)|antihistamine\w*|epinephrine|adrenaline|dialysis|transfusion)\b", re.I)
+
+
+class DechallengeAgent(BaseAgent):
+    NAME = "dechallenge_assessment"
+    VERSION = "1.0.0"
+    REQUIRED_RULES = ["REQ-ICH-E2B-R3-DECHALLENGE"]
+
+    def assess(self, case: ICSR, action_result=None) -> object:
+        return self.safe_run(self._assess, case, action_result)
+
+    def _assess(self, case: ICSR, action_result):
+        if action_result is None:
+            action_result = ActionTakenAgent(self.register).extract(case)
+        actions = {a["drug"]: a for a in action_result.payload["actions"]}
+        narrative = case.narrative or ""
+
+        r = self.result(status=ResultStatus.CONFIRMED)
+        pairs = []
+        for ev in case.events:
+            for drug in case.drugs:
+                if drug.role not in ("suspect", "interacting"):
+                    continue
+                act = actions.get(drug.name, {})
+                pairs.append(self._assess_pair(case, drug, ev, act, narrative))
+
+        if any(p["dechallenge"] == Dechallenge.NOT_APPLICABLE.value for p in pairs):
+            r.status = ResultStatus.HUMAN_REVIEW_REQUIRED
+            r.uncertainties.append("event-specific therapy may confound the dechallenge assessment")
+        if any(p["dechallenge"] == Dechallenge.UNKNOWN.value for p in pairs):
+            r.status = ResultStatus.UNRESOLVED
+        r.payload = {"case_id": case.case_id, "drug_event_pairs": pairs,
+                     "e2b_note": "Dechallenge is derived from G.k.8 + E.i.7; no separate E2B element exists (REQ-ICH-E2B-R3-DECHALLENGE)."}
+        return r
+
+    def _assess_pair(self, case, drug, ev, act, narrative) -> dict:
+        e2b_action = act.get("e2b_gk8")
+        withdrawn_or_reduced = e2b_action in ("1", "2")
+        evidence = act.get("evidence_quote")
+
+        if not withdrawn_or_reduced:
+            return self._pair(drug, ev, Dechallenge.UNKNOWN, evidence,
+                              "no withdrawal or dose reduction documented", e2b_action)
+
+        outcome = ev.outcome_e2b  # 1/2 improved; 3 not resolved; 5 fatal; 4 resolved w/ sequelae
+        improved_txt = bool(_IMPROVE.search(narrative))
+        not_improved_txt = bool(_NO_IMPROVE.search(narrative))
+        worsened_txt = bool(_WORSEN.search(narrative))
+        confounded = bool(_CONFOUNDERS.search(narrative))
+
+        # Expert-proposed convention: when AE-directed treatment accompanies improvement,
+        # classify N/A while preserving treatment context. A keyword elsewhere in a
+        # multi-event report cannot establish that the treatment was for THIS event.
+        event_treated = confounded and len(case.events) == 1 and len(case.drugs) == 1
+        if event_treated and (ev.outcome_e2b in ("1", "2", "4") or improved_txt):
+            return self._pair(drug, ev, Dechallenge.NOT_APPLICABLE, evidence,
+                              "AE treatment documented alongside recovery; response to withdrawal "
+                              "cannot be isolated under proposed Nexus rule", e2b_action)
+
+        # E.i.7 event outcome does not, by itself, establish dechallenge timing.
+        # Case-wide narrative improvement must not be attributed to a specific
+        # drug-event pair without an explicit source-linked chronology.
+        linked_improvement = bool(re.search(
+            r"(?:after|following)\s+(?:the\s+)?(?:withdrawal|stopping|discontinuation|dose reduction).{0,130}?(?:improv\w+|resolv\w+|recover\w+)"
+            r"|(?:improv\w+|resolv\w+|recover\w+).{0,100}?(?:after|following)\s+(?:the\s+)?(?:withdrawal|stopping|discontinuation|dose reduction)",
+            narrative, re.I))
+        # Explicit outcome linked to a bounded interval after withdrawal.
+        # Example: "rash resolved within 5 days of withdrawal".
+        linked_improvement = linked_improvement or bool(re.search(
+            r"(?:improv\w+|resolv\w+|recover\w+).{0,100}?"
+            r"within\s+\d+\s+(?:hours?|days?|weeks?)\s+of\s+"
+            r"(?:withdrawal|stopping|discontinuation|dose reduction)",
+            narrative, re.I))
+        # PV rule: documented cessation/dose reduction followed by event
+        # improvement or recovery is a positive dechallenge. Structured dates
+        # can establish chronology even when narrative lacks linking phrases.
+        # Do not require complete resolution; recovery in progress also counts.
+        dated_response = (
+            drug.end_date is not None and ev.end_date is not None
+            and ev.end_date >= drug.end_date
+            and outcome in ("1", "2", "4")
+        )
+        # Explicitly sequential event statements in a single drug/event report
+        # can also supply chronology without repeating "after withdrawal".
+        # Multi-pair cases still need pair-specific temporal evidence.
+        single_pair = len(case.drugs) == 1 and len(case.events) == 1
+        narrative_sequence = False
+        if single_pair and evidence and _IMPROVE.search(narrative) and not not_improved_txt:
+            action_pos = narrative.lower().find(str(evidence).lower())
+            if action_pos >= 0:
+                following = narrative[action_pos + len(str(evidence)):]
+                narrative_sequence = bool(_IMPROVE.search(following))
+        linked_improvement = linked_improvement or dated_response or narrative_sequence
+        # Explicit persistence after cessation in a single drug/event case is
+        # negative dechallenge; never project case-wide persistence across pairs.
+        if single_pair and not_improved_txt and not confounded:
+            return self._pair(drug, ev, Dechallenge.NEGATIVE, evidence,
+                "single drug-event report documents withdrawal and persistent event",
+                e2b_action)
+        if not linked_improvement:
+            return self._pair(drug, ev, Dechallenge.UNKNOWN, evidence,
+                "withdrawal reported; temporal drug-event response not established",
+                e2b_action)
+        improved = linked_improvement and (outcome in ("1", "2", "4") or (outcome is None and improved_txt and not not_improved_txt))
+        not_improved = outcome in ("3", "5") or not_improved_txt or worsened_txt
+
+        if improved and not not_improved:
+            m = _TIME_TO_IMPROVE.search(narrative)
+            tti = f"{m.group(1)} {m.group(2)}" if m else None
+            return self._pair(drug, ev, Dechallenge.POSITIVE, evidence,
+                              "drug withdrawn/reduced and event improved/resolved"
+                              + (f"; time to improvement {tti}" if tti else "")
+                              + ". Note: improvement alone does not establish causality.",
+                              e2b_action, time_to_improvement=tti)
+        if not_improved:
+            return self._pair(drug, ev, Dechallenge.NEGATIVE, evidence,
+                              "drug withdrawn/reduced but event did not improve (or worsened/fatal)",
+                              e2b_action)
+        return self._pair(drug, ev, Dechallenge.UNKNOWN, evidence,
+                          "withdrawal documented but clinical course not described", e2b_action)
+
+    @staticmethod
+    def _pair(drug, ev, cls: Dechallenge, evidence, rationale, e2b_action,
+              time_to_improvement=None) -> dict:
+        return {
+            "drug": drug.name, "event": ev.verbatim,
+            "dechallenge": cls.value,
+            "action_e2b_gk8": e2b_action,
+            "event_outcome_e2b_ei7": ev.outcome_e2b,
+            "evidence_quote": evidence,
+            "time_to_improvement": time_to_improvement,
+            "rationale": rationale,
+            "causality_disclaimer": "dechallenge outcome alone does not establish drug causality",
+        }

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalState from "@/components/enterprise/OperationalState";
+import { SharedAgentReviewPanel } from "@/components/literature/shared-agent-review-panel";
 
 type ReviewRecord = {
   workspaceId: string;
@@ -852,6 +853,15 @@ export default function ReviewPage() {
                 {saving === "Causality assessment" ? "Saving…" : "Save Causality"}
               </button>
             </section>
+
+            {process.env.NEXT_PUBLIC_NEXUS_LITERATURE_SHARED_AGENTS_ENABLED === "true" && (
+              <section className="step" aria-label="Optional specialist assessment">
+                <SharedAgentReviewPanel
+                  key={selected.workspaceId}
+                  reviewWorkspaceId={selected.workspaceId}
+                />
+              </section>
+            )}
 
             <section className="step">
               <span>4 · Medical Reviewer Finalization</span>

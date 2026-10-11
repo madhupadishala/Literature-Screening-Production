@@ -103,6 +103,15 @@ def merge_role_decisions(decisions: Iterable[Tuple[DrugRole, float, str, List[Ev
     if not decisions:
         return DrugRole.UNKNOWN, 0.45, "No evidence windows available.", []
 
+    # DR-003: AE-treatment role is retained within the same ICSR; a later
+    # reaction to that treatment warrants separate attribution/review, not
+    # silent reclassification of the initial treatment to SUSPECT.
+    treatment = [d for d in decisions if d[0] == DrugRole.TREATMENT and any(e.evidence_type == "event_treatment" for e in d[3])]
+    if treatment:
+        best_treatment = max(treatment, key=lambda d: d[1])
+        return (DrugRole.TREATMENT, best_treatment[1],
+                "Explicit AE-treatment evidence retained; any later treatment-associated reaction requires linked review.",
+                [e for d in decisions for e in d[3]])
     ranked = sorted(decisions, key=lambda d: d[1], reverse=True)
     best = ranked[0]
     roles = {d[0] for d in decisions if d[1] >= 0.80}

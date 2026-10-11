@@ -802,47 +802,40 @@ export async function retryProductionHits(input: {
   const packageId = input.packageId?.trim();
   if (!packageId) throw new Error("packageId is required.");
 
-  const target = await getPostgresPool().query<{
-    id: string;
-    package_key: string;
-    status: string;
-    title: string;
+  // Atomically claim the failed package before invoking the expensive Hits worker.
+  // Concurrent retries must not both see HITS_REVIEW and start duplicate AI runs.
+  const claimed = await getPostgresPool().query<{
+    id: string; package_key: string; status: string; title: string;
   }>(
-    `SELECT
-       package.id,
-       package.package_key,
-       package.status,
-       COALESCE(package.article_identity->>'title', package.external_reference, package.package_key) AS title
+    `UPDATE literature_workflow_state workflow
+     SET workflow_state = 'HITS_RUNNING',
+         state_version = state_version + 1,
+         state_payload = COALESCE(workflow.state_payload, '{}'::jsonb) ||
+           jsonb_build_object('hitsRetryClaimedAt', now()),
+         updated_by = $3,
+         updated_at = now()
      FROM literature_packages package
-     JOIN literature_workflow_state workflow
-       ON workflow.package_id = package.id
-      AND workflow.tenant_id = package.tenant_id
-     WHERE package.id = $1
+     WHERE workflow.package_id = package.id
+       AND workflow.tenant_id = package.tenant_id
+       AND package.id = $1
        AND package.tenant_id = $2
        AND workflow.workflow_state = 'HITS_REVIEW'
-     LIMIT 1`,
-    [packageId, input.principal.tenantId],
+       AND EXISTS (
+         SELECT 1 FROM LATERAL (
+           SELECT result_payload FROM hits_results latest
+           WHERE latest.tenant_id = package.tenant_id
+             AND latest.package_id = package.id
+           ORDER BY result_version DESC, created_at DESC LIMIT 1
+         ) latest_result
+         WHERE latest_result.result_payload->>'status' = 'HITS_EXECUTION_FAILED'
+       )
+     RETURNING package.id, package.package_key, package.status,
+       COALESCE(package.article_identity->>'title', package.external_reference, package.package_key) AS title`,
+    [packageId, input.principal.tenantId, input.principal.userId],
   );
-
-  const row = target.rows[0];
+  const row = claimed.rows[0];
   if (!row) {
-    throw new Error("The Evidence Package is not eligible for Hits retry in the active tenant.");
-  }
-
-  const latest = await getPostgresPool().query<{
-    result_payload: Record<string, unknown>;
-  }>(
-    `SELECT result_payload
-     FROM hits_results
-     WHERE tenant_id = $1 AND package_id = $2
-     ORDER BY result_version DESC, created_at DESC
-     LIMIT 1`,
-    [input.principal.tenantId, packageId],
-  );
-
-  const latestPayload = latest.rows[0]?.result_payload || {};
-  if (latestPayload.status !== "HITS_EXECUTION_FAILED") {
-    throw new Error("Hits retry is only allowed when the latest Hits execution failed technically.");
+    throw new Error("Hits retry is unavailable: package is not failed, not in review, or already claimed.");
   }
 
   const retryInput: CreatedPackage = {

@@ -118,11 +118,11 @@ def request():
 
 
 def service(tmp_path):
-    return PVAgentService({'test-token':[{'tenant_id':'tenant','client_id':'client','workspace_id':'workspace'}]},AuditStore(str(tmp_path/'audit.sqlite')),drug_agent=DrugAgent())
+    return PVAgentService({'contract-fixture-token-minimum-24':[{'tenant_id':'tenant','client_id':'client','workspace_id':'workspace'}]},AuditStore(str(tmp_path/'audit.sqlite')),drug_agent=DrugAgent())
 
 
 def test_service_records_durable_audit_before_returning(tmp_path):
-    output=service(tmp_path).assess('drug-role',request(),'test-token')
+    output=service(tmp_path).assess('drug-role',request(),'contract-fixture-token-minimum-24')
     assert output['route']=='hitl' and output['review_required'] and output['audit_id']
     with sqlite3.connect(tmp_path/'audit.sqlite') as db:
         stored=json.loads(db.execute('SELECT output_json FROM pv_agent_audit').fetchone()[0])
@@ -130,36 +130,36 @@ def test_service_records_durable_audit_before_returning(tmp_path):
 
 
 def test_duplicate_request_conflicts(tmp_path):
-    s=service(tmp_path);s.assess('drug-role',request(),'test-token')
-    with pytest.raises(ServiceError) as e:s.assess('drug-role',request(),'test-token')
+    s=service(tmp_path);s.assess('drug-role',request(),'contract-fixture-token-minimum-24')
+    with pytest.raises(ServiceError) as e:s.assess('drug-role',request(),'contract-fixture-token-minimum-24')
     assert e.value.status==409
 
 
 @pytest.mark.parametrize('field,value',[('tenant_id','other'),('client_id','other'),('workspace_id','other')])
 def test_service_rejects_foreign_scope(tmp_path,field,value):
     r=request();r[field]=value
-    with pytest.raises(ServiceError) as e:service(tmp_path).assess('drug-role',r,'test-token')
+    with pytest.raises(ServiceError) as e:service(tmp_path).assess('drug-role',r,'contract-fixture-token-minimum-24')
     assert e.value.status==403
 
 
 def test_service_rejects_reference_labels(tmp_path):
     r=request();r['faers_drugs']=[]
-    with pytest.raises(ServiceError) as e:service(tmp_path).assess('drug-role',r,'test-token')
+    with pytest.raises(ServiceError) as e:service(tmp_path).assess('drug-role',r,'contract-fixture-token-minimum-24')
     assert e.value.status==400
 
 
 def test_service_rejects_bad_hash(tmp_path):
     r=request();r['input_sha256']='0'*64
-    with pytest.raises(ServiceError):service(tmp_path).assess('drug-role',r,'test-token')
+    with pytest.raises(ServiceError):service(tmp_path).assess('drug-role',r,'contract-fixture-token-minimum-24')
 
 
 def test_missing_external_decision_worker_is_unavailable(tmp_path):
-    with pytest.raises(ServiceError) as e:service(tmp_path).assess('causality',request(),'test-token')
+    with pytest.raises(ServiceError) as e:service(tmp_path).assess('causality',request(),'contract-fixture-token-minimum-24')
     assert e.value.status==503
 
 
 def test_wsgi_authenticated_caller_and_disabled_gate(tmp_path,monkeypatch):
-    s=service(tmp_path);body=json.dumps(request()).encode();env={'PATH_INFO':'/v1/agents/drug-role/assess','REQUEST_METHOD':'POST','CONTENT_LENGTH':str(len(body)),'HTTP_AUTHORIZATION':'Bearer test-token','wsgi.input':io.BytesIO(body)};statuses=[]
+    s=service(tmp_path);body=json.dumps(request()).encode();env={'PATH_INFO':'/v1/agents/drug-role/assess','REQUEST_METHOD':'POST','CONTENT_LENGTH':str(len(body)),'HTTP_AUTHORIZATION':'Bearer contract-fixture-token-minimum-24','wsgi.input':io.BytesIO(body)};statuses=[]
     result=s(env,lambda status,headers:statuses.append(status))
     assert statuses==['503 Service Unavailable']
     monkeypatch.setenv('NEXUS_PV_AGENTS_ENABLED','true');env['wsgi.input']=io.BytesIO(body);statuses.clear();result=s(env,lambda status,headers:statuses.append(status))
@@ -179,12 +179,12 @@ def test_http_source_to_drug_engine_to_durable_audit(tmp_path, monkeypatch):
     (tmp_path/'Products').mkdir()
     (tmp_path/'Products/tenant_product_master.json').write_text(json.dumps({'products':[{'trade_name':'aspirin','client_id':'client','effective_date':'2025-01-01'}]}))
     agent=NexusDrugRoleAgent(KnowledgeRouter(str(tmp_path),retriever=HybridRetriever(collection=EmptyCollection())))
-    s=PVAgentService({'test-token':[{'tenant_id':'tenant','client_id':'client','workspace_id':'workspace'}]},AuditStore(str(tmp_path/'audit.sqlite')),drug_agent=agent)
+    s=PVAgentService({'contract-fixture-token-minimum-24':[{'tenant_id':'tenant','client_id':'client','workspace_id':'workspace'}]},AuditStore(str(tmp_path/'audit.sqlite')),drug_agent=agent)
     monkeypatch.setenv('NEXUS_PV_AGENTS_ENABLED','true')
     server=make_server('127.0.0.1',0,s,handler_class=Quiet)
     thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
     try:
-        req=urllib.request.Request(f'http://127.0.0.1:{server.server_port}/v1/agents/drug-role/assess',data=json.dumps(request()).encode(),headers={'Authorization':'Bearer test-token','Content-Type':'application/json'})
+        req=urllib.request.Request(f'http://127.0.0.1:{server.server_port}/v1/agents/drug-role/assess',data=json.dumps(request()).encode(),headers={'Authorization':'Bearer contract-fixture-token-minimum-24','Content-Type':'application/json'})
         with urllib.request.urlopen(req,timeout=5) as response:
             out=json.loads(response.read())
         item=out['result']['classifications'][0]

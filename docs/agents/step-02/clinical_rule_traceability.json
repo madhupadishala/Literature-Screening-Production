@@ -1,0 +1,830 @@
+{
+  "schema_version": "nexus.step2.clinical-traceability/1",
+  "date": "2026-10-09",
+  "status": "EXPERT_APPROVED_EXECUTION_PENDING",
+  "intended_stage": "Step 2.1 inventory only; no claim of runtime KB deployment or ruleset execution",
+  "source_inventory": {
+    "agent_source_entries": 17,
+    "distinct_clinical_functions": 16,
+    "merged_function_note": "Historical Conditions and Medical History share one clinical owner; code not merged",
+    "entries": [
+      {
+        "name": "action_taken",
+        "path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/action_taken.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "action_taken",
+        "entrypoint": "extract"
+      },
+      {
+        "name": "dechallenge",
+        "path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/dechallenge.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "dechallenge",
+        "entrypoint": "assess"
+      },
+      {
+        "name": "rechallenge",
+        "path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/rechallenge.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "rechallenge",
+        "entrypoint": "assess"
+      },
+      {
+        "name": "followup",
+        "path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/followup.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "followup",
+        "entrypoint": "generate"
+      },
+      {
+        "name": "icsr_duplicate",
+        "path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/icsr_duplicate.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "icsr_duplicate",
+        "entrypoint": "compare"
+      },
+      {
+        "name": "inclusion_exclusion",
+        "path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/inclusion_exclusion.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "inclusion_exclusion",
+        "entrypoint": "screen"
+      },
+      {
+        "name": "lit_duplicate",
+        "path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/lit_duplicate.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "lit_duplicate",
+        "entrypoint": "assess_pair"
+      },
+      {
+        "name": "med_history",
+        "path": "nexus_actual_agent_source_consolidation/packages/pv_specialist_core/nexus_pv_agents/nexus_agents/agents/med_history.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "med_history",
+        "entrypoint": "extract"
+      },
+      {
+        "name": "day_zero",
+        "path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/day_zero/agent.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "day_zero",
+        "entrypoint": "run"
+      },
+      {
+        "name": "history",
+        "path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/history/agent.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "med_history",
+        "entrypoint": "run"
+      },
+      {
+        "name": "current",
+        "path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/current/agent.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "current",
+        "entrypoint": "run"
+      },
+      {
+        "name": "patient",
+        "path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/patient/agent.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "patient",
+        "entrypoint": "run"
+      },
+      {
+        "name": "reporter",
+        "path": "nexus_actual_agent_source_consolidation/packages/v2_5/nexus_agents_v2/nexus_agents/reporter/agent.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "reporter",
+        "entrypoint": "run"
+      },
+      {
+        "name": "drug_extraction_and_classification",
+        "path": "backend/agents/drug_role/nexus_agent.py",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "drug_extraction_and_classification",
+        "entrypoint": "NexusDrugRoleAgent.run"
+      },
+      {
+        "name": "country_of_incidence",
+        "path": "frontend/lib/ai/coi/coi-agent.ts",
+        "source_ref": "integration/pv-agents-source-20261009",
+        "source_on_integration_branch": true,
+        "clinical_owner": "country_of_incidence",
+        "entrypoint": "runCOI"
+      },
+      {
+        "name": "literature_safety_assessment",
+        "path": "frontend/lib/pv-safety-assessment/assessment-engine.ts",
+        "source_ref": "feat/pv-safety-assessment-engine-v1",
+        "source_on_integration_branch": false,
+        "clinical_owner": "literature_safety_assessment",
+        "entrypoint": "assessPvSafety"
+      },
+      {
+        "name": "adverse_event_extraction",
+        "path": "backend/agents/event_runtime/engine.py",
+        "source_ref": "feat/event-extraction-agent",
+        "source_on_integration_branch": false,
+        "clinical_owner": "adverse_event_extraction",
+        "entrypoint": "EventEngine.run"
+      }
+    ]
+  },
+  "source_authority": {
+    "user_expert": "Dictated Nexus clinical policy; no new expert approval requested",
+    "repo_audit": "docs/agents/step-01-code-audit.json",
+    "preservation": "Previously supplied Drug and AE clinical packages are user-owned local downloads, not asserted as committed in this branch"
+  },
+  "regulatory_note": "References describe supporting data structures, not proof that every Nexus decision convention is mandated. Clinical and jurisdictional conflicts remain explicitly scoped before activation.",
+  "rule_count": 35,
+  "rules": [
+    {
+      "rule_id": "DR-001",
+      "domain": "drug",
+      "requirement": "All medicinal products: suspect, concomitant, treatment and historical; preserve verbatim names, chronology and patient linkage.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DR-001-POS",
+        "DR-001-NEG",
+        "DR-001-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-002",
+      "domain": "drug",
+      "requirement": "Historical drugs have ended before relevant suspect exposure; concomitant drugs overlap suspect exposure; source-specific chronology governs uncertainty.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DR-002-POS",
+        "DR-002-NEG",
+        "DR-002-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-003",
+      "domain": "drug",
+      "requirement": "Treatment for an already occurring AE retains treatment role within that ICSR even if subsequent itching or another AE is attributed to it; preserve new reaction attribution separately, consider separate case only under case policy.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "REQUIRES_APPLICABILITY_REVIEW",
+      "citations": [],
+      "tests": [
+        "DR-003-POS",
+        "DR-003-NEG",
+        "DR-003-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-004",
+      "domain": "drug",
+      "requirement": "Same reported product strength and formulation may contain multiple dosage regimens with independent start, stop, dose, dose unit, frequency and route; repeat exposure and a new event do not automatically create another ICSR.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [
+        {
+          "document": "ICH E2B(R3) IG",
+          "section": "G.k.4.r",
+          "url": "https://database.ich.org/sites/default/files/ICH_E2B%28R3%29_EWG_IWG_ICSR_Implementation_Guide_%28QA%20integration%29_Step3_2025_0718_Assembly_Approved_0.pdf",
+          "scope": "repeatable dosage data; Nexus regimen grouping remains a design policy"
+        }
+      ],
+      "tests": [
+        "DR-004-POS",
+        "DR-004-NEG",
+        "DR-004-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-005",
+      "domain": "drug",
+      "requirement": "Explicitly different strengths or formulations cause distinct drug product records; differences solely in route or dose do not establish a formulation change.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DR-005-POS",
+        "DR-005-NEG",
+        "DR-005-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-006",
+      "domain": "drug",
+      "requirement": "Never infer pharmaceutical form from route (IV does not prove injection formulation); missing strength and form remain unknown; ambiguous product grouping needs review.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DR-006-POS",
+        "DR-006-NEG",
+        "DR-006-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-007",
+      "domain": "drug",
+      "requirement": "Identity and regimen rules apply equally to suspect, concomitant, historical and treatment products.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DR-007-POS",
+        "DR-007-NEG",
+        "DR-007-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-008",
+      "domain": "drug",
+      "requirement": "Where only generic reported, populate Nexus brand and generic fields with generic. Where a verified brand reported, preserve brand and resolve generic ingredient with provenance.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DR-008-POS",
+        "DR-008-NEG",
+        "DR-008-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-009",
+      "domain": "drug",
+      "requirement": "Use versioned WHO Drug and tenant/client product master for identity resolution where available; do company ownership checks ONLY for suspect products.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DR-009-POS",
+        "DR-009-NEG",
+        "DR-009-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-010",
+      "domain": "drug",
+      "requirement": "Generic-only match to MAH master is provisionally company suspect unless verified incompatible product strength, formulation, marketing authorization/market information or other exclusion evidence; avoid definitive identity claims on generic alone.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "REQUIRES_APPLICABILITY_REVIEW",
+      "citations": [],
+      "tests": [
+        "DR-010-POS",
+        "DR-010-NEG",
+        "DR-010-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-011",
+      "domain": "drug",
+      "requirement": "Multiple discontinuous historical exposures must be separately represented with each partial or full start/stop date; NEVER consolidate earliest start and latest stop into continuous exposure; apply to spontaneous and trial data.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [
+        {
+          "document": "ICH E2B(R3) IG",
+          "section": "D.8.r",
+          "url": "https://database.ich.org/sites/default/files/ICH_E2B%28R3%29_EWG_IWG_ICSR_Implementation_Guide_%28QA%20integration%29_Step3_2025_0718_Assembly_Approved_0.pdf",
+          "scope": "repeatable relevant past drug history; one exposure per entry is Nexus convention, not explicitly mandated"
+        }
+      ],
+      "tests": [
+        "DR-011-POS",
+        "DR-011-NEG",
+        "DR-011-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DR-012",
+      "domain": "drug",
+      "requirement": "Previous non-suspected vaccine doses belong to relevant past drug history when clinically relevant; suspected vaccine product/dose belongs with suspects; preserve dose sequence without inventing it.",
+      "owner": "drug_extraction_and_classification",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [
+        {
+          "document": "ICH E2B(R3) Q&A",
+          "section": "4.23",
+          "url": "https://database.ich.org/sites/default/files/ICH_E2B-R3_QA_v2_4_Step4_2022_1202.pdf",
+          "scope": "reported prior vaccine dose representation; verify edition in regulatory review"
+        }
+      ],
+      "tests": [
+        "DR-012-POS",
+        "DR-012-NEG",
+        "DR-012-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-001",
+      "domain": "ae",
+      "requirement": "Extract all explicitly reported clinically adverse events separately under Nexus default, including separately reported rash and itching or fever and body temperature increased; do not silently collapse symptoms under a diagnosis.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-001-POS",
+        "AE-001-NEG",
+        "AE-001-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-002",
+      "domain": "ae",
+      "requirement": "Do not infer diagnosis, disease, disorder or AE from laboratory measurements or vital signs alone; anemia cannot be diagnosed from lab data and fever cannot be inferred merely from measured temperature.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-002-POS",
+        "AE-002-NEG",
+        "AE-002-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-003",
+      "domain": "ae",
+      "requirement": "Before coding, reject purely nonclinical complaints such as 'your product cost me a lot' as AE; preserve source but return no AE.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-003-POS",
+        "AE-003-NEG",
+        "AE-003-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-004",
+      "domain": "ae",
+      "requirement": "Distinguish metaphor/slang/subjective statements including 'I felt like I died' from documented death; do not code fatal outcome without source evidence; route ambiguity for review.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-004-POS",
+        "AE-004-NEG",
+        "AE-004-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-005",
+      "domain": "ae",
+      "requirement": "Preserve paired source verbatim term, agent-selected AE, evidence location, optional terminology suggestion and rationale per extracted event.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-005-POS",
+        "AE-005-NEG",
+        "AE-005-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-006",
+      "domain": "ae",
+      "requirement": "Event outcome is source-grounded: improved means recovering/resolving, disappeared means recovered/resolved, without information unknown; preserve source verbatim.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-006-POS",
+        "AE-006-NEG",
+        "AE-006-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-007",
+      "domain": "ae",
+      "requirement": "Record event onset and cessation at source precision; when recovered date is supported, it may equal event stop date; no invented unsupported dates.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-007-POS",
+        "AE-007-NEG",
+        "AE-007-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-008",
+      "domain": "ae",
+      "requirement": "Relative exact day counts ('15 days back', 'yesterday') may be anchored to a reliable report date; vague phrases ('last month') require partial date precision, not fabricated day.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-008-POS",
+        "AE-008-NEG",
+        "AE-008-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-009",
+      "domain": "ae",
+      "requirement": "Severity (intensity) and regulatory seriousness are separate, independently evidenced assessments; severe does not imply serious.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-009-POS",
+        "AE-009-NEG",
+        "AE-009-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-010",
+      "domain": "ae",
+      "requirement": "Nexus default is every separately reported clinical AE; client-specific coding differences may be configured only through an authorized, compliant scoped policy.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-010-POS",
+        "AE-010-NEG",
+        "AE-010-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "AE-011",
+      "domain": "ae",
+      "requirement": "Clinical NLP interprets regional expressions, slang, negation and temporality, but cannot manufacture clinical findings from ambiguous phrases.",
+      "owner": "adverse_event_extraction",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "AE-011-POS",
+        "AE-011-NEG",
+        "AE-011-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "IRD-001",
+      "domain": "ird",
+      "requirement": "IRD/Day Zero/clock start: for direct MAH cases, first receipt by ANY MAH employee/department of information meeting all four minimum ICSR validity criteria; internal PV transfer delays do not move date.",
+      "owner": "day_zero",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "IRD-001-POS",
+        "IRD-001-NEG",
+        "IRD-001-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "IRD-002",
+      "domain": "ird",
+      "requirement": "MR's first oral awareness from physician and scientist's conference awareness can be MAH awareness; retain original evidence date over later email.",
+      "owner": "day_zero",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "IRD-002-POS",
+        "IRD-002-NEG",
+        "IRD-002-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "IRD-003",
+      "domain": "ird",
+      "requirement": "If first MAH receipt does not meet all minimum validity criteria, document initial information and set valid-case IRD when final criterion is first received.",
+      "owner": "day_zero",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "IRD-003-POS",
+        "IRD-003-NEG",
+        "IRD-003-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "IRD-004",
+      "domain": "ird",
+      "requirement": "For database-searched literature reports, use MAH PV retrieval/stamp date under user's Nexus convention, not article publication date; preserve published and retrieved timestamps separately.",
+      "owner": "day_zero",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "REQUIRES_APPLICABILITY_REVIEW",
+      "citations": [],
+      "tests": [
+        "IRD-004-POS",
+        "IRD-004-NEG",
+        "IRD-004-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "IRD-005",
+      "domain": "ird",
+      "requirement": "For third-party social-media monitoring use report retrieval/first discovery date; for MAH-owned channel direct reports use original qualifying posting date.",
+      "owner": "day_zero",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "REQUIRES_APPLICABILITY_REVIEW",
+      "citations": [],
+      "tests": [
+        "IRD-005-POS",
+        "IRD-005-NEG",
+        "IRD-005-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "IRD-006",
+      "domain": "ird",
+      "requirement": "For partner/vendor-labelled cases, use partner's original valid ICSR receipt date instead of later MAH desk receipt as user's proposed rule; preserve partner source date and transfer date.",
+      "owner": "day_zero",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "REQUIRES_APPLICABILITY_REVIEW",
+      "citations": [],
+      "tests": [
+        "IRD-006-POS",
+        "IRD-006-NEG",
+        "IRD-006-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "ACT-001",
+      "domain": "action",
+      "requirement": "Capture action taken with suspect product per drug, including explicit No Change, Drug Withdrawn, Dose Reduced, Dose Increased, Temporary Interruption, Unknown and Not Applicable.",
+      "owner": "action_taken",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [
+        {
+          "document": "ICH E2B(R3) IG",
+          "section": "G.k.8",
+          "url": "https://database.ich.org/sites/default/files/ICH_E2B%28R3%29_EWG_IWG_ICSR_Implementation_Guide_%28QA%20integration%29_Step3_2025_0718_Assembly_Approved_0.pdf",
+          "scope": "action taken field codes"
+        }
+      ],
+      "tests": [
+        "ACT-001-POS",
+        "ACT-001-NEG",
+        "ACT-001-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DCH-001",
+      "domain": "dechallenge",
+      "requirement": "Positive dechallenge under user's convention: AE improves/resolves after suspect withdrawal or dose reduction without AE-specific treatment; preserve pair-level chronology.",
+      "owner": "dechallenge",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DCH-001-POS",
+        "DCH-001-NEG",
+        "DCH-001-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DCH-002",
+      "domain": "dechallenge",
+      "requirement": "If AE-specific treatment was given and event recovered/improved, user's rule classifies dechallenge Not Applicable; preserve treatment evidence and do not extrapolate cross-event treatment.",
+      "owner": "dechallenge",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "REQUIRES_APPLICABILITY_REVIEW",
+      "citations": [],
+      "tests": [
+        "DCH-002-POS",
+        "DCH-002-NEG",
+        "DCH-002-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "DCH-003",
+      "domain": "dechallenge",
+      "requirement": "When qualifying action or event course is insufficient, dechallenge Unknown rather than Not Assessable; a supported no-improvement course after withdrawal/reduction may be Negative.",
+      "owner": "dechallenge",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "DCH-003-POS",
+        "DCH-003-NEG",
+        "DCH-003-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "RCH-001",
+      "domain": "dechallenge",
+      "requirement": "Under user's convention, if dechallenge is Unknown or Not Applicable, rechallenge defaults Not Applicable; preserve all independently reported re-administration and recurrence evidence rather than discarding it.",
+      "owner": "rechallenge",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "REQUIRES_APPLICABILITY_REVIEW",
+      "citations": [],
+      "tests": [
+        "RCH-001-POS",
+        "RCH-001-NEG",
+        "RCH-001-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    },
+    {
+      "rule_id": "HIST-001",
+      "domain": "history",
+      "requirement": "Historical Conditions and Medical History are one clinical function, not competing agents; include prior clinical conditions and social history (alcohol, tobacco, recreational substances and reported suicidal history).",
+      "owner": "med_history",
+      "source": "Clinical expert dictation in Nexus discussion 2026-10-09",
+      "authority": "USER_APPROVED_NEXUS_BASELINE",
+      "engineering_status": "NOT_VERIFIED_IMPLEMENTED",
+      "regulatory_status": "NO_REGULATORY_CLAIM",
+      "citations": [],
+      "tests": [
+        "HIST-001-POS",
+        "HIST-001-NEG",
+        "HIST-001-AMB"
+      ],
+      "policy_scope": "NEXUS_DEFAULT_DRAFT_FOR_CONTROLLED_ACTIVATION",
+      "expert_approval_status": "APPROVED_FOR_IMPLEMENTATION"
+    }
+  ],
+  "open_topics": [
+    "Clinical rule coverage for patient/reporter/current-condition/COI/duplicate/literature/follow-up agents has not been fully dictated; retain existing logic and do not invent user approval.",
+    "Drug indication mapping has proposed rules but was not signed off in the session.",
+    "Do not interpret No Change as not applicable in Action Taken.",
+    "Nexus treatment-confounded dechallenge/rechallenge convention requires regulatory applicability review before live clinical activation.",
+    "Partial event dates must not use IRD as anchor if source indicates a different reference date.",
+    "Company-suspect market applicability needs time-specific MAH authorization information."
+  ],
+  "expert_approval": {
+    "scope": "all_35_rule_ids",
+    "approved_on": "2026-10-10",
+    "approved_by": "Nexus clinical owner (explicit user authorization)",
+    "meaning": "Requirements approved for implementation; not an assertion that placeholder execution is validated or clinically production-qualified"
+  }
+}

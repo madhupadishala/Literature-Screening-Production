@@ -1,0 +1,26 @@
+# Manually provisioned staging only. No automatic builds or deployments.
+services:
+  - type: web
+    name: nexus-pv-specialists-staging
+    runtime: python
+    plan: free
+    region: singapore
+    branch: integration/nexus-agent-five-steps-20261011
+    autoDeployTrigger: off
+    buildCommand: pip install -r backend/services/pv_agents/requirements-render.txt
+    startCommand: gunicorn backend.services.pv_agents.render_wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.11"
+      - key: NEXUS_PV_AGENTS_ENABLED
+        value: "false"
+      - key: NEXUS_PV_REGISTER_SPECIALISTS
+        value: "false"
+      - key: NEXUS_PV_SPECIALIST_GRAPH_ENABLED
+        value: "false"
+      - key: NEXUS_PV_AUDIT_BACKEND
+        value: postgres
+      - key: NEXUS_PV_AUDIT_DATABASE_URL
+        sync: false
+      - key: NEXUS_PV_SERVICE_TOKEN_SCOPES
+        sync: false

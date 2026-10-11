@@ -1,0 +1,8 @@
+# Hosted Python specialist runtime only (not the Streamlit application).
+-r ../../../requirements-agents.txt
+-r requirements-specialist-graph.txt
+gunicorn==23.0.0
+psycopg[binary]==3.2.10
+defusedxml==0.7.1
+pypdf==6.1.1
+python-docx==1.2.0

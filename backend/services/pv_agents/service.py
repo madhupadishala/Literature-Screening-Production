@@ -49,6 +49,16 @@ class AuditStore:
 
 class PVAgentService:
     def __init__(self, token_scopes, audit_store, drug_agent=None, workers=None, causality_adapter=None):
+        if not isinstance(token_scopes, dict) or not token_scopes:
+            raise ValueError("At least one scoped service token is required")
+        for token, scopes in token_scopes.items():
+            if not isinstance(token, str) or len(token) < 24 or not isinstance(scopes, list) or not scopes:
+                raise ValueError("Invalid service token configuration")
+            if any(not isinstance(scope, dict) or
+                   any(not isinstance(scope.get(key), str) or not scope[key].strip()
+                       for key in ("tenant_id", "client_id", "workspace_id"))
+                   for scope in scopes):
+                raise ValueError("Invalid service scope configuration")
         self.token_scopes, self.audit = token_scopes, audit_store
         self.drug_agent = drug_agent or NexusDrugRoleAgent()
         self.workers = workers or {}
@@ -59,7 +69,7 @@ class PVAgentService:
         scopes = next((v for k, v in self.token_scopes.items() if hmac.compare_digest(k, token)), None)
         if not scopes:
             raise ServiceError(401, "Service authentication required")
-        allowed = {'tenant_id','client_id','workspace_id','request_id','case_id','narrative','source_type','event_terms','input_sha256'}
+        allowed = {'tenant_id','client_id','workspace_id','request_id','case_id','narrative','source_type','event_terms','input_sha256','structured_case','jurisdiction','as_of'}
         if not isinstance(request, dict) or set(request) - allowed:
             raise ServiceError(400, "Invalid agent request fields")
         for key in ['tenant_id','client_id','workspace_id','request_id','case_id','narrative','input_sha256']:
@@ -67,10 +77,12 @@ class PVAgentService:
                 raise ServiceError(400, f"{key} required")
         if not any(all(s.get(k) == request[k] for k in ['tenant_id','client_id','workspace_id']) for s in scopes):
             raise ServiceError(403, "Service token scope mismatch")
-        if len(request['narrative']) > 50_000 and agent in ('seriousness', 'causality'):
+        if len(request['narrative']) > 50_000:
             raise ServiceError(400, 'Specialist narrative exceeds supported 50000 character limit')
         if not isinstance(request.get('event_terms', []), list) or len(request.get('event_terms', [])) > 50 or any(not isinstance(e, str) or not e.strip() or len(e) > 200 for e in request.get('event_terms', [])):
             raise ServiceError(400, 'Invalid event terms')
+        if 'structured_case' in request and (not isinstance(request['structured_case'], dict) or len(json.dumps(request['structured_case'])) > 100_000):
+            raise ServiceError(400, 'Invalid structured ICSR payload')
         digest = hashlib.sha256(request['narrative'].encode()).hexdigest()
         if digest != request['input_sha256']:
             raise ServiceError(400, "Source hash mismatch")
@@ -79,7 +91,7 @@ class PVAgentService:
             confidence = min((c['confidence'] for c in result['classifications']), default=0.0)
             evidence = [e for c in result['classifications'] for e in c['evidence']]
             version = result['knowledge_context'].get('version', 'unqualified-nexus-kb')
-        elif agent in ('seriousness', 'causality') and agent in self.workers:
+        elif agent in ('seriousness', 'causality', 'specialist-icsr') and agent in self.workers:
             worker_request = dict(request)
             if agent == 'causality':
                 context = self.causality_adapter.retrieve(CausalityKnowledgeRequest(
@@ -96,10 +108,12 @@ class PVAgentService:
         if not isinstance(confidence, (int, float)) or isinstance(confidence, bool) or not math.isfinite(confidence) or not 0 <= confidence <= 1 or not isinstance(evidence, list) or not isinstance(version, str) or not version:
             raise ServiceError(502, 'Invalid worker evidence/confidence contract')
         for span in evidence:
-            if not isinstance(span, dict) or not isinstance(span.get('start'), int) or not isinstance(span.get('end'), int) or not 0 <= span['start'] <= span['end'] <= len(request['narrative']) or request['narrative'][span['start']:span['end']] != span.get('text'):
+            if not isinstance(span, dict) or not isinstance(span.get('start'), int) or not isinstance(span.get('end'), int) or isinstance(span['start'], bool) or isinstance(span['end'], bool) or not 0 <= span['start'] < span['end'] <= len(request['narrative']) or request['narrative'][span['start']:span['end']] != span.get('text'):
                 raise ServiceError(502, 'Ungrounded worker evidence')
         output = {'schema_version':'nexus.pv-agent/1','agent':agent, **{k:request[k] for k in ['tenant_id','client_id','workspace_id','request_id','case_id']}, 'input_sha256':digest, 'confidence':confidence, 'route':'hitl', 'review_required':True, 'evidence_spans':evidence, 'knowledge_version':version, 'result':result}
         if agent == 'seriousness':
+            if any(k not in result for k in ('decision', 'criteria_met', 'review_reasons', 'explanation')):
+                raise ServiceError(502, 'Incomplete seriousness worker result')
             output.update({k: result[k] for k in ('decision', 'criteria_met', 'review_reasons', 'explanation')})
             output['execution_id'] = str(uuid4())
         return self.audit.append(request, agent, output)
@@ -129,8 +143,32 @@ class PVAgentService:
 
 
 def create_application():
-    app = PVAgentService(json.loads(os.environ['NEXUS_PV_SERVICE_TOKEN_SCOPES']), AuditStore(os.environ['NEXUS_PV_AUDIT_DB']))
+    if os.environ.get('NEXUS_PV_AUDIT_BACKEND') == 'postgres':
+        from .postgres_audit import PostgresAuditStore
+        audit = PostgresAuditStore(os.environ['NEXUS_PV_AUDIT_DATABASE_URL'])
+    elif os.environ.get('NEXUS_PV_AUDIT_BACKEND') in (None, 'sqlite'):
+        if os.environ.get('RENDER') == 'true':
+            raise ValueError('Render deployment requires durable PostgreSQL audit backend')
+        audit = AuditStore(os.environ['NEXUS_PV_AUDIT_DB'])
+    else:
+        raise ValueError('Unsupported specialist audit backend')
+    app = PVAgentService(json.loads(os.environ['NEXUS_PV_SERVICE_TOKEN_SCOPES']), audit)
     if os.environ.get('NEXUS_PV_REGISTER_SPECIALISTS') == 'true':
         from .workers import build_specialist_workers
         app.workers = build_specialist_workers(app.drug_agent, app.causality_adapter, os.environ['NEXUS_PV_SPECIALIST_AUDIT_DIR'])
+    if os.environ.get('NEXUS_PV_SPECIALIST_GRAPH_ENABLED') == 'true':
+        from .specialist_graph import NexusSpecialistBridge
+        bridge = NexusSpecialistBridge()
+
+        def specialist_worker(req):
+            report = bridge.assess(req)
+            return {
+                'review_required': True,
+                'confidence': 0.0,
+                'evidence_spans': [],
+                'knowledge_version': 'nexus-knowledge-router-scoped',
+                'assessment': report,
+            }
+
+        app.workers['specialist-icsr'] = specialist_worker
     return app

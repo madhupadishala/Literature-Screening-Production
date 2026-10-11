@@ -20,7 +20,7 @@ workers = {
     'seriousness': SeriousnessWorker(SeriousnessPipeline(OfflineBaselineExtractor(), SAudit(str(root/'s.sqlite')), SConfig())),
     'causality': CausalityWorker(CausalityPipeline(UnknownExtractor(), CAudit(str(root/'c.sqlite')), CConfig(), KnowledgeStore(), nexus_client=ScopedRuntimeKnowledge(adapter)), drug),
 }
-app = PVAgentService({'contract-test-only': [{'tenant_id':'tenant','client_id':'client','workspace_id':'workspace'}]}, AuditStore(str(root/'audit.sqlite')), drug, workers, adapter)
+app = PVAgentService({'contract-fixture-token-minimum-24': [{'tenant_id':'tenant','client_id':'client','workspace_id':'workspace'}]}, AuditStore(str(root/'audit.sqlite')), drug, workers, adapter)
 os.environ['NEXUS_PV_AGENTS_ENABLED'] = 'true'
 with make_server('127.0.0.1', 0, app) as server:
     print(f'PORT={server.server_port}', flush=True)
