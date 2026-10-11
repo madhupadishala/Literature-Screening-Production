@@ -2,6 +2,7 @@
 Uses controlled mock specialist responses; NOT live clinical/model qualification.
 """
 import hashlib
+import io
 import json
 import os
 import sqlite3
@@ -103,6 +104,30 @@ class Step44ServiceQualification(unittest.TestCase):
         with patch.object(self.app.audit, "append", side_effect=ServiceError(503, "Audit unavailable")):
             with self.assertRaises(ServiceError):
                 self.app.assess("seriousness", request(), TOKEN)
+
+    def test_wsgi_authenticated_and_denied_http_contract(self):
+        def invoke(payload, token=TOKEN, enabled="true"):
+            body = json.dumps(payload).encode()
+            env = {"REQUEST_METHOD": "POST", "PATH_INFO": "/v1/agents/seriousness/assess",
+                   "CONTENT_LENGTH": str(len(body)), "HTTP_AUTHORIZATION": "Bearer " + token,
+                   "wsgi.input": io.BytesIO(body)}
+            captured = []
+            def start_response(status, headers):
+                captured.append((status, dict(headers)))
+            with patch.dict(os.environ, {"NEXUS_PV_AGENTS_ENABLED": enabled}):
+                output = b"".join(self.app(env, start_response))
+            return int(captured[0][0].split()[0]), captured[0][1], json.loads(output)
+
+        status, headers, body = invoke(request())
+        self.assertEqual(status, 200)
+        self.assertEqual(headers["Cache-Control"], "no-store")
+        self.assertTrue(body["review_required"])
+        self.assertEqual(body["route"], "hitl")
+        self.assertIn("audit_id", body)
+        self.assertEqual(invoke(request(request_id="request-2"), token="not-registered")[0], 401)
+        self.assertEqual(invoke(request(request_id="request-3", client_id="client-b"))[0], 403)
+        self.assertEqual(invoke(request(request_id="request-4"), enabled="false")[0], 503)
+        self.assertEqual(invoke(request())[0], 409)
 
     def test_invalid_token_registration_fails_at_startup(self):
         for scopes in [{}, {"short": [SCOPE]}, {TOKEN: []},
