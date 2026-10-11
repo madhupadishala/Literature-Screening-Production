@@ -31,14 +31,14 @@ def test_specialists_execute_recovered_pipelines_and_commit_scoped_audit(tmp_pat
         'seriousness': SeriousnessWorker(SeriousnessPipeline(OfflineBaselineExtractor(), SAudit(str(tmp_path/'s.sqlite')), SConfig())),
         'causality': CausalityWorker(CausalityPipeline(UnknownExtractor(), CAudit(str(tmp_path/'c.sqlite')), CConfig(), KnowledgeStore(), nexus_client=ScopedRuntimeKnowledge(adapter)), drug),
     }
-    app = PVAgentService({'secret':[{'tenant_id':'tenant','client_id':'client','workspace_id':'workspace'}]}, AuditStore(str(tmp_path/'audit.sqlite')), drug, workers, adapter)
+    app = PVAgentService({'contract-fixture-token-minimum-24':[{'tenant_id':'tenant','client_id':'client','workspace_id':'workspace'}]}, AuditStore(str(tmp_path/'audit.sqlite')), drug, workers, adapter)
     text = 'Aspirin was suspected. The patient was hospitalized for bleeding.'
     base = {'tenant_id':'tenant','client_id':'client','workspace_id':'workspace','case_id':'case','narrative':text,'source_type':'literature','event_terms':['bleeding'],'input_sha256':hashlib.sha256(text.encode()).hexdigest()}
-    serious = app.assess('seriousness', {**base,'request_id':'s'}, 'secret')
+    serious = app.assess('seriousness', {**base,'request_id':'s'}, 'contract-fixture-token-minimum-24')
     assert serious['decision']=='serious' and serious['criteria_met']==['hospitalization']
     assert serious['route']=='hitl' and serious['review_required'] and serious['execution_id']
     assert all(text[s['start']:s['end']]==s['text'] for s in serious['evidence_spans'])
-    causal = app.assess('causality', {**base,'request_id':'c'}, 'secret')
+    causal = app.assess('causality', {**base,'request_id':'c'}, 'contract-fixture-token-minimum-24')
     assert len(causal['result']['pairs'])==1
     assert causal['result']['pairs'][0]['drug'].lower()=='aspirin'
     assert causal['result']['pairs'][0]['label_listed']=='unknown'
