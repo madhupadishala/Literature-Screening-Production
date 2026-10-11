@@ -36,3 +36,41 @@ This is not a platform-wide green release candidate.
 6. Defer full live-model clinical acceptance and cross-specialist calibration to the controlled register `docs/agents/step-03-deferred-qualification-register.md`.
 
 **Engineering gate:** A passing adapter test and frontend build is only an engineering claim. A runnable orchestrator, controlled KB, expert evaluation, security UAT and QA authorization are independent requirements.
+
+## Step 4 implementation record — 2026-10-11
+
+### 4.1 Canonical scoped contract — implemented
+- `frontend/lib/literature/shared-agents/shared-agent-contract.ts` (commit `7b5f6282`) sets `nexus.pv-agent/1`, supports `drug-role`, `seriousness`, `causality`, `specialist-icsr` as service-known identifiers and checks tenant, client, workspace, case, request, source SHA-256, confidence, source-grounded evidence spans, versioned knowledge, durable audit identity and `route=hitl`, `review_required=true`.
+- A response with mismatched scope, unsupported schema, automatic-decision route, ungrounded source evidence or missing governance data is rejected.
+
+### 4.2 Secure Next.js → Python adapter — implemented, disabled by default
+- `frontend/lib/literature/shared-agents/shared-agent-service.ts` (commit `fd02da0f`) invokes canonical `POST /v1/agents/{agent}/assess` using a server-only bearer token and a server-authorized workspace scope; request text hash is calculated on the server.
+- Explicit `NEXUS_LITERATURE_SHARED_AGENTS_ENABLED=true` required. Only HTTPS endpoints are permitted outside test loopback. 8s timeout, no redirect and no-store; generic fail-closed error, no raw narrative or credentials in errors.
+- **Scope caveat:** `client_id` currently maps to authorized `workspaceId` by contract; production use is blocked by a separate explicit mapping-approval switch until this mapping matches KnowledgeRouter/client identifiers.
+
+### 4.3 Human-reviewed Literature integration — opt-in route implemented
+- `frontend/app/api/literature/shared-agents/route.ts` (commit `a2e8d5f6`) requires signed selected Nexus Literature workspace and `MEDICAL_REVIEW` permission.
+- Accepts only `reviewWorkspaceId` and allowed specialist name; loads selected scoped review record server-side, derives the source narrative from the governed article record, and returns **SUGGESTION_ONLY**, `humanReviewRequired=true`.
+- Does **not** update workflow state, label/causality decisions, MR approval, Screening disposition, or Intake handoff. No arbitrary client-provided narrative is forwarded.
+- Enabled only when `NEXUS_LITERATURE_SHARED_AGENTS_ENABLED`, `NEXUS_PV_AGENT_DATA_TRANSFER_APPROVED` and `NEXUS_PV_AGENT_CLIENT_MAPPING_CONFIRMED` are all true. These are intentionally unset by default.
+- Scope limitation: this is a callable API for authorized reviewers, not an integrated UI review panel or a claim that real clinical workers are live.
+
+### 4.4 Failure, audit and provenance — source behavior implemented
+- Unavailable/failed/malformed worker output results in failure, not invented negative clinical evidence.
+- The successful request records `LITERATURE_SHARED_AGENT_SUGGESTION` with scoped tenant/client workspace, actor, environment, source hash, agent, knowledge version, request/audit ID; full article text and bearer tokens are not included in that application audit detail.
+- Audit database errors prevent returning a success response. Independent backend audit persistence, model outputs and full cross-service correlation remain to be verified in live controlled UAT.
+
+### 4.5 Verification
+- `frontend/scripts/verify-step4-shared-agent-contract.ts` (commit `ba0b4d3f`) tests valid contract, swapped tenant/client/workspace/case/input hash, unsupported schema, automatic release, missing knowledge provenance, invalid confidence, and ungrounded evidence.
+- `.github/workflows/frontend-ci.yml` (commit `c54c2245`) runs the negative contract test. Literature route source gate includes the new endpoint and tests its RBAC, flags, scope, review-only result and audit presence (`e8fac577`).
+- [ClinixAI Frontend Quality Gate run 38109097393](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38109097393): **SUCCESS** at code SHA `e8fac577ec3888b33542a0381265d5117131ffbb`, including new source/contract checks and production Next.js build.
+
+### Unfinished, intentionally tracked before clinical use
+1. Confirm real backend service address, scoped bearer identity configuration and service-to-service authentication/authorization in UAT.
+2. Verify KnowledgeRouter resolves `client_id = workspaceId`, or replace this with an authoritative server-side mapping before enabling.
+3. Approve clinical source text transfer/PII handling and trusted service environment; feature flags remain off.
+4. Verify actual downstream specialist workers, shared KB source/citation versioning, timeout, retries, user-visible clinical suggestion UI and audit correlation against a real test tenant.
+5. Execute end-to-end positive/negative multi-user UAT, blind clinical benchmark and regulated CSV as listed in `step-03-deferred-qualification-register.md`.
+6. Fix separately failing platform-wide Step 2/shared agent/clinical rules/cleanup CI before platform release; isolated frontend PASS is not enough.
+
+**Current engineering disposition:** Step 4 adapter, guarded suggestion endpoint and source/contract CI **IMPLEMENTED AND FRONTEND-PASSED**. Live specialist invocation and clinical production qualification **NOT COMPLETE**. No existing Literature decision flow replaced.
