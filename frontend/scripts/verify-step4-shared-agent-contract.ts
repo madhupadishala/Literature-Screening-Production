@@ -38,4 +38,13 @@ for (const altered of [
 }
 assert.throws(()=>requireAgentRequest({...req,tenant_id:""}));
 assert.throws(()=>requireAgentRequest({...req,narrative:"x".repeat(50001)}));
+
+// Verify the canonical server adapter remains opt-in and rejects malformed service origins.
+import { readFileSync } from "node:fs";
+const serviceSource = readFileSync("lib/literature/shared-agents/shared-agent-service.ts", "utf8");
+assert.ok(serviceSource.includes('NEXUS_LITERATURE_SHARED_AGENTS_ENABLED'));
+assert.ok(serviceSource.includes('Unexpected shared service URL components'));
+assert.ok(serviceSource.includes('validateAgentSuggestion(body, input.agent, request)'));
+assert.ok(serviceSource.includes('SharedAgentUnavailable'));
+
 console.log("Step 4 shared PV agent contract negative verification passed.");
