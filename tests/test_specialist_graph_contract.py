@@ -47,6 +47,23 @@ class SpecialistBridgeContractTests(unittest.TestCase):
         with self.assertRaises(IntegrationUnavailable):
             self.bridge._knowledge(self.request)
 
+    def test_rejects_cross_scope_citations(self):
+        for citation in ({"tenant_id": "tenant-other", "client_id": "c1"},
+                         {"tenant_id": "t1", "client_id": "client-other"}):
+            with self.subTest(citation=citation):
+                self.pack.to_dict.return_value = {"tenant_id": "t1", "client_id": "c1",
+                                                  "citations": [citation]}
+                with self.assertRaises(IntegrationUnavailable):
+                    self.bridge._knowledge(self.request)
+
+    def test_accepts_same_client_and_global_citations(self):
+        self.pack.to_dict.return_value = {
+            "tenant_id": "t1", "client_id": "c1",
+            "citations": [{"tenant_id": "t1", "client_id": "c1"},
+                          {"tenant_id": "GLOBAL", "client_id": "GLOBAL"}],
+        }
+        self.assertEqual(len(self.bridge._knowledge(self.request)["citations"]), 2)
+
     def test_rejects_cross_client_product_master(self):
         self.pack.to_dict.return_value = {"tenant_id": "t1", "product_master_matches": [{"client_id": "other"}]}
         with self.assertRaises(IntegrationUnavailable):
