@@ -42,6 +42,7 @@ const literatureRoutes = [
   "app/api/literature/review/causality/route.ts",
   "app/api/literature/review/labeling/route.ts",
   "app/api/literature/review/medical/route.ts",
+  "app/api/literature/review/shared-agent/route.ts",
   "app/api/literature/review/patient-extraction/route.ts",
   "app/api/literature/review/patient-segmentation/route.ts",
   "app/api/literature/review/route.ts",
