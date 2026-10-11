@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PV_AGENT_NAMES, type SharedPVAgentName, type SharedPVAgentSuggestion } from "@/lib/literature/shared-agents/shared-agent-contract";
 
 type SuggestionEnvelope = {
@@ -23,10 +23,15 @@ export function SharedAgentReviewPanel({ reviewWorkspaceId }: { reviewWorkspaceI
   const [suggestion, setSuggestion] = useState<SharedPVAgentSuggestion | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  useEffect(() => { setSuggestion(null); setError(null); }, [reviewWorkspaceId, agent]);
+  const generation = useRef(0);
+  useEffect(() => {
+    generation.current += 1;
+    setSuggestion(null); setError(null); setLoading(false);
+  }, [reviewWorkspaceId, agent]);
 
   async function assess() {
     if (loading || !reviewWorkspaceId) return;
+    const activeGeneration = ++generation.current;
     setSuggestion(null);
     setError(null);
     setLoading(true);
@@ -51,11 +56,11 @@ export function SharedAgentReviewPanel({ reviewWorkspaceId }: { reviewWorkspaceI
           typeof envelope.data.audit_id !== "string") {
         throw new Error("Invalid suggestion governance");
       }
-      setSuggestion(envelope.data);
+      if (activeGeneration === generation.current) setSuggestion(envelope.data);
     } catch {
-      setError("No verified specialist suggestion is available. Continue with the existing medical review workflow.");
+      if (activeGeneration === generation.current) setError("No verified specialist suggestion is available. Continue with the existing medical review workflow.");
     } finally {
-      setLoading(false);
+      if (activeGeneration === generation.current) setLoading(false);
     }
   }
 
