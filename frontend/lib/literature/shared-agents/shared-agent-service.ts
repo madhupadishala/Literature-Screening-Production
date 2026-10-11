@@ -32,13 +32,21 @@ export async function proposeSharedAgent(input: {
   if (!base || !token || !input.caseId?.trim()) throw new SharedAgentUnavailable();
   let endpoint: URL;
   try {
-    endpoint = new URL(`/v1/agents/${input.agent}/assess`, base);
+    const serviceOrigin = new URL(base);
+    // Disallow configured paths, credentials and query overrides at the service boundary.
+    if (serviceOrigin.pathname !== "/" || serviceOrigin.search || serviceOrigin.hash) {
+      throw new Error("Unexpected shared service URL components");
+    }
+    endpoint = new URL(`/v1/agents/${input.agent}/assess`, serviceOrigin);
     // Only private HTTPS services; test environments can use an explicit loopback override.
     if (endpoint.protocol !== "https:" &&
       !(process.env.NODE_ENV === "test" && endpoint.hostname === "127.0.0.1")) {
       throw new Error("Insecure service origin");
     }
-    if (endpoint.username || endpoint.password || !endpoint.hostname) throw new Error("Invalid origin");
+    if (endpoint.username || endpoint.password || !endpoint.hostname ||
+        !["443", ""].includes(endpoint.port) && process.env.NODE_ENV !== "test") {
+      throw new Error("Invalid service origin");
+    }
   } catch { throw new SharedAgentUnavailable(); }
   const request: ScopedAgentRequest = {
     tenant_id: input.principal.tenantId,
