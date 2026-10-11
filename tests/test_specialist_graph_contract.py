@@ -37,6 +37,25 @@ class SpecialistBridgeContractTests(unittest.TestCase):
         with self.assertRaises(IntegrationUnavailable):
             self.bridge._knowledge(self.request)
 
+    def test_rejects_cross_client_context(self):
+        self.pack.to_dict.return_value = {"tenant_id": "t1", "client_id": "other", "citations": []}
+        with self.assertRaises(IntegrationUnavailable):
+            self.bridge._knowledge(self.request)
+
+    def test_rejects_cross_client_rules(self):
+        self.pack.to_dict.return_value = {"tenant_id": "t1", "client_rules": [{"client_id": "other"}]}
+        with self.assertRaises(IntegrationUnavailable):
+            self.bridge._knowledge(self.request)
+
+    def test_rejects_cross_client_product_master(self):
+        self.pack.to_dict.return_value = {"tenant_id": "t1", "product_master_matches": [{"client_id": "other"}]}
+        with self.assertRaises(IntegrationUnavailable):
+            self.bridge._knowledge(self.request)
+
+    def test_accepts_explicit_global_and_scoped_rules(self):
+        self.pack.to_dict.return_value = {"tenant_id": "t1", "client_rules": [{"client_id": "c1"}, {"client_id": "GLOBAL"}]}
+        self.assertEqual(self.bridge._knowledge(self.request)["tenant_id"], "t1")
+
     def test_fails_closed_when_retrieval_unavailable(self):
         self.router.build_context_pack.side_effect = RuntimeError("Knowledge index unavailable")
         with self.assertRaises(RuntimeError):
