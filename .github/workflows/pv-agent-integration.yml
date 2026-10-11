@@ -17,6 +17,7 @@ on:
       - "tests/test_specialist_graph_contract.py"
       - "tests/test_pv_agent_service_step44.py"
       - "tests/test_step45_release_gates.py"
+      - "tests/test_step45_hosted_probe.py"
       - "backend/shared_agents/**"
       - ".github/workflows/pv-agent-integration.yml"
   workflow_dispatch:
@@ -50,6 +51,7 @@ jobs:
           python -m unittest discover -s tests -p test_specialist_graph_contract.py -v
           python -m unittest discover -s tests -p test_pv_agent_service_step44.py -v
           python -m unittest discover -s tests -p test_step45_release_gates.py -v
+          python -m unittest discover -s tests -p test_step45_hosted_probe.py -v
           python -m unittest discover -s tests -p test_clinical_dechallenge_regression.py -v
           python -m unittest discover -s tests -p test_clinical_rechallenge_attribution.py -v
           python -m unittest discover -s tests -p test_clinical_output_contracts.py -v
