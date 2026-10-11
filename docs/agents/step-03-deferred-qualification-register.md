@@ -1,8 +1,8 @@
-# Nexus Step 3 — Deferred work and qualification register
+# Nexus Steps 3–4 — Deferred work and qualification register
 
 **Owner of scheduling:** TheClinixAI leadership. **Technical preparation/execution:** engineering/assistant subject to authorized environment access. **Clinical acceptance:** PV experts; **quality/release sign-off:** authorized QA/business stakeholders.
 
-**Policy:** Finish safe in-repository engineering and evidence first. Schedule environment-dependent validation, expert review and full UAT as a consolidated program when required; do not treat any deferred item as verified or approved. Carry forward items from Sprints 3.1–3.6 and adjacent Step 2/shared-agent blockers. Do not replace an existing working workflow simply because live qualification is deferred.
+**Policy:** Finish safe in-repository engineering and evidence first. Schedule environment-dependent validation, expert review and full UAT as a consolidated program when required; do not treat any deferred item as verified or approved. Carry forward items from Sprints 3.1–3.6, Step 4 shared-agent integration and adjacent Step 2/shared-agent blockers. Do not replace an existing working workflow simply because live qualification is deferred.
 
 | ID | Origin | Deferred activity | Required completion evidence | Earliest sensible point | Status |
 |---|---|---|---|---|---|
@@ -41,6 +41,6 @@
 - Most recent inspected head `463c822a`: frontend gate [38074615915](https://github.com/madhupadishala/Literature-Screening-Production/actions/runs/38074615915) and 3.2/3.5 PostgreSQL gates passed. Other platform-wide CI was not all green.
 
 ## Scheduling recommendation
-**Now:** code consolidation and evidence compilation; **later, when a UAT environment is required:** D10, D14, then D11–D13 and D08–D09; **clinical acceptance:** D05, D07, D17–D19; **pre-release:** D01, D03, D06 if applicable, D15–D16 and D20. Dates intentionally **TBD by leadership**. Prerequisites cannot be waived just because activities are deferred.
+**Now:** code consolidation and evidence compilation; **later, when a UAT environment is required:** D10, D14, then D11–D13 and D08–D09; **clinical acceptance:** D05, D07, D17–D19; **shared-agent activation:** D21–D25; **pre-release:** D01, D03, D06 if applicable, D15–D16 and D20. Dates intentionally **TBD by leadership**. Prerequisites cannot be waived just because activities are deferred.
 
 No item is declared complete solely because a test script, architecture, or source-level fix exists.
