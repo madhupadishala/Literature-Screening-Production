@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { PV_AGENT_NAMES, type SharedPVAgentName, type SharedPVAgentSuggestion } from "@/lib/literature/shared-agents/shared-agent-contract";
 
 type SuggestionEnvelope = {
@@ -24,10 +24,6 @@ export function SharedAgentReviewPanel({ reviewWorkspaceId }: { reviewWorkspaceI
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const generation = useRef(0);
-  useEffect(() => {
-    generation.current += 1;
-    setSuggestion(null); setError(null); setLoading(false);
-  }, [reviewWorkspaceId, agent]);
 
   async function assess() {
     if (loading || !reviewWorkspaceId) return;
@@ -69,7 +65,13 @@ export function SharedAgentReviewPanel({ reviewWorkspaceId }: { reviewWorkspaceI
       <h3 className="font-semibold">Shared PV specialist suggestions</h3>
       <p className="text-sm">Advisory only. Specialist output is not a verified clinical fact and cannot approve, reject, or transfer a case.</p>
       <label className="block text-sm" htmlFor="shared-pv-agent">Specialist</label>
-      <select id="shared-pv-agent" value={agent} onChange={(e) => setAgent(e.target.value as SharedPVAgentName)}
+      <select id="shared-pv-agent" value={agent} onChange={(e) => {
+          generation.current += 1;
+          setAgent(e.target.value as SharedPVAgentName);
+          setSuggestion(null);
+          setError(null);
+          setLoading(false);
+        }}
         disabled={loading} className="rounded border p-2">
         {PV_AGENT_NAMES.map((name) => <option key={name} value={name}>{LABELS[name]}</option>)}
       </select>
