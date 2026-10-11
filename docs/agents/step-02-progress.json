@@ -176,7 +176,7 @@
     }
   },
   "step4": {
-    "status": "STARTED_SOURCE_INVENTORY",
+    "status": "STEP_4_SCOPED_ENGINEERING_IMPLEMENTED_LIVE_ACTIVATION_BLOCKED",
     "report": "docs/agents/step-04-shared-agent-integration-baseline.md",
     "baseline_sha": "6d3d16a11129610cb81b37e9dd0d45394f7caf85",
     "literature_gates": {
@@ -185,6 +185,19 @@
       "postgres_sprint_3_5": "PASS"
     },
     "broader_gates": "FOUR_FAILED_UNRESOLVED",
-    "next": "Select canonical contract and build gated Next.js-to-shared-PV-agent adapter; clinical UAT remains deferred"
+    "next": "Confirm client mapping/PII and service configuration, add review UI and live integration UAT under deferred qualification",
+    "source_contract": "frontend/lib/literature/shared-agents/shared-agent-contract.ts",
+    "server_adapter": "frontend/lib/literature/shared-agents/shared-agent-service.ts",
+    "review_only_route": "frontend/app/api/literature/shared-agents/route.ts",
+    "contract_test": "frontend/scripts/verify-step4-shared-agent-contract.ts",
+    "frontend_ci_pass_run": 38109097393,
+    "frontend_ci_pass_sha": "e8fac577ec3888b33542a0381265d5117131ffbb",
+    "latest_contract_addendum": "ef1d119a67bde021b68b649be230c027649dba7b",
+    "live_service_enabled": false,
+    "clinical_qualification": "NOT_RUN",
+    "client_mapping": "REQUIRES_APPROVAL",
+    "source_data_transfer": "REQUIRES_APPROVAL",
+    "deferred_register": "docs/agents/step-03-deferred-qualification-register.md",
+    "deferred_total": 25
   }
 }
