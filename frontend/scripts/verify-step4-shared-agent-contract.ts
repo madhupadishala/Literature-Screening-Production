@@ -47,4 +47,21 @@ assert.ok(serviceSource.includes('Unexpected shared service URL components'));
 assert.ok(serviceSource.includes('validateAgentSuggestion(body, input.agent, request)'));
 assert.ok(serviceSource.includes('SharedAgentUnavailable'));
 
+
+// Review suggestions cannot bypass the scoped Literature Medical Review route.
+const suggestionRoute = readFileSync("app/api/literature/review/shared-agent/route.ts", "utf8");
+for (const marker of [
+  "requireWorkspaceModulePermission",
+  "NEXUS_MODULES.LITERATURE",
+  "PERMISSIONS.MEDICAL_REVIEW",
+  "package.workspace_id = $2",
+  "package.environment = $3",
+  "review.tenant_id = $1",
+  "proposeSharedAgent",
+  'status: "SUGGESTION_ONLY"',
+  "reviewRequired: true",
+]) assert.ok(suggestionRoute.includes(marker), `Missing Step 4 review control: ${marker}`);
+assert.equal(suggestionRoute.includes("UPDATE literature_"), false);
+assert.equal(suggestionRoute.includes("INSERT INTO"), false);
+
 console.log("Step 4 shared PV agent contract negative verification passed.");
