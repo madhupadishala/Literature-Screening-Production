@@ -12,6 +12,8 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 from backend.services.pv_agents.service import AuditStore, PVAgentService, ServiceError
+from backend.engines.causality.nexus_kb_adapter import NexusCausalityKnowledgeAdapter, CausalityKnowledgeRequest
+from datetime import date
 
 TOKEN = "controlled-test-token-1234567890"
 SCOPE = {"tenant_id": "tenant-a", "client_id": "client-a", "workspace_id": "workspace-a"}
@@ -135,6 +137,43 @@ class Step44ServiceQualification(unittest.TestCase):
             with self.subTest(scopes=scopes):
                 with self.assertRaises(ValueError):
                     PVAgentService(scopes, AuditStore(self.path), drug_agent=Mock(), causality_adapter=Mock())
+
+
+class Step44KnowledgeScopeQualification(unittest.TestCase):
+    def test_causality_retrieval_rejects_cross_client_and_tenant_records(self):
+        router = Mock()
+        adapter = NexusCausalityKnowledgeAdapter(router=router)
+        req = CausalityKnowledgeRequest(
+            tenant_id="tenant-a", client_id="client-a", query="test drug-event",
+            knowledge_types=("general_pv", "tenant_override", "product_master"),
+            jurisdiction="GLOBAL", as_of=date(2026, 10, 11))
+        for source, record in (
+            ("client_rules", {"rule_id": "bad-client", "client_id": "client-b"}),
+            ("general_rules", {"rule_id": "bad-tenant", "tenant_id": "tenant-b"}),
+            ("product_master_matches", {"product_id": "bad-product", "client_id": "client-b"}),
+        ):
+            with self.subTest(source=source):
+                pack = Mock(client_rules=[], general_rules=[], product_master_matches=[])
+                setattr(pack, source, [record])
+                router.build_context_pack.return_value = pack
+                with self.assertRaises(ValueError):
+                    adapter.retrieve(req)
+
+    def test_causality_retrieval_keeps_scoped_references(self):
+        router = Mock()
+        router.build_context_pack.return_value = Mock(
+            client_rules=[{"rule_id": "client-rule", "tenant_id": "tenant-a",
+                           "client_id": "client-a", "rule_text": "Reviewed rule"}],
+            general_rules=[], product_master_matches=[])
+        adapter = NexusCausalityKnowledgeAdapter(router=router)
+        req = CausalityKnowledgeRequest(
+            tenant_id="tenant-a", client_id="client-a", query="controlled source",
+            knowledge_types=("general_pv",), jurisdiction="GLOBAL",
+            as_of=date(2026, 10, 11))
+        result = adapter.retrieve(req)
+        self.assertEqual(len(result.citations), 1)
+        self.assertEqual(result.citations[0].metadata["client_id"], "client-a")
+        self.assertEqual(router.build_context_pack.call_args.kwargs["client_id"], "client-a")
 
 
 if __name__ == "__main__":
