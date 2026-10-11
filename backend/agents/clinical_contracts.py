@@ -56,7 +56,8 @@ class ClinicalFinding(BaseModel):
     def clinical_evidence_gate(self):
         if self.status == ClinicalStatus.SUPPORTED and not self.evidence:
             raise ValueError("Supported finding requires source evidence")
-        if self.status in (ClinicalStatus.UNKNOWN, ClinicalStatus.CONFLICTING,
+        if self.status in (ClinicalStatus.POSSIBLE, ClinicalStatus.UNKNOWN,
+                           ClinicalStatus.CONFLICTING,
                            ClinicalStatus.PROCESSING_FAILED) and not self.reviewer_required:
             raise ValueError("Uncertain/failed findings require review")
         return self
