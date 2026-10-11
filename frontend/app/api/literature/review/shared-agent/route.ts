@@ -23,6 +23,11 @@ export async function POST(request: NextRequest): Promise<Response> {
     const principal = await requireWorkspaceModulePermission(
       request, NEXUS_MODULES.LITERATURE, PERMISSIONS.MEDICAL_REVIEW,
     );
+    if (process.env.NEXUS_LITERATURE_SHARED_AGENTS_ENABLED !== "true" ||
+        process.env.NEXUS_PV_AGENT_DATA_TRANSFER_APPROVED !== "true" ||
+        process.env.NEXUS_PV_AGENT_CLIENT_MAPPING_CONFIRMED !== "true") {
+      return Response.json({ success: false, code: "AGENT_NOT_CONFIGURED" }, { status: 503 });
+    }
     const body: unknown = await request.json();
     if (!body || typeof body !== "object" || Array.isArray(body)) {
       return Response.json({ success: false, code: "INVALID_REQUEST" }, { status: 400 });
@@ -63,6 +68,25 @@ export async function POST(request: NextRequest): Promise<Response> {
       narrative,
       sourceType: "literature",
     });
+    // Fail closed if application audit persistence fails; never return an unaudited proposal.
+    await getPostgresPool().query(
+      `INSERT INTO audit_events (
+         tenant_id, workspace_id, environment, module_key, actor_id,
+         event_type, event_category, outcome, details
+       ) VALUES ($1,$2,$3,$4,$5,'LITERATURE_SHARED_AGENT_SUGGESTION',
+                 'CLINICAL_HUMAN_REVIEW','success',$6::jsonb)`,
+      [
+        principal.tenantId, scope.workspaceId, scope.environment,
+        NEXUS_MODULES.LITERATURE, principal.userId,
+        JSON.stringify({
+          agent: result.agent, caseId: source.package_id,
+          requestId: result.request_id, auditId: result.audit_id,
+          sourceSha256: result.input_sha256,
+          knowledgeVersion: result.knowledge_version,
+          reviewRequired: true,
+        }),
+      ],
+    );
     return Response.json({
       success: true, status: "SUGGESTION_ONLY", reviewRequired: true,
       data: result,
