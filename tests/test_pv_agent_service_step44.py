@@ -219,5 +219,44 @@ class Step44PostgresAuditAdapterTests(unittest.TestCase):
                 PostgresAuditStore(value)
 
 
+class Step44RenderReadinessTests(unittest.TestCase):
+    def test_standby_liveness_and_no_clinical_execution(self):
+        from backend.services.pv_agents.render_wsgi import application
+        def call(path):
+            values = []
+            raw = b"".join(application({"REQUEST_METHOD": "GET", "PATH_INFO": path},
+                                       lambda status, headers: values.append(status)))
+            return int(values[0].split()[0]), json.loads(raw)
+        with patch.dict(os.environ, {"NEXUS_PV_AGENTS_ENABLED": "false"}):
+            self.assertEqual(call("/healthz"), (200, {"service": "nexus-pv-agents", "state": "disabled"}))
+            self.assertEqual(call("/v1/agents/drug-role/assess")[0], 503)
+
+    def test_readiness_rejects_missing_credentials(self):
+        from backend.services.pv_agents.render_wsgi import application
+        seen = []
+        with patch.dict(os.environ, {"NEXUS_PV_AUDIT_BACKEND": "postgres",
+                                      "NEXUS_PV_SERVICE_TOKEN_SCOPES": "{}",
+                                      "NEXUS_PV_AUDIT_DATABASE_URL": ""}):
+            data = b"".join(application({"REQUEST_METHOD": "GET", "PATH_INFO": "/readyz"},
+                                       lambda status, headers: seen.append(status)))
+        self.assertEqual(seen[0].split()[0], "503")
+        self.assertFalse(json.loads(data)["ready"])
+
+    def test_readiness_checks_db_without_enabling_clinical_executions(self):
+        from backend.services.pv_agents.render_wsgi import application
+        from backend.services.pv_agents.postgres_audit import PostgresAuditStore
+        values = []
+        with patch.object(PostgresAuditStore, "__init__", return_value=None) as probe:
+            with patch.dict(os.environ, {"NEXUS_PV_AUDIT_BACKEND": "postgres",
+                                          "NEXUS_PV_SERVICE_TOKEN_SCOPES": '{"token123":["synthetic"]}',
+                                          "NEXUS_PV_AUDIT_DATABASE_URL": "postgresql://test.invalid/db",
+                                          "NEXUS_PV_AGENTS_ENABLED": "false"}):
+                raw = b"".join(application({"REQUEST_METHOD": "GET", "PATH_INFO": "/readyz"},
+                                           lambda status, headers: values.append(status)))
+        self.assertEqual(values[0].split()[0], "200")
+        self.assertFalse(json.loads(raw)["clinical_execution_enabled"])
+        probe.assert_called_once()
+
+
 if __name__ == "__main__":
     unittest.main()
