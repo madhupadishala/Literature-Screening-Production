@@ -49,6 +49,16 @@ class AuditStore:
 
 class PVAgentService:
     def __init__(self, token_scopes, audit_store, drug_agent=None, workers=None, causality_adapter=None):
+        if not isinstance(token_scopes, dict) or not token_scopes:
+            raise ValueError("At least one scoped service token is required")
+        for token, scopes in token_scopes.items():
+            if not isinstance(token, str) or len(token) < 24 or not isinstance(scopes, list) or not scopes:
+                raise ValueError("Invalid service token configuration")
+            if any(not isinstance(scope, dict) or
+                   any(not isinstance(scope.get(key), str) or not scope[key].strip()
+                       for key in ("tenant_id", "client_id", "workspace_id"))
+                   for scope in scopes):
+                raise ValueError("Invalid service scope configuration")
         self.token_scopes, self.audit = token_scopes, audit_store
         self.drug_agent = drug_agent or NexusDrugRoleAgent()
         self.workers = workers or {}
@@ -67,7 +77,7 @@ class PVAgentService:
                 raise ServiceError(400, f"{key} required")
         if not any(all(s.get(k) == request[k] for k in ['tenant_id','client_id','workspace_id']) for s in scopes):
             raise ServiceError(403, "Service token scope mismatch")
-        if len(request['narrative']) > 50_000 and agent in ('seriousness', 'causality', 'specialist-icsr'):
+        if len(request['narrative']) > 50_000:
             raise ServiceError(400, 'Specialist narrative exceeds supported 50000 character limit')
         if not isinstance(request.get('event_terms', []), list) or len(request.get('event_terms', [])) > 50 or any(not isinstance(e, str) or not e.strip() or len(e) > 200 for e in request.get('event_terms', [])):
             raise ServiceError(400, 'Invalid event terms')
@@ -98,10 +108,12 @@ class PVAgentService:
         if not isinstance(confidence, (int, float)) or isinstance(confidence, bool) or not math.isfinite(confidence) or not 0 <= confidence <= 1 or not isinstance(evidence, list) or not isinstance(version, str) or not version:
             raise ServiceError(502, 'Invalid worker evidence/confidence contract')
         for span in evidence:
-            if not isinstance(span, dict) or not isinstance(span.get('start'), int) or not isinstance(span.get('end'), int) or not 0 <= span['start'] <= span['end'] <= len(request['narrative']) or request['narrative'][span['start']:span['end']] != span.get('text'):
+            if not isinstance(span, dict) or not isinstance(span.get('start'), int) or not isinstance(span.get('end'), int) or isinstance(span['start'], bool) or isinstance(span['end'], bool) or not 0 <= span['start'] < span['end'] <= len(request['narrative']) or request['narrative'][span['start']:span['end']] != span.get('text'):
                 raise ServiceError(502, 'Ungrounded worker evidence')
         output = {'schema_version':'nexus.pv-agent/1','agent':agent, **{k:request[k] for k in ['tenant_id','client_id','workspace_id','request_id','case_id']}, 'input_sha256':digest, 'confidence':confidence, 'route':'hitl', 'review_required':True, 'evidence_spans':evidence, 'knowledge_version':version, 'result':result}
         if agent == 'seriousness':
+            if any(k not in result for k in ('decision', 'criteria_met', 'review_reasons', 'explanation')):
+                raise ServiceError(502, 'Incomplete seriousness worker result')
             output.update({k: result[k] for k in ('decision', 'criteria_met', 'review_reasons', 'explanation')})
             output['execution_id'] = str(uuid4())
         return self.audit.append(request, agent, output)
