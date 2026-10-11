@@ -143,7 +143,16 @@ class PVAgentService:
 
 
 def create_application():
-    app = PVAgentService(json.loads(os.environ['NEXUS_PV_SERVICE_TOKEN_SCOPES']), AuditStore(os.environ['NEXUS_PV_AUDIT_DB']))
+    if os.environ.get('NEXUS_PV_AUDIT_BACKEND') == 'postgres':
+        from .postgres_audit import PostgresAuditStore
+        audit = PostgresAuditStore(os.environ['NEXUS_PV_AUDIT_DATABASE_URL'])
+    elif os.environ.get('NEXUS_PV_AUDIT_BACKEND') in (None, 'sqlite'):
+        if os.environ.get('RENDER') == 'true':
+            raise ValueError('Render deployment requires durable PostgreSQL audit backend')
+        audit = AuditStore(os.environ['NEXUS_PV_AUDIT_DB'])
+    else:
+        raise ValueError('Unsupported specialist audit backend')
+    app = PVAgentService(json.loads(os.environ['NEXUS_PV_SERVICE_TOKEN_SCOPES']), audit)
     if os.environ.get('NEXUS_PV_REGISTER_SPECIALISTS') == 'true':
         from .workers import build_specialist_workers
         app.workers = build_specialist_workers(app.drug_agent, app.causality_adapter, os.environ['NEXUS_PV_SPECIALIST_AUDIT_DIR'])
