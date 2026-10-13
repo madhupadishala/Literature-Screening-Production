@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "canonical_root": "Agentic_AI",
+  "policy": "Canonical agent implementations must resolve from Agentic_AI; do not remove legacy runtime imports until their replacement exists and callers have been migrated.",
+  "live_wiring_status": "not_verified",
+  "agents": [
+    {
+      "id": "AG01",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG02",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG03",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG04",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG05",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG06",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG07",
+      "implementation_status": "source_missing",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG08",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG09",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG10",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG11",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG12",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG13",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG14",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG15",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG16",
+      "implementation_status": "source_missing",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG17",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG18",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG19",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG20",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG21",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG22",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG23",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG24",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG25",
+      "implementation_status": "source_missing",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG26",
+      "implementation_status": "source_present_not_runtime_verified",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    },
+    {
+      "id": "AG27",
+      "implementation_status": "source_missing",
+      "nexus_live_connection": "unverified",
+      "old_paths_retired": false
+    }
+  ],
+  "migration_sequence": [
+    "Inventory callers and deployed entry points",
+    "Verify canonical importable implementation for each agent",
+    "Migrate backend orchestration/API callers to canonical agent entrypoints",
+    "Retire old implementation references once replacements are active",
+    "Verify deployed Nexus references and tenant/client access boundaries"
+  ],
+  "notes": "Folder consolidation alone does not redirect deployed applications. This registry is an audit baseline, not a claim of live integration."
+}
