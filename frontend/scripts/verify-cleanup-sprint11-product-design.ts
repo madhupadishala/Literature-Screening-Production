@@ -66,11 +66,13 @@ for (const page of [
 }
 
 const vercel = JSON.parse(read("vercel.json")) as {
-  git?: { deploymentEnabled?: Record<string, boolean> };
+  git?: { deploymentEnabled?: boolean | Record<string, boolean> };
 };
-assert.equal(
-  vercel.git?.deploymentEnabled?.["cleanup/zero-deviation-baseline-20260930"],
-  false,
+const deploySetting = vercel.git?.deploymentEnabled;
+assert.ok(
+  deploySetting === false ||
+    (typeof deploySetting === "object" &&
+      deploySetting["cleanup/zero-deviation-baseline-20260930"] === false),
   "Working cleanup branch must not auto-deploy to Vercel.",
 );
 
