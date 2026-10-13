@@ -1,5 +1,6 @@
 """Isolation and fail-closed tests for the shared Nexus dispatch boundary."""
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 
 from Agentic_AI.shared.module_dispatch import CanonicalAgentDispatcher
 from Agentic_AI.shared.workflow_context import ContextError, issue_context
@@ -63,6 +64,30 @@ class SharedDispatcherTests(unittest.TestCase):
                 envelope=envelope("AG18", "intake_triage", "x", "job-5"),
                 payload={}, authorized_tenant="tenant-a",
                 authorized_client="client-a")
+
+    def test_200_concurrent_jobs_cannot_cross_route(self):
+        dispatcher = CanonicalAgentDispatcher(
+            signing_secret=SECRET,
+            adapters={"AG11": lambda ctx, data: {"tag": data["tag"], "review_required": True}},
+        )
+        modules = ("literature_screening", "intake_triage", "case_processing", "submissions")
+        def one(n):
+            module = modules[n % len(modules)]
+            token = envelope("AG11", module, f"doc-{n}", f"job-{n}",
+                             tenant=f"tenant-{n % 3}", client=f"client-{n % 5}")
+            return dispatcher.execute(
+                agent_id="AG11", envelope=token, payload={"tag": n},
+                authorized_tenant=f"tenant-{n % 3}",
+                authorized_client=f"client-{n % 5}",
+            )
+        with ThreadPoolExecutor(max_workers=16) as pool:
+            outputs = list(pool.map(one, range(200)))
+        for n, output in enumerate(outputs):
+            self.assertEqual(output["result"]["tag"], n)
+            self.assertEqual(output["routing"]["document_id"], f"doc-{n}")
+            self.assertEqual(output["routing"]["job_id"], f"job-{n}")
+            self.assertEqual(output["routing"]["tenant_id"], f"tenant-{n % 3}")
+            self.assertEqual(output["routing"]["client_id"], f"client-{n % 5}")
 
     def test_tampering_rejected(self):
         token = envelope("AG11", "literature_screening", "x", "job-6")
