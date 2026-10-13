@@ -1,0 +1,14 @@
+{
+  "EMA GVP Module VI": {
+    "reference": "EMA/873138/2011 Rev 2",
+    "effective_date": "2017-11-22",
+    "mapped_section": "VI.C.6.2.2.4",
+    "topic": "Case narrative, causality assessment and comments",
+    "status": "mapping-verified-against-public-EMA-document; local controlled copy and QA pin still required"
+  },
+  "WHO-UMC causality categories": {
+    "reference": "UMC Standardised case causality assessment",
+    "version": "2018-04-06",
+    "status": "public-source-identified; controlled local copy and safety-physician approval required"
+  }
+}
