@@ -48,7 +48,16 @@ def drug_extraction_adapter(context: AgentExecution, payload: Any) -> dict:
             return SimpleNamespace(
                 # No inferred company ownership until exact client Product Master
                 # is integrated as a separate authorized, structured lookup.
-                product_master_matches=products,
+                product_master_matches=[
+                    {
+                        "product_id": product["product_id"],
+                        "trade_name": product["trade_name"],
+                        "aliases": product["aliases"],
+                        # Ingredient alone does not establish MAH ownership.
+                        "active_ingredients": [],
+                    }
+                    for product in products
+                ],
                 citations=[
                     {"rule_id": c["citationId"], "source": c.get("sourceFile", "")}
                     for c in citations
