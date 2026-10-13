@@ -1,5 +1,6 @@
 import "server-only";
 import { createHmac, randomBytes, randomUUID } from "node:crypto";
+import { buildAgentContextPack } from "@/lib/knowledge/retrieval/controlled-knowledge-service";
 
 type VerifiedNexusJob = {
   principal: { tenantId: string; workspaceId: string; userId: string };
@@ -43,12 +44,32 @@ export async function invokeCanonicalAG01(job: VerifiedNexusJob) {
     nonce: randomBytes(16).toString("hex"),
   };
   const signature = createHmac("sha256", signingSecret).update(canonical(context), "utf8").digest("hex");
+  // Current governed knowledge schema: approved/effective PostgreSQL chunks,
+  // versioned manifest and citations, not filesystem tenant JSON or Chroma.
+  // The existing controlled repository search is tenant-scoped; it does NOT
+  // constitute a client-specific Product Master lookup.
+  const governedPack = await buildAgentContextPack({
+    tenantId: job.principal.tenantId,
+    query: job.text.slice(0, 20000),
+    mode: "keyword",
+    topK: 8,
+    actorId: job.principal.userId,
+    requestId: String(context.job_id),
+    correlationId: String(context.workflow_id),
+  });
+  if (governedPack.tenantId !== job.principal.tenantId ||
+      !/^[a-f0-9]{64}$/.test(governedPack.repositoryManifestSha256)) {
+    throw new Error("Controlled KB identity/manifest mismatch");
+  }
   const response = await fetch(url.replace(/\/$/, "") + "/internal/v1/nexus-agents/execute", {
     method: "POST",
     headers: { "content-type": "application/json", authorization: "Bearer " + machineToken },
     body: JSON.stringify({
       agent_id: "AG01", envelope: { context, signature },
-      payload: { text: job.text, source_type: job.sourceType },
+      payload: { text: job.text, source_type: job.sourceType,
+        governed_knowledge: { tenant_id: governedPack.tenantId,
+          manifest_sha256: governedPack.repositoryManifestSha256,
+          citations: governedPack.citations } },
     }),
     cache: "no-store",
     redirect: "error",
