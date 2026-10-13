@@ -240,4 +240,5 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "039_literature_workspace_scope.sql",
     required: true,
   },
+  { id: "040", name: "Governed Client Product Master", filename: "040_nexus_client_product_master.sql", required: true },
 ] as const;
