@@ -20,6 +20,17 @@ def drug_extraction_adapter(context: AgentExecution, payload: Any) -> dict:
     manifest = knowledge.get("manifest_sha256")
     if not isinstance(manifest, str) or not re.fullmatch(r"[a-f0-9]{64}", manifest):
         raise ValueError("AG01 requires controlled manifest SHA256")
+    if knowledge.get("client_id") != context.client_id:
+        raise ValueError("AG01 client scope mismatch")
+    products = knowledge.get("products")
+    if not isinstance(products, list) or len(products) > 500:
+        raise ValueError("AG01 requires governed Product Master array")
+    for product in products:
+        if not isinstance(product, dict) or not all(isinstance(product.get(k), str) for k in ("product_id", "trade_name", "source_document_key")):
+            raise ValueError("Invalid governed product row")
+        for key in ("aliases", "active_ingredients"):
+            if not isinstance(product.get(key), list) or not all(isinstance(v, str) for v in product[key]):
+                raise ValueError("Invalid governed product aliases")
     citations = knowledge.get("citations")
     if not isinstance(citations, list) or len(citations) > 30:
         raise ValueError("AG01 requires controlled citation array")
@@ -37,7 +48,7 @@ def drug_extraction_adapter(context: AgentExecution, payload: Any) -> dict:
             return SimpleNamespace(
                 # No inferred company ownership until exact client Product Master
                 # is integrated as a separate authorized, structured lookup.
-                product_master_matches=[],
+                product_master_matches=products,
                 citations=[
                     {"rule_id": c["citationId"], "source": c.get("sourceFile", "")}
                     for c in citations
@@ -61,7 +72,7 @@ def drug_extraction_adapter(context: AgentExecution, payload: Any) -> dict:
     result["review_required"] = True
     result["knowledge_context"]["repository_manifest_sha256"] = manifest
     result["knowledge_context"]["retrieval_backend"] = "nexus-controlled-postgres"
-    result["knowledge_context"]["client_product_master_status"] = "not_connected_review_required"
+    result["knowledge_context"]["client_product_master_status"] = "governed_exact_workspace_matches"
     return result
 
 
