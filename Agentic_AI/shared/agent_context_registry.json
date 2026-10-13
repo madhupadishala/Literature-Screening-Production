@@ -1,0 +1,245 @@
+{
+  "AG01": {
+    "folder": "AG01_Drug_Extraction_Classification",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG01_Drug_Extraction_Classification",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG02": {
+    "folder": "AG02_Adverse_Event_MedDRA",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG02_Adverse_Event_MedDRA",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG03": {
+    "folder": "AG03_Patient_Identification",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG03_Patient_Identification",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG04": {
+    "folder": "AG04_Reporter_Identification",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG04_Reporter_Identification",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG05": {
+    "folder": "AG05_Indication_Identification",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG05_Indication_Identification",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG06": {
+    "folder": "AG06_Medical_History_Extraction",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG06_Medical_History_Extraction",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG07": {
+    "folder": "AG07_Laboratory_Data_Extraction",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG07_Laboratory_Data_Extraction",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG08": {
+    "folder": "AG08_Country_of_Incident",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG08_Country_of_Incident",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG09": {
+    "folder": "AG09_Clock_Start_Date",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG09_Clock_Start_Date",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG10": {
+    "folder": "AG10_Translation",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG10_Translation",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG11": {
+    "folder": "AG11_Seriousness_Assessment",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG11_Seriousness_Assessment",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG12": {
+    "folder": "AG12_Listedness_Expectedness",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG12_Listedness_Expectedness",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG13": {
+    "folder": "AG13_Causality_Assessment",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG13_Causality_Assessment",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG14": {
+    "folder": "AG14_Dechallenge_Assessment",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG14_Dechallenge_Assessment",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG15": {
+    "folder": "AG15_Rechallenge_Assessment",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG15_Rechallenge_Assessment",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG16": {
+    "folder": "AG16_AESI_Special_Situations",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG16_AESI_Special_Situations",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG17": {
+    "folder": "AG17_Safety_Information_Detection",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG17_Safety_Information_Detection",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG18": {
+    "folder": "AG18_Literature_Duplicate_Detection",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG18_Literature_Duplicate_Detection",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG19": {
+    "folder": "AG19_ICSR_Duplicate_Detection",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG19_ICSR_Duplicate_Detection",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG20": {
+    "folder": "AG20_Narrative_Generation",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG20_Narrative_Generation",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG21": {
+    "folder": "AG21_Followup_Questionnaire",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG21_Followup_Questionnaire",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG22": {
+    "folder": "AG22_Inclusion_Exclusion",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG22_Inclusion_Exclusion",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG23": {
+    "folder": "AG23_Action_Taken",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG23_Action_Taken",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG24": {
+    "folder": "AG24_Clinical_History_Capture",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG24_Clinical_History_Capture",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG25": {
+    "folder": "AG25_ICSR_Validity",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG25_ICSR_Validity",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG26": {
+    "folder": "AG26_Intake_Triage",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG26_Intake_Triage",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  },
+  "AG27": {
+    "folder": "AG27_Patient_Aggregate_Relevance",
+    "context_required": true,
+    "implementation": "Agentic_AI/AG27_Patient_Aggregate_Relevance",
+    "execution_mode": "isolated_per_job",
+    "authorization": "Nexus_backend_only",
+    "routing": "verified_envelope",
+    "live_integration": "not_verified"
+  }
+}
