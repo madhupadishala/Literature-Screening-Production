@@ -12,7 +12,7 @@ type VerifiedNexusJob = {
 };
 
 function canonical(value: Record<string, unknown>): string {
-  return JSON.stringify(Object.fromEntries(Object.entries(value).sort(([a], [b]) => a.localeCompare(b, "en")));
+  return JSON.stringify(Object.fromEntries(Object.entries(value).sort(([a], [b]) => a.localeCompare(b, "en"))));
 }
 
 /** Server-side only. A separately validated Nexus document authorization is mandatory. */
