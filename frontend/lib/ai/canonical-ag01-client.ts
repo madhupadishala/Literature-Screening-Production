@@ -1,6 +1,7 @@
 import "server-only";
 import { createHmac, randomBytes, randomUUID } from "node:crypto";
 import { buildAgentContextPack } from "@/lib/knowledge/retrieval/controlled-knowledge-service";
+import { findApprovedClientProducts } from "@/lib/knowledge/retrieval/client-product-master";
 
 type VerifiedNexusJob = {
   principal: { tenantId: string; workspaceId: string; userId: string };
@@ -61,6 +62,11 @@ export async function invokeCanonicalAG01(job: VerifiedNexusJob) {
       !/^[a-f0-9]{64}$/.test(governedPack.repositoryManifestSha256)) {
     throw new Error("Controlled KB identity/manifest mismatch");
   }
+  const clientProducts = await findApprovedClientProducts({
+    tenantId: job.principal.tenantId,
+    workspaceId: job.principal.workspaceId,
+    sourceText: job.text,
+  });
   const response = await fetch(url.replace(/\/$/, "") + "/internal/v1/nexus-agents/execute", {
     method: "POST",
     headers: { "content-type": "application/json", authorization: "Bearer " + machineToken },
@@ -69,7 +75,8 @@ export async function invokeCanonicalAG01(job: VerifiedNexusJob) {
       payload: { text: job.text, source_type: job.sourceType,
         governed_knowledge: { tenant_id: governedPack.tenantId,
           manifest_sha256: governedPack.repositoryManifestSha256,
-          citations: governedPack.citations } },
+          citations: governedPack.citations,
+          client_id: job.principal.workspaceId, products: clientProducts } },
     }),
     cache: "no-store",
     redirect: "error",
