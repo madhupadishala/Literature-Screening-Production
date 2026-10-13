@@ -41,8 +41,7 @@ export async function findApprovedClientProducts(input: {
     return new RegExp("(^|[^\\p{L}\\p{N}])" + escaped + "(?=$|[^\\p{L}\\p{N}])", "u").test(text);
   }
   return rows.filter(row => {
-    const terms = [row.trade_name, ...(Array.isArray(row.aliases) ? row.aliases : []),
-      ...(Array.isArray(row.active_ingredients) ? row.active_ingredients : [])];
+    const terms = [row.trade_name, ...(Array.isArray(row.aliases) ? row.aliases : [])];
     return terms.some(t => typeof t === "string" && present(t));
   }).map(row => ({
     product_id: row.id,
