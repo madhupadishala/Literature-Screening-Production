@@ -2,6 +2,7 @@ import "server-only";
 import { createHmac, randomBytes, randomUUID } from "node:crypto";
 import { buildAgentContextPack } from "@/lib/knowledge/retrieval/controlled-knowledge-service";
 import { findApprovedClientProducts } from "@/lib/knowledge/retrieval/client-product-master";
+import { agentKnowledgeQuery, isNexusAgentId } from "@/lib/ai/nexus-agent-kb-profiles";
 
 export type VerifiedNexusJob = {
   principal: { tenantId: string; workspaceId: string; userId: string };
@@ -19,7 +20,7 @@ function canonical(value: Record<string, unknown>): string {
 
 /** Server-side only. A separately validated Nexus document authorization is mandatory. */
 export async function invokeCanonicalAgent(job: VerifiedNexusJob) {
-  if (!/^AG(?:0[1-9]|1[0-9]|2[0-7])$/.test(job.agentId)) throw new Error("Unknown canonical agent ID");
+  if (!isNexusAgentId(job.agentId)) throw new Error("Unknown canonical agent ID");
   if (process.env.NEXUS_CANONICAL_AGENTS_ENABLED !== "true") {
     throw new Error("Canonical agents are not enabled");
   }
@@ -53,7 +54,7 @@ export async function invokeCanonicalAgent(job: VerifiedNexusJob) {
   // constitute a client-specific Product Master lookup.
   const governedPack = await buildAgentContextPack({
     tenantId: job.principal.tenantId,
-    query: job.text.slice(0, 20000),
+    query: agentKnowledgeQuery(job.agentId, job.text),
     mode: "hybrid",
     topK: 8,
     actorId: job.principal.userId,
