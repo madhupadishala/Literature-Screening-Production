@@ -112,7 +112,8 @@ export default function NexusAgentWorkspace() {
           const status = intakeRunnable.has(index+1) ? "Intake source-document execution route connected; hosted qualification pending" : "Specialist adapter registered; screen-level execution and hosted qualification pending";
           return <article key={id} style={{padding:16,background:"#fff",border:"1px solid #cbd5e1"}}>
             <strong>{id} — {name}</strong>
-            <p style={{fontSize:13}}>{status}</p>\n            <p><Link href={moduleLinks[id].href}>Open {moduleLinks[id].label}</Link></p>
+            <p style={{fontSize:13}}>{status}</p>
+            <p><Link href={moduleLinks[id].href}>Open {moduleLinks[id].label}</Link></p>
           </article>;
         })}
       </section>
