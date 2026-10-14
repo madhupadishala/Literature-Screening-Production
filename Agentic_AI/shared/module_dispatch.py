@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .workflow_context import ContextError, bind_result, verify_context
+from .governed_knowledge_adapter import resolve_agent_knowledge_adapter
 
 # Explicit, auditable module contracts. No LLM-based routing.
 MODULE_AGENTS = {
@@ -48,8 +49,10 @@ class CanonicalAgentDispatcher:
     """
 
     def __init__(self, *, signing_secret: bytes,
-                 adapters: Mapping[str, Callable[[AgentExecution, Any], dict]]):
+                 adapters: Mapping[str, Callable[[AgentExecution, Any], dict]],
+                 enforce_governed_kb: bool = False):
         self._secret = signing_secret
+        self._enforce_governed_kb = enforce_governed_kb
         # Adapter bindings are deliberately explicit; absent code fails closed.
         self._adapters = dict(adapters)
 
@@ -69,6 +72,14 @@ class CanonicalAgentDispatcher:
             document_id=ctx.document_id, tenant_id=ctx.tenant_id,
             client_id=ctx.client_id, workflow_id=ctx.workflow_id,
             job_id=ctx.job_id)
+        if self._enforce_governed_kb:
+            # The executor invokes the selected canonical folder's adapter
+            # before any specialist receives source data.
+            if not isinstance(payload, dict):
+                raise ContextError("governed job requires object payload")
+            controlled_context = resolve_agent_knowledge_adapter(agent_id)(
+                execution, payload)
+            payload = {**payload, "resolved_governed_context": controlled_context}
         output = adapter(execution, payload)
         if not isinstance(output, dict):
             raise ContextError("agent returned non-object output")
