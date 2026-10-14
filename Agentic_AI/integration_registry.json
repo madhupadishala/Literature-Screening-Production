@@ -2,7 +2,7 @@
   "schema_version": 1,
   "canonical_root": "Agentic_AI",
   "policy": "Canonical agent implementations must resolve from Agentic_AI; do not remove legacy runtime imports until their replacement exists and callers have been migrated.",
-  "live_wiring_status": "five_agents_code_connected_not_host_verified",
+  "live_wiring_status": "seven_agents_code_connected_not_host_verified",
   "agents": [
     {
       "id": "AG01",
@@ -47,7 +47,7 @@
       "old_paths_retired": false,
       "knowledge_base_adapter": "nexus-governed-context-v1",
       "knowledge_base_contract": "defined_not_host_verified",
-      "execution_adapter": "not_connected"
+      "execution_adapter": "registered_python_adapter"
     },
     {
       "id": "AG06",
@@ -92,7 +92,7 @@
       "old_paths_retired": false,
       "knowledge_base_adapter": "nexus-governed-context-v1",
       "knowledge_base_contract": "defined_not_host_verified",
-      "execution_adapter": "not_connected"
+      "execution_adapter": "registered_python_adapter"
     },
     {
       "id": "AG11",
