@@ -11,7 +11,8 @@ from .base_execution_adapter import BaseExecutionAdapter, SpecialistBinding
 RECOVERED = ("AG07", "AG16", "AG25", "AG27")
 NATIVE = ("AG05", "AG10")
 KIMI8 = ("AG06", "AG14", "AG15", "AG18", "AG19", "AG21", "AG22", "AG23")
-CONNECTED = ("AG01",) + RECOVERED + NATIVE + KIMI8
+V25 = ("AG03", "AG04", "AG09", "AG24")
+CONNECTED = ("AG01",) + RECOVERED + NATIVE + KIMI8 + V25
 ALL_AGENT_IDS = tuple(f"AG{i:02}" for i in range(1, 28))
 
 
@@ -100,6 +101,13 @@ def _kimi8(agent_id: str):
     return invoke
 
 
+def _v25(agent_id: str):
+    def invoke(execution: Any, payload: dict, knowledge: dict) -> dict:
+        from .v2_5.specialist_loader import invoke_v25
+        return invoke_v25(agent_id, payload, knowledge)
+    return invoke
+
+
 def build_specialist_adapters() -> dict[str, BaseExecutionAdapter]:
     """Explicitly bind the five confirmed callable engines to Step 1 base."""
     registry = {"AG01": BaseExecutionAdapter(
@@ -112,6 +120,9 @@ def build_specialist_adapters() -> dict[str, BaseExecutionAdapter]:
     for agent_id in KIMI8:
         registry[agent_id] = BaseExecutionAdapter(
             SpecialistBinding(agent_id, _kimi8(agent_id)))
+    for agent_id in V25:
+        registry[agent_id] = BaseExecutionAdapter(
+            SpecialistBinding(agent_id, _v25(agent_id)))
     return registry
 
 
@@ -125,6 +136,7 @@ def specialist_status() -> list[SpecialistStatus]:
                             else "controlled_indication_policy" if agent_id == "AG05"
                             else "translation_engine" if agent_id == "AG10"
                             else "governed_kimi8" if agent_id in KIMI8
+                            else "approved_provider_v25" if agent_id in V25
                             else "source_present_unmapped"),
             reason=("Callable engine bound through BaseExecutionAdapter"
                     if agent_id in CONNECTED
