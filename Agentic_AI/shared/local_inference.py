@@ -32,6 +32,11 @@ def require_loopback_endpoint(url: str) -> str:
     return url.rstrip("/")
 
 
+class _RejectRedirects(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise LocalInferenceUnavailable("local inference redirects are forbidden")
+
+
 class LocalOnlyMedicalLLM:
     """Synchronous JSON-schema output through a co-located model server."""
 
@@ -61,7 +66,7 @@ class LocalOnlyMedicalLLM:
             headers={"Content-Type":"application/json"})
         # Disable environment-supplied HTTP proxies: request must stay local.
         opener=urllib.request.build_opener(urllib.request.ProxyHandler({}),
-                                          urllib.request.HTTPRedirectHandler())
+                                          _RejectRedirects())
         try:
             with opener.open(request,timeout=60) as response:
                 if response.geturl() != request.full_url:
