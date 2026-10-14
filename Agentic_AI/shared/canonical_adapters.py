@@ -9,11 +9,13 @@ from typing import Any
 import re
 
 from .module_dispatch import AgentExecution
+from .governed_knowledge_adapter import governed_context, validate_governed_pack
 
 
 def drug_extraction_adapter(context: AgentExecution, payload: Any) -> dict:
     if not isinstance(payload, dict) or not isinstance(payload.get("text"), str):
         raise ValueError("AG01 expects text evidence")
+    validate_governed_pack(context, payload)
     knowledge = payload.get("governed_knowledge")
     if not isinstance(knowledge, dict) or knowledge.get("tenant_id") != context.tenant_id:
         raise ValueError("AG01 requires matching tenant controlled knowledge")
@@ -85,7 +87,39 @@ def drug_extraction_adapter(context: AgentExecution, payload: Any) -> dict:
     return result
 
 
+def recovered_agent_adapter(agent_id: str):
+    """Execute an actual recovered specialist with Nexus-governed context."""
+    from .recovered_ag_agents.registry import AGENTS
+    if agent_id not in AGENTS:
+        raise ValueError("No implemented recovered agent")
+    agent_class = AGENTS[agent_id]
+
+    def execute(context: AgentExecution, payload: Any) -> dict:
+        if not isinstance(payload, dict) or not isinstance(payload.get("text"), str):
+            raise ValueError("Source text is required")
+        if len(payload["text"]) > 100_000 or not payload["text"].strip():
+            raise ValueError("Invalid source text length")
+        knowledge = governed_context(context, payload)
+        result = agent_class().run(
+            text=payload["text"],
+            audit_reason="Synthetic Nexus agent evaluation with controlled evidence",
+            context=knowledge,
+        ).to_dict()
+        result["needs_human_review"] = True
+        result["auto_release_allowed"] = False
+        result["governed_knowledge"] = {
+            "tenant_id": context.tenant_id,
+            "client_id": context.client_id,
+            "repository_manifest_sha256": knowledge["repository_manifest_sha256"],
+            "citation_ids": [c["citationId"] for c in knowledge["citations"]],
+        }
+        return result
+    return execute
+
+
 CANONICAL_ADAPTERS = {"AG01": drug_extraction_adapter}
+for _id in ("AG07", "AG16", "AG25", "AG27"):
+    CANONICAL_ADAPTERS[_id] = recovered_agent_adapter(_id)
 
 
 def register_verified_adapter(registry: dict, agent_id: str, adapter) -> None:
