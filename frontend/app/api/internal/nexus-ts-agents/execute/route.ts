@@ -130,7 +130,7 @@ export async function POST(request: Request): Promise<Response> {
         k=>Array.isArray(value[k]))) {
         return Response.json({error:"incomplete_triage_snapshot"},{status:422});
       }
-      specialistResult=evaluateTriageSnapshot(value as Parameters<typeof evaluateTriageSnapshot>[0]);
+      specialistResult=evaluateTriageSnapshot(value as unknown as Parameters<typeof evaluateTriageSnapshot>[0]);
     }
     return Response.json({
       agent_id:input.agent_id,document_id:input.document_id,
