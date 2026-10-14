@@ -21,8 +21,8 @@ def test_all_agents_accounted_for_with_no_false_positive_connections():
     assert len(statuses)==len(ALL_AGENT_IDS)==27
     assert [s.agent_id for s in statuses]==list(ALL_AGENT_IDS)
     assert {s.agent_id for s in statuses if s.connected}==set(CONNECTED)
-    assert len(CONNECTED)==22
-    assert len([s for s in statuses if not s.connected])==5
+    assert len(CONNECTED)==27
+    assert len([s for s in statuses if not s.connected])==0
 
 def test_only_real_engines_are_registered():
     registry=build_specialist_adapters()
