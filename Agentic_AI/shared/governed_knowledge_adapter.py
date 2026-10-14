@@ -69,3 +69,22 @@ def governed_context(execution: Any, payload: dict) -> dict:
         "client_products": k["products"],
         "source_type": payload.get("source_type", "unknown"),
     }
+
+
+def resolve_agent_knowledge_adapter(agent_id: str):
+    """Resolve only the canonical agent folder's KB adapter, never user paths."""
+    from functools import lru_cache
+    from importlib import import_module
+    from pathlib import Path
+    if agent_id not in AGENT_IDS:
+        raise GovernedKnowledgeError("unknown agent")
+    root = Path(__file__).resolve().parents[1]
+    folders = [p for p in root.iterdir()
+               if p.is_dir() and p.name.startswith(agent_id + "_")]
+    if len(folders) != 1:
+        raise GovernedKnowledgeError("canonical agent folder is missing or ambiguous")
+    module = import_module("Agentic_AI." + folders[0].name + ".kb_adapter")
+    binding = getattr(module, "build_knowledge_context", None)
+    if not callable(binding) or getattr(module, "AGENT_ID", None) != agent_id:
+        raise GovernedKnowledgeError("agent KB adapter invalid")
+    return binding
