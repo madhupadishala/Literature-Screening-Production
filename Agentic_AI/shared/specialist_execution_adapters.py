@@ -13,7 +13,7 @@ NATIVE = ("AG05", "AG10")
 KIMI8 = ("AG06", "AG14", "AG15", "AG18", "AG19", "AG21", "AG22", "AG23")
 V25 = ("AG03", "AG04", "AG09", "AG24")
 REMOTE_PYTHON = ("AG02", "AG11", "AG13")
-REMOTE_TS = ("AG08",)
+REMOTE_TS = ("AG08", "AG12", "AG17", "AG20", "AG26")
 CONNECTED = ("AG01",) + RECOVERED + NATIVE + KIMI8 + V25 + REMOTE_PYTHON + REMOTE_TS
 ALL_AGENT_IDS = tuple(f"AG{i:02}" for i in range(1, 28))
 
@@ -121,10 +121,10 @@ def _remote_python(agent_id: str):
 
 def _remote_ts(agent_id: str):
     def invoke(execution: Any, payload: dict, knowledge: dict) -> dict:
-        if agent_id != "AG08" or execution.agent_id != agent_id:
-            raise ValueError("Unsupported TypeScript specialist")
-        from .remote_ts_specialists import invoke_country_of_incident
-        return invoke_country_of_incident(execution, payload, knowledge)
+        if execution.agent_id != agent_id:
+            raise ValueError("TypeScript specialist identity mismatch")
+        from .remote_ts_specialists import invoke_typescript_specialist
+        return invoke_typescript_specialist(execution, payload, knowledge)
     return invoke
 
 
