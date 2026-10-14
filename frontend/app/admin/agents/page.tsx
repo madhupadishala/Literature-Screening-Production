@@ -7,14 +7,14 @@ import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 
 const missing = new Set([7, 16, 25, 27]);
 const agentNames = [
-  "Drug Extraction and Classification", "Adverse Event Extraction", "Patient Identifier",
-  "Reporter Identifier", "Indication Identifier", "Medical History", "Laboratory Data",
+  "Drug Extraction and Classification", "Adverse Event Extraction / MedDRA", "Patient Identifier",
+  "Reporter Identifier", "Indication Identifier", "Medical History Extraction", "Laboratory Data Extraction",
   "Country of Incident", "Clock Start Date", "Translation", "Seriousness Assessment",
-  "Labeling / Listedness", "Causality", "Dechallenge", "Rechallenge", "AESI / AOAC",
-  "Safety Information", "Literature Duplicate Check", "ICSR Duplicate Check",
-  "Narrative Writing", "Follow-up Questionnaire", "Inclusion / Exclusion",
-  "Action Taken", "History Capture", "Additional Specialist (source unavailable)",
-  "MedDRA / Specialized Coding", "Additional Specialist (source unavailable)",
+  "Listedness / Expectedness", "Causality Assessment", "Dechallenge Assessment", "Rechallenge Assessment", "AESI / Special Situations",
+  "Safety Information Detection", "Literature Duplicate Detection", "ICSR Duplicate Detection",
+  "Narrative Generation", "Follow-up Questionnaire", "Inclusion / Exclusion",
+  "Action Taken", "Clinical History Capture", "ICSR Validity",
+  "Intake Triage", "Patient / Aggregate Relevance",
 ];
 
 export default function NexusAgentWorkspace() {
