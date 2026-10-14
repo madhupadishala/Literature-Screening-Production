@@ -63,8 +63,13 @@ export async function POST(request: Request): Promise<Response> {
     const details=input.specialist_input ?? {};
     let specialistResult: unknown;
     if (input.agent_id==="AG08") {
-      if (process.env.NEXUS_PV_PII_PROVIDER_APPROVED !== "true" || input.text.length>48000) {
-        return Response.json({error:"approved_coi_provider_required"},{status:503});
+      if (process.env.NEXUS_PV_INFERENCE_MODE !== "local_only" ||
+          process.env.AI_PROVIDER !== "ollama" ||
+          !/^http:\/\/(?:localhost|127\.0\.0\.1|\[::1\]):\d+(?:\/v1)?\/?$/.test(
+            process.env.AI_BASE_URL ?? process.env.OLLAMA_BASE_URL ?? ""
+          ) ||
+          input.text.length>48000) {
+        return Response.json({error:"co_located_inference_required"},{status:503});
       }
       specialistResult=await runCOI([
         {id:input.document_id,text:input.text,locator:"authorized_nexus_source"},
