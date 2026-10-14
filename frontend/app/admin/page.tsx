@@ -6,6 +6,11 @@ import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 
 const modules = [
   {
+    title: "Shared AI Agents",
+    description: "View canonical Nexus agent slots and run connected agents inside your authorized workspace.",
+    action: "/admin/agents",
+  },
+  {
     title: "Product Master",
     description:
       "Upload and version product identities, synonyms, salts, lifecycle, MAH, and WHODrug mappings.",
