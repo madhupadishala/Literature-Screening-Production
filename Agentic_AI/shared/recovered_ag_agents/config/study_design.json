@@ -1,0 +1,15 @@
+{
+  "_note": "Ordered by priority for AG27. First matching human-study design becomes primary; 'non_clinical' and 'review_narrative' only win if no human-study design matched.",
+  "designs": [
+    {"name": "meta_analysis", "pattern": "\\bmeta-?analys\\w+|\\bsystematic review\\b|\\bpooled analysis\\b", "aggregate_default": true},
+    {"name": "rct", "pattern": "\\brandomi[sz]ed\\b|\\bdouble-?blind\\b|\\bplacebo-?controlled\\b", "aggregate_default": true},
+    {"name": "clinical_trial_other", "pattern": "\\bphase\\s+(?:I{1,3}V?|IV|[1-4])\\b|\\bopen-?label\\b|\\bsingle-?arm\\b", "aggregate_default": true},
+    {"name": "case_report", "pattern": "\\bcase report\\b|\\bcase presentation\\b|\\bwe (?:report|describe|present) (?:a|an|the|this) (?:[\\w-]+ ){0,3}(?:case|patient|man|woman|boy|girl)\\b", "aggregate_default": false},
+    {"name": "case_series", "pattern": "\\bcase series\\b|\\bwe (?:report|describe|present) (?:[\\w-]+ ){0,2}(?:two|three|four|five|six|seven|eight|nine|ten|\\d+) (?:cases|patients)\\b", "aggregate_default": true},
+    {"name": "cohort_observational", "pattern": "\\bcohort\\b|\\bretrospective\\b|\\bprospective\\b|\\bobservational\\b|\\bregistry\\b|\\bcross-?sectional\\b|\\breal-?world\\b|\\bcase-?control\\b|\\bpost-?marketing surveillance\\b", "aggregate_default": true},
+    {"name": "non_clinical", "pattern": "\\bin vitro\\b|\\bin vivo\\b|\\banimal model\\b|\\bmice\\b|\\brats\\b|\\bcell lines?\\b|\\bpreclinical\\b|\\bxenograft\\b", "aggregate_default": false},
+    {"name": "review_narrative", "pattern": "\\bnarrative review\\b|\\breview article\\b|\\beditorial\\b|\\bcommentary\\b|\\bletter to the editor\\b|\\bguidelines?\\b", "aggregate_default": false}
+  ],
+  "aggregate_ae_pattern": "(?:\\d+(?:\\.\\d+)?\\s*%|\\bn\\s*=\\s*\\d+|\\b\\d+\\s+(?:of\\s+\\d+\\s+)?patients\\b|\\bincidence\\b)",
+  "ae_word_pattern": "\\b(?:adverse|side effects?|toxicit\\w+|safety|discontinu\\w+|events?)\\b"
+}

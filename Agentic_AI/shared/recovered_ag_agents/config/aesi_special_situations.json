@@ -1,0 +1,33 @@
+{
+  "_note": "STARTER lists only. Replace with the product-specific AESI list (RMP / MedDRA SMQs / company list) through governed configuration, or pass context['aesi_extra_terms'] and context['aesi_categories'].",
+  "aesi": {
+    "hepatic_injury": ["hepatotoxicity", "drug-induced liver injury", "DILI", "liver failure", "hepatic failure", "acute hepatitis", "hepatitis", "jaundice", "hepatocellular injury", "liver injury", "elevated transaminases", "raised transaminases"],
+    "anaphylaxis_hypersensitivity": ["anaphylaxis", "anaphylactic shock", "anaphylactic", "anaphylactoid", "angioedema", "bronchospasm"],
+    "severe_cutaneous_reactions": ["Stevens-Johnson syndrome", "Stevens Johnson", "SJS", "toxic epidermal necrolysis", "TEN", "DRESS", "erythema multiforme"],
+    "qt_arrhythmia": ["QT prolongation", "QTc prolongation", "prolonged QT", "torsades de pointes", "torsade", "ventricular arrhythmia", "ventricular tachycardia", "sudden cardiac death", "cardiac arrest"],
+    "thromboembolic_events": ["pulmonary embolism", "deep vein thrombosis", "DVT", "venous thromboembolism", "VTE", "thrombosis", "thromboembolism"],
+    "major_cardiovascular_events": ["myocardial infarction", "stroke", "cerebrovascular accident", "heart failure"],
+    "myocarditis_pericarditis": ["myocarditis", "pericarditis"],
+    "serious_infection": ["tuberculosis", "progressive multifocal leukoencephalopathy", "PML", "sepsis", "opportunistic infection", "hepatitis B reactivation"],
+    "malignancy": ["malignancy", "lymphoma", "carcinoma", "leukaemia", "leukemia", "second primary malignancy"],
+    "neuropsychiatric": ["suicidal ideation", "suicide attempt", "seizure", "convulsion", "Guillain-Barré", "Guillain-Barre", "encephalopathy", "psychosis"],
+    "haematological": ["agranulocytosis", "aplastic anaemia", "aplastic anemia", "thrombocytopenia", "neutropenia", "pancytopenia", "haemolytic anaemia", "hemolytic anemia"],
+    "renal_injury": ["acute kidney injury", "renal failure", "kidney failure", "nephrotoxicity"],
+    "pancreatitis": ["pancreatitis"],
+    "rhabdomyolysis": ["rhabdomyolysis"]
+  },
+  "special_situations": {
+    "pregnancy_exposure": {"pattern": "\\bpregnan\\w*|\\bgestation\\w*|\\bin utero\\b|\\btrimester\\b|\\bfoet(?:al|us)\\b|\\bfetal\\b|\\bfetus\\b", "follow_up": "Pregnancy outcome and exposure timing"},
+    "breastfeeding_exposure": {"pattern": "\\bbreast-?fe\\w+|\\blactati\\w+|\\bnursing (?:mother|infant)\\b", "follow_up": "Infant outcome and exposure via breast milk"},
+    "overdose": {"pattern": "\\boverdos\\w+|\\bsupratherapeutic\\b|\\btook too much\\b", "follow_up": "Dose taken, intent, outcome"},
+    "misuse_abuse": {"pattern": "\\bmisuse\\w*|\\bdrug abuse\\b|\\babuse of\\b|\\bdiversion\\b|\\brecreational use\\b", "follow_up": "Nature and intent of misuse/abuse"},
+    "medication_error": {"pattern": "\\bmedication errors?\\b|\\bwrong (?:dose|drug|route|patient)\\b|\\bdosing errors?\\b|\\bincorrect dose\\b|\\bdispensing errors?\\b|\\bprescribing errors?\\b|\\badministration errors?\\b|\\bnear miss\\b", "follow_up": "Error type, stage, outcome"},
+    "off_label_use": {"pattern": "\\boff-?label\\b|\\bunapproved indication\\b|\\bunlicensed use\\b", "follow_up": "Indication and dose used", "low_precision": true},
+    "occupational_exposure": {"pattern": "\\boccupational exposure\\b|\\bneedle-?stick\\b|\\baccidental exposure\\b|\\binadvertent exposure\\b", "follow_up": "Route and circumstances of exposure"},
+    "lack_of_efficacy": {"pattern": "\\black of (?:efficacy|effect|therapeutic effect)\\b|\\b(?:treatment|therapeutic|drug) failure\\b|\\bloss of efficacy\\b|\\binadequate response\\b|\\bineffective\\b", "follow_up": "Indication, duration, outcome", "low_precision": true},
+    "drug_interaction": {"pattern": "\\bdrug[- ]drug interactions?\\b|\\bdrug interactions?\\b|\\binteraction with\\b", "follow_up": "Co-medications, doses, timing", "low_precision": true},
+    "transmission_infectious_agent": {"pattern": "\\btransmission of (?:an? )?infectious agent\\b|\\bcontaminated (?:batch|product|lot)\\b|\\bproduct[- ]transmitted\\b", "follow_up": "Batch details and pathogen testing"},
+    "product_quality_issue": {"pattern": "\\bproduct quality\\b|\\bdefective\\b|\\bcounterfeit\\b|\\bfalsified\\b|\\bcontamination\\b|\\bparticulate\\b|\\brecall(?:ed)?\\b", "follow_up": "Batch/lot number and complaint details", "low_precision": true},
+    "unintended_exposure": {"pattern": "\\bpaternal exposure\\b|\\bsecondary exposure\\b|\\bexposure via semen\\b", "follow_up": "Exposure route and outcome"}
+  }
+}

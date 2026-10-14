@@ -1,0 +1,41 @@
+{
+  "_note": "Starter dictionary for AG07. Extend/replace per tenant via governed configuration; not a clinical reference.",
+  "unit_aliases": {
+    "u/l": "U/L", "iu/l": "IU/L", "mg/dl": "mg/dL", "g/dl": "g/dL", "g/l": "g/L",
+    "mmol/l": "mmol/L", "umol/l": "µmol/L", "µmol/l": "µmol/L", "μmol/l": "µmol/L",
+    "ng/ml": "ng/mL", "pg/ml": "pg/mL", "ng/dl": "ng/dL", "mg/l": "mg/L",
+    "ug/l": "µg/L", "µg/l": "µg/L", "μg/l": "µg/L", "meq/l": "mEq/L",
+    "miu/l": "mIU/L", "iu/ml": "IU/mL", "ml/min": "mL/min", "mm/h": "mm/h", "mm/hr": "mm/h",
+    "x10^9/l": "10^9/L", "×10^9/l": "10^9/L", "10^9/l": "10^9/L", "x10(9)/l": "10^9/L",
+    "x109/l": "10^9/L", "x10e9/l": "10^9/L", "10e9/l": "10^9/L",
+    "/ul": "/µL", "/µl": "/µL", "/μl": "/µL", "cells/ul": "/µL", "cells/µl": "/µL",
+    "%": "%", "sec": "s", "seconds": "s"
+  },
+  "tests": {
+    "ALT": {"aliases": ["alanine aminotransferase", "alanine transaminase", "SGPT"], "units": ["U/L", "IU/L"], "plausible": [0, 10000]},
+    "AST": {"aliases": ["aspartate aminotransferase", "aspartate transaminase", "SGOT"], "units": ["U/L", "IU/L"], "plausible": [0, 10000]},
+    "ALP": {"aliases": ["alkaline phosphatase"], "units": ["U/L", "IU/L"], "plausible": [0, 5000]},
+    "GGT": {"aliases": ["gamma-glutamyl transferase", "gamma glutamyl transferase", "gamma-GT"], "units": ["U/L", "IU/L"], "plausible": [0, 5000]},
+    "Total bilirubin": {"aliases": ["total bilirubin", "bilirubin", "T-bili", "TBIL"], "units": ["mg/dL", "µmol/L"], "plausible": [0, 60]},
+    "Direct bilirubin": {"aliases": ["direct bilirubin", "conjugated bilirubin"], "units": ["mg/dL", "µmol/L"], "plausible": [0, 40]},
+    "Creatinine": {"aliases": ["serum creatinine", "creatinine"], "units": ["mg/dL", "µmol/L"], "plausible": [0.1, 30]},
+    "BUN": {"aliases": ["blood urea nitrogen", "urea nitrogen"], "units": ["mg/dL", "mmol/L"], "plausible": [0, 300]},
+    "eGFR": {"aliases": ["estimated glomerular filtration rate", "GFR"], "units": ["mL/min"], "plausible": [0, 200]},
+    "Hemoglobin": {"aliases": ["haemoglobin", "hemoglobin", "Hb", "Hgb"], "units": ["g/dL", "g/L"], "plausible": [2, 25]},
+    "Platelets": {"aliases": ["platelet count", "platelets", "PLT", "thrombocytes"], "units": ["10^9/L", "/µL"], "plausible": [0, 2000000]},
+    "WBC": {"aliases": ["white blood cell count", "white cell count", "leukocyte count", "WBC count", "WBC"], "units": ["10^9/L", "/µL"], "plausible": [0, 500000]},
+    "Neutrophils": {"aliases": ["absolute neutrophil count", "neutrophil count", "ANC", "neutrophils"], "units": ["10^9/L", "/µL"], "plausible": [0, 100000]},
+    "INR": {"aliases": ["international normalized ratio", "international normalised ratio"], "units": [], "unitless": true, "plausible": [0.5, 20]},
+    "Prothrombin time": {"aliases": ["prothrombin time"], "units": ["s"], "plausible": [5, 300]},
+    "CRP": {"aliases": ["C-reactive protein", "C reactive protein"], "units": ["mg/L", "mg/dL"], "plausible": [0, 1000]},
+    "Troponin": {"aliases": ["troponin I", "troponin T", "troponin", "hs-troponin"], "units": ["ng/mL", "ng/L", "pg/mL"], "plausible": [0, 100000]},
+    "CK": {"aliases": ["creatine kinase", "creatine phosphokinase", "CPK", "CK"], "units": ["U/L", "IU/L"], "plausible": [0, 500000]},
+    "Lipase": {"aliases": ["serum lipase", "lipase"], "units": ["U/L", "IU/L"], "plausible": [0, 50000]},
+    "Amylase": {"aliases": ["serum amylase", "amylase"], "units": ["U/L", "IU/L"], "plausible": [0, 50000]},
+    "Potassium": {"aliases": ["serum potassium", "potassium"], "units": ["mmol/L", "mEq/L"], "plausible": [1, 12]},
+    "Sodium": {"aliases": ["serum sodium", "sodium"], "units": ["mmol/L", "mEq/L"], "plausible": [90, 190]},
+    "Glucose": {"aliases": ["blood glucose", "serum glucose", "glucose"], "units": ["mg/dL", "mmol/L"], "plausible": [10, 2000]},
+    "HbA1c": {"aliases": ["glycated hemoglobin", "glycosylated hemoglobin", "HbA1c", "A1c"], "units": ["%"], "plausible": [3, 25]},
+    "TSH": {"aliases": ["thyroid stimulating hormone", "thyrotropin", "TSH"], "units": ["mIU/L"], "plausible": [0, 500]}
+  }
+}
