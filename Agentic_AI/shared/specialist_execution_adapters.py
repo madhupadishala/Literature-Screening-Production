@@ -13,7 +13,8 @@ NATIVE = ("AG05", "AG10")
 KIMI8 = ("AG06", "AG14", "AG15", "AG18", "AG19", "AG21", "AG22", "AG23")
 V25 = ("AG03", "AG04", "AG09", "AG24")
 REMOTE_PYTHON = ("AG02", "AG11", "AG13")
-CONNECTED = ("AG01",) + RECOVERED + NATIVE + KIMI8 + V25 + REMOTE_PYTHON
+REMOTE_TS = ("AG08",)
+CONNECTED = ("AG01",) + RECOVERED + NATIVE + KIMI8 + V25 + REMOTE_PYTHON + REMOTE_TS
 ALL_AGENT_IDS = tuple(f"AG{i:02}" for i in range(1, 28))
 
 
@@ -118,6 +119,15 @@ def _remote_python(agent_id: str):
     return invoke
 
 
+def _remote_ts(agent_id: str):
+    def invoke(execution: Any, payload: dict, knowledge: dict) -> dict:
+        if agent_id != "AG08" or execution.agent_id != agent_id:
+            raise ValueError("Unsupported TypeScript specialist")
+        from .remote_ts_specialists import invoke_country_of_incident
+        return invoke_country_of_incident(execution, payload, knowledge)
+    return invoke
+
+
 def build_specialist_adapters() -> dict[str, BaseExecutionAdapter]:
     """Explicitly bind the five confirmed callable engines to Step 1 base."""
     registry = {"AG01": BaseExecutionAdapter(
@@ -136,6 +146,9 @@ def build_specialist_adapters() -> dict[str, BaseExecutionAdapter]:
     for agent_id in REMOTE_PYTHON:
         registry[agent_id] = BaseExecutionAdapter(
             SpecialistBinding(agent_id, _remote_python(agent_id)))
+    for agent_id in REMOTE_TS:
+        registry[agent_id] = BaseExecutionAdapter(
+            SpecialistBinding(agent_id, _remote_ts(agent_id)))
     return registry
 
 
@@ -151,6 +164,7 @@ def specialist_status() -> list[SpecialistStatus]:
                             else "governed_kimi8" if agent_id in KIMI8
                             else "approved_provider_v25" if agent_id in V25
                             else "approved_remote_python_service" if agent_id in REMOTE_PYTHON
+                            else "authenticated_typescript_runtime" if agent_id in REMOTE_TS
                             else "source_present_unmapped"),
             reason=("Callable engine bound through BaseExecutionAdapter"
                     if agent_id in CONNECTED
