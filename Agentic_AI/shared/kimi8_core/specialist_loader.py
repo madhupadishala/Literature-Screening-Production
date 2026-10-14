@@ -25,6 +25,8 @@ PREFIX = "Agentic_AI.shared.kimi8_core.agents"
 def load_specialist(agent_id: str):
     if agent_id not in SOURCES:
         raise ValueError("Unsupported Kimi8 specialist")
+    if agent_id == "AG14":
+        load_specialist("AG23")  # original dechallenge engine depends on action taken
     folder, name, cls = SOURCES[agent_id]
     fullname = PREFIX + "." + name
     if fullname not in sys.modules:
