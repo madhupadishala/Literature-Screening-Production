@@ -31,7 +31,8 @@ def create_app(*, secret: bytes, scopes: dict[str, dict],
     """
     dispatcher = CanonicalAgentDispatcher(
         signing_secret=secret,
-        adapters=CANONICAL_ADAPTERS if adapters is None else adapters)
+        adapters=CANONICAL_ADAPTERS if adapters is None else adapters,
+        enforce_governed_kb=(adapters is None))
 
     def app(environ, start_response):
         if environ.get("PATH_INFO") != "/internal/v1/nexus-agents/execute" or environ.get("REQUEST_METHOD") != "POST":
