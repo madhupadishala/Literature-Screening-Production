@@ -78,7 +78,11 @@ class ApprovedMedicalLLM:
 
 def invoke_v25(agent_id: str, payload: dict, knowledge: dict) -> dict:
     # Never invoke provider until Nexus KB tenant/client scope was validated.
-    provider=ApprovedMedicalLLM()
+    if os.environ.get("NEXUS_PV_INFERENCE_MODE") == "local_only":
+        from Agentic_AI.shared.local_inference import LocalOnlyMedicalLLM
+        provider = LocalOnlyMedicalLLM()
+    else:
+        raise PermissionError("Nexus PV external LLM inference is disabled; local_only required")
     if agent_id=="AG09":
         from Agentic_AI.shared.v2_5.common.base import grounded
         module=load_source("AG09")
