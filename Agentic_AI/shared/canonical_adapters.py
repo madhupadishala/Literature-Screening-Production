@@ -117,9 +117,9 @@ def recovered_agent_adapter(agent_id: str):
     return execute
 
 
-CANONICAL_ADAPTERS = {"AG01": drug_extraction_adapter}
-for _id in ("AG07", "AG16", "AG25", "AG27"):
-    CANONICAL_ADAPTERS[_id] = recovered_agent_adapter(_id)
+# All registered specialist engines go through the same Step 1 contract.
+from .specialist_execution_adapters import build_specialist_adapters
+CANONICAL_ADAPTERS = build_specialist_adapters()
 
 
 def register_verified_adapter(registry: dict, agent_id: str, adapter) -> None:
