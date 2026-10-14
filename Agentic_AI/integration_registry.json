@@ -2,169 +2,250 @@
   "schema_version": 1,
   "canonical_root": "Agentic_AI",
   "policy": "Canonical agent implementations must resolve from Agentic_AI; do not remove legacy runtime imports until their replacement exists and callers have been migrated.",
-  "live_wiring_status": "not_verified",
+  "live_wiring_status": "five_agents_code_connected_not_host_verified",
   "agents": [
     {
       "id": "AG01",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "registered_python_adapter"
     },
     {
       "id": "AG02",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG03",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG04",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG05",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG06",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG07",
-      "implementation_status": "source_missing",
+      "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "registered_python_adapter"
     },
     {
       "id": "AG08",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG09",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG10",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG11",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG12",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG13",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG14",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG15",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG16",
-      "implementation_status": "source_missing",
+      "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "registered_python_adapter"
     },
     {
       "id": "AG17",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG18",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG19",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG20",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG21",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG22",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG23",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG24",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG25",
-      "implementation_status": "source_missing",
+      "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "registered_python_adapter"
     },
     {
       "id": "AG26",
       "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "not_connected"
     },
     {
       "id": "AG27",
-      "implementation_status": "source_missing",
+      "implementation_status": "source_present_not_runtime_verified",
       "nexus_live_connection": "unverified",
-      "old_paths_retired": false
+      "old_paths_retired": false,
+      "knowledge_base_adapter": "nexus-governed-context-v1",
+      "knowledge_base_contract": "defined_not_host_verified",
+      "execution_adapter": "registered_python_adapter"
     }
   ],
   "migration_sequence": [
