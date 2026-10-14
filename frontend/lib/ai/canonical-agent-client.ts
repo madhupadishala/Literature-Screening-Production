@@ -54,7 +54,7 @@ export async function invokeCanonicalAgent(job: VerifiedNexusJob) {
   const governedPack = await buildAgentContextPack({
     tenantId: job.principal.tenantId,
     query: job.text.slice(0, 20000),
-    mode: "keyword",
+    mode: "hybrid",
     topK: 8,
     actorId: job.principal.userId,
     requestId: String(context.job_id),
