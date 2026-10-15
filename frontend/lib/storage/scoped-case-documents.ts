@@ -73,3 +73,41 @@ export async function listScopedCaseDocuments(input: {principal:RequestPrincipal
   );
   return result.rows;
 }
+
+export async function readScopedCaseDocument(input: {
+ principal:RequestPrincipal; intakeRecordId:string; documentId:string;
+}):Promise<{data:Buffer; filename:string; contentType:string}> {
+ const {principal,intakeRecordId,documentId}=input;
+ const scope=requireSafetyWorkspaceScope(principal);
+ await assertSafetyIntakeInScope(principal,intakeRecordId);
+ const result=await getPostgresPool().query<{
+  object_key:string;original_filename:string;content_type:string;sha256:string;
+ }>(`SELECT object_key,original_filename,content_type,sha256
+      FROM nexus_document_objects
+     WHERE tenant_id=$1 AND workspace_id=$2 AND environment=$3
+       AND intake_record_id=$4 AND id=$5 AND state IN ('ACTIVE','ARCHIVED')`,
+ [principal.tenantId,scope.workspaceId,scope.environment,intakeRecordId,documentId]);
+ const row=result.rows[0];
+ if(!row) throw new Error("Document not found in authorized client ICSR scope");
+ const data=await r2ObjectStorage.get(row.object_key);
+ if(createHash("sha256").update(data).digest("hex")!==row.sha256){
+  throw new Error("Stored ICSR evidence checksum mismatch");
+ }
+ return {data,filename:row.original_filename,contentType:row.content_type};
+}
+
+export async function archiveScopedCaseDocument(input: {
+ principal:RequestPrincipal; intakeRecordId:string; documentId:string;
+}) {
+ const {principal,intakeRecordId,documentId}=input;
+ const scope=requireSafetyWorkspaceScope(principal);
+ await assertSafetyIntakeInScope(principal,intakeRecordId);
+ const result=await getPostgresPool().query<{id:string}>(
+ `UPDATE nexus_document_objects SET state='ARCHIVED',archived_at=now()
+    WHERE tenant_id=$1 AND workspace_id=$2 AND environment=$3
+      AND intake_record_id=$4 AND id=$5 AND state='ACTIVE'
+  RETURNING id`,
+ [principal.tenantId,scope.workspaceId,scope.environment,intakeRecordId,documentId]);
+ if(!result.rows[0]) throw new Error("Active document not found in authorized client ICSR scope");
+ return {id:result.rows[0].id,state:"ARCHIVED"};
+}
