@@ -1,7 +1,9 @@
 """End-to-end scoped knowledge-pack regression for newly created folders."""
 from __future__ import annotations
 import hashlib
+import hmac
 import json
+from unittest.mock import patch
 import tempfile
 import unittest
 from pathlib import Path
@@ -35,13 +37,16 @@ class FolderRouterTests(unittest.TestCase):
                 "documents": [{"path":"approved.md", "document_id":"LAB-1",
                                "sha256": hashlib.sha256(body).hexdigest()}],
             }
+            signed = json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode()
+            manifest["approval_signature"] = hmac.new(b"synthetic-test-only-key", signed, hashlib.sha256).hexdigest()
             (folder / "knowledge.manifest.json").write_text(json.dumps(manifest))
-            after = router.build_context_pack(**args)
-            self.assertEqual(len(after.approved_documents), 1)
-            self.assertEqual(after.approved_documents[0]["content"], body.decode())
-            other = router.build_context_pack(**{**args, "client_id": "cipla"})
-            self.assertEqual(other.approved_documents, [])
-            other_agent = router.build_context_pack(**{**args, "agent_name": "AG11"})
-            self.assertEqual(other_agent.approved_documents, [])
+            with patch.dict("os.environ", {"NEXUS_KNOWLEDGE_MANIFEST_SECRET": "synthetic-test-only-key"}):
+                after = router.build_context_pack(**args)
+                self.assertEqual(len(after.approved_documents), 1)
+                self.assertEqual(after.approved_documents[0]["content"], body.decode())
+                other = router.build_context_pack(**{**args, "client_id": "cipla"})
+                self.assertEqual(other.approved_documents, [])
+                other_agent = router.build_context_pack(**{**args, "agent_name": "AG11"})
+                self.assertEqual(other_agent.approved_documents, [])
 if __name__ == "__main__":
     unittest.main()
