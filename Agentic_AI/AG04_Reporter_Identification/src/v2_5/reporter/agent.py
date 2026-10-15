@@ -2,7 +2,7 @@
 from __future__ import annotations
 import re
 from pydantic import BaseModel
-from ..common.base import LLMClient, Flag, call_structured, grounded, sha, GROUNDING_RULES
+from Agentic_AI.shared.v2_5.common.base import LLMClient, Flag, call_structured, grounded, sha, GROUNDING_RULES
 AGENT, VERSION, RULEPACK = "reporter", "0.1.0", "rep-rules-2026.10-draft"
 
 class ReporterRaw(BaseModel):
