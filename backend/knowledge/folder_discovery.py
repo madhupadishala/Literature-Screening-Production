@@ -74,6 +74,7 @@ def discover_approved_documents(root, *, tenant_id, client_id, agent_id,
                     continue
                 matched.append({
                     "rule_id": item["document_id"],
+                    "content": content,
                     "source": str(path.relative_to(base)),
                     "content_sha256": item["sha256"],
                     "approved_by": data["approved_by"],
