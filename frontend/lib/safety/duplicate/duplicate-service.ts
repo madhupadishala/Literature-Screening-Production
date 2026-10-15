@@ -384,7 +384,7 @@ async function loadCandidatePool(
         AND intake.validity_status = 'VALID'
         AND COALESCE(intake.case_relationship, 'NEW_CASE') <> 'DUPLICATE'
         AND COALESCE(intake.disposition_type, 'HOLD') NOT IN ('DUPLICATE', 'NON_CASE')
-      ORDER BY intake.created_at ASC, intake.id ASC
+      ORDER BY intake.created_at DESC, intake.id DESC
       LIMIT 500`,
     [tenantId, intakeRecordId, workspaceId, environment],
   );
