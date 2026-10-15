@@ -28,6 +28,7 @@ class AgentContextPack:
     product_master_matches: List[Dict[str, Any]] = field(default_factory=list)
     mah_country_rules: List[Dict[str, Any]] = field(default_factory=list)
     decision_constraints: List[Dict[str, Any]] = field(default_factory=list)
+    approved_documents: List[Dict[str, Any]] = field(default_factory=list)
     citations: List[Dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -40,5 +41,6 @@ class AgentContextPack:
             "product_master_matches": self.product_master_matches,
             "mah_country_rules": self.mah_country_rules,
             "decision_constraints": self.decision_constraints,
+            "approved_documents": self.approved_documents,
             "citations": self.citations
         }
