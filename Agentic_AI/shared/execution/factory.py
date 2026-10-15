@@ -4,9 +4,14 @@ from Agentic_AI.shared.execution.dispatcher import AgentDispatcher
 from Agentic_AI.shared.execution.specialists import VERIFIED_BINDINGS
 from backend.knowledge.knowledge_router import KnowledgeRouter
 
-def build_dispatcher(*, signing_secret: bytes, router=None) -> AgentDispatcher:
+def build_dispatcher(*, signing_secret: bytes, router=None, duplicate_repository=None) -> AgentDispatcher:
+    bindings = dict(VERIFIED_BINDINGS)
+    if duplicate_repository is not None:
+        # Never bind duplicate engines without an authorized persistence adapter.
+        from Agentic_AI.shared.execution.duplicate_bindings import make_duplicate_bindings
+        bindings.update(make_duplicate_bindings(duplicate_repository))
     return AgentDispatcher(
         router=router if router is not None else KnowledgeRouter(),
         secret=signing_secret,
-        specialists=VERIFIED_BINDINGS,
+        specialists=bindings,
     )
