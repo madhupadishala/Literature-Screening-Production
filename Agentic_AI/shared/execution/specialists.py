@@ -20,5 +20,54 @@ def drug_role(evidence: dict, knowledge_pack) -> dict:
     )
     return result.to_dict()
 
-# These are the engines verified for this adapter contract, not just recovered folders.
-VERIFIED_BINDINGS = {"AG01": drug_role}
+
+def _validated_case(evidence):
+    from Agentic_AI.shared.kimi8_core.schemas import ICSR
+    raw = evidence.get("case")
+    if not isinstance(raw, dict):
+        raise ValueError("structured ICSR case object is required")
+    if raw.get("case_id") != evidence.get("document_id"):
+        raise ValueError("ICSR identity must equal authorized source document")
+    return ICSR.model_validate(raw)
+
+def _run_case_specialist(evidence, knowledge_pack, agent_type, method):
+    from Agentic_AI.shared.kimi8_core import agents
+    cls = getattr(agents, agent_type)
+    result = getattr(cls(), method)(_validated_case(evidence))
+    return result.model_dump(mode="json")
+
+def medical_history(evidence, knowledge_pack):
+    return _run_case_specialist(evidence, knowledge_pack, "MedicalHistoryAgent", "extract")
+
+def dechallenge(evidence, knowledge_pack):
+    return _run_case_specialist(evidence, knowledge_pack, "DechallengeAgent", "assess")
+
+def rechallenge(evidence, knowledge_pack):
+    return _run_case_specialist(evidence, knowledge_pack, "RechallengeAgent", "assess")
+
+def followup(evidence, knowledge_pack):
+    return _run_case_specialist(evidence, knowledge_pack, "FollowUpQuestionnaireAgent", "generate")
+
+def action_taken(evidence, knowledge_pack):
+    return _run_case_specialist(evidence, knowledge_pack, "ActionTakenAgent", "extract")
+
+def inclusion_exclusion(evidence, knowledge_pack):
+    from Agentic_AI.shared.kimi8_core.agents import InclusionExclusionAgent
+    from Agentic_AI.shared.kimi8_core.schemas import LiteratureArticle
+    raw = evidence.get("article")
+    if not isinstance(raw, dict) or raw.get("record_id") != evidence.get("document_id"):
+        raise ValueError("authorized literature record object is required")
+    article = LiteratureArticle.model_validate(raw)
+    products = [p.get("trade_name", "") for p in knowledge_pack.product_master_matches]
+    return InclusionExclusionAgent().screen(article, products).model_dump(mode="json")
+
+# Explicit bindings only: comparison agents require a server-authorized comparison corpus.
+VERIFIED_BINDINGS = {
+    "AG01": drug_role,
+    "AG06": medical_history,
+    "AG14": dechallenge,
+    "AG15": rechallenge,
+    "AG21": followup,
+    "AG22": inclusion_exclusion,
+    "AG23": action_taken,
+}
