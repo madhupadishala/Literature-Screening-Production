@@ -5,6 +5,7 @@ from datetime import date
 from typing import Dict, Any
 from backend.knowledge.agent_context_pack import AgentContextPack
 from backend.knowledge.retriever import HybridRetriever
+from backend.knowledge.folder_discovery import discover_approved_documents
 
 class KnowledgeRouter:
     def __init__(self, base_path: str = None, retriever=None):
@@ -99,4 +100,19 @@ class KnowledgeRouter:
             else:
                 context_pack.general_rules.append(rule)
 
+        # Newly approved folders become reference-visible without agent redeployment.
+        # They never become authoritative decision rules without controlled ingestion.
+        if client_id:
+            discovered = discover_approved_documents(
+                self.base_path, tenant_id=tenant_id, client_id=client_id,
+                agent_id=agent_name, jurisdiction=jurisdiction, as_of=as_of,
+                query=search_corpus,
+            )
+            context_pack.decision_constraints.extend(
+                {"kind": "approved_document_reference", **record} for record in discovered
+            )
+            context_pack.citations.extend(
+                {"rule_id": record["rule_id"], "source": record["source"]}
+                for record in discovered
+            )
         return context_pack
