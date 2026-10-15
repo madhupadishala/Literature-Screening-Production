@@ -6,7 +6,7 @@ from Agentic_AI.shared.execution.specialists import VERIFIED_BINDINGS
 
 class SpecialistImportContracts(unittest.TestCase):
     def test_bound_specialists_are_explicit(self):
-        self.assertEqual(set(VERIFIED_BINDINGS), {"AG01"})
+        self.assertEqual(set(VERIFIED_BINDINGS), {"AG01", "AG06", "AG14", "AG15", "AG21", "AG22", "AG23"})
     def test_specialists_have_two_arguments(self):
         for name, fn in VERIFIED_BINDINGS.items():
             with self.subTest(name=name):
@@ -15,6 +15,8 @@ class SpecialistImportContracts(unittest.TestCase):
         modules = [
             "Agentic_AI.AG01_Drug_Extraction_Classification.src.backend.orchestrator",
             "Agentic_AI.AG10_Translation.translation_agent",
+            "Agentic_AI.shared.kimi8_core.agents",
+            "Agentic_AI.shared.kimi8_core.orchestration",
             "Agentic_AI.shared.workflow_context",
             "backend.knowledge.knowledge_router",
         ]
