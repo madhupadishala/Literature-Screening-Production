@@ -8,6 +8,7 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 import hashlib
+import hmac
 import json
 import re
 
@@ -15,12 +16,16 @@ ALLOWED_EXTENSIONS = {".md", ".txt", ".json"}
 SCOPE_PATTERN = re.compile(r"^[A-Za-z0-9_-]{1,128}$")
 
 def discover_approved_documents(root, *, tenant_id, client_id, agent_id,
-                                jurisdiction=None, as_of=None, query=""):
+                                jurisdiction=None, as_of=None, query="", verification_key=None):
     """Return citations to approved files, including newly created folders.
 
     Scope values and manifest must be controlled by trusted server storage.
     Unapproved/unverifiable knowledge is excluded, not silently indexed.
     """
+    if not isinstance(verification_key, (str, bytes)) or not verification_key:
+        # No trusted approval signer configured: do not ingest new knowledge.
+        return []
+    key = verification_key.encode() if isinstance(verification_key, str) else verification_key
     if not tenant_id or not client_id or not all(
         SCOPE_PATTERN.fullmatch(v) for v in (tenant_id, client_id, agent_id)
     ):
@@ -37,6 +42,12 @@ def discover_approved_documents(root, *, tenant_id, client_id, agent_id,
             continue
         try:
             data = json.loads(manifest.read_text(encoding="utf-8"))
+            signature = data.get("approval_signature")
+            body = {k: v for k, v in data.items() if k != "approval_signature"}
+            canonical = json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
+            expected = hmac.new(key, canonical, hashlib.sha256).hexdigest()
+            if not isinstance(signature, str) or not hmac.compare_digest(signature, expected):
+                continue
             if data.get("status") != "approved" or not data.get("approved_by"):
                 continue
             scopes = data["scope"]
