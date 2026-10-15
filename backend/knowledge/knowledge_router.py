@@ -108,8 +108,9 @@ class KnowledgeRouter:
                 agent_id=agent_name, jurisdiction=jurisdiction, as_of=as_of,
                 query=search_corpus,
             )
+            context_pack.approved_documents.extend(discovered)
             context_pack.decision_constraints.extend(
-                {"kind": "approved_document_reference", **record} for record in discovered
+                {"kind": "approved_document_reference", **{k: v for k, v in record.items() if k != "content"}} for record in discovered
             )
             context_pack.citations.extend(
                 {"rule_id": record["rule_id"], "source": record["source"]}
