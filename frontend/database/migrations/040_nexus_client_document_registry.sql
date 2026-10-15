@@ -1,4 +1,8 @@
 -- Durable private document registry; never infer client ownership from filenames.
+-- A composite reference must point to a complete authorized identity.
+ALTER TABLE safety_intake_records
+  ADD CONSTRAINT uq_safety_intake_document_identity
+  UNIQUE (tenant_id,workspace_id,environment,id);
 CREATE TABLE IF NOT EXISTS nexus_document_objects (
  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
  tenant_id uuid NOT NULL REFERENCES tenants(id) ON DELETE RESTRICT,
