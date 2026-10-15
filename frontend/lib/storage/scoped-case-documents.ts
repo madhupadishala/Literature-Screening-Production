@@ -13,6 +13,9 @@ export async function uploadScopedCaseDocument(input: {
   principal: RequestPrincipal; file: File; target: Target;
 }) {
   const { principal, file, target } = input;
+  if (process.env.NEXUS_ICSR_ATTACHMENTS_ENABLED !== "true") {
+    throw new Error("ICSR attachments remain disabled until storage qualification");
+  }
   const scope = requireSafetyWorkspaceScope(principal);
   if (Boolean(target.intakeRecordId) === Boolean(target.caseId)) throw new Error("Exactly one authorized ICSR target is required");
   if (target.intakeRecordId) await assertSafetyIntakeInScope(principal, target.intakeRecordId);
