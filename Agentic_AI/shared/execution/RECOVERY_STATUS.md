@@ -23,7 +23,7 @@ A specialist is only marked bound once its code imports, meets the two-argument
 | AG26 | TypeScript intake/triage implementation | Typed service bridge and server-side permission enforcement |
 | AG27 | No standalone Python in AG27 | Locate patient/aggregate assessment engine or implement |
 
-**Current status:** AG01 is the only explicitly bound (unqualified) specialist in `VERIFIED_BINDINGS`.
+**Current status (15 October 2026):** AG01, AG06, AG14, AG15, AG21, AG22 and AG23 are explicitly bound in `VERIFIED_BINDINGS` (engineering-only, pending CI and clinical qualification). Eight Kimi specialist implementations, their imports and regulatory register were restored to the canonical shared layer. AG18/AG19 remain unbound until authenticated comparison-set retrieval is implemented.
 All other agents fail closed. The 27-agent registry is not proof that 27 engines run.
 Do not deploy or change clinical-autonomy flags on the basis of this inventory.
 
