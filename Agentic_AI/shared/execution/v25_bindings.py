@@ -3,7 +3,7 @@ from __future__ import annotations
 
 
 def make_v25_bindings(llm):
-    if llm is None or not callable(getattr(llm, "complete", None)):
+    if llm is None or not callable(getattr(llm, "complete_json", None)):
         # Recovered common.LLMClient interface requires structured completion.
         raise ValueError("Approved server-side structured LLM adapter required")
 
