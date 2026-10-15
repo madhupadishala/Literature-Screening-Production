@@ -103,7 +103,7 @@ def translate_article(
     parts = segment_text(text, max_chars=max_chars)
     if len(parts) > 250:
         raise ValueError("Document exceeds 250 translation segments")
-    if translator is None:
+    if translator is None and source_language.casefold() != target_language.casefold():
         endpoint = os.environ.get("NEXUS_TRANSLATION_ENDPOINT", "")
         key = os.environ.get("NEXUS_TRANSLATION_API_KEY", "")
         model = os.environ.get("NEXUS_TRANSLATION_MODEL", "")
