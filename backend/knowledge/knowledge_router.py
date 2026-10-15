@@ -107,6 +107,7 @@ class KnowledgeRouter:
                 self.base_path, tenant_id=tenant_id, client_id=client_id,
                 agent_id=agent_name, jurisdiction=jurisdiction, as_of=as_of,
                 query=search_corpus,
+                verification_key=os.environ.get('NEXUS_KNOWLEDGE_MANIFEST_SECRET'),
             )
             context_pack.approved_documents.extend(discovered)
             context_pack.decision_constraints.extend(
