@@ -1,6 +1,7 @@
 """Approval, tenant isolation and automatic folder-discovery regression tests."""
 from __future__ import annotations
 import hashlib
+import hmac
 import json
 import tempfile
 import unittest
@@ -29,12 +30,21 @@ class FolderDiscoveryTests(unittest.TestCase):
         }
         self.save()
     def save(self):
+        body = {k:v for k,v in self.manifest.items() if k != "approval_signature"}
+        encoded = json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
+        self.manifest["approval_signature"] = hmac.new(b"synthetic-test-only-key", encoded, hashlib.sha256).hexdigest()
         (self.folder / "knowledge.manifest.json").write_text(json.dumps(self.manifest))
     def discover(self, **kwargs):
         opts = {"tenant_id": "orcimed", "client_id": "hetero", "agent_id": "AG02",
                 "jurisdiction": "IN", "query": "nausea"}
         opts.update(kwargs)
-        return discover_approved_documents(self.root, **opts)
+        return discover_approved_documents(self.root, verification_key="synthetic-test-only-key", **opts)
+    def test_unsigned_manifest_is_rejected(self):
+        self.manifest.pop("approval_signature")
+        (self.folder / "knowledge.manifest.json").write_text(json.dumps(self.manifest))
+        self.assertEqual(self.discover(), [])
+    def test_missing_signing_key_is_rejected(self):
+        self.assertEqual(discover_approved_documents(self.root, tenant_id="orcimed", client_id="hetero", agent_id="AG02"), [])
     def test_new_folder_is_found_and_content_read(self):
         docs = self.discover()
         self.assertEqual(len(docs), 1)
