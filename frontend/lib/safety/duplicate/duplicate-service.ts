@@ -372,6 +372,14 @@ async function loadCandidatePool(
         AND intake.workspace_id = $3
         AND intake.environment = $4
         AND intake.id <> $2
+        AND (intake.created_at, intake.id) < (
+          SELECT incoming.created_at, incoming.id
+            FROM safety_intake_records incoming
+           WHERE incoming.tenant_id = $1
+             AND incoming.workspace_id = $3
+             AND incoming.environment = $4
+             AND incoming.id = $2
+        )
         AND intake.triage_status = 'COMPLETE'
         AND intake.validity_status = 'VALID'
         AND COALESCE(intake.case_relationship, 'NEW_CASE') <> 'DUPLICATE'
