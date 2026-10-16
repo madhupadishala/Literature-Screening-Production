@@ -7,8 +7,11 @@ WSGI execution is synchronous; reject invocation from inside an event loop.
 import asyncio
 
 def create_event_runtime(engine):
-    from Agentic_AI.AG02_Adverse_Event_MedDRA.src.branches.feat__event_extraction_agent.backend.agents.event_runtime.engine import EventEngine
-    from Agentic_AI.AG02_Adverse_Event_MedDRA.src.branches.feat__event_extraction_agent.backend.agents.event_runtime.models import Request
+    from importlib import import_module
+    namespace = ("Agentic_AI.AG02_Adverse_Event_MedDRA.src.branches."
+                 "feat__event-extraction-agent.backend.agents.event_runtime")
+    EventEngine = import_module(namespace + ".engine").EventEngine
+    Request = import_module(namespace + ".models").Request
     if not isinstance(engine, EventEngine):
         raise TypeError("AG02 requires genuine recovered EventEngine")
 
