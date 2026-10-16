@@ -10,10 +10,10 @@ from typing import Any
 
 BATCH1_IDS = ("AG03", "AG04", "AG09", "AG24")
 BATCH1_ROUTES = {
-    "AG03": {"module": "intake_triage", "engine": "PatientAgent", "input": "text"},
-    "AG04": {"module": "intake_triage", "engine": "ReporterAgent", "input": "text"},
-    "AG09": {"module": "intake_triage", "engine": "DayZeroAgent", "input": "day_zero_input"},
-    "AG24": {"module": "case_processing", "engine": "HistoricalAgent", "input": "text"},
+    "AG03": {"modules": ("intake_triage", "case_processing"), "engine": "PatientAgent", "input": "text"},
+    "AG04": {"modules": ("intake_triage", "case_processing"), "engine": "ReporterAgent", "input": "text"},
+    "AG09": {"modules": ("intake_triage",), "engine": "DayZeroAgent", "input": "day_zero_input"},
+    "AG24": {"modules": ("case_processing",), "engine": "HistoricalAgent", "input": "text"},
 }
 
 def make_v25_bindings(llm):
