@@ -61,6 +61,33 @@ def approved_native_engines(*, socket_path, signing_secret, ag02_runtime=None, c
     """Register only explicit, server-owned Node engines and approved AG02."""
     if not set(configured_agents).issubset(TS_AGENT_IDS):
         raise ValueError("Invalid approved TS agent list")
+    if configured_agents:
+        probe_native_ready(socket_path=socket_path,signing_secret=signing_secret)
     engines={agent:NodeSocketRuntime(agent,socket_path=socket_path,signing_secret=signing_secret) for agent in configured_agents}
     if ag02_runtime is not None: engines["AG02"]=ag02_runtime
     return engines
+
+def probe_native_ready(*, socket_path, signing_secret, timeout=3):
+    """Fail closed before native registration; signed probe never invokes model."""
+    if not isinstance(signing_secret,bytes) or len(signing_secret)<32:
+        raise ValueError("IPC signing secret required")
+    body={"agent_id":"__health__","tenant_id":"nexus-diagnostic",
+          "client_id":"nexus-diagnostic","document_id":"nexus-native-readiness",
+          "input":{"probe":True},"knowledge_citations":[]}
+    canonical=json.dumps(body,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()
+    signature=hmac.new(signing_secret,canonical,hashlib.sha256).hexdigest()
+    raw=json.dumps({**body,"ipc_signature":signature},separators=(",",":"),ensure_ascii=False).encode()
+    try:
+        with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as stream:
+            stream.settimeout(timeout)
+            stream.connect(str(socket_path))
+            stream.sendall(struct.pack("!I",len(raw))+raw)
+            length=struct.unpack("!I",NodeSocketRuntime._recv(stream,4))[0]
+            if not 0 < length <= 4096:
+                raise NativeTransportError("Invalid readiness response")
+            answer=json.loads(NodeSocketRuntime._recv(stream,length))
+    except (OSError,TimeoutError,ValueError,UnicodeError):
+        raise NativeTransportError("Native worker readiness unavailable") from None
+    if answer != {"status":"ready","protocol":1,"clinical_execution_enabled":False}:
+        raise NativeTransportError("Native worker did not pass readiness")
+    return True
