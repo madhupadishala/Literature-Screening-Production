@@ -26,6 +26,7 @@ def build_dispatcher(*, signing_secret: bytes, router=None, duplicate_repository
         from .node_socket_runtime import approved_native_engines
         native_runtimes = approved_native_engines(
             socket_path=native_socket_path or "/run/nexus-agents/agent.sock",
+            signing_secret=signing_secret,
             ag02_runtime=ag02_runtime, configured_agents=native_ts_agents)
     if native_runtimes is not None:
         from Agentic_AI.shared.execution.native_runtime_bindings import make_native_runtime_bindings
