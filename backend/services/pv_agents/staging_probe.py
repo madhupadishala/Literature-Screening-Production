@@ -42,3 +42,37 @@ def assess_probe(token, request_id):
 
 class _UnusedAgent:
     pass
+
+def specialist_readiness_probe(token, request_id):
+    """Authenticated, synthetic-only 27-slot readiness. No patient input or model calls.
+
+    The current host has no injected provider/candidate corpus; preserve explicit
+    not_bound status instead of pretending all 27 are clinically executable.
+    """
+    from Agentic_AI.shared.execution.factory import build_dispatcher
+    from Agentic_AI.shared.execution.grounded_specialists import GROUNDED_BINDINGS
+    from Agentic_AI.shared.execution.additional_bindings import ADDITIONAL_BINDINGS
+    from Agentic_AI.shared.execution.specialists import VERIFIED_BINDINGS
+
+    audited = assess_probe(token, request_id)
+    registrations = {
+        **VERIFIED_BINDINGS, **ADDITIONAL_BINDINGS, **GROUNDED_BINDINGS
+    }
+    # Read registry from canonical source and verify exactly 27 slots.
+    from pathlib import Path
+    registry = json.loads(
+        (Path(__file__).resolve().parents[3] /
+         "Agentic_AI/shared/agent_context_registry.json").read_text(encoding="utf-8")
+    )
+    if set(registry) != {f"AG{i:02d}" for i in range(1, 28)}:
+        raise ServiceError(503, "27-agent registry unavailable")
+    return {
+        **audited,
+        "diagnostic": "synthetic_readiness_inventory",
+        "total_slots": 27,
+        "bound_unqualified": sorted(registrations),
+        "not_bound": sorted(set(registry) - set(registrations)),
+        "executed_specialists": 0,
+        "knowledge_retrieval_proven": False,
+        "clinical_release_authorized": False,
+    }
