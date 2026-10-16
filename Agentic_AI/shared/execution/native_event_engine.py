@@ -17,7 +17,17 @@ def create_event_runtime(engine):
         raise TypeError("AG02 requires genuine recovered EventEngine")
 
     class Runtime:
+        async def execute_async(self, request):
+            """ASGI callers await this: event loop stays responsive."""
+            return await asyncio.to_thread(self.execute, request)
+
         def execute(self, request):
+            try:
+                asyncio.get_running_loop()
+            except RuntimeError:
+                pass
+            else:
+                raise RuntimeError("Use await execute_async from an active event loop")
             payload=request["input"]
             if not isinstance(payload,dict) or payload.get("document_id")!=request["document_id"]:
                 raise ValueError("AG02 source document mismatch")
