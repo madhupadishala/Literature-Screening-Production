@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from uuid import uuid4
 from Agentic_AI.shared.workflow_context import issue_context, ContextError
 from Agentic_AI.shared.execution.factory import build_dispatcher
+from Agentic_AI.shared.execution.base import ExecutionFailure
 
 KEY = b"offline-batch-one-signed-test-key-32-bytes-minimum"
 SOURCE = ("Patient ID SYN-17, male, 45 years old. Dr Ada, physician, "
@@ -99,6 +100,17 @@ class Batch1RealExecutionTest(unittest.TestCase):
             self.dispatcher.execute("AG03",envelope=self.envelope("AG03",client="cipla"),
                 evidence=self.evidence(),expected_tenant="orcimed",expected_client="hetero")
         self.assertEqual(self.router.calls,[])
+    def test_wrong_module_denied_before_model_execution(self):
+        envelope=issue_context(verified_principal="synthetic-runner",
+            authorized_tenant="orcimed", authorized_client="hetero",
+            module_id="submissions", document_id="SYN-DOC-1",
+            workflow_id="synthetic-workflow", job_id="wrong-module",
+            agent_id="AG09", task_type="synthetic_extract", signing_secret=KEY)
+        with self.assertRaises(ExecutionFailure):
+            self.dispatcher.execute("AG09", envelope=envelope,
+                evidence=self.evidence(), expected_tenant="orcimed", expected_client="hetero")
+        self.assertEqual(self.router.calls, [])
+
     def test_missing_llm_rejected_and_batch1_unbound(self):
         bare=build_dispatcher(signing_secret=KEY,router=self.router)
         self.assertEqual(len(bare.registry),27)
