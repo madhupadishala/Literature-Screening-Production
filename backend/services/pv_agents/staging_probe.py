@@ -76,3 +76,74 @@ def specialist_readiness_probe(token, request_id):
         "knowledge_retrieval_proven": False,
         "clinical_release_authorized": False,
     }
+
+def synthetic_dispatch_batch(token, request_id):
+    """Execute available canonical specialists on fixed non-patient test content.
+
+    Never selects runtime providers, tenants, clients, documents or engine inputs
+    from an HTTP payload. Read-only synthetic context router is explicitly NOT a
+    test of live client KB retrieval. No clinical flag is enabled.
+    """
+    receipt = assess_probe(token, request_id)
+    from types import SimpleNamespace
+    from Agentic_AI.shared.execution.factory import build_dispatcher
+    from Agentic_AI.shared.workflow_context import issue_context
+
+    class SyntheticRouter:
+        def build_context_pack(self, *, tenant_id, client_id, agent_name, task, evidence_package):
+            if (tenant_id, client_id) != (SCOPE["tenant_id"], SCOPE["client_id"]):
+                raise PermissionError("synthetic scope mismatch")
+            return SimpleNamespace(
+                tenant_id=tenant_id, client_id=client_id, citations=[],
+                product_master_matches=[{"trade_name": "Metformin", "client_id": client_id}],
+                approved_documents=[],
+            )
+
+    signing = b"only-a-fixed-synthetic-test-key-never-for-production-use"
+    dispatcher = build_dispatcher(signing_secret=signing, router=SyntheticRouter())
+    document_id = "nexus-synthetic-icsr-0001"
+    narrative = ("SYNTHETIC TEST: A 45-year-old patient was hospitalized. "
+                 "Metformin prescribed for diabetes. ALT 120 U/L recorded. "
+                 "A clinician reported nausea following medication.")
+    evidence = {
+        "document_id": document_id, "case_id": document_id,
+        "text": narrative, "title": "Synthetic safety case",
+        "source_type": "spontaneous", "candidate_drugs": ["Metformin"],
+        "source_language": "English", "target_language": "English",
+        "case": {"case_id": document_id, "narrative": narrative,
+                 "drugs": [{"name": "Metformin", "role": "suspect"}],
+                 "events": [{"verbatim": "Nausea"}]},
+        "article": {"record_id": document_id, "title": "Synthetic safety case",
+                    "abstract": narrative, "mentions_products": ["Metformin"]},
+    }
+    outcomes = {}
+    for agent_id in sorted(dispatcher.registry):
+        if agent_id not in dispatcher.specialists:
+            outcomes[agent_id] = "not_bound"
+            continue
+        try:
+            envelope = issue_context(
+                verified_principal="synthetic-staging-probe",
+                authorized_tenant=SCOPE["tenant_id"], authorized_client=SCOPE["client_id"],
+                module_id="case_processing", document_id=document_id,
+                workflow_id="synthetic-workflow", job_id=f"synthetic-{agent_id}",
+                agent_id=agent_id, task_type="synthetic_readiness",
+                signing_secret=signing)
+            result = dispatcher.execute(
+                agent_id, envelope=envelope, evidence=evidence,
+                expected_tenant=SCOPE["tenant_id"], expected_client=SCOPE["client_id"])
+            if result.get("result", {}).get("status") != "review_required":
+                raise RuntimeError("synthetic specialist bypassed mandatory review")
+            outcomes[agent_id] = "executed_review_only"
+        except Exception:
+            # Never reflect source content or provider error details from a probe.
+            outcomes[agent_id] = "execution_failed_closed"
+    return {
+        **receipt,
+        "diagnostic": "synthetic_dispatch_execution",
+        "total_slots": len(outcomes),
+        "outcomes": outcomes,
+        "executed_specialists": sum(x == "executed_review_only" for x in outcomes.values()),
+        "knowledge_retrieval_proven": False,
+        "clinical_release_authorized": False,
+    }
