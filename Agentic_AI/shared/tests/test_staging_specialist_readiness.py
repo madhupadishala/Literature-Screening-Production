@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 from backend.services.pv_agents.render_wsgi import application
 
-TOKEN = "synthetic-authorization-token-for-automated-testing-123"
+TOKEN = "a" * 64  # test-only 256-bit-shaped fixture, never a deployed secret
 SCOPE = {"tenant_id":"nexus-staging-tenant","client_id":"nexus-staging-client",
          "workspace_id":"nexus-staging-workspace"}
 
