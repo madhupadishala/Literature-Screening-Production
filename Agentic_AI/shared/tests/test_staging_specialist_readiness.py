@@ -34,7 +34,7 @@ class StagingReadinessTest(unittest.TestCase):
         self.ctx = patch.dict(os.environ, {
             "NEXUS_PV_STAGING_PROBE_ENABLED":"true", "NEXUS_PV_AGENTS_ENABLED":"false",
             "NEXUS_PV_AUDIT_DATABASE_URL":"postgresql://synthetic-never-connect",
-            "NEXUS_PV_SERVICE_TOKEN_SCOPES":json.dumps({TOKEN:[SCOPE]}),
+            "NEXUS_PV_STAGING_DIAGNOSTIC_TOKEN": TOKEN,
         })
         self.ctx.start()
         self.addCleanup(self.ctx.stop)
