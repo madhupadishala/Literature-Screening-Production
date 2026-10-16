@@ -1,5 +1,6 @@
 """Synthetic offline AG02 async engine binding contract."""
 import sys
+import asyncio
 import types
 import unittest
 from unittest.mock import patch
@@ -31,6 +32,18 @@ class NativeEventTests(unittest.TestCase):
         self.assertEqual(result["agent_id"],"AG02")
         self.assertEqual(result["assessment"]["case_id"],"SYN-EVT-1")
         self.assertTrue(result["requires_human_review"])
+    def test_async_entrypoint_is_awaitable_and_sync_entrypoint_rejects_loop(self):
+        runtime=create_event_runtime(FakeEngine())
+        request={"agent_id":"AG02","tenant_id":"orcimed","client_id":"hetero",
+                 "document_id":"SYN-EVT-1","input":{"document_id":"SYN-EVT-1",
+                 "case":{"case_id":"SYN-EVT-1","documents":[{"id":"SYN-1"}]}}}
+        async def run():
+            with self.assertRaises(RuntimeError):
+                runtime.execute(request)
+            return await runtime.execute_async(request)
+        result=asyncio.run(run())
+        self.assertEqual(result["status"],"review_required")
+
     def test_mismatched_source_rejected(self):
         agent=create_event_runtime(FakeEngine())
         with self.assertRaises(ValueError):
