@@ -58,8 +58,11 @@ services:
       NEXUS_PV_AGENTS_ENABLED: "false"
       NEXUS_NATIVE_SOCKET_PATH: /run/nexus-agents/agent.sock
       IPC_SIGNING_SECRET_FILE: /run/secrets/ipc_key
-      DATABASE_URL_FILE: /run/secrets/staging_database_url
-    secrets: [ipc_key, staging_database_url]
+      NEXUS_AUDIT_WRITER_DATABASE_URL_FILE: /run/secrets/staging_database_url
+      NEXUS_AUDIT_AUDITOR_DATABASE_URL_FILE: /run/secrets/staging_auditor_url
+      NEXUS_AG02_LOCAL_PROVIDER_URL: http://ollama:11434/v1
+      NEXUS_AG02_LOCAL_MODEL: ${APPROVED_LOCAL_MODEL:?approved model name required}
+    secrets: [ipc_key, staging_database_url, staging_auditor_url]
     volumes:
       - ipc:/run/nexus-agents
     depends_on:
@@ -71,7 +74,8 @@ services:
     command: ["python","-m","backend.services.pv_agents.native_qualification_runner"]
 secrets:
   ipc_key: {file: ${IPC_SECRET_FILE:?secret manager materialized file}}
-  staging_database_url: {file: ${STAGING_DB_URL_FILE:?secret manager materialized file}}
+  staging_database_url: {file: ${STAGING_DB_URL_FILE:?audit writer credential file}}
+  staging_auditor_url: {file: ${STAGING_AUDITOR_URL_FILE:?read only auditor credential file}}
 volumes:
   ipc: {}
   ollama_models: {}
