@@ -45,9 +45,9 @@ def application(environ, start_response):
             "clinical_execution_enabled": os.environ.get("NEXUS_PV_AGENTS_ENABLED") == "true",
         }, head=method == "HEAD")
 
-    if path in ("/v1/staging/synthetic-assess", "/v1/staging/specialist-readiness") and method == "POST":
+    if path in ("/v1/staging/synthetic-assess", "/v1/staging/specialist-readiness", "/v1/staging/synthetic-dispatch") and method == "POST":
         from .service import ServiceError
-        from .staging_probe import assess_probe, specialist_readiness_probe
+        from .staging_probe import assess_probe, specialist_readiness_probe, synthetic_dispatch_batch
         try:
             size = int(environ.get("CONTENT_LENGTH") or 0)
             if not 1 <= size <= 512:
@@ -59,7 +59,8 @@ def application(environ, start_response):
             authorization = environ.get("HTTP_AUTHORIZATION", "")
             if not authorization.startswith("Bearer "):
                 raise ServiceError(401, "Service authentication required")
-            probe = specialist_readiness_probe if path.endswith("/specialist-readiness") else assess_probe
+            probe = (specialist_readiness_probe if path.endswith("/specialist-readiness") else
+                     synthetic_dispatch_batch if path.endswith("/synthetic-dispatch") else assess_probe)
             result = probe(authorization[7:], body["request_id"])
             return _json(start_response, "200 OK", result)
         except ServiceError as exc:
