@@ -19,6 +19,10 @@ class BaseExecutionAdapter:
                                  signing_secret=self.secret,
                                  expected_tenant=expected_tenant,
                                  expected_client=expected_client)
+        if self.agent_id in ("AG03", "AG04", "AG09", "AG24"):
+            from .v25_bindings import BATCH1_ROUTES
+            if context.module_id not in BATCH1_ROUTES[self.agent_id]["modules"]:
+                raise ExecutionFailure("agent not authorized for requested module")
         if not isinstance(evidence, dict):
             raise ExecutionFailure("evidence must be an object")
         if not isinstance(evidence.get("text", ""), str):
