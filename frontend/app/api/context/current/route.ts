@@ -1,7 +1,7 @@
 import { type NextRequest } from "next/server";
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { listAccessibleWorkspaces } from "@/lib/nexus/workspace-access-service";
-import { resolveRequestPrincipal } from "@/lib/rbac/request-principal";
+import { AuthorizationError, resolveRequestPrincipal } from "@/lib/rbac/request-principal";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,7 +13,8 @@ export async function GET(request: NextRequest): Promise<Response> {
       tenantId: principal.tenantId, userId: principal.userId, environment: principal.environment,
     });
     const workspace = workspaces.find(item => item.workspaceId === principal.workspaceId);
-    const enabledModules = workspace?.modules.map(item => item.moduleKey) ?? [];
+    if (!workspace) throw new AuthorizationError("Selected workspace access is no longer active.", 403);
+    const enabledModules = workspace.modules.map(item => item.moduleKey);
 
     return Response.json({
       success: true,
@@ -29,8 +30,12 @@ export async function GET(request: NextRequest): Promise<Response> {
         roleKey: principal.roleKey,
         enabledModules,
       },
-    });
+    }, { headers: { "Cache-Control": "private, no-store", Vary: "Cookie" } });
   } catch (error) {
-    return routeErrorResponse(error);
+    const response = routeErrorResponse(error);
+    response.headers.set("Cache-Control", "private, no-store");
+    response.headers.set("Vary", "Cookie");
+    if (response.status >= 500) console.error("Workspace context resolution failed", { code: "CONTEXT_RESOLUTION_FAILED" });
+    return response;
   }
 }

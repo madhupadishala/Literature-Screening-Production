@@ -27,7 +27,7 @@
 .module-links a:hover { background:#f1f5f9; }
 .module-links a.active { color:#124978; border-bottom-color:#124978; background:#eef4fa; }
 .validation { display:flex; align-items:center; gap:6px; min-height:22px; padding:0 12px; border-top:1px solid #e2e8f0; background:#f8fafc; color:#526176; font-size:10px; }
-.validation span { width:5px; height:5px; background:#23824a; border-radius:50%; }
+.validation span { width:5px; height:5px; background:#94a3b8; border-radius:50%; }
 .menu { display:none; }
 .menu-label { font-size:12px; }
 .error { margin:0; padding:8px 12px; background:#fff1f0; color:#b42318; font-size:12px; }
@@ -35,3 +35,6 @@
 @media(max-width:1000px) { .identity { grid-template-columns:repeat(3,minmax(0,1fr)); } .identity>div { border-bottom:1px solid #e2e8f0; } }
 @media(max-width:700px) { .application-bar { grid-template-columns:1fr; } .utility-toolbar { justify-content:flex-start; flex-wrap:wrap; border-top:1px solid #354355; } .identity { grid-template-columns:repeat(2,minmax(0,1fr)); } .brand-copy small { display:none; } }
 @media print { .shell-header { position:static; margin:0 0 12px; } .utility-toolbar,.validation { display:none; } }
+
+.validation[data-verified="true"] span { background:#23824a; }
+.module-links a { flex-shrink:0; }

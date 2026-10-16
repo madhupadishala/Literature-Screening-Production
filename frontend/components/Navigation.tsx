@@ -3,7 +3,8 @@
 import Link from "next/link";
 import styles from "./Navigation.module.css";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState, type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
+import { useWorkspaceContext } from "@/components/context/WorkspaceContext";
 import { getSession, saveSession } from "@/lib/session-manager";
 
 type ModuleKey =
@@ -34,40 +35,13 @@ export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [context, setContext] = useState<{
-    tenantKey: string;
-    tenantId?: string;
-    workspaceId?: string;
-    workspaceName?: string;
-    moduleKey?: string;
-    environment: string;
-    displayName: string;
-    roleKey: string;
-    enabledModules: string[];
-  }>({
-    tenantKey: "Active tenant",
-    environment: "—",
-    displayName: "Authenticated user",
-    roleKey: "Loading role",
-    enabledModules: [],
-  });
-
-  useEffect(() => {
-    let active = true;
-    void fetch("/api/context/current", { cache: "no-store" })
-      .then(async (response) => {
-        const payload = await response.json();
-        if (active && response.ok && payload.success) setContext(payload.data);
-      })
-      .catch(() => undefined);
-    return () => {
-      active = false;
-    };
-  }, []);
+  const { state, retry } = useWorkspaceContext();
+  const context = state.context;
 
   const [switching, setSwitching] = useState(false);
   const [switchError, setSwitchError] = useState("");
   async function navigateModule(event: MouseEvent<HTMLAnchorElement>, module: (typeof modules)[number]) {
+    if (!context) { event.preventDefault(); return; }
     if (!module.moduleKey || module.moduleKey === context.moduleKey) { setOpen(false); return; }
     event.preventDefault();
     if (switching) return;
@@ -83,21 +57,22 @@ export default function Navigation() {
       const current = getSession();
       if (current) saveSession({ ...current, moduleKey: module.moduleKey, permissions: payload.data.permissions });
       setOpen(false);
-      window.location.assign(module.path);
+      router.push(module.path);
     } catch (error) { setSwitchError(error instanceof Error ? error.message : "Module selection failed."); }
     finally { setSwitching(false); }
   }
 
   function isActive(module: (typeof modules)[number]): boolean {
     if (module.path === "/") return pathname === "/";
-    const prefixes = module.activePrefixes ?? [module.path];
+    const prefixes = [module.path, ...(module.activePrefixes ?? [])];
+    if (module.moduleKey === "LITERATURE") prefixes.push("/literature");
     return prefixes.some(
       (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
     );
   }
 
   const visibleModules = modules.filter(
-    (module) => !module.moduleKey || context.enabledModules.includes(module.moduleKey),
+    (module) => context && (!module.moduleKey || context.enabledModules.includes(module.moduleKey)),
   );
 
   const isCaseWorkspace =
@@ -200,20 +175,20 @@ export default function Navigation() {
         <div className={styles["identity"]}>
           <div>
             <span>Tenant</span>
-            <strong>{context.tenantKey}</strong>
+            <strong>{context?.tenantKey ?? "—"}</strong>
           </div>
-          <div><span>Client</span><strong>{context.workspaceName ?? "—"}</strong></div>
+          <div><span>Client</span><strong>{context?.workspaceName ?? "—"}</strong></div>
           <div>
             <span>Environment</span>
-            <strong>{context.environment}</strong>
+            <strong>{context?.environment ?? "—"}</strong>
           </div>
           <div>
             <span>User</span>
-            <strong>{context.displayName}</strong>
+            <strong>{context?.email ?? "—"}</strong>
           </div>
           <div>
             <span>Role</span>
-            <strong>{context.roleKey}</strong>
+            <strong>{context?.roleKey ?? "—"}</strong>
           </div>
         </div>
         <button
@@ -249,9 +224,13 @@ export default function Navigation() {
 
       </nav>
       {switchError ? <p className={styles.error} role="alert">{switchError}</p> : null}
-      <div className={styles["validation"]}>
+      <div className={styles.validation} data-verified={state.status === "authenticated_ready"} role="status">
         <span aria-hidden="true" />
-        Controlled environment · Tenant, module entitlement and RBAC controls active
+        {state.status === "authenticated_ready"
+          ? "Controlled environment · Tenant, module entitlement and RBAC controls active"
+          : state.status === "context_error"
+            ? <>Failed to load workspace context. <button type="button" onClick={retry}>Retry</button></>
+            : "Verifying context..."}
       </div>
 
     </div>

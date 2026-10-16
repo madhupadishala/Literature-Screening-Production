@@ -1,83 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { clearSession, isAuthenticated } from "@/lib/session-manager";
+import { usePathname } from "next/navigation";
+import { WorkspaceContextProvider, useWorkspaceContext } from "@/components/context/WorkspaceContext";
 
-const PUBLIC_PATHS = ["/login"];
-const BACKEND_SESSION_CHECK_INTERVAL_MS = 60_000;
+function VerifiedContent({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const { state, retry } = useWorkspaceContext();
+  if (pathname === "/login" || pathname.startsWith("/login/")) return <>{children}</>;
+  if (state.status === "authenticated_ready") return <>{children}</>;
+  return <div role={state.status === "context_error" ? "alert" : "status"} style={{ padding: 12, fontSize: 12 }}>
+    {state.status === "context_error" ? <>Failed to load workspace context. <button type="button" onClick={retry}>Retry</button> <a href="/login">Select workspace</a></>
+      : state.status === "loading" ? "Verifying context..." : "Redirecting to sign in..."}
+  </div>;
+}
 
 export default function AuthGate({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const isPublicPath = PUBLIC_PATHS.some((path) => pathname?.startsWith(path));
-  const [backendVerified, setBackendVerified] = useState(false);
-
-  useEffect(() => {
-    if (isPublicPath) return;
-
-    let cancelled = false;
-
-    async function verifyBackendSession() {
-      if (!isAuthenticated()) {
-        clearSession();
-        if (!cancelled) {
-          setBackendVerified(false);
-          router.replace("/login");
-        }
-        return;
-      }
-
-      try {
-        const response = await fetch("/api/context/current", {
-          method: "GET",
-          cache: "no-store",
-          credentials: "same-origin",
-        });
-
-        if (!response.ok) {
-          clearSession();
-          if (!cancelled) {
-            setBackendVerified(false);
-            router.replace("/login");
-          }
-          return;
-        }
-
-        if (!cancelled) setBackendVerified(true);
-      } catch {
-        clearSession();
-        if (!cancelled) {
-          setBackendVerified(false);
-          router.replace("/login");
-        }
-      }
-    }
-
-    void verifyBackendSession();
-
-    const interval = window.setInterval(
-      () => void verifyBackendSession(),
-      BACKEND_SESSION_CHECK_INTERVAL_MS,
-    );
-
-    function handleVisibilityChange() {
-      if (document.visibilityState === "visible") {
-        void verifyBackendSession();
-      }
-    }
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      cancelled = true;
-      window.clearInterval(interval);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [isPublicPath, pathname, router]);
-
-  if (isPublicPath) return <>{children}</>;
-  if (!backendVerified) return null;
-
-  return <>{children}</>;
+  return <WorkspaceContextProvider><VerifiedContent>{children}</VerifiedContent></WorkspaceContextProvider>;
 }

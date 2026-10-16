@@ -35,6 +35,8 @@ const fixture = { tenantId: 'tenant-a', tenantKey: 'clinixai-prod', workspaceId:
   workspaceName: 'TheClinixAI Production Workspace', moduleKey: 'CASE_PROCESSING', environment: 'PROD',
   displayName: 'ClinixAI Super Admin', email: 'synthetic@example.test', roleKey: 'CLINIXAI_SUPER_ADMIN',
   enabledModules: ['LITERATURE', 'INTAKE', 'CASE_PROCESSING', 'SUBMISSIONS'] };
+let contextMode = 200;
+let contextRequests = 0;
 let status = 200;
 let selectedModule = null;
 let returnedRecords = records;
@@ -50,10 +52,15 @@ try {
   await page.route('**/api/**', async route => {
     const path = new URL(route.request().url()).pathname;
     let body = { success: true, data: { records: [] } }; let code = 200;
-    if (path === '/api/context/current') body = { success: true, data: fixture };
+    if (path === '/api/context/current') {
+      contextRequests++;
+      if (contextMode === -1) { await route.abort(); return; }
+      code = contextMode;
+      body = contextMode === 200 ? { success: true, data: fixture } : { success: false, code: 'AUTHENTICATION_REQUIRED' };
+    }
     if (path === '/api/safety/cases') { code = status; body = status === 200 ? { success: true, data: { records: returnedRecords } } : { error: 'Authentication required.' }; }
     if (path === '/api/nexus/context' && route.request().method() === 'POST') {
-      selectedModule = route.request().postDataJSON(); body = { success: true, data: { permissions: ['submissions.view'] } };
+      selectedModule = route.request().postDataJSON(); fixture.moduleKey = selectedModule.moduleKey; body = { success: true, data: { permissions: ['submissions.view'] } };
     }
     await route.fulfill({ status: code, contentType: 'application/json', body: JSON.stringify(body) });
   });
@@ -93,9 +100,37 @@ try {
   await page.getByText('No cases are available in this workspace.', { exact: true }).waitFor();
   assert.deepEqual(await metricValues(), ['0', '0', '0', '0']);
   assert.equal(await page.getByRole('alert').filter({ hasText: 'Case worklist unavailable' }).count(), 0);
+  await page.evaluate(() => { window.__navigationDocument = 'preserved'; });
   await page.getByRole('link', { name: 'Submissions', exact: true }).click();
   await page.waitForURL('**/submissions');
   assert.deepEqual(selectedModule, { tenantId: 'tenant-a', workspaceId: 'workspace-a', environment: 'PROD', moduleKey: 'SUBMISSIONS' });
+  assert.equal(await page.evaluate(() => window.__navigationDocument), 'preserved', 'Module switches must preserve the document');
+  await page.getByRole('link', { name: 'Submissions', exact: true }).waitFor();
+  assert.equal(await page.getByRole('link', { name: 'Submissions', exact: true }).getAttribute('aria-current'), 'page');
+  await page.getByRole('link', { name: 'Case Processing', exact: true }).click();
+  await page.waitForURL('**/cases');
+  assert.equal(await page.evaluate(() => window.__navigationDocument), 'preserved');
+  assert.deepEqual(selectedModule, { tenantId: 'tenant-a', workspaceId: 'workspace-a', environment: 'PROD', moduleKey: 'CASE_PROCESSING' });
+  for (const mode of [500, -1]) {
+    contextMode = mode;
+    await page.goto(base + '/cases');
+    await page.getByText('Failed to load workspace context.', { exact: false }).waitFor();
+    assert.equal(await page.getByRole('link', { name: 'Submissions', exact: true }).count(), 0);
+    assert.equal(await page.getByText(/Tenant, module entitlement and RBAC controls active/).count(), 0);
+    const before = contextRequests;
+    contextMode = 200;
+    await page.getByRole('button', { name: 'Retry', exact: true }).click();
+    await page.getByRole('link', { name: 'Submissions', exact: true }).waitFor();
+    assert.equal(contextRequests, before + 1, 'Shared provider must issue one request per retry');
+    assert.equal(await page.getByText(fixture.email, { exact: true }).count(), 1);
+    assert.equal(await page.getByRole('link', { name: 'Case Processing', exact: true }).getAttribute('aria-current'), 'page');
+  }
+  for (const mode of [401, 403]) {
+    contextMode = mode;
+    await page.goto(base + '/cases');
+    await page.waitForURL(url => url.pathname === '/login' && url.searchParams.has('reason'));
+    assert.equal(await page.getByText(/Tenant, module entitlement and RBAC controls active/).count(), 0);
+  }
   assert.deepEqual(errors, []);
   console.log('PASS: desktop/mobile density, full client labels, styled links, filters, error/empty states, and scoped Submissions navigation.');
 } finally { await browser.close(); server?.kill(); }
