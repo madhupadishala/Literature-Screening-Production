@@ -3,13 +3,12 @@
  * model and a non-persisting narrative draft function before opening its socket.
  */
 import { createNativeBridge } from './native-agent-uds-bridge.mjs';
-import { registerRecoveredNativeAgents, type NativeRequest } from './native-agent-handlers';
+import { registerRecoveredNativeAgents } from './native-agent-handlers';
 import type { AIProvider } from '../ai/ai-types';
 
 export async function startNexusNativeWorker(input: {
   socketPath: string;
   countryProvider: AIProvider;
-  narrativeDraft: (source: Record<string, unknown>, request: NativeRequest) => Promise<Record<string, unknown>>;
 }) {
   if (process.env.NEXUS_PV_AGENTS_ENABLED === 'true') {
     throw new Error('Clinical dispatch release is not authorized for this isolated worker');
