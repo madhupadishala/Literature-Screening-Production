@@ -46,6 +46,13 @@ def make_native_runtime_bindings(runtimes: Mapping[str, Any]) -> dict:
             if isinstance(payload, dict):
                 if payload.get("document_id") != doc:
                     raise ValueError("Specialist input/document identity mismatch")
+                if _id == "AG02" and (not isinstance(payload.get("case"), dict) or
+                                        payload["case"].get("case_id") != doc or
+                                        not isinstance(payload["case"].get("documents"), list) or
+                                        not payload["case"]["documents"]):
+                    raise ValueError("AG02 requires source-linked case and nonempty documents")
+                if _id in ("AG12", "AG20", "AG26") and not isinstance(payload.get("source"), dict):
+                    raise ValueError("Structured specialist request requires source evidence object")
             request = {"agent_id": _id, "document_id": doc,
                        "tenant_id": pack.tenant_id, "client_id": pack.client_id,
                        "input": payload,
