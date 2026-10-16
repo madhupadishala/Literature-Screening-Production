@@ -41,7 +41,9 @@ class NativeBatchContracts(unittest.TestCase):
         route=RUNTIME_ROUTES[agent]
         evidence={"document_id":"SYN-DOC-2","text":"Synthetic medical case only"}
         if route["input"]!="text":
-            evidence[route["input"]]={"document_id":"SYN-DOC-2","synthetic":True,\n                "source":{"text":"synthetic source"},\n                "case":{"case_id":"SYN-DOC-2","documents":[{"id":"SYN-SOURCE-1"}]}}
+            evidence[route["input"]]={"document_id":"SYN-DOC-2","synthetic":True,
+                "source":{"text":"synthetic source"},
+                "case":{"case_id":"SYN-DOC-2","documents":[{"id":"SYN-SOURCE-1"}]}}
         return evidence
     def test_six_real_invocations_and_27_slots(self):
         self.assertEqual(len(self.dispatcher.registry),27)
