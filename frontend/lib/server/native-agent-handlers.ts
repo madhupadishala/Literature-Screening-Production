@@ -61,7 +61,7 @@ export function registerRecoveredNativeAgents(deps: {
           typeof source.sourceCoverage !== 'string') {
         throw new Error('AG17 requires governed structured product and safety evidence');
       }
-      return {assessment: assessPvSafety(source as Parameters<typeof assessPvSafety>[0]) as unknown as JsonObject};
+      return {assessment: assessPvSafety(source as unknown as Parameters<typeof assessPvSafety>[0]) as unknown as JsonObject};
     },
     AG20: (r) => {
       const source = scopedInput(r);
@@ -69,7 +69,7 @@ export function registerRecoveredNativeAgents(deps: {
       for (const field of ['patient', 'products', 'events', 'reporters', 'identification']) {
         if (!(field in caseDraft)) throw new Error('complete scoped case draft required');
       }
-      const narrativeText = deterministicNarrativeDraft(caseDraft as Parameters<typeof deterministicNarrativeDraft>[0]);
+      const narrativeText = deterministicNarrativeDraft(caseDraft as unknown as Parameters<typeof deterministicNarrativeDraft>[0]);
       return {assessment:{narrativeText, persisted:false, sourceDocumentId:r.document_id}};
     },
     AG26: (r) => {
@@ -77,7 +77,7 @@ export function registerRecoveredNativeAgents(deps: {
       for (const field of ['patients','reporters','products','events']) {
         if (!Array.isArray(source[field])) throw new Error('missing triage entity list');
       }
-      return {assessment:evaluateTriageSnapshot(source as Parameters<typeof evaluateTriageSnapshot>[0]) as unknown as JsonObject};
+      return {assessment:evaluateTriageSnapshot(source as unknown as Parameters<typeof evaluateTriageSnapshot>[0]) as unknown as JsonObject};
     },
   };
   return Object.fromEntries(Object.entries(handlers).map(([agent_id,engine]) => [
