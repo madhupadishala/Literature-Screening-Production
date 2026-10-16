@@ -84,33 +84,40 @@ def run_b(signing, sock, approved_event_provider):
     print("PHASE_B PASS six reviewed specialist outputs")
 
 def run_c(signing,sock,writer_url,auditor_url):
-    # A valid HMAC is generated then a single nibble altered, preserving framing.
-    import hashlib,hmac
-    raw=request("AG26")
-    blob=json.dumps(raw,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()
-    correct=hmac.new(signing,blob,hashlib.sha256).hexdigest()
-    bad=("0" if correct[0]!="0" else "1")+correct[1:]
-    packet=json.dumps({**raw,"ipc_signature":bad},separators=(",",":")).encode()
+    # Valid server-signed workflow context; a deliberately wrong *IPC* HMAC
+    # proves the native route denial and invokes dispatcher's failure audit.
+    from types import SimpleNamespace
+    from Agentic_AI.shared.execution.factory import build_dispatcher
+    from Agentic_AI.shared.workflow_context import issue_context
+    class SyntheticRouter:
+        def build_context_pack(self,**params):
+            return SimpleNamespace(tenant_id=params["tenant_id"],
+                client_id=params["client_id"],citations=[])
+    event_ids=[]
+    writer=durable_rejection_audit_callback(writer_url)
+    def record(rejection):
+        event_ids.append(writer(rejection))
+    incorrect=bytearray(signing)
+    incorrect[0]^=1
+    runtime=NodeSocketRuntime("AG26",socket_path=sock,signing_secret=bytes(incorrect))
+    dispatcher=build_dispatcher(signing_secret=signing,router=SyntheticRouter(),
+        native_runtimes={"AG26":runtime},audit_failure=record)
+    envelope=issue_context(verified_principal="synthetic-staging-runner",
+        authorized_tenant=TENANT,authorized_client=CLIENT,
+        module_id="intake_triage",document_id=DOC,workflow_id="native-synthetic",
+        job_id="tamper-qa",agent_id="AG26",task_type="synthetic",
+        signing_secret=signing)
+    evidence={"document_id":DOC,"text":"SYNTHETIC ONLY",
+              "triage_request":source("AG26")}
     try:
-        with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as connection:
-            connection.settimeout(4)
-            connection.connect(sock)
-            connection.sendall(struct.pack("!I",len(packet))+packet)
-            header=NodeSocketRuntime._recv(connection,4)
-            size=struct.unpack("!I",header)[0]
-            response=NodeSocketRuntime._recv(connection,size)
-        raise AssertionError("Tampered IPC unexpectedly returned "+repr(len(response)))
+        dispatcher.execute("AG26",envelope=envelope,evidence=evidence,
+            expected_tenant=TENANT,expected_client=CLIENT)
     except NativeTransportError:
         pass
-    except (OSError,TimeoutError):
-        # A destroyed socket is a typed transport error at the client boundary.
-        pass
-    # Trusted test harness knows the synthetic principal; untrusted request
-    # tenant/client metadata is NEVER used as the basis for audit attribution.
-    writer=durable_rejection_audit_callback(writer_url)
-    event_id=writer({"agent_id":"AG26","expected_tenant":TENANT,
-        "expected_client":CLIENT,"event":"specialist_execution_rejected",
-        "error_type":"NativeTransportError"})
+    else:
+        raise AssertionError("Tampered IPC dispatch must raise NativeTransportError")
+    assert len(event_ids)==1, "Exactly one audit callback required"
+    event_id=event_ids[0]
     UUID(event_id)
     import psycopg
     with psycopg.connect(auditor_url,connect_timeout=8) as conn:
@@ -129,7 +136,7 @@ def run_c(signing,sock,writer_url,auditor_url):
             columns={row[0] for row in cursor.fetchall()}
     assert not columns.intersection({"payload","narrative","patient","source_text",
                                      "clinical_text","prompt","reporter"}), "PII schema detected"
-    print("PHASE_C PASS tamper rejected and durable audit record independently verified")
+    print("PHASE_C PASS dispatcher tamper rejected; exactly one durable audit UUID="+event_id)
 
 def main(provider=None):
     assert os.environ.get("NEXUS_PV_AGENTS_ENABLED")=="false"
