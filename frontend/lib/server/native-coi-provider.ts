@@ -6,7 +6,7 @@ export function createApprovedNativeCOIProvider(): AIProvider {
   const endpoint=process.env.NEXUS_NATIVE_OLLAMA_ENDPOINT ?? 'http://127.0.0.1:11434';
   const url=new URL(endpoint);
   if (!model?.trim() || url.protocol!=='http:' ||
-      !['127.0.0.1','localhost','[::1]'].includes(url.hostname) ||
+      !['127.0.0.1','localhost','[::1]','ollama'].includes(url.hostname) ||
       url.username || url.password || url.search || url.hash ||
       url.pathname!=='/') {
     throw new Error('Approved local Ollama model/loopback endpoint required');
