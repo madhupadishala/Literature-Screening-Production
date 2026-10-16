@@ -2,13 +2,22 @@
 // Register ONLY trusted engine functions at process initialization.
 // Handler contract: async (request) => scoped, review-required native assessment.
 import net from 'node:net';
+import {createHmac, timingSafeEqual} from 'node:crypto';
 import fs from 'node:fs';
 import { statSync } from 'node:fs';
 
 const MAX_FRAME = 524288;
 const APPROVED = new Set(['AG08','AG12','AG17','AG20','AG26']);
+function canonical(value) {
+  if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
+  if (value && typeof value === 'object') return '{' + Object.keys(value).sort().map(k => JSON.stringify(k)+':'+canonical(value[k])).join(',') + '}';
+  return JSON.stringify(value);
+}
 
-export function createNativeBridge({socketPath, handlers}) {
+export function createNativeBridge({socketPath, handlers, signingSecret}) {
+  if (typeof signingSecret !== 'string' || Buffer.byteLength(signingSecret) < 32) {
+    throw new Error('32-byte private IPC secret is required');
+  }
   if (!socketPath?.startsWith('/') || socketPath.length > 100) throw new Error('absolute socket path required');
   if (!handlers || Object.keys(handlers).some(k => !APPROVED.has(k) || typeof handlers[k] !== 'function')) {
     throw new Error('explicit approved specialist handlers required');
@@ -33,8 +42,13 @@ export function createNativeBridge({socketPath, handlers}) {
       try {
         const request = JSON.parse(buffer.subarray(4,4+size).toString('utf8'));
         if (!request || typeof request !== 'object' || Array.isArray(request) ||
-            Object.keys(request).some(k => !['agent_id','document_id','tenant_id','client_id','input','knowledge_citations'].includes(k))) throw new Error('invalid request schema');
+            Object.keys(request).some(k => !['agent_id','document_id','tenant_id','client_id','input','knowledge_citations','ipc_signature'].includes(k))) throw new Error('invalid request schema');
         if (!Array.isArray(request.knowledge_citations)) throw new Error('knowledge provenance required');
+        const {ipc_signature:signature,...signedBody} = request;
+        if (typeof signature !== 'string' || !/^[a-f0-9]{64}$/.test(signature)) throw new Error('unsigned runtime request');
+        const expected = createHmac('sha256',signingSecret).update(canonical(signedBody)).digest();
+        const actual = Buffer.from(signature,'hex');
+        if (!timingSafeEqual(expected,actual)) throw new Error('invalid runtime signature');
         const id = request.agent_id;
         if (!APPROVED.has(id) || !handlers[id]) throw new Error('unregistered specialist');
         for (const key of ['document_id','tenant_id','client_id']) {
