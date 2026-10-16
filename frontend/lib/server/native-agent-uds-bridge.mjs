@@ -52,7 +52,9 @@ export function createNativeBridge({socketPath, handlers, signingSecret}) {
         const id = request.agent_id;
         if (id === '__health__') {
           // Signed probe proves IPC owner possession; no model or clinical work.
-          const data=Buffer.from(JSON.stringify({status:'ready',protocol:1,clinical_execution_enabled:false}));
+          const readiness={status:'ready',protocol:1,clinical_execution_enabled:false};
+          readiness.signature=createHmac('sha256',signingSecret).update(canonical({status:'ready',protocol:1,clinical_execution_enabled:false})).digest('hex');
+          const data=Buffer.from(JSON.stringify(readiness));
           const header=Buffer.alloc(4);header.writeUInt32BE(data.length);
           socket.end(Buffer.concat([header,data]));
           return;
