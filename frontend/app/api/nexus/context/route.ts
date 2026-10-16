@@ -4,7 +4,7 @@ import { requireIdentitySession, resolveTenantForIdentity } from "@/lib/auth/ide
 import { routeErrorResponse } from "@/lib/api/route-error";
 import { getPostgresPool } from "@/lib/database/postgres";
 import { isNexusEnvironment, type NexusEnvironment } from "@/lib/nexus/entitlement-types";
-import { getDefaultNexusEnvironment } from "@/lib/nexus/runtime-environment";
+import { NEXUS_ENVIRONMENTS } from "@/lib/nexus/entitlement-types";
 import {
   createNexusContextToken,
   NEXUS_CONTEXT_COOKIE,
@@ -31,9 +31,11 @@ export async function GET(request: NextRequest): Promise<Response> {
   try {
     const identity = await requireIdentitySession(request);
     const tenantId = request.nextUrl.searchParams.get("tenantId")?.trim();
-    const environment =
-      normalizeEnvironment(request.nextUrl.searchParams.get("environment")) ??
-      getDefaultNexusEnvironment();
+    const requestedEnvironment = request.nextUrl.searchParams.get("environment");
+    const environment = normalizeEnvironment(requestedEnvironment);
+    if (requestedEnvironment !== null && !environment) {
+      return Response.json({ success: false, error: "Invalid environment." }, { status: 400 });
+    }
 
     if (!tenantId || !UUID_PATTERN.test(tenantId)) {
       return Response.json(
@@ -43,17 +45,21 @@ export async function GET(request: NextRequest): Promise<Response> {
     }
 
     const tenant = await resolveTenantForIdentity({ session: identity, tenantId });
-    const workspaces = await listAccessibleWorkspaces({
-      tenantId: tenant.tenantId,
-      userId: identity.userId,
-      environment,
-    });
+    const environments = await Promise.all(NEXUS_ENVIRONMENTS.map(async candidate => {
+      const available = await listAccessibleWorkspaces({
+        tenantId: tenant.tenantId, userId: identity.userId, environment: candidate,
+      });
+      return { environment: candidate, workspaces: available.filter(workspace => workspace.modules.length > 0) };
+    }));
+    const authorized = environments.filter(item => item.workspaces.length > 0);
+    const workspaces = environment ? authorized.find(item => item.environment === environment)?.workspaces ?? [] : [];
 
     return Response.json({
       success: true,
       data: {
         tenant: { id: tenant.tenantId, key: tenant.tenantKey },
         environment,
+        environments: authorized,
         workspaces,
         next: "SELECT_WORKSPACE_AND_MODULE",
       },
@@ -82,6 +88,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     }
 
     if (
+      !body ||
       (body.tenantId !== undefined && typeof body.tenantId !== "string") ||
       (body.workspaceId !== undefined && typeof body.workspaceId !== "string") ||
       (body.environment !== undefined && typeof body.environment !== "string") ||
@@ -196,6 +203,7 @@ export async function POST(request: NextRequest): Promise<Response> {
         moduleKey,
         workspaceRole: access.workspaceRole,
         moduleRoles: access.moduleRoles,
+        permissions: access.effectivePermissions.filter(permission => tenant.hasPermission(permission)),
       },
     });
 

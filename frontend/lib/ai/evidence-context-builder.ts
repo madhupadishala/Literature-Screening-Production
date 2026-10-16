@@ -1,4 +1,5 @@
-import { getActiveTenant } from "@/lib/tenant/tenant-store";
+import { getTenantConfiguration } from "@/lib/tenant/tenant-configuration";
+import type { NexusEnvironment } from "@/lib/nexus/entitlement-types";
 import type {
   TenantCalendarEntry,
   TenantConfiguration,
@@ -19,7 +20,8 @@ export type EvidenceContextPurpose =
   | "assessment";
 
 export interface EvidenceContextInput {
-  tenantId?: string;
+  tenantId: string;
+  environment: NexusEnvironment;
   purpose: EvidenceContextPurpose;
   query?: string;
   sourceId?: string;
@@ -74,7 +76,7 @@ function resolvePromptConfigurations(
 export async function buildEvidenceContext(
   input: EvidenceContextInput
 ): Promise<EvidenceContext> {
-  const tenant = getActiveTenant();
+  const tenant = await getTenantConfiguration(input.tenantId, input.environment);
 
   const query =
     input.query ||
@@ -86,7 +88,7 @@ export async function buildEvidenceContext(
   const retrievedKnowledge =
     tenant && query.trim()
       ? await searchKnowledge({
-          tenantId: input.tenantId ?? tenant.id,
+          tenantId: tenant.id,
           query,
           topK: 10,
           actorId: input.actorId,

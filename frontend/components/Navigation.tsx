@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
+import { getSession, saveSession } from "@/lib/session-manager";
 
 type ModuleKey =
   | "LITERATURE"
@@ -34,6 +35,10 @@ export default function Navigation() {
   const [open, setOpen] = useState(false);
   const [context, setContext] = useState<{
     tenantKey: string;
+    tenantId?: string;
+    workspaceId?: string;
+    workspaceName?: string;
+    moduleKey?: string;
     environment: string;
     displayName: string;
     roleKey: string;
@@ -58,6 +63,29 @@ export default function Navigation() {
       active = false;
     };
   }, []);
+
+  const [switching, setSwitching] = useState(false);
+  const [switchError, setSwitchError] = useState("");
+  async function navigateModule(event: MouseEvent<HTMLAnchorElement>, module: (typeof modules)[number]) {
+    if (!module.moduleKey || module.moduleKey === context.moduleKey) { setOpen(false); return; }
+    event.preventDefault();
+    if (switching) return;
+    setSwitching(true); setSwitchError("");
+    try {
+      const response = await fetch("/api/nexus/context", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tenantId: context.tenantId, workspaceId: context.workspaceId,
+          environment: context.environment, moduleKey: module.moduleKey }),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "Module selection failed.");
+      const current = getSession();
+      if (current) saveSession({ ...current, moduleKey: module.moduleKey, permissions: payload.data.permissions });
+      setOpen(false);
+      window.location.assign(module.path);
+    } catch (error) { setSwitchError(error instanceof Error ? error.message : "Module selection failed."); }
+    finally { setSwitching(false); }
+  }
 
   function isActive(module: (typeof modules)[number]): boolean {
     if (module.path === "/") return pathname === "/";
@@ -113,6 +141,7 @@ export default function Navigation() {
         </div>
 
         <div className="utility-toolbar" aria-label="Global actions">
+          <Link className="utility-action" href="/login">Switch workspace</Link>
           <button
             type="button"
             className="utility-action"
@@ -175,6 +204,7 @@ export default function Navigation() {
             <span>Tenant</span>
             <strong>{context.tenantKey}</strong>
           </div>
+          <div><span>Client</span><strong>{context.workspaceName ?? "—"}</strong></div>
           <div>
             <span>Environment</span>
             <strong>{context.environment}</strong>
@@ -212,7 +242,8 @@ export default function Navigation() {
             <Link
               key={module.path}
               href={module.path}
-              onClick={() => setOpen(false)}
+              onClick={event => void navigateModule(event, module)}
+              aria-disabled={switching}
               className={isActive(module) ? "active" : ""}
               aria-current={isActive(module) ? "page" : undefined}
             >
@@ -222,6 +253,7 @@ export default function Navigation() {
         </div>
 
       </nav>
+      {switchError ? <p role="alert">{switchError}</p> : null}
       <div className="validation">
         <span aria-hidden="true" />
         Controlled environment · Tenant, module entitlement and RBAC controls active
