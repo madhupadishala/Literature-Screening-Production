@@ -41,7 +41,7 @@ export function createNativeBridge({socketPath, handlers}) {
           if (typeof request[key] !== 'string' || !request[key]) throw new Error('missing verified routing identity');
         }
         const input = request.input;
-        if (id === 'AG08' || id === 'AG17') {
+        if (id === 'AG08') {
           if (typeof input !== 'string' || !input.trim()) throw new Error('source text required');
         } else if (!input || typeof input !== 'object' || Array.isArray(input) ||
                    input.document_id !== request.document_id || !input.source ||
