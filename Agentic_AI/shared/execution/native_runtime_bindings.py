@@ -13,7 +13,7 @@ RUNTIME_ROUTES = {
     "AG02": {"runtime": "python-event-engine", "module": ("literature_screening", "intake_triage", "case_processing"), "input": "event_request"},
     "AG08": {"runtime": "typescript-country-of-incident", "module": ("intake_triage", "case_processing"), "input": "text"},
     "AG12": {"runtime": "typescript-listedness", "module": ("case_processing",), "input": "labeling_request"},
-    "AG17": {"runtime": "typescript-safety-assessment", "module": ("literature_screening", "intake_triage"), "input": "text"},
+    "AG17": {"runtime": "typescript-safety-assessment", "module": ("literature_screening", "intake_triage"), "input": "safety_request"},
     "AG20": {"runtime": "typescript-narrative", "module": ("case_processing",), "input": "narrative_request"},
     "AG26": {"runtime": "typescript-triage", "module": ("intake_triage",), "input": "triage_request"},
 }
@@ -51,7 +51,7 @@ def make_native_runtime_bindings(runtimes: Mapping[str, Any]) -> dict:
                                         not isinstance(payload["case"].get("documents"), list) or
                                         not payload["case"]["documents"]):
                     raise ValueError("AG02 requires source-linked case and nonempty documents")
-                if _id in ("AG12", "AG20", "AG26") and not isinstance(payload.get("source"), dict):
+                if _id in ("AG12", "AG17", "AG20", "AG26") and not isinstance(payload.get("source"), dict):
                     raise ValueError("Structured specialist request requires source evidence object")
             request = {"agent_id": _id, "document_id": doc,
                        "tenant_id": pack.tenant_id, "client_id": pack.client_id,
