@@ -52,4 +52,5 @@ def build_dispatcher(*, signing_secret: bytes, router=None, duplicate_repository
         router=router if router is not None else KnowledgeRouter(),
         secret=signing_secret,
         specialists=bindings,
+        audit_failure=audit_failure,
     )
