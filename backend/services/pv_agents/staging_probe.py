@@ -28,16 +28,16 @@ def assess_probe(token, request_id):
     diagnostic_token = os.environ.get("NEXUS_PV_STAGING_DIAGNOSTIC_TOKEN", "")
     if len(diagnostic_token) < 64 or len(token) != len(diagnostic_token) or not hmac.compare_digest(token, diagnostic_token):
         raise ServiceError(401, "Staging diagnostic authentication required")
-    scopes = {diagnostic_token: [dict(SCOPE, role="staging_diagnostic_runner",
-                allowed_routes=["/v1/staging/*"])]}
-    app = PVAgentService(scopes, PostgresAuditStore(os.environ["NEXUS_PV_AUDIT_DATABASE_URL"]),
-                         drug_agent=_UnusedAgent(), workers={}, causality_adapter=_UnusedAgent())
     record = dict(SCOPE, request_id=request_id, case_id="staging-probe",
                   input_sha256=hashlib.sha256(TEXT.encode()).hexdigest())
     output = dict(record, schema_version="nexus.staging-probe/1",
                   route="hitl", review_required=True,
                   synthetic_only=True, clinical_release_authorized=False,
                   agent="staging-probe", knowledge_version="none; diagnostic only")
+    scopes = {diagnostic_token: [dict(SCOPE, role="staging_diagnostic_runner",
+                allowed_routes=["/v1/staging/*"])]}
+    app = PVAgentService(scopes, PostgresAuditStore(os.environ["NEXUS_PV_AUDIT_DATABASE_URL"]),
+                         drug_agent=_UnusedAgent(), workers={}, causality_adapter=_UnusedAgent())
     return app.audit.append(record, "staging-probe", output)
 
 
