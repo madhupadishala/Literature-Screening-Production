@@ -1,0 +1,72 @@
+# Single-host staging qualification, never production. Requires local Docker Compose
+# and an explicitly chosen staging Postgres database.
+name: nexus-native-staging
+services:
+  ollama:
+    image: ollama/ollama:${OLLAMA_IMAGE_TAG:?pin version}
+    restart: unless-stopped
+    expose: ["11434"]
+    networks: [native]
+    volumes: [ollama_models:/root/.ollama]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD","ollama","list"]
+      interval: 20s
+      timeout: 8s
+      retries: 12
+  node:
+    build:
+      context: .
+      dockerfile: ops/native-node.Dockerfile
+    user: "11001:11001"
+    init: true
+    restart: on-failure:5
+    environment:
+      NEXUS_PV_AGENTS_ENABLED: "false"
+      NEXUS_NATIVE_SOCKET_PATH: /run/nexus-agents/agent.sock
+      NEXUS_NATIVE_OLLAMA_ENDPOINT: http://ollama:11434
+      NEXUS_NATIVE_OLLAMA_MODEL: ${APPROVED_LOCAL_MODEL:?approved model name required}
+      IPC_SIGNING_SECRET_FILE: /run/secrets/ipc_key
+    secrets: [ipc_key]
+    volumes:
+      - ipc:/run/nexus-agents
+    networks: [native]
+    depends_on:
+      ollama: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD","node","/app/ops/native-node-health.mjs"]
+      interval: 15s
+      timeout: 6s
+      retries: 4
+    mem_limit: 512m
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+  python:
+    build:
+      context: .
+      dockerfile: ops/native-python.Dockerfile
+    user: "11001:11001"
+    restart: on-failure:5
+    environment:
+      NEXUS_PV_AGENTS_ENABLED: "false"
+      NEXUS_NATIVE_SOCKET_PATH: /run/nexus-agents/agent.sock
+      IPC_SIGNING_SECRET_FILE: /run/secrets/ipc_key
+      DATABASE_URL_FILE: /run/secrets/staging_database_url
+    secrets: [ipc_key, staging_database_url]
+    volumes:
+      - ipc:/run/nexus-agents
+    depends_on:
+      node: {condition: service_healthy}
+    networks: [native]
+    mem_limit: 512m
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+    command: ["python","-m","backend.services.pv_agents.native_qualification_runner"]
+secrets:
+  ipc_key: {file: ${IPC_SECRET_FILE:?secret manager materialized file}}
+  staging_database_url: {file: ${STAGING_DB_URL_FILE:?secret manager materialized file}}
+volumes:
+  ipc: {}
+  ollama_models: {}
+networks:
+  native: {internal: true}
