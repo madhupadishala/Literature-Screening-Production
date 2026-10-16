@@ -29,8 +29,11 @@
     "engine": "PatientAgent",
     "requires": "approved structured LLMClient.complete_json, server-side injected",
     "input_contract": "text",
-    "authorized_module": "intake_triage",
-    "clinical_review_required": true
+    "clinical_review_required": true,
+    "authorized_modules": [
+      "intake_triage",
+      "case_processing"
+    ]
   },
   "AG04": {
     "folder": "AG04_Reporter_Identification",
@@ -44,8 +47,11 @@
     "engine": "ReporterAgent",
     "requires": "approved structured LLMClient.complete_json, server-side injected",
     "input_contract": "text",
-    "authorized_module": "intake_triage",
-    "clinical_review_required": true
+    "clinical_review_required": true,
+    "authorized_modules": [
+      "intake_triage",
+      "case_processing"
+    ]
   },
   "AG05": {
     "folder": "AG05_Indication_Identification",
@@ -95,8 +101,10 @@
     "engine": "DayZeroAgent",
     "requires": "approved structured LLMClient.complete_json, server-side injected",
     "input_contract": "day_zero_input",
-    "authorized_module": "intake_triage",
-    "clinical_review_required": true
+    "clinical_review_required": true,
+    "authorized_modules": [
+      "intake_triage"
+    ]
   },
   "AG10": {
     "folder": "AG10_Translation",
@@ -236,8 +244,10 @@
     "engine": "HistoricalAgent",
     "requires": "approved structured LLMClient.complete_json, server-side injected",
     "input_contract": "text",
-    "authorized_module": "case_processing",
-    "clinical_review_required": true
+    "clinical_review_required": true,
+    "authorized_modules": [
+      "case_processing"
+    ]
   },
   "AG25": {
     "folder": "AG25_ICSR_Validity",
