@@ -23,6 +23,12 @@ class BaseExecutionAdapter:
             from .v25_bindings import BATCH1_ROUTES
             if context.module_id not in BATCH1_ROUTES[self.agent_id]["modules"]:
                 raise ExecutionFailure("agent not authorized for requested module")
+        if self.agent_id in ("AG02", "AG08", "AG12", "AG17", "AG20", "AG26"):
+            from .native_runtime_bindings import RUNTIME_ROUTES
+            if context.module_id not in RUNTIME_ROUTES[self.agent_id]["module"]:
+                raise ExecutionFailure("native runtime agent not authorized for requested module")
+        if self.agent_id in ("AG11", "AG13") and context.module_id != "case_processing":
+            raise ExecutionFailure("clinical native pipeline not authorized for requested module")
         if not isinstance(evidence, dict):
             raise ExecutionFailure("evidence must be an object")
         if not isinstance(evidence.get("text", ""), str):
