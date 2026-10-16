@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
@@ -35,26 +35,38 @@ export default function CasesPage() {
   const [records, setRecords] = useState<CaseRow[]>([]);
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
+  const [loadState, setLoadState] = useState<"loading" | "ready" | "error">("loading");
+  const activeRequest = useRef<AbortController | null>(null);
 
   const load = useCallback(async () => {
+    activeRequest.current?.abort();
+    const controller = new AbortController();
+    activeRequest.current = controller;
+    setLoadState("loading");
     setMessage("");
     try {
       const response = await fetch("/api/safety/cases?limit=500", {
         cache: "no-store",
+        signal: controller.signal,
       });
       const payload = await response.json();
       if (!response.ok || !payload?.success) {
         throw new Error(payload?.error || "Unable to load case worklist.");
       }
+      if (controller.signal.aborted) return;
       setRecords(Array.isArray(payload.data?.records) ? payload.data.records : []);
+      setLoadState("ready");
     } catch (error) {
+      if (controller.signal.aborted) return;
+      setRecords([]);
+      setLoadState("error");
       setMessage(error instanceof Error ? error.message : "Unable to load cases.");
     }
   }, []);
 
   useEffect(() => {
     const timer = window.setTimeout(() => void load(), 0);
-    return () => window.clearTimeout(timer);
+    return () => { window.clearTimeout(timer); activeRequest.current?.abort(); };
   }, [load]);
 
   const filtered = useMemo(() => {
@@ -77,18 +89,20 @@ export default function CasesPage() {
   return (
     <ApplicationShell>
       <OperationalScreenHeader
-        eyebrow="Nexus Case Processing"
-        title="L2A Case Worklist"
-        description="Case-owned processing workspace with immutable revisions, QC, Medical Review, finalization and evidence controls."
+        compact
+        eyebrow="Case Processing"
+        title="Case worklist"
+        description=""
         actions={
-          <button type="button" onClick={() => void load()}>
-            Refresh
+          <button type="button" disabled={loadState === "loading"} onClick={() => void load()}>
+            {loadState === "loading" ? "Loading…" : "Refresh"}
           </button>
         }
       />
 
       {message ? (
         <OperationalState
+          compact
           kind="error"
           title="Case worklist unavailable"
           message={message}
@@ -97,20 +111,21 @@ export default function CasesPage() {
       ) : null}
 
       <OperationalMetricStrip
+        compact
         metrics={[
-          { label: "Cases", value: records.length },
+          { label: "Cases", value: loadState === "ready" ? records.length : "—" },
           {
             label: "Processing",
-            value: records.filter((r) => ["NEW","ASSIGNED","PROCESSING","QC_RETURNED"].includes(r.caseStatus)).length,
+            value: loadState === "ready" ? records.filter((r) => ["NEW","ASSIGNED","PROCESSING","QC_RETURNED"].includes(r.caseStatus)).length : "—",
           },
           {
             label: "In review",
-            value: records.filter((r) => ["READY_FOR_QC","QC_APPROVED","MEDICAL_REVIEW"].includes(r.caseStatus)).length,
+            value: loadState === "ready" ? records.filter((r) => ["READY_FOR_QC","QC_APPROVED","MEDICAL_REVIEW"].includes(r.caseStatus)).length : "—",
             tone: "attention",
           },
           {
             label: "Final",
-            value: records.filter((r) => ["FINAL","FINALIZED"].includes(r.caseStatus)).length,
+            value: loadState === "ready" ? records.filter((r) => ["FINAL","FINALIZED"].includes(r.caseStatus)).length : "—",
             tone: "positive",
           },
         ]}
@@ -118,11 +133,9 @@ export default function CasesPage() {
 
       <section className={styles.panel}>
         <div className={styles.toolbar}>
-          <div>
-            <span>Processor queue</span>
-            <h2>Safety Cases</h2>
-          </div>
+          <h2>Safety cases</h2>
           <input
+            aria-label="Search cases"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search case, status, priority…"
@@ -130,25 +143,25 @@ export default function CasesPage() {
         </div>
 
         <div className={styles.tableWrap}>
-          <table>
+          <table aria-busy={loadState === "loading"}>
+            <caption>Case-processing worklist for the selected tenant and client workspace</caption>
             <thead>
               <tr>
-                <th>Case</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Seriousness</th>
-                <th>Draft</th>
-                <th>Final Version</th>
-                <th>Updated</th>
-                <th />
+                <th scope="col">Case</th>
+                <th scope="col">Status</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Seriousness</th>
+                <th scope="col">Draft</th>
+                <th scope="col">Final Version</th>
+                <th scope="col">Updated</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              {filtered.map((row) => (
+              {loadState === "ready" ? filtered.map((row) => (
                 <tr key={row.caseId}>
                   <td>
-                    <strong>{row.caseKey}</strong>
-                    <small>{row.intakeRecordId}</small>
+                    <Link href={`/cases/${row.caseId}`} title={`Intake: ${row.intakeRecordId}`}>{row.caseKey}</Link>
                   </td>
                   <td>
                     <span className={`${styles.status} ${statusTone(row.caseStatus)}`}>
@@ -164,11 +177,11 @@ export default function CasesPage() {
                     <Link href={`/cases/${row.caseId}`}>Open case</Link>
                   </td>
                 </tr>
-              ))}
-              {!filtered.length ? (
+              )) : null}
+              {loadState !== "ready" || !filtered.length ? (
                 <tr>
                   <td colSpan={8} className={styles.empty}>
-                    No cases match the current worklist filter.
+                    <span role="status">{loadState === "loading" ? "Loading cases…" : loadState === "error" ? "Case data unavailable." : query.trim() ? "No cases match the current filter." : "No cases are available in this workspace."}</span>
                   </td>
                 </tr>
               ) : null}

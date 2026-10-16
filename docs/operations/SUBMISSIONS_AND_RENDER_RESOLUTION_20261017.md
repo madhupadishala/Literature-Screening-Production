@@ -1,5 +1,7 @@
 # Submissions visibility and Render release synchronization
 
+Execution update: see [PRODUCTION_EXECUTION_20261017.md](PRODUCTION_EXECUTION_20261017.md) for applied grants, Render synchronization and UI changes. The prepared-only statements below describe the earlier investigation.
+
 Investigated 17 October 2026. No UI files, production database records, Render settings, or live deployment were changed during this investigation. The scripts below are prepared for execution, not a claim that their operations have been applied.
 
 ## 1. Confirmed Submissions visibility defect

@@ -8,6 +8,7 @@ type OperationalScreenHeaderProps = {
   description: string;
   status?: string;
   actions?: ReactNode;
+  compact?: boolean;
 };
 
 export default function OperationalScreenHeader({
@@ -16,9 +17,10 @@ export default function OperationalScreenHeader({
   description,
   status,
   actions,
+  compact = false,
 }: OperationalScreenHeaderProps) {
   return (
-    <section className={styles.screenHeader} aria-labelledby="ops-screen-title">
+    <section className={[styles.screenHeader, compact ? styles.compact : ""].filter(Boolean).join(" ")} aria-labelledby="ops-screen-title">
       <div className={styles.screenCopy}>
         <span className={styles.eyebrow}>{eyebrow}</span>
         <div className={styles.titleRow}>
@@ -27,7 +29,7 @@ export default function OperationalScreenHeader({
           </h1>
           {status ? <span className={styles.status}>{status}</span> : null}
         </div>
-        <p className={styles.description}>{description}</p>
+        {description ? <p className={styles.description}>{description}</p> : null}
       </div>
       {actions ? <div className={styles.actions}>{actions}</div> : null}
     </section>

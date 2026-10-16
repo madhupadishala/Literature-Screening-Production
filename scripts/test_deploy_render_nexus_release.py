@@ -13,7 +13,7 @@ class RenderReleaseContract(unittest.TestCase):
         return dict(id=release.SERVICE, ownerId=release.WORKSPACE, repo=release.REPO, **changes)
 
     def test_pins_commit_and_health_without_altering_secrets_or_plan(self):
-        self.assertEqual(release.DEPLOY['commitId'], '52fba8cc1bc971599d0badfe75e36aa593a6f8c3')
+        self.assertEqual(release.DEPLOY['commitId'], '4417031e695056404fb3269ca6ae950fcb349cba')
         self.assertEqual(release.PATCH['serviceDetails']['healthCheckPath'], '/healthz')
         self.assertNotIn('envVars', release.PATCH)
         self.assertNotIn('plan', release.PATCH['serviceDetails'])

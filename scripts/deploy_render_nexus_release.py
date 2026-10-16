@@ -14,7 +14,7 @@ SERVICE = 'srv-db5o1a7lk1mc73all2gg'
 WORKSPACE = 'tea-db5n2f5ckfvc73ap55dg'
 REPO = 'https://github.com/madhupadishala/Literature-Screening-Production'
 BRANCH = 'fix/auth-tenancy-audit-20261017'
-COMMIT = '52fba8cc1bc971599d0badfe75e36aa593a6f8c3'
+COMMIT = '4417031e695056404fb3269ca6ae950fcb349cba'
 PATCH = {
     'branch': BRANCH,
     'autoDeployTrigger': 'off',
