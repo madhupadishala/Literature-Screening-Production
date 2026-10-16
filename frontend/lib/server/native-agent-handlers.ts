@@ -4,6 +4,7 @@
  */
 import { runCOI, type Segment } from '../ai/coi/coi-agent';
 import { evaluateTriageSnapshot } from '../safety/triage/triage-evaluator';
+import { deterministicNarrativeDraft } from '../safety/case-processing/case-assist';
 import { assessListedness } from '../../../Agentic_AI/AG12_Listedness_Expectedness/src/branches/consolidate__nexus-shared-agents/platform/shared-agents/candidates/listedness/listedness-engine';
 import { assessPvSafety } from '../../../Agentic_AI/AG17_Safety_Information_Detection/src/branches/feat__pv-safety-assessment-engine-v1/frontend/lib/pv-safety-assessment/assessment-engine';
 import type { AIProvider } from '../ai/ai-types';
@@ -33,11 +34,10 @@ export function registerRecoveredNativeAgents(deps: {
   countryProvider: AIProvider;
   // This must be the approved non-persisting native narrative engine, NOT
   // generateSystemNarrative() which writes to the case DB.
-  narrativeDraft: (source: JsonObject, request: NativeRequest) => Promise<JsonObject>;
+  narrativeDraft?: never;
 }): Record<string, EngineFn> {
-  if (!deps?.countryProvider || typeof deps.countryProvider.complete !== 'function' ||
-      typeof deps.narrativeDraft !== 'function') {
-    throw new Error('approved COI and non-persisting narrative engines required');
+  if (!deps?.countryProvider || typeof deps.countryProvider.complete !== 'function') {
+    throw new Error('approved COI provider required');
   }
   const handlers: Record<string, EngineFn> = {
     AG08: async (r) => {
@@ -63,10 +63,14 @@ export function registerRecoveredNativeAgents(deps: {
       }
       return {assessment: assessPvSafety(source as Parameters<typeof assessPvSafety>[0]) as unknown as JsonObject};
     },
-    AG20: async (r) => {
+    AG20: (r) => {
       const source = scopedInput(r);
-      const draft = object(await deps.narrativeDraft(source,r));
-      return {assessment:draft};
+      const caseDraft = object(source.caseDraft);
+      for (const field of ['patient', 'products', 'events', 'reporters', 'identification']) {
+        if (!(field in caseDraft)) throw new Error('complete scoped case draft required');
+      }
+      const narrativeText = deterministicNarrativeDraft(caseDraft as Parameters<typeof deterministicNarrativeDraft>[0]);
+      return {assessment:{narrativeText, persisted:false, sourceDocumentId:r.document_id}};
     },
     AG26: (r) => {
       const source = scopedInput(r);
