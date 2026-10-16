@@ -67,7 +67,7 @@ services:
       - ipc:/run/nexus-agents
     depends_on:
       node: {condition: service_healthy}
-    networks: [native]
+    networks: [native, audit-egress]
     mem_limit: 512m
     read_only: true
     security_opt: ["no-new-privileges:true"]
@@ -81,3 +81,4 @@ volumes:
   ollama_models: {}
 networks:
   native: {internal: true}
+  audit-egress: {} # Python-only controlled DB egress; Node/Ollama remain isolated
