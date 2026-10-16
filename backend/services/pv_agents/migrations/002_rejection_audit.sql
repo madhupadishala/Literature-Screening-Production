@@ -11,5 +11,9 @@ CREATE TABLE IF NOT EXISTS public.pv_agent_rejection_audit (
 CREATE INDEX IF NOT EXISTS pv_agent_rejection_audit_tenant_time_idx
   ON public.pv_agent_rejection_audit (tenant_id, client_id, occurred_at DESC);
 ALTER TABLE public.pv_agent_rejection_audit ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS pv_agent_rejection_insert_only ON public.pv_agent_rejection_audit;
+CREATE POLICY pv_agent_rejection_insert_only ON public.pv_agent_rejection_audit
+  FOR INSERT WITH CHECK (true);
+-- PostgreSQL GRANT INSERT must be restricted to the dedicated audit writer role.
 -- Runtime role may only insert through dedicated scoped administration;
 -- do not grant SELECT, UPDATE or DELETE to general application roles.
