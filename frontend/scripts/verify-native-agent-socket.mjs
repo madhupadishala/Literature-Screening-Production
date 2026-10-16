@@ -48,6 +48,8 @@ function exchange(request,{tamper=false}={}) {
 }
 try {
  await bridge.start();
+ const ready=await exchange({agent_id:'__health__',tenant_id:'nexus-diagnostic',client_id:'nexus-diagnostic',document_id:'nexus-native-readiness',input:{probe:true},knowledge_citations:[]});
+ assert.equal(ready.status,'ready');assert.equal(ready.clinical_execution_enabled,false);
  for(const id of ids) {
    const input=id==='AG08'?'Synthetic source event in France':
      {document_id:'SYN-1',source:{synthetic:true,products:[],patients:[],reporters:[],events:[]}};
