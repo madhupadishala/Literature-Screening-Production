@@ -17,6 +17,8 @@ def make_native_pipeline_bindings(*, seriousness_pipeline=None, causality_pipeli
             case_data = evidence.get("seriousness_case")
             if not isinstance(case_data, dict) or case_data.get("case_id") != evidence.get("document_id"):
                 raise ValueError("authorized AG11 case identity required")
+            if case_data.get("client_id") not in (None, pack.client_id):
+                raise PermissionError("seriousness case client scope mismatch")
             case = CaseInput.model_validate(case_data)
             result = seriousness_pipeline.assess(case, tenant_id=pack.tenant_id)
             return {"agent_id": "AG11", "status": "review_required",
