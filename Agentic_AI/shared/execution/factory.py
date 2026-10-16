@@ -6,12 +6,17 @@ from Agentic_AI.shared.execution.additional_bindings import ADDITIONAL_BINDINGS
 from Agentic_AI.shared.execution.grounded_specialists import GROUNDED_BINDINGS
 from backend.knowledge.knowledge_router import KnowledgeRouter
 
-def build_dispatcher(*, signing_secret: bytes, router=None, duplicate_repository=None, approved_llm=None, specialist_services=None, seriousness_pipeline=None, causality_pipeline=None) -> AgentDispatcher:
+def build_dispatcher(*, signing_secret: bytes, router=None, duplicate_repository=None, approved_llm=None, specialist_services=None, seriousness_pipeline=None, causality_pipeline=None, use_approved_batch1_provider=False) -> AgentDispatcher:
     bindings = {**VERIFIED_BINDINGS, **ADDITIONAL_BINDINGS, **GROUNDED_BINDINGS}
     if duplicate_repository is not None:
         # Never bind duplicate engines without an authorized persistence adapter.
         from Agentic_AI.shared.execution.duplicate_bindings import make_duplicate_bindings
         bindings.update(make_duplicate_bindings(duplicate_repository))
+    if use_approved_batch1_provider:
+        if approved_llm is not None:
+            raise ValueError('Choose either explicit approved_llm or environment provider, not both')
+        from Agentic_AI.shared.execution.approved_json_provider import PrivateStructuredJSONClient
+        approved_llm = PrivateStructuredJSONClient.from_server_env()
     if approved_llm is not None:
         from Agentic_AI.shared.execution.v25_bindings import make_v25_bindings
         bindings.update(make_v25_bindings(approved_llm))
