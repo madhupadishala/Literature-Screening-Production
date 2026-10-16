@@ -8,5 +8,6 @@ const report=runIcsrPreflight({patient:{age:42},reporters:[],products:[],events:
 if(!report.submissionBlocked||report.readiness!=="BLOCKED")throw new Error("Unsafe ICSR was not blocked");
 if(!report.findings.some(finding=>finding.findingId==="ICSR-COMP-REA-001"))throw new Error("Missing event finding not produced");
 const service=readFileSync(resolve(root,"lib/submissions/submission-service.ts"),"utf8");
-if(!service.includes("NEXUS_LIVE_SUBMISSION_TRANSPORT_ENABLED"))throw new Error("Transmission kill switch missing");
+if(!service.includes("NEXUS_LIVE_SUBMISSION_TRANSPORT_ENABLED") || !service.includes("ENABLE_LIVE_AUTHORITY_TRANSMISSION"))throw new Error("Dual transmission kill switch missing");
+if(!service.includes("SUBMISSION_TRANSMISSION_BLOCKED_BY_CONFIGURATION"))throw new Error("Blocked transmission audit event missing");
 console.log("Submissions ICSR integration verification passed: scoped preflight evidence, outbox boundary, UI integration and transmission lock.");

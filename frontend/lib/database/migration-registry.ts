@@ -246,4 +246,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "040_nexus_submissions_icsr_integration.sql",
     required: true,
   },
+  {
+    id: "041",
+    name: "Nexus Client Document Registry",
+    filename: "041_nexus_client_document_registry.sql",
+    required: true,
+  },
 ] as const;

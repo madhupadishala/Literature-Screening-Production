@@ -1,3 +1,4 @@
+-- 041_nexus_client_document_registry.sql
 -- Durable private document registry; never infer client ownership from filenames.
 -- A composite reference must point to a complete authorized identity.
 ALTER TABLE safety_intake_records

@@ -493,10 +493,29 @@ export async function transmitSubmission(input: {
   principal: RequestPrincipal;
   submissionId: string;
 }): Promise<Record<string, unknown>> {
-  if (process.env.NEXUS_LIVE_SUBMISSION_TRANSPORT_ENABLED !== "true") {
+  const scope = requireSafetyWorkspaceScope(input.principal);
+  const liveTransmissionEnabled =
+    process.env.NEXUS_LIVE_SUBMISSION_TRANSPORT_ENABLED === "true" &&
+    process.env.ENABLE_LIVE_AUTHORITY_TRANSMISSION === "true";
+  if (!liveTransmissionEnabled) {
+    await getPostgresPool().query(
+      `INSERT INTO audit_events
+       (tenant_id,workspace_id,environment,module_key,actor_id,event_type,event_category,outcome,details)
+       VALUES ($1,$2,$3,'SUBMISSIONS',$4,'SUBMISSION_TRANSMISSION_BLOCKED_BY_CONFIGURATION',
+               'NEXUS_SUBMISSIONS','blocked',$5::jsonb)`,
+      [
+        input.principal.tenantId,
+        scope.workspaceId,
+        scope.environment,
+        input.principal.userId,
+        JSON.stringify({
+          submissionId: input.submissionId,
+          reason: "LIVE_AUTHORITY_TRANSMISSION_DISABLED",
+        }),
+      ],
+    );
     throw new Error("Live authority transmission is disabled pending authority onboarding and validation.");
   }
-  const scope = requireSafetyWorkspaceScope(input.principal);
   const client = await getPostgresPool().connect();
 
   try {
