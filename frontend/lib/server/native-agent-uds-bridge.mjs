@@ -50,6 +50,13 @@ export function createNativeBridge({socketPath, handlers, signingSecret}) {
         const actual = Buffer.from(signature,'hex');
         if (!timingSafeEqual(expected,actual)) throw new Error('invalid runtime signature');
         const id = request.agent_id;
+        if (id === '__health__') {
+          // Signed probe proves IPC owner possession; no model or clinical work.
+          const data=Buffer.from(JSON.stringify({status:'ready',protocol:1,clinical_execution_enabled:false}));
+          const header=Buffer.alloc(4);header.writeUInt32BE(data.length);
+          socket.end(Buffer.concat([header,data]));
+          return;
+        }
         if (!APPROVED.has(id) || !handlers[id]) throw new Error('unregistered specialist');
         for (const key of ['document_id','tenant_id','client_id']) {
           if (typeof request[key] !== 'string' || !request[key]) throw new Error('missing verified routing identity');
