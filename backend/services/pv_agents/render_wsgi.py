@@ -4,26 +4,26 @@ import os
 import logging
 
 
-def _json(start_response, status, payload):
+def _json(start_response, status, payload, *, head=False):
     body = json.dumps(payload).encode("utf-8")
     start_response(status, [
         ("Content-Type", "application/json"),
         ("Cache-Control", "no-store"),
         ("Content-Length", str(len(body))),
     ])
-    return [body]
+    return [] if head else [body]
 
 
 def application(environ, start_response):
     method = environ.get("REQUEST_METHOD")
     path = environ.get("PATH_INFO", "")
-    if method == "GET" and path == "/healthz":
+    if method in ("GET", "HEAD") and path == "/healthz":
         return _json(start_response, "200 OK", {
             "service": "nexus-pv-agents",
             "state": "enabled" if os.environ.get("NEXUS_PV_AGENTS_ENABLED") == "true" else "disabled",
-        })
+        }, head=method == "HEAD")
 
-    if method == "GET" and path == "/readyz":
+    if method in ("GET", "HEAD") and path == "/readyz":
         # Check only connectivity/configuration; never run clinical code or disclose secrets.
         try:
             if os.environ.get("NEXUS_PV_AUDIT_BACKEND") != "postgres":
@@ -39,11 +39,11 @@ def application(environ, start_response):
                 "Staging readiness unavailable: %s", type(exc).__name__)
             return _json(start_response, "503 Service Unavailable", {
                 "service": "nexus-pv-agents", "ready": False,
-            })
+            }, head=method == "HEAD")
         return _json(start_response, "200 OK", {
             "service": "nexus-pv-agents", "ready": True,
             "clinical_execution_enabled": os.environ.get("NEXUS_PV_AGENTS_ENABLED") == "true",
-        })
+        }, head=method == "HEAD")
 
     if path == "/v1/staging/synthetic-assess" and method == "POST":
         from .service import ServiceError
