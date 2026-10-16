@@ -25,6 +25,11 @@ class RenderRuntimeContract(unittest.TestCase):
         self.assertEqual(response["status"], "200 OK")
         self.assertEqual(json.loads(response["body"])["state"], "disabled")
 
+    def test_head_healthz_supported(self):
+        response = request('/healthz', 'HEAD')
+        self.assertEqual(response['status'], '200 OK')
+        self.assertEqual(response['body'], b'')
+
     def test_readyz_503_when_audit_backend_missing(self):
         with patch.dict(os.environ, {"NEXUS_PV_AUDIT_BACKEND":"sqlite"}):
             response = request("/readyz")
@@ -44,6 +49,11 @@ class RenderRuntimeContract(unittest.TestCase):
                 response = request("/readyz")
         self.assertEqual(response["status"], "200 OK")
         self.assertEqual(json.loads(response["body"])["ready"], True)
+        with patch.dict(os.environ, {"NEXUS_PV_AUDIT_BACKEND":"postgres", "NEXUS_PV_AUDIT_DATABASE_URL":"synthetic-non-network", "NEXUS_PV_SERVICE_TOKEN_SCOPES": json.dumps({"synthetic-token":[{"tenant_id":"orcimed", "client_id":"hetero", "workspace_id":"w1"}]})}):
+            with patch("backend.services.pv_agents.postgres_audit.PostgresAuditStore"):
+                head = request("/readyz", "HEAD")
+        self.assertEqual(head["status"], "200 OK")
+        self.assertEqual(head["body"], b"")
 
     def test_disabled_agent_route_returns_503(self):
         with patch.dict(os.environ, {"NEXUS_PV_AGENTS_ENABLED":"false"}):
