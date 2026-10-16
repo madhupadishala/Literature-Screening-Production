@@ -59,6 +59,8 @@ class PVAgentService:
         scopes = next((v for k, v in self.token_scopes.items() if hmac.compare_digest(k, token)), None)
         if not scopes:
             raise ServiceError(401, "Service authentication required")
+        if any(g.get("role") == "staging_diagnostic_runner" for g in scopes):
+            raise ServiceError(403, "Diagnostic identity prohibited on clinical agent routes")
         allowed = {'tenant_id','client_id','workspace_id','request_id','case_id','narrative','source_type','event_terms','input_sha256'}
         if not isinstance(request, dict) or set(request) - allowed:
             raise ServiceError(400, "Invalid agent request fields")
