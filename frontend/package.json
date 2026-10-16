@@ -87,7 +87,8 @@
     "design:verify": "node --import tsx scripts/verify-product-design-guardian.ts",
     "cleanup:sprint12:verify": "node --import tsx scripts/verify-cleanup-sprint12-literature-ux.ts",
     "cleanup:sprint13:verify": "node --import tsx scripts/verify-cleanup-sprint13-intake-ux.ts",
-    "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts"
+    "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts",
+    "submissions:icsr:verify": "node --import tsx scripts/verify-submissions-icsr-integration.ts"
   },
   "dependencies": {
     "@langchain/core": "1.2.17",

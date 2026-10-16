@@ -7,6 +7,7 @@ import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 import { canonicalSha256 } from "@/lib/safety/common/canonical-json";
 import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
+import { runIcsrPreflight } from "./icsr-preflight";
 
 import {
   SUBMISSION_ACK_STATUSES,
@@ -436,6 +437,48 @@ export async function getSubmissionPackage(input: {
   return result.rows[0];
 }
 
+export async function runSubmissionPreflight(input: {
+  principal: RequestPrincipal;
+  submissionId: string;
+}): Promise<Record<string, unknown>> {
+  const scope = requireSafetyWorkspaceScope(input.principal);
+  const client = await getPostgresPool().connect();
+  try {
+    await client.query("BEGIN");
+    const selected = await client.query<{
+      id: string; message_profile: string; package_payload: Record<string, unknown>;
+    }>(`SELECT id, message_profile, package_payload
+          FROM nexus_submission_packages
+         WHERE tenant_id=$1 AND workspace_id=$2 AND environment=$3 AND id=$4
+         FOR UPDATE`, [input.principal.tenantId, scope.workspaceId, scope.environment, input.submissionId]);
+    const row = selected.rows[0];
+    if (!row) throw new Error("Submission package was not found in the selected client workspace/environment.");
+    const report = runIcsrPreflight(
+      (row.package_payload.casePayload ?? {}) as Record<string, unknown>, row.message_profile,
+    );
+    const reportSha256 = canonicalSha256(report);
+    const inserted = await client.query<Record<string, unknown>>(
+      `INSERT INTO nexus_submission_preflight_runs
+       (tenant_id,workspace_id,environment,submission_package_id,destination_profile,
+        engine_version,readiness,report,report_sha256,created_by)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9,$10) RETURNING *`,
+      [input.principal.tenantId, scope.workspaceId, scope.environment, row.id,
+       report.destinationProfile, report.engineVersion, report.readiness,
+       JSON.stringify(report), reportSha256, input.principal.userId],
+    );
+    await client.query(`INSERT INTO audit_events
+      (tenant_id,workspace_id,environment,module_key,actor_id,event_type,event_category,outcome,details)
+      VALUES ($1,$2,$3,'SUBMISSIONS',$4,'SUBMISSION_PREFLIGHT_COMPLETED','NEXUS_SUBMISSIONS','success',$5::jsonb)`,
+      [input.principal.tenantId, scope.workspaceId, scope.environment, input.principal.userId,
+       JSON.stringify({ submissionId: row.id, readiness: report.readiness, reportSha256 })]);
+    await client.query("COMMIT");
+    return inserted.rows[0];
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally { client.release(); }
+}
+
 function selectAdapter(input: {
   destinationType: SubmissionDestinationType;
   destinationKey: string;
@@ -450,6 +493,9 @@ export async function transmitSubmission(input: {
   principal: RequestPrincipal;
   submissionId: string;
 }): Promise<Record<string, unknown>> {
+  if (process.env.NEXUS_LIVE_SUBMISSION_TRANSPORT_ENABLED !== "true") {
+    throw new Error("Live authority transmission is disabled pending authority onboarding and validation.");
+  }
   const scope = requireSafetyWorkspaceScope(input.principal);
   const client = await getPostgresPool().connect();
 

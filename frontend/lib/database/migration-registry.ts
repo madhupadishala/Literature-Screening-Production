@@ -240,4 +240,10 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "039_literature_workspace_scope.sql",
     required: true,
   },
+  {
+    id: "040",
+    name: "Nexus Submissions ICSR Integration",
+    filename: "040_nexus_submissions_icsr_integration.sql",
+    required: true,
+  },
 ] as const;
