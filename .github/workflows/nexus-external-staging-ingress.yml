@@ -1,0 +1,54 @@
+name: Nexus External Staging Ingress Gate
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/nexus-external-staging-ingress.yml'
+permissions:
+  contents: read
+jobs:
+  external-synthetic-post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Require GitHub staging diagnostic secret
+        env:
+          TOKEN: ${{ secrets.NEXUS_PV_STAGING_DIAGNOSTIC_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::NEXUS_PV_STAGING_DIAGNOSTIC_TOKEN GitHub Actions secret is absent. Do not report external ingress as qualified."
+            exit 1
+          fi
+          echo "::add-mask::$TOKEN"
+      - name: Verify external HTTPS ingress and negative authorization
+        env:
+          TOKEN: ${{ secrets.NEXUS_PV_STAGING_DIAGNOSTIC_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os, ssl, urllib.request, urllib.error, uuid
+          host="https://nexus-pv-specialists-staging.onrender.com"
+          token=os.environ["TOKEN"]
+          def post(route, bearer):
+              headers={"Content-Type":"application/json"}
+              if bearer is not None:
+                  headers["Authorization"]="Bearer "+bearer
+              body=json.dumps({"request_id":"github-ingress-"+uuid.uuid4().hex}).encode()
+              req=urllib.request.Request(host+route, data=body, headers=headers,method="POST")
+              try:
+                  with urllib.request.urlopen(req, timeout=35, context=ssl.create_default_context()) as r:
+                      return r.status,json.loads(r.read(500000))
+              except urllib.error.HTTPError as e:
+                  return e.code,json.loads(e.read(10000))
+          for route in ("/v1/staging/specialist-readiness","/v1/staging/synthetic-dispatch"):
+              status,data=post(route,token)
+              assert status==200,(route,status)
+              assert data.get("total_slots")==27,(route,"slots")
+              assert bool(data.get("audit_id")),(route,"audit absent")
+              assert data.get("clinical_release_authorized") is False
+              print("PASS external authenticated",route,"slots",data["total_slots"],
+                    "executed",data.get("executed_specialists"),"audit_present",True)
+              for kind,t in (("altered","invalid-token"),("missing",None)):
+                  denied,_=post(route,t)
+                  assert denied in (401,403),(route,kind,denied)
+                  print("PASS external",kind,route,"status",denied)
+          PY
