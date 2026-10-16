@@ -4,7 +4,7 @@ import asyncio
 import types
 import unittest
 from unittest.mock import patch
-from Agentic_AI.shared.execution.native_event_engine import create_event_runtime
+from Agentic_AI.shared.execution.native_event_engine import create_event_runtime, create_approved_event_runtime
 
 NS=("Agentic_AI.AG02_Adverse_Event_MedDRA.src.branches."
     "feat__event-extraction-agent.backend.agents.event_runtime")
@@ -12,6 +12,7 @@ class FakeRequest:
     @classmethod
     def model_validate(cls, raw): return raw
 class FakeEngine:
+    def __init__(self, provider=None, **kwargs): self.provider = provider
     async def run(self, case):
         return types.SimpleNamespace(
             case_id=case["case_id"],qualified_for_autonomous_use=False,
@@ -24,6 +25,25 @@ class NativeEventTests(unittest.TestCase):
         models_mod.Request=FakeRequest
         self.context=patch.dict(sys.modules,{NS+".engine":engine_mod,NS+".models":models_mod})
         self.context.start();self.addCleanup(self.context.stop)
+    def test_approved_provider_factory_executes_async_synthetic_case(self):
+        class SyntheticProvider:
+            identity = "synthetic-approved-offline"
+            async def extract(self, block): return {"mentions": [], "unresolved": []}
+            async def verify(self, block, extracted): return {"findings": [], "missed_evidence": []}
+        runtime=create_approved_event_runtime(provider=SyntheticProvider(),concurrency=2)
+        request={"agent_id":"AG02","tenant_id":"nexus-staging-tenant",
+                 "client_id":"nexus-staging-client","document_id":"SYN-ICSR-2026",
+                 "input":{"document_id":"SYN-ICSR-2026",
+                   "case":{"case_id":"SYN-ICSR-2026",
+                     "documents":[{"id":"SYN-SOURCE-1","media_type":"text/plain",
+                       "content_base64":"QSA0NS15ZWFyLW9sZCBzeW50aGV0aWMgcGF0aWVudCByZXBvcnRlZCBuYXVzZWEu"}]}}}
+        response=asyncio.run(runtime.execute_async(request))
+        self.assertEqual(response["assessment"]["case_id"],"SYN-ICSR-2026")
+        self.assertTrue(response["requires_human_review"])
+        self.assertEqual(response["status"],"review_required")
+        with self.assertRaises(TypeError):
+            create_approved_event_runtime(provider=object())
+
     def test_real_async_call_and_scope(self):
         agent=create_event_runtime(FakeEngine())
         result=agent.execute({"agent_id":"AG02","tenant_id":"orcimed","client_id":"hetero",
