@@ -48,7 +48,7 @@ class NativeIPCTests(unittest.TestCase):
         self.server=LocalRuntimeServer(self.path);self.addCleanup(self.server.close)
         self.router=ScopedRouter();self.audit=[]
         self.dispatcher=build_dispatcher(signing_secret=KEY,router=self.router,
-            native_runtimes={"AG08":NodeSocketRuntime("AG08",socket_path=self.path)},
+            native_runtimes={"AG08":NodeSocketRuntime("AG08",socket_path=self.path,signing_secret=KEY)},
             audit_failure=self.audit.append)
         self.payload={"document_id":"SYN-1","text":"synthetic source only"}
     def envelope(self,client="client-a"):
