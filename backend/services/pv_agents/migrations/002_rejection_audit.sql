@@ -31,6 +31,17 @@ CREATE POLICY pv_agent_rejection_insert_only ON public.pv_agent_rejection_audit
     nullif(current_setting('nexus.audit_tenant',true),'')=tenant_id
     AND nullif(current_setting('nexus.audit_client',true),'')=client_id
   );
+-- A non-login auditor permission group; DBA grants it only to the separate
+-- staging QA auditor login. Fixed synthetic scope cannot inspect real tenants.
+DO $
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname='nexus_synthetic_audit_reader')
+  THEN EXECUTE 'CREATE ROLE nexus_synthetic_audit_reader NOLOGIN'; END IF;
+END $;
+GRANT SELECT ON public.pv_agent_rejection_audit TO nexus_synthetic_audit_reader;
+CREATE POLICY pv_agent_synthetic_auditor_read ON public.pv_agent_rejection_audit
+  FOR SELECT TO nexus_synthetic_audit_reader
+  USING (tenant_id='nexus-staging-tenant' AND client_id='nexus-staging-client');
 -- Access remains DENIED by table privileges until the deployment operator
 -- explicitly GRANTs INSERT to a dedicated NOLOGIN-independent audit writer.
 -- Never grant UPDATE/DELETE; table owner/superuser bypass requires DB governance.
