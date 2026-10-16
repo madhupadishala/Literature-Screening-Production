@@ -80,3 +80,12 @@ def application(environ, start_response):
 
     from .service import create_application
     return create_application()(environ, start_response)
+
+
+# Synthetic QA runs once per staging worker startup using only the diagnostic
+# token in Render's server environment. Clinical runtime remains disabled.
+if (os.environ.get("RENDER") == "true" and
+    os.environ.get("NEXUS_PV_STAGING_PROBE_ENABLED") == "true" and
+    os.environ.get("NEXUS_PV_AGENTS_ENABLED") != "true"):
+    from .hosted_boot_checks import run_hosted_checks
+    run_hosted_checks(application)
