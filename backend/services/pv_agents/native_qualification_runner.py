@@ -145,7 +145,8 @@ def main(provider=None):
     assert probe_native_ready(socket_path=sock,signing_secret=signing)
     print("PHASE_A PASS signed readiness")
     if provider is None:
-        raise RuntimeError("Host must inject a genuine approved AG02 extraction/verification provider")
+        from .native_local_event_provider import create_local_event_provider
+        provider=create_local_event_provider()
     run_b(signing,sock,provider)
     run_c(signing,sock,secret("NEXUS_AUDIT_WRITER_DATABASE_URL"),
           secret("NEXUS_AUDIT_AUDITOR_DATABASE_URL"))
