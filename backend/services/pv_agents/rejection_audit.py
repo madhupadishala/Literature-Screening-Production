@@ -23,6 +23,8 @@ def durable_rejection_audit_callback(database_url: str):
                 raise ValueError("Invalid rejection audit metadata")
         import psycopg
         with psycopg.connect(database_url,connect_timeout=8) as conn:
+            conn.execute("SELECT set_config(%s,%s,true)", ("nexus.audit_tenant",event["expected_tenant"]))
+            conn.execute("SELECT set_config(%s,%s,true)", ("nexus.audit_client",event["expected_client"]))
             conn.execute(
                 """INSERT INTO public.pv_agent_rejection_audit
                      (event_id,agent_id,tenant_id,client_id,event_type,error_type)
