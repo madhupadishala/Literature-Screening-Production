@@ -221,7 +221,7 @@
       "literature_screening",
       "intake_triage"
     ],
-    "input_contract": "text",
+    "input_contract": "safety_request",
     "clinical_review_required": true
   },
   "AG18": {
