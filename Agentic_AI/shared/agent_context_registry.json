@@ -24,7 +24,13 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "local_binding_implemented_hosted_unverified",
+    "binding": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "engine": "PatientAgent",
+    "requires": "approved structured LLMClient.complete_json, server-side injected",
+    "input_contract": "text",
+    "authorized_module": "intake_triage",
+    "clinical_review_required": true
   },
   "AG04": {
     "folder": "AG04_Reporter_Identification",
@@ -33,7 +39,13 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "local_binding_implemented_hosted_unverified",
+    "binding": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "engine": "ReporterAgent",
+    "requires": "approved structured LLMClient.complete_json, server-side injected",
+    "input_contract": "text",
+    "authorized_module": "intake_triage",
+    "clinical_review_required": true
   },
   "AG05": {
     "folder": "AG05_Indication_Identification",
@@ -78,7 +90,13 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "local_binding_implemented_hosted_unverified",
+    "binding": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "engine": "DayZeroAgent",
+    "requires": "approved structured LLMClient.complete_json, server-side injected",
+    "input_contract": "day_zero_input",
+    "authorized_module": "intake_triage",
+    "clinical_review_required": true
   },
   "AG10": {
     "folder": "AG10_Translation",
@@ -213,7 +231,13 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "local_binding_implemented_hosted_unverified",
+    "binding": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "engine": "HistoricalAgent",
+    "requires": "approved structured LLMClient.complete_json, server-side injected",
+    "input_contract": "text",
+    "authorized_module": "case_processing",
+    "clinical_review_required": true
   },
   "AG25": {
     "folder": "AG25_ICSR_Validity",
