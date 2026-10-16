@@ -6,7 +6,7 @@ from Agentic_AI.shared.execution.additional_bindings import ADDITIONAL_BINDINGS
 from Agentic_AI.shared.execution.grounded_specialists import GROUNDED_BINDINGS
 from backend.knowledge.knowledge_router import KnowledgeRouter
 
-def build_dispatcher(*, signing_secret: bytes, router=None, duplicate_repository=None, approved_llm=None, specialist_services=None, seriousness_pipeline=None, causality_pipeline=None, use_approved_batch1_provider=False) -> AgentDispatcher:
+def build_dispatcher(*, signing_secret: bytes, router=None, duplicate_repository=None, approved_llm=None, specialist_services=None, seriousness_pipeline=None, causality_pipeline=None, use_approved_batch1_provider=False, native_runtimes=None) -> AgentDispatcher:
     bindings = {**VERIFIED_BINDINGS, **ADDITIONAL_BINDINGS, **GROUNDED_BINDINGS}
     if duplicate_repository is not None:
         # Never bind duplicate engines without an authorized persistence adapter.
@@ -20,9 +20,18 @@ def build_dispatcher(*, signing_secret: bytes, router=None, duplicate_repository
     if approved_llm is not None:
         from Agentic_AI.shared.execution.v25_bindings import make_v25_bindings
         bindings.update(make_v25_bindings(approved_llm))
+    if native_runtimes is not None:
+        from Agentic_AI.shared.execution.native_runtime_bindings import make_native_runtime_bindings
+        native_runtime_bindings = make_native_runtime_bindings(native_runtimes)
+        if set(native_runtime_bindings) & set(bindings):
+            raise ValueError("Duplicate native runtime binding")
+        bindings.update(native_runtime_bindings)
     if specialist_services is not None:
         from Agentic_AI.shared.execution.service_bindings import make_service_bindings
-        bindings.update(make_service_bindings(specialist_services))
+        service_ports = make_service_bindings(specialist_services)
+        if set(service_ports) & set(bindings):
+            raise ValueError("Duplicate specialist engine binding")
+        bindings.update(service_ports)
     if seriousness_pipeline is not None or causality_pipeline is not None:
         from Agentic_AI.shared.execution.native_pipeline_bindings import make_native_pipeline_bindings
         native = make_native_pipeline_bindings(seriousness_pipeline=seriousness_pipeline,
