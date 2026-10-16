@@ -20,8 +20,8 @@ class AuditTests(unittest.TestCase):
                    event="specialist_execution_rejected",error_type="PermissionError")
         with patch.dict(sys.modules,{"psycopg":fake}):
             durable_rejection_audit_callback("postgresql://fake-local")(event)
-        self.assertEqual(len(connection.calls),1)
-        sql,params=connection.calls[0]
+        self.assertEqual(len(connection.calls),3)
+        sql,params=connection.calls[-1]
         self.assertIn("INSERT INTO public.pv_agent_rejection_audit",sql)
         self.assertEqual(params[1],"AG08")
         self.assertNotIn("source_text",str(params))
