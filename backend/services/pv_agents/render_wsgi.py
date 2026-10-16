@@ -17,7 +17,7 @@ def _json(start_response, status, payload, *, head=False):
 def application(environ, start_response):
     method = environ.get("REQUEST_METHOD")
     path = environ.get("PATH_INFO", "")
-    if method in ("GET", "HEAD") and path == "/healthz":
+    if method in ("GET", "HEAD") and path in ("/", "/healthz"):
         return _json(start_response, "200 OK", {
             "service": "nexus-pv-agents",
             "state": "enabled" if os.environ.get("NEXUS_PV_AGENTS_ENABLED") == "true" else "disabled",

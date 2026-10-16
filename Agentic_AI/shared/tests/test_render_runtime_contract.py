@@ -25,6 +25,17 @@ class RenderRuntimeContract(unittest.TestCase):
         self.assertEqual(response["status"], "200 OK")
         self.assertEqual(json.loads(response["body"])["state"], "disabled")
 
+    def test_root_is_liveness_when_clinical_disabled(self):
+        with patch.dict(os.environ, {"NEXUS_PV_AGENTS_ENABLED":"false"}):
+            response = request("/")
+        self.assertEqual(response["status"], "200 OK")
+        self.assertEqual(json.loads(response["body"])["state"], "disabled")
+
+    def test_head_root_has_no_body(self):
+        response = request("/", "HEAD")
+        self.assertEqual(response["status"], "200 OK")
+        self.assertEqual(response["body"], b"")
+
     def test_head_healthz_supported(self):
         response = request('/healthz', 'HEAD')
         self.assertEqual(response['status'], '200 OK')
