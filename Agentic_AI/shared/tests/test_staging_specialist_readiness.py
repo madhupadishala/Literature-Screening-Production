@@ -61,6 +61,20 @@ class StagingReadinessTest(unittest.TestCase):
         self.assertFalse(result["knowledge_retrieval_proven"])
         self.assertFalse(result["clinical_release_authorized"])
 
+    def test_hosted_boot_acceptance_positive_and_negative_auth(self):
+        from backend.services.pv_agents.hosted_boot_checks import run_hosted_checks
+        from backend.services.pv_agents.render_wsgi import application
+        with patch.dict(os.environ, {"RENDER": "true"}):
+            with patch("backend.services.pv_agents.staging_probe.PostgresAuditStore", InMemoryAudit):
+                with self.assertLogs("nexus.staging.boot_acceptance", level="WARNING") as seen:
+                    run_hosted_checks(application)
+        entries = "\\n".join(seen.output)
+        self.assertIn("route=inventory http_status=200 passed=true", entries)
+        self.assertIn("route=dispatch http_status=200 passed=true", entries)
+        self.assertIn("route=invalid_bearer http_status=401 passed=true", entries)
+        self.assertIn("route=missing_bearer http_status=401 passed=true", entries)
+        self.assertNotIn(TOKEN, entries)
+
     def test_invalid_token_rejected(self):
         with patch("backend.services.pv_agents.staging_probe.PostgresAuditStore", InMemoryAudit):
             status, result = invoke("/v1/staging/specialist-readiness", token="incorrect-secret")
