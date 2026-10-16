@@ -9,13 +9,14 @@ import type { AIProvider } from '../ai/ai-types';
 export async function startNexusNativeWorker(input: {
   socketPath: string;
   countryProvider: AIProvider;
+  ipcSigningSecret: string;
 }) {
   if (process.env.NEXUS_PV_AGENTS_ENABLED === 'true') {
     throw new Error('Clinical dispatch release is not authorized for this isolated worker');
   }
   const handlers = registerRecoveredNativeAgents(input);
   if (Object.keys(handlers).length !== 5) throw new Error('Five native specialist registrations required');
-  const server = createNativeBridge({socketPath:input.socketPath, handlers});
+  const server = createNativeBridge({socketPath:input.socketPath, handlers, signingSecret:input.ipcSigningSecret});
   await server.start();
   let stopping = false;
   const stop = async () => {
