@@ -88,6 +88,11 @@ def probe_native_ready(*, socket_path, signing_secret, timeout=3):
             answer=json.loads(NodeSocketRuntime._recv(stream,length))
     except (OSError,TimeoutError,ValueError,UnicodeError):
         raise NativeTransportError("Native worker readiness unavailable") from None
-    if answer != {"status":"ready","protocol":1,"clinical_execution_enabled":False}:
-        raise NativeTransportError("Native worker did not pass readiness")
+    expected={"status":"ready","protocol":1,"clinical_execution_enabled":False}
+    if not isinstance(answer,dict) or set(answer)!=set(expected)|{"signature"}:
+        raise NativeTransportError("Invalid signed readiness envelope")
+    signed=answer.pop("signature")
+    sig=hmac.new(signing_secret,json.dumps(expected,sort_keys=True,separators=(",",":")).encode(),hashlib.sha256).hexdigest()
+    if not isinstance(signed,str) or not hmac.compare_digest(signed,sig) or answer != expected:
+        raise NativeTransportError("Native worker signed readiness invalid")
     return True
