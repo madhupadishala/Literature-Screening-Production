@@ -50,6 +50,17 @@ class StagingReadinessTest(unittest.TestCase):
         self.assertFalse(result["clinical_release_authorized"])
         self.assertEqual(result["audit_id"], "synthetic-audit-record")
 
+    def test_real_signed_dispatch_executes_synthetic_native_engines(self):
+        with patch("backend.services.pv_agents.staging_probe.PostgresAuditStore", InMemoryAudit):
+            status, result = invoke("/v1/staging/synthetic-dispatch", token=TOKEN)
+        self.assertEqual(status, "200 OK")
+        self.assertEqual(result["total_slots"], 27)
+        self.assertGreaterEqual(result["executed_specialists"], 4)
+        for agent in ("AG05", "AG07", "AG16", "AG27", "AG25"):
+            self.assertEqual(result["outcomes"][agent], "executed_review_only")
+        self.assertFalse(result["knowledge_retrieval_proven"])
+        self.assertFalse(result["clinical_release_authorized"])
+
     def test_invalid_token_rejected(self):
         with patch("backend.services.pv_agents.staging_probe.PostgresAuditStore", InMemoryAudit):
             status, result = invoke("/v1/staging/specialist-readiness", token="incorrect-secret")
