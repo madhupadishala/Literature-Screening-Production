@@ -22,15 +22,16 @@ def assess_probe(token, request_id):
         raise ServiceError(503, "Staging probe unavailable")
     if not isinstance(request_id, str) or not 1 <= len(request_id) <= 100 or any(c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_" for c in request_id):
         raise ServiceError(400, "Invalid request ID")
-    scopes = json.loads(os.environ["NEXUS_PV_SERVICE_TOKEN_SCOPES"])
-    # Require a valid registered token scoped exclusively to synthetic identifiers.
+    # Dedicated staging-only credential: never place it into general clinical
+    # NEXUS_PV_SERVICE_TOKEN_SCOPES or grant access to clinical agent endpoints.
+    import hmac
+    diagnostic_token = os.environ.get("NEXUS_PV_STAGING_DIAGNOSTIC_TOKEN", "")
+    if len(diagnostic_token) < 64 or len(token) != len(diagnostic_token) or not hmac.compare_digest(token, diagnostic_token):
+        raise ServiceError(401, "Staging diagnostic authentication required")
+    scopes = {diagnostic_token: [dict(SCOPE, role="staging_diagnostic_runner",
+                allowed_routes=["/v1/staging/*"])]}
     app = PVAgentService(scopes, PostgresAuditStore(os.environ["NEXUS_PV_AUDIT_DATABASE_URL"]),
                          drug_agent=_UnusedAgent(), workers={}, causality_adapter=_UnusedAgent())
-    allowed = next((v for k, v in scopes.items() if __import__("hmac").compare_digest(k, token)), None)
-    if allowed is None:
-        raise ServiceError(401, "Service authentication required")
-    if SCOPE not in allowed:
-        raise ServiceError(403, "Synthetic scope required")
     record = dict(SCOPE, request_id=request_id, case_id="staging-probe",
                   input_sha256=hashlib.sha256(TEXT.encode()).hexdigest())
     output = dict(record, schema_version="nexus.staging-probe/1",
