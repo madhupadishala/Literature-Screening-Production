@@ -23,6 +23,8 @@ def review(result):
     assert result["requires_human_review"] is True, "human review not enforced"
     assessment=result["assessment"]
     assert isinstance(assessment,dict), "assessment object missing"
+    assert ("qualifiedForAutonomousUse" in assessment or
+            "qualified_for_autonomous_use" in assessment), "explicit autonomous qualification field missing"
     assert assessment.get("qualifiedForAutonomousUse",False) is False, "autonomous release allowed"
     assert assessment.get("qualified_for_autonomous_use",False) is False, "autonomous release allowed"
 
