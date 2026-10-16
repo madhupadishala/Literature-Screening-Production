@@ -9,11 +9,11 @@ BEGIN
   WHERE table_schema='public' AND table_name='pv_agent_rejection_audit'
     AND column_name ~* '(narrative|payload|raw|text|patient|reporter|pii|source|document|prompt|token)';
  IF cols IS NOT NULL THEN RAISE EXCEPTION 'Potential PII columns: %',cols; END IF;
- IF has_table_privilege('PUBLIC','public.pv_agent_rejection_audit','SELECT')
-    OR has_table_privilege('PUBLIC','public.pv_agent_rejection_audit','INSERT')
-    OR has_table_privilege('PUBLIC','public.pv_agent_rejection_audit','UPDATE')
-    OR has_table_privilege('PUBLIC','public.pv_agent_rejection_audit','DELETE')
- THEN RAISE EXCEPTION 'PUBLIC privileges present'; END IF;
+ IF EXISTS (
+     SELECT 1 FROM pg_class c, aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) acl
+      WHERE c.oid='public.pv_agent_rejection_audit'::regclass AND acl.grantee=0
+       AND acl.privilege_type IN ('SELECT','INSERT','UPDATE','DELETE','TRUNCATE')
+   ) THEN RAISE EXCEPTION 'PUBLIC privileges present'; END IF;
  FOR role_name IN SELECT rolname FROM pg_roles
    WHERE rolname IN ('anon','authenticated','web_anon','nexus_runtime','nexus_audit_writer') LOOP
    IF has_table_privilege(role_name,'public.pv_agent_rejection_audit','UPDATE')
