@@ -56,10 +56,12 @@ export function registerRecoveredNativeAgents(deps: {
       return {assessment: assessListedness({reportedEvent,labelEvidence} as Parameters<typeof assessListedness>[0]) as unknown as JsonObject};
     },
     AG17: (r) => {
-      const text = nonempty(r.input);
-      // No fabricated product/event evidence. A full safety assessment requires
-      // a governed structured evidence payload from the upstream source stage.
-      throw new Error('AG17 requires governed structured safety evidence; plain-text contract insufficient');
+      const source = scopedInput(r);
+      if (!Array.isArray(source.products) || !Array.isArray(source.specialSituations) ||
+          typeof source.sourceCoverage !== 'string') {
+        throw new Error('AG17 requires governed structured product and safety evidence');
+      }
+      return {assessment: assessPvSafety(source as Parameters<typeof assessPvSafety>[0]) as unknown as JsonObject};
     },
     AG20: async (r) => {
       const source = scopedInput(r);
