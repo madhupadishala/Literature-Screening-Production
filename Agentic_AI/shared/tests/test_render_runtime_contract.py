@@ -55,6 +55,29 @@ class RenderRuntimeContract(unittest.TestCase):
         self.assertEqual(head["status"], "200 OK")
         self.assertEqual(head["body"], b"")
 
+    def test_host_factory_uses_postgres_not_local_sqlite(self):
+        from backend.services.pv_agents.service import create_application
+        with patch.dict(os.environ, {
+            "NEXUS_PV_AUDIT_BACKEND": "postgres",
+            "NEXUS_PV_AUDIT_DATABASE_URL": "postgresql://synthetic-never-connect",
+            "NEXUS_PV_SERVICE_TOKEN_SCOPES": json.dumps({
+                "synthetic-not-for-production-auth-token-12345": [{
+                    "tenant_id": "orcimed", "client_id": "hetero", "workspace_id": "w1"
+                }]
+            }),
+            "NEXUS_PV_REGISTER_SPECIALISTS": "false",
+        }):
+            with patch("backend.services.pv_agents.postgres_audit.PostgresAuditStore") as store:
+                app = create_application()
+                store.assert_called_once_with("postgresql://synthetic-never-connect")
+                self.assertIs(app.audit, store.return_value)
+
+    def test_host_factory_rejects_sqlite(self):
+        from backend.services.pv_agents.service import create_application
+        with patch.dict(os.environ, {"NEXUS_PV_AUDIT_BACKEND": "sqlite"}):
+            with self.assertRaises(RuntimeError):
+                create_application()
+
     def test_disabled_agent_route_returns_503(self):
         with patch.dict(os.environ, {"NEXUS_PV_AGENTS_ENABLED":"false"}):
             response = request("/v1/agents/drug-role/assess", "POST", b"{}")
