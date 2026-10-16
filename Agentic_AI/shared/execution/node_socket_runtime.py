@@ -30,7 +30,7 @@ class NodeSocketRuntime:
 
     def execute(self, request):
         if request.get("agent_id")!=self.agent_id: raise PermissionError("Agent mismatch")
-        body=json.dumps(request,sort_keys=True,separators=(",",":"),allow_nan=False).encode()
+        body=json.dumps(request,sort_keys=True,separators=(",",":"),ensure_ascii=False,allow_nan=False).encode()
         signature=hmac.new(self.signing_secret,body,hashlib.sha256).hexdigest()
         raw=json.dumps({**request,"ipc_signature":signature},separators=(",",":"),allow_nan=False).encode()
         if len(raw)>MAX_FRAME: raise ValueError("Native request too large")
