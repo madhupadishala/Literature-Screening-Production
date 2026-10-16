@@ -81,7 +81,7 @@ export async function GET(): Promise<Response> {
       (SELECT count(*)::int FROM audit_events
         WHERE tenant_id=$1 AND workspace_id=$2 AND environment='UAT'
           AND event_type='SUBMISSION_TRANSMISSION_BLOCKED_BY_CONFIGURATION'
-          AND details->>'submissionId'=$3) AS blocked_audit_rows,
+          AND details->>'submissionId'=$3::text) AS blocked_audit_rows,
       (SELECT count(*)::int FROM information_schema.tables
         WHERE table_schema='public' AND table_name IN
           ('safety_cases','nexus_submission_packages','nexus_submission_preflight_runs','nexus_submission_outbox')) AS schema_tables`,
