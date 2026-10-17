@@ -4,13 +4,14 @@ import { requireIdentitySession, resolveTenantForIdentity } from "@/lib/auth/ide
 import { NEXUS_CONTEXT_COOKIE, validateNexusContextToken } from "@/lib/nexus/context-token";
 import type { NexusEnvironment } from "@/lib/nexus/entitlement-types";
 import { evaluateWorkspaceModuleAccess } from "@/lib/nexus/workspace-access-service";
+import type { NexusModuleKey } from "@/lib/nexus/modules";
 import type { Permission } from "@/lib/rbac/permissions";
 
 export interface RequestPrincipal {
   tenantId: string;
   tenantKey: string;
   workspaceId?: string;
-  moduleKey?: string;
+  moduleKey?: NexusModuleKey;
   environment: NexusEnvironment;
   userId: string;
   email: string;

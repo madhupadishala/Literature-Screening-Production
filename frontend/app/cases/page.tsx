@@ -7,6 +7,7 @@ import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalState from "@/components/enterprise/OperationalState";
+import { useWorkspaceContext } from "@/components/context/WorkspaceContext";
 import styles from "./cases.module.css";
 
 type CaseRow = {
@@ -24,6 +25,11 @@ type CaseRow = {
   updatedAt: string;
 };
 
+function caseTimestamp(value: string): string {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "—" : date.toISOString().replace("T", " ").replace(/\.\d{3}Z$/, " UTC");
+}
+
 function statusTone(status: string): string {
   if (["FINAL", "FINALIZED", "QC_APPROVED"].includes(status)) return styles.good;
   if (["QC_RETURNED"].includes(status)) return styles.bad;
@@ -32,6 +38,8 @@ function statusTone(status: string): string {
 }
 
 export default function CasesPage() {
+  const { state: workspaceState } = useWorkspaceContext();
+  const scopeKey = workspaceState.context ? `${workspaceState.context.tenantId}:${workspaceState.context.workspaceId}:${workspaceState.context.environment}:${workspaceState.context.moduleKey}` : "";
   const [records, setRecords] = useState<CaseRow[]>([]);
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
@@ -39,6 +47,7 @@ export default function CasesPage() {
   const activeRequest = useRef<AbortController | null>(null);
 
   const load = useCallback(async () => {
+    if (!scopeKey) return;
     activeRequest.current?.abort();
     const controller = new AbortController();
     activeRequest.current = controller;
@@ -54,7 +63,8 @@ export default function CasesPage() {
         throw new Error(payload?.error || "Unable to load case worklist.");
       }
       if (controller.signal.aborted) return;
-      setRecords(Array.isArray(payload.data?.records) ? payload.data.records : []);
+      if (!Array.isArray(payload.data?.records)) throw new Error("Invalid case worklist response.");
+      setRecords(payload.data.records);
       setLoadState("ready");
     } catch (error) {
       if (controller.signal.aborted) return;
@@ -62,7 +72,7 @@ export default function CasesPage() {
       setLoadState("error");
       setMessage(error instanceof Error ? error.message : "Unable to load cases.");
     }
-  }, []);
+  }, [scopeKey]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => void load(), 0);
@@ -160,7 +170,7 @@ export default function CasesPage() {
             <tbody>
               {loadState === "ready" ? filtered.map((row) => (
                 <tr key={row.caseId}>
-                  <td>
+                  <td className={styles.identifier}>
                     <Link href={`/cases/${row.caseId}`} title={`Intake: ${row.intakeRecordId}`}>{row.caseKey}</Link>
                   </td>
                   <td>
@@ -172,7 +182,7 @@ export default function CasesPage() {
                   <td>{row.seriousnessStatus}</td>
                   <td>R{row.currentDraftRevision}</td>
                   <td>V{row.currentVersion}</td>
-                  <td>{new Date(row.updatedAt).toLocaleString()}</td>
+                  <td className={styles.identifier}><time dateTime={row.updatedAt}>{caseTimestamp(row.updatedAt)}</time></td>
                   <td>
                     <Link href={`/cases/${row.caseId}`}>Open case</Link>
                   </td>
@@ -181,7 +191,8 @@ export default function CasesPage() {
               {loadState !== "ready" || !filtered.length ? (
                 <tr>
                   <td colSpan={8} className={styles.empty}>
-                    <span role="status">{loadState === "loading" ? "Loading cases…" : loadState === "error" ? "Case data unavailable." : query.trim() ? "No cases match the current filter." : "No cases are available in this workspace."}</span>
+                    <span role="status">{loadState === "loading" ? "Loading / Synchronizing cases..." : loadState === "error" ? "Case data unavailable." : records.length > 0 && query.trim() ? "Zero cases match current filters" : "Worklist empty (No pending cases in workspace)"}</span>
+                    {loadState === "ready" && records.length > 0 && query.trim() && !filtered.length ? <button className={styles.clearFilters} type="button" onClick={() => setQuery("")}>Clear Filters</button> : null}
                   </td>
                 </tr>
               ) : null}

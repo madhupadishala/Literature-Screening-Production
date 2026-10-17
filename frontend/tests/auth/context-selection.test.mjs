@@ -217,3 +217,31 @@ test('tenant settings update and audit commit in one transaction', async () => {
   const response = await tenantConfig.POST(request('/api/tenant/config', { tenant: current.tenants[0] }));
   assert.equal(response.status, 200); assert.deepEqual(writes, ['BEGIN', 'UPDATE', 'AUDIT', 'COMMIT']);
 });
+
+
+const currentContext = await import(new URL('app/api/context/current/route.ts', root));
+const contextContract = await import(new URL('lib/nexus/workspace-context-contract.ts', root));
+test('current context API and browser validators share the flat contract and private cache headers', async () => {
+  await login(); await select();
+  const response = await currentContext.GET(request('/api/context/current'));
+  const payload = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(contextContract.isWorkspaceContextResponse(payload), true);
+  assert.equal(payload.data.email, 'operator@example.test');
+  assert.equal(payload.data.workspaceId, workspaceA);
+  assert.deepEqual(payload.data.enabledModules, ['LITERATURE']);
+  assert.equal(response.headers.get('cache-control'), 'private, no-store');
+  assert.equal(response.headers.get('vary'), 'Cookie');
+  assert.equal('user' in payload, false);
+  for (const patch of [{ workspaceId: '' }, { moduleKey: 'cases' }, { enabledModules: ['submissions'] }, { environment: 'UNKNOWN' }, { enabledModules: [] }]) {
+    assert.equal(contextContract.isWorkspaceContextResponse({ ...payload, data: { ...payload.data, ...patch } }), false);
+  }
+  assert.equal(contextContract.isWorkspaceContextResponse({ success: true, user: { email: 'operator@example.test' } }), false);
+});
+test('unauthenticated context response is private and never satisfies the ready contract', async () => {
+  const response = await currentContext.GET(request('/api/context/current'));
+  assert.equal(response.status, 401);
+  assert.equal(response.headers.get('cache-control'), 'private, no-store');
+  assert.equal(response.headers.get('vary'), 'Cookie');
+  assert.equal(contextContract.isWorkspaceContextResponse(await response.json()), false);
+});

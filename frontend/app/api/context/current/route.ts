@@ -3,6 +3,8 @@ import { routeErrorResponse } from "@/lib/api/route-error";
 import { listAccessibleWorkspaces } from "@/lib/nexus/workspace-access-service";
 import { AuthorizationError, resolveRequestPrincipal } from "@/lib/rbac/request-principal";
 
+import type { WorkspaceContextResponse } from "@/lib/nexus/workspace-context-contract";
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -13,7 +15,7 @@ export async function GET(request: NextRequest): Promise<Response> {
       tenantId: principal.tenantId, userId: principal.userId, environment: principal.environment,
     });
     const workspace = workspaces.find(item => item.workspaceId === principal.workspaceId);
-    if (!workspace) throw new AuthorizationError("Selected workspace access is no longer active.", 403);
+    if (!workspace || !principal.moduleKey) throw new AuthorizationError("Selected workspace access is no longer active.", 403);
     const enabledModules = workspace.modules.map(item => item.moduleKey);
 
     return Response.json({
@@ -21,8 +23,8 @@ export async function GET(request: NextRequest): Promise<Response> {
       data: {
         tenantKey: principal.tenantKey,
         tenantId: principal.tenantId,
-        workspaceId: principal.workspaceId,
-        workspaceName: workspace?.displayName,
+        workspaceId: workspace.workspaceId,
+        workspaceName: workspace.displayName,
         moduleKey: principal.moduleKey,
         environment: principal.environment,
         displayName: principal.displayName,
@@ -30,7 +32,7 @@ export async function GET(request: NextRequest): Promise<Response> {
         roleKey: principal.roleKey,
         enabledModules,
       },
-    }, { headers: { "Cache-Control": "private, no-store", Vary: "Cookie" } });
+    } satisfies WorkspaceContextResponse, { headers: { "Cache-Control": "private, no-store", Vary: "Cookie" } });
   } catch (error) {
     const response = routeErrorResponse(error);
     response.headers.set("Cache-Control", "private, no-store");

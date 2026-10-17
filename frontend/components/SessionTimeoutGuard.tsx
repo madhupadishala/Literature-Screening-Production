@@ -1,5 +1,6 @@
 "use client";
 
+import { isWorkspaceContextResponse } from "@/lib/nexus/workspace-context-contract";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -123,6 +124,8 @@ export default function SessionTimeoutGuard() {
         return;
       }
 
+      const payload: unknown = await response.json();
+      if (!isWorkspaceContextResponse(payload)) throw new Error("Invalid workspace context response");
       refreshSessionActivity();
       await auditSession("SESSION_CONTINUED", "User continued before idle timeout.");
       setShowWarning(false);

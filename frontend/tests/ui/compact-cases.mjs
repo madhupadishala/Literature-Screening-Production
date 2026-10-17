@@ -41,6 +41,8 @@ let status = 200;
 let selectedModule = null;
 let returnedRecords = records;
 const errors = [];
+let releaseCases;
+const initialCasesGate = new Promise(resolve => { releaseCases = resolve; });
 try {
   const page = await browser.newPage({ viewport: { width: 1920, height: 1000 } });
   page.on('pageerror', error => errors.push(error.message));
@@ -58,13 +60,16 @@ try {
       code = contextMode;
       body = contextMode === 200 ? { success: true, data: fixture } : { success: false, code: 'AUTHENTICATION_REQUIRED' };
     }
-    if (path === '/api/safety/cases') { code = status; body = status === 200 ? { success: true, data: { records: returnedRecords } } : { error: 'Authentication required.' }; }
+    if (path === '/api/safety/cases') { await initialCasesGate; code = status; body = status === 200 ? { success: true, data: { records: returnedRecords } } : { error: 'Authentication required.' }; }
     if (path === '/api/nexus/context' && route.request().method() === 'POST') {
       selectedModule = route.request().postDataJSON(); fixture.moduleKey = selectedModule.moduleKey; body = { success: true, data: { permissions: ['submissions.view'] } };
     }
     await route.fulfill({ status: code, contentType: 'application/json', body: JSON.stringify(body) });
   });
   await page.goto(base + '/cases');
+  await page.getByText('Loading / Synchronizing cases...', { exact: true }).waitFor();
+  assert.deepEqual(await page.locator('section[aria-label="Operational summary"] strong').allTextContents(), ['—', '—', '—', '—']);
+  releaseCases();
   await page.getByRole('link', { name: 'PV-0001', exact: true }).waitFor();
   assert.equal(await page.getByRole('table').locator('tbody tr').count(), 3);
   assert.equal(await page.getByRole('link', { name: 'Submissions', exact: true }).count(), 1);
@@ -81,6 +86,9 @@ try {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `Page overflows at ${width}`);
     const client = page.getByText(fixture.workspaceName, { exact: true });
     assert.equal(await client.evaluate(el => el.scrollWidth <= el.clientWidth && getComputedStyle(el).textOverflow !== 'ellipsis'), true);
+    assert.equal(await page.getByLabel('Search cases').evaluate(el => el.getBoundingClientRect().height), 32);
+    assert.match(await page.locator('time').first().evaluate(el => getComputedStyle(el).fontFamily), /mono|Consolas/i);
+    assert.match(await page.locator('time').first().textContent(), /UTC$/);
     const row = await page.getByRole('table').locator('tbody tr').first().boundingBox();
     assert.ok(row.height <= 38, `Noncompact row at ${width}: ${row.height}`);
     if (output) { await mkdir(output, { recursive: true }); await page.screenshot({ path: `${output}/cases-${width}.png`, fullPage: true }); }
@@ -89,16 +97,23 @@ try {
   await page.getByLabel('Search cases').fill('PV-0002');
   assert.equal(await page.getByRole('table').locator('tbody tr').count(), 1);
   await page.getByLabel('Search cases').fill('not-present');
-  await page.getByText('No cases match the current filter.', { exact: true }).waitFor();
-  await page.getByLabel('Search cases').fill('');
+  await page.getByText('Zero cases match current filters', { exact: true }).waitFor();
+  assert.equal(await page.getByRole('button', { name: 'Clear Filters', exact: true }).evaluate(el => el.getBoundingClientRect().height), 32);
+  await page.getByRole('button', { name: 'Clear Filters', exact: true }).click();
+  assert.equal(await page.getByLabel('Search cases').inputValue(), '');
+  assert.equal(await page.getByRole('table').locator('tbody tr').count(), 3);
   status = 401; await page.getByRole('button', { name: 'Refresh', exact: true }).click();
   await page.getByRole('alert').filter({ hasText: 'Case worklist unavailable' }).waitFor();
   assert.deepEqual(await metricValues(), ['—', '—', '—', '—']);
-  assert.equal(await page.getByText('No cases match the current filter.', { exact: true }).count(), 0);
+  assert.equal(await page.getByText('Zero cases match current filters', { exact: true }).count(), 0);
   await page.getByText('Case data unavailable.', { exact: true }).waitFor();
   status = 200; returnedRecords = []; await page.getByRole('button', { name: 'Retry', exact: true }).click();
-  await page.getByText('No cases are available in this workspace.', { exact: true }).waitFor();
+  await page.getByText('Worklist empty (No pending cases in workspace)', { exact: true }).waitFor();
   assert.deepEqual(await metricValues(), ['0', '0', '0', '0']);
+  await page.getByLabel('Search cases').fill('not-present');
+  await page.getByText('Worklist empty (No pending cases in workspace)', { exact: true }).waitFor();
+  assert.equal(await page.getByRole('button', { name: 'Clear Filters', exact: true }).count(), 0);
+  await page.getByLabel('Search cases').fill('');
   assert.equal(await page.getByRole('alert').filter({ hasText: 'Case worklist unavailable' }).count(), 0);
   await page.evaluate(() => { window.__navigationDocument = 'preserved'; });
   await page.getByRole('link', { name: 'Submissions', exact: true }).click();

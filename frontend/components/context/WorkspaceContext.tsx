@@ -4,24 +4,14 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import { usePathname, useRouter } from "next/navigation";
 import { clearSession, getSession } from "@/lib/session-manager";
 
-export type WorkspaceIdentity = {
-  tenantId: string; tenantKey: string; workspaceId: string; workspaceName: string;
-  moduleKey: string; environment: string; displayName: string; email: string;
-  roleKey: string; enabledModules: string[];
-};
+export type { WorkspaceContextData as WorkspaceIdentity } from "@/lib/nexus/workspace-context-contract";
+import { isWorkspaceContextResponse, type WorkspaceContextData } from "@/lib/nexus/workspace-context-contract";
+
 export type ContextState =
   | { status: "loading"; context: null }
-  | { status: "authenticated_ready"; context: WorkspaceIdentity }
+  | { status: "authenticated_ready"; context: WorkspaceContextData }
   | { status: "session_expired" | "unauthenticated" | "context_error"; context: null };
 const WorkspaceContext = createContext<{ state: ContextState; retry: () => void } | null>(null);
-
-function validContext(value: unknown): value is WorkspaceIdentity {
-  if (!value || typeof value !== "object") return false;
-  const data = value as Record<string, unknown>;
-  return ["tenantId", "tenantKey", "workspaceId", "workspaceName", "moduleKey", "environment", "displayName", "email", "roleKey"]
-    .every(key => typeof data[key] === "string" && (data[key] as string).trim().length > 0)
-    && Array.isArray(data.enabledModules) && data.enabledModules.every(key => typeof key === "string");
-}
 
 export function WorkspaceContextProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -48,8 +38,8 @@ export function WorkspaceContextProvider({ children }: { children: React.ReactNo
         return;
       }
       if (!response.ok) throw new Error(`Workspace context HTTP ${response.status}`);
-      const payload = await response.json();
-      if (!payload.success || !validContext(payload.data)) throw new Error("Invalid workspace context response");
+      const payload: unknown = await response.json();
+      if (!isWorkspaceContextResponse(payload)) throw new Error("Invalid workspace context response");
       if (pending.current === controller) setState({ status: "authenticated_ready", context: payload.data });
     } catch (error) {
       if (pending.current !== controller) return;
