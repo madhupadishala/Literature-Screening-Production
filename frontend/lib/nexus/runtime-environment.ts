@@ -11,11 +11,5 @@ export function getDefaultNexusEnvironment(): NexusEnvironment {
     return configured;
   }
 
-  return process.env.VERCEL_ENV === "preview" ? "UAT" : "PROD";
-}
-
-export function getDefaultTenantKey(): string {
-  return getDefaultNexusEnvironment() === "UAT"
-    ? "nexus-uat-rc1-a"
-    : "clinixai-prod";
+  return "PROD";
 }

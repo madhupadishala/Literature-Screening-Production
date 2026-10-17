@@ -1,0 +1,84 @@
+# Single-host staging qualification, never production. Requires local Docker Compose
+# and an explicitly chosen staging Postgres database.
+name: nexus-native-staging
+services:
+  ollama:
+    image: ollama/ollama:${OLLAMA_IMAGE_TAG:?pin version}
+    restart: unless-stopped
+    expose: ["11434"]
+    networks: [native]
+    volumes: [ollama_models:/root/.ollama]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD","ollama","list"]
+      interval: 20s
+      timeout: 8s
+      retries: 12
+  ipc-init:
+    image: busybox:1.36
+    user: "0:0"
+    command: ["sh", "-ec", "chown 11001:11001 /run/nexus-agents && chmod 0700 /run/nexus-agents"]
+    volumes: ["ipc:/run/nexus-agents"]
+    restart: "no"
+  node:
+    build:
+      context: .
+      dockerfile: ops/native-node.Dockerfile
+    user: "11001:11001"
+    init: true
+    restart: on-failure:5
+    environment:
+      NEXUS_PV_AGENTS_ENABLED: "false"
+      NEXUS_NATIVE_SOCKET_PATH: /run/nexus-agents/agent.sock
+      NEXUS_NATIVE_OLLAMA_ENDPOINT: http://ollama:11434
+      NEXUS_NATIVE_OLLAMA_MODEL: ${APPROVED_LOCAL_MODEL:?approved model name required}
+      IPC_SIGNING_SECRET_FILE: /run/secrets/ipc_key
+    secrets: [ipc_key]
+    volumes:
+      - ipc:/run/nexus-agents
+    networks: [native]
+    depends_on:
+      ollama: {condition: service_healthy}
+      ipc-init: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD","node","/app/ops/native-node-health.mjs"]
+      interval: 15s
+      timeout: 6s
+      retries: 4
+    mem_limit: 512m
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+  python:
+    build:
+      context: .
+      dockerfile: ops/native-python.Dockerfile
+    user: "11001:11001"
+    restart: on-failure:5
+    environment:
+      NEXUS_PV_AGENTS_ENABLED: "false"
+      NEXUS_NATIVE_SOCKET_PATH: /run/nexus-agents/agent.sock
+      IPC_SIGNING_SECRET_FILE: /run/secrets/ipc_key
+      NEXUS_AUDIT_WRITER_DATABASE_URL_FILE: /run/secrets/staging_database_url
+      NEXUS_AUDIT_AUDITOR_DATABASE_URL_FILE: /run/secrets/staging_auditor_url
+      NEXUS_AG02_LOCAL_PROVIDER_URL: http://ollama:11434/v1
+      NEXUS_AG02_LOCAL_MODEL: ${APPROVED_LOCAL_MODEL:?approved model name required}
+    secrets: [ipc_key, staging_database_url, staging_auditor_url]
+    volumes:
+      - ipc:/run/nexus-agents
+    depends_on:
+      node: {condition: service_healthy}
+    networks: [native, audit-egress]
+    mem_limit: 512m
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+    command: ["python","-m","backend.services.pv_agents.native_qualification_runner"]
+secrets:
+  ipc_key: {file: ${IPC_SECRET_FILE:?secret manager materialized file}}
+  staging_database_url: {file: ${STAGING_DB_URL_FILE:?audit writer credential file}}
+  staging_auditor_url: {file: ${STAGING_AUDITOR_URL_FILE:?read only auditor credential file}}
+volumes:
+  ipc: {}
+  ollama_models: {}
+networks:
+  native: {internal: true}
+  audit-egress: {} # Python-only controlled DB egress; Node/Ollama remain isolated

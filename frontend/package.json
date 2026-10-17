@@ -87,7 +87,10 @@
     "design:verify": "node --import tsx scripts/verify-product-design-guardian.ts",
     "cleanup:sprint12:verify": "node --import tsx scripts/verify-cleanup-sprint12-literature-ux.ts",
     "cleanup:sprint13:verify": "node --import tsx scripts/verify-cleanup-sprint13-intake-ux.ts",
-    "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts"
+    "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts",
+    "submissions:icsr:verify": "node --import tsx scripts/verify-submissions-icsr-integration.ts",
+    "test:ui:cases": "node tests/ui/compact-cases.mjs",
+    "test:auth:context": "node --test tests/auth/context-selection.test.mjs"
   },
   "dependencies": {
     "@langchain/core": "1.2.17",
@@ -122,6 +125,7 @@
     "dependency-cruiser": "^18.4.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "playwright": "^1.62.1",
     "tailwindcss": "^4",
     "tsx": "^4.20.6",
     "typescript": "^5"

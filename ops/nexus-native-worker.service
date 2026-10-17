@@ -1,0 +1,31 @@
+[Unit]
+Description=Nexus private native PV agents (staging-only)
+After=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=nexusagents
+Group=nexusagents
+WorkingDirectory=/opt/nexus/frontend
+EnvironmentFile=/etc/nexus/native-agents.env
+Environment=NEXUS_PV_AGENTS_ENABLED=false
+RuntimeDirectory=nexus-agents
+RuntimeDirectoryMode=0700
+UMask=0077
+ExecStart=/usr/bin/node --max-old-space-size=384 --import tsx /opt/nexus/frontend/scripts/run-native-agent-worker.ts
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+MemoryMax=512M
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/run/nexus-agents
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

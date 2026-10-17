@@ -1,4 +1,4 @@
-import { getDefaultNexusEnvironment, getDefaultTenantKey } from "@/lib/nexus/runtime-environment";
+import { getDefaultNexusEnvironment } from "@/lib/nexus/runtime-environment";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,8 +8,8 @@ export async function GET(): Promise<Response> {
   return Response.json(
     {
       environment,
-      defaultTenantKey: getDefaultTenantKey(),
-      preview: process.env.VERCEL_ENV === "preview",
+      selectionRequired: true,
+
     },
     {
       headers: {

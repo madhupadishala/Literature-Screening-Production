@@ -27,6 +27,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const body = (await request.json()) as PackageContextRequestBody;
     const context = await buildEvidenceContext({
       tenantId: principal.tenantId,
+      environment: principal.environment,
       purpose: body.purpose ?? "screening",
       query: body.query,
       sourceId: body.sourceId,

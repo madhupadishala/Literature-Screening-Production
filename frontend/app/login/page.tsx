@@ -1,458 +1,129 @@
 "use client";
-
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { saveSession, type ClinixSession } from "@/lib/session-manager";
+import { clearSession, saveSession } from "@/lib/session-manager";
+import { NEXUS_MODULE_DEFINITIONS, type NexusModuleKey } from "@/lib/nexus/modules";
+import type { NexusEnvironment } from "@/lib/nexus/entitlement-types";
+import styles from "./page.module.css";
 
-const TENANTS = [
-  { tenantId: "clinixai-prod", tenantName: "TheClinixAI Production" },
-  { tenantId: "demo-tenant", tenantName: "Demo Tenant" },
-  { tenantId: "nexus-uat-rc1-a", tenantName: "Nexus UAT RC1 Tenant A" },
-  { tenantId: "nexus-uat-rc1-b", tenantName: "Nexus UAT RC1 Tenant B" },
-  { tenantId: "training-tenant", tenantName: "Training Workspace" },
-];
-
-const ROLE_LABELS: Record<string, string> = {
-  super_admin: "Super Admin",
-  client_admin: "Client Admin",
-  super_user: "Super User",
-  qc: "QC Reviewer",
-  auditor: "Auditor",
-  read_only: "Read Only",
-};
-
-type RuntimeConfig = {
-  environment: "PROD" | "UAT" | "TRAINING";
-  defaultTenantKey: string;
-  preview: boolean;
-};
-
-type IdentityLoginResponse = {
-  authenticated: boolean;
-  tenants?: Array<{
-    tenantId: string;
-    tenantKey: string;
-    displayName: string;
-    roleKey: string;
-  }>;
-  error?: string;
-};
-
-type LoginApiResponse = {
-  authenticated?: boolean;
-  error?: string;
-  session?: ServerSession;
-};
-
-type WorkspaceSummary = {
-  workspaceId: string;
-  modules?: Array<{ moduleKey?: string }>;
-};
-
-type WorkspaceContextResponse = {
-  success?: boolean;
-  error?: string;
-  data?: {
-    workspaces?: WorkspaceSummary[];
-  };
-};
-
-type ContextSelectionResponse = {
-  success?: boolean;
-  error?: string;
-};
-
-type ServerSession = {
-  id: string;
-  accessToken: string;
-  expiresAt: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-    tenantId: string;
-    role: string;
-    permissions: string[];
-  };
-};
-
-async function readJsonResponse<T>(response: Response): Promise<T> {
-  const text = await response.text();
-  if (!text.trim()) {
-    throw new Error(
-      response.ok
-        ? "The login service returned an empty response."
-        : "The UAT login service is temporarily unavailable.",
-    );
-  }
-
-  try {
-    return JSON.parse(text) as T;
-  } catch {
-    throw new Error(
-      response.ok
-        ? "The login service returned an invalid response."
-        : "The UAT login service is temporarily unavailable.",
-    );
-  }
+type Identity = { sessionId: string; userId: string; email: string; displayName: string; expiresAt: string };
+type Tenant = { tenantId: string; tenantKey: string; displayName: string; roleKey: string };
+type Workspace = { workspaceId: string; displayName: string; modules: { moduleKey: NexusModuleKey }[] };
+type EnvironmentAccess = { environment: NexusEnvironment; workspaces: Workspace[] };
+async function readResponse<T>(response: Response): Promise<T> {
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.error || "Request failed.");
+  return payload as T;
 }
-
 export default function LoginPage() {
   const router = useRouter();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [environment, setEnvironment] = useState<"PROD" | "UAT" | "TRAINING">("PROD");
-  const [tenantId, setTenantId] = useState("clinixai-prod");
-  const [loading, setLoading] = useState(false);
+  const [identity, setIdentity] = useState<Identity | null>(null);
+  const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [tenantId, setTenantId] = useState("");
+  const [access, setAccess] = useState<EnvironmentAccess[]>([]);
+  const [environment, setEnvironment] = useState<NexusEnvironment | "">("");
+  const [workspaceId, setWorkspaceId] = useState("");
+  const [moduleKey, setModuleKey] = useState<NexusModuleKey | "">("");
+  const [busy, setBusy] = useState(true);
+  const [loadingScope, setLoadingScope] = useState(false);
   const [error, setError] = useState("");
-  const [previewRuntime, setPreviewRuntime] = useState(false);
-
-  const completeLogin = useCallback(async (response: Response, requestedTenantId: string, requestedEnvironment: "PROD" | "UAT" | "TRAINING") => {
-    const data = await readJsonResponse<LoginApiResponse>(response);
-
-    if (!response.ok || !data.authenticated) {
-      throw new Error(data.error || "Login failed.");
-    }
-
-    const server = data.session;
-    if (!server) {
-      throw new Error("Authenticated login response did not include a session.");
-    }
-    const tenant = TENANTS.find((item) => item.tenantId === requestedTenantId);
-    const now = new Date().toISOString();
-
-    const session: ClinixSession = {
-      sessionId: server.id,
-      organizationId: "ORG-CLINIXAI",
-      organizationName: "ClinixAI",
-      tenantId: server.user.tenantId,
-      tenantName: tenant?.tenantName ?? server.user.tenantId,
-      userId: server.user.id,
-      userName: server.user.name,
-      role: ROLE_LABELS[server.user.role] ?? server.user.role,
-      environment: requestedEnvironment,
-      permissions: server.user.permissions,
-      loginTime: now,
-      lastActivity: now,
-      expiresAt: server.expiresAt,
-      locked: false,
-      accessToken: server.accessToken,
-    };
-
-    saveSession(session);
-    router.push("/");
-  }, [router]);
-
+  const scopeGeneration = useRef(0);
   useEffect(() => {
-    let cancelled = false;
-
-    const loadRuntimeConfig = async () => {
-      try {
-        const response = await fetch("/api/runtime-config", { cache: "no-store" });
-        if (!response.ok) return;
-        const config = (await response.json()) as RuntimeConfig;
-        if (cancelled) return;
-        setEnvironment(config.environment);
-        setTenantId(config.defaultTenantKey);
-        setPreviewRuntime(config.preview);
-      } catch {
-        // Server remains authoritative; login will fail closed if scope is invalid.
-      }
-    };
-
-    void loadRuntimeConfig();
-    return () => {
-      cancelled = true;
-    };
+    const controller = new AbortController();
+    void fetch("/api/auth/identity", { cache: "no-store", signal: controller.signal })
+      .then(async response => {
+        if (response.status === 401) return;
+        const data = await readResponse<{ identity: Identity; tenants: Tenant[] }>(response);
+        if (!controller.signal.aborted) { setIdentity(data.identity); setTenants(data.tenants); }
+      })
+      .catch(caught => { if (!controller.signal.aborted) setError(caught instanceof Error ? caught.message : "Session unavailable."); })
+      .finally(() => { if (!controller.signal.aborted) setBusy(false); });
+    return () => controller.abort();
   }, []);
-
   useEffect(() => {
-    const localBypassEnabled =
-      process.env.NEXT_PUBLIC_LOCAL_AUTH_BYPASS?.trim().toLowerCase() === "true";
-    if (!localBypassEnabled) return;
-    if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
-      return;
-    }
-
-    const runLocalBypass = async () => {
-      try {
-        setLoading(true);
-        setError("");
-        const response = await fetch("/api/auth/session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ tenantId: "demo-tenant" }),
-        });
-        await completeLogin(response, "demo-tenant", "UAT");
-      } catch (caughtError) {
-        setError(caughtError instanceof Error ? caughtError.message : "Local bypass failed.");
-        setLoading(false);
-      }
-    };
-
-    void runLocalBypass();
-  }, [completeLogin]);
-
-  async function establishPreviewIdentityContext() {
-    const identityResponse = await fetch("/api/auth/identity", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const identity = await readJsonResponse<IdentityLoginResponse>(identityResponse);
-    if (!identityResponse.ok || !identity.authenticated) {
-      throw new Error(identity.error || "Identity authentication failed.");
-    }
-
-    const tenant = identity.tenants?.find((item) => item.tenantKey === tenantId);
-    if (!tenant) {
-      throw new Error("The authenticated identity has no access to the UAT tenant.");
-    }
-
-    const workspaceResponse = await fetch(
-      `/api/nexus/context?tenantId=${encodeURIComponent(tenant.tenantId)}&environment=${environment}`,
-      { cache: "no-store" },
-    );
-    const workspacePayload =
-      await readJsonResponse<WorkspaceContextResponse>(workspaceResponse);
-    if (!workspaceResponse.ok || !workspacePayload?.success) {
-      throw new Error(workspacePayload?.error || "UAT workspace context could not be loaded.");
-    }
-
-    const workspaces = Array.isArray(workspacePayload.data?.workspaces)
-      ? workspacePayload.data.workspaces
-      : [];
-    const workspace =
-      workspaces.find((item: { modules?: Array<{ moduleKey?: string }> }) =>
-        item.modules?.some((module) => module.moduleKey === "LITERATURE"),
-      ) ?? workspaces[0];
-    if (!workspace) {
-      throw new Error("No authorized UAT workspace is available.");
-    }
-
-    const moduleKey =
-      workspace.modules?.find((module: { moduleKey?: string }) => module.moduleKey === "LITERATURE")
-        ?.moduleKey ?? workspace.modules?.[0]?.moduleKey;
-    if (!moduleKey) {
-      throw new Error("No authorized UAT module is available.");
-    }
-
-    const contextResponse = await fetch("/api/nexus/context", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        tenantId: tenant.tenantId,
-        workspaceId: workspace.workspaceId,
-        environment,
-        moduleKey,
-        reason: "Authenticated preview user selected the governed UAT workspace context.",
-      }),
-    });
-    const contextPayload =
-      await readJsonResponse<ContextSelectionResponse>(contextResponse);
-    if (!contextResponse.ok || !contextPayload?.success) {
-      throw new Error(contextPayload?.error || "UAT workspace context selection failed.");
-    }
+    if (!identity || !tenantId) return;
+    const generation = scopeGeneration.current;
+    const controller = new AbortController();
+    void fetch(`/api/nexus/context?tenantId=${encodeURIComponent(tenantId)}`, { cache: "no-store", signal: controller.signal })
+      .then(readResponse<{ data: { environments: EnvironmentAccess[] } }>)
+      .then(data => { if (!controller.signal.aborted && generation === scopeGeneration.current) setAccess(data.data.environments); })
+      .catch(caught => { if (!controller.signal.aborted && generation === scopeGeneration.current) setError(caught instanceof Error ? caught.message : "Workspace access unavailable."); })
+      .finally(() => { if (!controller.signal.aborted && generation === scopeGeneration.current) setLoadingScope(false); });
+    return () => controller.abort();
+  }, [identity, tenantId]);
+  function changeTenant(value: string) {
+    scopeGeneration.current += 1;
+    setTenantId(value); setAccess([]); setEnvironment(""); setWorkspaceId(""); setModuleKey("");
+    setLoadingScope(Boolean(value)); setError("");
   }
-
-  async function login() {
+  async function authenticate(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); setBusy(true); setError(""); clearSession();
     try {
-      setLoading(true);
-      setError("");
-
-      const response = await fetch("/api/auth/session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password, tenantId }),
-      });
-
-      if (response.ok && previewRuntime) {
-        try {
-          await establishPreviewIdentityContext();
-        } catch (contextError) {
-          await fetch("/api/auth/identity", { method: "DELETE" }).catch(() => undefined);
-          await fetch("/api/auth/session", { method: "DELETE" }).catch(() => undefined);
-          throw contextError;
-        }
-      }
-
-      await completeLogin(response, tenantId, environment);
-    } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : "Login failed.");
-    } finally {
-      setLoading(false);
-    }
+      const data = await readResponse<{ identity: Identity; tenants: Tenant[] }>(await fetch("/api/auth/identity", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }),
+      }));
+      setIdentity(data.identity); setTenants(data.tenants); setPassword("");
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "Authentication failed."); }
+    finally { setBusy(false); }
   }
-
+  const workspaces = access.find(item => item.environment === environment)?.workspaces ?? [];
+  const modules = workspaces.find(item => item.workspaceId === workspaceId)?.modules ?? [];
+  async function enterWorkspace(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); if (!identity || !environment) return;
+    setBusy(true); setError(""); clearSession();
+    try {
+      const result = await readResponse<{ data: { permissions: string[] } }>(await fetch("/api/nexus/context", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tenantId, workspaceId, environment, moduleKey }),
+      }));
+      const tenant = tenants.find(item => item.tenantId === tenantId)!;
+      const now = new Date().toISOString();
+      saveSession({
+        sessionId: identity.sessionId, organizationId: tenant.tenantId, organizationName: tenant.displayName,
+        tenantId, tenantName: tenant.displayName, userId: identity.userId, userName: identity.displayName,
+        role: tenant.roleKey, environment, permissions: result.data.permissions, workspaceId,
+        workspaceName: workspaces.find(item => item.workspaceId === workspaceId)?.displayName, moduleKey,
+        loginTime: now, lastActivity: now, expiresAt: identity.expiresAt, locked: false,
+      });
+      router.replace("/"); router.refresh();
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "Context selection failed."); }
+    finally { setBusy(false); }
+  }
+  async function signOut() {
+    setBusy(true); setError("");
+    try {
+      await readResponse(await fetch("/api/auth/identity", { method: "DELETE" }));
+      clearSession(); setIdentity(null); setTenants([]); changeTenant("");
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "Sign out failed."); }
+    finally { setBusy(false); }
+  }
   return (
-    <main className="login-shell">
-      <section className="login-card">
-        <div className="brand-block">
-          <h1>ClinixAI</h1>
-          <p>Literature Screening V1</p>
-        </div>
-
-        <div className="form-grid">
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="you@company.com"
-            />
-          </label>
-
-          <label>
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </label>
-
-          <label>
-            Environment
-            <select
-              value={environment}
-              disabled={previewRuntime}
-              onChange={(event) =>
-                setEnvironment(event.target.value as "PROD" | "UAT" | "TRAINING")
-              }
-            >
-              <option>PROD</option>
-              <option>UAT</option>
-              <option>TRAINING</option>
-            </select>
-          </label>
-
-          <label>
-            Tenant
-            <select
-              value={tenantId}
-              disabled={previewRuntime}
-              onChange={(event) => setTenantId(event.target.value)}
-            >
-              {(previewRuntime
-                ? TENANTS.filter((tenant) => tenant.tenantId === tenantId)
-                : TENANTS
-              ).map((tenant) => (
-                <option key={tenant.tenantId} value={tenant.tenantId}>
-                  {tenant.tenantName}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-
-        {error && <div className="error">{error}</div>}
-
-        <button onClick={login} disabled={loading}>
-          {loading ? "Signing in..." : "Sign In"}
-        </button>
-
-        <p className="hint">
-          {previewRuntime
-            ? "Preview deployment · UAT environment and tenant are enforced."
-            : "Email + password + environment + tenant are mandatory."}
-        </p>
-      </section>
-
-      <style jsx>{`
-        .login-shell {
-          min-height: 100vh;
-          background: linear-gradient(135deg, #071b34, #123f68);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 24px;
-          font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .login-card {
-          width: 460px;
-          background: #ffffff;
-          border-radius: 24px;
-          padding: 32px;
-          box-shadow: 0 30px 90px rgba(0, 0, 0, 0.32);
-        }
-
-        .brand-block {
-          margin-bottom: 24px;
-        }
-
-        h1 {
-          margin: 0;
-          color: #071b34;
-          font-size: 36px;
-        }
-
-        p {
-          margin: 8px 0 0;
-          color: #64748b;
-        }
-
-        .form-grid {
-          display: grid;
-          gap: 14px;
-        }
-
-        label {
-          display: grid;
-          gap: 8px;
-          color: #475569;
-          font-size: 12px;
-          font-weight: 900;
-          text-transform: uppercase;
-        }
-
-        input,
-        select {
-          border: 1px solid #cbd5e1;
-          border-radius: 12px;
-          padding: 12px 14px;
-          font-size: 14px;
-          outline: none;
-          background: #f8fafc;
-        }
-
-        button {
-          margin-top: 20px;
-          width: 100%;
-          border: none;
-          border-radius: 14px;
-          background: #185a9d;
-          color: white;
-          padding: 13px 16px;
-          font-weight: 900;
-          cursor: pointer;
-          font-size: 15px;
-        }
-
-        button:disabled {
-          opacity: 0.65;
-          cursor: not-allowed;
-        }
-
-        .error {
-          margin-top: 14px;
-          background: #fee2e2;
-          color: #991b1b;
-          padding: 12px;
-          border-radius: 12px;
-          font-weight: 800;
-        }
-
-        .hint {
-          text-align: center;
-          font-size: 12px;
-          margin-top: 14px;
-        }
-      `}</style>
-    </main>
+    <main className={styles.shell}><section className={styles.panel} aria-labelledby="login-title">
+      <header className={styles.header}><h1 id="login-title">Nexus</h1><span>{identity ? identity.email : "Sign in"}</span></header>
+      {identity ? <form onSubmit={enterWorkspace} className={styles.form}>
+        <label>Tenant<select required value={tenantId} disabled={busy} onChange={event => changeTenant(event.target.value)}>
+          <option value="">Select tenant</option>{tenants.map(tenant => <option key={tenant.tenantId} value={tenant.tenantId}>{tenant.displayName}</option>)}
+        </select></label>
+        <label>Environment<select required value={environment} disabled={busy || loadingScope || !tenantId} onChange={event => { setEnvironment(event.target.value as NexusEnvironment | ""); setWorkspaceId(""); setModuleKey(""); }}>
+          <option value="">Select environment</option>{access.map(item => <option key={item.environment}>{item.environment}</option>)}
+        </select></label>
+        <label>Client workspace<select required value={workspaceId} disabled={busy || !environment} onChange={event => { setWorkspaceId(event.target.value); setModuleKey(""); }}>
+          <option value="">Select client workspace</option>{workspaces.map(workspace => <option key={workspace.workspaceId} value={workspace.workspaceId}>{workspace.displayName}</option>)}
+        </select></label>
+        <label>Module<select required value={moduleKey} disabled={busy || !workspaceId} onChange={event => setModuleKey(event.target.value as NexusModuleKey | "")}>
+          <option value="">Select module</option>{modules.map(module => <option key={module.moduleKey} value={module.moduleKey}>{NEXUS_MODULE_DEFINITIONS[module.moduleKey].label}</option>)}
+        </select></label>
+        {!tenants.length ? <p role="status">No active tenant memberships are assigned.</p> : null}
+        {loadingScope ? <p role="status">Loading authorized workspaces…</p> : tenantId && !access.length ? <p role="status">No authorized workspace modules are available.</p> : null}
+        <button disabled={busy || loadingScope || !moduleKey} type="submit">{busy ? "Opening…" : "Open workspace"}</button>
+        <button className={styles.secondary} disabled={busy} type="button" onClick={signOut}>Sign out</button>
+      </form> : <form onSubmit={authenticate} className={styles.form}>
+        <label>Email<input required type="email" autoComplete="username" value={email} onChange={event => setEmail(event.target.value)} disabled={busy} /></label>
+        <label>Password<input required type="password" autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} disabled={busy} /></label>
+        <button type="submit" disabled={busy}>{busy ? "Checking session…" : "Sign in"}</button>
+      </form>}
+      {error ? <p className={styles.error} role="alert">{error}</p> : null}
+    </section></main>
   );
 }

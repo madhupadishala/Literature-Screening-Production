@@ -4,6 +4,7 @@ import type { PoolClient } from "pg";
 
 import { getPostgresPool } from "@/lib/database/postgres";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
+import { requireSafetyWorkspaceScope } from "@/lib/safety/common/safety-workspace-scope";
 import { canonicalSha256 } from "@/lib/safety/common/canonical-json";
 import {
   DUPLICATE_ALGORITHM_KEY,
@@ -207,15 +208,19 @@ async function ensureDuplicateEligible(
   tenantId: string,
   intakeRecordId: string,
   forUpdate = false,
+  workspaceId: string,
+  environment: string,
 ): Promise<Record<string, unknown>> {
   const result = await client.query<Record<string, unknown>>(
     `SELECT *
        FROM safety_intake_records
       WHERE tenant_id = $1
         AND id = $2
+        AND workspace_id = $3
+        AND environment = $4
       LIMIT 1
       ${forUpdate ? "FOR UPDATE" : ""}`,
-    [tenantId, intakeRecordId],
+    [tenantId, intakeRecordId, workspaceId, environment],
   );
   const row = result.rows[0];
   if (!row) throw new Error("Safety Intake was not found in the active tenant.");
@@ -237,6 +242,8 @@ async function loadFingerprints(
   client: PoolClient,
   tenantId: string,
   intakeRecordIds: string[],
+  workspaceId: string,
+  environment: string,
 ): Promise<DuplicateFingerprint[]> {
   if (!intakeRecordIds.length) return [];
 
@@ -254,8 +261,12 @@ async function loadFingerprints(
          ON safety_case.tenant_id = intake.tenant_id
         AND safety_case.intake_record_id = intake.id
       WHERE intake.tenant_id = $1
+        AND intake.workspace_id = $3
+        AND intake.environment = $4
+        AND source.workspace_id = $3
+        AND source.environment = $4
         AND intake.id = ANY($2::uuid[])`,
-    [tenantId, intakeRecordIds],
+    [tenantId, intakeRecordIds, workspaceId, environment],
   );
 
   const [patients, reporters, products, events] = await Promise.all([
@@ -351,25 +362,39 @@ async function loadCandidatePool(
   client: PoolClient,
   tenantId: string,
   intakeRecordId: string,
+  workspaceId: string,
+  environment: string,
 ): Promise<DuplicateFingerprint[]> {
   const candidates = await client.query<{ id: string }>(
     `SELECT intake.id
        FROM safety_intake_records intake
       WHERE intake.tenant_id = $1
+        AND intake.workspace_id = $3
+        AND intake.environment = $4
         AND intake.id <> $2
+        AND (intake.created_at, intake.id) < (
+          SELECT incoming.created_at, incoming.id
+            FROM safety_intake_records incoming
+           WHERE incoming.tenant_id = $1
+             AND incoming.workspace_id = $3
+             AND incoming.environment = $4
+             AND incoming.id = $2
+        )
         AND intake.triage_status = 'COMPLETE'
         AND intake.validity_status = 'VALID'
         AND COALESCE(intake.case_relationship, 'NEW_CASE') <> 'DUPLICATE'
         AND COALESCE(intake.disposition_type, 'HOLD') NOT IN ('DUPLICATE', 'NON_CASE')
-      ORDER BY intake.updated_at DESC
+      ORDER BY intake.created_at DESC, intake.id DESC
       LIMIT 500`,
-    [tenantId, intakeRecordId],
+    [tenantId, intakeRecordId, workspaceId, environment],
   );
 
   return loadFingerprints(
     client,
     tenantId,
     candidates.rows.map((item) => item.id),
+    workspaceId,
+    environment,
   );
 }
 
@@ -390,13 +415,17 @@ export async function getDuplicateWorkspace(input: {
 
   const client = await getPostgresPool().connect();
   try {
+    const scope = requireSafetyWorkspaceScope(input.principal);
     await ensureDuplicateEligible(
       client,
       input.principal.tenantId,
       intakeRecordId,
+      false,
+      scope.workspaceId,
+      scope.environment,
     );
     const source = (
-      await loadFingerprints(client, input.principal.tenantId, [intakeRecordId])
+      await loadFingerprints(client, input.principal.tenantId, [intakeRecordId], scope.workspaceId, scope.environment)
     )[0];
     if (!source) throw new Error("Duplicate source fingerprint could not be built.");
 
@@ -467,11 +496,14 @@ export async function runDuplicateSearch(input: {
 
   try {
     await client.query("BEGIN");
+    const scope = requireSafetyWorkspaceScope(input.principal);
     const intake = await ensureDuplicateEligible(
       client,
       input.principal.tenantId,
       intakeRecordId,
       true,
+      scope.workspaceId,
+      scope.environment,
     );
     if (String(intake.duplicate_review_status) === "COMPLETE") {
       throw new Error(
@@ -480,7 +512,7 @@ export async function runDuplicateSearch(input: {
     }
 
     const source = (
-      await loadFingerprints(client, input.principal.tenantId, [intakeRecordId])
+      await loadFingerprints(client, input.principal.tenantId, [intakeRecordId], scope.workspaceId, scope.environment)
     )[0];
     if (!source) throw new Error("Duplicate source fingerprint could not be built.");
 
@@ -517,6 +549,8 @@ export async function runDuplicateSearch(input: {
       client,
       input.principal.tenantId,
       intakeRecordId,
+      scope.workspaceId,
+      scope.environment,
     );
     const candidates = rankDuplicateCandidates(source, poolCandidates, {
       threshold: DUPLICATE_CANDIDATE_THRESHOLD,
@@ -672,11 +706,14 @@ export async function finalizeDuplicateReview(input: {
   const client = await getPostgresPool().connect();
   try {
     await client.query("BEGIN");
+    const scope = requireSafetyWorkspaceScope(input.principal);
     const intake = await ensureDuplicateEligible(
       client,
       input.principal.tenantId,
       intakeRecordId,
       true,
+      scope.workspaceId,
+      scope.environment,
     );
     if (String(intake.duplicate_review_status) === "COMPLETE") {
       throw new Error("Duplicate/follow-up review is already complete.");

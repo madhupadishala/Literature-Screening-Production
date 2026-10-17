@@ -1,7 +1,7 @@
 """Historical Conditions Extractor -> D.7.1.r (ended), D.7.1.r.6 family history, D.8.r past drug history. knowledge/02_historical.md"""
 from __future__ import annotations
-from ..common.base import LLMClient, sha
-from ..common import medctx as m
+from Agentic_AI.shared.v2_5.common.base import LLMClient, sha
+from Agentic_AI.shared.v2_5.common import medctx as m
 class HistoricalAgent:
     def __init__(self, llm: LLMClient): self.llm = llm
     def run(self, source: str, onset_override: str | None = None, _read: m.CtxRead | None = None) -> m.MedCtxResult:

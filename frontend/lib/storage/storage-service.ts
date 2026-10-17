@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { r2ObjectStorage } from "./cloudflare-r2";
 import type {
   StorageHealth,
   StorageObject,
@@ -48,6 +50,14 @@ export class StorageService {
       metadata: input.metadata,
     };
 
+    if (this.provider === "cloudflare-r2") {
+      const data = Buffer.from(input.content, "utf8");
+      await r2ObjectStorage.put(input.key, data, input.contentType);
+      return { ...object, checksum: createHash("sha256").update(data).digest("hex") };
+    }
+    if (process.env.NODE_ENV === "production" && this.provider === "memory-development") {
+      throw new Error("Volatile memory storage is prohibited in production");
+    }
     if (this.provider !== "memory-development") {
       throw new Error(
         `${this.provider} provider is not wired yet. Current Sprint 26 foundation uses memory-development with S3-ready contracts.`,
@@ -65,10 +75,15 @@ export class StorageService {
   async getObject(
     key: string,
   ): Promise<(StorageObject & { content: string }) | undefined> {
+    if (this.provider === "cloudflare-r2") {
+      const data = await r2ObjectStorage.get(key);
+      return { key, bucket: this.bucket, provider: this.provider, contentType: "application/octet-stream", sizeBytes: data.length, checksum: createHash("sha256").update(data).digest("hex"), createdAt: "", content: data.toString("utf8") };
+    }
     return memoryStorage.get(key);
   }
 
   async listObjects(prefix?: string): Promise<StorageObject[]> {
+    if (this.provider === "cloudflare-r2") throw new Error("R2 object listing requires an authorized persistent document registry");
     return Array.from(memoryStorage.values())
       .filter((item) => !prefix || item.key.startsWith(prefix))
       .map((item) => ({
@@ -84,6 +99,7 @@ export class StorageService {
   }
 
   async deleteObject(key: string): Promise<boolean> {
+    if (this.provider === "cloudflare-r2") { await r2ObjectStorage.remove(key); return true; }
     return memoryStorage.delete(key);
   }
 
@@ -91,7 +107,7 @@ export class StorageService {
     return {
       provider: this.provider,
       bucket: this.bucket,
-      connected: true,
+      connected: this.provider === "cloudflare-r2" ? Boolean(process.env.CLOUDFLARE_R2_ACCOUNT_ID && process.env.CLOUDFLARE_R2_ACCESS_KEY_ID && process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY && process.env.CLINIXAI_STORAGE_BUCKET) : this.provider === "memory-development" && process.env.NODE_ENV !== "production",
       checkedAt: new Date().toISOString(),
     };
   }
