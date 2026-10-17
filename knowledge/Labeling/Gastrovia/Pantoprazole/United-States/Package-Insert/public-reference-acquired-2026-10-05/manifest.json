@@ -1,0 +1,78 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-005-United-States-Package-Insert-8f00bbda32fc",
+  "brandName": "Gastrovia",
+  "genericName": "Pantoprazole",
+  "country": "United-States",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-005",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "PANTOPRAZOLE SODIUM TABLET, DELAYED RELEASE [NCS HEALTHCARE OF KY, LLC DBA VANGARD LABS]",
+    "sourceJurisdiction": "United-States",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "releaseCharacteristicsReview": "MASTER_TABLET_RELEASE_UNSPECIFIED_REQUIRES_REVIEW"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Gastrovia/Pantoprazole/United-States/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=6faf465b-c3a3-4ae7-9e16-1ba758f6962a&type=pdf",
+    "resolvedUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=6faf465b-c3a3-4ae7-9e16-1ba758f6962a&type=pdf",
+    "sha256": "8f00bbda32fcf3ad627a7e06499773f6be3e156e8dd2e3f3378ade540e605bf8",
+    "bytes": 807789,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:50:17.081162+00:00",
+    "sourcePublicationOrUpdateDate": "Sep 29, 2026",
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 36,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Pantoprazole"
+    ],
+    "strengths": [
+      "40 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

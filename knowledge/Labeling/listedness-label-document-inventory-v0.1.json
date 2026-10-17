@@ -1,0 +1,96 @@
+{
+  "inventoryId": "LISTEDNESS-LABEL-INVENTORY-STEP1-V0.1",
+  "generatedDate": "2026-10-07",
+  "status": "IN_PROGRESS_BLOCKED_ON_SOURCE_LABEL_DOCUMENTS",
+  "purpose": "Inventory actual product-specific labeling documents available to the Listedness Engine before governed LABEL_REFERENCE mapping.",
+  "findings": {
+    "previewControlledKnowledgeRepositories": 0,
+    "productionLegacyRuntimeKnowledgeDocuments": 0,
+    "gitControlledKnowledgeContainsProductLabels": false,
+    "libraryProductMastersFound": true,
+    "libraryProductSpecificLabelsFound": false
+  },
+  "repositoriesChecked": [
+    {
+      "source": "Vercel preview controlled knowledge database",
+      "result": "NO_ACTIVE_CONTROLLED_REPOSITORY",
+      "evidence": "Read-only inventory probe returned repositoryCount=0 after migrations 001-039."
+    },
+    {
+      "source": "Vercel production /api/knowledge/repository",
+      "result": "NO_RUNTIME_DOCUMENTS",
+      "evidence": "Endpoint returned totalDocuments=0, activeDocuments=0."
+    },
+    {
+      "source": "GitHub knowledge/controlled/ClinixAI_Knowledge_Repository_v1.0",
+      "result": "NO_PRODUCT_SPECIFIC_LABEL_FILES",
+      "evidence": "Repository contains governance/literature/search/screening knowledge objects and loader assets, not SmPC/CCDS/CCSI/USPI/RSI product labels."
+    },
+    {
+      "source": "Persistent Library semantic inventory",
+      "result": "PRODUCT_MASTERS_AND_LABELING_REFERENCE_MATERIAL_FOUND_BUT_NO_PRODUCT_SPECIFIC_LABEL",
+      "evidence": "Targeted searches for SmPC section 4.8, US prescribing information, CCDS/CCSI, package insert, named demo products and label terminology returned training/SOP/product-master assets rather than actual product labels."
+    }
+  ],
+  "productMasterAssetsDiscovered": [
+    {
+      "name": "TheClinixAI_Synthetic_Product_Master_10_Products.csv",
+      "classification": "VALIDATION_PRODUCT_MASTER",
+      "notes": "10-product controlled synthetic/demo product master."
+    },
+    {
+      "name": "TheClinixAI_Synthetic_Product_Master_10_Products.xlsx",
+      "classification": "VALIDATION_PRODUCT_MASTER",
+      "notes": "10-product controlled synthetic/demo product master; first worksheet intended for Product Master upload."
+    },
+    {
+      "name": "TheClinixAI_PV006_Controlled_Forms_and_Registers.xlsx",
+      "classification": "IMPLEMENTATION_PRODUCT_MASTER",
+      "notes": "Contains 100 imported product-country records; workbook explicitly requires responsible client/MAH confirmation before production use."
+    },
+    {
+      "name": "ClinixAI_Cipla_Demo_Product_Master_v1.0.xlsx",
+      "classification": "DEMO_PRODUCT_MASTER",
+      "notes": "Multi-country Cipla demo product/license data marked USER_SUPPLIED_UNVERIFIED_DEMO_DATA; not acceptable as verified regulatory source without confirmation."
+    }
+  ],
+  "labelingReferenceMaterialDiscovered": [
+    {
+      "name": "TheClinixAI_Labeling_Assessment_Gold_Standard.pptx",
+      "classification": "TRAINING_REFERENCE",
+      "usableAsProductLabel": false
+    },
+    {
+      "name": "Module 16 Labelling Assessment.pptx",
+      "classification": "TRAINING_REFERENCE",
+      "usableAsProductLabel": false
+    },
+    {
+      "name": "CAI-SOP-PV-003-Medical-Assessment.docx",
+      "classification": "PROCESS_SOP",
+      "usableAsProductLabel": false
+    }
+  ],
+  "requiredForStep1Closure": {
+    "minimum": "At least one actual product-specific label document that can be positively tied to clientProductId/productId + market + document type + version/effective date.",
+    "acceptableDocumentTypes": ["CCDS", "CCSI", "SmPC", "SPC", "USPI", "LPD", "RSI", "IB"],
+    "requiredMetadata": [
+      "documentKey",
+      "title",
+      "sourceFile",
+      "documentType",
+      "clientProductId",
+      "productId",
+      "market",
+      "version",
+      "effectiveFrom",
+      "effectiveTo",
+      "governanceStatus",
+      "productionEligible"
+    ]
+  },
+  "governance": {
+    "rule": "Do not create a production LABEL_REFERENCE mapping from training material, a product master alone, or an unverified demo record.",
+    "step1Closed": false
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "schemaVersion": "1.0",
+  "inventoryDate": "2026-10-07",
+  "sourceRoot": "knowledge/Labeling",
+  "manifestCount": 59,
+  "authorizationRecordCount": 60,
+  "sourceMimeTypes": {
+    "application/pdf": 49,
+    "text/html": 10
+  },
+  "integrity": {
+    "sourceFilesPresent": 59,
+    "sha256Matches": 59,
+    "parsedTextPresent": 59,
+    "qaFilesPresent": 59,
+    "sourceBytesUnmodified": 59,
+    "textPreservedWithoutTruncation": 59,
+    "humanContentReviewPending": 59,
+    "totalPagesReportedForPdfQa": 656
+  },
+  "governance": {
+    "draft": 59,
+    "productionEligible": 0,
+    "productionBlocked": 59,
+    "effectiveDatesKnown": 0,
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED"
+  },
+  "products": [
+    {
+      "brand": "Allerzen",
+      "generic": "Cetirizine",
+      "productId": "CLX-PROD-006",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [
+          "Package-Insert"
+        ],
+        "India": []
+      }
+    },
+    {
+      "brand": "Cardionex",
+      "generic": "Amlodipine",
+      "productId": "CLX-PROD-003",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [
+          "Package-Insert"
+        ],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [
+          "Package-Insert"
+        ],
+        "India": []
+      }
+    },
+    {
+      "brand": "Ceflora",
+      "generic": "Cefixime",
+      "productId": "CLX-PROD-008",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [],
+        "India": []
+      }
+    },
+    {
+      "brand": "Clinivex",
+      "generic": "Paracetamol",
+      "productId": "CLX-PROD-001",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [],
+        "India": []
+      }
+    },
+    {
+      "brand": "Gastrovia",
+      "generic": "Pantoprazole",
+      "productId": "CLX-PROD-005",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [
+          "Package-Insert"
+        ],
+        "India": []
+      }
+    },
+    {
+      "brand": "Glycora",
+      "generic": "Metformin",
+      "productId": "CLX-PROD-004",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [],
+        "United-Kingdom": [
+          "SmPC"
+        ],
+        "China": [],
+        "India": []
+      }
+    },
+    {
+      "brand": "Lipirex",
+      "generic": "Atorvastatin",
+      "productId": "CLX-PROD-009",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [
+          "Package-Insert"
+        ],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [
+          "Package-Insert"
+        ],
+        "India": []
+      },
+      "productLifecycleNote": "Withdrawn/inactive per acquisition report"
+    },
+    {
+      "brand": "Neurovia",
+      "generic": "Pregabalin",
+      "productId": "CLX-PROD-002",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [
+          "Package-Insert"
+        ],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [
+          "Package-Insert"
+        ],
+        "India": []
+      }
+    },
+    {
+      "brand": "Respira-L",
+      "generic": "Montelukast",
+      "productId": "CLX-PROD-007",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [
+          "Package-Insert"
+        ],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [],
+        "India": []
+      }
+    },
+    {
+      "brand": "Serovex",
+      "generic": "Sertraline",
+      "productId": "CLX-PROD-010",
+      "markets": {
+        "United-States": [
+          "Package-Insert"
+        ],
+        "European-Union-EEA": [
+          "PIL",
+          "SmPC"
+        ],
+        "Singapore": [],
+        "United-Kingdom": [
+          "PIL",
+          "SmPC"
+        ],
+        "China": [
+          "Package-Insert"
+        ],
+        "India": []
+      },
+      "productLifecycleNote": "Retired/inactive per acquisition report"
+    }
+  ]
+}

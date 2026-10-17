@@ -1,0 +1,81 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-002-United-Kingdom-SmPC-8eb0e1eb6d4c",
+  "brandName": "Neurovia",
+  "genericName": "Pregabalin",
+  "country": "United-Kingdom",
+  "documentType": "SmPC",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-002",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "emcProductId": "10302",
+      "identityReview": "PENDING"
+    },
+    "sourceJurisdiction": "United-Kingdom",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html",
+    "canonicalUrl": "https://www.medicines.org.uk/emc/product/10302/smpc",
+    "resolvedUrl": "https://www.medicines.org.uk/emc/product/10302/smpc",
+    "sha256": "8eb0e1eb6d4ca31c0d9363105515cb1bf132d834240011c6a0ccdab45bf5b6fd",
+    "bytes": 115533,
+    "mimeType": "text/html",
+    "acquiredAt": "2026-10-05T12:52:52.410432+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": null,
+    "fullHtmlSmPC": true,
+    "pages": null,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Pregabalin"
+    ],
+    "strengths": [
+      "75 mg"
+    ],
+    "dosageForms": [
+      "Capsule"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

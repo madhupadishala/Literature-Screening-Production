@@ -1,0 +1,643 @@
+                                            FICHA TÉCNICA
+
+1. NOMBRE DEL MEDICAMENTO
+
+Amlodipino Almus 5 mg comprimidos EFG
+Amlodipino Almus 10 mg comprimidos EFG
+
+2. COMPOSICIÓN CUALITATIVA Y CUANTITATIVA
+
+Amlodipino Almus 5 mg comprimidos:
+Cada comprimido contiene 6,94 mg de besilato de amlodipino que equivale a 5 mg de amlodipino.
+
+Amlodipino Almus 10 mg comprimidos:
+Cada comprimido contiene 13,89 mg de besilato de amlodipino que equivale a 10 mg de amlodipino.
+
+Excipiente con efecto conocido:
+Cada comprimido de 5 mg contiene 133,28 mg de lactosa (como monohidrato).
+Cada comprimido de 10 mg contiene 266,55 mg de lactosa (como monohidrato).
+
+Para consultar la lista completa de excipientes ver sección 6.1.
+
+3. FORMA FARMACÉUTICA
+
+Comprimido.
+
+Comprimidos blancos, redondos, planos y marcados en una cara.
+
+El comprimido se puede dividir en dosis iguales.
+
+4. DATOS CLÍNICOS
+
+
+
+4.1. Indicaciones terapéuticas
+
+Hipertensión arterial
+Angina de pecho crónica estable
+Angina vasoespástica (de Prinzmetal)
+
+4.2. Posología y forma de administración
+
+Posología
+
+Adultos
+Tanto para la hipertensión arterial como para la angina, la dosis inicial habitual es 5 mg de amlodipino una
+vez al día, que puede aumentarse hasta una dosis máxima de 10 mg, según la respuesta individual del
+paciente.
+
+En pacientes hipertensos, amlodipino se ha utilizado en combinación con diuréticos tiazídicos,
+alfabloqueantes, betabloqueantes o inhibidores de la enzima convertidora de la angiotensina. En angina,
+amlodipino se puede utilizar en monoterapia o en combinación con otros medicamentos antianginosos en
+pacientes con angina refractaria a los nitratos y/o para ajustar la dosis de betabloqueantes.
+
+No es necesario el ajuste de la dosis de amlodipino cuando se administra simultáneamente con diuréticos
+tiazídicos, betabloqueantes o inhibidores de la enzima convertidora de la angiotensina.
+
+
+
+                                                   1 de 11
+Poblaciones Especiales
+
+Pacientes de edad avanzada
+Amlodipino, a dosis similares, se tolera bien, tanto en pacientes de edad avanzada como en pacientes más
+jóvenes. Aunque se recomienda un régimen de dosis normal, el aumento de la dosis debe realizarse con
+precaución en los pacientes de edad avanzada (ver secciones 4.4 y 5.2).
+
+Insuficiencia hepática
+No se han establecido recomendaciones de dosis en pacientes con insuficiencia hepática de leve a
+moderada, por lo tanto se debe seleccionar con precaución la elección de la dosis y se debe comenzar con el
+rango inferior de la dosis (ver secciones 4.4 y 5.2). La farmacocinética de amlodipino no se ha estudiado en
+pacientes con insuficiencia hepática grave. En pacientes con insuficiencia hepática grave, amlodipino se
+debe iniciar con la dosis más baja y el ajuste de dosis se debe hacer lentamente.
+
+Insuficiencia renal
+Los cambios en las concentraciones plasmáticas de amlodipino no se correlacionan con el grado de
+insuficiencia renal, por lo tanto se recomiendan las dosis normales. Amlodipino no es dializable.
+
+Población pediátrica
+Niños y adolescentes con hipertensión arterial de 6 a 17 años de edad.
+La dosis recomendada de antihipertensivos orales en pacientes pediátricos de edades comprendidas entre 6-
+17 años es de 2,5 mg una vez al día como dosis inicial, elevándola hasta 5 mg una vez al día si no se
+alcanza el objetivo de presión arterial después de 4 semanas. No se han estudiado dosis superiores a 5 mg
+diarios en pacientes pediátricos (ver secciones 5.1 y 5.2).
+
+Niños menores de 6 años
+No hay datos disponibles.
+
+Forma de administración
+Comprimido para administración oral.
+
+4.3. Contraindicaciones
+
+Amlodipino está contraindicado en pacientes con:
+
+     Hipersensibilidad a los derivados de las dihidropiridinas, amlodipino o a cualquiera de los
+      excipientes incluidos en la sección 6.1.
+     Hipotensión grave.
+     Shock (incluyendo shock cardiogénico).
+     Obstrucción del conducto arterial del ventrículo izquierdo (por ejemplo: estenosis aórtica grave)
+     Insuficiencia cardiaca hemodinámicamente inestable tras infarto agudo de miocardio.
+
+4.4. Advertencias y precauciones especiales de empleo
+
+No se ha establecido la seguridad y eficacia de amlodipino en crisis hipertensivas.
+
+Pacientes con insuficiencia cardiaca
+Se debe tratar con precaución a los pacientes con insuficiencia cardíaca. En un estudio a largo plazo,
+controlado con placebo en pacientes con insuficiencia cardiaca grave (clases III y IV de la NYHA) la
+incidencia notificada de edema pulmonar fue mayor en el grupo tratado con amlodipino que en el grupo
+placebo (ver sección 5.1). Los antagonistas de los canales del calcio, incluyendo amlodipino, se debe
+utilizar con precaución en pacientes con insuficiencia cardíaca congestiva, ya que pueden aumentar el
+riesgo de futuros eventos cardiovasculares y de mortalidad.
+
+Pacientes con insuficiencia hepática
+
+
+
+                                                   2 de 11
+La semivida de amlodipino se prolonga y los valores AUC son mayores en pacientes con insuficiencia
+hepática; no se han establecido recomendaciones para su dosificación. En consecuencia, el fármaco deberá
+iniciarse con la dosis más baja del rango y debe ser usado con precaución, tanto al inicio del tratamiento
+como cuando se aumente la dosis. En pacientes con insuficiencia hepática grave se requiere una elevación
+lenta de la dosis y una monitorización cuidadosa.
+
+Pacientes de edad avanzada
+En pacientes de edad avanzada, los aumentos de dosis se deben realizar con precaución (ver secciones 4.2 y
+5.2)
+
+Pacientes con insuficiencia renal
+En estos pacientes, amlodipino puede usarse a dosis normales. Las variaciones de las concentraciones
+plasmáticas de amlodipino no se correlacionan con el grado de afectación renal. Amlodipino no es
+dializable.
+
+Excipientes:
+Este medicamento contiene lactosa. Los pacientes con intolerancia hereditaria a galactosa, deficiencia total
+de lactasa o problemas de absorción de glucosa o galactosa no deben tomar este medicamento.
+
+Este medicamento contiene menos de 1 mmol de sodio (23 mg) por comprimido; esto es, esencialmente
+“exento de sodio”.
+
+4.5. Interacción con otros medicamentos y otras formas de interacción
+
+Efectos de otros medicamentos sobre Amlodipino
+Inhibidores del CYP3A4
+El uso concomitante de amlodipino con inhibidores fuertes o moderados del citocromo CYP3A4
+(inhibidores de la proteasa, antifúngicos azólicos, macrólidos como la eritromicina o la claritromicina,
+verapamilo o diltiazem) puede dar lugar a un aumento significativo en la exposición a amlodipino, con el
+consiguiente aumento del riesgo de hipotensión. La traducción clínica de estas variaciones de la
+farmacocinética puede ser más pronunciada en los pacientes de edad avanzada. Así, puede requerirse una
+monitorización clínica y un ajuste de dosis.
+
+Inductores del citocromo CYP3A4
+Tras la administración concomitante de inductores conocidos del CYP3A4, la concentración plasmática de
+amlodipino puede variar. Por lo tanto, se debe vigilar la presión arterial y se debe considerar la regulación
+de la dosis tanto durante como después de la medicación concomitante, en particular con inductores
+potentes del CYP3A4 (por ejemplo, rifampicina e Hypericum perforatum [hierba de San Juan]).
+
+No se recomienda la administración de amlodipino con pomelo o zumo de pomelo debido a que puede
+aumentar su biodisponibilidad en algunos pacientes dando lugar a un aumento de su efecto
+antihipertensivo.
+
+Dantroleno (infusión)
+En animales se observan fibrilación ventricular letal y colapso cardiovascular en asociación con
+hiperpotasemia tras la administración de verapamilo y dantroleno intravenoso. Debido al riesgo de
+hiperpotasemia, se recomienda evitar la administración conjunta de antagonistas de los canales del calcio,
+tales como amlodipino, en pacientes susceptibles a hipertermia maligna y en el tratamiento de la
+hipertermia maligna.
+
+Efectos de Amlodipino sobre otros medicamentos:
+El efecto hipotensor de amlodipino se adiciona al efecto hipotensor de otros medicamentos con propiedades
+antihipertensivas.
+
+Tacrolimus
+Existe el riesgo de que las concentraciones sanguíneas de tacrolimus aumenten cuando se administra
+
+                                                   3 de 11
+conjuntamente con amlodipino, si bien el mecanismo farmacocinético de dicha interacción no se conoce en
+su totalidad. Cuando se administre amlodipino a un paciente en tratamiento con tacrolimus, es necesario
+comprobar las concentraciones sanguíneas de tacrolimus y ajustar su dosis cuando sea pertinente para
+evitar su toxicidad.
+
+Inhibidores de la diana mecanicista de la rapamicina (mTOR, por sus siglas en inglés)
+Los inhibidores de mTOR como, por ejemplo, sirolimus, temsirolimus y everolimus son sustratos del
+CYP3A. El amlodipino es un inhibidor débil del CYP3A. Con el uso concomitante de inhibidores de
+mTOR, el amlodipino puede aumentar la exposición de los inhibidores de mTOR.
+
+Ciclosporina
+No se han realizado estudios de interacciones medicamentosas con ciclosporina y amlodipino en
+voluntarios sanos ni en otras poblaciones, salvo en pacientes sometidos a un trasplante renal, en los que se
+observaron aumentos variables de las concentraciones mínimas (entre el 0% y el 40% por término medio)
+de ciclosporina. Deberá pensarse en la posibilidad de comprobar las concentraciones de ciclosporina en los
+pacientes sometidos a un trasplante renal que estén en tratamiento con amlodipino y deberá reducirse la
+dosis de ciclosporina cuando sea necesario.
+
+Simvastatina
+La administración conjunta de dosis múltiples de 10 mg de amlodipino con 80 mg de simvastatina dio lugar
+a un aumento de un 77% en la exposición a simvastatina comparado con simvastatina sola. En pacientes
+tratados con amlodipino, el límite de la dosis de simvastatina es de 20 mg al día.
+
+En estudios clínicos de interacción, amlodipino no afectó la farmacocinética de atorvastatina, digoxina o
+warfarina.
+
+4.6. Fertilidad, embarazo y lactancia
+
+Embarazo
+
+No se ha establecido la seguridad de amlodipino durante el embarazo de la especie humana.
+
+En estudios con animales, la toxicidad reproductiva se observó a dosis altas (ver sección 5.3).
+
+El uso durante el embarazo está únicamente recomendado si no hay otra alternativa segura y cuando la
+enfermedad en si misma implica un mayor riesgo para la madre y el feto.
+
+Lactancia
+
+Amlopidino se excreta en la leche materna. La proporción de la dosis materna recibida por el lactante se ha
+calculado con una amplitud intercuartílica del 3 al 7 %, con un máximo del 15 %. Se desconoce el efecto de
+amlodipino en los lactantes. Se debe decidir si continuar/interrumpir la lactancia o el tratamiento con
+amlodipino teniendo en cuenta el posible beneficio de la lactancia para el bebé y el posible beneficio del
+tratamiento para la madre.
+
+Fertilidad
+
+En algunos pacientes tratados con antagonistas del calcio han sido notificados cambios bioquímicos
+reversibles en las cabezas de los espermatozoides. Los datos clínicos son insuficientes con respecto al
+posible efecto de amlodipino sobre la fertilidad. En un estudio en ratas se encontraron efectos adversos en
+la fertilidad de los machos (ver sección 5.3).
+
+4.7. Efectos sobre la capacidad para conducir y utilizar máquinas
+
+La influencia de amlodipino sobre la capacidad para conducir y utilizar máquinas puede ser pequeña o
+moderada. Si el paciente que recibe amlodipino presenta mareos, dolor de cabeza, fatiga o náuseas, éstos
+
+
+                                                   4 de 11
+podrían afectar su capacidad de reacción. Se recomienda precaución especialmente al inicio del
+tratamiento.
+
+4.8. Reacciones adversas
+
+Resumen del perfil de seguridad
+Las reacciones adversas más frecuentemente notificadas durante el tratamiento son la somnolencia, mareos,
+dolor de cabeza, palpitaciones, sofocos, dolor abdominal, náuseas, hinchazón de los tobillos, edema y
+fatiga.
+
+Lista tabulada de reacciones adversas
+Durante el tratamiento con amlodipino se han observado y notificado las siguientes reacciones adversas con
+las siguientes frecuencias: muy frecuentes (≥1/10); frecuentes (≥1/100 a <1/10); poco frecuentes (≥1/1.000
+a ≤1/100); raras (≥1/10.000 a ≤1/1.000); muy raras (≤1/10.000); frecuencia no conocida (no puede
+estimarse a partir de los datos disponibles).
+
+Dentro de cada grupo de frecuencia, las reacciones adversas se presentan en orden decreciente de gravedad.
+
+         Clasificación por           Frecuencia      Efectos adversos
+         sistema orgánico
+         Trastornos de la sangre     Muy rara        Leucopenia,
+         y sistema linfático                         trombocitopenia.
+         Trastornos del sistema      Muy rara        Hipersensibilidad (Reacción alérgica)
+         inmunológico
+         Trastornos del              Muy rara        Hiperglucemia
+         metabolismo y de la
+         nutrición
+         Trastornos                  Poco            Depresión, cambios de humor
+         psiquiátricos               frecuente       (incluyendo ansiedad), insomnio
+                                     Rara            Confusión
+         Trastornos del sistema      Frecuente       Somnolencia, mareo, dolor de cabeza
+         nervioso                                    (especialmente al inicio del tratamiento)
+                                     Poco            Temblor, disgeusia, síncope, hipoestesia,
+                                     frecuente       parestesia
+                                     Muy rara        Hipertonía, neuropatía periférica
+                                     Frecuencia      Trastorno extrapiramidal
+                                     no conocida
+         Trastornos oculares         Poco            Alteraciones visuales (incluyendo
+                                     frecuente       diplopía)
+         Trastornos del oído y       Poco            Acúfenos
+         del laberinto               frecuente
+         Trastornos cardíacos        Frecuente       Palpitaciones
+                                     Poco            Arritmias (incluyendo bradicardia,
+                                     frecuente       taquicardia ventricular y fibrilación
+                                                     auricular)
+                                     Muy rara        Infarto de miocardio
+         Trastornos vasculares       Frecuente       Rubefacción
+                                     Poco            Hipotensión
+                                     frecuente
+                                     Muy rara        Vasculitis
+         Trastornos                  Frecuente       Disnea
+         respiratorios, torácicos    Poco            Tos, rinitis
+         y mediastínicos             frecuente
+
+
+                                                   5 de 11
+         Trastornos                   Frecuente       Dolor abdominal, náuseas, dispepsia,
+         gastrointestinales                           alteración del tránsito gastrointestinal
+                                                      (incluyendo diarrea y estreñimiento)
+                                      Poco            Vómitos, sequedad de boca
+                                      frecuente
+                                      Muy rara        Pancreatitis, gastritis, hiperplasia
+                                                      gingival
+         Trastornos                   Muy rara        Hepatitis, ictericia, elevación de las
+         hepatobiliares                               enzimas hepáticas*
+         Trastornos de la piel y      Poco            Alopecia, púrpura, cambio de coloración
+         del tejido subcutáneo        frecuente       de la piel, hiperhidrosis, prurito,
+                                                      erupción, exantema, urticaria
+                                      Muy rara        Angioedema, eritema multiforme,
+                                                      dermatitis exfoliativa, síndrome de
+                                                      Stevens-Johnson, edema de Quincke,
+                                                      fotosensibilidad
+
+                                      Frecuencia      Necrólisis epidérmica tóxica (NET)
+                                      no conocida
+
+
+
+         Trastornos                   Frecuente       Hinchazón de tobillos, calambres
+         musculoesqueléticos y                        musculares
+         del tejido conjuntivo        Poco            Artralgia, mialgia, dolor de espalda
+                                      frecuente
+         Trastornos renales y         Poco            Trastornos de la micción, nicturia,
+         urinarios                    frecuente       aumento de la frecuencia urinaria
+         Trastornos del aparato       Poco            Impotencia, ginecomastia
+         reproductor y de la          frecuente
+         mama
+         Trastornos generales y       Muy             Edema
+         alteraciones en el lugar     frecuente
+         de administración            Frecuente       Fatiga, astenia
+                                    Poco              Dolor torácico, dolor, malestar general
+                                    frecuente
+        Exploraciones               Poco              Aumento de peso, pérdida de peso
+        complementarias             frecuente
+*en su mayoría coincidiendo con colestasis
+
+Notificación de sospechas de reacciones adversas
+Es importante notificar sospechas de reacciones adversas al medicamento tras su autorización. Ello
+permite una supervisión continuada de la relación beneficio/riesgo del medicamento. Se invita a los
+profesionales sanitarios a notificar las sospechas de reacciones adversas a través del Sistema Español de
+Farmacovigilancia de Medicamentos de Uso Humano. Website: ww.notificaram.es.
+
+4.9. Sobredosis
+
+La experiencia en sobredosis intencionada en humanos es limitada.
+
+Síntomas
+Los datos disponibles sugieren que una sobredosis severa puede provocar excesiva vasodilatación
+periférica y, posiblemente, taquicardia refleja. Se ha informado de hipotensión sistémica marcada y,
+probablemente, prolongada que puede llegar incluso al shock con resultado de muerte.
+
+
+                                                    6 de 11
+En raras ocasiones se ha notificado edema pulmonar no cardiogénico como consecuencia de una sobredosis
+de amlodipino que puede manifestarse con un inicio tardío (24-48 horas después de la ingestión) y requerir
+soporte ventilatorio. Las medidas de reanimación tempranas (incluida la sobrecarga de líquidos) para
+mantener la perfusión y el gasto cardíaco pueden ser factores precipitantes.
+
+Tratamiento
+La hipotensión clínicamente importante, debida a una sobredosis de amlodipino, requiere medidas de
+apoyo cardiovascular activas, incluida la monitorización frecuente de las funciones cardíaca y respiratoria,
+la elevación de las extremidades y el control del volumen circulante y de la excreción de orina.
+
+La administración de medicamentos vasoconstrictores puede ser útil para restablecer el tono vascular y la
+presión arterial, siempre que su administración no esté contraindicada. La administración intravenosa de
+gluconato cálcico puede ser de utilidad para revertir los efectos del bloqueo de los canales del calcio.
+
+El lavado de estómago puede ser útil en algunos casos. La administración de carbón activado en
+voluntarios sanos, inmediatamente después o durante las dos horas siguientes a la ingestión de 10 mg de
+amlodipino, ha demostrado reducir de forma significativa la absorción de amlodipino.
+
+Como amlodipino se une en una elevada proporción a las proteínas plasmáticas, no es probable que la
+diálisis aporte beneficio alguno.
+
+5. PROPIEDADES FARMACOLÓGICAS
+
+5.1. Propiedades farmacodinámicas
+
+Grupo farmacoterapéutico: Bloqueantes selectivos de los canales de calcio con efectos principalmente
+vasculares. Código ATC: C08CA01
+
+Amlodipino es un inhibidor de la entrada de iones calcio del grupo de dihidropiridinas (bloqueante de los
+canales lentos o antagonista del ion calcio) e impide el paso de los iones de calcio a través de la membrana
+celular en el músculo cardiaco y en el músculo liso vascular.
+
+El mecanismo de acción antihipertensiva de amlodipino se debe a un efecto relajante directo sobre el
+músculo liso vascular. No se ha determinado totalmente el mecanismo exacto por el que amlodipino alivia
+la angina, pero amlodipino reduce la carga isquémica total mediante las dos acciones siguientes:
+
+1) Amlodipino dilata las arteriolas periféricas, reduciendo así la resistencia periférica total (postcarga),
+frente a la que trabaja el corazón. Como la frecuencia cardíaca permanece estable, se reduce el consumo de
+energía del miocardio, así como las necesidades de aporte de oxígeno del corazón.
+
+2) El mecanismo de acción de amlodipino también probablemente implica la dilatación de las grandes
+arterias coronarias, así como de las arteriolas coronarias, tanto en las zonas normales, como en las
+isquémicas. Esta dilatación aumenta el aporte de oxígeno al miocardio en pacientes con espasmo de las
+arterias coronarias (angina variante o de Prinzmetal).
+
+En pacientes hipertensos, una administración diaria de amlodipino reduce de forma clínicamente
+significativa la presión arterial, tanto en posición supina como erecta, a lo largo de 24 horas. Debido a su
+lento inicio de acción, la hipotensión aguda no es una característica de la administración de amlodipino.
+
+En pacientes con angina, una administración diaria de amlodipino produce un incremento en el tiempo total
+de ejercicio, tiempo hasta la aparición de la angina y tiempo hasta que se produce una depresión de 1 mm
+del segmento ST y disminuye tanto la frecuencia de crisis de angina como el consumo de comprimidos de
+nitroglicerina.
+
+
+
+
+                                                   7 de 11
+Amlodipino no se ha relacionado con ningún efecto metabólico adverso ni con alteraciones de los lípidos
+plasmáticos y es adecuado para su administración a enfermos con asma, diabetes y gota.
+
+Uso en pacientes con enfermedades arteriales coronarias (EAC)
+Se ha evaluado la eficacia de amlodipino en la prevención de eventos clínicos en pacientes con enfermedad
+arterial coronaria (EAC) de forma independiente, en un estudio multicéntrico, aleatorizado, doble-ciego,
+controlado con placebo en 1.997 pacientes, Comparison of Amlodipine vs Enalapril to Limit Ocurrences of
+Thrombosis (CAMELOT). De estos pacientes, 663 fueron tratados con 5-10 mg de amlodipino,
+673 pacientes fueron tratados con 10-20 mg de enalaprilo y 655 pacientes fueron tratados con placebo,
+además de la atención estándar con estatinas, betabloqueantes, diuréticos y ácido acetilsalicílico, durante 2
+años. Los resultados principales de eficacia se presentan en la Tabla 1. Los resultados indican que el
+tratamiento con amlodipino se asoció a un menor número de hospitalizaciones por angina de pecho y
+procedimientos de revascularización en pacientes con EAC.
+
+  Tabla 1.        Incidencia de los resultados clínicamente significativos en el CAMELOT
+                                                  Porcentaje de eventos
+                                                                                   Amlopidino vs. Placebo
+                                                  cardiovasculares Nº. (%)
+                                                                                     Hazard Ratio     Valor
+                                                                        Enalaprilo
+  Resultados                             Amlopidino         Placebo                  (IC del 95%)     de P
+  Objetivo principal
+  Reacciones adversas
+                                          110 (16,6)      151 (23,1) 136 (20,2) 0,69 (0,54-0,88)      ,003
+  cardiovasculares
+  Componentes individuales
+  Revascularización coronaria              78 (11,8)      103 (15,7)    95 (14,1)  0,73 (0,54-0,98)    ,03
+  Hospitalización por angina                51 (7,7)       84 (12,8)    86 (12,8)  0,58 (0,41-0,82)   ,002
+  IM no mortal                              14 (2,1)        19 (2,9)     11 (1,6)  0,73 (0,37-1,46)    ,37
+  Accidente cerebrovascular- AIT             6 (0,9)        12 (1,8)      8 (1,2)  0,50 (0,19-1,32)    ,15
+  Muerte cardiovascular                      5 (0,8)         2 (0,3)      5 (0,7)  2,46 (0,48-12,7)    ,27
+  Hospitalización por Insuficiencia
+                                             3 (0,5)         5 (0,8)      4 (0,6)  0,59 (0,14-2,47)    ,46
+  cardiaca congestiva - ICC
+  Reanimación tras paro cardíaco                0            4 (0,6)      1 (0,1)         NA           ,04
+  Reinicio de la enfermedad vascular
+                                             5 (0,8)         2 (0,3)      8 (1,2)   2,6 (0,50-13,4)    ,24
+  periférica
+
+  Abreviaturas: ICC, insuficiencia cardiaca congestiva; IC, intervalo de confianza; IM, infarto de miocardio;
+  AIT, ataque isquémico transitorio.
+
+Uso en pacientes con insuficiencia cardiaca
+Estudios hemodinámicos y ensayos clínicos controlados basados en pruebas de esfuerzo, en pacientes con
+insuficiencia cardíaca de las clases II-IV de la NYHA, han mostrado que amlodipino no produjo deterioro
+clínico, determinado por la tolerancia al ejercicio, fracción de eyección ventricular izquierda y
+sintomatología clínica.
+
+Un estudio controlado con placebo (PRAISE) diseñado para evaluar pacientes con insuficiencia cardiaca de
+las clases III-IV de la NYHA que recibían digoxina, diuréticos e inhibidores de la enzima convertidora de
+la angiotensina (ECA) ha demostrado que amlodipino no produjo un incremento del riesgo de mortalidad o
+de morbilidad y mortalidad combinadas en pacientes con insuficiencia cardiaca.
+
+En un estudio de seguimiento a largo plazo, controlado con placebo (PRAISE-2) de amlodipino en
+pacientes con insuficiencia cardíaca de las clases III y IV de la NYHA sin síntomas clínicos o datos
+objetivos que sugiriesen una enfermedad isquémica subyacente, a dosis estables de inhibidores de ECA,
+digitálicos, y diuréticos, amlodipino no afectó la mortalidad cardiovascular total. En esta misma población
+amlodipino se asoció con un aumento de casos de edema pulmonar.
+
+Estudio sobre el tratamiento para prevenir ataques al corazón (ALLHAT)
+
+
+
+                                                   8 de 11
+El efecto de amlodipino sobre la morbi-mortalidad cardiovascular se evaluó en el estudio ALLHAT
+(Antihypertensive and Lipid-Lowering Treatment to Prevent Heart Attack Trial), un ensayo clínico
+aleatorizado y doble ciego en el que se compararon los nuevos tratamientos: 2,5-10 mg/día de amlodipino
+(bloqueante de los canales del calcio) o 10-40 mg/día de lisinopril (inhibidor de ECA) como tratamientos
+de primera línea frente al diurético tiazídico, 12,5-25 mg/día de clortalidona en hipertensión leve a
+moderada.
+
+Se aleatorizó y se siguió un total de 33.357 pacientes de 55 años o más durante una media de 4,9 años. Los
+pacientes tenían al menos un factor adicional de riesgo de cardiopatía coronaria, incluyendo: infarto de
+miocardio o accidente cerebrovascular previos (> 6 meses antes de la inclusión) u otras enfermedades
+cardiovasculares ateroscleróticas documentadas (en total 51,5%), diabetes tipo 2 (36,1%), HDL-C <35
+mg/dl (11,6%), hipertrofia ventricular izquierda diagnosticada por electrocardiograma o ecocardiograma
+(20,9%), tabaquismo (21,9%).
+
+La variable principal era una combinación de enfermedad coronaria mortal o infarto de miocardio no
+mortal. No hubo diferencia significativa en la variable principal entre el tratamiento a base de amlodipino y
+la terapia basada en clortalidona: RR 0,98 IC 95% (0,90-1,07) p = 0,65. Entre los objetivos secundarios, la
+incidencia de insuficiencia cardiaca (componente compuesto de variables cardiovasculares combinadas) fue
+significativamente mayor en el grupo de amlodipino en comparación con el grupo de clortalidona (10,2%%
+frente a 7,7%, RR 1,38, 95% CI [1,25-1,52] p <0,001). Sin embargo, no hubo diferencias significativas en
+la mortalidad por todas las causas entre el tratamiento a base de amlodipino y la terapia basada en la
+clortalidona. RR 0,96 IC 95% [0,89-1,02], p = 0,20.
+
+Población pediátrica
+
+Uso en niños a partir de 6 años
+En un estudio con 268 niños de 6-17 años con hipertensión secundaria fundamentalmente, la comparación
+de dosis de 2,5 mg y de 5,0 mg de amlodipino con placebo, demostró que ambas dosis reducen
+significativamente la presión arterial sistólica, más que el placebo. La diferencia entre las dos dosis no fue
+estadísticamente significativa.
+
+Los efectos a largo plazo de amlodipino en el crecimiento, la pubertad y el desarrollo en general no han
+sido estudiados. No se ha establecido la eficacia a largo plazo del tratamiento con amlodipino en la infancia
+para reducir la morbilidad y mortalidad cardiovascular en la edad adulta.
+
+5.2. Propiedades farmacocinéticas
+
+Absorción
+Después de la administración oral a dosis terapéuticas, amlodipino se absorbe bien, alcanzando
+concentraciones máximas en sangre a las 6-12 horas de la administración. La biodisponibilidad absoluta ha
+sido estimada entre el 64 y el 80%. La biodisponibilidad de amlodipino no se ve afectada por la ingesta de
+alimentos.
+
+Distribución
+El volumen de distribución es aproximadamente de 21 1/Kg. En los estudios in vitro se ha demostrado que
+aproximadamente el 97,5% del amlodipino circulante está unido a las proteínas plasmáticas.
+
+Biotransformación
+Amlodipino se metaboliza ampliamente en el hígado hasta metabolitos inactivos.
+
+Eliminación
+La semivida plasmática de eliminación final es de unas 35-50 horas, y permite la administración una vez al
+día. Se elimina por la orina hasta el 10% del fármaco inalterado y el 60% de los metabolitos.
+
+Poblaciones especiales
+Insuficiencia hepática
+
+                                                    9 de 11
+En pacientes con insuficiencia hepática, los datos clínicos disponibles son muy limitados en relación con la
+administración de amlodipino. En pacientes con insuficiencia hepática el aclaramiento de amlodipino
+disminuye, lo que origina una mayor semivida y un incremento del AUC de aproximadamente 40-60%.
+
+Personas de edad avanzada
+El tiempo para alcanzar las concentraciones plasmáticas máximas de amlodipino es similar en pacientes de
+edad avanzada y jóvenes. El aclaramiento de amlodipino tiende a disminuir con el consiguiente aumento de
+la AUC y la semivida de eliminación en pacientes de edad avanzada. El aumento de la AUC y la semivida
+de eliminación en pacientes con insuficiencia cardiaca congestiva fueron los esperados para el grupo de
+edad de los pacientes estudiados.
+
+Población pediátrica
+Se ha realizado un estudio farmacocinético poblacional en 74 niños hipertensos con edades comprendidas
+entre 1 y 17 años (34 pacientes de 6 a 12 años y 28 pacientes entre 13 y 17 años) que recibieron entre 1,25
+y 20 mg de amlodipino administrados una vez o dos veces al día. El aclaramiento oral típico (CL/F) en
+niños de 6 a 12 años y en adolescentes de 13-17 años de edad fue de 22,5 y 27,4 l/h, respectivamente en
+varones y de 16,4 y 21,3 l/h, respectivamente en mujeres. Se observó una gran variabilidad en la exposición
+entre individuos. Los datos notificados en niños menores de 6 años son limitados.
+
+5.3. Datos preclínicos sobre seguridad
+
+Toxicología reproductiva
+Los estudios de reproducción en ratas y ratones han demostrado retraso en el parto, prolongación del parto
+y disminución de la supervivencia de las crías a dosis aproximadamente 50 veces mayores que la dosis
+máxima recomendada para humanos en base a mg/kg.
+
+Alteraciones de la fertilidad
+No hubo ningún efecto sobre la fertilidad de las ratas tratadas con amlodipino (machos y hembras tratados
+64 y 14 días antes del apareamiento, respectivamente) con dosis hasta 10 mg/kg /día (8 veces * la dosis
+máxima recomendada en humanos de 10 mg en base a mg/m2). En otro estudio con ratas en el que ratas
+macho fueron tratadas con besilato de amlodipino durante 30 días a una dosis comparable con la dosis
+humana basada en mg/kg, se encontró un descenso en plasma de la hormona folículo-estimulante y la
+testosterona, así como la disminución de la densidad de esperma y en el número de células espermáticas y
+de Sertoli.
+
+Carcinogénesis, mutagénesis
+Las ratas y los ratones tratados con amlodipino en la dieta durante dos años, a una concentración calculada
+para proporcionar los niveles de dosis diaria de 0,5, 1,25 y 2,5 mg/kg/día no mostraron evidencia de
+carcinogenicidad. La dosis más alta (similar para ratones y el doble* para las ratas de la dosis máxima
+recomendada en clínica de 10 mg en base a mg/m2) estuvo cerca de la dosis máxima tolerada para los
+ratones pero no para las ratas.
+
+Los estudios de mutagenicidad no revelaron efectos relacionados con el medicamento ni a nivel genético
+como cromosómico.
+
+*Basado en un paciente de 50 Kg de peso.
+
+6 . DATOS FARMACÉUTICOS
+
+6.1. Lista de excipientes
+
+Celulosa microcristalina E 460i
+Lactosa monohidrato
+Carboximetilalmidón sódico
+Estearato de magnesio E 470b
+
+
+
+                                                  10 de 11
+6.2. Incompatibilidades
+
+No procede.
+
+6.3. Periodo de validez
+
+4 años.
+
+6.4. Precauciones especiales de conservación
+
+No conservar a temperatura superior a 25 ºC.
+
+6.5. Naturaleza y contenido del envase
+
+Comprimidos de 5 mg
+Los comprimidos se envasan en blísters opacos de PVC+PVdC/Aluminio.
+Envases con 30 comprimidos de 5 mg.
+
+Comprimidos de 10 mg
+Los comprimidos se envasan en blísters opacos de PVC+PVdC/Aluminio.
+Envases con 30 comprimidos de 10 mg.
+
+6.6. Precauciones especiales de eliminación y otras manipulaciones
+
+La eliminación del medicamento no utilizado y de todos los materiales que hayan estado en contacto con él,
+se realizará de acuerdo con la normativa local.
+
+7. TITULAR DE LA AUTORIZACIÓN DE COMERCIALIZACIÓN
+
+Almus Farmacéutica, S.A.U.
+Marie Curie, 54
+08840 Viladecans (Barcelona)
+España
+
+8. NÚMERO(S) DE AUTORIZACIÓN DE COMERCIALIZACIÓN
+
+Amlodipino Almus 5 mg comprimidos EFG: 70750
+Amlodipino Almus 10 mg comprimidos EFG: 70751
+
+9. FECHA DE LA PRIMERA AUTORIZACIÓN/ RENOVACIÓN DE LA AUTORIZACIÓN
+
+Fecha de la primera autorización: 01/04/2009
+Fecha de la última renovación: 20/09/2013
+
+10. FECHA DE LA REVISIÓN DEL TEXTO
+
+Mayo 2024
+
+La información detallada y actualizada de este medicamento está disponible en la página web de la Agencia
+Española de Medicamentos y Productos Sanitarios (AEMPS) http://www.aemps.gob.es/
+
+
+
+
+                                                11 de 11
+

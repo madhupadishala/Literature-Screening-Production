@@ -1,0 +1,1345 @@
+                            Torvastatin Tablets
+                                Atorvastatin Calcium
+
+1. NAME OF THE MEDICINAL PRODUCT
+
+  TORVASTATIN
+
+
+2. QUALITATIVE AND QUANTITATIVE COMPOSITION
+
+  Active Ingredient: Atorvastatin.
+
+  Each tablet for oral administration contains atorvastatin calcium equivalent to 10mg,
+  20mg, 40mg, or 80mg atorvastatin.
+
+
+3. PHARMACEUTICAL FORM
+
+  10 mg film-coated tablet: White-off white, elliptical, biconvex, one side debossed
+  with “10” and plain on the other side.
+
+  20 mg film-coated tablet: White-off white, elliptical, biconvex, one side debossed
+  with “20” and score line on the other side. The tablet can be divided into equal halves.
+
+  40 mg film-coated tablet: White-off white, elliptical, biconvex, one side debossed
+  with “40” and score line on the other side. The tablet can be divided into equal halves.
+
+  80 mg film-coated tablet: White-off white, elliptical, biconvex, one side debossed
+  with “80” and score line on the other side. The tablet can be divided into equal halves.
+
+
+4. CLINICAL PARTICULARS
+
+  4.1. Therapeutic indications
+   Atorvastatin is indicated as an adjunct to diet for reduction of elevated total cholesterol
+   (total-C), low density lipoprotein cholesterol (LDL-C), apolipoprotein B (apo B), and
+   triglycerides (TG) in adults, adolescents and children aged 10 years or older with
+   primary hypercholesterolemia, heterozygous familial hypercholesterolemia, or
+   combined (mixed) hyperlipidemia (Fredrickson Types IIa and IIb), elevated serum TG
+   levels (Fredrickson Type IV), and for patients with dysbetalipoproteinemia
+   (Fredrickson Type III) when response to diet and other non-pharmacological measures
+   is inadequate.
+
+   Atorvastatin also raises high density lipoprotein cholesterol (HDL-C) and lowers the
+   LDL/HDL and total-C/HDL ratios.
+
+   Atorvastatin is also indicated to reduce total-C and LDL-C in adults with homozygous
+   familial hypercholesterolemia as an adjunct to other lipid-lowering treatments (e.g.,
+   LDL apheresis) or if such treatments are unavailable.
+    Prevention of Cardiovascular Disease
+    Torvastatin is indicated to reduce the risk of myocardial infarction (MI) in adult
+    hypertensive patients without clinically evident coronary heart disease (CHD), but
+    with at least three additional risk factors for CHD such as age ≥55 years, male sex,
+    smoking, left ventricular hypertrophy, other specified abnormalities on
+    electrocardiogram (ECG), microalbuminuria or proteinuria, ratio of plasma total-C to
+    HDL-C ≥6, or premature family history of CHD.
+
+    In adults with type 2 diabetes and without clinically evident CHD, but with multiple
+    risk factors for CHD such as retinopathy, albuminuria, smoking or hypertension,
+    Torvastatin is indicated to:
+    • Reduce the risk of MI.
+    • Reduce the risk of stroke.
+
+     In adults with clinically evident CHD, atorvastatin is indicated to:
+    • Reduce the risk of non-fatal MI.
+    • Reduce the risk of fatal and non-fatal stroke.
+    • Reduce the risk for revascularization procedures.
+    • Reduce the risk of hospitalization for congestive heart failure (CHF).
+    • Reduce the risk of angina.
+
+4.2. Posology and method of administration
+     General
+     Before instituting therapy with atorvastatin, an attempt should be made to control
+     hypercholesterolemia with appropriate diet, exercise and weight reduction in obese
+     patients, and to treat the underlying medical problems. The patient should continue on a
+     standard cholesterol-lowering diet during treatment with atorvastatin. The
+     recommended starting dose of atorvastatin is 10 mg or 20 mg once daily. Patients who
+     require a large reduction in LDL-C (more than 45%) may be started at 40 mg once
+     daily. The dosage range is 10 mg to 80 mg once daily. Atorvastatin can be administered
+     as a single dose at any time of the day, with or without food. The doses should be
+     individualized according to baseline LDL-C levels, the goal of therapy, and patient
+     response. After initiation and/or upon titration of atorvastatin, lipid levels should be
+     analyzed within 2 to 4 weeks, and dosage adjusted accordingly.
+
+    Prevention of Cardiovascular Disease (CVD)
+    For primary prevention, the recommended dose is 10 mg once daily. For secondary
+    prevention, optimal dosing may range from 10 mg to 80 mg atorvastatin once daily, to
+    be given at the discretion of the prescriber, taking into account the expected benefit and
+    safety considerations relevant to the patient to be treated (see section 5.1. -
+    Pharmacodynamic properties: Secondary Prevention of Cardiovascular Events).
+
+    Primary Hypercholesterolemia and Combined (Mixed) Hyperlipidemia
+    The majority of patients are controlled with 10 mg atorvastatin once daily. A
+    therapeutic response is evident within 2 weeks, and the maximum response is usually
+    achieved within 4 weeks. The response is maintained during chronic therapy.
+
+    Homozygous Familial Hypercholesterolemia
+    In a compassionate-use study of patients with homozygous familial
+hypercholesterolemia, most patients responded to 80 mg atorvastatin with a greater
+than 15% reduction in LDL-C (18%-45%).
+
+Use in Patients with Hepatic Insufficiency
+See section 4.3. - Contraindications and section 4.4. - Special warnings and
+precautions for use.
+
+Use in Patients with Renal Insufficiency
+Renal disease has no influence on plasma concentrations or on LDL-C reduction with
+atorvastatin. Thus, no dose adjustment is required (see section 4.4. - Special warnings
+and precautions for use).
+
+Pediatric Use, Hypercholesterolemia
+Pediatric use should only be carried out by physicians experienced in the treatment of
+pediatric hyperlipidemia and patients should be re-evaluated on a regular basis to assess
+progress.
+
+For patients aged 10 years and above, the recommended starting dose of atorvastatin is
+10 mg daily with titration up to 20 mg daily. Titration should be conducted according to
+the individual response and tolerability in pediatric patients. Safety information for
+pediatric patients treated with doses above 20 mg, corresponding to about 0.5 mg/kg, is
+limited.
+
+Experience in pediatric patients older than 6 to less than 10 years of age is derived from
+open-label studies (see section 4.8. - Undesirable effects, section 5.1. -
+Pharmacodynamic properties, and section 5.2. - Pharmacokinetic properties:
+Special Populations). Atorvastatin is not indicated in the treatment of patients below
+the age of 10 years.
+
+Treatment experience in a pediatric population is limited to doses of atorvastatin up to
+80 mg/day for one year in 8 patients with homozygous familial hypercholesterolemia.
+No clinical or biochemical abnormalities were reported in these patients.
+
+Use in the Elderly
+No differences in safety, efficacy or lipid treatment goal attainment were observed
+between elderly patients and the overall population (see section 5.2. -
+Pharmacokinetic properties: Special Populations).
+
+Use in Combination with Other Medicinal Compounds
+In cases where co-administration of atorvastatin with cyclosporine, telaprevir, or the
+combination tipranavir/ritonavir is necessary, the dose of atorvastatin should not
+exceed 10 mg.
+
+Dose of atorvastatin should not exceed 20 mg/day with concomitant use with
+elbasvir/grazoprevir (see section 4.4. - Special warnings and precautions for use:
+Skeletal Muscle Effects and section 4.5. - Interaction with other medicinal
+products and other forms of interaction).
+
+Use of atorvastatin is not recommended in patients taking letermovir co-administered
+with cyclosporine.
+   Pharmacokinetic drug interactions that result in increased systemic concentration of
+   atorvastatin have also been noted with other human immunodeficiency virus (HIV)
+   protease inhibitors (lopinavir/ritonavir, saquinavir/ritonavir, darunavir/ritonavir,
+   fosamprenavir, fosamprenavir/ritonavir and nelfinavir), hepatitis C (HCV) protease
+   inhibitors (boceprevir, elbasvir/grazoprevir, simeprevir), clarithromycin, itraconazole
+   and letermovir. Caution should be used when co-prescribing atorvastatin, and
+   appropriate clinical assessment is recommended to ensure that the lowest dose of
+   atorvastatin necessary is employed (see section 4.4. - Special warnings and
+   precautions for use: Skeletal Muscle Effects and section 4.5. - Interaction with
+   other medicinal products and other forms of interaction).
+
+   THE FOLLOWING TREATMENT GUIDELINES MAY BE USED TO
+   ESTABLISH TREATMENT GOALS
+
+    A. NCEP (National Cholesterol Education Program) Guidelines for Lipid
+      Management: LDL-C Goals and Cutpoints for Therapeutic Lifestyle
+      Changes and Drug Therapy in Different Risk Categories
+        Risk Category                 LDL Goal     LDL Level at Which to              LDL Level at Which to
+                                       mg/dL        Initiate Therapeutic              Consider Drug Therapy
+                                      (mmol/L)       Lifestyle Changes                       mg/dL
+                                                           mg/dL                            (mmol/L)
+                                                          (mmol/L)
+        CHDa or CHD risk              <100 (2.6)        ≥100 (2.6)                           ≥130 (3.4)
+           equivalents                                                                (100-129: drug optional)b
+       (10-year risk > 20%)
+          2+ risk factors             <130 (3.4)         ≥130 (3.4)                   10-year risk 10%-20%:
+       (10-year risk ≤ 20%)                                                                 ≥130 (3.4)
+                                                                                        10-year risk <10%:
+                                                                                            ≥160 (4.1)
+        0-1 risk factorc              <160 (4.1)         ≥160 (4.1)                         ≥190 (4.9)
+                                                                                   (160-189: LDL-lowering drug
+                                                                                             optional)
+     a CHD, coronary heart disease.
+    b Some authorities recommend use of LDL-lowering drugs in this category if an LDL-C level of <100 mg/dL
+
+       (2.6 mmol/L) cannot be achieved by therapeutic lifestyle changes. Others prefer use of drugs that primarily
+       modify triglycerides and HDL-C, e.g., nicotinic acid or fibrate. Clinical judgement also may call for deferring
+       drug therapy in this subcategory.
+    c Almost all people with 0-1 risk factor have 10-year risk <10%; thus, 10-year risk assessment in people with 0-
+
+       1 risk factor is not necessary.
+
+
+   After the LDL-C goal has been achieved, if the TG is still ≥200 mg/dL (2.2 mmol/L),
+   non-HDL-C (total-C minus HDL-C) becomes a secondary target of therapy.
+    Non-HDL-C goals are set 30 mg/dL (0.8 mmol/L) higher than LDL-C goals for
+    each risk category.
+
+4.3. Contraindications
+     Atorvastatin is contraindicated in patients who have:
+
+    Hypersensitivity to any component of this medication
+
+    Active liver disease or unexplained persistent elevations of serum transaminases
+    exceeding three times the upper limit of normal (ULN)
+    or who are:
+
+    Pregnant, breast-feeding, or of child-bearing potential who are not using adequate
+    contraceptive measures. Atorvastatin should be administered to women of child-
+    bearing age only when such patients are highly unlikely to conceive and have been
+    informed of the potential hazards to the fetus.
+
+    Concomitantly treated with glecaprevir/pibrentasvir.
+
+4.4. Special warnings and precautions for use
+     Hepatic Effects
+     As with other lipid-lowering agents of the same class, moderate (>3 x ULN) elevations
+     of serum transaminases have been reported following therapy with atorvastatin. Liver
+     function was monitored during pre-marketing as well as post-marketing clinical studies
+     of atorvastatin at doses of 10 mg, 20 mg, 40 mg and 80 mg.
+
+    Persistent increases in serum transaminases (>3 x ULN on two or more occasions)
+    occurred in 0.7% of patients who received atorvastatin in these clinical trials. The
+    incidence of these abnormalities was 0.2%, 0.2%, 0.6%, and 2.3% for the 10 mg,
+    20 mg, 40 mg and 80 mg doses, respectively. Increases were generally not associated
+    with jaundice or other clinical signs or symptoms. When the dosage of atorvastatin
+    was reduced, or drug treatment interrupted or discontinued, transaminase levels
+    returned to pre-treatment levels. Most patients continued treatment on a reduced dose
+    of atorvastatin without sequelae.
+
+    Liver function tests should be performed before the initiation of treatment and
+    periodically thereafter. Patients who develop any signs or symptoms suggesting liver
+    injury should have liver function tests performed. Patients who develop increased
+    transaminase levels should be monitored until the abnormality(ies) resolve(s). Should
+    an increase in ALT or AST of >3 x ULN persist, reduction of dose or withdrawal of
+    atorvastatin is recommended. Atorvastatin can cause an elevation in transaminases (see
+    section 4.8. - Undesirable effects).
+
+   Atorvastatin should be used with caution in patients who consume substantial quantities
+   of alcohol and/or have a history of liver disease. Active liver disease or unexplained
+   persistent transaminase elevations are contraindications to the use of atorvastatin (see
+   section 4.3. - Contraindications).
+
+   Skeletal Muscle Effects
+   Myalgia has been reported in atorvastatin-treated patients (see section 4.8. -
+   Undesirable effects). Myopathy, defined as muscle ache or muscle weakness in
+   conjunction with increases in creatine phosphokinase (CPK) values >10 x ULN, should
+   be considered in any patient with diffuse myalgias, muscle tenderness or weakness,
+   and/or marked elevation of CPK. Patients should be advised to promptly report
+   unexplained muscle pain, tenderness or weakness, particularly if accompanied by
+   malaise or fever. Atorvastatin therapy should be discontinued if markedly elevated
+   CPK levels occur or if myopathy is diagnosed or suspected. The risk of myopathy is
+   increased with concurrent administration of drugs that increase the systemic
+   concentration of atorvastatin (see section 4.5. - Interaction with other medicinal
+   products and other forms of interaction and section 5.2. - Pharmacokinetic
+   properties). Many of these drugs inhibit cytochrome P450 3A4 (CYP 3A4)
+metabolism and/or drug-transport. CYP 3A4 is the primary hepatic isozyme known to
+be involved in the biotransformation of atorvastatin. Physicians considering combined
+therapy with atorvastatin and fibric acid derivatives, erythromycin, immunosuppressive
+drugs, azole antifungals, HIV/HCV protease inhibitors, HCV non-structural protein 5A
+(NS5A)/non-structural protein 5B (NS5B) inhibitors, letermovir, or lipid-modifying
+doses of niacin should carefully weigh the potential benefits and risks and should
+carefully monitor patients for any signs and symptoms of muscle pain, tenderness, or
+weakness, particularly during the initial months of therapy and during any periods of
+upward dosage titration of either drug. Therefore, lower starting and maintenance doses
+of atorvastatin should also be considered when taken concomitantly with the
+aforementioned drugs (see section 4.2. - Posology and method of administration).
+The concurrent use of atorvastatin and fusidic acid is not recommended, therefore,
+temporary suspension of atorvastatin is advised during fusidic acid therapy (see section
+4.5. - Interaction with other medicinal products and other forms of interaction).
+Periodic CPK determinations may be considered in such situations, but there is no
+assurance that such monitoring will prevent the occurrence of severe myopathy.
+Atorvastatin may cause an elevation of CPK (see section 4.8. - Undesirable effects).
+
+There have been very rare reports of an immune-mediated necrotizing myopathy
+(IMNM) during or after treatment with some statins (see section 4.8. - Undesirable
+effects). IMNM is clinically characterized by persistent proximal muscle weakness and
+elevated serum creatine kinase, which persist despite discontinuation of statin
+treatment, positive anti-HMG-CoA reductase antibody and improvement with
+immunosuppressive agents.
+
+As with other drugs in this class, rare cases of rhabdomyolysis with acute renal failure
+secondary to myoglobinuria, have been reported. A history of renal impairment may be
+a risk factor for the development of rhabdomyolysis. Such patients merit closer
+monitoring for skeletal muscle effects. Atorvastatin therapy should be temporarily
+withheld or discontinued in any patient with an acute, serious condition suggestive of a
+myopathy or with a risk factor predisposing to the development of renal failure
+secondary to rhabdomyolysis (e.g., severe acute infection; hypotension; major surgery;
+trauma; severe metabolic, endocrine and electrolyte disorders; and uncontrolled
+seizures).
+
+Hemorrhagic Stroke
+A post-hoc analysis of a clinical study in 4731 patients without CHD who had a stroke
+or transient ischemic attack (TIA) within the preceding 6 months and were initiated on
+atorvastatin 80 mg revealed a higher incidence of hemorrhagic stroke in the atorvastatin
+80 mg group compared to placebo (55 atorvastatin vs. 33 placebo). Patients with
+hemorrhagic stroke on entry appeared to be at increased risk for recurrent hemorrhagic
+stroke (7 atorvastatin vs. 2 placebo) (see section 5.1. - Pharmacodynamic properties:
+Recurrent Stroke). The potential risk of hemorrhagic stroke should be carefully
+considered before initiating treatment with atorvastatin in patients with recent (1 to 6
+months) stroke or TIA.
+
+Endocrine Function
+Increases in hemoglobin A1c (HbA1c) and fasting serum glucose levels have been
+reported with 3-hydroxy-3-methylglutaryl-coenzyme A (HMG-CoA) reductase
+inhibitors, including atorvastatin. For some patients, at high risk of diabetes mellitus,
+hyperglycemia was sufficient to shift them to the diabetes status. The risk of
+     hyperglycemia, however, is outweighed by the reduction in vascular risk with statins.
+     Periodic monitoring of these patients is recommended.
+
+     Information for the Patient
+     Patients should be advised to promptly report unexplained muscle pain, tenderness or
+     weakness, particularly if accompanied by malaise or fever.
+
+     Adolescent females and women of child-bearing potential should be counseled on
+     appropriate contraceptive methods while on atorvastatin therapy (see section 4.6. -
+     Pregnancy and lactation).
+
+     Myasthenia Gravis/Ocular Myasthenia
+     In few cases, statins have been reported to induce de novo or aggravate pre-existing
+     myasthenia gravis or ocular myasthenia. Atorvastatin should be discontinued in case
+     of aggravation of symptoms. Recurrences when the same or a different statin was (re-
+     ) administered have been reported.
+
+4.5. Interaction with other medicinal products and other forms of interaction
+     The risk of myopathy during treatment with HMG-CoA reductase inhibitors is
+     increased with concurrent administration of cyclosporine, fibric acid derivatives, lipid-
+     modifying doses of niacin or CYP 3A4/transporter inhibitors (e.g., erythromycin and
+     azole antifungals) (see below and also section 4.2. - Posology and method of
+     administration: Use in Combination with Other Medicinal Compounds and
+     section 4.4. - Special warnings and precautions for use: Skeletal Muscle Effects).
+
+    In the rest of the sub-sections, ‘ratio of AUC’ is defined as ‘ratio treatment (co-
+    administered drug plus atorvastatin versus atorvastatin alone)’.
+
+    Inhibitors of CYP 3A4
+    Atorvastatin is metabolized by CYP 3A4. Concomitant administration of atorvastatin
+    with inhibitors of CYP 3A4 can lead to increases in plasma concentrations of
+    atorvastatin. The extent of interaction and potentiation of effects depend on the
+    variability of effect on CYP 3A4.
+
+    Clarithromycin: Co-administration of atorvastatin with clarithromycin (500 mg twice
+    daily) a known inhibitor of CYP 3A4, was associated with higher plasma
+    concentrations of atorvastatin (see section 4.4. - Special warnings and precautions
+    for use: Skeletal Muscle Effects, section 4.2. - Posology and method of
+    administration: Use in Combination with Other Medicinal Compounds and
+    section 5.2. - Pharmacokinetic properties: Drug Interactions - Table on Effect of
+    Co-administered Drugs on the Pharmacokinetics of Atorvastatin).
+
+    Erythromycin: Co-administration of atorvastatin with erythromycin (500 mg four
+    times daily), a known inhibitor of CYP 3A4, was associated with higher plasma
+    concentrations of atorvastatin (see section 4.4. - Special warnings and precautions
+    for use: Skeletal Muscle Effects and section 5.2. - Pharmacokinetic properties:
+    Drug Interactions - Table on Effect of Co-administered Drugs on the
+    Pharmacokinetics of Atorvastatin).
+
+    Protease inhibitors: Co-administration of atorvastatin with protease inhibitors, known
+    inhibitors of CYP 3A4, was associated with increased plasma concentrations of
+atorvastatin (see section 4.2. - Posology and method of administration: Use in
+Combination with Other Medicinal Compounds and section 5.2. -
+Pharmacokinetic properties: Drug Interactions - Table on Effect of Co-
+administered Drugs on the Pharmacokinetics of Atorvastatin).
+
+Diltiazem hydrochloride: Co-administration of atorvastatin (40 mg) with diltiazem
+(240 mg) was associated with higher plasma concentrations of atorvastatin (see section
+5.2. - Pharmacokinetic properties: Drug Interactions - Table on Effect of Co-
+administered Drugs on the Pharmacokinetics of Atorvastatin).
+
+Cimetidine: An atorvastatin interaction study with cimetidine was conducted, and no
+clinically significant interactions were seen (see section 5.2. - Pharmacokinetic
+properties: Drug Interactions - Table on Effect of Co-administered Drugs on the
+Pharmacokinetics of Atorvastatin).
+
+Itraconazole: Concomitant administration of atorvastatin (20mg-40mg) with
+itraconazole (200 mg) was associated with an increase in atorvastatin AUC (see section
+5.2. - Pharmacokinetic properties: Drug Interactions - Table on Effect of Co-
+administered Drugs on the Pharmacokinetics of Atorvastatin).
+
+Grapefruit juice: Contains one or more components that inhibit CYP 3A4 and can
+increase plasma concentrations of atorvastatin, especially with excessive grapefruit
+juice consumption (>1.2 L/day) (see section 5.2. - Pharmacokinetic properties: Drug
+Interactions - Table on Effect of Co-administered Drugs on the Pharmacokinetics
+of Atorvastatin).
+
+Transporter Inhibitors
+Atorvastatin is a substrate of the hepatic transporters (see section 5.2. -
+Pharmacokinetic properties).
+
+Concomitant administration of atorvastatin 10 mg and cyclosporine 5.2 mg/kg/day
+resulted in an increase in exposure to atorvastatin (ratio of AUC: 8.7; see section 5.2. -
+Pharmacokinetic properties). Cyclosporine is an inhibitor of organic anion-
+transporting polypeptide 1B1 (OATP1B1), OATP1B3, multi-drug resistance protein 1
+(MDR1), and breast cancer resistance protein (BCRP) as well as CYP 3A4, thus it
+increases exposure to atorvastatin. Do not exceed 10 mg atorvastatin daily (see section
+4.2. - Posology and method of administration: Use in Combination with Other
+Medicinal Compounds).
+
+Glecaprevir and pibrentasvir are inhibitors of OATP1B1, OATP1B3, MDR1 and
+BCRP, thus they increase exposure to atorvastatin and concomitant use with
+atorvastatin is contraindicated.
+
+Concomitant administration of atorvastatin 20 mg and letermovir 480 mg daily resulted
+in an increase in exposure to atorvastatin (ratio of AUC: 3.29; see section 5.2. -
+Pharmacokinetic properties). Letermovir inhibits efflux transporters P-gp, BCRP,
+multidrug resistance-associated protein 2 (MRP2), OAT2 and hepatic transporter
+OATP1B1/1B3, thus it increases exposure to atorvastatin. Do not exceed 20 mg
+atorvastatin daily (see section 4.2. - Posology and method of administration: Use in
+Combination with Other Medicinal Compounds).
+The magnitude of CYP3A- and OATP1B1/1B3-mediated drug interactions on co-
+administered drugs may be different when letermovir is co-administered with
+cyclosporine. Use of atorvastatin is not recommended in patients taking letermovir
+co-administered with cyclosporine.
+
+Elbasvir and grazoprevir are inhibitors of OATP1B1, OATP1B3, MDR1 and BCRP,
+thus they increase exposure to atorvastatin. Use with caution and lowest dose
+necessary. Dose of atorvastatin should not exceed 20 mg/day with concomitant use with
+elbasvir/grazoprevir (see section 4.2. - Posology and method of administration: Use
+in Combination with Other Medicinal Compounds).
+
+Inducers of CYP 3A4
+Concomitant administration of atorvastatin with inducers of CYP 3A4 (e.g., efavirenz,
+rifampin) can lead to variable reductions in plasma concentrations of atorvastatin. Due
+to the dual interaction mechanism of rifampin (CYP 3A4 induction and inhibition of
+hepatocyte uptake transporter OATP1B1), simultaneous co-administration of
+atorvastatin with rifampin is recommended, as delayed administration of atorvastatin
+after administration of rifampin has been associated with a significant reduction in
+atorvastatin plasma concentrations (see section 5.2. - Pharmacokinetic properties:
+Drug Interactions - Table on Effect of Co-administered Drugs on the
+Pharmacokinetics of Atorvastatin).
+
+Antacids: Co-administration of atorvastatin with an oral antacid suspension containing
+magnesium and aluminum hydroxides decreased atorvastatin plasma concentrations
+(ratio of AUC: 0.66); however, LDL-C reduction was not altered.
+
+Antipyrine: Because atorvastatin does not affect the pharmacokinetics of antipyrine,
+interactions with other drugs metabolized via the same cytochrome isozymes are not
+expected.
+
+Colestipol: Plasma concentrations of atorvastatin were lower (ratio of concentration:
+0.74) when colestipol was administered with atorvastatin. However, lipid effects were
+greater when atorvastatin and colestipol were co-administered than when either drug
+was given alone.
+
+Digoxin: When multiple doses of digoxin and 10 mg atorvastatin were co-
+administered, steady-state plasma digoxin concentrations were unaffected. However,
+digoxin concentrations increased (ratio of AUC: 1.15) following administration of
+digoxin with 80 mg atorvastatin daily. Patients taking digoxin should be monitored
+appropriately.
+
+Azithromycin: Co-administration of atorvastatin (10 mg once daily) with azithromycin
+(500 mg once daily) did not alter the plasma concentrations of atorvastatin.
+
+Oral contraceptives: Co-administration of atorvastatin with an oral contraceptive
+containing norethindrone and ethinyl estradiol increased the area under the
+concentration vs. time curve (AUC) values for norethindrone (ratio of AUC: 1.28) and
+ethinyl estradiol (ratio of AUC: 1.19). These increases should be considered when
+selecting an oral contraceptive for a woman taking atorvastatin.
+
+Warfarin: An atorvastatin interaction study with warfarin was conducted, and no
+    clinically significant interactions were seen.
+
+    Colchicine: Although interaction studies with atorvastatin and colchicine have not been
+    conducted, cases of myopathy have been reported with atorvastatin co-administered
+    with colchicine, and caution should be exercised when prescribing atorvastatin with
+    colchicine.
+
+    Amlodipine: In a drug-drug interaction study in healthy subjects, co-administration of
+    atorvastatin 80 mg with amlodipine 10 mg resulted in an increase in exposure to
+    atorvastatin (ratio of AUC: 1.18) which was not clinically meaningful.
+
+    Fusidic acid: Although interaction studies with atorvastatin and fusidic acid have not
+    been conducted, there is an increased risk of rhabdomyolysis in patients receiving a
+    combination of statins, including atorvastatin, and fusidic acid. The mechanism of this
+    interaction is not known. In patients where the use of systemic fusidic acid is considered
+    essential, statin treatment should be discontinued throughout the duration of fusidic
+    acid treatment. Statin therapy may be re-introduced seven days after the last dose of
+    fusidic acid.
+
+    In exceptional circumstances, where prolonged systemic fusidic acid is needed, e.g., for
+    the treatment of severe infections, the need for co-administration of atorvastatin and
+    fusidic acid should only be considered on a case by case basis and under close medical
+    supervision. The patient should be advised to seek medical advice immediately if they
+    experience any symptoms of muscle weakness, pain or tenderness.
+
+    Other Concomitant Therapy
+    In clinical studies, atorvastatin was used concomitantly with antihypertensive agents
+    and estrogen replacement therapy without evidence of clinically significant adverse
+    interactions. Interaction studies with specific agents have not been conducted.
+
+    Pediatric Population
+    Drug-drug interaction studies have only been performed in adults. The extent of
+    interactions in the pediatric population is not known. The above-mentioned interactions
+    for adults and the warnings in section 4.4. - Special warnings and precautions for use
+    should be taken into account for the pediatric population.
+
+4.6. Pregnancy and lactation
+     Atorvastatin is contraindicated in pregnancy. Women of childbearing potential should
+     use adequate contraceptive measures. Atorvastatin should be administered to women of
+     child-bearing age only when such patients are highly unlikely to conceive and have
+     been informed of the potential hazards to the fetus.
+
+    Atorvastatin is contraindicated while breast-feeding. It is not known whether this drug
+    is excreted in human milk. Because of the potential for adverse reactions in nursing
+    infants, women taking atorvastatin should not breast-feed.
+
+4.7. Effects on ability to drive and use machines
+     None known.
+
+4.8. Undesirable effects
+     Atorvastatin is generally well-tolerated. Adverse reactions have usually been mild and
+transient. In the atorvastatin placebo-controlled clinical trial database of 16,066 (8755
+Atorvastatin vs. 7311 placebo) patients treated for a median period of 53 weeks, 5.2%
+of patients on atorvastatin discontinued due to adverse reactions compared to 4.0% of
+patients on placebo.
+
+The most frequent (≥1%) adverse effects that may be associated with atorvastatin
+therapy, reported in patients participating in placebo-controlled clinical studies include:
+
+Infections and infestations: nasopharyngitis.
+
+Metabolism and nutrition disorders: hyperglycemia.
+
+Respiratory, thoracic and mediastinal disorders: pharyngolaryngeal pain, epistaxis.
+
+Psychiatric disorders: insomnia.
+
+Nervous system disorders: headache.
+
+Gastrointestinal disorders: nausea, diarrhea, abdominal pain, dyspepsia, constipation,
+flatulence.
+
+Musculoskeletal and connective tissue disorders: arthralgia, pain in extremity,
+musculoskeletal pain, muscle spasms, myalgia, joint swelling.
+
+General disorders and administration site conditions: asthenia.
+
+Investigations: liver function test abnormal, blood creatine phosphokinase increased.
+
+Additional adverse effects reported in atorvastatin placebo-controlled clinical trials
+include:
+
+Metabolism and nutrition disorders: hypoglycemia, hyperglycemia, anorexia.
+
+Psychiatric disorders: nightmare.
+
+Eye disorders: vision blurred.
+
+Ear and labyrinth disorders: tinnitus.
+
+Nervous system disorders: peripheral neuropathy, paresthesia.
+
+Gastrointestinal disorders: abdominal discomfort, eructation, pancreatitis, vomiting.
+
+Hepatobiliary disorders: hepatitis, cholestasis.
+
+Skin and subcutaneous tissue disorders: alopecia, pruritus, rash, urticaria, lichenoid
+drug reaction.
+
+Musculoskeletal and connective tissue disorders: myopathy, myositis, muscle
+cramps, muscle fatigue, neck pain.
+Reproductive system and breast disorders: impotence.
+
+General disorders and administration site conditions: malaise, pyrexia.
+
+Vascular disorders: vasculitis.
+
+Investigations: white blood cells urine positive.
+Not all effects listed above have been causally associated with atorvastatin therapy.
+
+Pediatric Population
+The clinical safety database includes safety data for 249 pediatric patients who received
+atorvastatin, among which 7 patients were <6 years old, 14 patients were in the age
+range of 6 to 9, and 228 patients were in the range of 10 to 17.
+
+Nervous system disorders: Common: Headache.
+
+Gastrointestinal disorders: Common: Abdominal pain.
+
+Investigations: Common: Alanine aminotransferase increased, blood creatine
+phosphokinase increased.
+
+Based on the data available, frequency, type and severity of adverse reactions in
+children are expected to be the same as in adults. There is currently limited experience
+with respect to long-term safety in the pediatric population.
+
+Patients treated with atorvastatin had an adverse experience profile generally similar to
+that of patients treated with placebo, the most common adverse experiences observed in
+both groups, regardless of causality assessment, were infections.
+
+No clinically significant effect on growth and sexual maturation was observed in a 3-
+year study in children ages 6 and above based on the assessment of overall maturation
+and development, assessment of Tanner Stage, and measurement of height and weight.
+The safety and tolerability profile in pediatric patients was similar to the known safety
+profile of atorvastatin in adult patients.
+
+Post-marketing Experience
+In post-marketing experience, the following additional undesirable effects have been
+reported:
+
+Blood and lymphatic system disorders: thrombocytopenia;
+
+Immune system disorders: allergic reactions (including anaphylaxis);
+
+Injury, poisoning and procedural complications: tendon rupture;
+
+Metabolism and nutrition disorders: weight gain;
+
+Nervous system disorders: hypoesthesia, amnesia, dizziness, dysgeusia;
+
+Gastrointestinal disorders: pancreatitis;
+     Skin and subcutaneous tissue disorders: Stevens-Johnson syndrome, toxic epidermal
+     necrolysis, angioedema, erythema multiforme, bullous rashes;
+
+     Musculoskeletal and connective tissue disorders: rhabdomyolysis,
+     immune-mediated necrotizing myopathy, myositis, back pain;
+
+     General disorders and administration site conditions: chest pain, peripheral edema,
+     fatigue.
+
+     Psychiatric Disorders: depression.
+
+     There have been rare post-marketing reports of cognitive impairment (e.g., memory
+     loss, forgetfulness, amnesia, memory impairment, confusion) associated with statin
+     use. These cognitive issues have been reported for all statins. The reports are generally
+     non-serious, and reversible upon statin discontinuation, with variable times to symptom
+     onset (1 day to years) and symptom resolution (median of 3 weeks).
+
+4.9. Overdose
+     There is no specific treatment for atorvastatin overdose. Should an overdose occur, the
+     patient should be treated symptomatically and supportive measures instituted, as
+     required. Due to extensive drug binding to plasma proteins, hemodialysis is not
+     expected to significantly enhance atorvastatin clearance.
+
+
+5.   PHARMACOLOGICAL PROPERTIES
+
+5.1. Pharmacodynamic properties
+     Atorvastatin calcium is a synthetic lipid-lowering agent, which is an inhibitor of
+     HMG-CoA reductase. This enzyme catalyzes the conversion of HMG-CoA to
+     mevalonate, an early and rate-limiting step in cholesterol biosynthesis.
+
+     The empirical formula of atorvastatin calcium is (C33H34FN2O5)2Ca•3H2O and its
+     molecular weight is 1209.42. Its structural formula is:
+
+
+
+
+     Atorvastatin calcium is a white to off-white crystalline powder, practically insoluble in
+     aqueous solutions of pH 4 and below. It is very slightly soluble in distilled water, pH
+     7.4 phosphate buffer, and acetonitrile; slightly soluble in ethanol; and freely soluble in
+     methanol.
+
+     Mechanism of Action
+     Atorvastatin is a selective, competitive inhibitor of HMG-CoA reductase, the rate-
+limiting enzyme that converts HMG-CoA to mevalonate, a precursor of sterols,
+including cholesterol. In patients with homozygous and heterozygous familial
+hypercholesterolemia, non-familial forms of hypercholesterolemia, and mixed
+dyslipidemia, atorvastatin reduces total-C, LDL-C, and apo B. Atorvastatin also
+reduces very-low-density lipoprotein cholesterol (VLDL-C) and TG and produces
+variable increases in HDL-C.
+
+Triglycerides and cholesterol in the liver are incorporated into VLDL and released into
+the plasma for delivery to peripheral tissues. LDL is formed from VLDL and is
+catabolized primarily through the high-affinity LDL receptor. Like LDL, cholesterol-
+enriched triglyceride-rich lipoproteins, including VLDL, IDL, and remnants can also
+promote atherosclerosis. Elevated plasma triglycerides are frequently found in a triad
+with low HDL-C levels and small LDL particles, as well as in association with non-
+lipid metabolic risk factors for coronary heart disease. As such, total plasma TG has
+not consistently been shown to be an independent risk factor for CHD. Furthermore,
+the independent effect of raising HDL or lowering TG on the risk of coronary and
+cardiovascular (CV) morbidity and mortality has not been determined.
+
+Atorvastatin lowers plasma cholesterol and lipoprotein levels by inhibiting HMG-CoA
+reductase and cholesterol synthesis in the liver and by increasing the number of hepatic
+LDL receptors on the cell surface for enhanced uptake and catabolism of LDL.
+
+Atorvastatin reduces LDL production and the number of LDL particles. Atorvastatin
+produces a profound and sustained increase in LDL receptor activity coupled with a
+beneficial change in the quality of circulating LDL particles. Atorvastatin is effective in
+reducing LDL in patients with homozygous familial hypercholesterolemia, a
+population that has not normally responded to lipid-lowering medication.
+
+In a dose-response study, atorvastatin (10 mg-80 mg) reduced total-C (30%-46%),
+LDL-C (41%-61%), apo B (34%-50%), and TG (14%-33%). These results are
+consistent in patients with heterozygous familial hypercholesterolemia, non-familial
+forms of hypercholesterolemia, and mixed hyperlipidemia, including patients with non-
+insulin-dependent diabetes mellitus.
+
+In patients with isolated hypertriglyceridemia, atorvastatin reduces total-C, LDL-C,
+VLDL-C, apo B, TG, and non-HDL-C, and increases HDL-C. In patients with
+dysbetalipoproteinemia, atorvastatin reduces intermediate density lipoprotein
+cholesterol (IDL-C).
+
+In patients with Fredrickson Types IIa and IIb hyperlipoproteinemia pooled from 24
+controlled trials, the median percent increases from baseline in HDL-C for atorvastatin
+(10 mg-80 mg) were 5.1% to 8.7% in a non-dose-related manner. Additionally, analysis
+of this pooled data demonstrated significant dose-related decreases in total-C/HDL-C
+and LDL-C/HDL-C ratios, ranging from -29% to -44% and -37% to -55%, respectively.
+
+Atorvastatin and some of its metabolites are pharmacologically active in humans. The
+primary site of action of atorvastatin is the liver, which is the principal site of
+cholesterol synthesis and LDL clearance. LDL-C reduction correlates better with drug
+dose than it does with systemic drug concentration. Individualization of drug dosage
+should be based on therapeutic response (see section 4.2. - Posology and method of
+administration).
+The effects of atorvastatin on ischemic events and total mortality were studied in the
+Myocardial Ischemia Reduction with Aggressive Cholesterol Lowering study
+(MIRACL). This multicenter, randomized, double-blind, placebo-controlled study
+followed 3086 patients with acute coronary syndromes; unstable angina or non-Q wave
+MI. Patients were treated with standard care, including diet, and either atorvastatin 80
+mg daily or placebo for a median duration of 16 weeks. The final LDL-C, total-C,
+HDL-C and TG levels were 72 mg/dL, 147 mg/dL, 48 mg/dL, and 139 mg/dL,
+respectively, in the atorvastatin group, and 135 mg/dL, 217 mg/dL, 46 mg/dL, and 187
+mg/dL, respectively, in the placebo group. Atorvastatin significantly reduced the risk of
+ischemic events and death by 16%. The risk of experiencing rehospitalization for
+angina pectoris with documented evidence of myocardial ischemia was significantly
+reduced by 26%. Atorvastatin reduced the risk of ischemic events and death to a similar
+extent across the range of baseline LDL-C. In addition, atorvastatin reduced the risk of
+ischemic events and death to similar extents in patients with non-Q wave MI and
+unstable angina, as well as in males and females and in patients ≤65 years of age and
+>65 years of age.
+
+Prevention of Cardiovascular Complications
+In the Anglo-Scandinavian Cardiac Outcomes Trial Lipid Lowering Arm (ASCOT-
+LLA), the effect of atorvastatin on fatal and non-fatal CHD was assessed in 10,305
+hypertensive patients 40 to 80 years of age (mean age 63 years), without a previous
+MI and with total-C levels <6.5 mmol/L (251 mg/dL). Additionally all patients had at
+least three of the following CV risk factors: male gender (81.1%), age >55 years
+(84.5%), smoking (33.2%), diabetes (24.3%), history of CHD in a first-degree relative
+(26%), total-C:HDL >6 (14.3%), peripheral vascular disease (5.1%), left ventricular
+hypertrophy (14.4%), prior cerebrovascular event (9.8%), specific ECG abnormality
+(14.3%), proteinuria/albuminuria (62.4%). In this double-blind, placebo-controlled
+study, patients were treated with anti-hypertensive therapy (goal BP <140/90 mm Hg
+for non-diabetic patients, <130/80 mm Hg for diabetic patients) and allocated to either
+atorvastatin 10 mg daily (n=5168) or placebo (n=5137). As the effect of atorvastatin
+treatment compared to placebo exceeded the significance threshold during an interim
+analysis, the ASCOT-LLA was terminated early at 3.3 years instead of 5 years.
+Additionally, blood pressure was well controlled and similar in patients assigned
+atorvastatin and placebo. These changes persisted throughout the treatment period.
+
+Atorvastatin reduced the rate of the following events:
+
+Event                                                        Risk           No. of Events        p-value
+                                                            Decrease        (Atorvastatin
+                                                              (%)           vs. Placebo)
+
+Coronary events (fatal CHDa plus non-fatal MIb)               36%             100 vs. 154         0.0005
+Total CV events and revascularization procedures              20%             389 vs. 483         0.0008
+Total coronary events                                         29%             178 vs. 247         0.0006
+Fatal and non-fatal stroke*                                   26%              89 vs. 119         0.0332
+a Coronary Heart Disease.
+b Myocardial Infarction.
+* Although the reduction of fatal and non-fatal strokes did not reach a pre-defined significance level
+  (p=0.01), a 26% relative risk reduction was observed.
+The primary endpoint examined in ASCOT was the rate of fatal coronary heart disease
+or non-fatal (symptomatic and silent) myocardial infarction. These coronary events
+occurred in 1.9% of atorvastatin treated patients compared to 3% of placebo treated
+subjects, a relative risk reduction of 36% (p=0.0005) (Table above). There was no
+significant difference between groups for cardiovascular mortality (hazard ratio: 0.90,
+95% CI: 0.66-1.23, p=0.51) and all-cause mortality (hazard ratio: 0.87, 95% CI: 0.71-
+1.06, p=0.17).
+
+In the Collaborative Atorvastatin Diabetes Study (CARDS), the effect of atorvastatin
+on fatal and non-fatal CVD was assessed in 2838 patients with type 2 diabetes 40 to 75
+years of age, without prior history of CVD and with LDL ≤4.14 mmol/L (160 mg/dL)
+and TG ≤6.78 mmol/L (600 mg/dL). Additionally, all patients had at least one of the
+following risk factors: hypertension, current smoking, retinopathy, microalbuminuria
+or macroalbuminuria.
+
+In this randomized, double-blind, multicenter, placebo-controlled trial, patients were
+treated with either atorvastatin 10 mg daily (n=1428) or placebo (n=1410) for a median
+follow-up of 3.9 years. As the effect of atorvastatin treatment on the primary endpoint
+reached the pre-defined stopping rules for efficacy, CARDS was terminated 2 years
+earlier than anticipated.
+
+The absolute and relative risk reduction effects of atorvastatin are as follows:
+
+ Event                                         Relative Risk        No. of Events        p-value
+                                                Reduction          (atorvastatin vs.
+                                                   (%)                 placebo)
+ Major CV events (fatal and non-                    37%              83 vs. 127          0.0010
+ fatal AMI, silent MI, acute CHD
+ death, stroke, CABG, PTCA,
+ revascularization procedure,
+ unstable angina)
+ MI (fatal and non-fatal AMI, silent MI)            42%               38 vs. 64          0.0070
+ Stroke (fatal and non-fatal)                       48%               21 vs. 39          0.0163
+ CABG, PTCA or other coronary                       31%               24 vs. 34          0.1557
+ revascularization procedure
+ Unstable angina                                    22%                8 vs. 10          0.5991
+ Acute CHD death (excluding confirmed                -                 10 vs. 5          0.2211
+ acute MI)
+AMI = acute myocardial infarction; CABG = coronary artery bypass graft; CHD = coronary heart
+disease; MI = myocardial infarction; PTCA = percutaneous transluminal coronary angioplasty.
+
+There was no evidence of a difference in the treatment effect by patient’s gender, age,
+or baseline LDL-C level.
+
+A relative risk reduction in death of 27% (82 deaths in the placebo group compared to
+61 deaths in the treatment arm) has been observed with a borderline statistical
+significance (p=0.0592). The overall incidence of adverse events or serious adverse
+events was similar between the treatment groups.
+
+Atherosclerosis
+In the Reversing Atherosclerosis with Aggressive Lipid-Lowering (REVERSAL)
+study, the effect of atorvastatin 80 mg and pravastatin 40 mg on coronary
+atherosclerosis was assessed by intravascular ultrasound (IVUS), during angiography,
+in patients with CHD. In this randomized, double-blind, multicenter, controlled clinical
+trial, IVUS was performed at baseline and at 18 months in 502 patients. In the
+atorvastatin group (n=253), the median percent change, from baseline, in total atheroma
+volume (the primary study criteria) was -0.4% (p=0.98) in the atorvastatin group and
++2.7% (p=0.001) in the pravastatin group (n=249). When compared to pravastatin, the
+effects of atorvastatin were statistically significant (p=0.02).
+
+In the atorvastatin group, LDL-C was reduced to a mean of 2.04 mmol/L ± 0.8 (78.9
+mg/dL ± 30) from baseline 3.89 mmol/L ± 0.7 (150 mg/dL ± 28) and in the pravastatin
+group, LDL-C was reduced to a mean of 2.85 mmol/L ± 0.7 (110 mg/dL ± 26) from
+baseline 3.89 mmol/L ± 0.7 (150 mg/dL ± 26) (p<0.0001). Atorvastatin also
+significantly reduced mean total-C by 34.1% (pravastatin: -18.4%, p<0.0001), mean
+TG levels by 20% (pravastatin: -6.8%, p<0.0009), and mean apo B by 39.1%
+(pravastatin: -22.0%, p<0.0001). Atorvastatin increased mean HDL-C by 2.9%
+(pravastatin: +5.6%, p=NS). There was a 36.4% mean reduction in C-reactive protein
+(CRP) in the atorvastatin group compared to a 5.2% reduction in the pravastatin group
+(p<0.0001).
+
+Study results were obtained with the 80 mg dose strength. Therefore, they cannot be
+extrapolated to the lower dose strengths.
+
+The safety and tolerability profiles of the two treatment groups were comparable.
+
+Recurrent Stroke
+In the Stroke Prevention by Aggressive Reduction in Cholesterol Levels (SPARCL)
+study, the effect of atorvastatin 80 mg daily or placebo on stroke was evaluated in 4731
+patients who had a stroke or TIA within the preceding 6 months and no history of CHD.
+Patients were 60% male, 21 to 92 years of age (mean age 63 years), and had an average
+baseline LDL of 133 mg/dL (3.4 mmol/L). The mean LDL-C was 73 mg/dL (1.9
+mmol/L) during treatment with atorvastatin and 129 mg/dL (3.3 mmol/L) during
+treatment with placebo. Median follow-up was 4.9 years.
+
+Atorvastatin 80 mg reduced the risk of the primary endpoint of fatal or non-fatal stroke
+by 15% (hazard ratio [HR] 0.85; 95% CI, 0.72-1.00; p=0.05 or HR 0.84; 95% CI,
+0.71-0.99; p=0.03 after adjustment for baseline factors) compared to placebo. All-cause
+mortality was 9.1% (216/2365) for atorvastatin vs. 8.9% (211/2366) for placebo. In a
+post-hoc analysis, atorvastatin 80 mg reduced the incidence of ischemic stroke
+(218/2365, 9.2% vs. 274/2366, 11.6%, p=0.01) and increased the incidence of
+hemorrhagic stroke (55/2365, 2.3% vs. 33/2366, 1.4%, p=0.02) compared to placebo.
+The incidence of non-fatal hemorrhagic stroke was significantly greater in the
+atorvastatin group (38 atorvastatin vs. 16 placebo) while the incidence of fatal
+hemorrhagic stroke was similar between groups (17 atorvastatin vs. 18 placebo). The
+risk of hemorrhagic stroke was increased in patients who entered the study with a
+hemorrhagic stroke and had a recurrent hemorrhagic stroke (7 atorvastatin vs. 2
+placebo).
+
+All-cause mortality was 15.6% (7/45) for atorvastatin vs. 10.4% (5/48) in the subgroup
+of patients with prior hemorrhagic stroke.
+    Secondary Prevention of Cardiovascular Events
+    In the Treating to New Targets Study (TNT), the effect of atorvastatin 80 mg/day vs.
+    atorvastatin 10 mg/day on the reduction in CV events was assessed in 10,001 subjects
+    (94% white, 81% male, 38% ≥65 years) with clinically evident CHD who had achieved
+    a target LDL-C level <130 mg/dL after completing an 8-week, open-label, run-in
+    period with atorvastatin 10 mg/day. Subjects were randomly assigned to either 10
+    mg/day or 80 mg/day of atorvastatin and followed for a median duration of 4.9 years.
+    The primary endpoint was the time-to-first occurrence of any of the following major
+    cardiovascular events (MCVE): death due to CHD, non-fatal MI, resuscitated cardiac
+    arrest, and fatal and non-fatal stroke. The mean LDL-C, total-C, TG, non-HDL and
+    HDL cholesterol levels at 12 weeks were 73 mg/dL, 145 mg/dL, 128 mg/dL, 98 mg/dL
+    and 47 mg/dL, respectively, during treatment with 80 mg atorvastatin and 99 mg/dL,
+    177 mg/dL, 152 mg/dL, 129 mg/dL and 48 mg/dL, respectively, during treatment with
+    10 mg atorvastatin.
+
+    Treatment with atorvastatin 80 mg/day significantly reduced the rate of MCVE (434
+    events in the 80 mg/day group vs. 548 events in the 10 mg/day group) with a relative
+    risk reduction of 22%.
+
+                                Overview of Efficacy Results in TNT
+Significant Endpoint                       Atorvastatin 10 mg     Atorvastatin 80 mg       HRa (95% CI)
+                                                (N=5006)              (N=4995)
+PRIMARY ENDPOINT*                              N          %          N          %
+First major CV endpoint                       548        10.9       434         8.7        0.78 (0.69-0.89)
+Components of the Primary Endpoint
+CHD death                                      127         2.5        101          2.0     0.80 (0.61-1.03)
+Non-fatal, non-procedure related MI            308         6.2        243          4.9     0.78 (0.66-0.93)
+Resuscitated cardiac arrest                     26         0.5         25          0.5     0.96 (0.56-1.67)
+Stroke (fatal and non-fatal)                   155         3.1        117          2.3     0.75 (0.59-0.96)
+SECONDARY ENDPOINTS**
+First CHF with hospitalization                 164         3.3        122          2.4     0.74 (0.59-0.94)
+First PVD endpoint                             282         5.6        275          5.5     0.97 (0.83-1.15)
+First CABG or other coronary                   904        18.1        667         13.4     0.72 (0.65-0.80)
+revascularization procedureb
+First documented angina endpointb              615        12.3        545         10.9     0.88 (0.79-0.99)
+All-cause mortality                            282         5.6        284          5.7     1.01 (0.85-1.19)
+Components of All-Cause Mortality
+CV death                                       155         3.1        126          2.5     0.81 (0.64-1.03)
+Non-CV death                                   127         2.5        158          3.2     1.25 (0.99-1.57)
+Cancer death                                    75         1.5         85          1.7     1.13 (0.83-1.55)
+Other non-CV death                              43         0.9         58          1.2     1.35 (0.91-2.00)
+Suicide, homicide and other traumatic            9         0.2         15          0.3     1.67 (0.73-3.82)
+non-CV death
+ a
+   Atorvastatin 80 mg: atorvastatin 10 mg.
+ b
+   Component of other secondary endpoints.
+ * MCVE =death due to CHD, non-fatal MI, resuscitated cardiac arrest, and fatal and non-fatal stroke.
+ ** Secondary endpoints not included in primary endpoint.
+ HR=hazard ratio; CHD=coronary heart disease; CI=confidence interval; MI=myocardial infarction;
+ CHF=congestive heart failure; CV=cardiovascular; PVD=peripheral vascular disease; CABG=coronary
+ artery bypass graft.
+ Confidence intervals for the secondary endpoints were not adjusted for multiple comparisons.
+There was no significant difference between the treatment groups for all-cause
+mortality: 282 (5.6%) in the atorvastatin 10 mg/day group vs. 284 (5.7%) in the
+atorvastatin 80 mg/day group. The proportions of subjects who experienced CV death,
+including the components of CHD death and fatal stroke were numerically smaller in
+the atorvastatin 80 mg group than in the atorvastatin 10 mg treatment group. The
+proportions of subjects who experienced non-CV death were numerically larger in the
+atorvastatin 80 mg group than in the atorvastatin 10 mg treatment group.
+
+In the Incremental Decrease in Endpoints Through Aggressive Lipid Lowering Study
+(IDEAL), treatment with atorvastatin 80 mg/day was compared to treatment with
+simvastatin 20 mg/day to 40 mg/day in 8888 subjects up to 80 years of age with a
+history of CHD to assess whether reduction in CV risk could be achieved. Patients were
+mainly male (81%), white (99%) with an average age of 61.7 years, and an average
+LDL-C of 121.5 mg/dL at randomization; 76% were on statin therapy. In this
+prospective, randomized, open-label, blinded endpoint (PROBE) trial with no run-in
+period, subjects were followed for a median duration of 4.8 years. The mean LDL-C,
+total-C, TG, HDL and non-HDL-C levels at Week 12 were 78 mg/dL, 145 mg/dL, 115
+mg/dL, 45 mg/dL and 100 mg/dL, respectively, during treatment with 80 mg
+atorvastatin and 105 mg/dL, 179 mg/dL, 142 mg/dL, 47 mg/dL and 132 mg/dL,
+respectively, during treatment with 20 mg to 40 mg simvastatin.
+
+There was no significant difference between the treatment groups for the primary
+endpoint; the rate of first major coronary event (fatal CHD, non-fatal MI and
+resuscitated cardiac arrest): 411 (9.3%) in the atorvastatin 80 mg/day group vs. 463
+(10.4%) in the simvastatin 20 mg/day to 40 mg/day group, HR 0.89, 95% CI (0.78-
+1.01), p=0.07.
+
+There were no significant differences between the treatment groups for all-cause
+mortality: 366 (8.2%) in the atorvastatin 80 mg/day group vs. 374 (8.4%) in the
+simvastatin 20 mg/day to 40 mg/day group. The proportions of subjects who
+experienced CV or non-CV death were similar for the atorvastatin 80 mg group and the
+simvastatin 20 mg to 40 mg group.
+
+There were more serious adverse events and discontinuations due to adverse events in
+the high-dose atorvastatin group (92, 1.8%; 497, 9.9%, respectively) as compared to the
+low-dose group (69, 1.4%; 404, 8.1%, respectively). Persistent transaminase elevations
+(≥3 x ULN twice within 4-10 days) occurred in 62 (1.3%) individuals with atorvastatin
+80 mg and in nine (0.2%) individuals with atorvastatin 10 mg. Elevations of CPK (≥10
+x ULN) were low overall, but were higher in the high-dose atorvastatin treatment group
+(13, 0.3%) compared to the low-dose atorvastatin group (6, 0.1%).
+
+Heterozygous Familial Hypercholesterolemia in Pediatric Patients
+The following pediatric-exclusive studies have been completed with atorvastatin.
+
+In an open-label, single-arm study, 271 male and female Heterozygous Familial
+Hypercholesterolemia (HeFH) children 6-15 years of age were enrolled and treated
+with atorvastatin for up to 3 years. Inclusion in the study required confirmed HeFH
+and a baseline LDL-C level ≥4 mmol/L (approximately 152 mg/dL). The study
+included 139 children at Tanner 1 development stage (generally ranging from 6-10
+years of age). The dosage of atorvastatin (once daily) was initiated at 5 mg (chewable
+tablet) in children less than 10 years of age. Children age 10 and above were initiated
+at 10 mg atorvastatin (once daily). All children could titrate to higher doses to achieve
+a target of
+<3.35 mmol/L LDL-C. The mean weighted dose for children aged 6 to 9 years was 19.6
+mg and the mean weighted dose for children aged 10 years and above was 23.9 mg.
+
+The mean (+/- SD) baseline LDL-C value was 6.12 (1.26) mmol/L which was
+approximately 233 (48) mg/dL. See table below for final results.
+
+The data were consistent with no drug effect on any of the parameters of growth and
+development (i.e., height, weight, BMI, Tanner stage, Investigator assessment of
+Overall Maturation and Development) in pediatric and adolescent subjects with HeFH
+receiving atorvastatin treatment over the 3-year study. There was no Investigator-
+assessed drug effect noted in height, weight, BMI by age or by gender by visit.
+
+     Lipid-lowering Effects of Atorvastatin in Adolescent Boys and Girls with
+              Heterozygous Familial Hypercholesterolemia (mmol/L)
+Timepoint N          TC (S.D.)       LDL-C (S.D.) HDL-C (S.D.) TG (S.D.)                   Apo B (S.D.)#
+Baseline      271 7.86 (1.30)        6.12 (1.26)        1.314 (0.2663) 0.93 (0.47)         1.42 (0.28)**
+Month 30 206 4.95 (0.77)*            3.25 (0.67)        1.327 (0.2796) 0.79 (0.38)*        0.90 (0.17)*
+Month         240 5.12 (0.86)        3.45 (0.81)        1.308 (0.2739) 0.78 (0.41)         0.93 (0.20)***
+36/ET
+TC = total cholesterol; LDL-C = low density lipoprotein cholesterol-C; HDL-C = high density
+lipoprotein cholesterol-C; TG = triglycerides; Apo B = apolipoprotein B; S.D. = Standard Deviation;
+“Month 36/ET” included final visit data for subjects who ended participation prior to the scheduled 36
+month timepoint as well as full 36 month data for subjects completing the 36 month participation; “*” =
+Month 30 N for this parameter was 207; “**” = Baseline N for this parameter was 270; “***” = Month
+36/ET N for this parameter was 243; “#”=g/L for Apo B.
+
+In a double-blind, placebo-controlled study followed by an open-label phase, 187 boys
+and post-menarchal girls 10 to 17 years of age (mean age 14.1 years) with heterozygous
+familial hypercholesterolemia or severe hypercholesterolemia were randomized to
+atorvastatin (n=140) or placebo (n=47) for 26 weeks and then all received atorvastatin
+for 26 weeks. Inclusion in the study required 1) a baseline LDL-C level ≥190 mg/dL
+or 2) a baseline LDL-C ≥160 mg/dL and positive family history of familial
+hypercholesterolemia or documented premature CVD in a first- or second-degree
+relative. The mean baseline LDL-C value was 218.6 mg/dL (range: 138.5-385.0
+mg/dL) in the atorvastatin group compared to 230.0 mg/dL (range: 160.0-324.5 mg/dL)
+in the placebo group. The dosage of atorvastatin (once daily) was 10 mg for the first 4
+weeks and up-titrated to 20 mg if the LDL-C level was >130 mg/dL. The number of
+atorvastatin-treated patients who required up-titration to 20 mg after Week 4 during the
+double-blind phase was 78 (55.7%).
+
+Atorvastatin significantly decreased plasma levels of total-C, LDL-C, TG, and apo B
+during the 26-week double-blind phase (see Table below).
+      Lipid-lowering Effects of Atorvastatin in Adolescent Boys and Girls with
+    Heterozygous Familial Hypercholesterolemia or Severe Hypercholesterolemia
+(Mean Percent Change from Baseline at Endpoint in Intention-to-Treat Population)
+
+   DOSAGE             N       Total-C     LDL-C       HDL-C          TG            Apo B
+
+   Placebo            47        -1.5        -0.4        -1.9         1.0             0.7
+
+   Atorvastatin      140        -31.4       -39.6        2.8        -12.0           -34.0
+
+  Total-C=total cholesterol; LDL-C=low density lipoprotein cholesterol; HDL-C=high density
+  lipoprotein cholesterol; TG=triglycerides; Apo B=apolipoprotein B
+
+The mean achieved LDL-C value was 130.7 mg/dL (range: 70.0-242.0 mg/dL) in the
+atorvastatin group compared to 228.5 mg/dL (range: 152.0-385.0 mg/dL) in the placebo
+group during the 26-week double-blind phase. In this 1-year study, there was no
+detectable effect on growth or sexual maturation in boys or on menstrual cycle length in
+girls.
+
+An 8-week, open-label study to evaluate pharmacokinetics, pharmacodynamics, and
+safety and tolerability of atorvastatin was conducted in 39 patients, 6 to 17 years of age
+with genetically confirmed heterozygous familial hypercholesterolemia and baseline
+LDL-C ≥4 mmol/L. Cohort A included 15 patients, 6 to 12 years of age and at Tanner
+Stage 1. Cohort B included 24 patients, 10 to 17 years of age and at Tanner Stage ≥2.
+
+The initial dose of atorvastatin was 5 mg daily of a chewable tablet in Cohort A and 10
+mg daily of a tablet formulation in Cohort B. The atorvastatin dose was permitted to be
+doubled if a patient had not attained target LDL-C of <3.35 mmol/L at Week 4 and if
+atorvastatin was well tolerated.
+
+Mean values for LDL-C, TC, VLDL-C, and Apo B decreased by Week 2 among all
+patients. For patients whose dose was doubled, additional decreases were observed as
+early as 2 weeks, at the first assessment, after dose escalation. The mean percent
+decreases in lipid parameters were similar for both cohorts, regardless of whether
+patients remained at their initial dose or doubled their initial dose. At Week 8, on
+average, the percent change from baseline in LDL-C and TC was approximately 40%
+and 30%, respectively, over the range of exposures.
+
+The long-term efficacy of atorvastatin therapy in childhood to reduce morbidity and
+mortality in adulthood has not been established.
+
+An additional pediatric study of atorvastatin vs. colestipol in patients with
+hypercholesterolemia aged 10-18 years demonstrated that atorvastatin (N=25) caused a
+significant reduction in LDL-C at Week 26 (p<0.05) compared with colestipol (N=31).
+
+A compassionate use study in patients with severe hypercholesterolemia (including
+homozygous hypercholesterolemia) included 46 pediatric patients treated with
+atorvastatin titrated according to response (some subjects received 80 mg atorvastatin
+per day). The study lasted 3 years: LDL-C was lowered by 36%.
+5.2. Pharmacokinetic properties
+     Pharmacokinetics and Metabolism
+     Absorption: Atorvastatin is rapidly absorbed after oral administration; maximum
+     plasma concentrations occur within 1 to 2 hours. The extent of absorption and plasma
+     atorvastatin concentrations increases in proportion to atorvastatin dose. Atorvastatin
+     tablets are 95% to 99% bioavailable compared to solutions. The absolute bioavailability
+     of atorvastatin is approximately 14% and the systemic availability of HMG-CoA
+     reductase inhibitory activity is approximately 30%. The low systemic availability is
+     attributed to presystemic clearance in gastrointestinal mucosa and/or hepatic first-pass
+     metabolism. Although food decreases the rate and extent of drug absorption by
+     approximately 25% and 9% respectively, as assessed by Cmax and AUC, LDL-C
+     reduction is similar whether atorvastatin is given with or without food. Plasma
+     atorvastatin concentrations are lower (approximately 30% for Cmax and AUC)
+     following evening drug administration compared to morning. However, LDL-C
+     reduction is the same regardless of the time of day of drug administration (see section
+     4.2. - Posology and method of administration).
+
+    Distribution: Mean volume of distribution of atorvastatin is approximately 381 Liters.
+    Atorvastatin is ≥98% bound to plasma proteins. A red blood cell/plasma ratio of
+    approximately 0.25 indicates poor drug penetration into red blood cells.
+
+    Metabolism: Atorvastatin is extensively metabolized to ortho- and para-hydroxylated
+    derivatives and various beta-oxidation products. In vitro inhibition of HMG-CoA
+    reductase by ortho- and para-hydroxylated metabolites is equivalent to that of
+    atorvastatin. Approximately 70% of circulating inhibitory activity for HMG-CoA
+    reductase is attributed to active metabolites. In vitro studies suggest the importance of
+    atorvastatin metabolism by hepatic CYP 3A4, consistent with increased plasma
+    concentrations of atorvastatin in humans following co-administration with
+    erythromycin, a known inhibitor of this isozyme. In vitro studies also indicate that
+    atorvastatin is a weak inhibitor of CYP 3A4. Atorvastatin co-administration did not
+    produce a clinically significant effect in plasma concentrations of terfenadine, a
+    compound predominantly metabolized by CYP 3A4; therefore, it is unlikely that
+    atorvastatin will significantly alter the pharmacokinetics of other CYP 3A4 substrates
+    (see section 4.5. - Interaction with other medicinal products and other forms of
+    interaction). In animals, the ortho-hydroxy metabolite undergoes further
+    glucuronidation.
+
+    Excretion: Atorvastatin and its metabolites are eliminated primarily in bile following
+    hepatic and/or extrahepatic metabolism; however, the drug does not appear to undergo
+    enterohepatic recirculation. Mean plasma elimination half-life of atorvastatin in
+    humans is approximately 14 hours, but the half-life of inhibitory activity for HMG-CoA
+    reductase is 20 to 30 hours due to the contribution of active metabolites. Less than 2%
+    of a dose of atorvastatin is recovered in urine following oral administration.
+
+    Atorvastatin is a substrate of the hepatic transporters, OATP1B1 and OATP1B3
+    transporter. Metabolites of atorvastatin are substrates of OATP1B1. Atorvastatin is also
+    identified as a substrate of the efflux transporters MDR1 and BCRP, which may limit
+    the intestinal absorption and biliary clearance of atorvastatin.
+
+    Special Populations
+Elderly: Plasma concentrations of atorvastatin are higher (approximately 40% for Cmax
+and 30% for AUC) in healthy, elderly subjects (aged ≥65 years) than in young adults.
+The ACCESS study specifically evaluated elderly patients with respect to reaching
+their National Cholesterol Education Program (NCEP) treatment goals. The study
+included 1087 patients under 65 years of age, 815 patients over 65 years of age, and 185
+patients over 75 years of age. No differences in safety, efficacy or lipid treatment goal
+attainment were observed between elderly patients and the overall population.
+
+Pediatric: In an open-label, 8-week study, Tanner Stage 1 (N=15) and Tanner Stage ≥2
+(N=24) pediatric patients (ages 6-17 years) with heterozygous familial
+hypercholesterolemia and baseline LDL-C ≥4 mmol/L were treated with 5 mg or 10 mg
+of chewable or 10 mg or 20 mg of film-coated atorvastatin tablets once daily,
+respectively. Body weight was the only significant covariate in atorvastatin population
+PK model. Apparent oral clearance of atorvastatin in pediatric subjects appeared similar
+to adults when scaled allometrically by body weight. Consistent decreases in LDL-C
+and total-C were observed over the range of atorvastatin and o-hydroxyatorvastatin
+exposures.
+
+Gender: Plasma concentrations of atorvastatin in women differ (approximately 20%
+higher for Cmax and 10% lower for AUC) from those in men. However, there were no
+clinically significant differences in lipid effects between men and women.
+
+Renal Insufficiency: Renal disease has no influence on the plasma concentrations or
+lipid effects of atorvastatin. Thus, dose adjustment in patients with renal dysfunction is
+not necessary (see section 4.2. - Posology and method of administration).
+
+Hemodialysis: While studies have not been conducted in patients with end-stage renal
+disease, hemodialysis is not expected to significantly enhance clearance of atorvastatin
+since the drug is extensively bound to plasma proteins.
+
+Hepatic Insufficiency: Plasma concentrations of atorvastatin are markedly increased
+(approximately 16-fold in Cmax and 11-fold in AUC) in patients with chronic alcoholic
+liver disease (Child-Pugh Class B) (see section 4.3. - Contraindications).
+
+Drug Interactions: The effect of co-administered drugs on the pharmacokinetics of
+atorvastatin as well as the effect of atorvastatin on the pharmacokinetics of co-
+administered drugs are summarized below (see section 4.4. - Special warnings and
+precautions for use, and section 4.5. - Interaction with other medicinal products
+and other forms of interaction).
+            Effect of Co-administered Drugs on the Pharmacokinetics of Atorvastatin
+          Co-administered Drug and                                 Atorvastatin
+              Dosing Regimen
+                                                Dose (mg)             Ratio of AUC&     Ratio of Cmax&
+    #
+      Cyclosporine 5.2 mg/kg/day, stable   10 mg QDa for 28 days            8.7              10.7
+    dose
+    #
+      Tipranavir 500 mg BIDb/ritonavir           10 mg SDc                  9.4               8.6
+    200 mg BIDb, 7 days
+    #
+      Glecaprevir 400 mg
+                                           10 mg QDa for 7 days
+    QDa/Pibrentasvir 120 mg QDa, 7 days                                     8.3               22.0
+    #
+      Telaprevir 750 mg q8hf, 10 days            20 mg SDc                  7.9               10.6
+    #
+      Elbasvir 50 mg QDa/grazoprevir
+                                                 10 mg SDc                 1.95               4.3
+    200 mg QDa, 13 days
+    #
+      Boceprevir 800 mg TIDd, 7 days            40 mg SD    c
+                                                                            2.3               2.7
+    #
+      Simeprevir 150 mg QDa, 10 days            40 mg SDc                  2.12               1.7
+    #
+      Lopinavir 400 mg BIDb/ritonavir       20 mg QDa for 4 days            5.9               4.7
+    100 mg BIDb, 14 days
+    #,‡
+        Saquinavir 400 mg BIDb/ritonavir    40 mg QDa for 4 days            3.9               4.3
+    400 mg BIDb, 15 days
+    #
+      Clarithromycin 500 mg BIDb,           80 mg QDa for 8 days            4.5               5.4
+    9 days
+    #
+      Darunavir 300 mg BIDb/ritonavir       10 mg QDa for 4 days            3.4               2.2
+    100 mg BIDb, 9 days
+    #
+      Itraconazole 200 mg QDa, 4 days           40 mg SDc                   3.3               1.20
+    #
+      Letermovir 480 mg QD, 10 daysa            20 mg SDc                  3.29               2.17
+    #
+      Fosamprenavir 700 mg                  10 mg QDa for 4 days            2.5                2.8
+    BIDb/ritonavir 100 mg BIDb,
+    14 days
+    #
+      Fosamprenavir 1400 mg BIDb,           10 mg QDa for 4 days            2.3               4.0
+    14 days
+    #
+      Nelfinavir 1250 mg BIDb, 14 days     10 mg QDa for 28 days           1.74               2.2
+    #                              a,                       c
+        Grapefruit juice, 240 mL QD *            40 mg SD                  1.37               1.16
+
+    Diltiazem 240 mg QDa, 28 days                40 mg SDc                 1.51               1.00
+
+    Erythromycin 500 mg QIDe, 7 days             10 mg SDc                 1.33               1.38
+
+    Amlodipine 10 mg, single dose                80 mg SDc                 1.18               0.91
+
+    Cimetidine 300 mg QIDe, 2 weeks        10 mg QDa for 2 weeks           1.00               0.89
+
+    Colestipol 10 g BIDb, 24 weeks         40 mg QDa for 8 weeks           NA                0.74**
+
+    Maalox TC® 30 mL QIDe, 17 days         10 mg QDa for 15 days           0.66               0.67
+
+    Efavirenz 600 mg QDa, 14 days             10 mg for 3 days             0.59               1.01
+    #
+      Rifampin 600 mg QDa, 7 days (co-           40 mg SDc                 1.12               2.9
+    administered)†
+    #
+      Rifampin 600 mg QDa, 5 days (doses         40 mg SDc                 0.20               0.60
+    separated)†
+    #
+      Gemfibrozil 600 mg BIDb, 7 days            40 mg SDc                 1.35               1.00
+
+    #
+        Fenofibrate 160 mg QDa, 7 days           40 mg SDc                 1.03               1.02
+
+&
+    Represents ratio treatments (co-administered drug plus atorvastatin vs. atorvastatin alone).
+#
+     See section 4.4. - Special warnings and precautions for use and section 4.5. - Interaction with
+     other medicinal products and other forms of interaction for clinical significance.
+      * Greater increases in AUC (ratio of AUC up to 2.5) and/or Cmax (ratio of Cmax up to 1.71) have been
+         reported with excessive grapefruit consumption (≥750 mL - 1.2 L/day).
+      ** Ratio based on a single sample taken 8-16 h post dose.
+      †
+         Due to the dual interaction mechanism of rifampin, simultaneous co-administration of atorvastatin
+         with rifampin is recommended, as delayed administration of atorvastatin after administration of
+         rifampin has been associated with a significant reduction in atorvastatin plasma concentrations.
+      ‡
+         The dose of saquinavir/ritonavir in this study is not the clinically used dose. The increase in
+         atorvastatin exposure when used clinically is likely to be higher than what was observed in this
+         study. Therefore caution should be exercised and the lowest dose necessary should be used.
+      a
+         Once daily
+      b
+         Twice daily
+      c
+         Single dose
+      d
+         Three times daily
+      e
+         Four times daily
+      f
+         Every 8 hours
+
+           Effect of Atorvastatin on the Pharmacokinetics of Co-administered Drugs
+             Atorvastatin                 Co-administered Drug and Dosing Regimen
+                                Drug/Dose (mg)                    Ratio of      Ratio of
+                                                                  AUC&          Cmax&
+                                                      c
+      80 mg QDa for             Antipyrine, 600 mg SD             1.03          0.89
+      15 days
+      80 mg QDa for             Digoxin 0.25 mg QDa, 20 days#          1.15              1.20
+      10 days
+      40 mg QDa for             Oral contraceptive QDa, 2 months
+      22 days                   - Norethindrone 1 mg                   1.28              1.23
+                                - Ethinyl estradiol 35 µg              1.19              1.30
+      10 mg SDc                 Tipranavir 500 mg BIDb/ritonavir       1.08              0.96
+                                200 mg BIDb, 7 days
+      10 mg QDa for 4 days      Fosamprenavir 1400 mg BIDb,            0.73              0.82
+                                14 days
+      10 mg QDa for 4 days      Fosamprenavir 700 mg                   0.99              0.94
+                                BIDb/ritonavir 100 mg BIDb,
+                                14 days
+
+       &
+         Represents ratio treatments (co-administered drug plus atorvastatin vs. atorvastatin alone).
+       #
+         See section 4.5 - Interaction with other medicinal products and other forms of interaction for
+         clinical significance.
+       a
+         Once daily
+       b
+         Twice daily
+       c
+         Single dose
+
+5.3. Preclinical safety data
+     Carcinogenesis, Mutagenesis, Impairment of Fertility - Atorvastatin was not
+     carcinogenic in rats. The maximum dose used was 63-fold higher than the highest
+     human dose (80 mg/day) on a mg/kg body-weight basis and 8- to 16-fold higher based
+     on AUC(0-24) values. In a 2-year study in mice, the incidences of hepatocellular
+     adenomas in males and hepatocellular carcinomas in females were increased at the
+     maximum dose used, which was 250-fold higher than the highest human dose, on a
+     mg/kg body-weight basis. Systemic exposure was 6- to 11-fold higher based on
+     AUC(0-24).
+
+    All other chemically similar drugs in this class have induced tumors in both mice and
+    rats at multiples of 12 to 125 times their highest recommended clinical doses, on a
+    mg/kg body-weight basis.
+
+    Atorvastatin did not demonstrate mutagenic or clastogenic potential in four in vitro
+      tests with and without metabolic activation or in one in vivo assay. It was negative in the
+      Ames test with Salmonella typhimurium and Escherichia coli, and in the in vitro
+      hypoxanthine-guanine phosphoribosyltransferase (HGPRT) forward mutation assay in
+      Chinese hamster lung cells. Atorvastatin did not produce significant increases in
+      chromosomal aberrations in the in vitro Chinese hamster lung cell assay and was
+      negative in the in vivo mouse micronucleus test.
+
+      No adverse effects on fertility or reproduction were observed in male rats given doses
+      of atorvastatin up to 175 mg/kg/day or in female rats given doses up to 225 mg/kg/day.
+      These doses are 100 to 140 times the maximum recommended human dose on a mg/kg
+      basis. Atorvastatin caused no adverse effects on sperm or semen parameters, or on
+      reproductive organ histopathology in dogs given doses of 10 mg/kg, 40 mg/kg, or 120
+      mg/kg for 2 years.
+
+ 6.   PHARMACEUTICAL PARTICULARS
+
+ 6.1. List of excipients
+     Cellulose microcrystalline, Calcium carbonate, Maltose, Croscarmellose Sodium, mix of
+     polysorbate 80 and Magnesium Aluminometasilicate (type I-A), Magnesium stearate,
+     Hypromellose, Hydroxypropylcellulose, Triethyl citrate, Polysorbate 80, Titanium
+     dioxide.
+
+6.2. Incompatibilities
+     Not relevant.
+
+ 6.3. Shelf-life
+      Please refer to outer carton.
+
+ 6.4. Special precautions for storage
+      Store below 30°C.
+
+ 6.5. Nature and content of container
+      Available in PVC/PVDC-Al or PA/Al/PVC-Al blisters
+      10 mg film-coated tablets in blister pack of 2x15’s and 10x10’s.
+      20 mg film-coated tablets in blister pack of 2x15’s and 10x10’s.
+      40 mg film-coated tablets in blister pack of 2x15’s and 10x10’s.
+      80 mg film-coated tablets in blister pack of 10x10’s.
+
+      Not all presentations may be available locally.
+
+ 6.6. Special precautions for disposal and other handling
+      None.
+
+ 7.   MANUFACTURER
+      TEVA PHARMA S.L.U.
+      C/ C, nº 4
+      Poligono Industrial Malpica
+      50016 Zaragoza
+      Spain
+
+      Date of last revision: January 2026
+

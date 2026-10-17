@@ -1,0 +1,77 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-007-Singapore-Package-Insert-c8d46cfd4ae7",
+  "brandName": "Respira-L",
+  "genericName": "Montelukast",
+  "country": "Singapore",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-007",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "Montelukast-Teva 10 mg / Teva Singapore",
+    "sourceJurisdiction": "Singapore",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Respira-L/Montelukast/Singapore/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaan6780-montelukast-teva-film-coated-tablet-pi.pdf",
+    "resolvedUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaan6780-montelukast-teva-film-coated-tablet-pi.pdf",
+    "sha256": "c8d46cfd4ae7727c8f760f729147d98349cf4f50744ef36993892508993cde28",
+    "bytes": 208611,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:52:06.739959+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "MANUFACTURER"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Respira-L/Montelukast/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Respira-L/Montelukast/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Respira-L/Montelukast/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Respira-L/Montelukast/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 2,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Montelukast"
+    ],
+    "strengths": [
+      "10 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

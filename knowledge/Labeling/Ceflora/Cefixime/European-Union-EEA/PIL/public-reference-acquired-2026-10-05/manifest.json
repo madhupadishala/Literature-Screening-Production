@@ -1,0 +1,88 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-008-European-Union-EEA-PIL-eaa29ce85ed5",
+  "brandName": "Ceflora",
+  "genericName": "Cefixime",
+  "country": "European-Union-EEA",
+  "documentType": "PIL",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-008",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "name": "CEFIXIMA SANDOZ 200 MG COMPRIMIDOS RECUBIERTOS CON PELÍCULA EFG",
+      "holder": "Sandoz Farmaceutica S.A.",
+      "registration": "90331",
+      "dose": "200 mg",
+      "form": {
+        "id": 42,
+        "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+      },
+      "language": "Spanish"
+    },
+    "sourceJurisdiction": "Spain",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "regionalApplicability": "SPAIN_NATIONAL_LABEL_NOT_EMA_CENTRAL_OR_ALL_EEA_APPROVAL"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://cima.aemps.es/cima/pdfs/p/90331/P_90331.pdf",
+    "resolvedUrl": "https://cima.aemps.es/cima/pdfs/p/90331/P_90331.pdf",
+    "sha256": "eaa29ce85ed5d8dbcde46de56b39a4e1c4fa48b4e965ca716b5a3dfebefe167a",
+    "bytes": 163348,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:51:20.340343+00:00",
+    "sourcePublicationOrUpdateDate": "2025-05-07T12:25:19+00:00",
+    "authorityClass": "NATIONAL_REGULATOR"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 9,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Cefixime"
+    ],
+    "strengths": [
+      "200 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

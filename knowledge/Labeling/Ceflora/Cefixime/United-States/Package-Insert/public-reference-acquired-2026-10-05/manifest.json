@@ -1,0 +1,85 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-008-United-States-Package-Insert-36c1483dbf10",
+  "brandName": "Ceflora",
+  "genericName": "Cefixime",
+  "country": "United-States",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-008",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "REJECTED_STRENGTH_MISMATCH",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "CEFIXIME TABLET [RISING PHARMA HOLDINGS, INC.]",
+    "sourceJurisdiction": "United-States",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "400_MG_TABLET_NOT_200_MG",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Ceflora/Cefixime/United-States/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=b5a3c547-3bc7-4856-af9c-1bead294f5d9&type=pdf",
+    "resolvedUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=b5a3c547-3bc7-4856-af9c-1bead294f5d9&type=pdf",
+    "sha256": "36c1483dbf10634d0e752ea4b68146d841c2defc160e37a914fdcb487c1e572d",
+    "bytes": 230230,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:50:56.760672+00:00",
+    "sourcePublicationOrUpdateDate": "Apr 13, 2026",
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Ceflora/Cefixime/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Ceflora/Cefixime/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Ceflora/Cefixime/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Ceflora/Cefixime/United-States/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 16,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Cefixime"
+    ],
+    "strengths": [
+      "200 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [
+      "Cefixime"
+    ],
+    "strengths": [
+      "400 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  }
+}

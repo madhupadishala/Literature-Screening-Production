@@ -1,0 +1,902 @@
+                                             FICHA TÉCNICA
+
+1. NOMBRE DEL MEDICAMENTO
+
+Pregabalina Alter 25 mg cápsulas duras EFG
+Pregabalina Alter 50 mg cápsulas duras EFG
+Pregabalina Alter 75 mg cápsulas duras EFG
+Pregabalina Alter 100 mg cápsulas duras EFG
+Pregabalina Alter 150 mg cápsulas duras EFG
+Pregabalina Alter 200 mg cápsulas duras EFG
+Pregabalina Alter 300 mg cápsulas duras EFG
+
+2. COMPOSICIÓN CUALITATIVA Y CUANTITATIVA
+
+Cada cápsula dura de Pregabalina Alter 25 mg contiene 25 mg de pregabalina.
+Cada cápsula dura de Pregabalina Alter 50 mg contiene 50 mg de pregabalina.
+Cada cápsula dura de Pregabalina Alter 75 mg contiene 75 mg de pregabalina.
+Cada cápsula dura de Pregabalina Alter 100 mg contiene 100 mg de pregabalina.
+Cada cápsula dura de Pregabalina Alter 150 mg contiene 150 mg de pregabalina.
+Cada cápsula dura de Pregabalina Alter 200 mg contiene 200 mg de pregabalina.
+Cada cápsula dura de Pregabalina Alter 300 mg contiene 300 mg de pregabalina.
+
+Para consultar la lista completa de excipientes, ver sección 6.1.
+
+3. FORMA FARMACÉUTICA
+
+Cápsula dura.
+
+Pregabalina Alter 25 mg: cápsula dura de color blanco, marcada con "25" en el cuerpo de la cápsula.
+Pregabalina Alter 50 mg: cápsula dura de color blanco, marcada con "50" en el cuerpo de la
+cápsula.Pregabalina Alter 75 mg: cápsula dura de color blanco y naranja, marcada con "75" en el cuerpo de
+la cápsula.
+Pregabalina Alter 100 mg: cápsula dura de color naranja, marcada con "100" en el cuerpo de la cápsula.
+Pregabalina Alter 150 mg: cápsula dura de color blanco, marcada con "150" en el cuerpo de la cápsula.
+Pregabalina Alter 200 mg: cápsula dura de color rojo, marcada con "200" en el cuerpo de la cápsula.
+Pregabalina Alter 300 mg: cápsula dura de color blanco y naranja, marcada con "300" en el cuerpo de la
+cápsula.
+
+4. DATOS CLÍNICOS
+
+4.1. Indicaciones terapéuticas
+
+Dolor neuropático
+Pregabalina está indicado en el tratamiento del dolor neuropático periférico y central en adultos.
+
+Epilepsia
+Pregabalina está indicado en adultos en el tratamiento combinado de las crisis parciales con o sin
+generalización secundaria.
+
+Trastorno de ansiedad generalizada
+Pregabalina está indicado en el tratamiento del trastorno de ansiedad generalizada (TAG) en adultos.
+
+4.2. Posología y forma de administración
+
+Posología
+
+                                                   1 de 16
+El rango de dosis es de 150 a 600 mg al día, dividiendo su administración en dos o tres tomas.
+
+Dolor neuropático
+El tratamiento con pregabalina se puede comenzar con una dosis de 150 mg al día, que se puede
+administrar dividida en dos o tres tomas. En función de la respuesta y tolerabilidad individual de cada
+paciente, la dosis se puede incrementar hasta 300 mg al día después de un intervalo de 3 a 7 días, y si fuese
+necesario, hasta una dosis máxima de 600 mg al día después de un intervalo adicional de 7 días.
+
+Epilepsia
+El tratamiento con pregabalina se puede iniciar con una dosis de 150 mg al día, que se puede administrar
+dividida en dos o tres tomas. En función de la respuesta y tolerabilidad individual de cada paciente, la dosis
+se puede incrementar a 300 mg al día después de una semana. La dosis máxima que se puede alcanzar,
+después de una semana adicional, es de 600 mg al día.
+
+Trastorno de ansiedad generalizada
+El rango de dosis es de 150 a 600 mg al día, dividiendo su administración en dos o tres tomas. Se debe
+reevaluar de forma periódica la necesidad del tratamiento.
+
+El tratamiento con pregabalina se puede iniciar con una dosis de 150 mg al día. En función de la respuesta
+y tolerabilidad individual de cada paciente, la dosis se puede incrementar a 300 mg al día después de una
+semana. Tras una semana adicional, la dosis se puede incrementar a 450 mg al día. La dosis máxima que se
+puede alcanzar, después de una semana adicional, es de 600 mg al día.
+
+Interrupción del tratamiento con pregabalina
+De acuerdo con la práctica clínica actual, si se tiene que interrumpir el tratamiento con pregabalina se
+deberá hacer de forma gradual durante un periodo mínimo de 1 semana, independientemente de la
+indicación (ver secciones 4.4 y 4.8).
+
+Insuficiencia renal
+ La pregabalina se elimina del sistema circulatorio principalmente por excreción renal como fármaco
+inalterado. Dado que el aclaramiento plasmático de pregabalina es directamente proporcional al
+aclaramiento de creatinina (ver sección 5.2), la reducción de la dosis en pacientes con la función renal
+alterada se deberá realizar de forma individualizada de acuerdo al aclaramiento de creatinina (Acr), tal y
+como se indica en la Tabla 1, que se ha determinado usando la fórmula siguiente:
+
+
+
+
+La pregabalina se elimina del plasma de forma eficaz mediante hemodiálisis (50 % del fármaco en 4 horas).
+En pacientes sometidos a hemodiálisis, se debe ajustar la dosis diaria de pregabalina según su función
+renal. Además de la dosis diaria, después de cada sesión de 4 horas de hemodiálisis se debe administrar de
+forma inmediata una dosis complementaria (véase Tabla 1).
+
+Tabla 1. Ajuste de dosis de pregabalina de acuerdo a la función renal
+
+
+Aclaramiento de creatinina
+                                          Dosis diaria total de pregabalina *                  Posología
+      (Acr) (ml/min)
+
+                                   Dosis inicial (mg/día)        Dosis máxima (mg/día)
+             ≥ 60                           150                            600                DVD o TVD
+         ≥ 30 - < 60                         75                            300                DVD o TVD
+
+                                                   2 de 16
+         ≥ 15 - < 30                       25 – 50                         150                UVD o DVD
+             < 15                            25                             75                       UVD
+Dosis complementarias tras la hemodiálisis (mg)
+                                             25                            100                 Dosis única+
+TVD = Tres veces al día.
+DVD = Dos veces al día.
+UVD = Una vez al día.
+* La dosis diaria total (mg/día) se debe dividir en las tomas indicadas en la posología para obtener los
+mg/dosis adecuados.
++ La dosis complementaria es una única dosis adicional.
+
+Insuficiencia hepática
+No se requiere ajuste de la dosis en pacientes con la función hepática alterada (ver sección 5.2).
+
+Población pediátrica
+No se ha establecido la seguridad y eficacia de pregabalina en niños menores de 12 años ni en adolescentes
+(de 12 a 17 años de edad). Los datos actualmente disponibles están descritos en las secciones 4.8, 5.1 y 5.2,
+sin embargo no se puede hacer una recomendación posológica.
+
+Pacientes de edad avanzada
+Los pacientes de edad avanzada pueden precisar una reducción de la dosis de pregabalina debido a la
+disminución de la función renal (ver sección 5.2).
+
+Forma de administración
+Pregabalina se puede tomar con o sin alimentos.
+Pregabalina se administra únicamente por vía oral.
+
+4.3. Contraindicaciones
+
+Hipersensibilidad al principio activo o a alguno de los excipientes incluidos en la sección 6.1.
+
+4.4. Advertencias y precauciones especiales de empleo
+
+Pacientes diabéticos
+De acuerdo a la práctica clínica actual, ciertos pacientes diabéticos que ganen peso durante el tratamiento
+con pregabalina, pueden precisar un ajuste de los medicamentos hipoglucemiantes.
+
+Reacciones de hipersensibilidad
+Durante el periodo poscomercialización se han notificado casos de reacciones de hipersensibilidad,
+incluyendo casos de angioedema. Si aparecen síntomas de angioedema, como son tumefacción facial,
+perioral o de las vias respiratorias superiores, se debe suspender inmediatamente el tratamiento con
+pregabalina.
+
+Se han notificado reacciones adversas cutáneas graves (RACG), como síndrome de Stevens-Johnson (SSJ)
+y necrólisis epidérmica tóxica (NET), que pueden ser potencialmente mortales o mortales, asociadas al
+tratamiento con pregabalina. En el momento de la prescripción, se debe informar a los pacientes de los
+signos y síntomas y vigilarles estrechamente por si aparecen reacciones cutáneas. Si aparecen signos y
+síntomas que sugieran estas reacciones, se deberá retirar inmediatamente la pregabalina y considerar un
+tratamiento alternativo (cuando proceda).
+
+Mareos, somnolencia, pérdida de conocimiento, confusión y deterioro mental
+El tratamiento con pregabalina se ha asociado a mareos y somnolencia, lo cual podría incrementar los casos
+de lesiones accidentales (caídas) en la población anciana. Asimismo se han notificado, durante el periodo
+poscomercialización, casos de pérdida de conocimiento, confusión y deterioro mental. Por tanto, se debe
+
+
+                                                     3 de 16
+aconsejar a los pacientes que tengan precaución hasta que se familiaricen con los potenciales efectos del
+medicamento.
+
+Efectos relacionados con la visión
+En ensayos clínicos controlados, una mayor proporción de pacientes tratados con pregabalina, en
+comparación con aquellos tratados con placebo, notificó visión borrosa que en la mayoría de los casos se
+resolvió al continuar con el tratamiento. En los ensayos clínicos en los que se llevaron a cabo pruebas
+oftalmológicas, la incidencia de disminución de la agudeza visual y alteración del campo visual fue mayor
+en pacientes tratados con pregabalina que en aquellos tratados con placebo; la incidencia de cambios
+fundoscópicos fue mayor en pacientes tratados con placebo (ver sección 5.1).
+
+Durante el periodo poscomercialización también se han notificado reacciones adversas visuales incluyendo
+pérdida de visión, visión borrosa u otros cambios de agudeza visual, muchos de los cuales fueron
+transitorios. La suspensión del tratamiento con pregabalina puede resolver o mejorar estos síntomas
+visuales.
+
+Insuficiencia renal
+Se han notificado casos de insuficiencia renal, de los cuales algunos revirtieron con la interrupción del
+tratamiento con pregabalina.
+
+Retirada de la medicación antiepiléptica concomitante
+No hay datos suficientes que permitan suprimir la medicación antiepiléptica concomitante, tras alcanzar el
+control de las crisis con pregabalina en el tratamiento combinado, para lograr la monoterapia con
+pregabalina.
+
+
+Insuficiencia cardíaca congestiva
+Durante la experiencia poscomercialización se han notificado casos de insuficiencia cardiaca congestiva en
+algunos pacientes en tratamiento con pregabalina. Estas reacciones se observan sobre todo en pacientes de
+edad avanzada (mayores de 65 años) con función cardiovascular comprometida y tratados con pregabalina
+en la indicación de tratamiento del dolor neuropático. Pregabalina debe utilizarse con precaución en este
+tipo de pacientes. Estas reacciones pueden revertir tras la suspensión del tratamiento.
+
+Tratamiento del dolor neuropático central debido a lesión de la médula espinal
+En el tratamiento del dolor neuropático central debido a lesión de la médula espinal se incrementó la
+incidencia de reacciones adversas en general, reacciones adversas a nivel del SNC y especialmente
+somnolencia. Esto puede atribuirse a un efecto aditivo debido a los medicamentos concomitantes (p. ej.,
+agentes antiespasmódicos) necesarios para esta patología. Este hecho debe tenerse en cuenta cuando se
+prescriba pregabalina en estos casos.
+
+Depresión respiratoria
+Se han notificado casos de depresión respiratoria grave en relación con el uso de pregabalina. Los pacientes
+con función respiratoria comprometida, enfermedad respiratoria o neurológica, insuficiencia renal, uso
+concomitante de depresores del SNC y los pacientes de edad avanzada pueden tener un mayor riesgo de
+experimentar esta reacción adversa grave. En estos pacientes pueden ser necesarios ajustes de dosis (ver
+sección 4.2).
+
+Pensamientos y comportamientos suicidas
+Se han notificado casos de pensamientos y comportamientos suicidas en pacientes tratados con
+medicamentos antiepilépticos en distintas indicaciones. Un metanálisis de ensayos clínicos controlados con
+placebo, aleatorizados, con fármacos antiepilépticos, ha mostrado también un pequeño aumento del riesgo
+de pensamientos y comportamientos suicidas. Se desconoce el mecanismo por el que se produce este
+riesgo. Durante el periodo poscomercialización se han observado casos de pensamientos y
+comportamientos suicidas en pacientes tratados con pregabalina (ver sección 4.8). Un estudio
+epidemiológico que utilizó un diseño de estudio autocontrolado (que comparó periodos de tratamiento con
+
+
+
+                                                  4 de 16
+periodos de no tratamiento en una persona) mostró indicios de un incremento en el riesgo de aparición de
+comportamientos suicidas y muerte por suicidio en pacientes tratados con pregabalina.
+
+Se debe aconsejar a los pacientes (y sus cuidadores) que consulten a su médico si aparecen signos de
+pensamientos o comportamientos suicidas. Los pacientes deben ser monitorizados para detectar signos de
+pensamiento y comportamiento suicida, y debe considerarse el tratamiento adecuado. Se debe considerar la
+interrupción del tratamiento con pregabalina en caso de pensamientos y comportamientos suicidas.
+
+Disminución de la funcionalidad del tracto gastrointestinal inferior
+Durante el periodo poscomercialización se han notificado casos relacionados con la disminución de la
+funcionalidad del tracto gastrointestinal inferior (p.ej, obstrucción intestinal, íleo paralítico, estreñimiento)
+al administrarse pregabalina conjuntamente con medicamentos con potencial para producir estreñimiento,
+como los analgésicos opioides. En caso de que se vayan a administrar en combinación pregabalina y
+opioides, debe considerarse la utilización de medidas para evitar el estreñimiento (especialmente en
+mujeres y pacientes de edad avanzada).
+
+Uso concomitante con opioides
+Se recomienda precaución cuando se prescriba pregabalina de forma concomitante con opioides debido al
+riesgo de depresión del SNC (ver sección 4.5). En un estudio observacional de usuarios de opioides,
+aquellos pacientes que tomaron pregabalina de forma concomitante con un opioide tuvieron un mayor
+riesgo de muerte relacionada con los opioides en comparación con el uso de opioides en monoterapia
+(adjusted odds ratio [aOR], 1,68 [IC del 95% entre 1,19 y 2,36]). Este incremento del riesgo se observó
+con dosis bajas de pregabalina (≤ 300 mg, aOR 1,52 [95% CI, 1,04 – 2,22]) y generó una tendencia a un
+riesgo mayor con dosis altas de pregabalina (> 300 mg, aOR 2,51 [95% CI 1,24 – 5,06]).
+
+Uso incorrecto, potencial de abuso o dependencia
+Pregabalina puede causar drogodependencia, que puede aparecer a dosis terapéuticas. Se han notificado
+casos de abuso y uso incorrecto. Los pacientes con antecedentes de abuso de sustancias pueden tener un
+mayor riesgo de uso incorrecto, abuso y dependencia de pregabalina y pregabalina se debe utilizar con
+precaución en dichos pacientes. Antes de prescribir pregabalina, se debe evaluar detenidamente el riesgo de
+uso incorrecto, abuso o dependencia del paciente. Los pacientes tratados con pregabalina deben ser
+monitorizados para detectar síntomas de uso incorrecto, abuso o dependencia de pregabalina como, por
+ejemplo, el desarrollo de tolerancia, el aumento de la dosis y la búsqueda compulsiva del fármaco.
+
+Síntomas de retirada
+Se han observado síntomas de retirada tras la interrupción del tratamiento con pregabalina, tanto a corto
+como a largo plazo. Se han notificado los siguientes síntomas: insomnio, dolor de cabeza, náuseas,
+ansiedad, diarrea, síndrome gripal, nerviosismo, depresión, pensamientos suicidas, dolor, convulsiones,
+hiperhidrosis y mareos. La aparición de síntomas de retirada tras la interrupción del tratamiento con
+pregabalina puede indicar drogodependencia (ver sección 4.8). Se debe informar al paciente sobre esto al
+inicio del tratamiento. Si se tiene que interrumpir el tratamiento con pregabalina, se recomienda hacerlo
+de forma gradual durante un periodo mínimo de 1 semana independientemente de la indicación (ver
+sección 4.2).
+
+Durante el tratamiento con pregabalina, o al poco tiempo de interrumpir el tratamiento con pregabalina,
+pueden aparecer convulsiones, incluyendo estatus epiléptico y convulsiones de tipo gran mal.
+
+Con respecto a la interrupción del tratamiento de pregabalina a largo plazo, los datos sugieren que la
+incidencia y gravedad de los síntomas de retirada pueden estar relacionadas con la dosis.
+
+Encefalopatía
+Se han notificado casos de encefalopatía, mayoritariamente en pacientes con enfermedades subyacentes
+que podrían haber provocado la encefalopatía.
+
+
+
+
+                                                    5 de 16
+Mujeres en edad fértil/Anticoncepción
+El uso de pregabalina en el primer trimestre del embarazo puede causar anomalías congénitas graves en
+el feto. No debe utilizarse pregabalina durante el embarazo a no ser que el beneficio para la madre supere
+claramente el riesgo potencial para el feto. Las mujeres en edad fértil deben utilizar métodos
+anticonceptivos efectivos durante el tratamiento (ver sección 4.6).
+
+
+
+4.5. Interacción con otros medicamentos y otras formas de interacción
+
+Dado que la pregabalina se excreta principalmente inalterada en orina, experimenta un metabolismo
+insignificante en humanos (< 2% de la dosis recuperada en orina en forma de metabolitos), no inhibe el
+metabolismo de fármacos in vitro y no se une a proteínas plasmáticas, no es probable que produzca
+interacciones farmacocinéticas o sea susceptible a las mismas.
+
+Estudios in vivo y análisis farmacocinético de la población
+En consecuencia, en los estudios in vivo, no se observaron interacciones farmacocinéticas relevantes desde
+el punto de vista clínico entre pregabalina y fenitoína, carbamazepina, ácido valproico, lamotrigina,
+gabapentina, lorazepam, oxicodona o etanol. El análisis farmacocinético de la población indicó que los
+antidiabéticos orales, diuréticos, insulina, fenobarbital, tiagabina y topiramato, no presentaban un efecto
+clínicamente importante sobre el aclaramiento de pregabalina.
+
+Anticonceptivos orales, noretisterona y/o etinilestradiol
+La administración de pregabalina junto con anticonceptivos orales como noretisterona y/o etinilestradiol,
+no influye en la farmacocinética en el estado estacionario de ninguna de estas sustancias.
+
+Medicamentos que influyen en el sistema nervioso central
+La pregabalina puede potenciar los efectos del etanol y del lorazepam.
+
+Durante la experiencia poscomercialización se han notificado casos de insuficiencia respiratoria, coma y
+muerte en pacientes en tratamiento con pregabalina y opioides y/u otros medicamentos depresores del
+sistema nervioso central (SNC). Pregabalina parece tener un efecto aditivo en la alteración de la función
+cognitiva y motora causada por oxicodona.
+
+Interacciones y pacientes de edad avanzada
+No se realizaron estudios farmacodinámicos específicos de interacción en voluntarios de edad avanzada.
+Los estudios de interacciones se han realizado sólo en adultos.
+
+4.6. Fertilidad, embarazo y lactancia
+
+Mujeres en edad fértil/Anticoncepción
+Las mujeres en edad fértil deben utilizar métodos anticonceptivos efectivos durante el tratamiento (ver
+sección 4.4).
+
+Embarazo
+Los estudios realizados en animales han mostrado toxicidad para la reproducción (ver sección 5.3).
+
+Se ha demostrado que la pregabalina atraviesa la placenta en ratas (ver sección 5.2). Puede que la
+pregabalina atraviese la placenta humana.
+
+Malformaciones congénitas graves
+Los datos de un estudio observacional nórdico de más de 2700 mujeres embarazadas expuestas a
+pregabalina en el primer trimestre de embarazo mostraron una mayor prevalencia de malformaciones
+congénitas graves (MCG) entre la población pediátrica (viva o nacida muerta) expuesta a pregabalina en
+comparación con la población no expuesta (5,9 % frente a 4,1 %).
+
+
+
+                                                  6 de 16
+El riesgo de MCG entre la población pediátrica expuesta a pregabalina en el primer trimestre de
+embarazo fue ligeramente mayor en comparación con la población no expuesta (cociente de prevalencia
+ajustada e intervalo de confianza del 95 %: 1,14 [0,96-1,35]), y en comparación con la población expuesta
+a lamotrigina (1,29 [1,01-1,65]) o duloxetina (1,39 [1,07-1,82]).
+
+Los análisis de malformaciones específicas mostraron un mayor riesgo de malformaciones del sistema
+nervioso, el ojo, las hendiduras bucofaciales, malformaciones urinarias y malformaciones genitales, pero
+las cifras eran pequeñas y los cálculos imprecisos.
+
+Pregabalina no debería utilizarse durante el embarazo excepto si fuese claramente necesario (si el beneficio
+para la madre es claramente superior al riesgo potencial para el feto).
+
+Lactancia
+Pregabalina se excreta en la leche materna (ver sección 5.2). No se conoce el efecto de pregabalina en
+recién nacidos/lactantes. Se debe decidir si es necesario interrumpir la lactancia o interrumpir el tratamiento
+tras considerar el beneficio de la lactancia para el niño y el beneficio del tratamiento para la madre.
+
+Fertilidad
+No hay datos clínicos sobre el efecto de pregabalina sobre la fertilidad de la mujer.
+
+En un ensayo clínico realizado para evaluar el efecto de pregabalina sobre la movilidad de los
+espermatozoides se expuso a varones sanos a dosis de pregabalina de 600 mg/día. Después de 3 meses de
+tratamiento, no se observaron efectos sobre la movilidad de los espermatozoides.
+
+Un estudio de fertilidad realizado en ratas hembras ha mostrado efectos adversos sobre la reproducción.
+Estudios de fertilidad en ratas macho han mostrado efectos adversos sobre la reproducción y sobre el
+desarrollo. La relevancia clínica de estos hallazgos, se desconoce (ver sección 5.3).
+
+4.7. Efectos sobre la capacidad para conducir y utilizar máquinas
+
+La influencia de pregabalina sobre la capacidad para conducir y utilizar máquinas puede ser pequeña o
+moderada. Pregabalina puede causar mareos y somnolencia por lo que puede afectar la capacidad de
+conducir o para utilizar máquinas. Se aconseja a los pacientes que no conduzcan, manejen maquinaria
+pesada o realicen otras actividades potencialmente peligrosas hasta que se sepa si este medicamento afecta
+su capacidad para realizar estas actividades.
+
+4.8. Reacciones adversas
+
+El programa clínico de pregabalina incluyó a más de 8.900 pacientes expuestos a pregabalina, de los que
+más de 5.600 participaron en ensayos doble ciego controlados con placebo. Las reacciones adversas
+comunicadas con más frecuencia fueron mareos y somnolencia. Generalmente, las reacciones adversas
+fueron de intensidad de leve a moderada. En todos los estudios controlados, la tasa de abandono a causa de
+reacciones adversas fue del 12% para pacientes que estaban recibiendo pregabalina y del 5% para pacientes
+que recibieron placebo. Las reacciones adversas que con más frecuencia dieron lugar a una interrupción del
+tratamiento en los grupos tratados con pregabalina fueron mareos y somnolencia.
+
+En la tabla 2 siguiente se relacionan todas las reacciones adversas, que tuvieron lugar con una incidencia
+superior a la detectada con placebo y en más de un paciente, ordenadas por sistema y frecuencia [muy
+frecuentes (≥ 1/10); frecuentes (≥ 1/100 a < 1/10); poco frecuentes (≥ 1/1.000 a < 1/100); raras (≥
+1/10.000 a < 1/1.000); muy raras (< 1/10.000), frecuencia no conocida (no puede estimarse a partir de los
+datos disponibles)]. Las reacciones adversas se enumeran en orden decreciente de gravedad dentro de cada
+intervalo de frecuencia.
+
+Las reacciones adversas enumeradas también pueden estar relacionadas con la enfermedad subyacente y/o
+con la medicación que se administra al mismo tiempo.
+
+
+
+                                                   7 de 16
+En el tratamiento del dolor neuropático central debido a lesión de la médula espinal se incrementó la
+incidencia de reacciones adversas en general, reacciones adversas a nivel del SNC y especialmente
+somnolencia (ver sección 4.4).
+
+Las reacciones adversas adicionales notificadas durante la experiencia poscomercialización se incluyen en
+la siguiente tabla en cursiva.
+
+Tabla 2. Reacciones adversas de pregabalina
+
+Sistema de clasificación de órganos     Reacciones adversas del fármaco
+Infecciones e infestaciones
+Frecuentes                              Nasofaringitis
+Trastornos de la sangre y del sistema linfático
+Poco frecuentes                         Neutropenia
+Trastornos del sistema inmunológico
+Poco frecuentes                         Hipersensibilidad
+Raras                                   Angioedema, reacción alérgica
+Trastornos del metabolismo y de la nutrición
+Frecuentes                              Aumento del apetito
+Poco frecuentes                         Anorexia, hipoglucemia
+Trastornos psiquiátricos
+Frecuentes                              Estado de ánimo eufórico, confusión, irritabilidad,
+                                        desorientación, insomnio, líbido disminuida
+Poco frecuentes                         Alucinaciones, crisis de angustia, inquietud, agitación,
+                                        depresión, estado de ánimo depresivo, estado de ánimo elevado,
+                                        agresión, cambios del estado de ánimo, despersonalización,
+                                        dificultad de expresión, sueños anormales, líbido aumentada,
+                                        anorgasmia, apatía
+Raras                                   Desinhibición, comportamientos suicidas, pensamientos suicidas
+Frecuencia desconocida                  Drogodependencia
+Trastornos del sistema nervioso
+Muy frecuentes                          Mareos, somnolencia, cefalea
+Frecuentes                              Ataxia, coordinación anormal, temblor, disartria, amnesia,
+                                        alteración de la memoria, alteración de la atención, parestesia,
+                                        hipoestesia, sedación, alteración del equilibrio, letargo
+Poco frecuentes                         Síncope, estupor, mioclono, pérdida de conciencia,
+                                        hiperactividad psicomotora, discinesia, mareo postural, temblor
+                                        de intención, nistagmo, trastorno cognitivo, deterioro mental,
+                                        trastorno del habla, hiporreflexia, hiperestesia, sensación de
+                                        ardor, ageusia, malestar general
+Raras                                   Convulsiones, parosmia, hipocinesia, disgrafía, parkinsonismo.
+Trastornos oculares
+Frecuentes                              Visión borrosa, diplopía
+Poco frecuentes                         Pérdida de la visión periférica, alteración de la visión, hinchazón
+                                        ocular, defecto del campo visual, agudeza visual disminuida,
+                                        dolor ocular, astenopía, fotopsia, ojo seco, aumento del
+                                        lagrimeo, irritación ocular
+Raras                                   Perdida de la visión, queratitis, oscilopsia, alteración visual de
+                                        la percepción de profundidad, midriasis, estrabismo, brillo
+                                        visual
+Trastornos del oído y del laberinto
+Frecuentes                              Vértigo
+Poco frecuentes                         Hiperacusia
+Trastornos cardíacos
+Poco frecuentes                         Taquicardia, bloqueo auriculoventricular de primer grado,
+
+                                                  8 de 16
+                                        bradicardia sinusal, insuficiencia cardiaca congestiva
+Raras                                   Prolongación del intervalo QT, taquicardia sinusal, arritmia
+                                        sinusal
+Trastornos vasculares
+Poco frecuentes                         Hipotensión, hipertensión, sofocos, rubefacción, frialdad
+                                        periférica
+Trastornos respiratorios, torácicos y mediastínicos
+Poco frecuentes                         Disnea, epistaxis, tos, congestión nasal, rinitis, ronquidos,
+                                        sequedad nasal
+Raras                                   Edema pulmonar, sensación de opresión en la garganta
+Frecuencia no conocida                  Depresión respiratoria
+Trastornos gastrointestinales
+Frecuentes                              Vómitos, náuseas, estreñimiento, diarrea, flatulencia, distensión
+                                        abdominal, boca seca
+Poco frecuentes                         Enfermedad por reflujo gastroesofágico, hipersecreción salival,
+                                        hipoestesia oral
+Raras                                   Ascitis, pancreatitis, lengua hinchada, disfagia
+Trastornos hepatobiliares
+Poco frecuentes                         Enzimas hepáticas elevadas*
+Raras                                   Ictericia
+Muy raras                               Insuficiencia hepática, hepatitis
+Trastornos de la piel y del tejido subcutáneo
+Poco frecuentes                         Erupción papular, urticaria, hiperhidrosis, prurito
+Raras                                   Necrólisis epidérmica tóxica, síndrome de Stevens Johnson,
+                                        sudor frío
+Trastornos musculoesqueléticos y del tejido conjuntivo
+Frecuentes                              Calambres musculares, artralgia, dolor de espalda, dolor en las
+                                        extremidades, espasmo cervical,
+Poco frecuentes                         Hinchazón articular, mialgia, sacudidas musculares, dolor de
+                                        cuello, rigidez muscular
+Raras                                   Rabdomiólisis
+Trastornos renales y urinarios
+Poco frecuentes                         Incontinencia urinaria, disuria
+Raras                                   Insuficiencia renal, oliguria, retención urinaria
+Trastornos del aparato reproductor y de la mama
+Frecuentes                              Disfunción eréctil
+Poco frecuentes                         Disfunción sexual, eyaculación retardada, dismenorrea, dolor de
+                                        mama
+Raras                                   Amenorrea, secreción mamaria, aumento de tamaño de la
+                                        mama, ginecomastia
+Trastornos generales y alteraciones en el lugar de administración
+Frecuentes                              Edema periférico, edema, marcha anormal, caídas, sensación de
+                                        embriaguez, sensación anormal, fatiga
+Poco frecuentes                         Edema generalizado, edema facial, opresión en el pecho, dolor,
+                                        pirexia, sed, escalofríos, astenia
+Exploraciones complementarias
+Frecuentes                              Aumento de peso
+Poco frecuentes                         Creatinfosfoquinasa elevada en sangre, glucosa elevada en
+                                        sangre, recuento disminuido de plaquetas, creatinina elevada en
+                                        sangre, potasio disminuido en sangre, peso disminuido
+Raras                                   Recuento disminuido de leucocitos
+*Alanina aminotransferasa elevada (ALT) y aspartato aminotransferasa elevada (AST).
+
+
+
+
+                                                 9 de 16
+Se han observado síntomas de retirada tras la interrupción del tratamiento con pregabalina tanto a corto
+como a largo plazo. Se han notificado los siguientes síntomas: insomnio, dolor de cabeza, náuseas,
+ansiedad, diarrea, síndrome gripal, convulsiones, nerviosismo, depresión, pensamientos suicidas, dolor,
+hiperhidrosis y mareos. Estos síntomas pueden ser indicativos de drogodependencia. Se debe informar al
+paciente sobre esto al inicio del tratamiento.
+
+Con respecto a la interrupción del tratamiento de pregabalina a largo plazo, los datos sugieren que la
+incidencia y gravedad de los síntomas de retirada pueden estar relacionadas con la dosis (ver secciones 4.2
+y 4.4).
+
+Población pediátrica
+El perfil de seguridad de pregabalina observado en cinco estudios pediátricos en pacientes con crisis
+parciales con o sin generalización secundaria (estudio de eficacia y seguridad de 12 semanas en pacientes
+de 4 a 16 años de edad, n = 295; estudio de eficacia y seguridad de 14 días en pacientes de 1 mes hasta
+menos de 4 años de edad n=145; estudio de farmacocinética y tolerabilidad, n = 65; y dos estudios de
+seguimiento de la seguridad, sin enmascaramiento, de 1 año de duración, n = 54 y n =431) fue similar al
+observado en los estudios en adultos de pacientes con epilepsia. Los acontecimientos adversos más
+frecuentes observados en el estudio de 12 semanas con el tratamiento de pregabalina fueron somnolencia,
+pirexia, infección de las vías respiratorias superiores, aumento del apetito, aumento de peso y
+nasofaringitis. Los acontecimientos adversos más frecuentes observados en el estudio de 14 días con el
+tratamiento de pregabalina fueron somnolencia, infección de las vías respiratorias superiores y pirexia (ver
+secciones 4.2, 5.1 y 5.2).
+
+Notificación de sospechas de reacciones adversas
+Es importante notificar sospechas de reacciones adversas al medicamento tras su autorización. Ello permite
+una supervisión continuada de la relación beneficio/riesgo del medicamento. Se invita a los profesionales
+sanitarios a notificar las sospechas de reacciones adversas a través del Sistema Español de
+Farmacovigilancia de medicamentos de Uso Humano: https://www.notificaram.es.
+
+4.9. Sobredosis
+
+Durante la experiencia poscomercialización, las reacciones adversas notificadas con mayor frecuencia
+cuando se produjo una sobredosis por pregabalina, incluyeron somnolencia, estado de confusión, agitación
+e inquietud. También se han notificado crisis epilépticas.
+
+En raras ocasiones, se han notificado casos de coma.
+
+El tratamiento de la sobredosis de pregabalina debe incluir medidas generales de soporte y puede incluir
+hemodiálisis si fuese necesario (ver sección 4.2 Tabla 1).
+
+5. PROPIEDADES FARMACOLÓGICAS
+
+5.1. Propiedades farmacodinámicas
+
+Grupo farmacoterapéutico: analgésico, otros analgésicos y antipiréticos, gabapentinoides; código ATC:
+N02BF02.
+
+El principio activo, pregabalina, es un análogo del ácido gamma-aminobutírico [ácido (S)-3- (aminometil)-
+5-metilhexanoico].
+
+Mecanismo de acción
+La pregabalina se une a una subunidad auxiliar (proteína α2-δ) de los canales de calcio dependientes del
+voltaje en el Sistema Nervioso Central.
+
+Eficacia clínica y seguridad
+
+
+                                                 10 de 16
+Dolor neuropático
+Se ha demostrado la eficacia en ensayos clínicos en neuropatía diabética, neuralgia postherpética y lesión
+de la médula espinal. No se ha estudiado la eficacia en otros modelos de dolor neuropático.
+
+La pregabalina se ha estudiado en 10 ensayos clínicos controlados con una duración de hasta 13 semanas y
+dos administraciones al día (DVD) y con una duración de hasta 8 semanas y tres administraciones al día
+(TVD). En términos generales, los perfiles de seguridad y eficacia para los regímenes posológicos de dos y
+tres veces al día fueron similares.
+
+En ensayos clínicos de hasta 12 semanas de duración para dolor neuropático periférico y central, se observó
+una reducción del dolor a la primera semana de tratamiento y se mantuvo a lo largo del periodo de
+tratamiento.
+
+En ensayos clínicos controlados para dolor neuropático periférico, el 35% de los pacientes tratados con
+pregabalina y el 18% de los pacientes con placebo experimentaron una mejoría de un 50% en la escala de
+dolor. En el caso de los pacientes que no experimentaron somnolencia, dicha mejoría se observó en un 33%
+de los pacientes tratados con pregabalina y en un 18% de los pacientes con placebo. En el caso de los
+pacientes que experimentaron somnolencia, los porcentajes de respondedores fueron del 48% para
+pregabalina y 16% para placebo.
+
+En el ensayo clínico controlado para dolor neuropático central, el 22% de los pacientes tratados con
+pregabalina y el 7% de los pacientes con placebo experimentaron una mejoría del 50% en la escala de
+dolor.
+
+Epilepsia
+Tratamiento complementario
+La pregabalina se ha estudiado en 3 ensayos clínicos controlados con una duración de hasta 12 semanas
+tanto con la administración DVD como con TVD. En términos generales, los perfiles de seguridad y
+eficacia para los regímenes posológicos de dos y tres veces al día fueron similares.
+
+Se observó una reducción en la frecuencia de las crisis a la primera semana de tratamiento.
+
+Población pediátrica
+No se ha establecido la eficacia ni la seguridad de pregabalina como tratamiento complementario para la
+epilepsia en pacientes pediátricos de menos de 12 años y adolescentes. Los acontecimientos adversos
+observados en un estudio de farmacocinética y tolerabilidad en el que participaron pacientes de entre 3
+meses y 16 años de edad (n = 65) con crisis de inicio parcial fueron similares a los observados en los
+adultos. Los resultados de un estudio de 12 semanas, controlado con placebo, de 295 pacientes pediátricos
+de 4 a 16 años de edad, y otro estudio de 14 días, controlado con placebo, de 175 pacientes pediátricos de 1
+mes hasta 4 años de edad realizados para evaluar la eficacia y seguridad de la pregabalina como tratamiento
+complementario para el tratamiento de crisis de inicio parcial y dos estudios de seguridad, sin
+enmascaramiento, de 1 año de duración en 54 y 431 pacientes pediátricos, respectivamente, de entre 3
+meses y 16 años de edad con epilepsia indican que los acontecimientos adversos de pirexia e infecciones
+respiratorias altas se observaron con mayor frecuencia que en los estudios en adultos de pacientes con
+epilepsia (ver secciones 4.2, 4.8 y 5.2).
+
+En el estudio controlado con placebo de 12 semanas, los pacientes pediátricos (de 4 a 16 años de edad)
+recibieron pregabalina 2,5 mg/kg/día (máximo, 150 mg/día), pregabalina 10 mg/kg/día (máximo, 600
+mg/día) o placebo. El porcentaje de sujetos con al menos un 50% de reducción en las crisis de inicio parcial
+desde la visita basal fue del 40,6% de los pacientes tratados con pregabalina 10 mg/kg/día (p = 0,0068 en
+comparación con placebo), el 29,1% de los pacientes tratados con pregabalina 2,5 mg/kg/día (p = 0,2600 en
+comparación con placebo) y el 22,6% de aquellos que recibieron placebo.
+
+En el estudio de 14 días controlado con placebo, los pacientes pediátricos (de 1 mes hasta menos de 4 años
+de edad) recibieron 7 mg/kg/día de pregabalina, 14 mg/kg/día de pregabalina o placebo. La mediana de la
+
+
+
+                                                 11 de 16
+frecuencia de las crisis en 24 horas al inicio y en la visita final fue de 4,7 y de 3,8 para 7 mg/kg/día de
+pregabalina, 5,4 y 1,4 para 14 mg/kg/día de pregabalina y 2,9 y 2,3 para placebo.
+Pregabalina 14 mg/kg/día redujo significativamente la frecuencia de inicio de crisis parciales transformada
+logarítmicamente en comparación con placebo (p = 0,0223); pregabalina 7 mg/kg/día no mostró mejoría en
+comparación con placebo.
+
+En un estudio controlado con placebo de 12 semanas en sujetos con convulsiones tónico-clónicas
+generalizadas primarias (PGTC), 219 sujetos (de 5 a 65 años de edad, de los cuales 66 tenían entre 5 y 16
+años de edad) recibieron pregabalina 5 mg/kg/día (máximo 300 mg/día), pregabalina 10 mg/kg/día de
+(máximo 600 mg/día) o placebo como tratamiento complementario. El porcentaje de sujetos con al menos
+una reducción del 50% en la tasa de convulsiones PGTC fue del 41,3%, 38,9% y 41,7% para pregabalina 5
+mg/kg/día, pregabalina 10 mg/kg/día y placebo, respectivamente.
+
+Monoterapia (pacientes recientemente diagnosticados)
+Pregabalina se ha estudiado en 1 ensayo clínico controlado de 56 semanas de duración administrada DVD.
+Pregabalina no demostró no inferioridad frente a lamotrigina en base a la variable de estar libre de crisis
+durante 6 meses. Pregabalina y lamotrigina tuvieron perfiles de seguridad similares y buena tolerabilidad.
+
+Trastorno de ansiedad generalizada
+La pregabalina se ha estudiado en 6 ensayos controlados de 4-6 semanas de duración, un estudio en
+pacientes de edad avanzada de 8 semanas de duración y un estudio a largo plazo de prevención de recaídas
+con una fase doble ciego de prevención de recaídas de 6 meses de duración.
+
+En la primera semana se observó un alivio de los síntomas del TAG como se reflejó en la Escala de
+Valoración de la Ansiedad de Hamilton (HAM-A).
+
+En los ensayos clínicos controlados (4-8 semanas de duración) el 52% de los pacientes tratados con
+pregabalina y el 38% de los que recibieron placebo mejoraron la puntuación total de la HAM-A en al
+menos un 50% desde la visita basal hasta la finalización del estudio.
+
+En ensayos clínicos controlados, una mayor proporción de pacientes tratados con pregabalina, en
+comparación con aquellos tratados con placebo, notificó visión borrosa que en la mayoría de los casos se
+resolvió al continuar con el tratamiento. Se realizaron pruebas oftalmológicas (incluyendo pruebas de
+agudeza visual, pruebas de campo visual y examen fundoscópico en pupila dilatada) a más de 3.600
+pacientes como parte de los ensayos clínicos controlados. La agudeza visual se redujo en un 6,5% en los
+pacientes tratados con pregabalina frente al 4,8 % en los pacientes tratados con placebo.
+Se detectaron alteraciones del campo visual en el 12,4 % de los pacientes tratados con pregabalina frente al
+11,7% de los pacientes tratados con placebo. Se observaron cambios fundoscópicos en el 1,7% de los
+pacientes tratados con pregabalina frente al 2,1% de los pacientes tratados con placebo.
+
+
+5.2. Propiedades farmacocinéticas
+
+Los parámetros farmacocinéticos de pregabalina en el estado estacionario son similares en voluntarios
+sanos, pacientes con epilepsia recibiendo fármacos antiepilépticos y pacientes con dolor crónico.
+
+Absorción
+La pregabalina se absorbe rápidamente cuando se administra en ayunas, alcanzando concentraciones
+plasmáticas máximas una hora tras la administración tanto de dosis única como de dosis múltiples. La
+biodisponibilidad oral de pregabalina se estima que es ≥ 90% y es independiente de la dosis. Tras la
+administración repetida, el estado estacionario se alcanza en las 24 a 48 horas posteriores. La velocidad de
+absorción de pregabalina disminuye cuando se administra con alimentos, produciéndose un descenso en la
+Cmax de aproximadamente un 25-30% y un retraso en el tmax de aproximadamente 2,5 horas. Sin embargo, la
+administración de pregabalina junto con alimentos no tiene ningún efecto clínicamente significativo sobre
+el grado de absorción de pregabalina.
+
+
+
+                                                 12 de 16
+Distribución
+En estudios preclínicos, se ha visto que la pregabalina atraviesa la barrera hematoencefálica en ratones,
+ratas y monos. Se ha visto que la pregabalina atraviesa la placenta en ratas y está presente en la leche de
+ratas lactantes. En humanos, el volumen de distribución aparente de la pregabalina tras la administración
+oral es de aproximadamente 0,56 l/kg. La pregabalina no se une a las proteínas plasmáticas.
+
+Biotransformación
+La pregabalina sufre un metabolismo insignificante en humanos. Tras una dosis de pregabalina marcada
+isotópicamente, aproximadamente el 98% de la radioactividad recuperada en orina procedía de pregabalina
+inalterada. El derivado N-metilado de pregabalina, metabolito principal de ésta encontrado en orina,
+representó el 0,9% de la dosis. En estudios preclínicos, no hubo indicios de racemización del S-
+enantiómero de pregabalina al R-enantiómero.
+
+Eliminación
+La pregabalina se elimina del sistema circulatorio principalmente mediante excreción renal como fármaco
+inalterado. La semivida media de eliminación de pregabalina es de 6,3 horas. El aclaramiento plasmático y
+el aclaramiento renal de pregabalina son directamente proporcionales al aclaramiento de creatinina (ver
+sección 5.2 Insuficiencia renal).
+Es necesario un ajuste de la dosis en pacientes con la función renal alterada o en hemodiálisis (ver sección
+4.2 Tabla 1).
+
+Linealidad/No linealidad
+La farmacocinética de pregabalina es lineal en el rango de dosis diaria recomendada. La variabilidad
+farmacocinética interindividual de pregabalina es baja (< 20%). La farmacocinética de dosis múltiples es
+predecible a partir de los datos obtenidos con dosis única. Por tanto, no es necesario llevar una
+monitorización rutinaria de las concentraciones plasmáticas de pregabalina.
+
+Sexo
+Los ensayos clínicos indican que el sexo no tiene influencia clínicamente significativa sobre las
+concentraciones plasmáticas de pregabalina.
+
+Insuficiencia renal
+El aclaramiento de pregabalina es directamente proporcional al aclaramiento de creatinina. Además, la
+pregabalina se elimina del plasma de forma eficaz mediante hemodiálisis (tras una sesión de hemodiálisis
+de 4 horas, las concentraciones plasmáticas de pregabalina se reducen aproximadamente al 50%). Dado que
+la eliminación por vía renal es la principal vía de eliminación, en pacientes con insuficiencia renal es
+necesaria una reducción de la dosis y una dosis complementaria tras la hemodiálisis (ver sección 4.2 Tabla
+1).
+
+Insuficiencia hepática
+No se han llevado a cabo estudios de farmacocinética específicos en pacientes con la función hepática
+alterada. Puesto que la pregabalina no sufre un metabolismo significativo y se excreta mayoritariamente
+como fármaco inalterado en orina, no es previsible que una insuficiencia de la función hepática altere de
+forma significativa las concentraciones plasmáticas de pregabalina.
+
+Población pediátrica
+En un estudio de farmacocinética y tolerabilidad se evaluó la farmacocinética de pregabalina en pacientes
+pediátricos con epilepsia (grupos de edad: de 1 a 23 meses, de 2 a 6 años, de 7 a 11 años y de 12 a 16 años)
+con concentraciones de dosis de 2,5, 5, 10 y 15 mg/kg/día.
+
+En general, el tiempo transcurrido hasta alcanzar la concentración plasmática máxima tras la
+administración oral de pregabalina a pacientes pediátricos en ayunas fue similar en todo el grupo de edad y
+se produjo entre 0,5 horas y 2 horas después de la dosis.
+
+Los parámetros de Cmax y AUC de pregabalina aumentaron de forma lineal con el aumento de la dosis en
+cada grupo de edad. El AUC fue un 30% menor en los pacientes pediátricos con un peso inferior a 30 kg
+
+                                                 13 de 16
+debido a un mayor aclaramiento ajustado al peso corporal del 43% en estos pacientes en comparación con
+los pacientes con un peso ≥ 30 kg.
+
+La semivida terminal promedio de pregabalina fue, aproximadamente, de entre 3 y 4 horas en los pacientes
+pediátricos de hasta 6 años de edad, y de entre 4 y 6 horas en los de 7 años o más.
+
+El análisis de farmacocinética poblacional mostró que el aclaramiento de creatinina era una covariable
+significativa del aclaramiento de pregabalina oral, el peso corporal era una covariable significativa del
+volumen de distribución aparente de pregabalina oral, y que dichas relaciones eran similares en los
+pacientes pediátricos y adultos.
+
+No se ha estudiado la farmacocinética de pregabalina en pacientes de menos de 3 meses de edad (ver
+secciones 4.2, 4.8 y 5.1).
+
+Pacientes de edad avanzada
+El aclaramiento de pregabalina tiende a disminuir al aumentar la edad. Este descenso en el aclaramiento de
+pregabalina oral está en relación con el descenso del aclaramiento de creatinina asociado con el aumento de
+la edad. Podría requerirse una reducción de la dosis de pregabalina en pacientes que tengan función renal
+alterada debido a la edad (ver sección 4.2 Tabla 1).
+
+Madres lactantes
+Se evaluó la farmacocinética de 150 mg de pregabalina administrados cada 12 horas (dosis diaria de 300
+mg), en 10 mujeres lactantes, tras al menos 12 semanas después del parto. La lactancia tuvo un efecto nulo
+o pequeño sobre la farmacocinética de pregabalina. Pregabalina se excretó por la leche materna a
+concentraciones promedio, en estado de equilibrio, de aproximadamente el 76% de las presentes en el
+plasma materno. La dosis estimada para el lactante procedente de la leche materna (suponiendo un
+consumo medio de leche de 150 ml/kg/día) de las mujeres que reciben 300 mg/día o la dosis máxima de
+600 mg/día sería de 0,31 o 0,62 mg/kg/día, respectivamente. Estas dosis estimadas son aproximadamente el
+7% de la dosis materna diaria total, en mg/kg.
+
+5.3. Datos preclínicos sobre seguridad
+
+En los estudios convencionales sobre farmacología de seguridad en animales, la pregabalina fue bien
+tolerada a dosis clínicamente relevantes. En estudios de toxicidad de dosis repetidas en ratas y monos se
+observaron efectos en el SNC, incluyendo hipoactividad, hiperactividad y ataxia. Se observó un aumento
+en la incidencia de atrofia retiniana, observada frecuentemente en ratas albinas ancianas, tras la exposición
+a largo plazo de pregabalina a exposiciones ≥ 5 veces la exposición media en humanos a la dosis clínica
+máxima recomendada.
+
+La pregabalina no fue teratógena ni en ratones ni en ratas ni en conejos. Sólo hubo toxicidad fetal en ratas y
+conejos a exposiciones lo suficientemente por encima de la exposición en humanos. En estudios de
+toxicidad prenatal/postnatal, la pregabalina indujo toxicidad en el desarrollo de las crías en ratas a
+exposiciones > 2 veces la exposición máxima recomendada en el hombre.
+
+Únicamente se observaron efectos adversos sobre la fertilidad en ratas macho y hembra a exposiciones por
+encima de la dosis terapéutica. Los efectos adversos sobre los órganos reproductores masculinos y sobre el
+esperma fueron de carácter reversible y únicamente se produjeron a exposiciones suficientemente por
+encima de la dosis terapéutica, o cuando estaban asociados con procesos degenerativos espontáneos de los
+órganos reproductores masculinos en ratas macho. Por tanto, los efectos fueron considerados de pequeña o
+nula relevancia clínica.
+
+La pregabalina no es genotóxica de acuerdo a los resultados del conjunto de análisis in vitro e in vivo.
+
+Se llevaron a cabo estudios de carcinogenicidad a dos años con pregabalina en ratas y ratones. No se
+observaron tumores en ratas a exposiciones de hasta 24 veces la exposición media en humanos a la dosis
+clínica máxima recomendada de 600 mg/día. En ratones, a exposiciones similares a la exposición media en
+
+
+                                                  14 de 16
+humanos, no se detectó aumento en la incidencia de tumores, pero a exposiciones más altas se observó un
+incremento en la incidencia de hemangiosarcoma. El mecanismo no genotóxico de la formación de tumores
+inducidos por pregabalina en ratones implica cambios en las plaquetas y una proliferación asociada de
+células endoteliales. Estos cambios en las plaquetas no estuvieron presentes ni en ratas ni en humanos de
+acuerdo a los datos clínicos obtenidos a corto y limitado largo plazo. No hay evidencias que sugieran un
+riesgo relacionado en el hombre.
+
+En ratas jóvenes los tipos de toxicidad no difieren cualitativamente de los observados en las ratas adultas.
+Sin embargo, las ratas jóvenes son más sensibles. A las exposiciones terapéuticas, hubo evidencias de
+signos clínicos en el SNC de hiperactividad y bruxismo y algunos cambios en el crecimiento (inhibición
+pasajera de la ganancia de peso). Se observaron efectos sobre el ciclo estral a 5 veces la exposición
+terapéutica humana.
+Se observó una respuesta reducida al sobresalto acústico en ratas jóvenes 1-2 semanas después de una
+exposición > 2 veces a la terapéutica humana. Este efecto no se volvió a observar nueve semanas después
+de la exposición.
+
+6 . DATOS FARMACÉUTICOS
+
+6.1. Lista de excipientes
+
+Contenido de la cápsula
+Almidón pregelatinizado de maíz
+Manitol (E-421)
+Talco
+
+Cubierta de la cápsula
+Gelatina (todas las dosis)
+Dióxido de titanio (E171) (todas las dosis)
+Óxido de hierro rojo (E172) (solo en las dosis de 75 mg, 100 mg, 200 mg y 300 mg)
+Óxido de hierro amarillo (E172) (solo en la dosis de 200 mg)
+
+Tinta de impresión
+Laca shellac
+Óxido de hierro negro (E172)
+Propilenglicol (E-1520)
+Hidróxido amónico
+
+6.2. Incompatibilidades
+
+No procede.
+
+6.3. Periodo de validez
+
+36 meses.
+
+6.4. Precauciones especiales de conservación
+
+Este medicamento no requiere condiciones especiales de conservación.
+
+6.5. Naturaleza y contenido del envase
+
+Blísteres de PVC/Aluminio conteniendo 14, 56 o 84 cápsulas duras.
+Puede que solamente estén comercializados algunos tamaños de envases.
+
+6.6. Precauciones especiales de eliminación y otras manipulaciones
+
+Ninguna especial para su eliminación.
+
+                                                 15 de 16
+7. TITULAR DE LA AUTORIZACIÓN DE COMERCIALIZACIÓN
+
+Laboratorios Alter, S.A.
+Mateo Inurria 30
+28036 Madrid
+España
+
+8. NÚMERO(S) DE AUTORIZACIÓN DE COMERCIALIZACIÓN
+
+Pregabalina Alter 25 mg cápsulas duras EFG, Nº Reg.: 79807
+Pregabalina Alter 50 mg cápsulas duras EFG, Nº Reg.: 84167
+Pregabalina Alter 75 mg cápsulas duras EFG, Nº Reg.: 79806
+Pregabalina Alter 100 mg cápsulas duras EFG, Nº Reg.:84166
+Pregabalina Alter 150 mg cápsulas duras EFG, Nº Reg.: 79804
+Pregabalina Alter 200 mg cápsulas duras EFG, Nº Reg.:84168
+Pregabalina Alter 300 mg cápsulas duras EFG, Nº Reg.: 79805
+
+9. FECHA DE LA PRIMERA AUTORIZACIÓN/ RENOVACIÓN DE LA AUTORIZACIÓN
+
+Fecha de la primera autorización:
+Pregabalina Alter 25 mg/75 mg/150 mg/300 mg: 07/mayo/2015
+Pregabalina Alter 50 mg/100 mg/200 mg: 28/mayo/2019
+
+Fecha de la última renovación: 17/marzo/2019
+
+10. FECHA DE LA REVISIÓN DEL TEXTO
+
+
+
+
+                                               16 de 16
+

@@ -1,0 +1,793 @@
+{
+  "acquiredDate": "2026-10-05",
+  "sources": [
+    {
+      "productId": "CLX-PROD-001",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=fc5e6f2a-e813-0666-e053-6394a90a66a7&type=pdf",
+      "sourceProductIdentity": "MEDLINE acetaminophen 500 mg tablet",
+      "sourceCountry": "United-States",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-001",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/82903/P_82903.pdf",
+      "sourceProductIdentity": {
+        "name": "PARACETAMOL AUROVITAS SPAIN 500 MG COMPRIMIDOS EFG",
+        "holder": "Aurovitas Spain, S.A.U.",
+        "registration": "82903",
+        "dose": "500 mg",
+        "form": {
+          "id": 40,
+          "nombre": "COMPRIMIDO"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2026-04-20T22:10:16+00:00"
+    },
+    {
+      "productId": "CLX-PROD-001",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/82903/FT_82903.pdf",
+      "sourceProductIdentity": {
+        "name": "PARACETAMOL AUROVITAS SPAIN 500 MG COMPRIMIDOS EFG",
+        "holder": "Aurovitas Spain, S.A.U.",
+        "registration": "82903",
+        "dose": "500 mg",
+        "form": {
+          "id": 40,
+          "nombre": "COMPRIMIDO"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2026-04-14T23:26:31+00:00"
+    },
+    {
+      "productId": "CLX-PROD-001",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.5164.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "5164",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-001",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/5164/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "5164",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=613a7a13-d5ba-4827-91ec-3ed5176602b7&type=pdf",
+      "sourceProductIdentity": "Pregabalin capsules multi-strength including 75 mg",
+      "sourceCountry": "United-States",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/79806/P_79806.pdf",
+      "sourceProductIdentity": {
+        "name": "PREGABALINA ALTER 75 MG CAPSULAS DURAS EFG",
+        "holder": "Laboratorios Alter S.A.",
+        "registration": "79806",
+        "dose": "75 mg",
+        "form": {
+          "id": 32,
+          "nombre": "CÁPSULA DURA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2024-02-15T23:44:18+00:00"
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/79806/FT_79806.pdf",
+      "sourceProductIdentity": {
+        "name": "PREGABALINA ALTER 75 MG CAPSULAS DURAS EFG",
+        "holder": "Laboratorios Alter S.A.",
+        "registration": "79806",
+        "dose": "75 mg",
+        "form": {
+          "id": 32,
+          "nombre": "CÁPSULA DURA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2024-02-15T23:44:05+00:00"
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "country": "Singapore",
+      "documentType": "Package-Insert",
+      "url": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaao2591-brieka-pregabalin_pi_sg.pdf",
+      "sourceProductIdentity": "Brieka 75 mg / Teva Singapore",
+      "sourceCountry": "Singapore",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.10302.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "10302",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/10302/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "10302",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "country": "China",
+      "documentType": "Package-Insert",
+      "url": "https://viatris.cn/-/media/project/viatris-sites/product-document/06pregabalin.pdf",
+      "sourceProductIdentity": "Lyrica / Viatris China",
+      "sourceCountry": "China",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=d09173a1-5e3c-4c86-8c7c-15238925ef50&type=pdf",
+      "sourceProductIdentity": "RemedyRepack amlodipine 5 mg tablets",
+      "sourceCountry": "United-States",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/70750/P_70750.pdf",
+      "sourceProductIdentity": {
+        "name": "AMLODIPINO ALMUS 5 mg COMPRIMIDOS EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "70750",
+        "dose": "5 mg",
+        "form": {
+          "id": 40,
+          "nombre": "COMPRIMIDO"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2025-06-10T23:33:19+00:00"
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/70750/FT_70750.pdf",
+      "sourceProductIdentity": {
+        "name": "AMLODIPINO ALMUS 5 mg COMPRIMIDOS EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "70750",
+        "dose": "5 mg",
+        "form": {
+          "id": 40,
+          "nombre": "COMPRIMIDO"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2024-05-22T22:36:46+00:00"
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "country": "Singapore",
+      "documentType": "Package-Insert",
+      "url": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaam3081-actapin-amlodipine_pi_sg.pdf",
+      "sourceProductIdentity": "Actapin 5 mg / Teva Singapore",
+      "sourceCountry": "Singapore",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.4717.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "4717",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/4717/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "4717",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "country": "China",
+      "documentType": "Package-Insert",
+      "url": "https://viatris.cn/-/media/project/viatris-sites/product-document/02norvasc.pdf",
+      "sourceProductIdentity": "Norvasc / Viatris China",
+      "sourceCountry": "China",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=23aa50c5-28fe-4322-b5c6-1f1c48409b16&type=pdf",
+      "sourceProductIdentity": "METFORMIN HYDROCHLORIDE TABLET, FILM COATED [A-S MEDICATION SOLUTIONS]",
+      "sourceCountry": "United-States",
+      "publication": "Sep 23, 2026"
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/91590/P_91590.pdf",
+      "sourceProductIdentity": {
+        "name": "METFORMINA ACTIVASE 500 MG COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Activase Pharmaceuticals Limited",
+        "registration": "91590",
+        "dose": "500 mg",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2026-08-05T13:59:19+00:00"
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/91590/FT_91590.pdf",
+      "sourceProductIdentity": {
+        "name": "METFORMINA ACTIVASE 500 MG COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Activase Pharmaceuticals Limited",
+        "registration": "91590",
+        "dose": "500 mg",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2026-09-01T07:39:42+00:00"
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/15731/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "15731",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=6faf465b-c3a3-4ae7-9e16-1ba758f6962a&type=pdf",
+      "sourceProductIdentity": "PANTOPRAZOLE SODIUM TABLET, DELAYED RELEASE [NCS HEALTHCARE OF KY, LLC DBA VANGARD LABS]",
+      "sourceCountry": "United-States",
+      "publication": "Sep 29, 2026"
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/70297/P_70297.pdf",
+      "sourceProductIdentity": {
+        "name": "PANTOPRAZOL ALMUS 40 mg COMPRIMIDOS GASTRORRESISTENTES EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "70297",
+        "dose": "40 mg pantoprazol",
+        "form": {
+          "id": 46,
+          "nombre": "COMPRIMIDO GASTRORRESISTENTE"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2025-06-10T23:30:58+00:00"
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/70297/FT_70297.pdf",
+      "sourceProductIdentity": {
+        "name": "PANTOPRAZOL ALMUS 40 mg COMPRIMIDOS GASTRORRESISTENTES EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "70297",
+        "dose": "40 mg pantoprazol",
+        "form": {
+          "id": 46,
+          "nombre": "COMPRIMIDO GASTRORRESISTENTE"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2024-02-08T23:34:19+00:00"
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.14644.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "14644",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/14644/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "14644",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "country": "China",
+      "documentType": "Package-Insert",
+      "url": "https://assets-dam.takeda.com/raw/upload/v1675187850/legacy-dotcom/siteassets/zh-cn/home/pantodac40mg-pantazole-sodium-enteric-_-instruction-manual_20161128-.pdf",
+      "sourceProductIdentity": "Takeda pantoprazole 40 mg enteric coated tablet; historical manufacturer document 2016",
+      "sourceCountry": "China",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=cf6b3017-c8b6-4862-aa33-19ed02a43c28&type=pdf",
+      "sourceProductIdentity": "WELBY ALLERGY RELIEF (CETIRIZINE HYDROCHLORIDE) TABLET, FILM COATED [ALDI INC]",
+      "sourceCountry": "United-States",
+      "publication": "Oct 02, 2026"
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/64636/P_64636.pdf",
+      "sourceProductIdentity": {
+        "name": "CETIRIZINA ALMUS 10 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "64636",
+        "dose": "10 mg Cetirizina Diclorhidrato",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2023-08-10T22:52:21+00:00"
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/64636/FT_64636.pdf",
+      "sourceProductIdentity": {
+        "name": "CETIRIZINA ALMUS 10 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "64636",
+        "dose": "10 mg Cetirizina Diclorhidrato",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2023-08-10T22:52:05+00:00"
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.100094.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "100094",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/100094/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "100094",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "country": "China",
+      "documentType": "Package-Insert",
+      "url": "https://www.dawnrays.com/img/product/%E6%96%B0%E7%89%88%E8%AF%B4%E6%98%8E%E4%B9%A6/%E8%A5%BF%E5%8F%AF%E9%9F%A6_OTC%E7%89%88_.pdf",
+      "sourceProductIdentity": "Cetirizine 10 mg / Dawnrays China",
+      "sourceCountry": "China",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=9287d2f1-2414-4ee2-aecc-b6b59c6a0a4c&type=pdf",
+      "sourceProductIdentity": "MONTELUKAST SODIUM TABLET, FILM COATED [CARDINAL HEALTH 107, LLC]",
+      "sourceCountry": "United-States",
+      "publication": "Sep 21, 2026"
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/74098/P_74098.pdf",
+      "sourceProductIdentity": {
+        "name": "MONTELUKAST ALMUS 10 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "74098",
+        "dose": "10 mg",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2025-03-18T00:41:14+00:00"
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/74098/FT_74098.pdf",
+      "sourceProductIdentity": {
+        "name": "MONTELUKAST ALMUS 10 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "74098",
+        "dose": "10 mg",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2025-03-18T00:41:02+00:00"
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "country": "Singapore",
+      "documentType": "Package-Insert",
+      "url": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaan6780-montelukast-teva-film-coated-tablet-pi.pdf",
+      "sourceProductIdentity": "Montelukast-Teva 10 mg / Teva Singapore",
+      "sourceCountry": "Singapore",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.9918.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "9918",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/9918/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "9918",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=b5a3c547-3bc7-4856-af9c-1bead294f5d9&type=pdf",
+      "sourceProductIdentity": "CEFIXIME TABLET [RISING PHARMA HOLDINGS, INC.]",
+      "sourceCountry": "United-States",
+      "publication": "Apr 13, 2026"
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/90331/P_90331.pdf",
+      "sourceProductIdentity": {
+        "name": "CEFIXIMA SANDOZ 200 MG COMPRIMIDOS RECUBIERTOS CON PELÍCULA EFG",
+        "holder": "Sandoz Farmaceutica S.A.",
+        "registration": "90331",
+        "dose": "200 mg",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2025-05-07T12:25:19+00:00"
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/90331/FT_90331.pdf",
+      "sourceProductIdentity": {
+        "name": "CEFIXIMA SANDOZ 200 MG COMPRIMIDOS RECUBIERTOS CON PELÍCULA EFG",
+        "holder": "Sandoz Farmaceutica S.A.",
+        "registration": "90331",
+        "dose": "200 mg",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2025-05-13T09:21:59+00:00"
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.15047.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "15047",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/15047/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "15047",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=7c58bf4a-4a92-4db8-89bc-4de1b5831efc&type=pdf",
+      "sourceProductIdentity": "ATORVASTATIN CALCIUM TABLET [NIVAGEN PHARMACEUTICALS, INC.]",
+      "sourceCountry": "United-States",
+      "publication": "Oct 01, 2026"
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/82628/P_82628.pdf",
+      "sourceProductIdentity": {
+        "name": "ATORVASTATINA ALMUS PHARMA 20 MG COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "82628",
+        "dose": "20 mg",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2024-10-31T23:11:27+00:00"
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/82628/FT_82628.pdf",
+      "sourceProductIdentity": {
+        "name": "ATORVASTATINA ALMUS PHARMA 20 MG COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "82628",
+        "dose": "20 mg",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2024-10-31T23:11:13+00:00"
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "country": "Singapore",
+      "documentType": "Package-Insert",
+      "url": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/torvastatin-tablet-package-insert-27-jan-2026.pdf",
+      "sourceProductIdentity": "Torvastatin 20 mg / Teva Singapore",
+      "sourceCountry": "Singapore",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.7049.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "7049",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/7049/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "7049",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "country": "China",
+      "documentType": "Package-Insert",
+      "url": "https://viatris.cn/-/media/project/viatris-sites/product-document/01AtorvastatinCalciumTablets.pdf",
+      "sourceProductIdentity": "Lipitor / Viatris China",
+      "sourceCountry": "China",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "country": "United-States",
+      "documentType": "Package-Insert",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=b5e98b93-d8f8-4eed-8a0a-63b347b670ed&type=pdf",
+      "sourceProductIdentity": "SERTRALINE HYDROCHLORIDE TABLET, FILM COATED [A-S MEDICATION SOLUTIONS]",
+      "sourceCountry": "United-States",
+      "publication": "Sep 30, 2026"
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "country": "European-Union-EEA",
+      "documentType": "PIL",
+      "url": "https://cima.aemps.es/cima/pdfs/p/69765/P_69765.pdf",
+      "sourceProductIdentity": {
+        "name": "SERTRALINA ALMUS 50 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "69765",
+        "dose": "50 mg sertralina",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2025-09-18T22:25:38+00:00"
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "country": "European-Union-EEA",
+      "documentType": "SmPC",
+      "url": "https://cima.aemps.es/cima/pdfs/ft/69765/FT_69765.pdf",
+      "sourceProductIdentity": {
+        "name": "SERTRALINA ALMUS 50 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+        "holder": "Almus Farmaceutica S.A.U.",
+        "registration": "69765",
+        "dose": "50 mg sertralina",
+        "form": {
+          "id": 42,
+          "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+        },
+        "language": "Spanish"
+      },
+      "sourceCountry": "Spain",
+      "publication": "2025-09-18T22:25:26+00:00"
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "country": "United-Kingdom",
+      "documentType": "PIL",
+      "url": "https://www.medicines.org.uk/emc/files/pil.13523.pdf",
+      "sourceProductIdentity": {
+        "emcProductId": "13523",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "country": "United-Kingdom",
+      "documentType": "SmPC",
+      "url": "https://www.medicines.org.uk/emc/product/13523/smpc",
+      "sourceProductIdentity": {
+        "emcProductId": "13523",
+        "identityReview": "PENDING"
+      },
+      "sourceCountry": "United-Kingdom",
+      "publication": null
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "country": "China",
+      "documentType": "Package-Insert",
+      "url": "https://viatris.cn/-/media/project/viatris-sites/product-document/10zoloft.pdf",
+      "sourceProductIdentity": "Zoloft / Viatris China",
+      "sourceCountry": "China",
+      "publication": null
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "jurisdiction": "European Union / EEA",
+  "authority": "EMA / EEA NCAs",
+  "mah": "ClinixAI",
+  "authorizationStatus": "CONFIGURED",
+  "labelingAcquisitionStatus": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+  "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED",
+  "legalAuthorizationVerified": false,
+  "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+  "sourceManifestPaths": [
+    "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+    "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json"
+  ]
+}

@@ -71,6 +71,9 @@ jobs:
       - name: Verify PV decision architecture
         run: npm run pv:verify
 
+      - name: Verify listedness engine regression suite
+        run: npm run listedness:verify
+
       - name: Verify governed Screening and Product/MAH logic
         run: npm run screening:verify
 

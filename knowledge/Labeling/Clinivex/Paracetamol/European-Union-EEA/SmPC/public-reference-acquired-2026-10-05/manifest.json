@@ -1,0 +1,88 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-001-European-Union-EEA-SmPC-a5286fdd833b",
+  "brandName": "Clinivex",
+  "genericName": "Paracetamol",
+  "country": "European-Union-EEA",
+  "documentType": "SmPC",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-001",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "name": "PARACETAMOL AUROVITAS SPAIN 500 MG COMPRIMIDOS EFG",
+      "holder": "Aurovitas Spain, S.A.U.",
+      "registration": "82903",
+      "dose": "500 mg",
+      "form": {
+        "id": 40,
+        "nombre": "COMPRIMIDO"
+      },
+      "language": "Spanish"
+    },
+    "sourceJurisdiction": "Spain",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "regionalApplicability": "SPAIN_NATIONAL_LABEL_NOT_EMA_CENTRAL_OR_ALL_EEA_APPROVAL"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://cima.aemps.es/cima/pdfs/ft/82903/FT_82903.pdf",
+    "resolvedUrl": "https://cima.aemps.es/cima/pdfs/ft/82903/FT_82903.pdf",
+    "sha256": "a5286fdd833b401cb3505fd553a8e8d49fbc25f9b95b64ad02d22a0a5916edd2",
+    "bytes": 193554,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:49:17.317541+00:00",
+    "sourcePublicationOrUpdateDate": "2026-04-14T23:26:31+00:00",
+    "authorityClass": "NATIONAL_REGULATOR"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 9,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Paracetamol"
+    ],
+    "strengths": [
+      "500 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

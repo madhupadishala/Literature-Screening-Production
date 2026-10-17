@@ -1,0 +1,77 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-009-Singapore-Package-Insert-6deace192dac",
+  "brandName": "Lipirex",
+  "genericName": "Atorvastatin",
+  "country": "Singapore",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-009",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "Torvastatin 20 mg / Teva Singapore",
+    "sourceJurisdiction": "Singapore",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Lipirex/Atorvastatin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/torvastatin-tablet-package-insert-27-jan-2026.pdf",
+    "resolvedUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/torvastatin-tablet-package-insert-27-jan-2026.pdf",
+    "sha256": "6deace192dacdcef5b7f7c31f56b1c51c5c7af5adc6626b9f126abe0e7a99bba",
+    "bytes": 261747,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:52:06.976478+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "MANUFACTURER"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Lipirex/Atorvastatin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Lipirex/Atorvastatin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Lipirex/Atorvastatin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Lipirex/Atorvastatin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 26,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Atorvastatin"
+    ],
+    "strengths": [
+      "20 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-001-United-Kingdom-SmPC-4386d82e957c",
+  "brandName": "Clinivex",
+  "genericName": "Paracetamol",
+  "country": "United-Kingdom",
+  "documentType": "SmPC",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-001",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "emcProductId": "5164",
+      "identityReview": "PENDING"
+    },
+    "sourceJurisdiction": "United-Kingdom",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html",
+    "canonicalUrl": "https://www.medicines.org.uk/emc/product/5164/smpc",
+    "resolvedUrl": "https://www.medicines.org.uk/emc/product/5164/smpc",
+    "sha256": "4386d82e957cef7f24097548002e31fc9a59f0f4bdbdc23956e1e40149e1b675",
+    "bytes": 64007,
+    "mimeType": "text/html",
+    "acquiredAt": "2026-10-05T12:52:52.542671+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": null,
+    "fullHtmlSmPC": true,
+    "pages": null,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Paracetamol"
+    ],
+    "strengths": [
+      "500 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

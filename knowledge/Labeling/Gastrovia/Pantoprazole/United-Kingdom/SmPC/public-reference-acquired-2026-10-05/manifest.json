@@ -1,0 +1,82 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-005-United-Kingdom-SmPC-040bd1e4e68d",
+  "brandName": "Gastrovia",
+  "genericName": "Pantoprazole",
+  "country": "United-Kingdom",
+  "documentType": "SmPC",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-005",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "emcProductId": "14644",
+      "identityReview": "PENDING"
+    },
+    "sourceJurisdiction": "United-Kingdom",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "releaseCharacteristicsReview": "MASTER_TABLET_RELEASE_UNSPECIFIED_REQUIRES_REVIEW"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html",
+    "canonicalUrl": "https://www.medicines.org.uk/emc/product/14644/smpc",
+    "resolvedUrl": "https://www.medicines.org.uk/emc/product/14644/smpc",
+    "sha256": "040bd1e4e68d05e88e67c7efcef4dd642311e1c24db84af7ab20d5465ad92c6e",
+    "bytes": 90050,
+    "mimeType": "text/html",
+    "acquiredAt": "2026-10-05T12:52:52.301348+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": null,
+    "fullHtmlSmPC": true,
+    "pages": null,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Pantoprazole"
+    ],
+    "strengths": [
+      "40 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

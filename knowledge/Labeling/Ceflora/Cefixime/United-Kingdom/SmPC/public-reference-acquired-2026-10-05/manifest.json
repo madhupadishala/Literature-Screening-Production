@@ -1,0 +1,81 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-008-United-Kingdom-SmPC-f9ef4b1ad76e",
+  "brandName": "Ceflora",
+  "genericName": "Cefixime",
+  "country": "United-Kingdom",
+  "documentType": "SmPC",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-008",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "emcProductId": "15047",
+      "identityReview": "PENDING"
+    },
+    "sourceJurisdiction": "United-Kingdom",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/source/document.html",
+    "canonicalUrl": "https://www.medicines.org.uk/emc/product/15047/smpc",
+    "resolvedUrl": "https://www.medicines.org.uk/emc/product/15047/smpc",
+    "sha256": "f9ef4b1ad76ea27632b80d78fe557a36c09537f91bbb23f441ff03d3b6a814fe",
+    "bytes": 70132,
+    "mimeType": "text/html",
+    "acquiredAt": "2026-10-05T12:53:05.158749+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "PUBLIC_LABEL_REPOSITORY"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": null,
+    "fullHtmlSmPC": true,
+    "pages": null,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Cefixime"
+    ],
+    "strengths": [
+      "200 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

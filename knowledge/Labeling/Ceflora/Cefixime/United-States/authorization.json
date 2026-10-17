@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "jurisdiction": "United States",
+  "authority": "US FDA",
+  "mah": "ClinixAI",
+  "authorizationStatus": "CONFIGURED",
+  "labelingAcquisitionStatus": "MATCHING_SOURCE_NOT_ACQUIRED",
+  "productionLabelStatus": "UNRESOLVED_FAIL_CLOSED",
+  "legalAuthorizationVerified": false,
+  "evidenceBasis": "USER_PROJECT_CONFIGURATION",
+  "sourceManifestPaths": [
+    "knowledge/Labeling/Ceflora/Cefixime/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json"
+  ]
+}

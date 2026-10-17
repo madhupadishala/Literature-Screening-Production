@@ -1,0 +1,852 @@
+{
+  "schemaVersion": "1.1",
+  "acquiredDate": "2026-10-05",
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "results": [
+    {
+      "productId": "CLX-PROD-001",
+      "brand": "Clinivex",
+      "generic": "Paracetamol",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=fc5e6f2a-e813-0666-e053-6394a90a66a7&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-001",
+      "brand": "Clinivex",
+      "generic": "Paracetamol",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/82903/P_82903.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/82903/FT_82903.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-001",
+      "brand": "Clinivex",
+      "generic": "Paracetamol",
+      "country": "Singapore",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-001",
+      "brand": "Clinivex",
+      "generic": "Paracetamol",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.5164.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Clinivex/Paracetamol/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/5164/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-001",
+      "brand": "Clinivex",
+      "generic": "Paracetamol",
+      "country": "China",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "brand": "Neurovia",
+      "generic": "Pregabalin",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=613a7a13-d5ba-4827-91ec-3ed5176602b7&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "brand": "Neurovia",
+      "generic": "Pregabalin",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/79806/P_79806.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/79806/FT_79806.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "brand": "Neurovia",
+      "generic": "Pregabalin",
+      "country": "Singapore",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaao2591-brieka-pregabalin_pi_sg.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "brand": "Neurovia",
+      "generic": "Pregabalin",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.10302.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/10302/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-002",
+      "brand": "Neurovia",
+      "generic": "Pregabalin",
+      "country": "China",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Neurovia/Pregabalin/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://viatris.cn/-/media/project/viatris-sites/product-document/06pregabalin.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "brand": "Cardionex",
+      "generic": "Amlodipine",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=d09173a1-5e3c-4c86-8c7c-15238925ef50&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "brand": "Cardionex",
+      "generic": "Amlodipine",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/70750/P_70750.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/70750/FT_70750.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "brand": "Cardionex",
+      "generic": "Amlodipine",
+      "country": "Singapore",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaam3081-actapin-amlodipine_pi_sg.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "brand": "Cardionex",
+      "generic": "Amlodipine",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.4717.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/4717/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-003",
+      "brand": "Cardionex",
+      "generic": "Amlodipine",
+      "country": "China",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Cardionex/Amlodipine/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://viatris.cn/-/media/project/viatris-sites/product-document/02norvasc.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "brand": "Glycora",
+      "generic": "Metformin",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Glycora/Metformin/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=23aa50c5-28fe-4322-b5c6-1f1c48409b16&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "brand": "Glycora",
+      "generic": "Metformin",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/91590/P_91590.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Glycora/Metformin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/91590/FT_91590.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "brand": "Glycora",
+      "generic": "Metformin",
+      "country": "Singapore",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "brand": "Glycora",
+      "generic": "Metformin",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Glycora/Metformin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/15731/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-004",
+      "brand": "Glycora",
+      "generic": "Metformin",
+      "country": "China",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "brand": "Gastrovia",
+      "generic": "Pantoprazole",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=6faf465b-c3a3-4ae7-9e16-1ba758f6962a&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "brand": "Gastrovia",
+      "generic": "Pantoprazole",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/70297/P_70297.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/70297/FT_70297.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "brand": "Gastrovia",
+      "generic": "Pantoprazole",
+      "country": "Singapore",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "brand": "Gastrovia",
+      "generic": "Pantoprazole",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.14644.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/14644/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-005",
+      "brand": "Gastrovia",
+      "generic": "Pantoprazole",
+      "country": "China",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Gastrovia/Pantoprazole/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://assets-dam.takeda.com/raw/upload/v1675187850/legacy-dotcom/siteassets/zh-cn/home/pantodac40mg-pantazole-sodium-enteric-_-instruction-manual_20161128-.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "brand": "Allerzen",
+      "generic": "Cetirizine",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=cf6b3017-c8b6-4862-aa33-19ed02a43c28&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "brand": "Allerzen",
+      "generic": "Cetirizine",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/64636/P_64636.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/64636/FT_64636.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "brand": "Allerzen",
+      "generic": "Cetirizine",
+      "country": "Singapore",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "brand": "Allerzen",
+      "generic": "Cetirizine",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.100094.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/100094/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-006",
+      "brand": "Allerzen",
+      "generic": "Cetirizine",
+      "country": "China",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Allerzen/Cetirizine/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://www.dawnrays.com/img/product/%E6%96%B0%E7%89%88%E8%AF%B4%E6%98%8E%E4%B9%A6/%E8%A5%BF%E5%8F%AF%E9%9F%A6_OTC%E7%89%88_.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "brand": "Respira-L",
+      "generic": "Montelukast",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=9287d2f1-2414-4ee2-aecc-b6b59c6a0a4c&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "brand": "Respira-L",
+      "generic": "Montelukast",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/74098/P_74098.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/74098/FT_74098.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "brand": "Respira-L",
+      "generic": "Montelukast",
+      "country": "Singapore",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaan6780-montelukast-teva-film-coated-tablet-pi.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "brand": "Respira-L",
+      "generic": "Montelukast",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.9918.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Respira-L/Montelukast/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/9918/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-007",
+      "brand": "Respira-L",
+      "generic": "Montelukast",
+      "country": "China",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "brand": "Ceflora",
+      "generic": "Cefixime",
+      "country": "United-States",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "Downloaded label is 400 mg tablet; 200 mg mention is pharmacokinetic evidence, not a labeled 200 mg presentation. Rejected as a match.",
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=b5a3c547-3bc7-4856-af9c-1bead294f5d9&type=pdf",
+          "status": "REJECTED_STRENGTH_MISMATCH"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "brand": "Ceflora",
+      "generic": "Cefixime",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/90331/P_90331.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/90331/FT_90331.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "brand": "Ceflora",
+      "generic": "Cefixime",
+      "country": "Singapore",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "brand": "Ceflora",
+      "generic": "Cefixime",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.15047.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Ceflora/Cefixime/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/15047/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-008",
+      "brand": "Ceflora",
+      "generic": "Cefixime",
+      "country": "China",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "brand": "Lipirex",
+      "generic": "Atorvastatin",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=7c58bf4a-4a92-4db8-89bc-4de1b5831efc&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "brand": "Lipirex",
+      "generic": "Atorvastatin",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/82628/P_82628.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/82628/FT_82628.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "brand": "Lipirex",
+      "generic": "Atorvastatin",
+      "country": "Singapore",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/Singapore/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/torvastatin-tablet-package-insert-27-jan-2026.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "brand": "Lipirex",
+      "generic": "Atorvastatin",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.7049.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/7049/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-009",
+      "brand": "Lipirex",
+      "generic": "Atorvastatin",
+      "country": "China",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Lipirex/Atorvastatin/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://viatris.cn/-/media/project/viatris-sites/product-document/01AtorvastatinCalciumTablets.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "brand": "Serovex",
+      "generic": "Sertraline",
+      "country": "United-States",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Serovex/Sertraline/United-States/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=b5e98b93-d8f8-4eed-8a0a-63b347b670ed&type=pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "brand": "Serovex",
+      "generic": "Sertraline",
+      "country": "European-Union-EEA",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Serovex/Sertraline/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/p/69765/P_69765.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Serovex/Sertraline/European-Union-EEA/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://cima.aemps.es/cima/pdfs/ft/69765/FT_69765.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "brand": "Serovex",
+      "generic": "Sertraline",
+      "country": "Singapore",
+      "status": "MATCHING_SOURCE_NOT_ACQUIRED",
+      "reason": "No matching complete primary source acquired; manufacturer/HSA access or exact strength/form resolution still required.",
+      "documents": []
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "brand": "Serovex",
+      "generic": "Sertraline",
+      "country": "United-Kingdom",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/PIL/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "PIL",
+          "sourceUrl": "https://www.medicines.org.uk/emc/files/pil.13523.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        },
+        {
+          "manifestPath": "knowledge/Labeling/Serovex/Sertraline/United-Kingdom/SmPC/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "SmPC",
+          "sourceUrl": "https://www.medicines.org.uk/emc/product/13523/smpc",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    },
+    {
+      "productId": "CLX-PROD-010",
+      "brand": "Serovex",
+      "generic": "Sertraline",
+      "country": "China",
+      "status": "REFERENCE_ACQUIRED_PENDING_REVIEW",
+      "reason": null,
+      "documents": [
+        {
+          "manifestPath": "knowledge/Labeling/Serovex/Sertraline/China/Package-Insert/public-reference-acquired-2026-10-05/manifest.json",
+          "documentType": "Package-Insert",
+          "sourceUrl": "https://viatris.cn/-/media/project/viatris-sites/product-document/10zoloft.pdf",
+          "status": "ACQUIRED_REFERENCE_PENDING_REVIEW"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-009-China-Package-Insert-4b6a5328493b",
+  "brandName": "Lipirex",
+  "genericName": "Atorvastatin",
+  "country": "China",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-009",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "Lipitor / Viatris China",
+    "sourceJurisdiction": "China",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Lipirex/Atorvastatin/China/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://viatris.cn/-/media/project/viatris-sites/product-document/01AtorvastatinCalciumTablets.pdf",
+    "resolvedUrl": "https://viatris.cn/-/media/project/viatris-sites/product-document/01AtorvastatinCalciumTablets.pdf",
+    "sha256": "4b6a5328493bb32aad3d9463b66ff8308ca7b2beaa2751943466c1635be5ff55",
+    "bytes": 447658,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:51:57.098061+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "MANUFACTURER"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Lipirex/Atorvastatin/China/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Lipirex/Atorvastatin/China/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Lipirex/Atorvastatin/China/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Lipirex/Atorvastatin/China/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 25,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Atorvastatin"
+    ],
+    "strengths": [
+      "20 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

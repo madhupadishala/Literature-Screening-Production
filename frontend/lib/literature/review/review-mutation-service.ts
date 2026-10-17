@@ -7,6 +7,7 @@ import {
   activeReviewReferenceData,
   expectednessFromReference,
 } from "@/lib/literature/review/review-reference-service";
+import { assessListednessFromKnowledgeBase } from "@/lib/listedness-intelligence/knowledge-base-listedness-service";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 function cleanText(value: unknown): string {
@@ -438,14 +439,53 @@ export async function saveLabelAssessments(input: {
         );
       }
 
-      const governedExpectedness = expectednessFromReference({
-        clinicalEvent: assessment.clinicalEvent,
-        reference,
-      });
-      if (governedExpectedness !== assessment.conclusion) {
-        throw new Error(
-          `Expectedness mismatch for ${assessment.clinicalEvent}: active Label / RSI resolves to ${governedExpectedness}, not ${assessment.conclusion}.`,
-        );
+      if (allowedScope === "VALIDATION_ONLY") {
+        const governedExpectedness = expectednessFromReference({
+          clinicalEvent: assessment.clinicalEvent,
+          reference,
+        });
+        if (governedExpectedness !== assessment.conclusion) {
+          throw new Error(
+            `Expectedness mismatch for ${assessment.clinicalEvent}: active validation Label / RSI resolves to ${governedExpectedness}, not ${assessment.conclusion}.`,
+          );
+        }
+      } else {
+        const listedness = await assessListednessFromKnowledgeBase({
+          tenantId: input.principal.tenantId,
+          clientProductId: context.productId,
+          country: context.countryOfInterest,
+          reportedEvent: assessment.clinicalEvent,
+          relevantDate: assessment.referenceEffectiveDate,
+          actorId: input.principal.userId,
+          requireDocumentEvidence: true,
+        });
+
+        if (!listedness.reference) {
+          throw new Error(
+            `No active production label reference could be resolved for ${assessment.reportedProduct} in ${context.countryOfInterest}.`,
+          );
+        }
+        if (
+          listedness.reference.labelKey !== reference.labelKey ||
+          listedness.reference.version !== reference.version
+        ) {
+          throw new Error(
+            `Listedness engine resolved ${listedness.reference.labelKey} ${listedness.reference.version}, which does not match the selected governed reference ${reference.labelKey} ${reference.version}.`,
+          );
+        }
+
+        const governedExpectedness =
+          listedness.assessment.listedness === "LISTED"
+            ? "EXPECTED"
+            : listedness.assessment.listedness === "UNLISTED"
+              ? "UNEXPECTED"
+              : "UNRESOLVED";
+
+        if (governedExpectedness !== assessment.conclusion) {
+          throw new Error(
+            `Listedness mismatch for ${assessment.clinicalEvent}: governed label evidence resolves to ${governedExpectedness} (${listedness.assessment.reasonCode}), not ${assessment.conclusion}.`,
+          );
+        }
       }
     }
 

@@ -1,0 +1,88 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-007-European-Union-EEA-PIL-39bc8472c717",
+  "brandName": "Respira-L",
+  "genericName": "Montelukast",
+  "country": "European-Union-EEA",
+  "documentType": "PIL",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-007",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": {
+      "name": "MONTELUKAST ALMUS 10 mg COMPRIMIDOS RECUBIERTOS CON PELICULA EFG",
+      "holder": "Almus Farmaceutica S.A.U.",
+      "registration": "74098",
+      "dose": "10 mg",
+      "form": {
+        "id": 42,
+        "nombre": "COMPRIMIDO RECUBIERTO CON PELÍCULA"
+      },
+      "language": "Spanish"
+    },
+    "sourceJurisdiction": "Spain",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true,
+    "regionalApplicability": "SPAIN_NATIONAL_LABEL_NOT_EMA_CENTRAL_OR_ALL_EEA_APPROVAL"
+  },
+  "source": {
+    "path": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://cima.aemps.es/cima/pdfs/p/74098/P_74098.pdf",
+    "resolvedUrl": "https://cima.aemps.es/cima/pdfs/p/74098/P_74098.pdf",
+    "sha256": "39bc8472c717904275ec23731c453d9ff9e529d0235635202ce26ec094cf38cb",
+    "bytes": 178616,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:51:04.381885+00:00",
+    "sourcePublicationOrUpdateDate": "2025-03-18T00:41:14+00:00",
+    "authorityClass": "NATIONAL_REGULATOR"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Respira-L/Montelukast/European-Union-EEA/PIL/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 7,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Montelukast"
+    ],
+    "strengths": [
+      "10 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

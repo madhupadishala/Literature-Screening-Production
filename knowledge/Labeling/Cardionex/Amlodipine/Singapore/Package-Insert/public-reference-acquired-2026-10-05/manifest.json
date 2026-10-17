@@ -1,0 +1,77 @@
+{
+  "labelId": "PUBLIC-REFERENCE-CLX-PROD-003-Singapore-Package-Insert-bf5c63059dc9",
+  "brandName": "Cardionex",
+  "genericName": "Amlodipine",
+  "country": "Singapore",
+  "documentType": "Package-Insert",
+  "version": "acquisition-2026-10-05",
+  "effectiveDate": null,
+  "supersedesLabelId": null,
+  "governanceStatus": "DRAFT",
+  "effectiveForProduction": false,
+  "referenceMapping": {
+    "clientProductId": "CLX-PROD-003",
+    "clientMAH": "ClinixAI",
+    "matchBasis": "INGREDIENT_STRENGTH_FORM_CANDIDATE_REQUIRES_REVIEW",
+    "exactClientBrandMatch": false,
+    "exactClientMAHMatch": false,
+    "sourceProductIdentity": "Actapin 5 mg / Teva Singapore",
+    "sourceJurisdiction": "Singapore",
+    "approvalStatus": "PENDING_PRODUCT_AND_REGULATORY_REVIEW",
+    "sourceScopeVerification": "PENDING_MANUAL_REVIEW",
+    "historicalVersionMatch": "UNRESOLVED",
+    "tenantClientAssignment": "UNASSIGNED_REFERENCE_ONLY",
+    "productionUseBlocked": true
+  },
+  "source": {
+    "path": "knowledge/Labeling/Cardionex/Amlodipine/Singapore/Package-Insert/public-reference-acquired-2026-10-05/source/document.pdf",
+    "canonicalUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaam3081-actapin-amlodipine_pi_sg.pdf",
+    "resolvedUrl": "https://www.tevapharm.sg/globalassets/singapore/product-leaflets/aaam3081-actapin-amlodipine_pi_sg.pdf",
+    "sha256": "bf5c63059dc939c5c0287bf867191d8cc45fbf5e3c810611e0a73824f127d493",
+    "bytes": 261333,
+    "mimeType": "application/pdf",
+    "acquiredAt": "2026-10-05T12:52:06.792433+00:00",
+    "sourcePublicationOrUpdateDate": null,
+    "authorityClass": "MANUFACTURER"
+  },
+  "derived": {
+    "parsedPath": "knowledge/Labeling/Cardionex/Amlodipine/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/parsed",
+    "chunksPath": "knowledge/Labeling/Cardionex/Amlodipine/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/chunks",
+    "embeddingsPath": "knowledge/Labeling/Cardionex/Amlodipine/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/embeddings",
+    "indexPath": "knowledge/Labeling/Cardionex/Amlodipine/Singapore/Package-Insert/public-reference-acquired-2026-10-05/derived/indexes",
+    "embeddingModel": null,
+    "embeddingDimensions": null
+  },
+  "regulatoryUse": {
+    "referenceSafetyInformation": false,
+    "listednessExpectedness": false,
+    "jurisdictionSpecific": true
+  },
+  "technicalVerification": {
+    "pdfReadable": true,
+    "pages": 2,
+    "textPreservedWithoutTruncation": true,
+    "sourceBytesUnmodified": true,
+    "humanContentReview": "PENDING"
+  },
+  "requestedProductScope": {
+    "activeIngredients": [
+      "Amlodipine"
+    ],
+    "strengths": [
+      "5 mg"
+    ],
+    "dosageForms": [
+      "Tablet"
+    ],
+    "routes": [
+      "Oral"
+    ]
+  },
+  "productScope": {
+    "activeIngredients": [],
+    "strengths": [],
+    "dosageForms": [],
+    "routes": []
+  }
+}

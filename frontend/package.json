@@ -87,7 +87,12 @@
     "design:verify": "node --import tsx scripts/verify-product-design-guardian.ts",
     "cleanup:sprint12:verify": "node --import tsx scripts/verify-cleanup-sprint12-literature-ux.ts",
     "cleanup:sprint13:verify": "node --import tsx scripts/verify-cleanup-sprint13-intake-ux.ts",
-    "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts"
+    "cleanup:sprint14:verify": "node --import tsx scripts/verify-cleanup-sprint14-case-processing-ux.ts",
+    "listedness:verify": "node --import tsx scripts/verify-listedness-engine.ts",
+    "listedness:verify:kb": "node --import tsx scripts/verify-listedness-kb-e2e.ts",
+    "listedness:inventory:labels": "node --import tsx scripts/inventory-label-documents.ts",
+    "label:inventory:verify": "node --import tsx scripts/verify-label-inventory.ts",
+    "label:references:verify": "node --import tsx scripts/verify-label-reference-candidates.ts"
   },
   "dependencies": {
     "@langchain/core": "1.2.17",
