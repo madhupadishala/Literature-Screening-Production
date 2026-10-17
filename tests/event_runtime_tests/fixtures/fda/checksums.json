@@ -1,0 +1,52 @@
+{
+  "000.xml": {
+    "original_sha256": "0e91b61bfdebee353cc09ab8db9348742b3268fdc38b5a20bfdc976e18ef0032",
+    "fixture_sha256": "b7db48332cdbc4be566e1e190e640db362e46e9dca66725a0db50d0c6386e97c",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "001.xml": {
+    "original_sha256": "0fc4f81eb25fbe5f52a2c59caf3111cde02fee516f6ebf9ce0397873f3e3c61a",
+    "fixture_sha256": "ff668ad7025fd9db649a8f10fa44f735cf23ae81c2d45bf0492bff4b8dba62dc",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "002.xml": {
+    "original_sha256": "c24aaae76edc49e19589dfbac9c589110decc9d5d2ee448df0515bf0033534df",
+    "fixture_sha256": "23c65d0059d948490950059d25340e2967c5b16092174c7e14fc6d1ca9329294",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "003.xml": {
+    "original_sha256": "2ff128073c84211dcef1c5bd3c3bd3b6f094e3d2f83ee96941d728ae7a0a9a79",
+    "fixture_sha256": "c831558557ddb58f7de4d65314e387f9bdbc8b979bea0389db5f4a13bef9dbd6",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "004.xml": {
+    "original_sha256": "2670dc2e7c295a151f80b306b366c36aad9288465ea4022ff823bb75fe72425a",
+    "fixture_sha256": "7c618d1f218c74275daa8492d0695296a908240eb0cd3ef47c874072b7c03550",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "005.xml": {
+    "original_sha256": "011401975406e68b4ec1c939989ff6addb6b9b4fef8e8d5828f8e3411a2d18dd",
+    "fixture_sha256": "62475f985c6db3a0364b569898aa23ce08486e031af62343af5556b15fb2fcf9",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "006.xml": {
+    "original_sha256": "665aaf4f9a4ab60d5a1c443de5d1468c9204403a4bdacc9b17d2dbb630e82aa6",
+    "fixture_sha256": "08e6c5b15dc9143abd8c32317a1358c288125739a07b88483a6e4bc8561dec03",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "007.xml": {
+    "original_sha256": "816d603aa563562ec4187dd388b843be9702cc5ae328300cfb17fc4b93c53141",
+    "fixture_sha256": "3d819ef88189e55f886949115db8d9ef4ff8a544beda4ddc6cbf0e93187a47f2",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "008.xml": {
+    "original_sha256": "bb1f7b3f219de1f094c2f16d3573f52513ae34b28d95957fe17afcb6fdc3d6ed",
+    "fixture_sha256": "d1628185b53a13396948dbdd72acccd77b41f9c5e334ec0b1a547ff879a0c306",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  },
+  "009.xml": {
+    "original_sha256": "6ece62d4d56ce0eb74886b109fd95d34dfeabf6c7d99c44dc5107b5f23026d31",
+    "fixture_sha256": "1d4bad6f3a3aa770db3b216977b09b26e30336e47c0d5f59a75e295b8ae2d7da",
+    "transformation": "XML comments and embedded attachment payloads removed; reaction records preserved"
+  }
+}

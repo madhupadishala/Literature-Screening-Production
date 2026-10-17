@@ -60,6 +60,8 @@ class PVAgentService:
         if not scopes:
             raise ServiceError(401, "Service authentication required")
         allowed = {'tenant_id','client_id','workspace_id','request_id','case_id','narrative','source_type','event_terms','input_sha256'}
+        if agent == 'event-extraction':
+            allowed = allowed | {'documents'}
         if not isinstance(request, dict) or set(request) - allowed:
             raise ServiceError(400, "Invalid agent request fields")
         for key in ['tenant_id','client_id','workspace_id','request_id','case_id','narrative','input_sha256']:
@@ -79,7 +81,7 @@ class PVAgentService:
             confidence = min((c['confidence'] for c in result['classifications']), default=0.0)
             evidence = [e for c in result['classifications'] for e in c['evidence']]
             version = result['knowledge_context'].get('version', 'unqualified-nexus-kb')
-        elif agent in ('seriousness', 'causality') and agent in self.workers:
+        elif agent in ('seriousness', 'causality', 'event-extraction') and agent in self.workers:
             worker_request = dict(request)
             if agent == 'causality':
                 context = self.causality_adapter.retrieve(CausalityKnowledgeRequest(
@@ -133,4 +135,7 @@ def create_application():
     if os.environ.get('NEXUS_PV_REGISTER_SPECIALISTS') == 'true':
         from .workers import build_specialist_workers
         app.workers = build_specialist_workers(app.drug_agent, app.causality_adapter, os.environ['NEXUS_PV_SPECIALIST_AUDIT_DIR'])
+    if os.environ.get('NEXUS_PV_REGISTER_EVENT_EXTRACTION') == 'true':
+        from .event_worker import build_event_worker
+        app.workers['event-extraction'] = build_event_worker(app.drug_agent.knowledge_router)
     return app
