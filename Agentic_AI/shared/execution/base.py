@@ -43,7 +43,7 @@ class BaseExecutionAdapter:
             task=context.task_type,
             evidence_package=evidence,
         )
-        if pack.tenant_id != context.tenant_id:
+        if pack.tenant_id != context.tenant_id or getattr(pack, "client_id", None) != context.client_id:
             raise ExecutionFailure("knowledge scope mismatch")
         # Never pass unverified model-generated identity into downstream routing.
         output = self.specialist(evidence, pack)

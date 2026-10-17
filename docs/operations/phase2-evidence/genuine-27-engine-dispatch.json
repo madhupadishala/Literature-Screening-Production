@@ -1,0 +1,144 @@
+{
+  "synthetic_only": true,
+  "clinical_release_authorized": false,
+  "knowledge_retrieval_proven": false,
+  "executed_specialists": 27,
+  "total_slots": 27,
+  "outcomes": {
+    "AG01": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG02": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG03": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG04": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG05": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG06": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG07": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG08": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG09": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG10": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG11": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG12": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG13": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG14": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG15": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG16": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG17": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG18": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG19": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG20": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG21": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG22": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG23": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG24": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG25": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG26": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    },
+    "AG27": {
+      "status": "passed",
+      "native_engine_invoked": true,
+      "provider_mode": "synthetic_fixture"
+    }
+  }
+}

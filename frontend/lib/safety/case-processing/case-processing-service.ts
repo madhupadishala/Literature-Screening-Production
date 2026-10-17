@@ -453,7 +453,7 @@ async function insertAssistSuggestions(
   }
 }
 
-async function ensureInitialDraft(
+export async function ensureInitialDraft(
   client: PoolClient,
   principal: RequestPrincipal,
   caseId: string,

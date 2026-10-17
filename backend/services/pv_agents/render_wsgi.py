@@ -23,6 +23,11 @@ def application(environ, start_response):
             "state": "enabled" if os.environ.get("NEXUS_PV_AGENTS_ENABLED") == "true" else "disabled",
         }, head=method == "HEAD")
 
+    if method in ("GET", "HEAD") and path == "/readyz/vector":
+        from .vector_readiness import cached_vector_probe
+        result = cached_vector_probe()
+        return _json(start_response, "200 OK" if result["vector_ready"] else "503 Service Unavailable", result, head=method == "HEAD")
+
     if method in ("GET", "HEAD") and path == "/readyz":
         # Check only connectivity/configuration; never run clinical code or disclose secrets.
         try:
@@ -45,7 +50,24 @@ def application(environ, start_response):
             "clinical_execution_enabled": os.environ.get("NEXUS_PV_AGENTS_ENABLED") == "true",
         }, head=method == "HEAD")
 
-    if path in ("/v1/staging/synthetic-assess", "/v1/staging/specialist-readiness", "/v1/staging/synthetic-dispatch") and method == "POST":
+    if path == "/v1/workflows/assess" and method == "POST":
+        from .service import ServiceError
+        from .workflow_endpoint import assess_workflow
+        try:
+            size = int(environ.get("CONTENT_LENGTH") or 0)
+            if not 1 <= size <= 500000: raise ServiceError(400,"Invalid workflow size")
+            auth = environ.get("HTTP_AUTHORIZATION", "")
+            if not auth.startswith("Bearer "): raise ServiceError(401,"Service authentication required")
+            result = assess_workflow(json.loads(environ["wsgi.input"].read(size)),auth[7:])
+            return _json(start_response,"200 OK",result)
+        except ServiceError as exc:
+            status = {400:"400 Bad Request",401:"401 Unauthorized",403:"403 Forbidden",409:"409 Conflict"}.get(exc.status,"503 Service Unavailable")
+            return _json(start_response,status,{"error":exc.message,"review_required":True})
+        except Exception as exc:
+            logging.getLogger("nexus.workflow").warning("Workflow failed closed: %s",type(exc).__name__)
+            return _json(start_response,"503 Service Unavailable",{"error":"Agent workflow dependencies unavailable","review_required":True})
+
+    if path in ("/v1/staging/synthetic-assess", "/v1/staging/specialist-readiness", "/v1/staging/synthetic-dispatch", "/v1/staging/synthetic-composition") and method == "POST":
         from .service import ServiceError
         from .staging_probe import assess_probe, specialist_readiness_probe, synthetic_dispatch_batch
         try:
@@ -61,7 +83,13 @@ def application(environ, start_response):
                 raise ServiceError(401, "Service authentication required")
             probe = (specialist_readiness_probe if path.endswith("/specialist-readiness") else
                      synthetic_dispatch_batch if path.endswith("/synthetic-dispatch") else assess_probe)
-            result = probe(authorization[7:], body["request_id"])
+            if path.endswith("/synthetic-composition"):
+                from .staging_probe import assess_probe
+                receipt = assess_probe(authorization[7:], body["request_id"])
+                from .synthetic_composition import run_synthetic_composition
+                result = {**receipt, **run_synthetic_composition()}
+            else:
+                result = probe(authorization[7:], body["request_id"])
             return _json(start_response, "200 OK", result)
         except ServiceError as exc:
             status = {400: "400 Bad Request", 401: "401 Unauthorized",

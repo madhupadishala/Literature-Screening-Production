@@ -9,7 +9,7 @@ def make_native_pipeline_bindings(*, seriousness_pipeline=None, causality_pipeli
     bindings = {}
     if seriousness_pipeline is not None:
         from Agentic_AI.AG11_Seriousness_Assessment.src.backend.pipeline import SeriousnessPipeline
-        from Agentic_AI.AG11_Seriousness_Assessment.src.backend.schemas import CaseInput
+        from Agentic_AI.AG11_Seriousness_Assessment.src.backend.schemas import CaseInput as SeriousnessCaseInput
         if not isinstance(seriousness_pipeline, SeriousnessPipeline):
             raise TypeError("AG11 requires a genuine approved SeriousnessPipeline")
 
@@ -19,7 +19,7 @@ def make_native_pipeline_bindings(*, seriousness_pipeline=None, causality_pipeli
                 raise ValueError("authorized AG11 case identity required")
             if case_data.get("client_id") not in (None, pack.client_id):
                 raise PermissionError("seriousness case client scope mismatch")
-            case = CaseInput.model_validate(case_data)
+            case = SeriousnessCaseInput.model_validate(case_data)
             result = seriousness_pipeline.assess(case, tenant_id=pack.tenant_id)
             return {"agent_id": "AG11", "status": "review_required",
                     "requires_human_review": True,
@@ -28,7 +28,7 @@ def make_native_pipeline_bindings(*, seriousness_pipeline=None, causality_pipeli
 
     if causality_pipeline is not None:
         from Agentic_AI.AG13_Causality_Assessment.src.backend.pipeline import CausalityPipeline
-        from Agentic_AI.AG13_Causality_Assessment.src.backend.schemas import CaseInput
+        from Agentic_AI.AG13_Causality_Assessment.src.backend.schemas import CaseInput as CausalityCaseInput
         if not isinstance(causality_pipeline, CausalityPipeline):
             raise TypeError("AG13 requires a genuine approved CausalityPipeline")
 
@@ -38,7 +38,7 @@ def make_native_pipeline_bindings(*, seriousness_pipeline=None, causality_pipeli
                 raise ValueError("authorized AG13 case identity required")
             if case_data.get("client_id") != pack.client_id:
                 raise PermissionError("causality case client scope mismatch")
-            case = CaseInput.model_validate(case_data)
+            case = CausalityCaseInput.model_validate(case_data)
             result = causality_pipeline.assess(case, tenant_id=pack.tenant_id)
             return {"agent_id": "AG13", "status": "review_required",
                     "requires_human_review": True,

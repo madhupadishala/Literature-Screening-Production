@@ -38,15 +38,18 @@ def run_hosted_checks(application):
     for label, path, bearer in (
         ("inventory", "/v1/staging/specialist-readiness", token),
         ("dispatch", "/v1/staging/synthetic-dispatch", token),
+        ("composition", "/v1/staging/synthetic-composition", token),
         ("invalid_bearer", "/v1/staging/specialist-readiness", "invalid-token"),
         ("missing_bearer", "/v1/staging/synthetic-dispatch", None),
     ):
         try:
             status, body = post(path, bearer)
-            expected = 200 if label in ("inventory", "dispatch") else 401
+            expected = 200 if label in ("inventory", "dispatch", "composition") else 401
             valid = status == expected
-            if label in ("inventory", "dispatch") and valid:
+            if label in ("inventory", "dispatch", "composition") and valid:
                 valid = body.get("total_slots") == 27 and body.get("clinical_release_authorized") is False and bool(body.get("audit_id"))
+            if label == "composition" and body.get("dry_run_slots_passed") != 27:
+                valid = False
             LOG.warning(
                 "staging_acceptance route=%s http_status=%d passed=%s slots=%s executed=%s audit_present=%s",
                 label, status, str(valid).lower(),
@@ -54,5 +57,8 @@ def run_hosted_checks(application):
                 body.get("executed_specialists", "na") if valid else "na",
                 str(bool(body.get("audit_id"))).lower() if valid else "na",
             )
+            if label == "composition" and valid:
+                LOG.warning("synthetic_composition passed=%s python_engines=%s native_dependency_fixtures=%s clinical_release=false",
+                    body.get("dry_run_slots_passed"),body.get("actual_python_engine_slots"),body.get("native_dependency_fixture_slots"))
         except Exception as exc:
             LOG.error("staging_acceptance route=%s failed_closed=%s", label, type(exc).__name__)

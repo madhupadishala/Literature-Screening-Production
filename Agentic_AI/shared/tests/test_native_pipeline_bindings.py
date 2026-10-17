@@ -38,3 +38,13 @@ class NativePipelineTests(unittest.TestCase):
             make_native_pipeline_bindings(seriousness_pipeline=object())
 if __name__ == "__main__":
     unittest.main()
+
+class DualPipelineRegressionTests(unittest.TestCase):
+    def test_seriousness_and_causality_keep_distinct_schemas(self):
+        from backend.services.pv_agents.real_engine_qualification import components,evidence
+        deps=components()
+        bindings=make_native_pipeline_bindings(seriousness_pipeline=deps['seriousness_pipeline'],causality_pipeline=deps['causality_pipeline'])
+        pack=SimpleNamespace(tenant_id='nexus-staging-tenant',client_id='nexus-staging-client')
+        for agent in ('AG11','AG13'):
+            result=bindings[agent](evidence(),pack)
+            self.assertEqual(result['agent_id'],agent)

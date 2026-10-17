@@ -23,6 +23,7 @@ class AgentContextPack:
     tenant_id: str
     agent: str
     evidence_package_id: str
+    client_id: str | None = None
     general_rules: List[Dict[str, Any]] = field(default_factory=list)
     client_rules: List[Dict[str, Any]] = field(default_factory=list)
     product_master_matches: List[Dict[str, Any]] = field(default_factory=list)
@@ -34,6 +35,7 @@ class AgentContextPack:
     def to_dict(self) -> Dict[str, Any]:
         return {
             "tenant_id": self.tenant_id,
+            "client_id": self.client_id,
             "agent": self.agent,
             "evidence_package_id": self.evidence_package_id,
             "general_rules": self.general_rules,

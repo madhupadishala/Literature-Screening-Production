@@ -1,0 +1,347 @@
+{
+  "request_id": "SYN-REAL-WORKFLOW",
+  "case_id": "26e5b166-7d79-4e86-b691-1718a244c90e",
+  "review_id": "b627080f-7e18-4449-bb4b-66993cd39cda",
+  "preview_id": "f23f1e6e-5816-4ffd-820a-4da5a6a02c26",
+  "tenantKey": "nexus-staging-tenant",
+  "workspaceId": "nexus-staging-client",
+  "environment": "UAT",
+  "source_sha256": "c84e68b9b685e0cd5c969dd45e20bd6f965e61dd3414997695211bbbbaf67071",
+  "status": "PENDING_HUMAN_REVIEW",
+  "clinical_release_authorized": false,
+  "executed_slots": 27,
+  "trace": [
+    {
+      "sequence": 1,
+      "stage": "document_intake",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "document_id": "SYN-DOC-27",
+      "source_sha256": "c84e68b9b685e0cd5c969dd45e20bd6f965e61dd3414997695211bbbbaf67071",
+      "audit_id": "676ac804-0d64-4d42-bb48-c84f4736c9fb"
+    },
+    {
+      "sequence": 2,
+      "stage": "scoped_knowledge_retrieval",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "citation_ids": [
+        "nexus-staging-tenant-nexus-staging-client-LABEL",
+        "nexus-staging-tenant-nexus-staging-client-PRODUCT",
+        "nexus-staging-tenant-nexus-staging-client-SOP"
+      ],
+      "source_sha256": "c84e68b9b685e0cd5c969dd45e20bd6f965e61dd3414997695211bbbbaf67071",
+      "audit_id": "bf44d241-4b9c-4bec-bfe7-57ec7da475ec"
+    },
+    {
+      "sequence": 3,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG01",
+      "status": "review_required",
+      "audit_id": "69326549-80d2-43ee-aeb7-fe25b8b93bab"
+    },
+    {
+      "sequence": 4,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG02",
+      "status": "review_required",
+      "audit_id": "0491a073-36fe-4280-9559-26717c90d0a6"
+    },
+    {
+      "sequence": 5,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG03",
+      "status": "review_required",
+      "audit_id": "7f38ef36-4611-4ceb-9792-db209e9ae865"
+    },
+    {
+      "sequence": 6,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG04",
+      "status": "review_required",
+      "audit_id": "f24e70c1-a3b9-4e53-b55d-2b230e4caa25"
+    },
+    {
+      "sequence": 7,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG05",
+      "status": "review_required",
+      "audit_id": "70880bfd-6d3f-4616-bf26-ae6805164b7a"
+    },
+    {
+      "sequence": 8,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG06",
+      "status": "review_required",
+      "audit_id": "407c2ef8-5e7b-4fa6-8387-47d678c739e8"
+    },
+    {
+      "sequence": 9,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG07",
+      "status": "review_required",
+      "audit_id": "9804959a-ebcd-47dc-a606-f30ea32de1da"
+    },
+    {
+      "sequence": 10,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG08",
+      "status": "review_required",
+      "audit_id": "c1bf243d-ed0e-4cc4-94b0-ed7a1cef9bdd"
+    },
+    {
+      "sequence": 11,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG09",
+      "status": "review_required",
+      "audit_id": "62481a76-b58f-4b4b-9cad-e2978d4842d8"
+    },
+    {
+      "sequence": 12,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG10",
+      "status": "review_required",
+      "audit_id": "850d1b13-d989-4c4a-bcd1-97457bf6f501"
+    },
+    {
+      "sequence": 13,
+      "stage": "extraction",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG24",
+      "status": "review_required",
+      "audit_id": "d809f3f8-e786-4885-8a14-ea159e4d6c40"
+    },
+    {
+      "sequence": 14,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG11",
+      "status": "review_required",
+      "audit_id": "764bed2c-d443-45d8-a53c-df2989ab12ef"
+    },
+    {
+      "sequence": 15,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG12",
+      "status": "review_required",
+      "audit_id": "52cf5232-b4ee-45c7-99dd-c4ea317d5608"
+    },
+    {
+      "sequence": 16,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG13",
+      "status": "review_required",
+      "audit_id": "ebd5ba26-fa63-4c9b-af74-11c9f92a708f"
+    },
+    {
+      "sequence": 17,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG14",
+      "status": "review_required",
+      "audit_id": "7437543a-bad8-40b9-b21b-fed4bed05df0"
+    },
+    {
+      "sequence": 18,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG15",
+      "status": "review_required",
+      "audit_id": "f92248af-383b-46e5-80b6-c4931914fe8f"
+    },
+    {
+      "sequence": 19,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG16",
+      "status": "review_required",
+      "audit_id": "14e17f57-ea23-40ed-a9b1-1718ff79bc65"
+    },
+    {
+      "sequence": 20,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG17",
+      "status": "review_required",
+      "audit_id": "86b5f8a4-8931-4ee4-8be9-52ff4efd82c0"
+    },
+    {
+      "sequence": 21,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG18",
+      "status": "review_required",
+      "audit_id": "c45a49b8-5624-4765-88d8-b3554274ac28"
+    },
+    {
+      "sequence": 22,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG19",
+      "status": "review_required",
+      "audit_id": "bbe9524a-e399-4423-95c6-de613ec3efa7"
+    },
+    {
+      "sequence": 23,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG21",
+      "status": "review_required",
+      "audit_id": "75e1c934-2b98-45bc-8580-faee5faed409"
+    },
+    {
+      "sequence": 24,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG22",
+      "status": "review_required",
+      "audit_id": "3d333680-73e3-4bd3-8080-30c9647cde9d"
+    },
+    {
+      "sequence": 25,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG23",
+      "status": "review_required",
+      "audit_id": "24e4e54b-43f7-4d8e-a514-8f2118652045"
+    },
+    {
+      "sequence": 26,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG25",
+      "status": "review_required",
+      "audit_id": "c257a2bd-0f95-4fcc-bde0-00d8cdf2cb5c"
+    },
+    {
+      "sequence": 27,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG26",
+      "status": "review_required",
+      "audit_id": "891922ff-21d1-431d-9efd-6cecbf3097b8"
+    },
+    {
+      "sequence": 28,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG27",
+      "status": "review_required",
+      "audit_id": "a708609a-d3e4-4e10-ad4b-cfffa64f39a0"
+    },
+    {
+      "sequence": 29,
+      "stage": "assessment_and_deduplication",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "agent_id": "AG20",
+      "status": "review_required",
+      "audit_id": "7d8201d9-3285-4d05-9b10-7f19112f6ead"
+    },
+    {
+      "sequence": 30,
+      "stage": "draft_case_created",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "case_id": "26e5b166-7d79-4e86-b691-1718a244c90e",
+      "status": "DRAFT",
+      "audit_id": "ee23f558-fb2f-4133-adbf-2f2e3917e248"
+    },
+    {
+      "sequence": 31,
+      "stage": "review_queue",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "case_id": "26e5b166-7d79-4e86-b691-1718a244c90e",
+      "review_id": "b627080f-7e18-4449-bb4b-66993cd39cda",
+      "status": "PENDING_HUMAN_REVIEW",
+      "audit_id": "cc8f0072-72a4-487d-8344-2ad98a7b6568"
+    },
+    {
+      "sequence": 32,
+      "stage": "submission_payload_staged",
+      "tenantKey": "nexus-staging-tenant",
+      "workspaceId": "nexus-staging-client",
+      "environment": "UAT",
+      "case_id": "26e5b166-7d79-4e86-b691-1718a244c90e",
+      "preview_id": "f23f1e6e-5816-4ffd-820a-4da5a6a02c26",
+      "status": "AWAITING_REVIEW",
+      "transmission_enabled": false,
+      "audit_id": "d1b993a0-ce6d-48fd-ae6e-8d3203668540"
+    }
+  ],
+  "repository_mode": "local_sqlite_fixture",
+  "vector_mode": "local_chroma_with_synthetic_embeddings",
+  "provider_mode": "synthetic_fixtures",
+  "tenant_workspace_isolation_passed": true,
+  "production_data_used": false
+}

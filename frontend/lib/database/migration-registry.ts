@@ -252,4 +252,5 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "041_nexus_client_document_registry.sql",
     required: true,
   },
+  { id: "042", name: "Nexus Agent Workflow Runs", filename: "042_nexus_agent_workflow_runs.sql", required: true },
 ] as const;

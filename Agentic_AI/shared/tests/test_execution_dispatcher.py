@@ -8,7 +8,7 @@ class Router:
     def __init__(self): self.calls=[]
     def build_context_pack(self, **kwargs):
         self.calls.append(kwargs)
-        return SimpleNamespace(tenant_id=kwargs["tenant_id"], citations=[])
+        return SimpleNamespace(tenant_id=kwargs["tenant_id"], client_id=kwargs["client_id"], citations=[])
 
 class ExecutionTests(unittest.TestCase):
     def setUp(self):
