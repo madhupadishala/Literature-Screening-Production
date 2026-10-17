@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 
 const modules = [
+  { title: "Nexus Knowledge Centre", description: "Browse governed regulatory, clinical, product and client knowledge plus draft agent dependencies.", action: "/admin/knowledge-centre" },
   {
     title: "Product Master",
     description:
