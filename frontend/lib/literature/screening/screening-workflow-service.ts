@@ -390,7 +390,7 @@ async function updateWorkflow(input: {
 
 export async function executeScreening(input: {
   principal: RequestPrincipal;
-  request: ExecuteScreeningInput & LeaseProof;
+  request: ExecuteScreeningInput & Partial<LeaseProof>;
 }): Promise<ScreeningWorklistRecord> {
   const auditReason = validateAuditReason(input.request.reason);
   if (!auditReason.valid) {
@@ -413,7 +413,7 @@ export async function executeScreening(input: {
     },
     eventType: "SCREENING_EXECUTION_STARTED",
     outcome: "started",
-    proof: {lock_token:input.request.lock_token,fencing_token:input.request.fencing_token},
+    proof: {lock_token:input.request.lock_token??"",fencing_token:input.request.fencing_token??""},
   });
 
   const request: ScreeningRequest = {
@@ -438,7 +438,7 @@ export async function executeScreening(input: {
 
     try {
       await client.query("BEGIN");
-      await requireMutationLease(client,row.package_id,input.principal,"SCREENING",{lock_token:input.request.lock_token,fencing_token:input.request.fencing_token});
+      await requireMutationLease(client,row.package_id,input.principal,"SCREENING",{lock_token:input.request.lock_token??"",fencing_token:input.request.fencing_token??""});
       const execution = await client.query<{ id: string }>(
         `INSERT INTO ai_executions (
            tenant_id, package_id, execution_type, provider, model, request_id,
@@ -556,7 +556,7 @@ export async function executeScreening(input: {
       },
       eventType: "SCREENING_EXECUTION_FAILED",
       outcome: "failure",
-      proof: {lock_token:input.request.lock_token,fencing_token:input.request.fencing_token},
+      proof: {lock_token:input.request.lock_token??"",fencing_token:input.request.fencing_token??""},
     });
     throw error;
   }
@@ -566,7 +566,7 @@ export async function executeScreening(input: {
 
 export async function saveScreeningReview(input: {
   principal: RequestPrincipal;
-  review: SaveScreeningReviewInput & LeaseProof;
+  review: SaveScreeningReviewInput & Partial<LeaseProof>;
 }): Promise<ScreeningWorkflowMutation> {
   const review = input.review;
   if (!review.packageId?.trim() || !review.screeningResultId?.trim()) {
@@ -600,7 +600,7 @@ export async function saveScreeningReview(input: {
 
   try {
     await client.query("BEGIN");
-    await requireMutationLease(client,review.packageId,input.principal,"SCREENING",{lock_token:review.lock_token,fencing_token:review.fencing_token});
+    await requireMutationLease(client,review.packageId,input.principal,"SCREENING",{lock_token:review.lock_token??"",fencing_token:review.fencing_token??""});
     const target = await client.query<{
       id: string;
       result_payload: Record<string, unknown>;
