@@ -327,6 +327,7 @@ export default function ScreeningPage() {
   const [selected, setSelected] = useState<ScreeningArticle | null>(null);
   const [activeTab, setActiveTab] = useState("Overview");
   const [search, setSearch] = useState("");
+  const [worklistView,setWorklistView]=useState<"queue"|"mine">("queue");
   const [screeningFilters, setScreeningFilters] = useState<ScreeningFilters>({...EMPTY_SCREENING_FILTERS});
   const [toast, setToast] = useState("");
   const [loading, setLoading] = useState(true);
@@ -577,7 +578,12 @@ export default function ScreeningPage() {
           </div>
         </div>
 
-        <div className="table-wrap">
+        <div className="nxs-screening-tabs" role="tablist" aria-label="Screening worklists">
+          <button type="button" role="tab" aria-selected={worklistView==="queue"} onClick={()=>setWorklistView("queue")}>Screening Queue ({visibleArticles.length})</button>
+          <button type="button" role="tab" aria-selected={worklistView==="mine"} onClick={()=>setWorklistView("mine")}>My Assignments</button>
+        </div>
+        {worklistView==="mine"&&<div className="nxs-not-ready" role="status">Manager assignments, self-assignment and exclusive editing require the governed assignment API. This view will not invent cases or ownership.</div>}
+        {worklistView==="queue"&&<div className="table-wrap">
           <table>
             <thead>
               <tr>
@@ -660,7 +666,7 @@ export default function ScreeningPage() {
               )}
             </tbody>
           </table>
-        </div>
+        </div>}
       </section>
 
       {selected && (
@@ -679,6 +685,12 @@ export default function ScreeningPage() {
       {toast && <div className="toast">{toast}</div>}
 
       <style jsx>{`
+        .nxs-screening-tabs{display:flex;background:#fff;border-bottom:1px solid #c6c6c6}
+        .nxs-screening-tabs button{border-radius:0;background:white;color:#393939;border:0;border-bottom:2px solid transparent}
+        .nxs-screening-tabs button[aria-selected="true"]{border-bottom-color:#0f62fe;color:#0f62fe}
+        .nxs-not-ready{padding:14px;background:#fff8e1;color:#5d4700;font-size:11px}
+        .table-wrap{max-height:calc(100vh - 275px);overflow:auto}
+
         .nxs-screening-heading{display:flex;gap:14px;align-items:baseline;padding:5px 3px;margin:0}
         .nxs-screening-heading h1{font-size:17px;line-height:1.3;margin:0;color:#161616}
         .nxs-screening-heading span{font-size:11px;color:#525252}
