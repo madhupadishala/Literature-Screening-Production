@@ -6,6 +6,7 @@ import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalState from "@/components/enterprise/OperationalState";
 import ScreeningWorkspace from "@/components/ScreeningWorkspace";
+import ScreeningFilterBar, { EMPTY_SCREENING_FILTERS, matchesScreeningFilters, type ScreeningFilters } from "@/components/screening-frs/ScreeningFilterBar";
 
 type AuditEvent = {
   id: string;
@@ -31,6 +32,11 @@ export type ScreeningArticle = {
   title: string;
   journal: string;
   publication_date: string;
+  date_received: string;
+  origin_database: string;
+  causality: string;
+  listedness: string;
+  susar: string;
   product_name: string;
   country_of_interest: string;
   primary_author: string;
@@ -217,6 +223,12 @@ function normalizeArticle(input: unknown): ScreeningArticle {
     title: stringValue(raw.title, "—"),
     journal: stringValue(raw.journal, "—"),
     publication_date: stringValue(raw.publicationDate, "—"),
+    // Do not substitute publication date when source receipt date is missing.
+    date_received: stringValue(raw.receivedAt) || stringValue(raw.dateReceived),
+    origin_database: stringValue(raw.originDatabase) || stringValue(raw.sourceDatabase),
+    causality: stringValue(raw.causality, "Not assessed"),
+    listedness: stringValue(raw.listedness, "Not assessed"),
+    susar: stringValue(raw.susar, "Not assessed"),
     product_name: product,
     country_of_interest: coiValue,
     primary_author:
@@ -315,6 +327,7 @@ export default function ScreeningPage() {
   const [selected, setSelected] = useState<ScreeningArticle | null>(null);
   const [activeTab, setActiveTab] = useState("Overview");
   const [search, setSearch] = useState("");
+  const [screeningFilters, setScreeningFilters] = useState<ScreeningFilters>({...EMPTY_SCREENING_FILTERS});
   const [toast, setToast] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -358,27 +371,32 @@ export default function ScreeningPage() {
   }, [loadScreeningArticles]);
 
   const visibleArticles = useMemo(() => {
-    const query = search.toLowerCase().trim();
-
-    return articles.filter((article) => {
-      if (!query) return true;
-
-      return [
-        article.pmid,
-        article.title,
-        article.product_name,
-        article.country_of_interest,
-        article.primary_author,
-        article.screening_decision,
-        ...article.company_suspect_drugs,
-        ...article.clinical_events,
-        ...article.special_situations,
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(query);
-    });
-  }, [articles, search]);
+    const query=search.toLowerCase().trim();
+    return articles.filter(article=>{
+      if(!matchesScreeningFilters(article,screeningFilters))return false;
+      if(!query)return true;
+      return [article.pmid,article.title,article.product_name,article.country_of_interest,
+        article.primary_author,article.screening_decision,...article.company_suspect_drugs,
+        ...article.clinical_events].join(" ").toLowerCase().includes(query);
+    }).sort((x,y)=>y.date_received.localeCompare(x.date_received)||x.hit_id.localeCompare(y.hit_id));
+  },[articles,search,screeningFilters]);
+  function exportLoadedCsv() {
+    const columns = ["Screening ID","Date Received","Database","PMID","Title","Product/INN","Events",
+      "COI","Seriousness","Causality","Listedness","SUSAR","Status"];
+    // Export is deliberately restricted to authorized records loaded in this session.
+    // Never label this as a full-database regulatory line listing.
+    const safe=(v:string) => {
+      const t=/^[=+@\-\t\r]/.test(v)?"'"+v:v;
+      return '"'+t.replace(/"/g,'""')+'"';
+    };
+    const lines=[columns,...visibleArticles.map(x=>[x.hit_id,x.date_received,x.origin_database,x.pmid,
+      x.title,x.product_name,x.clinical_events.join("; "),x.country_of_interest,
+      x.seriousness,x.causality,x.listedness,x.susar,x.screening_status])];
+    const csv="\uFEFF"+lines.map(row=>row.map(v=>safe(String(v||""))).join(",")).join("\r\n");
+    const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+    const link=document.createElement("a");link.href=url;link.download="screening-loaded-records.csv";
+    document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);
+  }
 
   const awaitingAiCount = articles.filter(
     (article) => article.execution_status === "ready",
@@ -485,19 +503,10 @@ export default function ScreeningPage() {
 
   return (
     <ApplicationShell module="LITERATURE">
-      <OperationalScreenHeader
-        eyebrow="Literature Screening · Screening"
-        title="Human-Governed Screening"
-        description="Complete article-level screening with source evidence, AI assistance and an explicit human decision before governed handoff to Medical Review."
-        status="Human decision required"
-      />
-      <OperationalState
-        kind="info"
-        title="Decision authority"
-        message="AI screening output is a recommendation only. Include, exclude and review outcomes become authoritative only when saved by an authorized human reviewer."
-        compact
-      />
-
+      <header className="nxs-screening-heading">
+        <h1>Screening</h1>
+        <span>Article worklist · Human decisions remain governed</span>
+      </header>
       <section className="metrics-grid">
         <Metric label="Screening Worklist Items" value={articles.length} />
         <Metric label="Awaiting Screening AI" value={awaitingAiCount} tone="warning" />
@@ -511,11 +520,14 @@ export default function ScreeningPage() {
         />
       </section>
 
+      <ScreeningFilterBar value={screeningFilters} onChange={setScreeningFilters}
+        loadedCount={articles.length} matchingCount={visibleArticles.length}
+        limitations="Client-side filtering applies to at most 500 loaded authorized records; full-database search and exports require a scoped backend endpoint." />
       <section className="panel">
         <div className="panel-header">
           <div>
             <span className="section-kicker">Medical review worklist</span>
-            <h2>Screening Decisions</h2>
+            <h2>Screening Records</h2>
             <p>
               {loading
                 ? "Loading governed screening results…"
@@ -530,6 +542,8 @@ export default function ScreeningPage() {
               placeholder="Search PMID, product, event…"
               aria-label="Search screening worklist"
             />
+
+            <button type="button" onClick={exportLoadedCsv}>CSV · loaded subset</button>
 
             <button type="button" onClick={() => void loadScreeningArticles()}>
               Refresh
@@ -558,24 +572,16 @@ export default function ScreeningPage() {
                 URL.revokeObjectURL(url);
               }}
             >
-              Export Governed XLSX
+              Governed XLSX (unfiltered)
             </button>
           </div>
-        </div>
-
-        <div className="filters-row" aria-label="Screening filters">
-          <button type="button">Product</button>
-          <button type="button">Active MAH</button>
-          <button type="button">COI</button>
-          <button type="button">Seriousness</button>
-          <button type="button">Special Situation</button>
         </div>
 
         <div className="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>QC</th>
+                <th>Received ↓</th><th>Origin DB</th><th>QC</th>
                 <th>PMID</th>
                 <th>Product</th>
                 <th>Country</th>
@@ -594,6 +600,7 @@ export default function ScreeningPage() {
             <tbody>
               {visibleArticles.map((article) => (
                 <tr key={article.hit_id}>
+                  <td>{article.date_received || "Unavailable"}</td><td>{article.origin_database || "Unavailable"}</td>
                   <td>
                     <span
                       className={`qc-badge ${
@@ -646,7 +653,7 @@ export default function ScreeningPage() {
 
               {!loading && visibleArticles.length === 0 && (
                 <tr>
-                  <td colSpan={13} className="empty">
+                  <td colSpan={15} className="empty">
                     No screening results match the current search.
                   </td>
                 </tr>
@@ -672,6 +679,18 @@ export default function ScreeningPage() {
       {toast && <div className="toast">{toast}</div>}
 
       <style jsx>{`
+        .nxs-screening-heading{display:flex;gap:14px;align-items:baseline;padding:5px 3px;margin:0}
+        .nxs-screening-heading h1{font-size:17px;line-height:1.3;margin:0;color:#161616}
+        .nxs-screening-heading span{font-size:11px;color:#525252}
+        .metrics-grid{display:flex!important;gap:0!important;margin:3px 0!important;background:#fff;border:1px solid #c6c6c6;overflow-x:auto}
+        .metrics-grid :global(article){flex:1;min-width:125px;min-height:38px!important;padding:5px 9px!important;border:0!important;border-right:1px solid #e0e0e0!important;border-radius:0!important;box-shadow:none!important}
+        .metrics-grid :global(article span){min-height:0!important;font-size:9px!important;letter-spacing:0!important}
+        .metrics-grid :global(article strong){display:inline!important;font-size:15px!important;margin:0!important}
+        .panel{border-radius:0!important;box-shadow:none!important}
+        .panel-header{padding:9px 12px!important}
+        th,td{padding:6px 8px!important;font-size:10px!important}
+        th{position:sticky;top:0;z-index:2;background:#e0e0e0!important}
+
         .app-shell {
           min-height: 100vh;
           padding: 24px;
