@@ -330,6 +330,9 @@ export default function ScreeningPage() {
   const [activeTab, setActiveTab] = useState("Overview");
   const [search, setSearch] = useState("");
   const [worklistView,setWorklistView]=useState<"queue"|"mine">("queue");
+  const [myAssignments,setMyAssignments]=useState<Array<{assignment_id:string;record_id:string;package_key:string;status:string;lock_status:string}>>([]);
+  const [assignmentError,setAssignmentError]=useState("");
+  useEffect(()=>{if(worklistView!=="mine")return;let cancelled=false;void fetch("/api/v1/my-assignments?stage=SCREENING",{cache:"no-store"}).then(async r=>{const x=await r.json();if(!r.ok||!x.success)throw new Error("Assignments unavailable");if(!cancelled){setMyAssignments(x.data.records);setAssignmentError("");}}).catch(()=>{if(!cancelled){setMyAssignments([]);setAssignmentError("Unable to load assignments");}});return()=>{cancelled=true};},[worklistView]);
   const [screeningFilters, setScreeningFilters] = useState<ScreeningFilters>({...EMPTY_SCREENING_FILTERS});
   const [toast, setToast] = useState("");
   const [loading, setLoading] = useState(true);
@@ -587,7 +590,7 @@ export default function ScreeningPage() {
           <button type="button" role="tab" aria-selected={worklistView==="queue"} onClick={()=>setWorklistView("queue")}>Screening Queue ({visibleArticles.length})</button>
           <button type="button" role="tab" aria-selected={worklistView==="mine"} onClick={()=>setWorklistView("mine")}>My Assignments</button>
         </div>
-        {worklistView==="mine"&&<div className="nxs-not-ready" role="status">Manager assignments, self-assignment and exclusive editing require the governed assignment API. This view will not invent cases or ownership.</div>}
+        {worklistView==="mine"&&<div className="nxs-my-work">{assignmentError&&<div role="alert">{assignmentError}</div>}{myAssignments.length===0&&!assignmentError&&<p>No active Screening assignments.</p>}<table><thead><tr><th>Record</th><th>Assignment</th><th>Lock</th><th>Action</th></tr></thead><tbody>{myAssignments.map(a=><tr key={a.assignment_id}><td>{a.package_key}</td><td>{a.status}</td><td>{a.lock_status}</td><td><button type="button" onClick={()=>{const article=articles.find(x=>x.database_package_id===a.record_id);if(article)setSelected(article);else showToast("Assigned record is not in the loaded worklist. Refresh or expand the worklist.");}}>Open</button></td></tr>)}</tbody></table></div>}
         {worklistView==="queue"&&<div className="table-wrap">
           <table>
             <thead>
@@ -695,6 +698,7 @@ export default function ScreeningPage() {
         .nxs-screening-tabs{display:flex;background:#fff;border-bottom:1px solid #c6c6c6}
         .nxs-screening-tabs button{border-radius:0;background:white;color:#393939;border:0;border-bottom:2px solid transparent}
         .nxs-screening-tabs button[aria-selected="true"]{border-bottom-color:#0f62fe;color:#0f62fe}
+        .nxs-my-work{max-height:calc(100vh - 275px);overflow:auto;padding:8px;background:white}
         .nxs-not-ready{padding:14px;background:#fff8e1;color:#5d4700;font-size:11px}
         .table-wrap{max-height:calc(100vh - 275px);overflow:auto}
 
