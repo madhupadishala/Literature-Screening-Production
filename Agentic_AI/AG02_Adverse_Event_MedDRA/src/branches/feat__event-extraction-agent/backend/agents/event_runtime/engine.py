@@ -142,10 +142,18 @@ class EventEngine:
                         eid = sha256(f"{block.document_id}:{base_locator}:{origin+mention.start}:{origin+mention.end}:{mention.patient_id}".encode()).hexdigest()[:24]
                         language = next(d.language for d in state["request"].documents if d.id == block.document_id)
                         coding = self.dictionary.suggest(mention.verbatim, language) if self.dictionary else None
+                        review_reasons = ["clinical_signoff_required"]
+                        if coding is None:
+                            review_reasons.append("no_approved_dictionary_match")
+                        if mention.assertion != "affirmed":
+                            review_reasons.append("uncertain_assertion")
+                        if mention.diagnosis_status == "provisional_diagnosis":
+                            review_reasons.append("provisional_diagnosis")
                         events.append(Event(id=eid, patient_id=f"{block.document_id}:{mention.patient_id}",
                             verbatim=mention.verbatim, assertion=mention.assertion,
                             diagnosis_status=mention.diagnosis_status, role=mention.role,
                             onset_quote=mention.onset_quote, outcome_quote=mention.outcome_quote, coding=coding,
+                            coding_review_reasons=review_reasons, review_required=True,
                             evidence=[Evidence(document_id=block.document_id, block_id=block.id,
                             locator=block.locator, start=mention.start, end=mention.end,
                             quote=mention.verbatim, context_quote=mention.context_quote)]))
