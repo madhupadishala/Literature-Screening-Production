@@ -19,7 +19,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type ScreeningActionRequest =
-  | { action: "execute"; input: ExecuteScreeningInput }
+  | { action: "execute"; input: ExecuteScreeningInput & LeaseProof }
   | { action: "review"; input: SaveScreeningReviewInput & LeaseProof };
 
 export async function GET(request: NextRequest): Promise<Response> {
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       NEXUS_MODULES.LITERATURE,
       PERMISSIONS.SCREENING_EXECUTE,
       );
-      const record = await executeScreening({ principal, request: body.input as ExecuteScreeningInput });
+      const record = await executeScreening({ principal, request: body.input as ExecuteScreeningInput & LeaseProof });
       return Response.json({ success: true, data: record }, { status: 201 });
     }
 
