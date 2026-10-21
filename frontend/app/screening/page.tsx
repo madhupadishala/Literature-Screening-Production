@@ -6,6 +6,7 @@ import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalState from "@/components/enterprise/OperationalState";
 import ScreeningWorkspace from "@/components/ScreeningWorkspace";
+import {useRecordLock} from "@/hooks/useRecordLock";
 import ScreeningFilterBar, { EMPTY_SCREENING_FILTERS, matchesScreeningFilters, type ScreeningFilters } from "@/components/screening-frs/ScreeningFilterBar";
 
 type AuditEvent = {
@@ -325,6 +326,7 @@ function normalizeArticle(input: unknown): ScreeningArticle {
 export default function ScreeningPage() {
   const [articles, setArticles] = useState<ScreeningArticle[]>([]);
   const [selected, setSelected] = useState<ScreeningArticle | null>(null);
+  const recordLock=useRecordLock(selected?.database_package_id||null,"SCREENING",Boolean(selected));
   const [activeTab, setActiveTab] = useState("Overview");
   const [search, setSearch] = useState("");
   const [worklistView,setWorklistView]=useState<"queue"|"mine">("queue");
@@ -467,6 +469,8 @@ export default function ScreeningPage() {
     comments: string,
   ): Promise<boolean> {
     if (!selected?.screening_result_id) return false;
+    const proof=recordLock.getProof();
+    if(!proof){showToast("Read-only: active edit lease required.");return false;}
     const response = await fetch("/api/literature/screening", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -479,6 +483,7 @@ export default function ScreeningPage() {
           finalDecision,
           comments,
           expectedVersion: selected.review_version,
+          ...proof,
         },
       }),
     });
@@ -672,6 +677,8 @@ export default function ScreeningPage() {
       {selected && (
         <ScreeningWorkspace
           article={selected}
+          readOnly={recordLock.readOnly}
+          lockMessage={recordLock.message|| (recordLock.state==="acquiring"?"Acquiring edit access…":"")}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onClose={() => setSelected(null)}
