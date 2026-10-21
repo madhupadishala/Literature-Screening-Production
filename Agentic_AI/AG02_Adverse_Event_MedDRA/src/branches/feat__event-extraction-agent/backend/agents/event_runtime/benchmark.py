@@ -37,6 +37,8 @@ def evaluate_coding(gold, predictions):
                 raise ValueError("duplicate coding concept")
             values[key] = row
         return values
+    from Agentic_AI.shared.validation import exact_concept_score
+    shared_score = exact_concept_score(gold, predictions, fields=("pt_code", "llt_code"))
     g, p = index(gold), index(predictions)
     common = g.keys() & p.keys()
     pt = sum(bool(g[k].get("pt_code")) and g[k]["pt_code"] == p[k].get("pt_code") for k in common)
