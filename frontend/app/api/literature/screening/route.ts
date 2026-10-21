@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import {leaseResponse,type LeaseProof} from "@/lib/literature/assignment/lock-service";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import {
   executeScreening,
@@ -19,7 +20,7 @@ export const dynamic = "force-dynamic";
 
 type ScreeningActionRequest =
   | { action: "execute"; input: ExecuteScreeningInput }
-  | { action: "review"; input: SaveScreeningReviewInput };
+  | { action: "review"; input: SaveScreeningReviewInput & LeaseProof };
 
 export async function GET(request: NextRequest): Promise<Response> {
   try {
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest): Promise<Response> {
       data: { records, count: records.length },
     });
   } catch (error) {
-    return routeErrorResponse(error);
+    return leaseResponse(error)??routeErrorResponse(error);
   }
 }
 
@@ -84,7 +85,7 @@ export async function POST(request: NextRequest): Promise<Response> {
       );
       const mutation = await saveScreeningReview({
         principal,
-        review: body.input as SaveScreeningReviewInput,
+        review: body.input as SaveScreeningReviewInput & LeaseProof,
       });
       return Response.json({ success: true, data: mutation });
     }
