@@ -77,6 +77,9 @@ class AuditStore:
         if dictionary_version is not None and (not isinstance(dictionary_version, str) or
                                                 len(dictionary_version) > 64):
             raise ValueError("invalid dictionary version")
+        from Agentic_AI.shared.validation import safe_audit_metadata
+        safe_audit_metadata(tenant=tenant, client=client, case_digest=case_digest,
+                            decision_digest=decision_digest, event_type=event_type)
         with self.connect() as db:
             db.execute("INSERT INTO coding_validation_audit VALUES (?,?,?,?,?,?,?,?)",
                        (tenant, client, case_digest, run_id, event_type, decision_digest,
