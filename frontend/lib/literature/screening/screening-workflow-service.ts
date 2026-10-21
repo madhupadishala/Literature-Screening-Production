@@ -6,6 +6,7 @@ import { screeningAgent } from "@/lib/ai/screening-agent";
 import { screeningValidator } from "@/lib/ai/screening-validator";
 import { validateAuditReason } from "@/lib/audit/reason";
 import { getPostgresPool } from "@/lib/database/postgres";
+import {requireMutationLease,type LeaseProof} from "@/lib/literature/assignment/lock-service";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 import { finalIncludeEligibility } from "./governed-decision";
@@ -560,7 +561,7 @@ export async function executeScreening(input: {
 
 export async function saveScreeningReview(input: {
   principal: RequestPrincipal;
-  review: SaveScreeningReviewInput;
+  review: SaveScreeningReviewInput & LeaseProof;
 }): Promise<ScreeningWorkflowMutation> {
   const review = input.review;
   if (!review.packageId?.trim() || !review.screeningResultId?.trim()) {
@@ -594,6 +595,7 @@ export async function saveScreeningReview(input: {
 
   try {
     await client.query("BEGIN");
+    await requireMutationLease(client,review.packageId,input.principal,"SCREENING",{lock_token:review.lock_token,fencing_token:review.fencing_token});
     const target = await client.query<{
       id: string;
       result_payload: Record<string, unknown>;
