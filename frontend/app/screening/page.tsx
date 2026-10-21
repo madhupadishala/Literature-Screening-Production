@@ -448,12 +448,14 @@ export default function ScreeningPage() {
 
   async function rerunAI(reason: string) {
     if (!selected) return;
+    const proof=recordLock.getProof();
+    if(!proof){showToast("Read-only: edit lease required for AI re-run.");return;}
     const response = await fetch("/api/literature/screening", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         action: "execute",
-        input: { packageId: selected.database_package_id, reason },
+        input: { packageId: selected.database_package_id, reason, ...proof },
       }),
     });
     const payload = await response.json();
