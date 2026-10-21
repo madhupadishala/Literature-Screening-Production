@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalState from "@/components/enterprise/OperationalState";
+import {useRecordLock} from "@/hooks/useRecordLock";
 import ScreeningFilterBar, {EMPTY_SCREENING_FILTERS, matchesText, type ScreeningFilters} from "@/components/screening-frs/ScreeningFilterBar";
 
 type ReviewRecord = {
@@ -220,6 +221,7 @@ function availableLabels(
 export default function ReviewPage() {
   const [records, setRecords] = useState<ReviewRecord[]>([]);
   const [selected, setSelected] = useState<ReviewDetail | null>(null);
+  const recordLock=useRecordLock(selected?.packageId||null,"MEDICAL_REVIEW",Boolean(selected));
   const [worklistQuery,setWorklistQuery]=useState("");
   const [worklistFilters,setWorklistFilters]=useState<ScreeningFilters>({...EMPTY_SCREENING_FILTERS});
   const [worklistView,setWorklistView]=useState<"queue"|"mine">("queue");
@@ -294,6 +296,8 @@ export default function ReviewPage() {
 
   async function mutate(path: string, body: Record<string, unknown>, label: string) {
     if (!selected) return;
+    const leaseProof=recordLock.getProof();
+    if(!leaseProof){setMessage("Read-only: active Medical Review edit lease required.");return;}
     if (auditReason.trim().length < 8) {
       setMessage("Enter a specific audit reason before saving a governed Review action.");
       return;
@@ -303,7 +307,7 @@ export default function ReviewPage() {
       const response = await fetch(path, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ workspaceId: selected.workspaceId, reason: auditReason, ...body }),
+        body: JSON.stringify({ workspaceId: selected.workspaceId, reason: auditReason, ...body, ...leaseProof }),
       });
       const payload = await response.json();
       if (!response.ok || !payload?.success) {
@@ -531,6 +535,7 @@ export default function ReviewPage() {
       {selected && (
         <div className="drawer-backdrop">
           <aside className="drawer" aria-label="Medical Review workspace">
+            {recordLock.readOnly&&<div role="status" style={{padding:"10px 16px",background:"#fff2cf",color:"#614900",fontSize:12}}>{recordLock.message||"Read-only — acquiring an authorized edit lease."}</div>}
             <header className="drawer-header">
               <div>
                 <span>Review / MR workspace</span>
