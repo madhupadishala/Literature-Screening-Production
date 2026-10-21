@@ -225,6 +225,9 @@ export default function ReviewPage() {
   const [worklistQuery,setWorklistQuery]=useState("");
   const [worklistFilters,setWorklistFilters]=useState<ScreeningFilters>({...EMPTY_SCREENING_FILTERS});
   const [worklistView,setWorklistView]=useState<"queue"|"mine">("queue");
+  const [myAssignments,setMyAssignments]=useState<Array<{assignment_id:string;record_id:string;package_key:string;status:string;lock_status:string}>>([]);
+  const [assignmentError,setAssignmentError]=useState("");
+  useEffect(()=>{if(worklistView!=="mine")return;let cancelled=false;void fetch("/api/v1/my-assignments?stage=MEDICAL_REVIEW",{cache:"no-store"}).then(async r=>{const x=await r.json();if(!r.ok||!x.success)throw new Error("Assignments unavailable");if(!cancelled){setMyAssignments(x.data.records);setAssignmentError("");}}).catch(()=>{if(!cancelled){setMyAssignments([]);setAssignmentError("Unable to load assignments");}});return()=>{cancelled=true};},[worklistView]);
   const [patients, setPatients] = useState<PatientSegment[]>([]);
   const [labels, setLabels] = useState<LabelAssessment[]>([]);
   const [causality, setCausality] = useState<CausalityAssessment[]>([]);
@@ -501,7 +504,7 @@ export default function ReviewPage() {
           <button type="button" role="tab" aria-selected={worklistView==="queue"} onClick={()=>setWorklistView("queue")}>Medical Review Queue ({filteredRecords.length})</button>
           <button type="button" role="tab" aria-selected={worklistView==="mine"} onClick={()=>setWorklistView("mine")}>My Assignments</button>
         </div>
-        {worklistView==="mine" && <div className="nxs-not-ready" role="status">My Assignments is awaiting the server-side assignment and edit-lease service. No assignments are invented or stored in the browser.</div>}
+        {worklistView==="mine"&&<div className="nxs-my-work">{assignmentError&&<div role="alert">{assignmentError}</div>}{myAssignments.length===0&&!assignmentError&&<p>No active Medical Review assignments.</p>}<table><thead><tr><th>Record</th><th>Assignment</th><th>Lock</th><th>Action</th></tr></thead><tbody>{myAssignments.map(a=><tr key={a.assignment_id}><td>{a.package_key}</td><td>{a.status}</td><td>{a.lock_status}</td><td><button type="button" onClick={()=>{const record=records.find(x=>x.packageId===a.record_id);if(record)void openWorkspace(record);else setMessage("Assigned record is outside the currently loaded worklist.");}}>Open</button></td></tr>)}</tbody></table></div>}
         {worklistView==="queue" && <div className="table-wrap">
           <table>
             <thead>
@@ -903,6 +906,7 @@ export default function ReviewPage() {
         .nxs-mr-views{display:flex;gap:0;border-bottom:1px solid #c6c6c6;background:white}
         .nxs-mr-views button{border-radius:0;background:#fff;color:#393939;border-bottom:2px solid transparent}
         .nxs-mr-views button[aria-selected="true"]{border-bottom-color:#0f62fe;color:#0f62fe}
+        .nxs-my-work{max-height:calc(100vh - 270px);overflow:auto;padding:8px;background:white}
         .nxs-not-ready{padding:14px;background:#fff8e1;color:#5d4700;font-size:12px}
         .table-wrap{max-height:calc(100vh - 270px);overflow:auto}
         th{position:sticky;top:0;z-index:1;height:34px!important;background:#e0e0e0!important}
