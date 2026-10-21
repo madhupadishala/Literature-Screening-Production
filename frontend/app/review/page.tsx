@@ -550,6 +550,7 @@ export default function ReviewPage() {
               <button type="button" onClick={() => setSelected(null)} aria-label="Close">×</button>
             </header>
 
+            <fieldset disabled={recordLock.readOnly} style={{border:0,padding:0,margin:0,minWidth:0}}>
             <section className="audit-bar">
               <label>
                 <span>Audit reason for the next controlled action</span>
@@ -891,6 +892,7 @@ export default function ReviewPage() {
             <div className="gate">
               Intake is unlocked only after patient segmentation is COMPLETE, labeling and causality are governed as COMPLETE or UNRESOLVED, and Medical Review is APPROVED.
             </div>
+            </fieldset>
           </aside>
         </div>
       )}
