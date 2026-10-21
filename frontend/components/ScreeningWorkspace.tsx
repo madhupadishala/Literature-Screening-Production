@@ -48,6 +48,8 @@ type ScreeningArticle = {
 
 type Props = {
   article: ScreeningArticle;
+  readOnly?: boolean;
+  lockMessage?: string;
   activeTab: string;
   setActiveTab: (tab: string) => void;
   onClose: () => void;
@@ -81,6 +83,8 @@ function clean(value?: string | null) {
 
 export default function ScreeningWorkspace({
   article,
+  readOnly=false,
+  lockMessage="",
   activeTab,
   setActiveTab,
   onClose,
@@ -96,7 +100,7 @@ export default function ScreeningWorkspace({
   }>(null);
 
   function submitReason(reason: string) {
-    if (!modal) return;
+    if (!modal || readOnly) return;
 
     if (modal.action === "approve") onApprove(reason);
     if (modal.action === "exclude") onExclude(reason);
@@ -108,6 +112,8 @@ export default function ScreeningWorkspace({
   return (
     <div className="drawer-backdrop" role="presentation">
       <aside className="review-drawer" aria-label="Screening review workspace">
+      {readOnly&&<div role="status" style={{background:"#fff2cf",color:"#5c4600",padding:"9px 14px",fontSize:12}}>{lockMessage||"Read-only: locked by another reviewer or lease unavailable."}</div>}
+
         <header className="drawer-header">
           <div>
             <span className="eyebrow">
