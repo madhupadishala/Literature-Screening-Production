@@ -1,7 +1,8 @@
 CREATE SEQUENCE IF NOT EXISTS nexus_record_lock_fencing_seq AS bigint;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_nexus_package_assignment_scope ON literature_packages(id,tenant_id,workspace_id,environment);
 CREATE TABLE IF NOT EXISTS nexus_record_assignments (
  assignment_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
- record_id uuid NOT NULL REFERENCES literature_packages(id) ON DELETE CASCADE,
+ record_id uuid NOT NULL,
  tenant_id uuid NOT NULL REFERENCES tenants(id),
  workspace_id uuid NOT NULL REFERENCES nexus_client_workspaces(id),
  environment text NOT NULL,
@@ -16,7 +17,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS nexus_active_assignment_unique ON nexus_record
  WHERE status IN ('PENDING_ACCEPTANCE','ACCEPTED','IN_PROGRESS','RETURNED');
 CREATE INDEX IF NOT EXISTS nexus_assignment_my_work ON nexus_record_assignments(tenant_id,workspace_id,environment,assigned_to_user_id,stage,status);
 CREATE TABLE IF NOT EXISTS nexus_record_locks (
- record_id uuid PRIMARY KEY REFERENCES literature_packages(id) ON DELETE CASCADE,
+ record_id uuid PRIMARY KEY,
  tenant_id uuid NOT NULL REFERENCES tenants(id),
  workspace_id uuid NOT NULL REFERENCES nexus_client_workspaces(id),
  environment text NOT NULL,
@@ -39,3 +40,7 @@ BEGIN
  GET DIAGNOSTICS deleted_count=ROW_COUNT;
  RETURN deleted_count;
 END $$;
+ALTER TABLE nexus_record_assignments ADD CONSTRAINT nexus_assignment_package_scope_fk
+ FOREIGN KEY (record_id,tenant_id,workspace_id,environment) REFERENCES literature_packages(id,tenant_id,workspace_id,environment) ON DELETE CASCADE;
+ALTER TABLE nexus_record_locks ADD CONSTRAINT nexus_lock_package_scope_fk
+ FOREIGN KEY (record_id,tenant_id,workspace_id,environment) REFERENCES literature_packages(id,tenant_id,workspace_id,environment) ON DELETE CASCADE;
