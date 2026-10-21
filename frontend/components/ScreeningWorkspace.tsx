@@ -323,6 +323,7 @@ export default function ScreeningWorkspace({
             <>
               <button
                 type="button"
+                disabled={readOnly}
                 onClick={() =>
                   setModal({
                     title: "Reason required to exclude this screening result",
@@ -335,6 +336,7 @@ export default function ScreeningWorkspace({
 
               <button
                 type="button"
+                disabled={readOnly}
                 onClick={() =>
                   setModal({
                     title: "Reason required to save this screening review",
@@ -347,6 +349,7 @@ export default function ScreeningWorkspace({
 
               <button
                 type="button"
+                disabled={readOnly}
                 onClick={() =>
                   setModal({
                     title:
@@ -363,7 +366,7 @@ export default function ScreeningWorkspace({
               <button
                 type="button"
                 className="primary-action"
-                disabled={
+                disabled={readOnly ||
                   article.screening_decision !== "INCLUDE" ||
                   article.company_applicability !== "CONFIRMED" ||
                   article.active_mah !== "ACTIVE"
