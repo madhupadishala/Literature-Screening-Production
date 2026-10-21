@@ -14,6 +14,11 @@ class AuditStore:
             db.execute("PRAGMA journal_mode=WAL")
             db.execute("CREATE TABLE IF NOT EXISTS runs (tenant TEXT, key TEXT, request_hash TEXT, payload TEXT, PRIMARY KEY(tenant,key))")
             db.execute("CREATE TABLE IF NOT EXISTS audit (id INTEGER PRIMARY KEY, tenant TEXT, at TEXT, run_id TEXT, previous TEXT, digest TEXT)")
+            db.execute("""CREATE TABLE IF NOT EXISTS coding_validation_audit (
+                tenant TEXT NOT NULL, client TEXT NOT NULL, case_digest TEXT NOT NULL,
+                run_id TEXT NOT NULL, event_type TEXT NOT NULL, decision_digest TEXT NOT NULL,
+                dictionary_version TEXT, recorded_at TEXT NOT NULL,
+                PRIMARY KEY(tenant, client, run_id, event_type))""")
         os.chmod(path, 0o600)
 
     def connect(self):
@@ -58,3 +63,21 @@ class AuditStore:
                     return False
                 previous = digest
             return True
+
+    def record_coding_validation(self, *, tenant, client, case_digest, run_id,
+                                 event_type, decision_digest, dictionary_version=None):
+        """Append scoped metadata only; never persist patient text or raw prompts."""
+        import re
+        for value in (tenant, client, run_id, event_type):
+            if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z0-9_.:-]{1,128}", value):
+                raise ValueError("invalid audit scope")
+        for digest in (case_digest, decision_digest):
+            if not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest):
+                raise ValueError("invalid SHA256 audit digest")
+        if dictionary_version is not None and (not isinstance(dictionary_version, str) or
+                                                len(dictionary_version) > 64):
+            raise ValueError("invalid dictionary version")
+        with self.connect() as db:
+            db.execute("INSERT INTO coding_validation_audit VALUES (?,?,?,?,?,?,?,?)",
+                       (tenant, client, case_digest, run_id, event_type, decision_digest,
+                        dictionary_version, datetime.now(timezone.utc).isoformat()))
