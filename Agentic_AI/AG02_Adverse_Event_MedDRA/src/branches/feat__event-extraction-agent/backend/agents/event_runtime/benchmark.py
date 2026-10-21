@@ -26,3 +26,24 @@ def evaluate(gold, predictions):
 
 if __name__ == "__main__":
     print(json.dumps(evaluate(json.load(open(sys.argv[1])), json.load(open(sys.argv[2]))), indent=2))
+
+def evaluate_coding(gold, predictions):
+    """Concept-level LLT/PT evaluation; no autonomous clinical qualification."""
+    def index(rows):
+        values = {}
+        for row in rows:
+            key = (row["case_id"], row["concept_id"])
+            if key in values:
+                raise ValueError("duplicate coding concept")
+            values[key] = row
+        return values
+    g, p = index(gold), index(predictions)
+    common = g.keys() & p.keys()
+    pt = sum(bool(g[k].get("pt_code")) and g[k]["pt_code"] == p[k].get("pt_code") for k in common)
+    llt = sum(bool(g[k].get("llt_code")) and g[k]["llt_code"] == p[k].get("llt_code") for k in common)
+    return {"gold_concepts": len(g), "predicted_concepts": len(p),
+            "missing_concepts": len(g.keys()-p.keys()), "extra_concepts": len(p.keys()-g.keys()),
+            "pt_correct": pt, "llt_correct": llt,
+            "pt_recall": pt / len(g) if g else None,
+            "llt_recall": llt / len(g) if g else None,
+            "clinical_qualification": False}
