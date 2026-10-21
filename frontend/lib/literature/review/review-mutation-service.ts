@@ -182,6 +182,8 @@ export async function savePatientSegmentation(input: {
   workspaceId: string;
   patients: PatientSegmentInput[];
   reason: string;
+  lock_token: string;
+  fencing_token: string;
 }): Promise<void> {
   const audit = validateAuditReason(input.reason);
   if (!audit.valid) throw new Error(audit.message || "A specific audit reason is required.");
@@ -227,6 +229,7 @@ export async function savePatientSegmentation(input: {
       workspaceId: input.workspaceId,
       client,
     });
+    await requireMutationLease(client,workspace.package_id,input.principal,"MEDICAL_REVIEW",{lock_token:input.lock_token,fencing_token:input.fencing_token});
 
     if (workspace.status === "REVIEW_COMPLETE") {
       throw new Error("Completed Review workspace cannot be edited.");
@@ -320,6 +323,8 @@ export async function saveLabelAssessments(input: {
   workspaceId: string;
   assessments: LabelAssessmentInput[];
   reason: string;
+  lock_token: string;
+  fencing_token: string;
 }): Promise<void> {
   const audit = validateAuditReason(input.reason);
   if (!audit.valid) throw new Error(audit.message || "A specific audit reason is required.");
@@ -372,6 +377,7 @@ export async function saveLabelAssessments(input: {
       workspaceId: input.workspaceId,
       client,
     });
+    await requireMutationLease(client,workspace.package_id,input.principal,"MEDICAL_REVIEW",{lock_token:input.lock_token,fencing_token:input.fencing_token});
     if (workspace.patient_segmentation_status !== "COMPLETE") {
       throw new Error("Complete patient segmentation before labeling assessment.");
     }
@@ -527,6 +533,8 @@ export async function saveCausalityAssessments(input: {
   workspaceId: string;
   assessments: CausalityAssessmentInput[];
   reason: string;
+  lock_token: string;
+  fencing_token: string;
 }): Promise<void> {
   const audit = validateAuditReason(input.reason);
   if (!audit.valid) throw new Error(audit.message || "A specific audit reason is required.");
@@ -572,6 +580,7 @@ export async function saveCausalityAssessments(input: {
       workspaceId: input.workspaceId,
       client,
     });
+    await requireMutationLease(client,workspace.package_id,input.principal,"MEDICAL_REVIEW",{lock_token:input.lock_token,fencing_token:input.fencing_token});
     if (workspace.patient_segmentation_status !== "COMPLETE") {
       throw new Error("Complete patient segmentation before causality assessment.");
     }
