@@ -328,6 +328,8 @@ export default function ReviewPage() {
 
   async function runPatientExtraction() {
     if (!selected) return;
+    const proof=recordLock.getProof();
+    if(!proof){setMessage("Read-only: active Medical Review edit lease required.");return;}
     if (auditReason.trim().length < 8) {
       setMessage("Enter a specific audit reason before running governed patient extraction.");
       return;
