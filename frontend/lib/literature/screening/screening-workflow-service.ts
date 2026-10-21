@@ -340,10 +340,12 @@ async function updateWorkflow(input: {
   payload: Record<string, unknown>;
   eventType: string;
   outcome: string;
+  proof: LeaseProof;
 }): Promise<void> {
   const client = await getPostgresPool().connect();
   try {
     await client.query("BEGIN");
+    await requireMutationLease(client,input.packageId,input.principal,"SCREENING",input.proof);
     await client.query(
       `UPDATE literature_packages SET status = $3, updated_at = now()
        WHERE id = $1 AND tenant_id = $2`,
@@ -388,7 +390,7 @@ async function updateWorkflow(input: {
 
 export async function executeScreening(input: {
   principal: RequestPrincipal;
-  request: ExecuteScreeningInput;
+  request: ExecuteScreeningInput & LeaseProof;
 }): Promise<ScreeningWorklistRecord> {
   const auditReason = validateAuditReason(input.request.reason);
   if (!auditReason.valid) {
@@ -411,6 +413,7 @@ export async function executeScreening(input: {
     },
     eventType: "SCREENING_EXECUTION_STARTED",
     outcome: "started",
+    proof: {lock_token:input.request.lock_token,fencing_token:input.request.fencing_token},
   });
 
   const request: ScreeningRequest = {
@@ -435,6 +438,7 @@ export async function executeScreening(input: {
 
     try {
       await client.query("BEGIN");
+      await requireMutationLease(client,row.package_id,input.principal,"SCREENING",{lock_token:input.request.lock_token,fencing_token:input.request.fencing_token});
       const execution = await client.query<{ id: string }>(
         `INSERT INTO ai_executions (
            tenant_id, package_id, execution_type, provider, model, request_id,
@@ -552,6 +556,7 @@ export async function executeScreening(input: {
       },
       eventType: "SCREENING_EXECUTION_FAILED",
       outcome: "failure",
+      proof: {lock_token:input.request.lock_token,fencing_token:input.request.fencing_token},
     });
     throw error;
   }
