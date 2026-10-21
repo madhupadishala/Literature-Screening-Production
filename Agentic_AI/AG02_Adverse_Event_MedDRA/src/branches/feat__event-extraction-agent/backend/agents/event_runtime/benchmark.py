@@ -26,3 +26,17 @@ def evaluate(gold, predictions):
 
 if __name__ == "__main__":
     print(json.dumps(evaluate(json.load(open(sys.argv[1])), json.load(open(sys.argv[2]))), indent=2))
+
+def evaluate_coding(gold, predictions):
+    """Concept-level LLT/PT recall, counting missing and extra concepts."""
+    from Agentic_AI.shared.validation import exact_concept_score
+    result = exact_concept_score(gold, predictions, fields=("pt_code", "llt_code"))
+    return {"gold_concepts": result["reference_concepts"],
+            "predicted_concepts": result["predicted_concepts"],
+            "missing_concepts": result["missing_concepts"],
+            "extra_concepts": result["extra_concepts"],
+            "pt_correct": result["correct"]["pt_code"],
+            "llt_correct": result["correct"]["llt_code"],
+            "pt_recall": result["recall"]["pt_code"],
+            "llt_recall": result["recall"]["llt_code"],
+            "clinical_qualification": False}

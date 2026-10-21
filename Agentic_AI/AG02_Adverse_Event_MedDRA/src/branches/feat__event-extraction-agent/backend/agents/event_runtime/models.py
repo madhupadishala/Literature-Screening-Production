@@ -76,6 +76,7 @@ class Event(StrictModel):
     onset_quote: str | None = None
     outcome_quote: str | None = None
     coding: dict | None = None
+    coding_review_reasons: list[str] = Field(default_factory=list)
     review_required: bool = True
 
 class Result(StrictModel):
