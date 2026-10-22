@@ -5,6 +5,7 @@ import { createHash, randomUUID } from "node:crypto";
 import { extractPatientSuggestions } from "@/lib/ai/patient-extraction-agent";
 import { validateAuditReason } from "@/lib/audit/reason";
 import { getPostgresPool } from "@/lib/database/postgres";
+import {requireMutationLease,type LeaseProof} from "@/lib/literature/assignment/lock-service";
 import type { PatientExtractionExecution } from "@/lib/literature/review/patient-extraction-types";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
@@ -20,6 +21,8 @@ export async function runPatientExtraction(input: {
   principal: RequestPrincipal;
   workspaceId: string;
   reason: string;
+  lock_token?: string;
+  fencing_token?: string;
 }): Promise<PatientExtractionExecution> {
   const auditReason = validateAuditReason(input.reason);
   if (!auditReason.valid) {
@@ -93,6 +96,7 @@ export async function runPatientExtraction(input: {
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
+    await requireMutationLease(client,target.package_id,input.principal,"MEDICAL_REVIEW",{lock_token:input.lock_token??"",fencing_token:input.fencing_token??""});
 
     const versionResult = await client.query<{ next_version: number }>(
       `SELECT COALESCE(MAX(run_version), 0) + 1 AS next_version

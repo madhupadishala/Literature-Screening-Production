@@ -9,6 +9,7 @@ import {
 } from "@/lib/auth/identity-session-service";
 import { verifyIdentityCredentials } from "@/lib/auth/verify-credentials";
 import { routeErrorResponse } from "@/lib/api/route-error";
+import { NEXUS_CONTEXT_COOKIE } from "@/lib/nexus/context-token";
 import { getPostgresPool } from "@/lib/database/postgres";
 
 export const runtime = "nodejs";
@@ -74,7 +75,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     return Response.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  if (typeof body.email !== "string" || typeof body.password !== "string") {
+  if (!body || typeof body.email !== "string" || typeof body.password !== "string") {
     return Response.json({ error: "email and password must be strings." }, { status: 400 });
   }
 
@@ -112,6 +113,12 @@ export async function POST(request: NextRequest): Promise<Response> {
     maxAge: NEXUS_IDENTITY_SESSION_MAX_AGE_SECONDS,
   });
 
+    for (const cookie of [NEXUS_CONTEXT_COOKIE, "clinixai_access_token"]) {
+      response.cookies.set(cookie, "", {
+        httpOnly: true, secure: process.env.NODE_ENV === "production",
+        sameSite: "strict", path: "/", maxAge: 0,
+      });
+    }
     return response;
   } catch (error) {
     return routeErrorResponse(error);
@@ -122,13 +129,12 @@ export async function DELETE(request: NextRequest): Promise<Response> {
   try {
     const revoked = await revokeIdentitySession(readIdentityToken(request));
     const response = NextResponse.json({ revoked });
-    response.cookies.set(NEXUS_IDENTITY_SESSION_COOKIE, "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
-      maxAge: 0,
-    });
+    for (const cookie of [NEXUS_IDENTITY_SESSION_COOKIE, NEXUS_CONTEXT_COOKIE, "clinixai_access_token"]) {
+      response.cookies.set(cookie, "", {
+        httpOnly: true, secure: process.env.NODE_ENV === "production",
+        sameSite: "strict", path: "/", maxAge: 0,
+      });
+    }
     return response;
   } catch (error) {
     return routeErrorResponse(error);

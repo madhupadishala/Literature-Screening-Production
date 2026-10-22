@@ -2,8 +2,8 @@
 Medical history (D.7) and past drugs (D.8) belong to the History/Current agents."""
 from __future__ import annotations
 from pydantic import BaseModel
-from ..common.base import LLMClient, Flag, call_structured, grounded, sha, GROUNDING_RULES
-from ..common import pdate
+from Agentic_AI.shared.v2_5.common.base import LLMClient, Flag, call_structured, grounded, sha, GROUNDING_RULES
+from Agentic_AI.shared.v2_5.common import pdate
 AGENT, VERSION, RULEPACK = "patient", "0.1.0", "pat-rules-2026.10-draft"
 
 class Num(BaseModel):

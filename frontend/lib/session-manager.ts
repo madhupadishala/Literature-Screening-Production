@@ -14,6 +14,9 @@ export type ClinixSession = {
   expiresAt: string;
   locked: boolean;
   accessToken?: string;
+  workspaceId?: string;
+  workspaceName?: string;
+  moduleKey?: string;
 };
 
 const SESSION_KEY = "clinixai_session";

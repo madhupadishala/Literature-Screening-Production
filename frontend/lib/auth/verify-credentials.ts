@@ -3,8 +3,6 @@ import "server-only";
 import { getPostgresPool } from "@/lib/database/postgres";
 
 import { verifyPassword } from "./password";
-import { mapRoleKeyToUserRole } from "./role-mapping";
-import type { UserRole } from "./auth-types";
 
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCKOUT_MINUTES = 15;
@@ -27,18 +25,6 @@ export type IdentityCredentialCheckResult =
       displayName: string;
     }
   | { ok: false; reason: "invalid_credentials" | "account_locked" };
-
-export type CredentialCheckResult =
-  | {
-      ok: true;
-      userId: string;
-      email: string;
-      displayName: string;
-      tenantId: string;
-      role: UserRole;
-      roleKey: string;
-    }
-  | { ok: false; reason: "invalid_credentials" | "account_locked" | "no_active_membership" };
 
 async function authenticateIdentity(
   email: string,
@@ -118,49 +104,4 @@ export async function verifyIdentityCredentials(
   password: string,
 ): Promise<IdentityCredentialCheckResult> {
   return authenticateIdentity(email, password);
-}
-
-/**
- * Legacy tenant-first compatibility path.
- * New Nexus flows shall authenticate identity first and select tenant/workspace
- * through the scoped context APIs.
- */
-export async function verifyCredentials(
-  email: string,
-  password: string,
-  tenantKey: string,
-): Promise<CredentialCheckResult> {
-  const identity = await authenticateIdentity(email, password);
-  if (!identity.ok) return identity;
-
-  const membershipResult = await getPostgresPool().query<{
-    tenant_id: string;
-    role_key: string;
-  }>(
-    `SELECT t.id AS tenant_id, m.role_key
-       FROM tenant_memberships m
-       JOIN tenants t ON t.id = m.tenant_id
-      WHERE t.tenant_key = $1
-        AND m.user_id = $2
-        AND t.status = 'active'
-        AND m.membership_status = 'active'
-      LIMIT 1`,
-    [tenantKey, identity.userId],
-  );
-
-  const membership = membershipResult.rows[0];
-
-  if (!membership) {
-    return { ok: false, reason: "no_active_membership" };
-  }
-
-  return {
-    ok: true,
-    userId: identity.userId,
-    email: identity.email,
-    displayName: identity.displayName,
-    tenantId: membership.tenant_id,
-    role: mapRoleKeyToUserRole(membership.role_key),
-    roleKey: membership.role_key,
-  };
 }

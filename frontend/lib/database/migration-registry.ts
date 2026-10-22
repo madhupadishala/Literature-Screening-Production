@@ -240,4 +240,17 @@ export const REQUIRED_DATABASE_MIGRATIONS: readonly RequiredMigration[] = [
     filename: "039_literature_workspace_scope.sql",
     required: true,
   },
+  {
+    id: "040",
+    name: "Nexus Submissions ICSR Integration",
+    filename: "040_nexus_submissions_icsr_integration.sql",
+    required: true,
+  },
+  {
+    id: "041",
+    name: "Nexus Client Document Registry",
+    filename: "041_nexus_client_document_registry.sql",
+    required: true,
+  },
+  { id: "042", name: "Nexus Agent Workflow Runs", filename: "042_nexus_agent_workflow_runs.sql", required: true },
 ] as const;

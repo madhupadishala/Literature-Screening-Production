@@ -1,0 +1,251 @@
+[
+  {
+    "agent_id": "AG01",
+    "engine_target": "Agentic_AI.shared.execution.specialists.drug_role",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG02",
+    "engine_target": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "default_bound": false,
+    "missing_dependency": "native runtime (AG02 Python; others Node socket)",
+    "authorized_modules": [
+      "literature_screening",
+      "intake_triage",
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG03",
+    "engine_target": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "default_bound": false,
+    "missing_dependency": "approved JSON provider",
+    "authorized_modules": [
+      "intake_triage",
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG04",
+    "engine_target": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "default_bound": false,
+    "missing_dependency": "approved JSON provider",
+    "authorized_modules": [
+      "intake_triage",
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG05",
+    "engine_target": "Agentic_AI.shared.execution.grounded_specialists.indication",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG06",
+    "engine_target": "Agentic_AI.shared.execution.specialists.medical_history",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG07",
+    "engine_target": "Agentic_AI.shared.execution.grounded_specialists.laboratory",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG08",
+    "engine_target": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "default_bound": false,
+    "missing_dependency": "native runtime (AG02 Python; others Node socket)",
+    "authorized_modules": [
+      "intake_triage",
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG09",
+    "engine_target": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "default_bound": false,
+    "missing_dependency": "approved JSON provider",
+    "authorized_modules": [
+      "intake_triage"
+    ]
+  },
+  {
+    "agent_id": "AG10",
+    "engine_target": "Agentic_AI.shared.execution.additional_bindings.translation",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG11",
+    "engine_target": "Agentic_AI.shared.execution.native_pipeline_bindings.make_native_pipeline_bindings",
+    "default_bound": false,
+    "missing_dependency": "native pipeline with approved extractor and audit",
+    "authorized_modules": [
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG12",
+    "engine_target": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "default_bound": false,
+    "missing_dependency": "native runtime (AG02 Python; others Node socket)",
+    "authorized_modules": [
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG13",
+    "engine_target": "Agentic_AI.shared.execution.native_pipeline_bindings.make_native_pipeline_bindings",
+    "default_bound": false,
+    "missing_dependency": "native pipeline with approved extractor and audit",
+    "authorized_modules": [
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG14",
+    "engine_target": "Agentic_AI.shared.execution.specialists.dechallenge",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG15",
+    "engine_target": "Agentic_AI.shared.execution.specialists.rechallenge",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG16",
+    "engine_target": "Agentic_AI.shared.execution.grounded_specialists.aesi",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG17",
+    "engine_target": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "default_bound": false,
+    "missing_dependency": "native runtime (AG02 Python; others Node socket)",
+    "authorized_modules": [
+      "literature_screening",
+      "intake_triage"
+    ]
+  },
+  {
+    "agent_id": "AG18",
+    "engine_target": "Agentic_AI/AG18_Literature_Duplicate_Detection",
+    "default_bound": false,
+    "missing_dependency": "tenant/workspace SQL duplicate repository",
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG19",
+    "engine_target": "Agentic_AI/AG19_ICSR_Duplicate_Detection",
+    "default_bound": false,
+    "missing_dependency": "tenant/workspace SQL duplicate repository",
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG20",
+    "engine_target": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "default_bound": false,
+    "missing_dependency": "native runtime (AG02 Python; others Node socket)",
+    "authorized_modules": [
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG21",
+    "engine_target": "Agentic_AI.shared.execution.specialists.followup",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG22",
+    "engine_target": "Agentic_AI.shared.execution.specialists.inclusion_exclusion",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG23",
+    "engine_target": "Agentic_AI.shared.execution.specialists.action_taken",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG24",
+    "engine_target": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "default_bound": false,
+    "missing_dependency": "approved JSON provider",
+    "authorized_modules": [
+      "case_processing"
+    ]
+  },
+  {
+    "agent_id": "AG25",
+    "engine_target": "Agentic_AI.shared.execution.additional_bindings.validity",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  },
+  {
+    "agent_id": "AG26",
+    "engine_target": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "default_bound": false,
+    "missing_dependency": "native runtime (AG02 Python; others Node socket)",
+    "authorized_modules": [
+      "intake_triage"
+    ]
+  },
+  {
+    "agent_id": "AG27",
+    "engine_target": "Agentic_AI.shared.execution.grounded_specialists.patient_aggregate",
+    "default_bound": true,
+    "missing_dependency": null,
+    "authorized_modules": [
+      "module scope verified by trusted workflow"
+    ]
+  }
+]

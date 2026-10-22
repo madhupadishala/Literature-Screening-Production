@@ -15,7 +15,16 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "native_adapter_implemented_engine_injection_required",
+    "binding": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "native_runtime": "python-event-engine",
+    "authorized_modules": [
+      "literature_screening",
+      "intake_triage",
+      "case_processing"
+    ],
+    "input_contract": "event_request",
+    "clinical_review_required": true
   },
   "AG03": {
     "folder": "AG03_Patient_Identification",
@@ -24,7 +33,16 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "local_binding_implemented_hosted_unverified",
+    "binding": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "engine": "PatientAgent",
+    "requires": "approved structured LLMClient.complete_json, server-side injected",
+    "input_contract": "text",
+    "clinical_review_required": true,
+    "authorized_modules": [
+      "intake_triage",
+      "case_processing"
+    ]
   },
   "AG04": {
     "folder": "AG04_Reporter_Identification",
@@ -33,7 +51,16 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "local_binding_implemented_hosted_unverified",
+    "binding": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "engine": "ReporterAgent",
+    "requires": "approved structured LLMClient.complete_json, server-side injected",
+    "input_contract": "text",
+    "clinical_review_required": true,
+    "authorized_modules": [
+      "intake_triage",
+      "case_processing"
+    ]
   },
   "AG05": {
     "folder": "AG05_Indication_Identification",
@@ -69,7 +96,15 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "native_adapter_implemented_engine_injection_required",
+    "binding": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "native_runtime": "typescript-country-of-incident",
+    "authorized_modules": [
+      "intake_triage",
+      "case_processing"
+    ],
+    "input_contract": "text",
+    "clinical_review_required": true
   },
   "AG09": {
     "folder": "AG09_Clock_Start_Date",
@@ -78,7 +113,15 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "local_binding_implemented_hosted_unverified",
+    "binding": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "engine": "DayZeroAgent",
+    "requires": "approved structured LLMClient.complete_json, server-side injected",
+    "input_contract": "day_zero_input",
+    "clinical_review_required": true,
+    "authorized_modules": [
+      "intake_triage"
+    ]
   },
   "AG10": {
     "folder": "AG10_Translation",
@@ -96,7 +139,14 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "native_pipeline_adapter_implemented_approved_dependencies_required",
+    "binding": "Agentic_AI.shared.execution.native_pipeline_bindings.make_native_pipeline_bindings",
+    "native_runtime": "python-native-pipeline",
+    "authorized_modules": [
+      "case_processing"
+    ],
+    "input_contract": "seriousness_case",
+    "clinical_review_required": true
   },
   "AG12": {
     "folder": "AG12_Listedness_Expectedness",
@@ -105,7 +155,14 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "native_adapter_implemented_engine_injection_required",
+    "binding": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "native_runtime": "typescript-listedness",
+    "authorized_modules": [
+      "case_processing"
+    ],
+    "input_contract": "labeling_request",
+    "clinical_review_required": true
   },
   "AG13": {
     "folder": "AG13_Causality_Assessment",
@@ -114,7 +171,14 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "native_pipeline_adapter_implemented_approved_dependencies_required",
+    "binding": "Agentic_AI.shared.execution.native_pipeline_bindings.make_native_pipeline_bindings",
+    "native_runtime": "python-native-pipeline",
+    "authorized_modules": [
+      "case_processing"
+    ],
+    "input_contract": "causality_case",
+    "clinical_review_required": true
   },
   "AG14": {
     "folder": "AG14_Dechallenge_Assessment",
@@ -150,7 +214,15 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "native_adapter_implemented_engine_injection_required",
+    "binding": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "native_runtime": "typescript-safety-assessment",
+    "authorized_modules": [
+      "literature_screening",
+      "intake_triage"
+    ],
+    "input_contract": "safety_request",
+    "clinical_review_required": true
   },
   "AG18": {
     "folder": "AG18_Literature_Duplicate_Detection",
@@ -177,7 +249,14 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "native_adapter_implemented_engine_injection_required",
+    "binding": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "native_runtime": "typescript-narrative",
+    "authorized_modules": [
+      "case_processing"
+    ],
+    "input_contract": "narrative_request",
+    "clinical_review_required": true
   },
   "AG21": {
     "folder": "AG21_Followup_Questionnaire",
@@ -213,7 +292,15 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "local_binding_implemented_hosted_unverified",
+    "binding": "Agentic_AI.shared.execution.v25_bindings.make_v25_bindings",
+    "engine": "HistoricalAgent",
+    "requires": "approved structured LLMClient.complete_json, server-side injected",
+    "input_contract": "text",
+    "clinical_review_required": true,
+    "authorized_modules": [
+      "case_processing"
+    ]
   },
   "AG25": {
     "folder": "AG25_ICSR_Validity",
@@ -231,7 +318,14 @@
     "execution_mode": "isolated_per_job",
     "authorization": "Nexus_backend_only",
     "routing": "verified_envelope",
-    "live_integration": "not_verified"
+    "live_integration": "native_adapter_implemented_engine_injection_required",
+    "binding": "Agentic_AI.shared.execution.native_runtime_bindings.make_native_runtime_bindings",
+    "native_runtime": "typescript-triage",
+    "authorized_modules": [
+      "intake_triage"
+    ],
+    "input_contract": "triage_request",
+    "clinical_review_required": true
   },
   "AG27": {
     "folder": "AG27_Patient_Aggregate_Relevance",

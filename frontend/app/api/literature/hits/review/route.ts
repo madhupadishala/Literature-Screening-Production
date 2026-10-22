@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import {leaseResponse} from "@/lib/literature/assignment/lock-service";
 import { saveHitsReview } from "@/lib/literature/hits/hits-review-repository";
 import type { SaveHitsReviewInput } from "@/lib/literature/hits/hits-review-types";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
@@ -18,6 +19,6 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     return Response.json({ success: true, data: saved });
   } catch (error) {
-    return routeErrorResponse(error);
+    return leaseResponse(error)??routeErrorResponse(error);
   }
 }

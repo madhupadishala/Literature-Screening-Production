@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getPostgresPool } from "@/lib/database/postgres";
+import {requireMutationLease} from "@/lib/literature/assignment/lock-service";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 import type {
@@ -261,6 +262,7 @@ export async function listHitsForReview(input: {
   status?: HitsReviewStatus;
   limit?: number;
 }): Promise<HitsWorklistRecord[]> {
+  if (!input.principal.workspaceId) return [];
   const limit = Math.max(1, Math.min(input.limit ?? 250, 500));
   const result = await getPostgresPool().query<HitsWorklistRow>(
     `
@@ -332,11 +334,13 @@ export async function listHitsForReview(input: {
           AND source.package_id = latest.package_id
       ) duplicates ON true
       WHERE latest.tenant_id = $1
+        AND package.workspace_id = $4::uuid
+        AND package.environment = $5
         AND ($2::text IS NULL OR COALESCE(review.review_status, 'pending') = $2)
       ORDER BY latest.created_at DESC
       LIMIT $3
     `,
-    [input.principal.tenantId, input.status ?? null, limit],
+    [input.principal.tenantId, input.status ?? null, limit, input.principal.workspaceId, input.principal.environment],
   );
 
   return result.rows.map(mapWorklistRow);
@@ -355,6 +359,7 @@ export async function saveHitsReview(input: {
 
   try {
     await client.query("BEGIN");
+    await requireMutationLease(client,input.review.packageId,input.principal,"HITS",{lock_token:input.review.lock_token??"",fencing_token:input.review.fencing_token??""});
     const target = await client.query<{
       package_id: string;
       hits_result_id: string;

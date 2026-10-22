@@ -7,8 +7,8 @@ Knowledge : knowledge/01_day_zero.md (GVP Module VI.B.7, VI App2 literature rule
 from __future__ import annotations
 from enum import Enum
 from pydantic import BaseModel, Field
-from ..common.base import LLMClient, Flag, call_structured, grounded, sha, GROUNDING_RULES
-from ..common import pdate
+from Agentic_AI.shared.v2_5.common.base import LLMClient, Flag, call_structured, grounded, sha, GROUNDING_RULES
+from Agentic_AI.shared.v2_5.common import pdate
 
 AGENT, VERSION, RULEPACK = "day_zero", "0.1.0", "dz-rules-2026.10-draft"
 

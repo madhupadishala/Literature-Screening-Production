@@ -31,42 +31,12 @@ function buildSslConfiguration(): PoolConfig["ssl"] {
   );
 }
 
-const GOVERNED_UAT_PREVIEW_BRANCHES = new Set([
-  "release/nexus-integrated-rc1",
-  "cleanup/zero-deviation-baseline-20260930",
-  "preview/wave4",
-]);
-const GOVERNED_UAT_NEON_HOST =
-  "ep-dry-grass-b3qv8phi-pooler.c-4.ap-southeast-1.aws.neon.tech";
-const GOVERNED_UAT_DATABASE = "literature_screening_prod";
-
-function resolveGovernedUatPreviewDatabaseUrl(databaseUrl: string): string {
-  const gitBranch = process.env.VERCEL_GIT_COMMIT_REF?.trim() ?? "";
-  const isGovernedUatPreview =
-    process.env.VERCEL_ENV?.trim().toLowerCase() === "preview" &&
-    GOVERNED_UAT_PREVIEW_BRANCHES.has(gitBranch);
-
-  if (!isGovernedUatPreview) return databaseUrl;
-
-  const parsed = new URL(databaseUrl);
-  if (parsed.protocol !== "postgres:" && parsed.protocol !== "postgresql:") {
-    throw new Error("Governed UAT preview requires a PostgreSQL DATABASE_URL.");
-  }
-
-  // Reuse only the protected Vercel credential material. The target host and
-  // database are non-secret identifiers for the isolated Neon UAT branch.
-  parsed.hostname = GOVERNED_UAT_NEON_HOST;
-  parsed.pathname = `/${GOVERNED_UAT_DATABASE}`;
-  parsed.searchParams.set("sslmode", "require");
-  return parsed.toString();
-}
-
 export function getDatabaseUrl(): string {
   const databaseUrl = process.env.DATABASE_URL?.trim();
   if (!databaseUrl) {
     throw new Error("DATABASE_URL is not configured.");
   }
-  return resolveGovernedUatPreviewDatabaseUrl(databaseUrl);
+  return databaseUrl;
 }
 
 export function getPostgresPool(): Pool {

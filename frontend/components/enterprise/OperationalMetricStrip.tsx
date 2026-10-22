@@ -6,9 +6,9 @@ type Metric = {
   tone?: "neutral" | "attention" | "positive" | "critical";
 };
 
-export default function OperationalMetricStrip({ metrics }: { metrics: Metric[] }) {
+export default function OperationalMetricStrip({ metrics, compact = false }: { metrics: Metric[]; compact?: boolean }) {
   return (
-    <section className={styles.metricStrip} aria-label="Operational summary">
+    <section className={[styles.metricStrip, compact ? styles.compact : ""].filter(Boolean).join(" ")} aria-label="Operational summary">
       {metrics.map((metric) => {
         const toneClass =
           metric.tone && metric.tone !== "neutral" ? styles[metric.tone] : "";

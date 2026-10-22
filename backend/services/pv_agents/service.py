@@ -59,6 +59,8 @@ class PVAgentService:
         scopes = next((v for k, v in self.token_scopes.items() if hmac.compare_digest(k, token)), None)
         if not scopes:
             raise ServiceError(401, "Service authentication required")
+        if any(g.get("role") == "staging_diagnostic_runner" for g in scopes):
+            raise ServiceError(403, "Diagnostic identity prohibited on clinical agent routes")
         allowed = {'tenant_id','client_id','workspace_id','request_id','case_id','narrative','source_type','event_terms','input_sha256'}
         if not isinstance(request, dict) or set(request) - allowed:
             raise ServiceError(400, "Invalid agent request fields")
@@ -129,8 +131,25 @@ class PVAgentService:
 
 
 def create_application():
-    app = PVAgentService(json.loads(os.environ['NEXUS_PV_SERVICE_TOKEN_SCOPES']), AuditStore(os.environ['NEXUS_PV_AUDIT_DB']))
-    if os.environ.get('NEXUS_PV_REGISTER_SPECIALISTS') == 'true':
+    """Production/staging only: enforce durable audit and fail-closed service scope."""
+    if os.environ.get("NEXUS_PV_AUDIT_BACKEND") != "postgres":
+        raise RuntimeError("Hosted PV agent runtime requires durable PostgreSQL audit")
+    from .postgres_audit import PostgresAuditStore
+    scopes = json.loads(os.environ["NEXUS_PV_SERVICE_TOKEN_SCOPES"])
+    if not isinstance(scopes, dict) or not scopes:
+        raise ValueError("Scoped service tokens required")
+    for token, grants in scopes.items():
+        if not isinstance(token, str) or len(token) < 24 or not isinstance(grants, list) or not grants:
+            raise ValueError("Invalid scoped service token")
+        if any(not isinstance(g, dict) or any(
+            not isinstance(g.get(k), str) or not g[k].strip()
+            for k in ("tenant_id", "client_id", "workspace_id")) for g in grants):
+            raise ValueError("Invalid grant scope")
+    audit = PostgresAuditStore(os.environ["NEXUS_PV_AUDIT_DATABASE_URL"])
+    app = PVAgentService(scopes, audit)
+    if os.environ.get("NEXUS_PV_REGISTER_SPECIALISTS") == "true":
         from .workers import build_specialist_workers
-        app.workers = build_specialist_workers(app.drug_agent, app.causality_adapter, os.environ['NEXUS_PV_SPECIALIST_AUDIT_DIR'])
+        app.workers = build_specialist_workers(
+            app.drug_agent, app.causality_adapter,
+            os.environ["NEXUS_PV_SPECIALIST_AUDIT_DIR"])
     return app

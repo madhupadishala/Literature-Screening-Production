@@ -7,6 +7,9 @@
     }
   ],
   "git": {
-    "deploymentEnabled": false
+    "deploymentEnabled": {
+      "cleanup/zero-deviation-baseline-20260930": false,
+      "integration/nexus-27-agents-kb-execution-20261015": false
+    }
   }
 }

@@ -1,0 +1,6 @@
+# Nexus PV Specialist Graph — integration dependencies
+
+# Python 3.11+ in the hosted specialist runtime; pin exact versions at qualification.
+# Existing Nexus KnowledgeRouter requires its approved ChromaDB/index backend.
+langgraph>=0.2,<2
+pydantic>=2,<3

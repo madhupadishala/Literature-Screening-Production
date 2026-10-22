@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 
 import { routeErrorResponse } from "@/lib/api/route-error";
+import {leaseResponse} from "@/lib/literature/assignment/lock-service";
 import { saveMedicalReview } from "@/lib/literature/review/review-mutation-service";
 import { NEXUS_MODULES } from "@/lib/nexus/modules";
 import { PERMISSIONS } from "@/lib/rbac/permissions";
@@ -20,9 +21,11 @@ export async function POST(request: NextRequest): Promise<Response> {
       finalDecision: String(body.finalDecision || ""),
       comments: String(body.comments || ""),
       reason: String(body.reason || ""),
+      lock_token: String(body.lock_token || ""),
+      fencing_token: String(body.fencing_token || ""),
     });
     return Response.json({ success: true });
   } catch (error) {
-    return routeErrorResponse(error);
+    return leaseResponse(error)??routeErrorResponse(error);
   }
 }

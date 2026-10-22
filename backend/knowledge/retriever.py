@@ -23,7 +23,7 @@ class HybridRetriever:
 
     def retrieve_relevant_rules(self, query: str, agent_name: str, tenant_id: str,
                                limit: int = 10, client_id=None, knowledge_types=None,
-                               jurisdiction=None, as_of=None) -> List[Dict[str, Any]]:
+                               jurisdiction=None, as_of=None, environment=None) -> List[Dict[str, Any]]:
         if not tenant_id or tenant_id == "GLOBAL":
             raise ValueError("An actual tenant_id is required")
         if limit < 1 or limit > 100:
@@ -31,6 +31,9 @@ class HybridRetriever:
         effective_on = date.fromisoformat(str(as_of)) if as_of else None
         tenant_filter = {"$and": [{"tenant_id": tenant_id}, {"client_id": {"$in": [client_id or "GLOBAL", "GLOBAL"]}}]}
         where = {"$or": [{"tenant_id": "GLOBAL"}, tenant_filter]}
+        if environment:
+            if environment not in ("PROD", "UAT", "TRAINING"): raise ValueError("Invalid environment")
+            where = {"$and": [where, {"environment": environment}]}
         if knowledge_types:
             where = {"$and": [where, {"knowledge_type": {"$in": list(knowledge_types)}}]}
         results = self.collection.query(query_texts=[query], n_results=limit,
@@ -44,6 +47,8 @@ class HybridRetriever:
             if meta.get("tenant_id") not in (tenant_id, "GLOBAL"):
                 continue
             if meta.get("tenant_id") != "GLOBAL" and meta.get("client_id") not in (client_id or "GLOBAL", "GLOBAL"):
+                continue
+            if environment and meta.get("environment") != environment:
                 continue
             if knowledge_types and meta.get("knowledge_type") not in knowledge_types:
                 continue

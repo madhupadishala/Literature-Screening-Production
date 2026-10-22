@@ -5,6 +5,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalState from "@/components/enterprise/OperationalState";
+import {useRecordLock} from "@/hooks/useRecordLock";
+import ScreeningFilterBar, {EMPTY_SCREENING_FILTERS, matchesText, type ScreeningFilters} from "@/components/screening-frs/ScreeningFilterBar";
 
 type ReviewRecord = {
   workspaceId: string;
@@ -219,6 +221,13 @@ function availableLabels(
 export default function ReviewPage() {
   const [records, setRecords] = useState<ReviewRecord[]>([]);
   const [selected, setSelected] = useState<ReviewDetail | null>(null);
+  const recordLock=useRecordLock(selected?.packageId||null,"MEDICAL_REVIEW",Boolean(selected));
+  const [worklistQuery,setWorklistQuery]=useState("");
+  const [worklistFilters,setWorklistFilters]=useState<ScreeningFilters>({...EMPTY_SCREENING_FILTERS});
+  const [worklistView,setWorklistView]=useState<"queue"|"mine">("queue");
+  const [myAssignments,setMyAssignments]=useState<Array<{assignment_id:string;record_id:string;package_key:string;status:string;lock_status:string}>>([]);
+  const [assignmentError,setAssignmentError]=useState("");
+  useEffect(()=>{if(worklistView!=="mine")return;let cancelled=false;void fetch("/api/v1/my-assignments?stage=MEDICAL_REVIEW",{cache:"no-store"}).then(async r=>{const x=await r.json();if(!r.ok||!x.success)throw new Error("Assignments unavailable");if(!cancelled){setMyAssignments(x.data.records);setAssignmentError("");}}).catch(()=>{if(!cancelled){setMyAssignments([]);setAssignmentError("Unable to load assignments");}});return()=>{cancelled=true};},[worklistView]);
   const [patients, setPatients] = useState<PatientSegment[]>([]);
   const [labels, setLabels] = useState<LabelAssessment[]>([]);
   const [causality, setCausality] = useState<CausalityAssessment[]>([]);
@@ -290,6 +299,8 @@ export default function ReviewPage() {
 
   async function mutate(path: string, body: Record<string, unknown>, label: string) {
     if (!selected) return;
+    const leaseProof=recordLock.getProof();
+    if(!leaseProof){setMessage("Read-only: active Medical Review edit lease required.");return;}
     if (auditReason.trim().length < 8) {
       setMessage("Enter a specific audit reason before saving a governed Review action.");
       return;
@@ -299,7 +310,7 @@ export default function ReviewPage() {
       const response = await fetch(path, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ workspaceId: selected.workspaceId, reason: auditReason, ...body }),
+        body: JSON.stringify({ workspaceId: selected.workspaceId, reason: auditReason, ...body, ...leaseProof }),
       });
       const payload = await response.json();
       if (!response.ok || !payload?.success) {
@@ -317,6 +328,8 @@ export default function ReviewPage() {
 
   async function runPatientExtraction() {
     if (!selected) return;
+    const proof=recordLock.getProof();
+    if(!proof){setMessage("Read-only: active Medical Review edit lease required.");return;}
     if (auditReason.trim().length < 8) {
       setMessage("Enter a specific audit reason before running governed patient extraction.");
       return;
@@ -453,28 +466,19 @@ export default function ReviewPage() {
     [records],
   );
 
+  const filteredRecords=records.filter(record=>{
+    const fields=[record.pmid,record.title,record.packageKey,...record.products,...record.clinicalEvents].join(" ");
+    if(worklistQuery&&!matchesText(fields,worklistQuery))return false;
+    if(worklistFilters.product&&!matchesText(record.products.join(" "),worklistFilters.product))return false;
+    if(worklistFilters.event&&!matchesText(record.clinicalEvents.join(" "),worklistFilters.event))return false;
+    if(worklistFilters.listedness&&!matchesText(record.labelingStatus,worklistFilters.listedness))return false;
+    if(worklistFilters.causality&&!matchesText(record.causalityStatus,worklistFilters.causality))return false;
+    return true;
+  });
+
   return (
     <ApplicationShell module="LITERATURE">
-      <OperationalScreenHeader
-        eyebrow="Literature Screening · Medical Review"
-        title="Medical Review Workspace"
-        description="Perform patient-level segmentation, seriousness, listedness / expectedness and causality review after a human-approved Screening INCLUDE decision."
-        status="Medical review controlled"
-      />
-      <OperationalState
-        kind="info"
-        title="Evidence-first medical review"
-        message="Patient, product and event assessments must remain linked to source evidence. AI extraction can propose; authorized medical review records the governed conclusion."
-        compact
-      />
-
-      <section className="boundary-note">
-        <strong>Governance boundary</strong>
-        <span>
-          Screening is article-level. Review / MR is patient-product-event level. Zero-patient articles make labeling and causality not applicable; Intake remains blocked until an approved Review is complete.
-        </span>
-      </section>
-
+      <div className="nxs-mr-head"><strong>Medical Review</strong><span>Evidence-first, human-governed patient-level assessment</span></div>
       <section className="metrics">
         <Metric label="Ready for Review" value={metrics.ready} />
         <Metric label="Patient Segmentation Pending" value={metrics.segmentation} />
@@ -483,19 +487,27 @@ export default function ReviewPage() {
         <Metric label="MR Review Pending" value={metrics.mr} />
       </section>
 
+      <ScreeningFilterBar value={worklistFilters} onChange={setWorklistFilters}
+        loadedCount={records.length} matchingCount={filteredRecords.length}
+        limitations="Available MR filters operate on the loaded queue (maximum 500). Unsupported criteria require a server search implementation." />
       <section className="panel">
         <header>
           <div>
             <span>Governed worklist</span>
-            <h2>Post-Screening Review</h2>
+            <h2>Medical Review Records</h2>
             <p>Only human-approved Screening INCLUDE articles enter this queue.</p>
           </div>
-          <button type="button" onClick={() => void load()}>Refresh</button>
+          <div className="nxs-mr-actions"><input aria-label="Search medical review records" placeholder="Search PMID, title, product, event" value={worklistQuery} onChange={event=>setWorklistQuery(event.target.value)}/><button type="button" onClick={() => void load()}>Refresh</button></div>
         </header>
 
         {message && <div className="message">{message}</div>}
 
-        <div className="table-wrap">
+        <div className="nxs-mr-views" role="tablist" aria-label="Medical Review worklists">
+          <button type="button" role="tab" aria-selected={worklistView==="queue"} onClick={()=>setWorklistView("queue")}>Medical Review Queue ({filteredRecords.length})</button>
+          <button type="button" role="tab" aria-selected={worklistView==="mine"} onClick={()=>setWorklistView("mine")}>My Assignments</button>
+        </div>
+        {worklistView==="mine"&&<div className="nxs-my-work">{assignmentError&&<div role="alert">{assignmentError}</div>}{myAssignments.length===0&&!assignmentError&&<p>No active Medical Review assignments.</p>}<table><thead><tr><th>Record</th><th>Assignment</th><th>Lock</th><th>Action</th></tr></thead><tbody>{myAssignments.map(a=><tr key={a.assignment_id}><td>{a.package_key}</td><td>{a.status}</td><td>{a.lock_status}</td><td><button type="button" onClick={()=>{const record=records.find(x=>x.packageId===a.record_id);if(record)void openWorkspace(record);else setMessage("Assigned record is outside the currently loaded worklist.");}}>Open</button></td></tr>)}</tbody></table></div>}
+        {worklistView==="queue" && <div className="table-wrap">
           <table>
             <thead>
               <tr>
@@ -504,7 +516,7 @@ export default function ReviewPage() {
               </tr>
             </thead>
             <tbody>
-              {records.map((record) => (
+              {filteredRecords.map((record) => (
                 <tr key={record.workspaceId}>
                   <td>{record.pmid}</td>
                   <td><strong>{record.title}</strong><small>{record.packageKey}</small></td>
@@ -517,17 +529,18 @@ export default function ReviewPage() {
                   <td><button type="button" onClick={() => void openWorkspace(record)}>Open</button></td>
                 </tr>
               ))}
-              {!loading && records.length === 0 && (
+              {!loading && filteredRecords.length === 0 && (
                 <tr><td colSpan={9} className="empty">No Screening-approved INCLUDE article is ready for Review.</td></tr>
               )}
             </tbody>
           </table>
-        </div>
+        </div>}
       </section>
 
       {selected && (
         <div className="drawer-backdrop">
           <aside className="drawer" aria-label="Medical Review workspace">
+            {recordLock.readOnly&&<div role="status" style={{padding:"10px 16px",background:"#fff2cf",color:"#614900",fontSize:12}}>{recordLock.message||"Read-only — acquiring an authorized edit lease."}</div>}
             <header className="drawer-header">
               <div>
                 <span>Review / MR workspace</span>
@@ -537,6 +550,7 @@ export default function ReviewPage() {
               <button type="button" onClick={() => setSelected(null)} aria-label="Close">×</button>
             </header>
 
+            <fieldset disabled={recordLock.readOnly} style={{border:0,padding:0,margin:0,minWidth:0}}>
             <section className="audit-bar">
               <label>
                 <span>Audit reason for the next controlled action</span>
@@ -878,11 +892,32 @@ export default function ReviewPage() {
             <div className="gate">
               Intake is unlocked only after patient segmentation is COMPLETE, labeling and causality are governed as COMPLETE or UNRESOLVED, and Medical Review is APPROVED.
             </div>
+            </fieldset>
           </aside>
         </div>
       )}
 
       <style jsx>{`
+        .nxs-mr-head{height:30px;display:flex;align-items:center;gap:12px;margin:0 0 3px;color:#161616}
+        .nxs-mr-head strong{font-size:17px}.nxs-mr-head span{font-size:10px;color:#525252}
+        .metrics{height:56px;display:flex!important;gap:0!important;margin:0 0 4px!important;overflow:auto;background:#fff}
+        .metrics :global(article){flex:1;min-width:132px;min-height:56px!important;padding:5px 9px!important;border-radius:0!important;box-shadow:none!important}
+        .panel{border-radius:0!important}
+        .panel>header{padding:5px 9px!important;align-items:center}
+        .panel h2{font-size:14px!important;margin:0!important}
+        .nxs-mr-actions{display:flex;align-items:center;gap:6px}
+        .nxs-mr-actions input{min-width:230px;height:30px;border:1px solid #8d8d8d;padding:5px 8px;font-size:11px}
+        .nxs-mr-views{display:flex;gap:0;border-bottom:1px solid #c6c6c6;background:white}
+        .nxs-mr-views button{border-radius:0;background:#fff;color:#393939;border-bottom:2px solid transparent}
+        .nxs-mr-views button[aria-selected="true"]{border-bottom-color:#0f62fe;color:#0f62fe}
+        .nxs-my-work{max-height:calc(100vh - 270px);overflow:auto;padding:8px;background:white}
+        .nxs-not-ready{padding:14px;background:#fff8e1;color:#5d4700;font-size:12px}
+        .table-wrap{max-height:calc(100vh - 270px);overflow:auto}
+        th{position:sticky;top:0;z-index:1;height:34px!important;background:#e0e0e0!important}
+        td{height:36px!important;padding:5px 8px!important}
+        .drawer{width:min(40vw,700px);min-width:min(380px,100vw)}
+        @media(max-width:850px){.drawer{width:min(95vw,700px)}.nxs-mr-actions input{min-width:100px}}
+
         .app-shell{min-height:100vh;padding:24px;background:#eef2f7;color:#0f172a;font-family:"Poppins",Arial,sans-serif}
         .boundary-note{display:flex;justify-content:space-between;gap:16px;margin-bottom:14px;padding:13px 16px;border:1px solid #bae6fd;border-radius:12px;background:#f0f9ff;color:#075985;font-size:11px}
         .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
