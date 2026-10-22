@@ -73,6 +73,8 @@ export interface SaveHitsReviewInput {
   status: HitsReviewStatus;
   comments?: string;
   expectedVersion?: number;
+  lock_token?: string;
+  fencing_token?: string;
 }
 
 export interface SavedHitsReview {
