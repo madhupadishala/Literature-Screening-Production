@@ -3,14 +3,14 @@ import {useEffect,useRef,useState,useCallback} from "react";
 export type LeaseProof={lock_token:string;fencing_token:string};
 type Lease=LeaseProof & {expires_at:string};
 export type LeaseState="idle"|"acquiring"|"editing"|"read_only"|"lost";
-export function useRecordLock(recordId:string|null,stage:"SCREENING"|"MEDICAL_REVIEW",enabled:boolean){
+export function useRecordLock(recordId:string|null,stage:"SCREENING"|"MEDICAL_REVIEW"|"HITS",enabled:boolean){
  const [state,setState]=useState<LeaseState>("idle");
  const [message,setMessage]=useState("");
  const proofRef=useRef<Lease|null>(null);
  const [revision,setRevision]=useState(0);
  useEffect(()=>{
   if(!enabled||!recordId){setState("idle");proofRef.current=null;return;}
-  const url=stage==="SCREENING"?`/api/v1/screening/records/${encodeURIComponent(recordId)}/lock`:`/api/v1/medical-review/records/${encodeURIComponent(recordId)}/lock`;
+  const url=stage==="SCREENING"?`/api/v1/screening/records/${encodeURIComponent(recordId)}/lock`:stage==="HITS"?`/api/v1/hits/records/${encodeURIComponent(recordId)}/lock`:`/api/v1/medical-review/records/${encodeURIComponent(recordId)}/lock`;
   let closed=false;
   let inFlight=false;
   let acquired:Lease|null=null;
