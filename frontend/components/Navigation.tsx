@@ -97,7 +97,7 @@ export default function Navigation() {
   }
 
   return (
-    <div className={styles["shell-header"]}>
+    <div className={styles["shell-header"]} style={pathname === "/hits" ? { marginBottom: "2px" } : undefined}>
       <a className={styles["skip-link"]} href="#main-content">
         Skip to main content
       </a>
@@ -224,14 +224,14 @@ export default function Navigation() {
 
       </nav>
       {switchError ? <p className={styles.error} role="alert">{switchError}</p> : null}
-      <div className={styles.validation} data-verified={state.status === "authenticated_ready"} role="status">
+      {(pathname !== "/hits" || state.status !== "authenticated_ready") && <div className={styles.validation} data-verified={state.status === "authenticated_ready"} role="status">
         <span aria-hidden="true" />
         {state.status === "authenticated_ready"
           ? "Controlled environment · Tenant, module entitlement and RBAC controls active"
           : state.status === "context_error"
             ? <>Failed to load workspace context. <button type="button" onClick={retry}>Retry</button></>
             : "Verifying context..."}
-      </div>
+      </div>}
 
     </div>
   );
