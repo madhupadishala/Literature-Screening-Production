@@ -40,7 +40,15 @@ BEGIN
  GET DIAGNOSTICS deleted_count=ROW_COUNT;
  RETURN deleted_count;
 END $$;
-ALTER TABLE nexus_record_assignments ADD CONSTRAINT nexus_assignment_package_scope_fk
- FOREIGN KEY (record_id,tenant_id,workspace_id,environment) REFERENCES literature_packages(id,tenant_id,workspace_id,environment) ON DELETE CASCADE;
-ALTER TABLE nexus_record_locks ADD CONSTRAINT nexus_lock_package_scope_fk
- FOREIGN KEY (record_id,tenant_id,workspace_id,environment) REFERENCES literature_packages(id,tenant_id,workspace_id,environment) ON DELETE CASCADE;
+DO $ BEGIN
+ IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'nexus_record_assignments'::regclass AND conname = 'nexus_assignment_package_scope_fk') THEN
+  ALTER TABLE nexus_record_assignments ADD CONSTRAINT nexus_assignment_package_scope_fk
+   FOREIGN KEY (record_id,tenant_id,workspace_id,environment) REFERENCES literature_packages(id,tenant_id,workspace_id,environment) ON DELETE CASCADE;
+ END IF;
+END $;
+DO $ BEGIN
+ IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'nexus_record_locks'::regclass AND conname = 'nexus_lock_package_scope_fk') THEN
+  ALTER TABLE nexus_record_locks ADD CONSTRAINT nexus_lock_package_scope_fk
+   FOREIGN KEY (record_id,tenant_id,workspace_id,environment) REFERENCES literature_packages(id,tenant_id,workspace_id,environment) ON DELETE CASCADE;
+ END IF;
+END $;
