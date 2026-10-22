@@ -25,3 +25,5 @@
 .nh-audit{padding:6px}
 .nh-drawer{width:min(40vw,650px);min-width:min(360px,100vw)}
 @media(max-width:800px){.nh-drawer{width:min(95vw,650px)}.nh-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.nh-synthetic-note{font-size:9px;text-align:right;color:#525252;line-height:14px;height:14px;padding-right:3px}
