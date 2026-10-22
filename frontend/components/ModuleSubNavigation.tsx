@@ -46,7 +46,7 @@ export default function ModuleSubNavigation({ module }: { module: keyof typeof N
         .module-subnav {
           display: flex;
           min-height: 42px;
-          margin: -4px 0 14px;
+          margin: -4px 0 ${pathname === "/hits" ? "0" : "14px"};
           overflow-x: auto;
           border: 1px solid #cbd5e1;
           border-radius: 6px;
