@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getPostgresPool } from "@/lib/database/postgres";
+import {requireMutationLease} from "@/lib/literature/assignment/lock-service";
 import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 import type {
@@ -355,6 +356,7 @@ export async function saveHitsReview(input: {
 
   try {
     await client.query("BEGIN");
+    await requireMutationLease(client,input.review.packageId,input.principal,"HITS",{lock_token:input.review.lock_token??"",fencing_token:input.review.fencing_token??""});
     const target = await client.query<{
       package_id: string;
       hits_result_id: string;
