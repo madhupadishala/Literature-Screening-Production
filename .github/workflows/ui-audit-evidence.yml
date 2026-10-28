@@ -1,0 +1,30 @@
+name: NEXUS UI audit evidence
+
+on:
+  push:
+    branches:
+      - feat/nexus-unified-ui-primitives-20261028
+    paths:
+      - "frontend/scripts/audit-ui-evidence.mjs"
+      - ".github/workflows/ui-audit-evidence.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ui-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Unmapped color priorities and WCAG pairs
+        env:
+          CI: "true"
+        run: node frontend/scripts/audit-ui-evidence.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nexus-ui-color-and-contrast-audit
+          path: test-results/nexus-ui-audit.json
