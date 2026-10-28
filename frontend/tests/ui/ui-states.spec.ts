@@ -1,7 +1,10 @@
 import { expect, test } from "playwright/test";
 
 test("DataTable has five distinct, accessible operational states", async ({ page }) => {
+  page.on("pageerror", error => console.error("BROWSER ERROR:", error.message));
+  page.on("console", message => console.log("BROWSER CONSOLE:", message.text()));
   await page.goto("http://127.0.0.1:3107/");
+  console.log("BROWSER DOM:", (await page.locator("body").innerText()).slice(0, 1200));
   const expected = ["loading", "empty", "error", "readonly", "finalized"];
   for (const state of expected) {
     await expect(page.locator(`[data-table-state="${state}"]`)).toHaveCount(1);
