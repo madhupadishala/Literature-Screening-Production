@@ -44,5 +44,20 @@ jobs:
           node scripts/count-ui-debt.mjs ../nexus-base/frontend
           echo "CURRENT BRANCH"
           node scripts/count-ui-debt.mjs . scripts/ui-debt-baseline.json
+      - name: Shell purity contract
+        run: |
+          set -e
+          echo "styled-jsx in shell files:"
+          matches=$(grep -El '<style[[:space:]]+jsx' components/Navigation.tsx components/ModuleSubNavigation.tsx components/enterprise/ApplicationShell.tsx || true)
+          echo "${matches:-0}"
+          test -z "$matches"
+          echo "pathname equality in shell files:"
+          matches=$(grep -En 'pathname[[:space:]]*===' components/Navigation.tsx components/ModuleSubNavigation.tsx components/enterprise/ApplicationShell.tsx || true)
+          echo "${matches:-0}"
+          test -z "$matches"
+          echo "raw hardcoded hex in shell files:"
+          matches=$(grep -Ein '#[[:xdigit:]]{6}' components/Navigation.tsx components/ModuleSubNavigation.tsx components/enterprise/ApplicationShell.tsx || true)
+          echo "${matches:-0}"
+          test -z "$matches"
       - name: Production build
         run: npm run build
