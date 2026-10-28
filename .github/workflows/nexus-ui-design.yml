@@ -37,5 +37,12 @@ jobs:
         run: node scripts/verify-ui-design-diff.mjs
         env:
           UI_BASE_REF: origin/main
+      - name: Compare UI debt against exact base
+        run: |
+          git worktree add --detach ../nexus-base df4a49f
+          echo "BASE df4a49f"
+          node scripts/count-ui-debt.mjs ../nexus-base/frontend
+          echo "CURRENT BRANCH"
+          node scripts/count-ui-debt.mjs .
       - name: Production build
         run: npm run build
