@@ -12,6 +12,17 @@
   --nx-color-text-secondary: #525252;
   --nx-color-text-muted: #6f6f6f;
   --nx-color-text-inverse: #ffffff;
+  --nx-bg: var(--nx-color-bg);
+  --nx-surface: var(--nx-color-surface);
+  --nx-border: var(--nx-color-border);
+  --nx-text: var(--nx-color-text);
+  --nx-text-muted: var(--nx-color-text-muted);
+  --nx-success: var(--nx-color-positive);
+  --nx-success-subtle: var(--nx-color-positive-bg);
+  --nx-warning: var(--nx-color-warning);
+  --nx-warning-subtle: var(--nx-color-warning-bg);
+  --nx-danger: var(--nx-color-critical);
+  --nx-danger-subtle: var(--nx-color-critical-bg);
   --nx-primary: #0f62fe;
   --nx-primary-hover: #0353e9;
   --nx-primary-active: #002d9c;
