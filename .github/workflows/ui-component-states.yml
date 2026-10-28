@@ -28,14 +28,14 @@ jobs:
       - run: npm ci
       - name: Build isolated React UI story without application route
         run: |
-          mkdir -p test-results/ui-state-harness
+          mkdir -p .ui-state-harness
           npx --yes esbuild@0.25.11 tests/ui/ui-states-harness.tsx \
             --bundle --platform=browser --format=iife --jsx=automatic \
             --loader:.module.css=local-css \
-            --outdir=test-results/ui-state-harness \
+            --outdir=.ui-state-harness \
             --entry-names=bundle
           printf '<!doctype html><html><head><link rel="stylesheet" href="/bundle.css"></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>' \
-            > test-results/ui-state-harness/index.html
+            > .ui-state-harness/index.html
       - run: npx playwright install --with-deps chromium
       - name: Launch component story
         run: |
