@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import styles from "./Navigation.module.css";
+import { UI_MODULE_REGISTRY } from "@/lib/nexus/ui-module-registry";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, type MouseEvent } from "react";
 import { useWorkspaceContext } from "@/components/context/WorkspaceContext";
@@ -24,7 +25,7 @@ const modules: Array<{
     label: "Literature Screening",
     path: "/literature/dashboard",
     moduleKey: "LITERATURE",
-    activePrefixes: ["/literature-search", "/workflow", "/hits", "/screening", "/review", "/reports"],
+    activePrefixes: [...UI_MODULE_REGISTRY.LITERATURE.activePrefixes],
   },
   { label: "Intake", path: "/intake", moduleKey: "INTAKE" },
   { label: "Case Processing", path: "/cases", moduleKey: "CASE_PROCESSING" },
@@ -97,7 +98,7 @@ export default function Navigation() {
   }
 
   return (
-    <div className={styles["shell-header"]} style={pathname === "/hits" ? { marginBottom: "2px" } : undefined}>
+    <div className={styles["shell-header"]}>
       <a className={styles["skip-link"]} href="#main-content">
         Skip to main content
       </a>
@@ -224,7 +225,7 @@ export default function Navigation() {
 
       </nav>
       {switchError ? <p className={styles.error} role="alert">{switchError}</p> : null}
-      {(pathname !== "/hits" || state.status !== "authenticated_ready") && <div className={styles.validation} data-verified={state.status === "authenticated_ready"} role="status">
+      {<div className={styles.validation} data-verified={state.status === "authenticated_ready"} role="status">
         <span aria-hidden="true" />
         {state.status === "authenticated_ready"
           ? "Controlled environment · Tenant, module entitlement and RBAC controls active"
