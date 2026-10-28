@@ -1,4 +1,4 @@
-import {test,expect} from "@playwright/test";
+import {test,expect} from "playwright/test";
 test("Hits live workspace layout",async({page})=>{
   await page.goto("/hits");
   await expect(page.locator("#main-content")).toBeVisible();
