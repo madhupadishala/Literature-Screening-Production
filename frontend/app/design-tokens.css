@@ -1,28 +1,35 @@
 :root {
+  /* Canonical NEXUS token values, Carbon white theme */
   --nx-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --nx-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
   --nx-color-bg: #f4f4f4;
   --nx-color-surface: #ffffff;
   --nx-color-surface-subtle: #f8f8f8;
   --nx-color-surface-muted: #e0e0e0;
   --nx-color-border: #d6d6d6;
   --nx-color-border-strong: #8d8d8d;
-
   --nx-color-text: #161616;
   --nx-color-text-secondary: #525252;
   --nx-color-text-muted: #6f6f6f;
   --nx-color-text-inverse: #ffffff;
-
   --nx-color-interactive: #0f62fe;
   --nx-color-interactive-hover: #0353e9;
+  --nx-color-interactive-active: #002d9c;
+  --nx-color-interactive-subtle: #edf5ff;
+  --nx-color-interactive-disabled: #c6c6c6;
   --nx-color-focus: #0f62fe;
-
+  --nx-focus-width: 2px;
+  --nx-focus-offset: 2px;
   --nx-color-positive: #198038;
+  --nx-color-positive-bg: #defbe6;
   --nx-color-warning: #8e6a00;
+  --nx-color-warning-bg: #fff1c7;
   --nx-color-critical: #da1e28;
+  --nx-color-critical-bg: #fff1f1;
   --nx-color-info: #0043ce;
-
+  --nx-color-info-bg: #edf5ff;
+  --nx-color-neutral-bg: #e0e0e0;
+  --nx-color-overlay: rgb(22 22 22 / 55%);
   --nx-space-1: 2px;
   --nx-space-2: 4px;
   --nx-space-3: 8px;
@@ -30,18 +37,14 @@
   --nx-space-5: 16px;
   --nx-space-6: 24px;
   --nx-space-7: 32px;
-
   --nx-radius-1: 2px;
   --nx-radius-2: 4px;
   --nx-radius-3: 6px;
-
   --nx-control-h-compact: 32px;
   --nx-control-h-default: 40px;
   --nx-table-row-compact: 36px;
   --nx-table-row-default: 44px;
-
-  --nx-shadow-overlay: 0 8px 24px rgba(22, 22, 22, 0.16);
-
+  --nx-shadow-overlay: 0 8px 24px rgb(22 22 22 / 16%);
   --nx-font-size-1: 11px;
   --nx-font-size-2: 12px;
   --nx-font-size-3: 13px;
@@ -49,12 +52,45 @@
   --nx-font-size-5: 16px;
   --nx-font-size-6: 20px;
   --nx-font-size-7: 24px;
-
   --nx-line-tight: 1.2;
   --nx-line-body: 1.45;
+  --nx-motion-fast: 100ms;
+  --nx-motion-default: 150ms;
+  --nx-motion-slow: 240ms;
+  --nx-motion-ease: cubic-bezier(.2, 0, .38, .9);
 }
-
 [data-density="compact"] {
   --nx-control-h-default: 32px;
   --nx-table-row-default: 36px;
+}
+[data-theme="dark"], .nx-theme-dark {
+  color-scheme: dark;
+  --nx-color-bg: #161616;
+  --nx-color-surface: #262626;
+  --nx-color-surface-subtle: #393939;
+  --nx-color-surface-muted: #525252;
+  --nx-color-border: #525252;
+  --nx-color-border-strong: #8d8d8d;
+  --nx-color-text: #f4f4f4;
+  --nx-color-text-secondary: #c6c6c6;
+  --nx-color-text-muted: #a8a8a8;
+  --nx-color-text-inverse: #161616;
+  --nx-color-interactive: #78a9ff;
+  --nx-color-interactive-hover: #a6c8ff;
+  --nx-color-interactive-active: #d0e2ff;
+  --nx-color-interactive-subtle: #002d9c;
+  --nx-color-interactive-disabled: #525252;
+  --nx-color-focus: #ffffff;
+  --nx-color-positive: #42be65;
+  --nx-color-positive-bg: #044317;
+  --nx-color-warning: #f1c21b;
+  --nx-color-warning-bg: #684e00;
+  --nx-color-critical: #ff8389;
+  --nx-color-critical-bg: #750e13;
+  --nx-color-info: #a6c8ff;
+  --nx-color-info-bg: #002d9c;
+  --nx-color-neutral-bg: #525252;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --nx-motion-fast: 0ms; --nx-motion-default: 0ms; --nx-motion-slow: 0ms; }
 }
