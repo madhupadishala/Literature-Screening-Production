@@ -1,0 +1,22 @@
+name: NEXUS UI design integrity
+on:
+  pull_request:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/nexus-ui-design.yml"
+jobs:
+  ui-design:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Design tokens and styled-jsx guard
+        run: node frontend/scripts/verify-ui-design-diff.mjs
+        env:
+          UI_BASE_REF: ${{ github.event.pull_request.base.sha }}
