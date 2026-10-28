@@ -2,34 +2,27 @@
 
 import Link from "next/link";
 import styles from "./Navigation.module.css";
-import { UI_MODULE_REGISTRY } from "@/lib/nexus/ui-module-registry";
+import { UI_MODULE_ORDER, UI_MODULE_REGISTRY, matchesUiPath } from "@/lib/nexus/ui-module-registry";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, type MouseEvent } from "react";
 import { useWorkspaceContext } from "@/components/context/WorkspaceContext";
 import { getSession, saveSession } from "@/lib/session-manager";
 
-type ModuleKey =
-  | "LITERATURE"
-  | "INTAKE"
-  | "CASE_PROCESSING"
-  | "SUBMISSIONS";
-
-const modules: Array<{
+type NavigationModule = {
   label: string;
   path: string;
-  moduleKey?: ModuleKey;
+  moduleKey?: (typeof UI_MODULE_ORDER)[number];
   activePrefixes?: string[];
-}> = [
+};
+
+const modules: NavigationModule[] = [
   { label: "Dashboard", path: "/" },
-  {
-    label: "Literature Screening",
-    path: "/literature/dashboard",
-    moduleKey: "LITERATURE",
-    activePrefixes: [...UI_MODULE_REGISTRY.LITERATURE.activePrefixes],
-  },
-  { label: "Intake", path: "/intake", moduleKey: "INTAKE" },
-  { label: "Case Processing", path: "/cases", moduleKey: "CASE_PROCESSING" },
-  { label: "Submissions", path: "/submissions", moduleKey: "SUBMISSIONS" },
+  ...UI_MODULE_ORDER.map(moduleKey => ({
+    moduleKey,
+    label: UI_MODULE_REGISTRY[moduleKey].label,
+    path: UI_MODULE_REGISTRY[moduleKey].path,
+    activePrefixes: [...UI_MODULE_REGISTRY[moduleKey].activePrefixes],
+  })),
 ];
 
 export default function Navigation() {
@@ -64,11 +57,11 @@ export default function Navigation() {
   }
 
   function isActive(module: (typeof modules)[number]): boolean {
-    if (module.path === "/") return pathname === "/";
+    if (module.path === "/") return matchesUiPath(pathname, "/") && pathname.length === 1;
     const prefixes = [module.path, ...(module.activePrefixes ?? [])];
     if (module.moduleKey === "LITERATURE") prefixes.push("/literature");
     return prefixes.some(
-      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+      (prefix) => matchesUiPath(pathname, prefix),
     );
   }
 
@@ -78,7 +71,7 @@ export default function Navigation() {
 
   const isCaseWorkspace =
     Boolean(pathname) &&
-    pathname !== "/cases" &&
+    pathname.length > "/cases".length &&
     pathname.startsWith("/cases/");
 
   function dispatchUtilityAction(action: string) {
@@ -120,7 +113,7 @@ export default function Navigation() {
             type="button"
             className={styles["utility-action"]}
             onClick={goBack}
-            disabled={pathname === "/"}
+            disabled={pathname.length === 1}
             title="Go back"
           >
             ← <span>Back</span>
