@@ -1,2 +1,2 @@
-import {defineConfig,devices} from "@playwright/test";
+import {defineConfig,devices} from "playwright/test";
 export default defineConfig({testDir:"./tests/ui",testMatch:"*.spec.ts",timeout:30000,use:{baseURL:process.env.PLAYWRIGHT_BASE_URL??"http://127.0.0.1:3000",...devices["Desktop Chrome"]},reporter:"list"});
