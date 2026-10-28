@@ -38,3 +38,37 @@
 .evidence{display:grid;gap:var(--nx-space-3);padding:var(--nx-space-3);border:1px solid var(--nx-color-border)}
 .evidenceAi{border-left:3px solid var(--nx-color-info);padding-left:var(--nx-space-3)}
 .evidenceHuman{border-left:3px solid var(--nx-color-positive);padding-left:var(--nx-space-3)}
+
+.card {
+  border: 1px solid var(--nx-border);
+  background: var(--nx-surface);
+  color: var(--nx-text);
+  padding: var(--nx-space-4);
+  border-radius: var(--nx-radius-2);
+}
+.statePanel {
+  display: grid;
+  gap: var(--nx-space-3);
+  padding: var(--nx-space-5);
+  background: var(--nx-surface);
+  color: var(--nx-text);
+  border: 1px solid var(--nx-border);
+  min-height: 96px;
+}
+.stateHeading {
+  font-weight: 600;
+  font-size: var(--nx-font-size-3);
+}
+.skeleton {
+  height: var(--nx-control-h-compact);
+  border-radius: var(--nx-radius-1);
+  background: var(--nx-color-surface-muted);
+  animation: nx-skeleton-pulse var(--nx-motion-slow) ease-in-out infinite alternate;
+}
+@keyframes nx-skeleton-pulse {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
+.statePanel strong { color: var(--nx-text); }
+.tableViewport[data-readonly="true"] { border-left: 3px solid var(--nx-warning); }
+.tableViewport[data-finalized="true"] { border-left: 3px solid var(--nx-success); }
