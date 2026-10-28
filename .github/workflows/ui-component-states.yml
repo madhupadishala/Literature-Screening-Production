@@ -1,0 +1,55 @@
+name: NEXUS UI component state contract
+
+on:
+  push:
+    branches:
+      - feat/nexus-unified-ui-primitives-20261028
+    paths:
+      - "frontend/components/ui/**"
+      - "frontend/tests/ui/ui-states*"
+      - "frontend/scripts/serve-ui-states.mjs"
+      - ".github/workflows/ui-component-states.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  component-state-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm ci
+      - name: Build isolated React UI story without application route
+        run: |
+          mkdir -p test-results/ui-state-harness
+          npx --yes esbuild@0.25.11 tests/ui/ui-states-harness.tsx \
+            --bundle --platform=browser --format=iife --jsx=automatic \
+            --loader:.module.css=local-css \
+            --outdir=test-results/ui-state-harness \
+            --entry-names=bundle
+          printf '<!doctype html><html><head><link rel="stylesheet" href="/bundle.css"></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>' \
+            > test-results/ui-state-harness/index.html
+      - run: npx playwright install --with-deps chromium
+      - name: Launch component story
+        run: |
+          node scripts/serve-ui-states.mjs > /tmp/ui-harness.log 2>&1 &
+          for attempt in $(seq 1 40); do
+            if curl -sf http://127.0.0.1:3107/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/ui-harness.log
+          exit 1
+      - name: Playwright states and visual difference
+        run: npx playwright test tests/ui/ui-states.spec.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nexus-five-datatable-states
+          path: frontend/test-results/
