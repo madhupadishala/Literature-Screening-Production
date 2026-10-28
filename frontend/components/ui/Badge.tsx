@@ -1,1 +1,16 @@
-import type {ReactNode} from "react";import s from "./primitives.module.css";export function Badge({children,tone="neutral"}:{children:ReactNode;tone?:"neutral"|"success"|"warning"|"danger"|"info"}){return <span className={[s.badge,tone==="neutral"?"":s[tone]].filter(Boolean).join(" ")}>{children}</span>};export default Badge;
+import type { ReactNode } from "react";
+import s from "./primitives.module.css";
+export function Badge({
+  children,
+  tone = "neutral",
+}: {
+  children: ReactNode;
+  tone?: "neutral" | "success" | "warning" | "danger" | "info";
+}) {
+  return (
+    <span className={[s.badge, tone === "neutral" ? "" : s[tone]].filter(Boolean).join(" ")}>
+      {children}
+    </span>
+  );
+}
+export default Badge;

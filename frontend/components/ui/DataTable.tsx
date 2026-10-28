@@ -113,7 +113,7 @@ export function DataTable<T>({
           <table className={styles.table}>
             <thead>
               <tr>
-                {columns.map(column => (
+                {columns.map((column) => (
                   <th key={column.key} scope="col">
                     {column.header}
                   </th>
@@ -121,9 +121,9 @@ export function DataTable<T>({
               </tr>
             </thead>
             <tbody>
-              {rows.map(row => (
+              {rows.map((row) => (
                 <tr key={rowKey(row)}>
-                  {columns.map(column => (
+                  {columns.map((column) => (
                     <td key={column.key}>{column.render(row)}</td>
                   ))}
                 </tr>
