@@ -65,6 +65,18 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  // Baseline exception: both legacy files contained synchronous effect state
+  // transitions at df4a49f. Leave the runtime lease/assignment contract
+  // unchanged; remove this narrow exception during the dedicated hook refactor.
+  {
+    files: [
+      "hooks/useRecordLock.ts",
+      "components/nexus-hits-v2/HitsWorkspace.tsx",
+    ],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
   globalIgnores([
     ".next/**",
     "out/**",
