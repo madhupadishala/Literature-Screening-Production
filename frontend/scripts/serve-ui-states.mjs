@@ -2,7 +2,7 @@ import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const directory = resolve("test-results/ui-state-harness");
+const directory = resolve(".ui-state-harness");
 const types = { ".css": "text/css", ".js": "text/javascript" };
 const server = createServer((request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
