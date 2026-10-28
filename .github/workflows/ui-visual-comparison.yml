@@ -1,0 +1,81 @@
+name: NEXUS six-route visual comparison
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/nexus-unified-ui-primitives-20261028
+    paths:
+      - "frontend/scripts/compare-ui-visuals.mjs"
+      - ".github/workflows/ui-visual-comparison.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Prepare exact-base worktree
+        run: git worktree add --detach ../nexus-base df4a49f
+      - name: Install candidate
+        working-directory: frontend
+        run: npm ci
+      - name: Install baseline
+        working-directory: ../nexus-base/frontend
+        run: npm ci
+      - name: Install Chromium
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+      - name: Boot both builds
+        run: |
+          (cd ../nexus-base/frontend && npm run dev -- --port 3001 > /tmp/nexus-base.log 2>&1) &
+          (cd frontend && npm run dev -- --port 3000 > /tmp/nexus-branch.log 2>&1) &
+          for attempt in $(seq 1 90); do
+            if curl -sf http://127.0.0.1:3000/ >/dev/null && curl -sf http://127.0.0.1:3001/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/nexus-base.log /tmp/nexus-branch.log
+          exit 1
+      - name: Capture route screenshots
+        working-directory: frontend
+        run: node scripts/compare-ui-visuals.mjs
+      - name: Generate visual pixel difference previews
+        if: always()
+        run: |
+          python -m pip install --quiet pillow
+          python - <<'PY'
+          from PIL import Image, ImageChops, ImageStat
+          from pathlib import Path
+          import json
+          root = Path("frontend/test-results/ui-comparison")
+          reports = []
+          for name in ("hits", "screening", "review", "intake", "cases", "submissions"):
+              a, b = root / f"base-{name}.png", root / f"branch-{name}.png"
+              if not a.exists() or not b.exists():
+                  reports.append({"route": name, "status": "missing screenshot"})
+                  continue
+              before, after = Image.open(a).convert("RGBA"), Image.open(b).convert("RGBA")
+              width, height = max(before.width, after.width), max(before.height, after.height)
+              left, right = Image.new("RGBA",(width,height)), Image.new("RGBA",(width,height))
+              left.paste(before,(0,0)); right.paste(after,(0,0))
+              diff = ImageChops.difference(left,right)
+              diff.save(root / f"diff-{name}.png")
+              changed = sum(1 for value in diff.convert("L").getdata() if value > 20)
+              ratio = changed / (width * height)
+              reports.append({"route": name, "pixelChangeRatio": ratio, "needsReview": ratio > 0.1})
+          (root / "visual-diff-report.json").write_text(json.dumps(reports,indent=2))
+          print(json.dumps(reports,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nexus-six-route-visual-comparison
+          path: frontend/test-results/ui-comparison/
+          if-no-files-found: warn
