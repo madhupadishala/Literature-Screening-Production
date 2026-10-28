@@ -1,14 +1,23 @@
 name: NEXUS UI design integrity
+
 on:
+  push:
+    branches:
+      - feat/nexus-unified-ui-primitives-20261028
   pull_request:
     paths:
       - "frontend/**"
       - ".github/workflows/nexus-ui-design.yml"
+
+permissions:
+  contents: read
+
 jobs:
   ui-design:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
         with:
@@ -16,7 +25,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Design tokens and styled-jsx guard
-        run: node frontend/scripts/verify-ui-design-diff.mjs
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: TypeScript check
+        run: npx tsc --noEmit
+      - name: ESLint
+        run: npm run lint
+      - name: Design token and styled-jsx check
+        run: node scripts/verify-ui-design-diff.mjs
         env:
-          UI_BASE_REF: ${{ github.event.pull_request.base.sha }}
+          UI_BASE_REF: origin/main
+      - name: Production build
+        run: npm run build
