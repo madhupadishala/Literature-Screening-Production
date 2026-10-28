@@ -148,7 +148,7 @@ export default function WorkflowTable({
         th,
         td {
           padding: 14px 16px;
-          border-bottom: 1px solid #e8eef5;
+          border-bottom: 1px solid var(--nx-border);
           text-align: left;
           vertical-align: middle;
           font-size: 12px;
@@ -158,8 +158,8 @@ export default function WorkflowTable({
           position: sticky;
           top: 0;
           z-index: 1;
-          color: #64748b;
-          background: #f8fafc;
+          color: var(--nx-text-muted);
+          background: var(--nx-surface);
           font-size: 10px;
           font-weight: 900;
           letter-spacing: 0.055em;
@@ -172,7 +172,7 @@ export default function WorkflowTable({
         }
 
         tbody tr:hover {
-          background: #f8fbff;
+          background: var(--nx-surface);
         }
 
         .package-id {
@@ -196,7 +196,7 @@ export default function WorkflowTable({
         .article-title strong {
           max-width: 330px;
           overflow: hidden;
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: 12px;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -213,7 +213,7 @@ export default function WorkflowTable({
           padding: 6px 9px;
           border-radius: 999px;
           color: #475569;
-          background: #eef2f7;
+          background: var(--nx-surface);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.035em;
@@ -224,7 +224,7 @@ export default function WorkflowTable({
         .status.hits_running,
         .status.screening_running {
           color: #075985;
-          background: #e0f2fe;
+          background: var(--nx-border);
         }
 
         .status.hits_complete {
@@ -236,17 +236,17 @@ export default function WorkflowTable({
         .status.review_ready,
         .status.review_in_progress {
           color: #6b21a8;
-          background: #f3e8ff;
+          background: var(--nx-border);
         }
 
         .status.review_complete {
           color: #0f766e;
-          background: #ccfbf1;
+          background: var(--nx-success-subtle);
         }
 
         .status.intake_input_created {
           color: #166534;
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
         }
 
         .progress {
@@ -254,27 +254,27 @@ export default function WorkflowTable({
           height: 7px;
           overflow: hidden;
           border-radius: 999px;
-          background: #e2e8f0;
+          background: var(--nx-border);
         }
 
         .progress div {
           height: 100%;
           border-radius: inherit;
-          background: linear-gradient(90deg, #1d4ed8, #38bdf8);
+          background: linear-gradient(90deg, var(--nx-primary), #38bdf8);
         }
 
         td small {
           display: inline-block;
           margin-top: 4px;
-          color: #64748b;
+          color: var(--nx-text-muted);
         }
 
         button {
           border: 0;
           border-radius: 10px;
           padding: 8px 11px;
-          color: #ffffff;
-          background: #1d4ed8;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
           font: inherit;
           font-size: 10px;
           font-weight: 900;
@@ -283,7 +283,7 @@ export default function WorkflowTable({
         }
 
         button:hover:not(:disabled) {
-          background: #1e40af;
+          background: var(--nx-primary-active);
         }
 
         button:disabled {
@@ -293,7 +293,7 @@ export default function WorkflowTable({
 
         .empty {
           padding: 36px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           text-align: center;
         }
       `}</style>

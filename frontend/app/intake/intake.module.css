@@ -3,9 +3,9 @@
   justify-content: space-between;
   gap: 24px;
   padding: 24px;
-  border: 1px solid #dbe4ef;
+  border: 1px solid var(--nx-border);
   border-radius: 18px;
-  background: #ffffff;
+  background: var(--nx-surface);
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
 }
 
@@ -14,7 +14,7 @@
 .workspaceHeader h2,
 .sectionHeader h3 {
   margin: 4px 0 0;
-  color: #0f172a;
+  color: var(--nx-text);
   letter-spacing: -0.03em;
 }
 
@@ -26,13 +26,13 @@
 .workspaceHeader p {
   margin: 8px 0 0;
   max-width: 760px;
-  color: #64748b;
+  color: var(--nx-text-muted);
   line-height: 1.6;
   font-size: 13px;
 }
 
 .kicker {
-  color: #2563eb;
+  color: var(--nx-primary);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -45,12 +45,12 @@
   align-content: center;
   padding: 14px 16px;
   border-radius: 14px;
-  background: #f0f7ff;
+  background: var(--nx-surface);
   border: 1px solid #bfdbfe;
 }
 
 .heroStatus span {
-  color: #2563eb;
+  color: var(--nx-primary);
   font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
@@ -71,21 +71,21 @@
 
 .metric {
   padding: 16px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--nx-border);
   border-radius: 15px;
-  background: #ffffff;
+  background: var(--nx-surface);
 }
 
 .metric span {
   display: block;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 11px;
 }
 
 .metric strong {
   display: block;
   margin-top: 6px;
-  color: #0f172a;
+  color: var(--nx-text);
   font-size: 26px;
 }
 
@@ -99,9 +99,9 @@
 
 .worklist,
 .workspace {
-  border: 1px solid #dbe4ef;
+  border: 1px solid var(--nx-border);
   border-radius: 18px;
-  background: #ffffff;
+  background: var(--nx-surface);
   overflow: hidden;
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
 }
@@ -125,17 +125,17 @@
 .panelHeader,
 .workspaceHeader {
   padding: 16px 18px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--nx-border);
 }
 
 .panelHeader button,
 .actionBar button,
 .suggestionFooter button {
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--nx-border);
   border-radius: 9px;
-  background: #ffffff;
+  background: var(--nx-surface);
   padding: 8px 11px;
-  color: #334155;
+  color: var(--nx-text);
   cursor: pointer;
   font-weight: 700;
   font-size: 11px;
@@ -144,23 +144,23 @@
 .panelHeader button:hover,
 .actionBar button:hover,
 .suggestionFooter button:hover {
-  background: #f8fafc;
+  background: var(--nx-surface);
 }
 
 .searchRow {
   padding: 10px 14px;
-  border-bottom: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border-bottom: 1px solid var(--nx-border);
+  background: var(--nx-surface);
 }
 
 .searchRow input,
 .actionBar input {
   width: 100%;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--nx-border);
   border-radius: 9px;
   padding: 9px 10px;
-  background: #ffffff;
-  color: #0f172a;
+  background: var(--nx-surface);
+  color: var(--nx-text);
 }
 
 .tableWrap {
@@ -174,8 +174,8 @@
 
 .tableWrap th {
   padding: 9px 10px;
-  color: #64748b;
-  background: #f8fafc;
+  color: var(--nx-text-muted);
+  background: var(--nx-surface);
   font-size: 9px;
   text-transform: uppercase;
   text-align: left;
@@ -184,7 +184,7 @@
 
 .tableWrap td {
   padding: 11px 10px;
-  border-top: 1px solid #edf2f7;
+  border-top: 1px solid var(--nx-surface);
   font-size: 11px;
   vertical-align: top;
   cursor: pointer;
@@ -197,18 +197,18 @@
 
 .tableWrap td small {
   margin-top: 3px;
-  color: #64748b;
+  color: var(--nx-text-muted);
 }
 
 .tableWrap tr:hover td,
 .selectedRow td {
-  background: #eff6ff;
+  background: var(--nx-surface);
 }
 
 .empty {
   padding: 24px !important;
   text-align: center;
-  color: #64748b;
+  color: var(--nx-text-muted);
 }
 
 .placeholder {
@@ -216,12 +216,12 @@
   display: grid;
   place-content: center;
   text-align: center;
-  color: #64748b;
+  color: var(--nx-text-muted);
   padding: 30px;
 }
 
 .placeholder strong {
-  color: #0f172a;
+  color: var(--nx-text);
   font-size: 18px;
 }
 
@@ -235,14 +235,14 @@
   gap: 10px;
   padding: 12px 18px;
   align-items: end;
-  border-bottom: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border-bottom: 1px solid var(--nx-border);
+  background: var(--nx-surface);
 }
 
 .actionBar label span {
   display: block;
   margin-bottom: 4px;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 9px;
   font-weight: 800;
   text-transform: uppercase;
@@ -259,7 +259,7 @@
 }
 
 .verifyButton {
-  color: #ffffff !important;
+  color: var(--nx-surface) !important;
   background: #166534 !important;
   border-color: #166534 !important;
 }
@@ -269,7 +269,7 @@
   padding: 10px 12px;
   border-radius: 10px;
   color: #1e3a8a;
-  background: #eff6ff;
+  background: var(--nx-surface);
   border: 1px solid #bfdbfe;
   font-size: 11px;
 }
@@ -287,8 +287,8 @@
 }
 
 .sourcePanel {
-  border-right: 1px solid #e2e8f0;
-  background: #fbfdff;
+  border-right: 1px solid var(--nx-border);
+  background: var(--nx-surface);
 }
 
 .sectionHeader {
@@ -309,25 +309,25 @@
 }
 
 .metadata dt {
-  color: #64748b;
+  color: var(--nx-text-muted);
 }
 
 .metadata dd {
   margin: 0;
   overflow-wrap: anywhere;
-  color: #334155;
+  color: var(--nx-text);
 }
 
 .sourceText,
 .entityGroup pre {
   margin: 0;
-  border: 1px solid #dbe4ef;
+  border: 1px solid var(--nx-border);
   border-radius: 12px;
-  background: #ffffff;
+  background: var(--nx-surface);
   padding: 13px;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  color: #334155;
+  color: var(--nx-text);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 10px;
   line-height: 1.65;
@@ -341,14 +341,14 @@
 .note {
   padding: 10px;
   border-radius: 10px;
-  background: #fff7ed;
+  background: var(--nx-danger-subtle);
   color: #9a3412;
   font-size: 11px;
 }
 
 .entityGroup {
   margin-bottom: 12px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--nx-border);
   border-radius: 12px;
   padding: 11px;
 }
@@ -367,8 +367,8 @@
   justify-content: center;
   padding: 3px 7px;
   border-radius: 999px;
-  color: #1d4ed8;
-  background: #dbeafe;
+  color: var(--nx-primary);
+  background: var(--nx-border);
   font-size: 9px;
   font-weight: 800;
 }
@@ -377,7 +377,7 @@
   margin-top: 7px;
   max-height: 170px;
   overflow-y: auto;
-  background: #f8fafc;
+  background: var(--nx-surface);
 }
 
 .entityGroup p {
@@ -388,7 +388,7 @@
 
 .suggestions {
   padding: 18px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--nx-border);
 }
 
 .suggestionGrid {
@@ -399,10 +399,10 @@
 
 .suggestionCard,
 .emptyCard {
-  border: 1px solid #dbe4ef;
+  border: 1px solid var(--nx-border);
   border-radius: 14px;
   padding: 13px;
-  background: #ffffff;
+  background: var(--nx-surface);
 }
 
 .suggestionTop,
@@ -420,7 +420,7 @@
 
 .suggestionTop small {
   margin-top: 2px;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 9px;
 }
 
@@ -428,7 +428,7 @@
   padding: 4px 8px;
   border-radius: 999px;
   color: #1e3a8a;
-  background: #dbeafe;
+  background: var(--nx-border);
   font-size: 10px;
   font-weight: 800;
 }
@@ -437,7 +437,7 @@
   margin: 10px 0;
   padding: 9px 10px;
   border-left: 3px solid #60a5fa;
-  background: #f8fafc;
+  background: var(--nx-surface);
   color: #475569;
   font-size: 10px;
   line-height: 1.5;
@@ -447,11 +447,11 @@
   width: 100%;
   min-height: 120px;
   resize: vertical;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--nx-border);
   border-radius: 9px;
   padding: 10px;
-  background: #0f172a;
-  color: #e2e8f0;
+  background: var(--nx-text);
+  color: var(--nx-border);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 10px;
   line-height: 1.5;
@@ -468,9 +468,9 @@
 }
 
 .rejectButton {
-  color: #b91c1c !important;
+  color: var(--nx-danger) !important;
   border-color: #fecaca !important;
-  background: #fff7f7 !important;
+  background: var(--nx-danger-subtle) !important;
 }
 
 .status {
@@ -484,22 +484,22 @@
 
 .success {
   color: #166534;
-  background: #dcfce7;
+  background: var(--nx-success-subtle);
 }
 
 .warning {
   color: #92400e;
-  background: #fef3c7;
+  background: var(--nx-warning-subtle);
 }
 
 .danger {
   color: #991b1b;
-  background: #fee2e2;
+  background: var(--nx-danger-subtle);
 }
 
 .neutral {
   color: #475569;
-  background: #f1f5f9;
+  background: var(--nx-surface);
 }
 
 .mono {
@@ -507,7 +507,7 @@
 }
 
 .emptyCard {
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 11px;
 }
 
@@ -535,7 +535,7 @@
 
   .sourcePanel {
     border-right: 0;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--nx-border);
   }
 
   .actionBar {
@@ -557,24 +557,24 @@
   padding: 7px 10px;
   border: 1px solid #bfdbfe;
   border-radius: 9px;
-  color: #1d4ed8;
-  background: #eff6ff;
+  color: var(--nx-primary);
+  background: var(--nx-surface);
   font-size: 10px;
   font-weight: 800;
   text-decoration: none;
 }
 
 .sourceLink:hover {
-  background: #dbeafe;
+  background: var(--nx-border);
 }
 
 .sourceFrame {
   width: 100%;
   height: 360px;
   margin-bottom: 12px;
-  border: 1px solid #dbe4ef;
+  border: 1px solid var(--nx-border);
   border-radius: 12px;
-  background: #ffffff;
+  background: var(--nx-surface);
 }
 
 .triageLink {
@@ -582,15 +582,15 @@
   height: 36px;
   align-items: center;
   padding: 0 12px;
-  border: 1px solid #1d4ed8;
+  border: 1px solid var(--nx-primary);
   border-radius: 9px;
-  color: #ffffff;
-  background: #1d4ed8;
+  color: var(--nx-surface);
+  background: var(--nx-primary);
   font-size: 11px;
   font-weight: 800;
   text-decoration: none;
 }
 
 .triageLink:hover {
-  background: #1e40af;
+  background: var(--nx-primary-active);
 }

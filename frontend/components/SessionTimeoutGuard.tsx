@@ -169,8 +169,8 @@ const styles = `
     position: fixed;
     right: 24px;
     bottom: 24px;
-    background: #0f172a;
-    color: #ffffff;
+    background: var(--nx-text);
+    color: var(--nx-surface);
     border-radius: 18px;
     padding: 16px;
     box-shadow: 0 18px 45px rgba(15, 23, 42, 0.32);
@@ -181,7 +181,7 @@ const styles = `
   }
 
   .session-warning span {
-    color: #cbd5e1;
+    color: var(--nx-border);
     font-size: 13px;
   }
 
@@ -189,14 +189,14 @@ const styles = `
     border: none;
     border-radius: 12px;
     background: #185a9d;
-    color: #ffffff;
+    color: var(--nx-surface);
     padding: 11px 14px;
     font-weight: 800;
     cursor: pointer;
   }
 
   button.secondary {
-    background: #e2e8f0;
-    color: #334155;
+    background: var(--nx-border);
+    color: var(--nx-text);
   }
 `;

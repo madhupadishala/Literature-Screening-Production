@@ -21,12 +21,12 @@ function page(title: string, body: string, status = 200): Response {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title>
 <style>
-body{font-family:Arial,sans-serif;background:#0b2740;color:#102a43;margin:0;padding:24px}
-main{max-width:680px;margin:7vh auto;background:#fff;border-radius:20px;padding:28px;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+body{font-family:Arial,sans-serif;background:var(--nx-text);color:var(--nx-text);margin:0;padding:24px}
+main{max-width:680px;margin:7vh auto;background:var(--nx-surface);border-radius:20px;padding:28px;box-shadow:0 12px 40px rgba(0,0,0,.2)}
 h1{margin:0 0 16px;font-size:28px}p{line-height:1.5}
-code{display:block;padding:12px;border-radius:10px;background:#f3f6f9;font-size:15px;word-break:break-all;margin:8px 0}
-button{width:100%;margin-top:18px;border:0;border-radius:12px;padding:14px 18px;background:#185a9d;color:#fff;font-weight:800;font-size:16px}
-.note{font-size:13px;color:#5c6773}
+code{display:block;padding:12px;border-radius:10px;background:var(--nx-surface);font-size:15px;word-break:break-all;margin:8px 0}
+button{width:100%;margin-top:18px;border:0;border-radius:12px;padding:14px 18px;background:#185a9d;color:var(--nx-surface);font-weight:800;font-size:16px}
+.note{font-size:13px;color:var(--nx-text-muted)}
 .ok{color:#166534}.bad{color:#991b1b}
 </style>
 </head>

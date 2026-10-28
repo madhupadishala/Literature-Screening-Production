@@ -91,8 +91,8 @@ export default function AuditLogsPage() {
         .app-shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
-          background: #eef2f7;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-family: "Poppins", Arial, sans-serif;
         }
         .workspace {
@@ -105,7 +105,7 @@ export default function AuditLogsPage() {
           border: 1px solid #fecaca;
           border-radius: 8px;
           color: #991b1b;
-          background: #fef2f2;
+          background: var(--nx-danger-subtle);
           font-size: 12px;
           font-weight: 700;
         }

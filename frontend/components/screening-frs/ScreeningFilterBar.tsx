@@ -91,16 +91,16 @@ export default function ScreeningFilterBar({value,onChange,loadedCount,matchingC
     </div>}
     <small className="nxs-data-limit">{limitations}</small>
     <style jsx>{`
-      .nxs-filter{border:1px solid #c6c6c6;background:#fff;margin:4px 0}
+      .nxs-filter{border:1px solid var(--nx-border);background:var(--nx-surface);margin:4px 0}
       .nxs-filter-bar{display:flex;gap:10px;align-items:center;min-height:37px;padding:4px 8px}
-      .nxs-filter-bar button{border:1px solid #8d8d8d;background:#fff;color:#161616;font-size:11px;padding:5px 10px;cursor:pointer}
-      .nxs-filter-bar .nxs-filter-trigger{background:#0f62fe;color:white;border-color:#0f62fe;font-weight:700}
-      .nxs-filter-summary{flex:1;font-size:11px;color:#525252}
-      .nxs-filter-fields{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:10px;border-top:1px solid #e0e0e0}
-      .nxs-filter-fields label{display:flex;flex-direction:column;gap:3px;font-size:10px;color:#525252;font-weight:700}
-      .nxs-filter-fields input{width:100%;min-width:0;background:#f4f4f4;border:0;border-bottom:1px solid #8d8d8d;border-radius:0;padding:7px;font:inherit;font-weight:400;color:#161616}
-      .nxs-filter-help{grid-column:1/-1;color:#525252;font-size:10px;margin:0}
-      .nxs-data-limit{display:block;color:#6f6f6f;padding:0 8px 4px;font-size:9px}
+      .nxs-filter-bar button{border:1px solid var(--nx-text-muted);background:var(--nx-surface);color:var(--nx-text);font-size:11px;padding:5px 10px;cursor:pointer}
+      .nxs-filter-bar .nxs-filter-trigger{background:var(--nx-primary);color:white;border-color:var(--nx-primary);font-weight:700}
+      .nxs-filter-summary{flex:1;font-size:11px;color:var(--nx-text-muted)}
+      .nxs-filter-fields{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:10px;border-top:1px solid var(--nx-border)}
+      .nxs-filter-fields label{display:flex;flex-direction:column;gap:3px;font-size:10px;color:var(--nx-text-muted);font-weight:700}
+      .nxs-filter-fields input{width:100%;min-width:0;background:var(--nx-bg);border:0;border-bottom:1px solid var(--nx-text-muted);border-radius:0;padding:7px;font:inherit;font-weight:400;color:var(--nx-text)}
+      .nxs-filter-help{grid-column:1/-1;color:var(--nx-text-muted);font-size:10px;margin:0}
+      .nxs-data-limit{display:block;color:var(--nx-text-muted);padding:0 8px 4px;font-size:9px}
       @media(max-width:900px){.nxs-filter-fields{grid-template-columns:repeat(3,minmax(0,1fr))}}
       @media(max-width:540px){.nxs-filter-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
     `}</style>

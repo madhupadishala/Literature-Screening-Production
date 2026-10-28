@@ -689,9 +689,9 @@ export default function AdHocSearchWorkspace({
         .search-panel,
         .history-panel,
         .results-panel {
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 4px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
         }
 
@@ -702,8 +702,8 @@ export default function AdHocSearchWorkspace({
           align-items: flex-start;
           gap: 18px;
           padding: 16px 18px;
-          border-bottom: 1px solid #dbe4ef;
-          background: #f8fafc;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
 
         .panel-title.compact {
@@ -712,7 +712,7 @@ export default function AdHocSearchWorkspace({
 
         .panel-title span,
         .results-command span {
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 8px;
           font-weight: 900;
           letter-spacing: 0.07em;
@@ -721,14 +721,14 @@ export default function AdHocSearchWorkspace({
 
         h2 {
           margin: 3px 0;
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: 17px;
         }
 
         .panel-title p,
         .results-command p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 10px;
           line-height: 1.5;
         }
@@ -744,17 +744,17 @@ export default function AdHocSearchWorkspace({
           border: 1px solid #94a3b8;
           border-radius: 3px;
           padding: 8px 12px;
-          color: #334155;
-          background: #ffffff;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-size: 9px;
           font-weight: 800;
           cursor: pointer;
         }
 
         button.primary {
-          border-color: #185abd;
-          color: #ffffff;
-          background: #185abd;
+          border-color: var(--nx-primary);
+          color: var(--nx-surface);
+          background: var(--nx-primary);
         }
 
         button:disabled {
@@ -791,11 +791,11 @@ export default function AdHocSearchWorkspace({
         select {
           width: 100%;
           box-sizing: border-box;
-          border: 1px solid #b8c4d3;
+          border: 1px solid var(--nx-border);
           border-radius: 3px;
           padding: 9px 10px;
-          color: #0f172a;
-          background: #ffffff;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-size: 10px;
           outline: none;
         }
@@ -806,23 +806,23 @@ export default function AdHocSearchWorkspace({
         }
 
         .purpose-field small {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
           line-height: 1.5;
         }
 
         input:focus,
         textarea:focus {
-          border-color: #185abd;
+          border-color: var(--nx-primary);
           box-shadow: 0 0 0 2px rgba(24, 90, 189, 0.1);
         }
 
         .database-section {
           margin: 0 18px 17px;
           padding: 14px;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 3px;
-          background: #f8fafc;
+          background: var(--nx-surface);
         }
 
         .database-section > div:first-child {
@@ -835,7 +835,7 @@ export default function AdHocSearchWorkspace({
         }
 
         .database-section small {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
           line-height: 1.45;
         }
@@ -852,9 +852,9 @@ export default function AdHocSearchWorkspace({
           align-items: center;
           gap: 8px;
           padding: 10px;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 3px;
-          background: #ffffff;
+          background: var(--nx-surface);
           cursor: pointer;
         }
 
@@ -875,7 +875,7 @@ export default function AdHocSearchWorkspace({
         }
 
         .source-grid strong {
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: 9px;
         }
 
@@ -888,12 +888,12 @@ export default function AdHocSearchWorkspace({
           justify-content: space-between;
           align-items: center;
           padding: 12px 18px;
-          border-top: 1px solid #dbe4ef;
-          background: #f8fafc;
+          border-top: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
 
         .command-row span {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
         }
 
@@ -905,7 +905,7 @@ export default function AdHocSearchWorkspace({
 
         .history-list article {
           padding: 12px 14px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
         }
 
         .history-list strong,
@@ -915,13 +915,13 @@ export default function AdHocSearchWorkspace({
         }
 
         .history-list strong {
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: 9px;
         }
 
         .history-list span {
           margin-top: 4px;
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 7px;
           font-weight: 900;
           text-transform: uppercase;
@@ -949,7 +949,7 @@ export default function AdHocSearchWorkspace({
           border: 1px solid #93c5fd;
           border-radius: 3px;
           color: #1e3a8a;
-          background: #eff6ff;
+          background: var(--nx-surface);
           font-size: 9px;
           font-weight: 700;
         }
@@ -969,7 +969,7 @@ export default function AdHocSearchWorkspace({
           padding: 10px 16px;
           border-bottom: 1px solid #fecaca;
           color: #991b1b;
-          background: #fef2f2;
+          background: var(--nx-danger-subtle);
           font-size: 9px;
         }
 
@@ -979,9 +979,9 @@ export default function AdHocSearchWorkspace({
 
         .translated-queries {
           padding: 10px 16px;
-          border-bottom: 1px solid #dbe4ef;
-          color: #334155;
-          background: #f8fafc;
+          border-bottom: 1px solid var(--nx-border);
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-size: 9px;
         }
 
@@ -999,7 +999,7 @@ export default function AdHocSearchWorkspace({
 
         .translated-queries code {
           overflow-x: auto;
-          color: #0f172a;
+          color: var(--nx-text);
           white-space: pre-wrap;
         }
 
@@ -1016,7 +1016,7 @@ export default function AdHocSearchWorkspace({
         th,
         td {
           padding: 10px 11px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
           text-align: left;
           vertical-align: top;
           font-size: 8px;
@@ -1024,7 +1024,7 @@ export default function AdHocSearchWorkspace({
 
         th {
           color: #475569;
-          background: #f8fafc;
+          background: var(--nx-surface);
           font-size: 7px;
           font-weight: 900;
           letter-spacing: 0.045em;
@@ -1042,7 +1042,7 @@ export default function AdHocSearchWorkspace({
 
         td small {
           margin-top: 4px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           line-height: 1.45;
         }
 
@@ -1065,17 +1065,17 @@ export default function AdHocSearchWorkspace({
         }
 
         .source-badge {
-          color: #1e40af;
-          background: #dbeafe;
+          color: var(--nx-primary-active);
+          background: var(--nx-border);
         }
 
         .duplicate-badge {
           color: #92400e;
-          background: #fef3c7;
+          background: var(--nx-warning-subtle);
         }
 
         td a {
-          color: #185abd;
+          color: var(--nx-primary);
           font-weight: 800;
         }
 

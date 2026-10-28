@@ -72,4 +72,4 @@
   }
 }
 
-.compact .actions button { height:32px; padding:0 10px; border:1px solid #cbd5e1; border-radius:3px; background:#fff; color:#334155; font:500 12px var(--nx-font-sans); cursor:pointer; }
+.compact .actions button { height:32px; padding:0 10px; border:1px solid var(--nx-border); border-radius:3px; background:var(--nx-surface); color:var(--nx-text); font:500 12px var(--nx-font-sans); cursor:pointer; }

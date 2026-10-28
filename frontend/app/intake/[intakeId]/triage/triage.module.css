@@ -3,29 +3,29 @@
   justify-content: space-between;
   gap: 24px;
   padding: 24px;
-  border: 1px solid #dbe4ef;
+  border: 1px solid var(--nx-border);
   border-radius: 18px;
-  background: #fff;
+  background: var(--nx-surface);
 }
 
 .hero h1,
 .panel h2,
 .history h2 {
   margin: 4px 0 0;
-  color: #0f172a;
+  color: var(--nx-text);
   letter-spacing: -0.03em;
 }
 
 .hero p {
   max-width: 760px;
   margin: 8px 0 0;
-  color: #64748b;
+  color: var(--nx-text-muted);
   line-height: 1.6;
   font-size: 13px;
 }
 
 .kicker {
-  color: #2563eb;
+  color: var(--nx-primary);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -41,10 +41,10 @@
 .actions a,
 .actions button {
   padding: 9px 12px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--nx-border);
   border-radius: 9px;
-  background: #fff;
-  color: #334155;
+  background: var(--nx-surface);
+  color: var(--nx-text);
   text-decoration: none;
   font-size: 11px;
   font-weight: 800;
@@ -61,13 +61,13 @@
 
 .message {
   color: #1e3a8a;
-  background: #eff6ff;
+  background: var(--nx-surface);
   border: 1px solid #bfdbfe;
 }
 
 .blocker {
   color: #9a3412;
-  background: #fff7ed;
+  background: var(--nx-danger-subtle);
   border: 1px solid #fed7aa;
 }
 
@@ -80,14 +80,14 @@
 
 .summary div {
   padding: 13px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--nx-border);
   border-radius: 13px;
-  background: #fff;
+  background: var(--nx-surface);
 }
 
 .summary span {
   display: block;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 9px;
   text-transform: uppercase;
 }
@@ -95,7 +95,7 @@
 .summary strong {
   display: block;
   margin-top: 5px;
-  color: #0f172a;
+  color: var(--nx-text);
   font-size: 11px;
 }
 
@@ -109,9 +109,9 @@
 .panel,
 .history {
   padding: 18px;
-  border: 1px solid #dbe4ef;
+  border: 1px solid var(--nx-border);
   border-radius: 18px;
-  background: #fff;
+  background: var(--nx-surface);
 }
 
 .panelHeader {
@@ -133,17 +133,17 @@
 
 .goodBadge {
   color: #166534;
-  background: #dcfce7;
+  background: var(--nx-success-subtle);
 }
 
 .warnBadge {
   color: #92400e;
-  background: #fef3c7;
+  background: var(--nx-warning-subtle);
 }
 
 .systemNote {
   color: #1e3a8a;
-  background: #dbeafe;
+  background: var(--nx-border);
 }
 
 .criteria {
@@ -153,9 +153,9 @@
 
 .criterion {
   padding: 11px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--nx-border);
   border-radius: 12px;
-  background: #fbfdff;
+  background: var(--nx-surface);
 }
 
 .criterionTop {
@@ -172,7 +172,7 @@
 .criterion ul {
   margin: 8px 0;
   padding-left: 18px;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 10px;
 }
 
@@ -181,11 +181,11 @@
   width: 100%;
   min-height: 68px;
   resize: vertical;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--nx-border);
   border-radius: 8px;
   padding: 8px;
-  color: #334155;
-  background: #fff;
+  color: var(--nx-text);
+  background: var(--nx-surface);
 }
 
 .field {
@@ -195,7 +195,7 @@
 }
 
 .field > span {
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 9px;
   font-weight: 800;
   text-transform: uppercase;
@@ -203,11 +203,11 @@
 
 .field select,
 .criterion select {
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--nx-border);
   border-radius: 8px;
   padding: 8px;
-  background: #fff;
-  color: #0f172a;
+  background: var(--nx-surface);
+  color: var(--nx-text);
 }
 
 .checks {
@@ -222,14 +222,14 @@
   gap: 8px;
   align-items: start;
   padding: 8px;
-  border: 1px solid #edf2f7;
+  border: 1px solid var(--nx-surface);
   border-radius: 9px;
   font-size: 10px;
 }
 
 .checks small {
   grid-column: 2;
-  color: #64748b;
+  color: var(--nx-text-muted);
   line-height: 1.45;
 }
 
@@ -244,11 +244,11 @@
   padding: 11px;
   border: 1px solid #bfdbfe;
   border-radius: 10px;
-  background: #eff6ff;
+  background: var(--nx-surface);
 }
 
 .outcome span {
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 9px;
   text-transform: uppercase;
 }
@@ -264,7 +264,7 @@
   padding: 11px 14px;
   border: 0;
   border-radius: 10px;
-  color: #fff;
+  color: var(--nx-surface);
   background: #166534;
   font-weight: 800;
   cursor: pointer;
@@ -284,8 +284,8 @@
   overflow: auto;
   padding: 12px;
   border-radius: 12px;
-  color: #e2e8f0;
-  background: #0f172a;
+  color: var(--nx-border);
+  background: var(--nx-text);
   font-size: 10px;
   white-space: pre-wrap;
 }

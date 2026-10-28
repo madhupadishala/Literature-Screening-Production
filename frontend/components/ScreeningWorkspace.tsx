@@ -112,7 +112,7 @@ export default function ScreeningWorkspace({
   return (
     <div className="drawer-backdrop" role="presentation">
       <aside className="review-drawer" aria-label="Screening review workspace">
-      {readOnly&&<div role="status" style={{background:"#fff2cf",color:"#5c4600",padding:"9px 14px",fontSize:12}}>{lockMessage||"Read-only: locked by another reviewer or lease unavailable."}</div>}
+      {readOnly&&<div role="status" style={{background:"var(--nx-warning-subtle)",color:"#5c4600",padding:"9px 14px",fontSize:12}}>{lockMessage||"Read-only: locked by another reviewer or lease unavailable."}</div>}
 
         <header className="drawer-header">
           <div>
@@ -422,8 +422,8 @@ export default function ScreeningWorkspace({
           width: min(820px, 95vw);
           height: 100%;
           flex-direction: column;
-          color: #0f172a;
-          background: #f8fafc;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           box-shadow: -24px 0 70px rgba(15, 23, 42, 0.24);
           font-family: "Poppins", Arial, sans-serif;
         }
@@ -433,10 +433,10 @@ export default function ScreeningWorkspace({
           justify-content: space-between;
           gap: 20px;
           padding: 24px 26px;
-          color: #ffffff;
+          color: var(--nx-surface);
           background:
             radial-gradient(circle at 90% 0%, rgba(56, 189, 248, 0.22), transparent 30%),
-            linear-gradient(135deg, #0f172a, #1d4ed8);
+            linear-gradient(135deg, var(--nx-text), var(--nx-primary));
         }
 
         .eyebrow {
@@ -454,7 +454,7 @@ export default function ScreeningWorkspace({
 
         .drawer-header p {
           margin: 0;
-          color: #dbeafe;
+          color: var(--nx-border);
           font-size: 12px;
         }
 
@@ -465,7 +465,7 @@ export default function ScreeningWorkspace({
           place-items: center;
           border: 1px solid rgba(255, 255, 255, 0.18);
           border-radius: 12px;
-          color: #ffffff;
+          color: var(--nx-surface);
           background: rgba(255, 255, 255, 0.08);
           font-size: 24px;
           cursor: pointer;
@@ -475,7 +475,7 @@ export default function ScreeningWorkspace({
           padding: 11px 26px;
           border-bottom: 1px solid #bae6fd;
           color: #075985;
-          background: #f0f9ff;
+          background: var(--nx-surface);
           font-size: 11px;
           line-height: 1.5;
         }
@@ -485,8 +485,8 @@ export default function ScreeningWorkspace({
           gap: 7px;
           padding: 10px 18px;
           overflow-x: auto;
-          border-bottom: 1px solid #e2e8f0;
-          background: #ffffff;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
 
         .tabs button {
@@ -503,8 +503,8 @@ export default function ScreeningWorkspace({
         }
 
         .tabs button.active {
-          color: #ffffff;
-          background: #1d4ed8;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
         }
 
         .drawer-body {
@@ -520,17 +520,17 @@ export default function ScreeningWorkspace({
           justify-content: flex-end;
           gap: 8px;
           padding: 14px 18px;
-          border-top: 1px solid #dbe4ef;
+          border-top: 1px solid var(--nx-border);
           background: rgba(255, 255, 255, 0.98);
           box-shadow: 0 -10px 25px rgba(15, 23, 42, 0.06);
         }
 
         .actions button {
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 10px;
           padding: 10px 12px;
-          color: #334155;
-          background: #ffffff;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font: inherit;
           font-size: 10px;
           font-weight: 900;
@@ -538,9 +538,9 @@ export default function ScreeningWorkspace({
         }
 
         .actions .primary-action {
-          border-color: #1d4ed8;
-          color: #ffffff;
-          background: #1d4ed8;
+          border-color: var(--nx-primary);
+          color: var(--nx-surface);
+          background: var(--nx-primary);
         }
 
         @media (max-width: 680px) {
@@ -566,9 +566,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
       <style jsx>{`
         .review-section {
           padding: 20px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 17px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
         }
 
@@ -593,15 +593,15 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
         :global(.evidence) {
           padding: 14px;
-          border: 1px solid #dbeafe;
+          border: 1px solid var(--nx-border);
           border-radius: 12px;
-          background: #f8fbff;
+          background: var(--nx-surface);
         }
 
         :global(.evidence span) {
           display: block;
           margin-bottom: 6px;
-          color: #1d4ed8;
+          color: var(--nx-primary);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.055em;
@@ -619,7 +619,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
         :global(.support-note) {
           padding: 13px;
           border-left: 3px solid #38bdf8;
-          background: #f0f9ff;
+          background: var(--nx-surface);
         }
 
         :global(.flag-list) {
@@ -633,7 +633,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
           border: 1px solid #fde68a;
           border-radius: 999px;
           color: #92400e;
-          background: #fffbeb;
+          background: var(--nx-surface);
           font-size: 10px;
           font-weight: 800;
         }
@@ -645,9 +645,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
         :global(.audit-list article) {
           padding: 13px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 12px;
-          background: #f8fafc;
+          background: var(--nx-surface);
         }
 
         :global(.audit-list strong),
@@ -658,7 +658,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
         :global(.audit-list span),
         :global(.audit-list small) {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 10px;
         }
 
@@ -687,15 +687,15 @@ function Row({ label, value }: { label: string; value?: string | null }) {
         .detail-row {
           min-height: 72px;
           padding: 13px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 12px;
-          background: #fbfdff;
+          background: var(--nx-surface);
         }
 
         span {
           display: block;
           margin-bottom: 6px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.045em;
@@ -704,7 +704,7 @@ function Row({ label, value }: { label: string; value?: string | null }) {
 
         strong {
           display: block;
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: 11px;
           line-height: 1.5;
           word-break: break-word;
@@ -778,12 +778,12 @@ function ReasonModal({
           width: min(500px, 100%);
           padding: 24px;
           border-radius: 19px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 28px 80px rgba(15, 23, 42, 0.28);
         }
 
         .reason-modal > span {
-          color: #1d4ed8;
+          color: var(--nx-primary);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.06em;
@@ -797,7 +797,7 @@ function ReasonModal({
 
         p {
           margin: 0 0 14px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 11px;
           line-height: 1.6;
         }
@@ -807,7 +807,7 @@ function ReasonModal({
           min-height: 118px;
           resize: vertical;
           padding: 12px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 12px;
           outline: none;
           font: inherit;
@@ -816,13 +816,13 @@ function ReasonModal({
         }
 
         textarea:focus {
-          border-color: #1d4ed8;
+          border-color: var(--nx-primary);
           box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
         }
 
         .reason-error {
           margin: 8px 0 0;
-          color: #b91c1c;
+          color: var(--nx-danger);
           font-size: 10px;
           font-weight: 700;
         }
@@ -835,10 +835,10 @@ function ReasonModal({
         }
 
         button {
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 10px;
           padding: 10px 13px;
-          background: #ffffff;
+          background: var(--nx-surface);
           font: inherit;
           font-size: 10px;
           font-weight: 900;
@@ -846,9 +846,9 @@ function ReasonModal({
         }
 
         .primary-action {
-          border-color: #1d4ed8;
-          color: #ffffff;
-          background: #1d4ed8;
+          border-color: var(--nx-primary);
+          color: var(--nx-surface);
+          background: var(--nx-primary);
         }
 
         .primary-action:disabled {

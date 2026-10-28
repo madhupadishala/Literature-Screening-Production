@@ -30,8 +30,8 @@ export default function ProductsPage() {
         .app-shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
-          background: #eef2f7;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 
@@ -45,7 +45,7 @@ export default function ProductsPage() {
           border: 1px solid #bae6fd;
           border-radius: 6px;
           color: #075985;
-          background: #f0f9ff;
+          background: var(--nx-surface);
           font-size: 11px;
         }
 
@@ -58,8 +58,8 @@ export default function ProductsPage() {
         .boundary a {
           padding: 8px 10px;
           border-radius: 5px;
-          color: #ffffff;
-          background: #185abd;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
           font-weight: 800;
           text-decoration: none;
           white-space: nowrap;

@@ -576,7 +576,7 @@ export default function HitsReviewPage() {
                 <tr>
                   <td
                     colSpan={9}
-                    style={{ textAlign: "center", color: "#64748b", padding: "40px 14px" }}
+                    style={{ textAlign: "center", color: "var(--nx-text-muted)", padding: "40px 14px" }}
                   >
                     No pending items match this operational queue filter condition.
                   </td>
@@ -789,15 +789,15 @@ export default function HitsReviewPage() {
         .app-shell {
           min-height: 100vh;
           padding: 16px 20px 28px;
-          background: #f4f4f4;
-          color: #161616;
+          background: var(--nx-bg);
+          color: var(--nx-text);
           font-family: Arial, Helvetica, sans-serif;
         }
 
         .enterprise-search-shell {
           margin: 14px 0 0;
-          border: 1px solid #d6d9de;
-          background: #ffffff;
+          border: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
         .enterprise-search-shell > summary {
           display: flex;
@@ -808,62 +808,62 @@ export default function HitsReviewPage() {
           padding: 8px 12px;
           cursor: pointer;
           list-style: none;
-          background: #f4f4f4;
-          border-bottom: 1px solid #d6d9de;
-          color: #161616;
+          background: var(--nx-bg);
+          border-bottom: 1px solid var(--nx-border);
+          color: var(--nx-text);
         }
         .enterprise-search-shell > summary::-webkit-details-marker { display: none; }
         .enterprise-search-shell > summary div { display: grid; gap: 1px; }
         .enterprise-search-shell > summary span {
-          color: #6f6f6f;
+          color: var(--nx-text-muted);
           font-size: 9px;
           font-weight: 600;
           letter-spacing: .08em;
           text-transform: uppercase;
         }
         .enterprise-search-shell > summary strong { font-size: 13px; font-weight: 600; }
-        .enterprise-search-shell > summary small { margin: 0; font-size: 10px; color: #6f6f6f; }
+        .enterprise-search-shell > summary small { margin: 0; font-size: 10px; color: var(--nx-text-muted); }
         .enterprise-search-shell > summary em {
           font-style: normal;
           font-size: 11px;
-          color: #0f62fe;
+          color: var(--nx-primary);
           white-space: nowrap;
         }
-        .enterprise-search-body { padding: 12px; background: #ffffff; }
+        .enterprise-search-body { padding: 12px; background: var(--nx-surface); }
 
         .tab-navigation {
           display: flex;
           gap: 0;
           margin: 14px 0 0;
           overflow-x: auto;
-          border: 1px solid #d6d9de;
+          border: 1px solid var(--nx-border);
           border-bottom: 0;
-          background: #ffffff;
+          background: var(--nx-surface);
         }
         .tab-navigation button {
           min-height: 36px;
           padding: 0 14px;
           border: 0;
-          border-right: 1px solid #e0e0e0;
+          border-right: 1px solid var(--nx-border);
           border-bottom: 2px solid transparent;
-          background: #ffffff;
-          color: #525252;
+          background: var(--nx-surface);
+          color: var(--nx-text-muted);
           cursor: pointer;
           font-size: 12px;
           font-weight: 600;
           white-space: nowrap;
         }
-        .tab-navigation button:hover { background: #f4f4f4; color: #161616; }
+        .tab-navigation button:hover { background: var(--nx-bg); color: var(--nx-text); }
         .tab-navigation button.active {
-          border-bottom-color: #0f62fe;
-          background: #f4f4f4;
-          color: #161616;
+          border-bottom-color: var(--nx-primary);
+          background: var(--nx-bg);
+          color: var(--nx-text);
         }
 
         .panel {
           overflow: hidden;
-          border: 1px solid #d6d9de;
-          background: #ffffff;
+          border: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
         .panel-header {
           display: flex;
@@ -872,13 +872,13 @@ export default function HitsReviewPage() {
           gap: 16px;
           min-height: 56px;
           padding: 10px 12px;
-          border-bottom: 1px solid #d6d9de;
-          background: #ffffff;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
         .panel-header h2,
         .review-header h2 { margin: 0 0 2px; font-size: 15px; font-weight: 600; }
         .panel-header p,
-        .review-header p { margin: 0; color: #6f6f6f; font-size: 11px; }
+        .review-header p { margin: 0; color: var(--nx-text-muted); font-size: 11px; }
         .panel-actions {
           display: flex;
           align-items: center;
@@ -889,31 +889,31 @@ export default function HitsReviewPage() {
           min-width: 300px;
           height: 34px;
           padding: 0 10px;
-          border: 1px solid #8d8d8d;
+          border: 1px solid var(--nx-text-muted);
           border-radius: 0;
-          background: #f4f4f4;
-          color: #161616;
+          background: var(--nx-bg);
+          color: var(--nx-text);
           outline: none;
           font-size: 12px;
         }
-        .search-input:focus { outline: 2px solid #0f62fe; outline-offset: -2px; }
+        .search-input:focus { outline: 2px solid var(--nx-primary); outline-offset: -2px; }
         .panel-actions button,
         .review-button,
         .close-panel-btn {
           min-height: 34px;
           padding: 0 12px;
-          border: 1px solid #0f62fe;
+          border: 1px solid var(--nx-primary);
           border-radius: 0;
-          background: #0f62fe;
-          color: #ffffff;
+          background: var(--nx-primary);
+          color: var(--nx-surface);
           cursor: pointer;
           font-size: 11px;
           font-weight: 600;
         }
         .panel-actions button:hover,
         .review-button:hover,
-        .close-panel-btn:hover { background: #0353e9; }
-        .panel-actions button:disabled { border-color: #c6c6c6; background: #c6c6c6; cursor: not-allowed; }
+        .close-panel-btn:hover { background: var(--nx-primary-hover); }
+        .panel-actions button:disabled { border-color: var(--nx-border); background: var(--nx-border); cursor: not-allowed; }
 
         .table-wrap { overflow: auto; max-height: calc(100vh - 360px); }
         .hits-table {
@@ -926,9 +926,9 @@ export default function HitsReviewPage() {
         .hits-table th {
           height: 34px;
           padding: 0 10px;
-          border-bottom: 1px solid #8d8d8d;
-          background: #e0e0e0;
-          color: #393939;
+          border-bottom: 1px solid var(--nx-text-muted);
+          background: var(--nx-border);
+          color: var(--nx-text-muted);
           font-size: 10px;
           font-weight: 600;
           letter-spacing: .02em;
@@ -937,27 +937,27 @@ export default function HitsReviewPage() {
           white-space: nowrap;
         }
         .hits-table th.sortable { cursor: pointer; user-select: none; }
-        .hits-table th.sortable:hover { background: #d6d6d6; color: #161616; }
+        .hits-table th.sortable:hover { background: var(--nx-border); color: var(--nx-text); }
         .hits-table td {
           height: 40px;
           padding: 5px 10px;
-          border-bottom: 1px solid #e0e0e0;
+          border-bottom: 1px solid var(--nx-border);
           vertical-align: middle;
           font-size: 12px;
         }
-        .hits-table tbody tr:hover { background: #f4f4f4; }
+        .hits-table tbody tr:hover { background: var(--nx-bg); }
         .hits-table tr.row-selected {
-          background: #edf5ff;
-          box-shadow: inset 3px 0 #0f62fe;
+          background: var(--nx-surface);
+          box-shadow: inset 3px 0 var(--nx-primary);
         }
         .hits-table td strong { font-weight: 600; }
         .mono {
-          color: #0043ce;
+          color: var(--nx-primary);
           font-family: Consolas, Monaco, monospace;
           font-size: 11px;
           font-weight: 600;
         }
-        small { display: block; margin-top: 1px; color: #6f6f6f; font-size: 10px; }
+        small { display: block; margin-top: 1px; color: var(--nx-text-muted); font-size: 10px; }
 
         .qc-badge,
         .confidence-pill,
@@ -974,14 +974,14 @@ export default function HitsReviewPage() {
           letter-spacing: .02em;
           text-transform: uppercase;
         }
-        .qc-badge.success { background: #defbe6; color: #0e6027; }
+        .qc-badge.success { background: var(--nx-success-subtle); color: #0e6027; }
         .qc-badge.warning,
-        .review-needed { background: #fcf4d6; color: #684e00; }
-        .confidence-pill { background: #e5f6ff; color: #00539a; }
-        .status-pill.pending { background: #e0e0e0; color: #393939; }
-        .status-pill.approved { background: #defbe6; color: #0e6027; }
-        .status-pill.dismissed { background: #fff1f1; color: #a2191f; }
-        .status-pill.flagged { background: #fff2e8; color: #8a3800; }
+        .review-needed { background: var(--nx-warning-subtle); color: #684e00; }
+        .confidence-pill { background: var(--nx-surface); color: #00539a; }
+        .status-pill.pending { background: var(--nx-border); color: var(--nx-text-muted); }
+        .status-pill.approved { background: var(--nx-success-subtle); color: #0e6027; }
+        .status-pill.dismissed { background: var(--nx-danger-subtle); color: #a2191f; }
+        .status-pill.flagged { background: var(--nx-danger-subtle); color: #8a3800; }
 
         .review-panel {
           position: fixed;
@@ -991,8 +991,8 @@ export default function HitsReviewPage() {
           z-index: 90;
           width: min(660px, 48vw);
           overflow-y: auto;
-          border-left: 1px solid #8d8d8d;
-          background: #ffffff;
+          border-left: 1px solid var(--nx-text-muted);
+          background: var(--nx-surface);
           box-shadow: -12px 0 32px rgba(22,22,22,.18);
         }
         .review-header {
@@ -1005,15 +1005,15 @@ export default function HitsReviewPage() {
           gap: 12px;
           min-height: 62px;
           padding: 10px 14px;
-          border-bottom: 1px solid #d6d9de;
-          background: #ffffff;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
         .close-panel-btn {
-          border-color: #8d8d8d;
-          background: #ffffff;
-          color: #161616;
+          border-color: var(--nx-text-muted);
+          background: var(--nx-surface);
+          color: var(--nx-text);
         }
-        .close-panel-btn:hover { background: #e0e0e0; }
+        .close-panel-btn:hover { background: var(--nx-border); }
 
         .workflow-action-bar {
           position: sticky;
@@ -1023,11 +1023,11 @@ export default function HitsReviewPage() {
           grid-template-columns: 1fr;
           gap: 8px;
           padding: 10px 14px;
-          border-bottom: 1px solid #d6d9de;
-          background: #f4f4f4;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-bg);
         }
         .workflow-action-bar > span {
-          color: #525252;
+          color: var(--nx-text-muted);
           font-size: 10px;
           font-weight: 600;
           letter-spacing: .05em;
@@ -1038,14 +1038,14 @@ export default function HitsReviewPage() {
           min-height: 58px;
           padding: 8px 10px;
           resize: vertical;
-          border: 1px solid #8d8d8d;
+          border: 1px solid var(--nx-text-muted);
           border-radius: 0;
-          background: #ffffff;
-          color: #161616;
+          background: var(--nx-surface);
+          color: var(--nx-text);
           font: inherit;
           font-size: 11px;
         }
-        .workflow-action-bar textarea:focus { outline: 2px solid #0f62fe; outline-offset: -2px; }
+        .workflow-action-bar textarea:focus { outline: 2px solid var(--nx-primary); outline-offset: -2px; }
         .action-buttons-group { display: flex; flex-wrap: wrap; gap: 6px; }
         .btn-action {
           min-height: 32px;
@@ -1057,42 +1057,42 @@ export default function HitsReviewPage() {
           font-weight: 600;
         }
         .btn-action:disabled { opacity: .45; cursor: not-allowed; }
-        .btn-action.approve { background: #198038; color: #ffffff; }
-        .btn-action.flag { background: #ff832b; color: #161616; }
-        .btn-action.dismiss { background: #da1e28; color: #ffffff; }
-        .btn-action.retry { background: #0f62fe; color: #ffffff; }
+        .btn-action.approve { background: var(--nx-success); color: var(--nx-surface); }
+        .btn-action.flag { background: #ff832b; color: var(--nx-text); }
+        .btn-action.dismiss { background: var(--nx-danger); color: var(--nx-surface); }
+        .btn-action.retry { background: var(--nx-primary); color: var(--nx-surface); }
 
         .technical-failure {
-          border-left: 3px solid #da1e28;
+          border-left: 3px solid var(--nx-danger);
           padding: 8px 10px;
-          background: #fff1f1;
+          background: var(--nx-danger-subtle);
         }
         .technical-failure strong { display: block; color: #a2191f; font-size: 11px; }
-        .technical-failure p { margin: 3px 0 8px; color: #525252; font-size: 10px; }
+        .technical-failure p { margin: 3px 0 8px; color: var(--nx-text-muted); font-size: 10px; }
 
         .review-grid {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          border-bottom: 1px solid #d6d9de;
+          border-bottom: 1px solid var(--nx-border);
         }
         .review-grid div {
           min-width: 0;
           padding: 9px 10px;
-          border-right: 1px solid #e0e0e0;
-          border-bottom: 1px solid #e0e0e0;
-          background: #ffffff;
+          border-right: 1px solid var(--nx-border);
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
         .review-grid span {
           display: block;
           margin-bottom: 3px;
-          color: #6f6f6f;
+          color: var(--nx-text-muted);
           font-size: 9px;
           font-weight: 600;
           text-transform: uppercase;
         }
         .review-grid strong { display: block; overflow-wrap: anywhere; font-size: 11px; font-weight: 600; }
 
-        .product-assessment-section { padding: 12px 14px; border-bottom: 1px solid #d6d9de; }
+        .product-assessment-section { padding: 12px 14px; border-bottom: 1px solid var(--nx-border); }
         .product-assessment-heading {
           display: flex;
           align-items: center;
@@ -1102,16 +1102,16 @@ export default function HitsReviewPage() {
         }
         .product-assessment-heading span {
           display: block;
-          color: #6f6f6f;
+          color: var(--nx-text-muted);
           font-size: 9px;
           font-weight: 600;
           letter-spacing: .04em;
           text-transform: uppercase;
         }
         .product-assessment-heading h3 { margin: 2px 0 0; font-size: 13px; font-weight: 600; }
-        .product-assessment-heading > strong { color: #0f62fe; font-size: 10px; }
+        .product-assessment-heading > strong { color: var(--nx-primary); font-size: 10px; }
         .product-assessment-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .product-assessment-card { border: 1px solid #d6d9de; background: #f4f4f4; padding: 9px 10px; }
+        .product-assessment-card { border: 1px solid var(--nx-border); background: var(--nx-bg); padding: 9px 10px; }
         .product-assessment-title {
           display: flex;
           align-items: center;
@@ -1126,15 +1126,15 @@ export default function HitsReviewPage() {
           grid-template-columns: minmax(120px, .8fr) minmax(0, 1.2fr);
           gap: 8px;
           padding: 5px 0;
-          border-top: 1px solid #d6d9de;
+          border-top: 1px solid var(--nx-border);
         }
-        .product-assessment-card dt { color: #6f6f6f; font-size: 10px; }
+        .product-assessment-card dt { color: var(--nx-text-muted); font-size: 10px; }
         .product-assessment-card dd { margin: 0; overflow-wrap: anywhere; font-size: 10px; font-weight: 600; }
 
-        .text-block { padding: 11px 14px; border-bottom: 1px solid #d6d9de; background: #ffffff; }
+        .text-block { padding: 11px 14px; border-bottom: 1px solid var(--nx-border); background: var(--nx-surface); }
         .text-block h3 {
           margin: 0 0 5px;
-          color: #525252;
+          color: var(--nx-text-muted);
           font-size: 10px;
           font-weight: 600;
           letter-spacing: .04em;
@@ -1142,7 +1142,7 @@ export default function HitsReviewPage() {
         }
         .text-block p {
           margin: 0;
-          color: #393939;
+          color: var(--nx-text-muted);
           font-size: 11px;
           line-height: 1.45;
           white-space: pre-wrap;
@@ -1155,9 +1155,9 @@ export default function HitsReviewPage() {
           z-index: 120;
           max-width: 420px;
           padding: 10px 12px;
-          border-left: 3px solid #0f62fe;
-          background: #262626;
-          color: #ffffff;
+          border-left: 3px solid var(--nx-primary);
+          background: var(--nx-text);
+          color: var(--nx-surface);
           box-shadow: 0 8px 24px rgba(0,0,0,.22);
           font-size: 11px;
           font-weight: 600;

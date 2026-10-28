@@ -129,7 +129,7 @@ export class ConfigurationStore {
           "ClinixAI Literature",
 
         primaryColor:
-          "#2563eb",
+          "var(--nx-primary)",
       },
 
       updatedAt:

@@ -70,8 +70,8 @@ export default function ReportsPage() {
         .shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
-          background: #eef2f7;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-family: "Poppins", Arial, sans-serif;
         }
         .report-grid {
@@ -84,13 +84,13 @@ export default function ReportsPage() {
           min-height: 205px;
           align-content: start;
           padding: 17px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 6px;
-          background: #fff;
+          background: var(--nx-surface);
           box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
         }
         article > span {
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 8px;
           font-weight: 900;
           letter-spacing: 0.07em;
@@ -102,7 +102,7 @@ export default function ReportsPage() {
         }
         p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
           line-height: 1.6;
         }
@@ -112,8 +112,8 @@ export default function ReportsPage() {
           border: 0;
           border-radius: 5px;
           padding: 10px 12px;
-          color: #fff;
-          background: #185abd;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
           font: inherit;
           font-size: 9px;
           font-weight: 900;
@@ -125,7 +125,7 @@ export default function ReportsPage() {
           border: 1px solid #93c5fd;
           border-radius: 6px;
           color: #1e3a8a;
-          background: #eff6ff;
+          background: var(--nx-surface);
         }
         .boundary strong {
           font-size: 9px;

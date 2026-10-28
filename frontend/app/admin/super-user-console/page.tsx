@@ -349,15 +349,15 @@ export default function SuperUserConsolePage() {
       <style jsx>{`
         .app-shell {
           min-height: 100vh;
-          background: #f4f7fb;
+          background: var(--nx-surface);
           padding: 24px;
-          color: #0f172a;
+          color: var(--nx-text);
           font-family: Arial, Helvetica, sans-serif;
         }
 
         .topbar {
-          background: linear-gradient(135deg, #071b34, #123f68);
-          color: #ffffff;
+          background: linear-gradient(135deg, var(--nx-text), #123f68);
+          color: var(--nx-surface);
           border-radius: 20px;
           padding: 24px 28px;
           display: flex;
@@ -373,7 +373,7 @@ export default function SuperUserConsolePage() {
 
         .topbar p {
           margin: 6px 0 0;
-          color: #cfe7ff;
+          color: var(--nx-border);
         }
 
         .topbar-meta {
@@ -395,8 +395,8 @@ export default function SuperUserConsolePage() {
           display: grid;
           grid-template-columns: 1fr auto auto;
           gap: 12px;
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
+          background: var(--nx-surface);
+          border: 1px solid var(--nx-border);
           border-radius: 18px;
           padding: 18px;
           margin-bottom: 18px;
@@ -407,8 +407,8 @@ export default function SuperUserConsolePage() {
         select,
         textarea {
           width: 100%;
-          border: 1px solid #cbd5e1;
-          background: #f8fafc;
+          border: 1px solid var(--nx-border);
+          background: var(--nx-surface);
           border-radius: 12px;
           padding: 12px 14px;
           outline: none;
@@ -424,7 +424,7 @@ export default function SuperUserConsolePage() {
           border: none;
           border-radius: 12px;
           background: #185a9d;
-          color: #ffffff;
+          color: var(--nx-surface);
           padding: 11px 14px;
           cursor: pointer;
           font-weight: 800;
@@ -436,8 +436,8 @@ export default function SuperUserConsolePage() {
         }
 
         button.secondary {
-          background: #e2e8f0;
-          color: #334155;
+          background: var(--nx-border);
+          color: var(--nx-text);
         }
 
         .console-grid {
@@ -450,8 +450,8 @@ export default function SuperUserConsolePage() {
         .queue-panel,
         .detail-panel,
         .action-panel {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
+          background: var(--nx-surface);
+          border: 1px solid var(--nx-border);
           border-radius: 20px;
           box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
           overflow: hidden;
@@ -459,7 +459,7 @@ export default function SuperUserConsolePage() {
 
         .panel-header {
           padding: 20px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
           display: flex;
           justify-content: space-between;
           gap: 16px;
@@ -472,7 +472,7 @@ export default function SuperUserConsolePage() {
 
         .panel-header p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           line-height: 1.5;
         }
 
@@ -484,17 +484,17 @@ export default function SuperUserConsolePage() {
         }
 
         .package-list button {
-          background: #ffffff;
-          color: #0f172a;
+          background: var(--nx-surface);
+          color: var(--nx-text);
           border-radius: 0;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
           text-align: left;
           padding: 16px;
         }
 
         .package-list button.selected,
         .package-list button:hover {
-          background: #eff6ff;
+          background: var(--nx-surface);
         }
 
         .package-list strong,
@@ -515,33 +515,33 @@ export default function SuperUserConsolePage() {
         }
 
         .locked {
-          background: #fee2e2;
+          background: var(--nx-danger-subtle);
           color: #991b1b;
         }
 
         .review {
-          background: #fef3c7;
+          background: var(--nx-warning-subtle);
           color: #92400e;
         }
 
         .complete {
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
           color: #166534;
         }
 
         .route,
         .override {
-          background: #ede9fe;
+          background: var(--nx-border);
           color: #6d28d9;
         }
 
         .running {
-          background: #dbeafe;
-          color: #1d4ed8;
+          background: var(--nx-border);
+          color: var(--nx-primary);
         }
 
         .default {
-          background: #e2e8f0;
+          background: var(--nx-border);
           color: #475569;
         }
 
@@ -553,15 +553,15 @@ export default function SuperUserConsolePage() {
         }
 
         .detail-grid div {
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
+          background: var(--nx-surface);
+          border: 1px solid var(--nx-border);
           border-radius: 14px;
           padding: 14px;
         }
 
         .detail-grid span {
           display: block;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 12px;
           font-weight: 800;
           text-transform: uppercase;
@@ -571,7 +571,7 @@ export default function SuperUserConsolePage() {
         .timeline-panel,
         .audit-panel {
           padding: 20px;
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid var(--nx-border);
         }
 
         .timeline-panel h3,
@@ -588,8 +588,8 @@ export default function SuperUserConsolePage() {
         }
 
         .timeline div {
-          background: #f1f5f9;
-          color: #64748b;
+          background: var(--nx-surface);
+          color: var(--nx-text-muted);
           border-radius: 14px;
           padding: 12px;
           font-size: 12px;
@@ -598,21 +598,21 @@ export default function SuperUserConsolePage() {
         }
 
         .timeline div.done {
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
           color: #166534;
         }
 
         .timeline div.active {
-          background: #fef3c7;
+          background: var(--nx-warning-subtle);
           color: #92400e;
         }
 
         .audit-row {
           padding: 14px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 14px;
           margin-bottom: 10px;
-          background: #f8fafc;
+          background: var(--nx-surface);
         }
 
         .audit-row strong {
@@ -621,12 +621,12 @@ export default function SuperUserConsolePage() {
 
         .audit-row p {
           margin: 6px 0;
-          color: #334155;
+          color: var(--nx-text);
         }
 
         .audit-row small {
           display: block;
-          color: #64748b;
+          color: var(--nx-text-muted);
           margin-top: 4px;
         }
 
@@ -657,7 +657,7 @@ export default function SuperUserConsolePage() {
         .rule-card {
           margin-top: 18px;
           border: 1px solid #fed7aa;
-          background: #fff7ed;
+          background: var(--nx-danger-subtle);
           color: #9a3412;
           border-radius: 16px;
           padding: 16px;
@@ -671,7 +671,7 @@ export default function SuperUserConsolePage() {
         .empty,
         .empty-detail {
           padding: 24px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-weight: 800;
         }
 
@@ -679,8 +679,8 @@ export default function SuperUserConsolePage() {
           position: fixed;
           right: 24px;
           bottom: 24px;
-          background: #0f172a;
-          color: #ffffff;
+          background: var(--nx-text);
+          color: var(--nx-surface);
           padding: 14px 18px;
           border-radius: 14px;
           box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);

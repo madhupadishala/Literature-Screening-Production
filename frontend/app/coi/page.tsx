@@ -13,7 +13,7 @@ export default function COIPage(){
   <p>All suggestions require PV review. Scanned documents need verified text extraction before use.</p>
   <label htmlFor="coi-module">Module </label><select id="coi-module" value={module} onChange={e=>setModule(e.target.value)}><option value="literature">Literature</option><option value="intake">Intake</option><option value="case_processing">Case Processing</option></select>
   <p><label htmlFor="coi-source">Source document text</label></p>
-  <textarea id="coi-source" value={text} onChange={e=>setText(e.target.value)} maxLength={48000} rows={16} style={{width:'100%',border:'1px solid #777',padding:12}} />
+  <textarea id="coi-source" value={text} onChange={e=>setText(e.target.value)} maxLength={48000} rows={16} style={{width:'100%',border:'1px solid var(--nx-text-muted)',padding:12}} />
   <p>{text.length.toLocaleString()} / 48,000 characters</p>
   <button disabled={busy||!text.trim()} onClick={run} style={{padding:'10px 20px',background:'#1761a0',color:'white'}}>{busy?'Extracting…':'Extract country of incident'}</button>
   {error&&<p role="alert">{error}</p>}

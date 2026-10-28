@@ -11,7 +11,7 @@ export default function RoleBadge({ role }: RoleBadgeProps) {
       style={{
         display: "inline-flex",
         alignItems: "center",
-        border: "1px solid #d1d5db",
+        border: "1px solid var(--nx-border)",
         borderRadius: "999px",
         padding: "2px 8px",
         fontSize: "12px",

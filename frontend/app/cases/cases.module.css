@@ -1,23 +1,23 @@
-.panel { margin-top:12px; border:1px solid #d5dce5; border-radius:3px; background:#fff; }
-.toolbar { display:flex; justify-content:space-between; gap:12px; align-items:center; padding:8px 12px; border-bottom:1px solid #d5dce5; }
-.toolbar h2 { margin:0; color:#182230; font-size:14px; font-weight:600; }
-.toolbar input { box-sizing:border-box; width:min(320px,100%); height:32px; padding:0 8px; border:1px solid #cbd5e1; border-radius:3px; background:#fff; color:#334155; font-size:12px; }
+.panel { margin-top:12px; border:1px solid var(--nx-border); border-radius:3px; background:var(--nx-surface); }
+.toolbar { display:flex; justify-content:space-between; gap:12px; align-items:center; padding:8px 12px; border-bottom:1px solid var(--nx-border); }
+.toolbar h2 { margin:0; color:var(--nx-text); font-size:14px; font-weight:600; }
+.toolbar input { box-sizing:border-box; width:min(320px,100%); height:32px; padding:0 8px; border:1px solid var(--nx-border); border-radius:3px; background:var(--nx-surface); color:var(--nx-text); font-size:12px; }
 .tableWrap { overflow:auto; max-height:calc(100vh - 290px); min-height:120px; }
 .tableWrap table { width:100%; border-collapse:collapse; white-space:nowrap; font-size:12px; }
 .tableWrap caption { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
-.tableWrap th { position:sticky; top:0; z-index:1; height:32px; padding:0 10px; border-bottom:1px solid #d5dce5; background:#f8fafc; color:#596579; text-align:left; text-transform:uppercase; font-size:12px; font-weight:500; }
-.tableWrap td { box-sizing:border-box; height:36px; padding:0 10px; border-bottom:1px solid #e6ebf0; color:#334155; font-variant-numeric:tabular-nums; }
-.tableWrap tbody tr:hover { background:#f7faff; }
+.tableWrap th { position:sticky; top:0; z-index:1; height:32px; padding:0 10px; border-bottom:1px solid var(--nx-border); background:var(--nx-surface); color:var(--nx-text-muted); text-align:left; text-transform:uppercase; font-size:12px; font-weight:500; }
+.tableWrap td { box-sizing:border-box; height:36px; padding:0 10px; border-bottom:1px solid var(--nx-border); color:var(--nx-text); font-variant-numeric:tabular-nums; }
+.tableWrap tbody tr:hover { background:var(--nx-surface); }
 .tableWrap td a { color:#18517f; text-decoration:none; font-weight:500; }
 .tableWrap td a:hover { text-decoration:underline; }
-.status { display:inline-flex; align-items:center; padding:2px 5px; border:1px solid #d5dce5; border-radius:3px; font-size:12px; font-weight:500; }
-.good { background:#effaf2; color:#21653d; border-color:#c4dfcd; }
-.bad { background:#fff1f0; color:#a62f24; border-color:#efcbc6; }
-.review { background:#fff9e9; color:#80621b; border-color:#e8dcb7; }
-.neutral { background:#f8fafc; color:#526176; }
-.tableWrap td.empty { height:36px; text-align:center; color:#64748b; }
+.status { display:inline-flex; align-items:center; padding:2px 5px; border:1px solid var(--nx-border); border-radius:3px; font-size:12px; font-weight:500; }
+.good { background:var(--nx-surface); color:#21653d; border-color:var(--nx-success-subtle); }
+.bad { background:var(--nx-danger-subtle); color:#a62f24; border-color:#efcbc6; }
+.review { background:var(--nx-surface); color:#80621b; border-color:var(--nx-warning-subtle); }
+.neutral { background:var(--nx-surface); color:var(--nx-text-muted); }
+.tableWrap td.empty { height:36px; text-align:center; color:var(--nx-text-muted); }
 .toolbar input:focus-visible,.tableWrap a:focus-visible,.clearFilters:focus-visible { outline:2px solid #4379b1; outline-offset:2px; }
 @media(max-width:700px) { .toolbar { flex-wrap:wrap; } .toolbar input { width:100%; } }
 
 .identifier { font-family:var(--nx-font-mono,ui-monospace,SFMono-Regular,Consolas,monospace); font-variant-numeric:tabular-nums; }
-.clearFilters { height:32px; margin-left:8px; padding:0 8px; border:1px solid #94a3b8; border-radius:3px; background:#fff; color:#182230; font:500 12px var(--nx-font-sans); cursor:pointer; }
+.clearFilters { height:32px; margin-left:8px; padding:0 8px; border:1px solid #94a3b8; border-radius:3px; background:var(--nx-surface); color:var(--nx-text); font:500 12px var(--nx-font-sans); cursor:pointer; }

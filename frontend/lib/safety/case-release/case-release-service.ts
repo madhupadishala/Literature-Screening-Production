@@ -36,7 +36,7 @@ function escapeHtml(value: unknown): string {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replaceAll("'", "&var(--nx-primary-active);");
 }
 
 async function loadFinalCase(
@@ -520,11 +520,11 @@ function humanReadableHtml(input: {
 <html>
 <head><meta charset="utf-8"><title>${escapeHtml(input.safetyCase.caseKey)} Case Report</title>
 <style>
-body{font-family:Arial,sans-serif;max-width:980px;margin:32px auto;color:#172033;line-height:1.5}
-h1,h2{color:#0f2747}table{width:100%;border-collapse:collapse;margin:12px 0 24px}
-th,td{border:1px solid #ccd6e3;padding:8px;text-align:left;font-size:12px}
-.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.meta div{border:1px solid #dbe4ef;padding:10px}
-small{color:#64748b}.narrative{white-space:pre-wrap;border:1px solid #dbe4ef;padding:14px}
+body{font-family:Arial,sans-serif;max-width:980px;margin:32px auto;color:var(--nx-text);line-height:1.5}
+h1,h2{color:var(--nx-text)}table{width:100%;border-collapse:collapse;margin:12px 0 24px}
+th,td{border:1px solid var(--nx-border);padding:8px;text-align:left;font-size:12px}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.meta div{border:1px solid var(--nx-border);padding:10px}
+small{color:var(--nx-text-muted)}.narrative{white-space:pre-wrap;border:1px solid var(--nx-border);padding:14px}
 </style></head>
 <body>
 <h1>Individual Case Safety Report</h1>

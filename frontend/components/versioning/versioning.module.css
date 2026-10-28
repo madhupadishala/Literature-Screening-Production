@@ -10,8 +10,8 @@
   text-transform: uppercase;
   letter-spacing: 0.03em;
   border: 1px solid #bfdbfe;
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: var(--nx-surface);
+  color: var(--nx-primary);
   white-space: nowrap;
 }
 
@@ -21,26 +21,26 @@
 }
 
 .latest {
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: var(--nx-surface);
+  color: var(--nx-primary);
   border-color: #bfdbfe;
 }
 
 .archived {
-  background: #f8fafc;
-  color: #64748b;
-  border-color: #cbd5e1;
+  background: var(--nx-surface);
+  color: var(--nx-text-muted);
+  border-color: var(--nx-border);
 }
 
 .locked {
-  background: #fff7ed;
+  background: var(--nx-danger-subtle);
   color: #c2410c;
   border-color: #fed7aa;
 }
 
 .versionPanel {
-  background: #ffffff;
-  border: 1px solid #dbe4ef;
+  background: var(--nx-surface);
+  border: 1px solid var(--nx-border);
   border-radius: 20px;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
   overflow: hidden;
@@ -52,12 +52,12 @@
   justify-content: space-between;
   gap: 16px;
   padding: 22px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--nx-border);
 }
 
 .panelHeader p {
   margin: 0 0 6px;
-  color: #2563eb;
+  color: var(--nx-primary);
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
@@ -66,14 +66,14 @@
 
 .panelHeader h2 {
   margin: 0;
-  color: #0f172a;
+  color: var(--nx-text);
   font-size: 22px;
 }
 
 .panelHeader span {
   display: block;
   margin-top: 6px;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 13px;
   font-weight: 700;
 }
@@ -89,7 +89,7 @@
   grid-template-columns: 120px 1fr;
   gap: 18px;
   padding: 20px 22px;
-  border-bottom: 1px solid #eef2f7;
+  border-bottom: 1px solid var(--nx-surface);
 }
 
 .versionItem:last-child {
@@ -103,14 +103,14 @@
 }
 
 .versionMeta small {
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 12px;
   font-weight: 700;
 }
 
 .versionBody h3 {
   margin: 0 0 8px;
-  color: #0f172a;
+  color: var(--nx-text);
   font-size: 16px;
 }
 
@@ -131,9 +131,9 @@
 .versionFacts span {
   border-radius: 999px;
   padding: 6px 9px;
-  background: #f8fafc;
+  background: var(--nx-surface);
   color: #475569;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--nx-border);
   font-size: 11px;
   font-weight: 800;
 }
@@ -145,15 +145,15 @@
 }
 
 .changeItem {
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--nx-border);
   border-radius: 12px;
   padding: 10px;
-  background: #f8fafc;
+  background: var(--nx-surface);
 }
 
 .changeItem strong {
   display: block;
-  color: #0f172a;
+  color: var(--nx-text);
   margin-bottom: 4px;
   font-size: 13px;
 }
@@ -165,7 +165,7 @@
 
 .emptyState {
   padding: 32px;
-  color: #64748b;
+  color: var(--nx-text-muted);
   text-align: center;
   font-weight: 700;
 }

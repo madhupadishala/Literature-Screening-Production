@@ -190,8 +190,8 @@ export default function PerformancePage() {
         .shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
-          background: #eef2f7;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-family: "Poppins", Arial, sans-serif;
         }
         .metrics {
@@ -212,14 +212,14 @@ export default function PerformancePage() {
           border: 1px solid #fecaca;
           border-radius: 6px;
           color: #991b1b;
-          background: #fef2f2;
+          background: var(--nx-danger-subtle);
           font-size: 11px;
           font-weight: 700;
         }
         .loading {
           color: #475569;
-          border-color: #cbd5e1;
-          background: #fff;
+          border-color: var(--nx-border);
+          background: var(--nx-surface);
         }
         .table-wrap {
           overflow-x: auto;
@@ -232,13 +232,13 @@ export default function PerformancePage() {
         th,
         td {
           padding: 12px 14px;
-          border-bottom: 1px solid #e8eef5;
+          border-bottom: 1px solid var(--nx-border);
           text-align: left;
           font-size: 10px;
         }
         th {
-          color: #64748b;
-          background: #f8fafc;
+          color: var(--nx-text-muted);
+          background: var(--nx-surface);
           font-size: 8px;
           text-transform: uppercase;
           letter-spacing: 0.06em;
@@ -249,7 +249,7 @@ export default function PerformancePage() {
         }
         td small {
           margin-top: 3px;
-          color: #64748b;
+          color: var(--nx-text-muted);
         }
         .budget-list {
           display: grid;
@@ -262,7 +262,7 @@ export default function PerformancePage() {
           gap: 12px;
           align-items: center;
           padding: 11px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 5px;
         }
         .budget-list strong,
@@ -271,7 +271,7 @@ export default function PerformancePage() {
         }
         .budget-list small {
           margin-top: 3px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
         }
         .budget-list span {
@@ -283,23 +283,23 @@ export default function PerformancePage() {
         }
         .pass {
           color: #166534;
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
         }
         .warning {
           color: #92400e;
-          background: #fef3c7;
+          background: var(--nx-warning-subtle);
         }
         .fail {
           color: #991b1b;
-          background: #fee2e2;
+          background: var(--nx-danger-subtle);
         }
         .empty {
           padding: 28px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           text-align: center;
         }
         .refreshed {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
           text-align: right;
         }
@@ -332,14 +332,14 @@ function Metric({ label, value }: { label: string; value: string }) {
       <style jsx>{`
         .metric {
           padding: 15px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 6px;
-          background: #fff;
+          background: var(--nx-surface);
         }
         span {
           display: block;
           min-height: 25px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
           font-weight: 900;
           text-transform: uppercase;
@@ -347,7 +347,7 @@ function Metric({ label, value }: { label: string; value: string }) {
         strong {
           display: block;
           margin-top: 7px;
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 20px;
         }
       `}</style>
@@ -375,14 +375,14 @@ function Panel({
         .panel {
           margin-bottom: 14px;
           overflow: hidden;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 6px;
-          background: #fff;
+          background: var(--nx-surface);
           box-shadow: 0 5px 18px rgba(15, 23, 42, 0.05);
         }
         header {
           padding: 16px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
         }
         h2 {
           margin: 0 0 4px;
@@ -390,7 +390,7 @@ function Panel({
         }
         p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
         }
       `}</style>
@@ -416,20 +416,20 @@ function Rows({ rows }: { rows: Array<[string, number]> }) {
         }
         div {
           padding: 12px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 5px;
-          background: #f8fafc;
+          background: var(--nx-surface);
         }
         span {
           display: block;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
           text-transform: uppercase;
         }
         strong {
           display: block;
           margin-top: 5px;
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 18px;
         }
       `}</style>

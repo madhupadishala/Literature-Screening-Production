@@ -857,10 +857,10 @@ export default function TenantConfigurationConsole() {
           display: grid;
           grid-template-columns: 260px minmax(0, 1fr);
           min-height: 680px;
-          border: 1px solid #b8c4d3;
+          border: 1px solid var(--nx-border);
           border-radius: 4px;
           overflow: hidden;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 3px 12px rgba(15, 23, 42, 0.07);
         }
 
@@ -871,16 +871,16 @@ export default function TenantConfigurationConsole() {
         }
 
         .admin-navigation {
-          border-right: 1px solid #b8c4d3;
-          background: #e8edf4;
+          border-right: 1px solid var(--nx-border);
+          background: var(--nx-border);
         }
 
         .nav-title {
           display: grid;
           gap: 3px;
           padding: 15px;
-          color: #ffffff;
-          background: #0f172a;
+          color: var(--nx-surface);
+          background: var(--nx-text);
         }
 
         .nav-title span {
@@ -901,21 +901,21 @@ export default function TenantConfigurationConsole() {
           gap: 4px;
           padding: 12px 14px;
           border: 0;
-          border-bottom: 1px solid #cbd5e1;
-          color: #334155;
+          border-bottom: 1px solid var(--nx-border);
+          color: var(--nx-text);
           background: transparent;
           text-align: left;
           cursor: pointer;
         }
 
         .admin-navigation > button:hover {
-          background: #dbeafe;
+          background: var(--nx-border);
         }
 
         .admin-navigation > button.active {
-          color: #0f172a;
-          background: #ffffff;
-          box-shadow: inset 4px 0 #185abd;
+          color: var(--nx-text);
+          background: var(--nx-surface);
+          box-shadow: inset 4px 0 var(--nx-primary);
         }
 
         .admin-navigation strong {
@@ -923,14 +923,14 @@ export default function TenantConfigurationConsole() {
         }
 
         .admin-navigation small {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 7px;
           line-height: 1.4;
         }
 
         .content {
           min-width: 0;
-          background: #f4f7fb;
+          background: var(--nx-surface);
         }
 
         .content-title {
@@ -938,12 +938,12 @@ export default function TenantConfigurationConsole() {
           justify-content: space-between;
           align-items: center;
           padding: 14px 17px;
-          border-bottom: 1px solid #cbd5e1;
-          background: #ffffff;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
 
         .content-title span {
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 7px;
           font-weight: 900;
           letter-spacing: 0.06em;
@@ -959,17 +959,17 @@ export default function TenantConfigurationConsole() {
           border: 1px solid #94a3b8;
           border-radius: 3px;
           padding: 7px 10px;
-          color: #334155;
-          background: #ffffff;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-size: 8px;
           font-weight: 800;
           cursor: pointer;
         }
 
         button.primary {
-          border-color: #185abd;
-          color: #ffffff;
-          background: #185abd;
+          border-color: var(--nx-primary);
+          color: var(--nx-surface);
+          background: var(--nx-primary);
         }
 
         button:disabled {
@@ -979,20 +979,20 @@ export default function TenantConfigurationConsole() {
 
         button.active-state:disabled {
           border-color: #94a3b8;
-          color: #64748b;
-          background: #e2e8f0;
+          color: var(--nx-text-muted);
+          background: var(--nx-border);
           opacity: 1;
         }
 
         button.retire-action {
-          border-color: #dc2626;
-          color: #b91c1c;
-          background: #ffffff;
+          border-color: var(--nx-danger);
+          color: var(--nx-danger);
+          background: var(--nx-surface);
         }
 
         button.retire-action:hover {
-          color: #ffffff;
-          background: #dc2626;
+          color: var(--nx-surface);
+          background: var(--nx-danger);
         }
 
         .message {
@@ -1001,7 +1001,7 @@ export default function TenantConfigurationConsole() {
           border: 1px solid #93c5fd;
           border-radius: 3px;
           color: #1e3a8a;
-          background: #eff6ff;
+          background: var(--nx-surface);
           font-size: 8px;
           font-weight: 700;
         }
@@ -1010,9 +1010,9 @@ export default function TenantConfigurationConsole() {
         .table-panel,
         .source-list {
           margin: 14px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 3px;
-          background: #ffffff;
+          background: var(--nx-surface);
         }
 
         .editor-meta {
@@ -1020,8 +1020,8 @@ export default function TenantConfigurationConsole() {
           grid-template-columns: repeat(4, 1fr);
           gap: 10px;
           padding: 13px;
-          border-bottom: 1px solid #dbe4ef;
-          background: #f8fafc;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
 
         label {
@@ -1047,18 +1047,18 @@ export default function TenantConfigurationConsole() {
         textarea {
           width: 100%;
           box-sizing: border-box;
-          border: 1px solid #b8c4d3;
+          border: 1px solid var(--nx-border);
           border-radius: 3px;
           padding: 8px 9px;
-          color: #0f172a;
-          background: #ffffff;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-size: 9px;
           outline: none;
         }
 
         input:focus,
         textarea:focus {
-          border-color: #185abd;
+          border-color: var(--nx-primary);
           box-shadow: 0 0 0 2px rgba(24, 90, 189, 0.1);
         }
 
@@ -1075,9 +1075,9 @@ export default function TenantConfigurationConsole() {
           align-content: start;
           gap: 8px;
           padding: 13px;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 3px;
-          background: #f8fafc;
+          background: var(--nx-surface);
         }
 
         .upload-box strong,
@@ -1087,7 +1087,7 @@ export default function TenantConfigurationConsole() {
 
         .upload-box p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
           line-height: 1.5;
         }
@@ -1103,13 +1103,13 @@ export default function TenantConfigurationConsole() {
           display: flex;
           justify-content: space-between;
           padding: 11px 13px;
-          border-bottom: 1px solid #dbe4ef;
-          background: #f8fafc;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
           font-size: 9px;
         }
 
         .table-title span {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
         }
 
@@ -1126,7 +1126,7 @@ export default function TenantConfigurationConsole() {
         th,
         td {
           padding: 10px 11px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
           text-align: left;
           vertical-align: top;
           font-size: 8px;
@@ -1134,7 +1134,7 @@ export default function TenantConfigurationConsole() {
 
         th {
           color: #475569;
-          background: #f8fafc;
+          background: var(--nx-surface);
           font-size: 7px;
           font-weight: 900;
           letter-spacing: 0.045em;
@@ -1148,7 +1148,7 @@ export default function TenantConfigurationConsole() {
 
         td small {
           margin-top: 3px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 7px;
         }
 
@@ -1157,7 +1157,7 @@ export default function TenantConfigurationConsole() {
           padding: 5px 7px;
           border-radius: 999px;
           color: #475569;
-          background: #e2e8f0;
+          background: var(--nx-border);
           font-size: 7px;
           font-weight: 900;
           text-transform: uppercase;
@@ -1165,19 +1165,19 @@ export default function TenantConfigurationConsole() {
 
         .status.active {
           color: #166534;
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
         }
 
         .status.approved,
         .status.validated {
-          color: #1e40af;
-          background: #dbeafe;
+          color: var(--nx-primary-active);
+          background: var(--nx-border);
         }
 
         .status.rejected,
         .status.retired {
           color: #991b1b;
-          background: #fee2e2;
+          background: var(--nx-danger-subtle);
         }
 
         .row-actions {
@@ -1188,7 +1188,7 @@ export default function TenantConfigurationConsole() {
 
         .empty {
           padding: 28px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           text-align: center;
         }
 
@@ -1203,7 +1203,7 @@ export default function TenantConfigurationConsole() {
           align-items: center;
           gap: 16px;
           padding: 14px;
-          border-bottom: 1px solid #dbe4ef;
+          border-bottom: 1px solid var(--nx-border);
         }
 
         .source-list article:last-child {
@@ -1211,7 +1211,7 @@ export default function TenantConfigurationConsole() {
         }
 
         .source-list article > div > span {
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 7px;
           font-weight: 900;
           text-transform: uppercase;
@@ -1224,7 +1224,7 @@ export default function TenantConfigurationConsole() {
 
         .source-list p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
         }
 
@@ -1232,7 +1232,7 @@ export default function TenantConfigurationConsole() {
           display: flex;
           align-items: center;
           gap: 7px;
-          color: #334155;
+          color: var(--nx-text);
           font-size: 9px;
           font-weight: 800;
         }
@@ -1250,7 +1250,7 @@ export default function TenantConfigurationConsole() {
             display: flex;
             overflow-x: auto;
             border-right: 0;
-            border-bottom: 1px solid #b8c4d3;
+            border-bottom: 1px solid var(--nx-border);
           }
 
           .nav-title {
@@ -1259,7 +1259,7 @@ export default function TenantConfigurationConsole() {
 
           .admin-navigation > button {
             min-width: 190px;
-            border-right: 1px solid #cbd5e1;
+            border-right: 1px solid var(--nx-border);
           }
 
           .editor-meta {

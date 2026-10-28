@@ -558,19 +558,19 @@ export default function WorkflowDetailsPage() {
         .details-shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
+          color: var(--nx-text);
           background:
             radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%),
-            #f4f7fb;
+            var(--nx-surface);
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 
         .loading-card,
         .section-card {
           padding: 26px;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 20px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
         }
 
@@ -583,7 +583,7 @@ export default function WorkflowDetailsPage() {
         }
 
         .back-link {
-          color: #1d4ed8;
+          color: var(--nx-primary);
           font-size: 11px;
           font-weight: 900;
           text-decoration: none;
@@ -595,9 +595,9 @@ export default function WorkflowDetailsPage() {
           margin: 0 0 18px;
           padding: 8px;
           overflow-x: auto;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 16px;
-          background: #ffffff;
+          background: var(--nx-surface);
         }
 
         .tabs button {
@@ -614,8 +614,8 @@ export default function WorkflowDetailsPage() {
         }
 
         .tabs button.active {
-          color: #ffffff;
-          background: #1d4ed8;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
         }
 
         .grid {
@@ -639,10 +639,10 @@ export default function WorkflowDetailsPage() {
           align-items: center;
           gap: 10px;
           padding: 15px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 14px;
           color: #475569;
-          background: #f8fafc;
+          background: var(--nx-surface);
         }
 
         .progress-step span {
@@ -651,7 +651,7 @@ export default function WorkflowDetailsPage() {
           height: 28px;
           place-items: center;
           border-radius: 999px;
-          background: #e2e8f0;
+          background: var(--nx-border);
           font-weight: 900;
         }
 
@@ -662,11 +662,11 @@ export default function WorkflowDetailsPage() {
         .progress-step.done {
           border-color: #bbf7d0;
           color: #166534;
-          background: #f0fdf4;
+          background: var(--nx-surface);
         }
 
         .progress-step.done span {
-          color: #ffffff;
+          color: var(--nx-surface);
           background: #16a34a;
         }
 
@@ -678,15 +678,15 @@ export default function WorkflowDetailsPage() {
         }
 
         .text-panel {
-          border: 1px solid #dbeafe;
-          background: #f8fbff;
+          border: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
 
         .text-panel span,
         .boundary-panel span {
           display: block;
           margin-bottom: 6px;
-          color: #1d4ed8;
+          color: var(--nx-primary);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.055em;
@@ -707,7 +707,7 @@ export default function WorkflowDetailsPage() {
           gap: 24px;
           margin: 0 0 16px;
           border: 1px solid #bae6fd;
-          background: #f0f9ff;
+          background: var(--nx-surface);
         }
 
         .boundary-panel div {
@@ -733,7 +733,7 @@ export default function WorkflowDetailsPage() {
 
         .note {
           margin: 14px 0 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 11px;
           line-height: 1.6;
         }
@@ -776,7 +776,7 @@ function StatusBadge({ state }: { state: string }) {
           padding: 7px 10px;
           border-radius: 999px;
           color: #475569;
-          background: #eef2f7;
+          background: var(--nx-surface);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.04em;
@@ -786,7 +786,7 @@ function StatusBadge({ state }: { state: string }) {
         .hits_running,
         .screening_running {
           color: #075985;
-          background: #e0f2fe;
+          background: var(--nx-border);
         }
 
         .hits_complete {
@@ -796,12 +796,12 @@ function StatusBadge({ state }: { state: string }) {
 
         .screening_complete {
           color: #6b21a8;
-          background: #f3e8ff;
+          background: var(--nx-border);
         }
 
         .intake_input_created {
           color: #166534;
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
         }
       `}</style>
     </span>
@@ -818,15 +818,15 @@ function Field({ label, value }: { label: string; value: unknown }) {
         .field-card {
           min-height: 82px;
           padding: 14px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 13px;
-          background: #fbfdff;
+          background: var(--nx-surface);
         }
 
         span {
           display: block;
           margin-bottom: 7px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.045em;
@@ -835,7 +835,7 @@ function Field({ label, value }: { label: string; value: unknown }) {
 
         strong {
           display: block;
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: 11px;
           line-height: 1.55;
           word-break: break-word;
@@ -860,9 +860,9 @@ function Section({
       <style jsx>{`
         .section-card {
           padding: 24px;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 20px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
         }
 
@@ -898,9 +898,9 @@ function TimelineItem({
           display: flex;
           gap: 12px;
           padding: 14px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 13px;
-          background: #f8fafc;
+          background: var(--nx-surface);
         }
 
         article > span {
@@ -908,13 +908,13 @@ function TimelineItem({
           height: 12px;
           margin-top: 3px;
           border-radius: 999px;
-          background: #cbd5e1;
+          background: var(--nx-border);
           flex: 0 0 auto;
         }
 
         article.done {
           border-color: #bbf7d0;
-          background: #f7fff9;
+          background: var(--nx-surface);
         }
 
         article.done > span {
@@ -929,7 +929,7 @@ function TimelineItem({
 
         p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 10px;
           line-height: 1.55;
         }
@@ -962,8 +962,8 @@ function DownloadLink({
           place-items: center;
           padding: 12px;
           border-radius: 13px;
-          color: #ffffff;
-          background: #1d4ed8;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
           font-size: 10px;
           font-weight: 900;
           text-align: center;
