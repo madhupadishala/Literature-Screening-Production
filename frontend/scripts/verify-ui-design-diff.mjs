@@ -1,0 +1,5 @@
+import {execFileSync} from "node:child_process";import {readFileSync,existsSync} from "node:fs";
+const base=process.env.UI_BASE_REF||"origin/main";
+let files;try{files=execFileSync("git",["diff","--name-only","--diff-filter=ACMR",base+"...HEAD"],{encoding:"utf8"}).split(/\r?\n/).filter(Boolean);}catch(e){console.error("Cannot calculate changed files against "+base,e.message);process.exit(2)}
+const errors=[];for(const name of files){if(!name.startsWith("frontend/")||!(/\.(tsx|ts|css|jsx|js)$/.test(name))||!existsSync(name))continue;const content=readFileSync(name,"utf8");if(name!=="frontend/app/design-tokens.css"&&/#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/.test(content))errors.push(name+": raw hex color outside canonical design-tokens.css");if(/<style\s+jsx(?:\s|>)/.test(content))errors.push(name+": styled-jsx is prohibited");}
+if(errors.length){console.error(errors.join("\n"));process.exit(1)}console.log("NEXUS design-diff check passed for "+files.length+" changed files");
