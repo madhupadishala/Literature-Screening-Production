@@ -1,0 +1,65 @@
+"use client";
+import {useEffect,useMemo,useState} from "react";
+import {useRecordLock} from "@/hooks/useRecordLock";
+export type Hit={id:string;database:string;doi:string;pmid:string;title:string;language:string;primary:string;secondary:string;country:string;seriousness:string;product:string;events:string;articleType:string;fullText:boolean;safety:boolean;evidence:string;listedness:string;relatedness:string;susar:string;date:string;packageId?:string;hitsResultId?:string;reviewVersion?:number};
+export type SearchHit={hit:Hit;decision:"Unreviewed"|"Yes"|"No"|"Re-review";match:string;source:"duplicate"|"manual"};
+const previewFixtures:Hit[]=[];
+const searchable=(x:Hit,q:string)=>!q||[x.title,x.id,x.pmid,x.doi,x.product,x.events,x.primary].some(v=>v.toLowerCase().includes(q.toLowerCase()));
+const matchOf=(x:Hit,items:Hit[])=>items.find(y=>y.id===x.id||y.pmid===x.pmid||y.doi===x.doi)?.id||"";
+export function useHits(){
+const [open,setOpen]=useState<Record<string,boolean>>({dup:true,dupForm:true,dupResults:true,manual:true,manualForm:true,manualResults:true,queue:true,mine:true});
+const [query,setQuery]=useState({dup:"",manual:""});const [db,setDb]=useState("All");
+const [rows,setRows]=useState<{dup:SearchHit[];manual:SearchHit[]}>({dup:[],manual:[]});
+const [queue,setQueue]=useState<Hit[]>([]);
+const [loadError,setLoadError]=useState("");
+const previewEnabled = process.env.NEXT_PUBLIC_NEXUS_HITS_FIXTURES === "true" && process.env.NODE_ENV !== "production";
+const [liveLoaded,setLiveLoaded]=useState(false);
+const [viewMode,setViewMode]=useState<"readonly"|"review">("readonly");const [completed,setCompleted]=useState<string[]>([]);const [rereview,setRereview]=useState<string[]>([]);
+const [menuRecord,setMenuRecord]=useState<string|null>(null);
+const [savingReview,setSavingReview]=useState(false);
+const [selection,setSelection]=useState<{kind:"dup"|"manual"|"queue";id:string}|null>(null);const [reviewNotes,setReviewNotes]=useState("");const [addTarget,setAddTarget]=useState<{kind:"dup"|"manual";id:string}|null>(null);const [reason,setReason]=useState("");const [notice,setNotice]=useState("");const [worklistView,setWorklistView]=useState<"queue"|"mine">("queue");const [audit,setAudit]=useState<string[]>([]);
+const [applied,setApplied]=useState(false);const [fileFormat,setFileFormat]=useState("csv");const [assigned,setAssigned]=useState<string[]>([]);const [draftFilters,setDraftFilters]=useState({product:"",database:"",seriousness:"",country:"",listedness:"",relatedness:"",susar:"",from:"",to:""});
+const loadHits=async()=>{try{const res=await fetch("/api/literature/hits?limit=500",{cache:"no-store"});if(!res.ok)throw new Error("Hits API unavailable");const payload=await res.json();const items=payload?.data?.hits;if(!Array.isArray(items))throw new Error("Invalid Hits response");const records:Hit[]=items.map((v:Record<string,unknown>)=>({id:String(v.hit_id||v.package_id),database:"Literature",doi:String(v.doi||""),pmid:String(v.pmid||""),title:String(v.title||""),language:"—",primary:"—",secondary:"",country:String(v.country_of_interest||"—"),seriousness:String(v.patient_safety_status||"Not assessed"),product:String(v.product_name||"—"),events:"—",articleType:"—",fullText:false,safety:String(v.patient_safety_status||"").toUpperCase()==="POSITIVE",evidence:String(v.evidence_sentence||""),listedness:"Not assessed",relatedness:"Not assessed",susar:"Not assessed",date:String(v.publication_date||""),packageId:String(v.database_package_id||""),hitsResultId:String(v.hits_result_id||""),reviewVersion:Number(v.review_version||0)}));setQueue(records);setLiveLoaded(true);setLoadError("");}catch(e){setQueue([]);setLiveLoaded(false);setLoadError(e instanceof Error?e.message:"Live Hits could not be loaded");}};
+useEffect(()=>{void loadHits()},[]);
+useEffect(()=>{if(!liveLoaded)return;let active=true;void fetch("/api/v1/my-assignments?stage=HITS",{cache:"no-store"}).then(async response=>{if(!response.ok)throw new Error("Assignments unavailable");const body=await response.json();if(!body.success||!Array.isArray(body.data?.records))throw new Error("Invalid assignments");const packageIds=new Set<string>(body.data.records.map((record:{record_id:string})=>record.record_id));if(active)setAssigned(queue.filter(hit=>hit.packageId&&packageIds.has(hit.packageId)).map(hit=>hit.id));}).catch(()=>{if(active)setNotice("My Assignments could not be loaded from the server.");});return()=>{active=false;};},[liveLoaded,queue]);
+const activeQueueRecord=selection?.kind==="queue"?queue.find(x=>x.id===selection.id):null;
+const recordLock=useRecordLock(viewMode==="review"&&activeQueueRecord?.packageId?activeQueueRecord.packageId:null,"HITS",viewMode==="review"&&Boolean(activeQueueRecord?.packageId));
+const submitHitsReview=async(status:"pending"|"approved"|"dismissed"|"flagged")=>{
+ if(!activeQueueRecord?.packageId||!activeQueueRecord.hitsResultId)return;
+ const proof=recordLock.getProof();if(!proof){setNotice("Record is read-only. Active edit lease required.");return;}
+ if((status==="dismissed"||status==="flagged")&&reviewNotes.trim().length<3){setNotice("Please enter at least 3 characters of review rationale.");return;}
+ setSavingReview(true);
+ try{const res=await fetch("/api/literature/hits/review",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({packageId:activeQueueRecord.packageId,hitsResultId:activeQueueRecord.hitsResultId,status,comments:reviewNotes,expectedVersion:activeQueueRecord.reviewVersion??0,...proof})});
+ const data=await res.json();if(!res.ok||!data.success)throw new Error(data.error?.message||"Save failed");
+ setNotice("Hits review saved with audit and edit-lease validation.");setSelection(null);setReviewNotes("");await loadHits();
+ }catch(e){setNotice(e instanceof Error?e.message:"Review save failed");}
+ finally{setSavingReview(false);}
+};
+const toggle=(k:string)=>setOpen(o=>({...o,[k]:!o[k]}));
+const existing=()=>[...queue,...(previewEnabled?previewFixtures.slice(0,3):[])];
+const run=(kind:"dup"|"manual")=>{if(!previewEnabled){setNotice("Preview search is disabled. No live duplicate/manual search is connected to this panel.");return;}const result=previewFixtures.filter(x=>searchable(x,query[kind])&&(kind==="dup"||db==="All"||db===x.database)).map(hit=>({hit,decision:"Unreviewed" as const,match:matchOf(hit,existing()),source:kind==="dup"?"duplicate" as const:"manual" as const}));setRows(r=>({...r,[kind]:result}));setOpen(o=>({...o,[kind+"Results"]:true}));setNotice(result.length?result.length+" synthetic result(s), no live database or agent accessed":"No matching records found");};
+const row=selection&&selection.kind!=="queue"?rows[selection.kind].find(x=>x.hit.id===selection.id):null;const selected=selection?.kind==="queue"?queue.find(x=>x.id===selection.id):row?.hit;
+const decide=(d:SearchHit["decision"])=>{if(!selection||selection.kind==="queue"||!row)return;if(d==="No"&&row.match){setNotice("Blocked: record exists or duplicates "+row.match);return;}if(d==="Re-review"&&!reviewNotes.trim()){setNotice("Enter an escalation reason first");return;}const kind=selection.kind;const id=selection.id;setRows(r=>({...r,[kind]:r[kind].map(x=>x.hit.id===id?{...x,decision:d}:x)}));setAudit(a=>[row.hit.id+": duplicate review "+d+" (synthetic)",...a]);setSelection(null);setReviewNotes("");};
+const add=()=>{if(!addTarget||!reason.trim())return;const x=rows[addTarget.kind].find(x=>x.hit.id===addTarget.id);if(!x||x.decision!=="No"||matchOf(x.hit,existing())){setNotice("Addition blocked: review incomplete or record already exists");return;}if(!previewEnabled){setNotice("Preview additions are disabled.");return;}setAudit(a=>[x.hit.id+": preview add requested, reason: "+reason,...a]);setNotice("Preview-only action recorded in browser activity; the live Hits queue was not modified.");setAddTarget(null);setReason("");};
+const [filters,setFilters]=useState(draftFilters);
+const filtered=useMemo(()=>queue.filter(x=>(!filters.product||searchable(x,filters.product))&&(!filters.database||x.database===filters.database)&&(!filters.seriousness||x.seriousness===filters.seriousness)&&(!filters.country||x.country===filters.country)&&(!filters.listedness||x.listedness===filters.listedness)&&(!filters.relatedness||x.relatedness===filters.relatedness)&&(!filters.susar||x.susar===filters.susar)&&(!filters.from||x.date>=filters.from)&&(!filters.to||x.date<=filters.to)),[queue,filters]);
+const showActions=(id:string)=>{setSelection(null);setMenuRecord(id);};
+const openQueueRecord=(id:string,mode:"readonly"|"review")=>{setMenuRecord(null);setViewMode(mode);setSelection({kind:"queue",id});setReviewNotes("");};
+const chooseAction=async(action:"open"|"readonly"|"assign"|"review"|"accept")=>{
+ if(!menuRecord)return;
+ const hit=queue.find(x=>x.id===menuRecord);if(!hit)return;
+ if(action==="readonly"||action==="open"){openQueueRecord(hit.id,"readonly");return;}
+ if(!hit.packageId){setMenuRecord(null);setNotice("This is a synthetic preview record; no live ownership or review can be recorded.");return;}
+ if(action==="review"&&!assigned.includes(hit.id)){setMenuRecord(null);setNotice("Accept the assignment or choose Accept and Review before editing.");return;}
+ if(action==="assign"||action==="accept"){
+  try{const res=await fetch("/api/v1/hits/self-assign",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({record_id:hit.packageId})});const payload=await res.json();if(!res.ok||!payload.success)throw new Error(payload.error?.message||payload.error?.code||"Assignment refused");
+  setAssigned(a=>a.includes(hit.id)?a:[...a,hit.id]);
+  }catch(e){setMenuRecord(null);setNotice(e instanceof Error?e.message:"Self-assignment failed");return;}
+ }
+ if(action==="assign"){setMenuRecord(null);setNotice("Record assigned to your worklist.");return;}
+ if(action==="review"||action==="accept"){openQueueRecord(hit.id,"review");}
+};
+const clearFilters=()=>{const empty={product:"",database:"",seriousness:"",country:"",listedness:"",relatedness:"",susar:"",from:"",to:""};setDraftFilters(empty);setFilters(empty);setApplied(false);};
+const exportQueue=()=>{if(fileFormat!=="csv"){setNotice("Only CSV export is available in the synthetic preview.");return;}const safe=(value:unknown)=>{const raw=String(value??"");return '"'+(/^[=+@\\-\\t\\r]/.test(raw)?"'"+raw:raw).replace(/"/g,'""')+'"';};const columns=["ID","Database","DOI","PMID","Title","Language","Primary reporter","Secondary reporter","Country","Seriousness","Product","Events","Article type","Full text"];const data=filtered.map(x=>[x.id,x.database,x.doi,x.pmid,x.title,x.language,x.primary,x.secondary,x.country,x.seriousness,x.product,x.events,x.articleType,x.fullText?"Yes":"No"]);const csv="\\uFEFF"+[columns,...data].map(row=>row.map(safe).join(",")).join("\\r\\n");const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));const link=document.createElement("a");link.href=url;link.download="hits-queue-preview.csv";link.click();URL.revokeObjectURL(url);};
+return {open,setOpen,query,setQuery,db,setDb,rows,setRows,queue,setQueue,loadError,previewEnabled,liveLoaded,viewMode,setViewMode,completed,rereview,menuRecord,setMenuRecord,savingReview,selection,setSelection,reviewNotes,setReviewNotes,addTarget,setAddTarget,reason,setReason,notice,setNotice,worklistView,setWorklistView,audit,applied,setApplied,fileFormat,setFileFormat,assigned,setAssigned,draftFilters,setDraftFilters,filters,setFilters,filtered,activeQueueRecord,recordLock,submitHitsReview,toggle,run,row,selected,decide,add,showActions,openQueueRecord,chooseAction,clearFilters,exportQueue};
+}
