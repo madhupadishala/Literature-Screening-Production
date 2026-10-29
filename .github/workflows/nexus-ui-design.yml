@@ -66,5 +66,20 @@ jobs:
             exit 1
           fi
           echo "Forbidden paths changed: 0"
+      - name: Reject fixture flag in production
+        run: |
+          if [ -n "${NEXT_PUBLIC_NEXUS_HITS_FIXTURES:-}" ]; then
+            echo "Fixture flag must not be present for a production build."
+            exit 1
+          fi
+          echo "Production fixture flag: unset"
       - name: Production build
         run: npm run build
+      - name: Reject bundled synthetic Hits records
+        run: |
+          if grep -rEl 'HIT-00101|39010001|Synthetic excerpt:|10\\.1000/nexus\\.101' .next/static .next/server; then
+            echo "Synthetic Hits fixture data found in production bundle"
+            exit 1
+          fi
+          echo "Synthetic Hits fixtures in production bundle: 0"
+
