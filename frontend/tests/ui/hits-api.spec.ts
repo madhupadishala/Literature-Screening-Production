@@ -1,5 +1,10 @@
 import { expect, test } from "playwright/test";
 
+test.beforeEach(async ({page}) => {
+  page.on("pageerror", error => console.error("HITS BROWSER ERROR:", error.message));
+  page.on("console", message => console.log("HITS CONSOLE:", message.text()));
+});
+
 const liveHit = {
   hit_id: "HIT-LIVE-101",
   package_id: "PKG-LIVE-101",
@@ -26,6 +31,7 @@ async function setup(page: import("playwright").Page, status: number, body: unkn
 test("200 data shows the live worklist", async ({page}) => {
   await setup(page, 200, {data: {hits: [liveHit]}});
   await page.goto("http://127.0.0.1:3108/");
+  console.log("HITS TEST DOM:", (await page.locator("body").innerText()).slice(0,500));
   await expect(page.getByText("Live safety publication for testing")).toBeVisible();
   await expect(page.getByText("Live Hits could not be loaded", {exact: false})).toHaveCount(0);
 });
