@@ -1,7 +1,8 @@
 "use client";
 import {useEffect,useMemo,useState} from "react";
 import {useRecordLock} from "@/hooks/useRecordLock";
-import {fetchLiveHits,downloadHitsCsv,saveHitsReview} from "./hits-utils";
+import {fetchLiveHits,downloadHitsCsv} from "./hits-utils";
+import {createSubmitHitsReview} from "./hits-review-actions";
 import {createChooseAction} from "./hits-actions";
 export type Hit={id:string;database:string;doi:string;pmid:string;title:string;language:string;primary:string;secondary:string;country:string;seriousness:string;product:string;events:string;articleType:string;fullText:boolean;safety:boolean;evidence:string;listedness:string;relatedness:string;susar:string;date:string;packageId?:string;hitsResultId?:string;reviewVersion?:number};
 export type SearchHit={hit:Hit;decision:"Unreviewed"|"Yes"|"No"|"Re-review";match:string;source:"duplicate"|"manual"};
@@ -26,16 +27,7 @@ useEffect(()=>{void loadHits()},[]);
 useEffect(()=>{if(!liveLoaded)return;let active=true;void fetch("/api/v1/my-assignments?stage=HITS",{cache:"no-store"}).then(async response=>{if(!response.ok)throw new Error("Assignments unavailable");const body=await response.json();if(!body.success||!Array.isArray(body.data?.records))throw new Error("Invalid assignments");const packageIds=new Set<string>(body.data.records.map((record:{record_id:string})=>record.record_id));if(active)setAssigned(queue.filter(hit=>hit.packageId&&packageIds.has(hit.packageId)).map(hit=>hit.id));}).catch(()=>{if(active)setNotice("My Assignments could not be loaded from the server.");});return()=>{active=false;};},[liveLoaded,queue]);
 const activeQueueRecord=selection?.kind==="queue"?queue.find(x=>x.id===selection.id):null;
 const recordLock=useRecordLock(viewMode==="review"&&activeQueueRecord?.packageId?activeQueueRecord.packageId:null,"HITS",viewMode==="review"&&Boolean(activeQueueRecord?.packageId));
-const submitHitsReview=async(status:"pending"|"approved"|"dismissed"|"flagged")=>{
- if(!activeQueueRecord?.packageId||!activeQueueRecord.hitsResultId)return;
- const proof=recordLock.getProof();if(!proof){setNotice("Record is read-only. Active edit lease required.");return;}
- if((status==="dismissed"||status==="flagged")&&reviewNotes.trim().length<3){setNotice("Please enter at least 3 characters of review rationale.");return;}
- setSavingReview(true);
- try{await saveHitsReview(activeQueueRecord,proof,status,reviewNotes);
- setNotice("Hits review saved with audit and edit-lease validation.");setSelection(null);setReviewNotes("");await loadHits();
- }catch(e){setNotice(e instanceof Error?e.message:"Review save failed");}
- finally{setSavingReview(false);}
-};
+const submitHitsReview=createSubmitHitsReview({activeQueueRecord,recordLock,reviewNotes,setNotice,setSavingReview,setSelection,setReviewNotes,loadHits});
 const toggle=(k:string)=>setOpen(o=>({...o,[k]:!o[k]}));
 const existing=()=>[...queue,...(previewEnabled?previewFixtures.slice(0,3):[])];
 const run=(kind:"dup"|"manual")=>{if(!previewEnabled){setNotice("Preview search is disabled. No live duplicate/manual search is connected to this panel.");return;}const result=previewFixtures.filter(x=>searchable(x,query[kind])&&(kind==="dup"||db==="All"||db===x.database)).map(hit=>({hit,decision:"Unreviewed" as const,match:matchOf(hit,existing()),source:kind==="dup"?"duplicate" as const:"manual" as const}));setRows(r=>({...r,[kind]:result}));setOpen(o=>({...o,[kind+"Results"]:true}));setNotice(result.length?result.length+" synthetic result(s), no live database or agent accessed":"No matching records found");};
