@@ -1,0 +1,49 @@
+name: NEXUS Hits mocked API and lease contract
+on:
+  push:
+    branches:
+      - feat/nexus-unified-ui-primitives-20261028
+    paths:
+      - ".github/workflows/ui-hits-api.yml"
+      - "frontend/tests/ui/hits-*"
+      - "frontend/scripts/serve-hits-harness.mjs"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  hits-api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm ci
+      - name: Build isolated Hits harness
+        run: |
+          mkdir -p .hits-test-harness
+          npx --yes esbuild@0.25.11 tests/ui/hits-harness.tsx \
+            --bundle --platform=browser --format=iife --jsx=automatic \
+            --loader:.module.css=local-css --alias:@=. \
+            --outdir=.hits-test-harness --entry-names=bundle
+          printf '<!doctype html><html><head><link rel="stylesheet" href="/bundle.css"></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>' > .hits-test-harness/index.html
+      - run: npx playwright install --with-deps chromium
+      - name: Start Hits harness
+        run: |
+          node scripts/serve-hits-harness.mjs >/tmp/hits-harness.log 2>&1 &
+          for n in $(seq 1 40); do
+            curl -sf http://127.0.0.1:3108/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/hits-harness.log
+          exit 1
+      - name: Execute mocked API and lease scenarios
+        run: npx playwright test tests/ui/hits-api.spec.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nexus-hits-api-contract-artifacts
+          path: frontend/test-results
