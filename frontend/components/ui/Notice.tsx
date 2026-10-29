@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import s from "./primitives.module.css";
+import s from "./data-primitives.module.css";
 export function Notice({
   children,
   tone = "info",

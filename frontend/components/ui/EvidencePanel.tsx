@@ -1,4 +1,4 @@
-import s from "./primitives.module.css";
+import s from "./data-primitives.module.css";
 import { Badge } from "./Badge";
 export function EvidencePanel({
   suggestion,

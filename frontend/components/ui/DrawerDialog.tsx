@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, type ReactNode } from "react";
-import s from "./primitives.module.css";
+import s from "./data-primitives.module.css";
 import { Button } from "./Button";
 export function DrawerDialog({
   open,

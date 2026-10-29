@@ -2,7 +2,7 @@ import type { Key, ReactNode } from "react";
 
 import { Button } from "./Button";
 import { Notice } from "./Notice";
-import styles from "./primitives.module.css";
+import styles from "./data-primitives.module.css";
 
 export type Column<T> = {
   key: string;
