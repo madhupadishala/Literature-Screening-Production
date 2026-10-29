@@ -69,10 +69,13 @@ function matchColor(hex) {
 }
 
 const exclusions = new Set(["node_modules", ".next", ".git", "out", "build"]);
+const excludePaths = ["app/api", "auth", "lib/auth", "src/design-system"];
+const excludedPath = path => excludePaths.some(prefix => path === prefix || path.startsWith(prefix + "/"));
 const files = [];
 function walk(dir) {
   for (const entry of readdirSync(dir, {withFileTypes: true})) {
     if (exclusions.has(entry.name)) continue;
+    if (excludedPath(relative(frontend, join(dir, entry.name)).replaceAll("\\", "/"))) continue;
     const pathname = join(dir, entry.name);
     if (entry.isDirectory()) walk(pathname);
     else if (/\.(tsx|ts|css)$/.test(entry.name) &&
