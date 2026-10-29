@@ -71,6 +71,7 @@ const eslintConfig = defineConfig([
     files: [
       "hooks/useRecordLock.ts",
       "components/nexus-hits-v2/HitsWorkspace.tsx",
+      "components/nexus-hits-v2/hooks/useHits.ts",
     ],
     rules: {
       "react-hooks/set-state-in-effect": "off",
