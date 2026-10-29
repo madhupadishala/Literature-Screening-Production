@@ -28,6 +28,8 @@ jobs:
           npx --yes esbuild@0.25.11 tests/ui/hits-harness.tsx \
             --bundle --platform=browser --format=iife --jsx=automatic \
             --loader:.module.css=local-css --alias:@=. \
+            --define:process.env.NODE_ENV='"development"' \
+            --define:process.env.NEXT_PUBLIC_NEXUS_HITS_FIXTURES='"false"' \
             --outdir=.hits-test-harness --entry-names=bundle
           printf '<!doctype html><html><head><link rel="stylesheet" href="/bundle.css"></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>' > .hits-test-harness/index.html
       - run: npx playwright install --with-deps chromium
