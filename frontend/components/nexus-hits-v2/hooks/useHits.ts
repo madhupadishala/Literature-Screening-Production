@@ -234,6 +234,7 @@ export function useHits() {
     queue,
     setQueue,
     loadError,
+    loadHits,
     previewEnabled,
     liveLoaded,
     viewMode,
