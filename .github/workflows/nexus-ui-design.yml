@@ -59,5 +59,12 @@ jobs:
           matches=$(grep -Ein '#[[:xdigit:]]{6}' components/Navigation.tsx components/ModuleSubNavigation.tsx components/enterprise/ApplicationShell.tsx || true)
           echo "${matches:-0}"
           test -z "$matches"
+      - name: Forbidden path safety gate
+        run: |
+          if git diff --name-only df4a49f...HEAD | grep -E '^frontend/(app/api/|auth/|lib/auth/|src/design-system/)'; then
+            echo "Forbidden files changed compared with df4a49f"
+            exit 1
+          fi
+          echo "Forbidden paths changed: 0"
       - name: Production build
         run: npm run build
