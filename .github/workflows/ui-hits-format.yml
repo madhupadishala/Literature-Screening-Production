@@ -24,12 +24,12 @@ jobs:
       - run: npm ci
       - name: Format Hits source
         run: |
-          npx --yes prettier@3.6.2 --print-width 120 --write "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/useHits.ts"
+          npx --yes prettier@3.6.2 --print-width 120 --write "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/{useHits,hits-utils}.ts"
           npx --yes prettier@3.6.2 --print-width 120 --check "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/useHits.ts"
       - name: Check source line budgets
         run: |
           failures=0
-          for file in components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx components/nexus-hits-v2/hooks/useHits.ts; do
+          for file in components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx components/nexus-hits-v2/hooks/{useHits,hits-utils}.ts; do
             count=$(wc -l < "$file")
             echo "$file: $count lines"
             if test "$count" -ge 300; then echo "File exceeds regulated UI line budget"; failures=1; fi
