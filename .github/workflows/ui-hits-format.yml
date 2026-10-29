@@ -24,15 +24,17 @@ jobs:
       - run: npm ci
       - name: Format Hits source
         run: |
-          npx --yes prettier@3.6.2 --write "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/useHits.ts"
-          npx --yes prettier@3.6.2 --check "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/useHits.ts"
+          npx --yes prettier@3.6.2 --print-width 120 --write "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/useHits.ts"
+          npx --yes prettier@3.6.2 --print-width 120 --check "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/useHits.ts"
       - name: Check source line budgets
         run: |
+          failures=0
           for file in components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx components/nexus-hits-v2/hooks/useHits.ts; do
             count=$(wc -l < "$file")
             echo "$file: $count lines"
-            if test "$count" -ge 300; then echo "File exceeds regulated UI line budget"; exit 1; fi
+            if test "$count" -ge 300; then echo "File exceeds regulated UI line budget"; failures=1; fi
           done
+          test "$failures" -eq 0
       - run: npx tsc --noEmit
       - run: npm run lint
       - run: npm run build
