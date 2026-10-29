@@ -1,7 +1,7 @@
 "use client";
 import {useEffect,useMemo,useState} from "react";
 import {useRecordLock} from "@/hooks/useRecordLock";
-import {fetchLiveHits,downloadHitsCsv} from "./hits-utils";
+import {fetchLiveHits,downloadHitsCsv,saveHitsReview,selfAssignHit} from "./hits-utils";
 export type Hit={id:string;database:string;doi:string;pmid:string;title:string;language:string;primary:string;secondary:string;country:string;seriousness:string;product:string;events:string;articleType:string;fullText:boolean;safety:boolean;evidence:string;listedness:string;relatedness:string;susar:string;date:string;packageId?:string;hitsResultId?:string;reviewVersion?:number};
 export type SearchHit={hit:Hit;decision:"Unreviewed"|"Yes"|"No"|"Re-review";match:string;source:"duplicate"|"manual"};
 const previewFixtures:Hit[]=[];
@@ -30,8 +30,7 @@ const submitHitsReview=async(status:"pending"|"approved"|"dismissed"|"flagged")=
  const proof=recordLock.getProof();if(!proof){setNotice("Record is read-only. Active edit lease required.");return;}
  if((status==="dismissed"||status==="flagged")&&reviewNotes.trim().length<3){setNotice("Please enter at least 3 characters of review rationale.");return;}
  setSavingReview(true);
- try{const res=await fetch("/api/literature/hits/review",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({packageId:activeQueueRecord.packageId,hitsResultId:activeQueueRecord.hitsResultId,status,comments:reviewNotes,expectedVersion:activeQueueRecord.reviewVersion??0,...proof})});
- const data=await res.json();if(!res.ok||!data.success)throw new Error(data.error?.message||"Save failed");
+ try{await saveHitsReview(activeQueueRecord,proof,status,reviewNotes);
  setNotice("Hits review saved with audit and edit-lease validation.");setSelection(null);setReviewNotes("");await loadHits();
  }catch(e){setNotice(e instanceof Error?e.message:"Review save failed");}
  finally{setSavingReview(false);}
@@ -53,7 +52,7 @@ const chooseAction=async(action:"open"|"readonly"|"assign"|"review"|"accept")=>{
  if(!hit.packageId){setMenuRecord(null);setNotice("This is a synthetic preview record; no live ownership or review can be recorded.");return;}
  if(action==="review"&&!assigned.includes(hit.id)){setMenuRecord(null);setNotice("Accept the assignment or choose Accept and Review before editing.");return;}
  if(action==="assign"||action==="accept"){
-  try{const res=await fetch("/api/v1/hits/self-assign",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({record_id:hit.packageId})});const payload=await res.json();if(!res.ok||!payload.success)throw new Error(payload.error?.message||payload.error?.code||"Assignment refused");
+  try{await selfAssignHit(hit.packageId);
   setAssigned(a=>a.includes(hit.id)?a:[...a,hit.id]);
   }catch(e){setMenuRecord(null);setNotice(e instanceof Error?e.message:"Self-assignment failed");return;}
  }
