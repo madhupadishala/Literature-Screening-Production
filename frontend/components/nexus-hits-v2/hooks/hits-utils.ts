@@ -1,10 +1,10 @@
 import type { Hit } from "./useHits";
 export async function fetchLiveHits(): Promise<Hit[]> {
   const res = await fetch("/api/literature/hits?limit=500", { cache: "no-store" });
-  if (!res.ok) throw new Error("Hits API unavailable");
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const payload = await res.json();
   const items = payload?.data?.hits;
-  if (!Array.isArray(items)) throw new Error("Invalid Hits response");
+  if (!Array.isArray(items)) throw new Error("invalid response");
   const records: Hit[] = items.map((v: Record<string, unknown>) => ({
     id: String(v.hit_id || v.package_id),
     database: "Literature",

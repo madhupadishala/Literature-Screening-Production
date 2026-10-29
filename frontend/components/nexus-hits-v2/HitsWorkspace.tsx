@@ -17,6 +17,7 @@ export default function HitsWorkspace() {
   const model = useHits();
   const {
     loadError,
+    loadHits,
     previewEnabled,
     queue,
     completed,
@@ -90,20 +91,26 @@ export default function HitsWorkspace() {
   const parent = (key: string, title: string, children: React.ReactNode) => <Section title={title}>{children}</Section>;
   return (
     <div className="nh-root">
-      {loadError && <Notice tone="error">{loadError}</Notice>}
+      {loadError && (
+        <Notice tone="error">
+          <strong>Could not load hits. Please retry.</strong>
+          <p>{loadError}</p>
+          <Button onClick={() => void loadHits()}>Retry</Button>
+        </Notice>
+      )}
       {previewEnabled && <Badge tone="warning">PREVIEW FIXTURES — NOT LIVE SEARCH</Badge>}
       <div className="nh-metrics" aria-label="Hits insights">
         <div>
-          Hits in queue<strong>{queue.length}</strong>
+          Hits in queue<strong>{loadError ? "—" : queue.length}</strong>
         </div>
         <div>
-          Awaiting review<strong>{queue.length - completed.length}</strong>
+          Awaiting review<strong>{loadError ? "—" : queue.length - completed.length}</strong>
         </div>
         <div>
-          Preview re-review<strong>{previewEnabled ? rereview.length : 0}</strong>
+          Preview re-review<strong>{loadError ? "—" : previewEnabled ? rereview.length : 0}</strong>
         </div>
         <div>
-          Assignments<strong>{assigned.length}</strong>
+          Assignments<strong>{loadError ? "—" : assigned.length}</strong>
         </div>
       </div>
       {notice && (
