@@ -46,4 +46,6 @@ jobs:
           git add frontend/components/nexus-hits-v2/
           git diff --cached --quiet && exit 0
           git commit -m "style(hits): format split workspaces"
+          git fetch origin feat/nexus-unified-ui-primitives-20261028
+          git rebase origin/feat/nexus-unified-ui-primitives-20261028
           git push origin HEAD:feat/nexus-unified-ui-primitives-20261028
