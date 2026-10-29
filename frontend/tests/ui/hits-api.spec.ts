@@ -96,5 +96,6 @@ test("Retry recovers from initial HTTP 500", async ({page}) => {
   await expect(page.getByText("Live safety publication for testing")).toBeVisible();
   await expect(page.locator(".nh-metrics strong").first()).toHaveText("1");
   await expect(page.getByText("Could not load hits. Please retry.")).toHaveCount(0);
+  await expect(page.getByRole("button", {name: "Retry"})).toHaveCount(0);
   expect(attempts).toBeGreaterThanOrEqual(2);
 });
