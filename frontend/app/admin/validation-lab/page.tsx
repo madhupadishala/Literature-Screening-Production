@@ -252,17 +252,17 @@ export default function Sprint6CValidationLabPage() {
       </section>
 
       <style jsx>{`
-        .app-shell{min-height:100vh;padding:24px;background:#eef2f7;color:#0f172a;font-family:"Poppins",Arial,sans-serif}
-        .warning{display:flex;justify-content:space-between;gap:16px;margin-bottom:14px;padding:13px 16px;border:1px solid #f59e0b;border-radius:10px;background:#fffbeb;color:#92400e;font-size:10px}
-        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.card,.create-panel,.path,.history,.created{border:1px solid #dbe4ef;border-radius:12px;background:#fff}
-        .card{padding:15px}.card span,.history header span{color:#1d4ed8;font-size:8px;font-weight:900;text-transform:uppercase}.card h2{margin:7px 0;font-size:15px}.card p,.path p{margin:0;color:#64748b;font-size:9px;line-height:1.55}
+        .app-shell{min-height:100vh;padding:24px;background:var(--nx-surface);color:var(--nx-text);font-family:"Poppins",Arial,sans-serif}
+        .warning{display:flex;justify-content:space-between;gap:16px;margin-bottom:14px;padding:13px 16px;border:1px solid #f59e0b;border-radius:10px;background:var(--nx-surface);color:#92400e;font-size:10px}
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.card,.create-panel,.path,.history,.created{border:1px solid var(--nx-border);border-radius:12px;background:var(--nx-surface)}
+        .card{padding:15px}.card span,.history header span{color:var(--nx-primary);font-size:8px;font-weight:900;text-transform:uppercase}.card h2{margin:7px 0;font-size:15px}.card p,.path p{margin:0;color:var(--nx-text-muted);font-size:9px;line-height:1.55}
         .create-panel{display:flex;gap:12px;align-items:end;padding:15px;margin-bottom:14px}.create-panel label{flex:1}.create-panel span{display:block;margin-bottom:5px;color:#475569;font-size:8px;font-weight:900;text-transform:uppercase}
-        input{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:7px;padding:9px;font:inherit;font-size:10px}
-        button,.actions :global(a){border:0;border-radius:8px;padding:9px 12px;background:#185abd;color:#fff;font:inherit;font-size:9px;font-weight:800;text-decoration:none;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
-        .message{margin-bottom:14px;padding:11px 13px;border-radius:8px;background:#eff6ff;color:#1e3a8a;font-size:10px}
-        .created{display:grid;grid-template-columns:1fr 1fr 2fr;gap:12px;padding:15px;margin-bottom:14px}.created span{display:block;color:#64748b;font-size:8px;font-weight:900;text-transform:uppercase}.created strong,.created small{display:block;margin-top:4px}.created small{color:#64748b;font-size:8px;word-break:break-all}.actions{display:flex;gap:7px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
-        .path{padding:16px;margin-bottom:14px}.path h2{margin:0 0 12px;font-size:16px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.step{padding:11px;border:1px solid #e2e8f0;border-radius:9px;background:#f8fafc}.step-num{display:grid;width:23px;height:23px;place-items:center;border-radius:50%;background:#1d4ed8;color:#fff;font-size:9px;font-weight:900}.step strong{display:block;margin:7px 0 4px;font-size:10px}
-        .history{overflow:hidden}.history header{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid #e2e8f0}.history h2{margin:4px 0 0;font-size:16px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:9px}th,td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left;vertical-align:top}th{background:#f8fafc;color:#64748b;font-size:8px;text-transform:uppercase}td strong,td small{display:block}td small{margin-top:3px;color:#94a3b8}.empty{text-align:center;color:#64748b;padding:24px}
+        input{width:100%;box-sizing:border-box;border:1px solid var(--nx-border);border-radius:7px;padding:9px;font:inherit;font-size:10px}
+        button,.actions :global(a){border:0;border-radius:8px;padding:9px 12px;background:var(--nx-primary);color:var(--nx-surface);font:inherit;font-size:9px;font-weight:800;text-decoration:none;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
+        .message{margin-bottom:14px;padding:11px 13px;border-radius:8px;background:var(--nx-surface);color:#1e3a8a;font-size:10px}
+        .created{display:grid;grid-template-columns:1fr 1fr 2fr;gap:12px;padding:15px;margin-bottom:14px}.created span{display:block;color:var(--nx-text-muted);font-size:8px;font-weight:900;text-transform:uppercase}.created strong,.created small{display:block;margin-top:4px}.created small{color:var(--nx-text-muted);font-size:8px;word-break:break-all}.actions{display:flex;gap:7px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
+        .path{padding:16px;margin-bottom:14px}.path h2{margin:0 0 12px;font-size:16px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.step{padding:11px;border:1px solid var(--nx-border);border-radius:9px;background:var(--nx-surface)}.step-num{display:grid;width:23px;height:23px;place-items:center;border-radius:50%;background:var(--nx-primary);color:var(--nx-surface);font-size:9px;font-weight:900}.step strong{display:block;margin:7px 0 4px;font-size:10px}
+        .history{overflow:hidden}.history header{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid var(--nx-border)}.history h2{margin:4px 0 0;font-size:16px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:9px}th,td{padding:10px;border-bottom:1px solid var(--nx-border);text-align:left;vertical-align:top}th{background:var(--nx-surface);color:var(--nx-text-muted);font-size:8px;text-transform:uppercase}td strong,td small{display:block}td small{margin-top:3px;color:#94a3b8}.empty{text-align:center;color:var(--nx-text-muted);padding:24px}
         @media(max-width:900px){.grid,.steps,.created{grid-template-columns:1fr}.create-panel{display:block}.create-panel button{margin-top:10px}.actions{justify-content:flex-start}}
         @media(max-width:700px){.app-shell{padding:12px}.warning{flex-direction:column}}
       `}</style>
@@ -277,6 +277,6 @@ function Step({ n, title, detail }: { n: string; title: string; detail: string }
 function Status({ value }: { value: string }) {
   return <span className={`status ${statusTone(value)}`}>{String(value || "—").replaceAll("_", " ")}<style jsx>{`
     .status{display:inline-block;padding:4px 7px;border-radius:999px;font-size:7px;font-weight:900;text-transform:uppercase}
-    .good{background:#dcfce7;color:#166534}.warn{background:#fef3c7;color:#92400e}.pending{background:#dbeafe;color:#1e40af}
+    .good{background:var(--nx-success-subtle);color:#166534}.warn{background:var(--nx-warning-subtle);color:#92400e}.pending{background:var(--nx-border);color:var(--nx-primary-active)}
   `}</style></span>;
 }

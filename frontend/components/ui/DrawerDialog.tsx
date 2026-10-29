@@ -1,0 +1,49 @@
+"use client";
+import { useEffect, useRef, type ReactNode } from "react";
+import s from "./data-primitives.module.css";
+import { Button } from "./Button";
+export function DrawerDialog({
+  open,
+  onClose,
+  title,
+  children,
+  drawer = false,
+  readOnly = false,
+  finalized = false,
+}: {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  children: ReactNode;
+  drawer?: boolean;
+  readOnly?: boolean;
+  finalized?: boolean;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const d = ref.current;
+    if (!d) return;
+    if (open && !d.open) d.showModal();
+    if (!open && d.open) d.close();
+  }, [open]);
+  return (
+    <dialog
+      ref={ref}
+      onClose={onClose}
+      onCancel={onClose}
+      aria-label={title}
+      data-readonly={readOnly || undefined}
+      data-finalized={finalized || undefined}
+      className={[s.dialog, drawer ? s.drawer : ""].filter(Boolean).join(" ")}
+    >
+      <div className={s.dialogHeader}>
+        <h2>{title}</h2>
+        <Button variant="secondary" onClick={onClose}>
+          Close
+        </Button>
+      </div>
+      {children}
+    </dialog>
+  );
+}
+export default DrawerDialog;

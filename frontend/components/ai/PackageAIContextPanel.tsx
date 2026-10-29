@@ -40,8 +40,8 @@ export default function PackageAIContextPanel() {
             marginTop: 20,
             overflow: "auto",
             maxHeight: 600,
-            background: "#111827",
-            color: "#f9fafb",
+            background: "var(--nx-text)",
+            color: "var(--nx-surface)",
             padding: 16,
             borderRadius: 8,
           }}

@@ -152,15 +152,15 @@ export default function TenantManagementPage() {
       <style jsx>{`
         .app-shell {
           min-height: 100vh;
-          background: #f4f7fb;
+          background: var(--nx-surface);
           padding: 24px;
-          color: #0f172a;
+          color: var(--nx-text);
           font-family: Arial, Helvetica, sans-serif;
         }
 
         .topbar {
-          background: linear-gradient(135deg, #071b34, #123f68);
-          color: #ffffff;
+          background: linear-gradient(135deg, var(--nx-text), #123f68);
+          color: var(--nx-surface);
           border-radius: 20px;
           padding: 24px 28px;
           display: flex;
@@ -176,7 +176,7 @@ export default function TenantManagementPage() {
 
         .topbar p {
           margin: 6px 0 0;
-          color: #cfe7ff;
+          color: var(--nx-border);
         }
 
         .topbar-meta {
@@ -204,8 +204,8 @@ export default function TenantManagementPage() {
         .metric-card,
         .panel,
         .info-card {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
+          background: var(--nx-surface);
+          border: 1px solid var(--nx-border);
           border-radius: 18px;
           box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
         }
@@ -216,7 +216,7 @@ export default function TenantManagementPage() {
 
         .metric-card span {
           display: block;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 13px;
           margin-bottom: 8px;
           font-weight: 800;
@@ -228,7 +228,7 @@ export default function TenantManagementPage() {
         }
 
         .success strong {
-          color: #15803d;
+          color: var(--nx-success);
         }
 
         .warning strong {
@@ -246,7 +246,7 @@ export default function TenantManagementPage() {
           justify-content: space-between;
           gap: 16px;
           align-items: center;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
         }
 
         .panel-header h2 {
@@ -255,7 +255,7 @@ export default function TenantManagementPage() {
 
         .panel-header p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           line-height: 1.5;
           max-width: 760px;
         }
@@ -270,7 +270,7 @@ export default function TenantManagementPage() {
           border: none;
           border-radius: 12px;
           background: #185a9d;
-          color: #ffffff;
+          color: var(--nx-surface);
           padding: 10px 14px;
           font-weight: 800;
           cursor: pointer;
@@ -287,7 +287,7 @@ export default function TenantManagementPage() {
         }
 
         th {
-          background: #f8fafc;
+          background: var(--nx-surface);
           color: #475569;
           text-align: left;
           padding: 14px;
@@ -298,7 +298,7 @@ export default function TenantManagementPage() {
 
         td {
           padding: 14px;
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid var(--nx-border);
           vertical-align: middle;
         }
 
@@ -319,17 +319,17 @@ export default function TenantManagementPage() {
         }
 
         .ok {
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
           color: #166534;
         }
 
         .warn {
-          background: #fef3c7;
+          background: var(--nx-warning-subtle);
           color: #92400e;
         }
 
         .env-pill {
-          background: #e0f2fe;
+          background: var(--nx-border);
           color: #075985;
         }
 
@@ -357,8 +357,8 @@ export default function TenantManagementPage() {
           position: fixed;
           right: 24px;
           bottom: 24px;
-          background: #0f172a;
-          color: #ffffff;
+          background: var(--nx-text);
+          color: var(--nx-surface);
           padding: 14px 18px;
           border-radius: 14px;
           box-shadow: 0 14px 32px rgba(15, 23, 42, 0.28);

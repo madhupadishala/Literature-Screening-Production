@@ -33,11 +33,11 @@ export default function LiteratureDashboardPage() {
       </section>
       <style>{`
         .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:14px}
-        .card,.assessment{border:1px solid #cbd5e1;border-radius:8px;background:#fff;padding:20px;text-decoration:none;color:inherit}
-        .card span,.assessment span{font-size:8px;font-weight:900;letter-spacing:.08em;color:#185abd}
+        .card,.assessment{border:1px solid var(--nx-border);border-radius:8px;background:var(--nx-surface);padding:20px;text-decoration:none;color:inherit}
+        .card span,.assessment span{font-size:8px;font-weight:900;letter-spacing:.08em;color:var(--nx-primary)}
         .card strong,.assessment strong{display:block;margin-top:8px;font-size:18px}
-        .card p,.assessment p{margin:8px 0 0;color:#64748b;font-size:11px;line-height:1.6}
-        .card:hover{border-color:#185abd}
+        .card p,.assessment p{margin:8px 0 0;color:var(--nx-text-muted);font-size:11px;line-height:1.6}
+        .card:hover{border-color:var(--nx-primary)}
         @media(max-width:800px){.grid{grid-template-columns:1fr}}
       `}</style>
     </ApplicationShell>

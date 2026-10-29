@@ -697,31 +697,31 @@ export default function ScreeningPage() {
       {toast && <div className="toast">{toast}</div>}
 
       <style jsx>{`
-        .nxs-screening-tabs{display:flex;background:#fff;border-bottom:1px solid #c6c6c6}
-        .nxs-screening-tabs button{border-radius:0;background:white;color:#393939;border:0;border-bottom:2px solid transparent}
-        .nxs-screening-tabs button[aria-selected="true"]{border-bottom-color:#0f62fe;color:#0f62fe}
+        .nxs-screening-tabs{display:flex;background:var(--nx-surface);border-bottom:1px solid var(--nx-border)}
+        .nxs-screening-tabs button{border-radius:0;background:white;color:var(--nx-text-muted);border:0;border-bottom:2px solid transparent}
+        .nxs-screening-tabs button[aria-selected="true"]{border-bottom-color:var(--nx-primary);color:var(--nx-primary)}
         .nxs-my-work{max-height:calc(100vh - 275px);overflow:auto;padding:8px;background:white}
-        .nxs-not-ready{padding:14px;background:#fff8e1;color:#5d4700;font-size:11px}
+        .nxs-not-ready{padding:14px;background:var(--nx-warning-subtle);color:#5d4700;font-size:11px}
         .table-wrap{max-height:calc(100vh - 275px);overflow:auto}
 
         .nxs-screening-heading{display:flex;gap:14px;align-items:baseline;padding:5px 3px;margin:0}
-        .nxs-screening-heading h1{font-size:17px;line-height:1.3;margin:0;color:#161616}
-        .nxs-screening-heading span{font-size:11px;color:#525252}
-        .metrics-grid{display:flex!important;gap:0!important;margin:3px 0!important;background:#fff;border:1px solid #c6c6c6;overflow-x:auto}
-        .metrics-grid :global(article){flex:1;min-width:125px;min-height:38px!important;padding:5px 9px!important;border:0!important;border-right:1px solid #e0e0e0!important;border-radius:0!important;box-shadow:none!important}
+        .nxs-screening-heading h1{font-size:17px;line-height:1.3;margin:0;color:var(--nx-text)}
+        .nxs-screening-heading span{font-size:11px;color:var(--nx-text-muted)}
+        .metrics-grid{display:flex!important;gap:0!important;margin:3px 0!important;background:var(--nx-surface);border:1px solid var(--nx-border);overflow-x:auto}
+        .metrics-grid :global(article){flex:1;min-width:125px;min-height:38px!important;padding:5px 9px!important;border:0!important;border-right:1px solid var(--nx-border)!important;border-radius:0!important;box-shadow:none!important}
         .metrics-grid :global(article span){min-height:0!important;font-size:9px!important;letter-spacing:0!important}
         .metrics-grid :global(article strong){display:inline!important;font-size:15px!important;margin:0!important}
         .panel{border-radius:0!important;box-shadow:none!important}
         .panel-header{padding:9px 12px!important}
         th,td{padding:6px 8px!important;font-size:10px!important}
-        th{position:sticky;top:0;z-index:2;background:#e0e0e0!important}
+        th{position:sticky;top:0;z-index:2;background:var(--nx-border)!important}
 
         .app-shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
+          color: var(--nx-text);
           background:
-            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%), #f4f7fb;
+            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%), var(--nx-surface);
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 
@@ -734,9 +734,9 @@ export default function ScreeningPage() {
 
         .panel {
           overflow: hidden;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 21px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
         }
 
@@ -746,11 +746,11 @@ export default function ScreeningPage() {
           align-items: center;
           gap: 24px;
           padding: 23px 24px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
         }
 
         .section-kicker {
-          color: #1d4ed8;
+          color: var(--nx-primary);
           font-size: 10px;
           font-weight: 900;
           letter-spacing: 0.07em;
@@ -765,7 +765,7 @@ export default function ScreeningPage() {
 
         .panel-header p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 12px;
         }
 
@@ -780,7 +780,7 @@ export default function ScreeningPage() {
         .panel-actions input {
           min-width: 230px;
           padding: 10px 12px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 10px;
           outline: none;
           font: inherit;
@@ -788,7 +788,7 @@ export default function ScreeningPage() {
         }
 
         .panel-actions input:focus {
-          border-color: #1d4ed8;
+          border-color: var(--nx-primary);
           box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
         }
 
@@ -798,10 +798,10 @@ export default function ScreeningPage() {
           align-items: center;
           min-height: 36px;
           padding: 8px 11px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 10px;
-          color: #334155;
-          background: #ffffff;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font: inherit;
           font-size: 10px;
           font-weight: 900;
@@ -810,9 +810,9 @@ export default function ScreeningPage() {
         }
 
         .panel-actions .primary-action {
-          border-color: #1d4ed8;
-          color: #ffffff;
-          background: #1d4ed8;
+          border-color: var(--nx-primary);
+          color: var(--nx-surface);
+          background: var(--nx-primary);
         }
 
         .filters-row {
@@ -820,16 +820,16 @@ export default function ScreeningPage() {
           gap: 8px;
           padding: 12px 18px;
           overflow-x: auto;
-          border-bottom: 1px solid #e2e8f0;
-          background: #f8fafc;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
 
         .filters-row button {
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 999px;
           padding: 7px 10px;
           color: #475569;
-          background: #ffffff;
+          background: var(--nx-surface);
           font: inherit;
           font-size: 9px;
           font-weight: 800;
@@ -850,15 +850,15 @@ export default function ScreeningPage() {
         th,
         td {
           padding: 13px 14px;
-          border-bottom: 1px solid #e8eef5;
+          border-bottom: 1px solid var(--nx-border);
           text-align: left;
           vertical-align: middle;
           font-size: 11px;
         }
 
         th {
-          color: #64748b;
-          background: #ffffff;
+          color: var(--nx-text-muted);
+          background: var(--nx-surface);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.055em;
@@ -866,7 +866,7 @@ export default function ScreeningPage() {
         }
 
         tbody tr:hover {
-          background: #f8fbff;
+          background: var(--nx-surface);
         }
 
         td strong,
@@ -892,7 +892,7 @@ export default function ScreeningPage() {
           padding: 6px 8px;
           border-radius: 999px;
           color: #166534;
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
           font-size: 8px;
           font-weight: 900;
           text-transform: uppercase;
@@ -901,25 +901,25 @@ export default function ScreeningPage() {
 
         .qc-badge.required {
           color: #92400e;
-          background: #fef3c7;
+          background: var(--nx-warning-subtle);
         }
 
         .qc-badge.pending {
-          color: #1e40af;
-          background: #dbeafe;
+          color: var(--nx-primary-active);
+          background: var(--nx-border);
         }
 
         .decision {
-          color: #1e40af;
-          background: #dbeafe;
+          color: var(--nx-primary-active);
+          background: var(--nx-border);
         }
 
         .review-button {
           border: 0;
           border-radius: 9px;
           padding: 8px 10px;
-          color: #ffffff;
-          background: #1d4ed8;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
           font: inherit;
           font-size: 9px;
           font-weight: 900;
@@ -928,7 +928,7 @@ export default function ScreeningPage() {
 
         .empty {
           padding: 38px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           text-align: center;
         }
 
@@ -940,8 +940,8 @@ export default function ScreeningPage() {
           max-width: 460px;
           padding: 14px 18px;
           border-radius: 14px;
-          color: #ffffff;
-          background: #0f172a;
+          color: var(--nx-surface);
+          background: var(--nx-text);
           box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
           font-size: 12px;
           font-weight: 700;
@@ -1005,16 +1005,16 @@ function Metric({
         .metric {
           min-height: 102px;
           padding: 16px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 17px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
         }
 
         span {
           display: block;
           min-height: 31px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 10px;
           line-height: 1.35;
           font-weight: 900;
@@ -1025,28 +1025,28 @@ function Metric({
         strong {
           display: block;
           margin-top: 8px;
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: 27px;
         }
 
         .warning {
           border-color: #fde68a;
-          background: #fffdf5;
+          background: var(--nx-surface);
         }
 
         .success {
           border-color: #bbf7d0;
-          background: #f7fff9;
+          background: var(--nx-surface);
         }
 
         .primary {
           border-color: #bfdbfe;
-          background: #f8fbff;
+          background: var(--nx-surface);
         }
 
         .critical {
           border-color: #fecaca;
-          background: #fff8f8;
+          background: var(--nx-surface);
         }
       `}</style>
     </article>

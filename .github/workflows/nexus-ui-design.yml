@@ -1,0 +1,85 @@
+name: NEXUS UI design integrity
+
+on:
+  push:
+    branches:
+      - feat/nexus-unified-ui-primitives-20261028
+  pull_request:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/nexus-ui-design.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  ui-design:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: TypeScript check
+        run: npx tsc --noEmit
+      - name: ESLint
+        run: npm run lint
+      - name: Design token and styled-jsx check
+        run: node scripts/verify-ui-design-diff.mjs
+        env:
+          UI_BASE_REF: origin/main
+      - name: Compare UI debt against exact base
+        run: |
+          git worktree add --detach ../nexus-base df4a49f
+          echo "BASE df4a49f"
+          node scripts/count-ui-debt.mjs ../nexus-base/frontend
+          echo "CURRENT BRANCH"
+          node scripts/count-ui-debt.mjs . scripts/ui-debt-baseline.json
+      - name: Shell purity contract
+        run: |
+          set -e
+          echo "styled-jsx in shell files:"
+          matches=$(grep -El '<style[[:space:]]+jsx' components/Navigation.tsx components/ModuleSubNavigation.tsx components/enterprise/ApplicationShell.tsx || true)
+          echo "${matches:-0}"
+          test -z "$matches"
+          echo "pathname equality in shell files:"
+          matches=$(grep -En 'pathname[[:space:]]*===' components/Navigation.tsx components/ModuleSubNavigation.tsx components/enterprise/ApplicationShell.tsx || true)
+          echo "${matches:-0}"
+          test -z "$matches"
+          echo "raw hardcoded hex in shell files:"
+          matches=$(grep -Ein '#[[:xdigit:]]{6}' components/Navigation.tsx components/ModuleSubNavigation.tsx components/enterprise/ApplicationShell.tsx || true)
+          echo "${matches:-0}"
+          test -z "$matches"
+      - name: Forbidden path safety gate
+        run: |
+          if git diff --name-only df4a49f...HEAD | grep -E '^frontend/(app/api/|auth/|lib/auth/|src/design-system/)'; then
+            echo "Forbidden files changed compared with df4a49f"
+            exit 1
+          fi
+          echo "Forbidden paths changed: 0"
+      - name: Reject fixture flag in production
+        run: |
+          if [ -n "${NEXT_PUBLIC_NEXUS_HITS_FIXTURES:-}" ]; then
+            echo "Fixture flag must not be present for a production build."
+            exit 1
+          fi
+          echo "Production fixture flag: unset"
+      - name: Production build
+        run: npm run build
+      - name: Reject bundled synthetic Hits records
+        run: |
+          if grep -rEl 'HIT-00101|39010001|Synthetic excerpt:|10\\.1000/nexus\\.101' .next/static .next/server; then
+            echo "Synthetic Hits fixture data found in production bundle"
+            exit 1
+          fi
+          echo "Synthetic Hits fixtures in production bundle: 0"
+

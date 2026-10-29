@@ -118,8 +118,8 @@ export default function WorkflowToolbar({
 
       <style jsx>{`
         .workflow-toolbar {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
+          background: var(--nx-surface);
+          border: 1px solid var(--nx-border);
           border-radius: 18px;
           padding: 18px;
           margin-bottom: 18px;
@@ -143,7 +143,7 @@ export default function WorkflowToolbar({
         label {
           font-size: 12px;
           font-weight: 800;
-          color: #64748b;
+          color: var(--nx-text-muted);
           text-transform: uppercase;
           letter-spacing: 0.4px;
         }
@@ -151,19 +151,19 @@ export default function WorkflowToolbar({
         .search-box input,
         select {
           width: 100%;
-          border: 1px solid #cbd5e1;
-          background: #f8fafc;
+          border: 1px solid var(--nx-border);
+          background: var(--nx-surface);
           border-radius: 12px;
           padding: 12px 14px;
           font-size: 14px;
-          color: #0f172a;
+          color: var(--nx-text);
           outline: none;
         }
 
         .search-box input:focus,
         select:focus {
           border-color: #185a9d;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 0 0 3px rgba(24, 90, 157, 0.12);
         }
 
@@ -178,12 +178,12 @@ export default function WorkflowToolbar({
 
         .refresh-button {
           background: #185a9d;
-          color: #ffffff;
+          color: var(--nx-surface);
         }
 
         .clear-button {
-          background: #e2e8f0;
-          color: #334155;
+          background: var(--nx-border);
+          color: var(--nx-text);
         }
 
         .clear-button:disabled {
@@ -210,7 +210,7 @@ export default function WorkflowToolbar({
           align-items: center;
           gap: 8px;
           height: 44px;
-          color: #334155;
+          color: var(--nx-text);
           text-transform: none;
           letter-spacing: 0;
         }
@@ -223,12 +223,12 @@ export default function WorkflowToolbar({
         .result-count {
           justify-self: end;
           font-size: 13px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           padding-bottom: 12px;
         }
 
         .result-count strong {
-          color: #0f172a;
+          color: var(--nx-text);
         }
 
         @media (max-width: 1000px) {

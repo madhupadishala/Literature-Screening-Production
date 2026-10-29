@@ -4,7 +4,7 @@ import SubmissionWorkspace from "./SubmissionWorkspace";
 
 export default function SubmissionsPage() {
   return (
-    <ApplicationShell>
+    <ApplicationShell module="SUBMISSIONS">
       <OperationalScreenHeader
         eyebrow="Safety Operations · Submissions"
         title="ICSR Submissions Workspace"

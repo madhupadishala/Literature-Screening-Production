@@ -227,16 +227,16 @@ export default function LiteratureSchedulerPage() {
       </section>
 
       <style jsx>{`
-        .app-shell{min-height:100vh;padding:24px;background:#eef2f7;color:#0f172a;font-family:"Poppins",Arial,sans-serif}
+        .app-shell{min-height:100vh;padding:24px;background:var(--nx-surface);color:var(--nx-text);font-family:"Poppins",Arial,sans-serif}
         .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-        .toolbar,.panel{border:1px solid #cbd5e1;border-radius:4px;background:#fff;box-shadow:0 3px 10px rgba(15,23,42,.05)}
+        .toolbar,.panel{border:1px solid var(--nx-border);border-radius:4px;background:var(--nx-surface);box-shadow:0 3px 10px rgba(15,23,42,.05)}
         .toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:14px 16px;margin-bottom:14px}
-        .toolbar strong{font-size:11px}.toolbar p{margin:4px 0 0;color:#64748b;font-size:9px;line-height:1.5}.buttons{display:flex;gap:7px}
-        button{border:1px solid #94a3b8;border-radius:3px;padding:8px 11px;background:#fff;color:#334155;font:inherit;font-size:8px;font-weight:800;cursor:pointer}
-        button.primary{border-color:#185abd;background:#185abd;color:#fff}button:disabled{opacity:.5;cursor:not-allowed}
-        .message{margin-bottom:14px;padding:10px 12px;border:1px solid #93c5fd;border-radius:3px;background:#eff6ff;color:#1e3a8a;font-size:9px;font-weight:700}
-        .panel{margin-bottom:14px;overflow:hidden}.panel header{padding:13px 15px;border-bottom:1px solid #dbe4ef;background:#f8fafc}.panel header span{color:#185abd;font-size:7px;font-weight:900;text-transform:uppercase}.panel h2{margin:3px 0 0;font-size:16px}
-        .table-wrap{overflow-x:auto}table{width:100%;min-width:1050px;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:left;vertical-align:top;font-size:8px}th{background:#f8fafc;color:#475569;font-size:7px;text-transform:uppercase}td strong,td small{display:block}td small{margin-top:3px;color:#64748b;word-break:break-all}.empty{text-align:center;color:#64748b;padding:24px}
+        .toolbar strong{font-size:11px}.toolbar p{margin:4px 0 0;color:var(--nx-text-muted);font-size:9px;line-height:1.5}.buttons{display:flex;gap:7px}
+        button{border:1px solid #94a3b8;border-radius:3px;padding:8px 11px;background:var(--nx-surface);color:var(--nx-text);font:inherit;font-size:8px;font-weight:800;cursor:pointer}
+        button.primary{border-color:var(--nx-primary);background:var(--nx-primary);color:var(--nx-surface)}button:disabled{opacity:.5;cursor:not-allowed}
+        .message{margin-bottom:14px;padding:10px 12px;border:1px solid #93c5fd;border-radius:3px;background:var(--nx-surface);color:#1e3a8a;font-size:9px;font-weight:700}
+        .panel{margin-bottom:14px;overflow:hidden}.panel header{padding:13px 15px;border-bottom:1px solid var(--nx-border);background:var(--nx-surface)}.panel header span{color:var(--nx-primary);font-size:7px;font-weight:900;text-transform:uppercase}.panel h2{margin:3px 0 0;font-size:16px}
+        .table-wrap{overflow-x:auto}table{width:100%;min-width:1050px;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid var(--nx-border);text-align:left;vertical-align:top;font-size:8px}th{background:var(--nx-surface);color:#475569;font-size:7px;text-transform:uppercase}td strong,td small{display:block}td small{margin-top:3px;color:var(--nx-text-muted);word-break:break-all}.empty{text-align:center;color:var(--nx-text-muted);padding:24px}
         @media(max-width:900px){.summary-grid{grid-template-columns:repeat(2,1fr)}.toolbar{align-items:flex-start;flex-direction:column}}
         @media(max-width:700px){.app-shell{padding:12px}.summary-grid{grid-template-columns:1fr 1fr}}
       `}</style>
@@ -250,8 +250,8 @@ function Summary({ label, value }: { label: string; value: string }) {
       <span>{label}</span>
       <strong>{value}</strong>
       <style jsx>{`
-        .summary{padding:14px;border:1px solid #cbd5e1;border-radius:4px;background:#fff}
-        .summary span{display:block;color:#64748b;font-size:7px;font-weight:900;text-transform:uppercase}
+        .summary{padding:14px;border:1px solid var(--nx-border);border-radius:4px;background:var(--nx-surface)}
+        .summary span{display:block;color:var(--nx-text-muted);font-size:7px;font-weight:900;text-transform:uppercase}
         .summary strong{display:block;margin-top:5px;font-size:20px}
       `}</style>
     </article>
@@ -264,7 +264,7 @@ function Status({ value }: { value: string }) {
       {String(value || "—").replaceAll("_", " ")}
       <style jsx>{`
         .status{display:inline-flex;padding:4px 7px;border-radius:999px;font-size:7px;font-weight:900;text-transform:uppercase}
-        .good{background:#dcfce7;color:#166534}.bad{background:#fee2e2;color:#991b1b}.warn{background:#fef3c7;color:#92400e}.pending{background:#dbeafe;color:#1e40af}
+        .good{background:var(--nx-success-subtle);color:#166534}.bad{background:var(--nx-danger-subtle);color:#991b1b}.warn{background:var(--nx-warning-subtle);color:#92400e}.pending{background:var(--nx-border);color:var(--nx-primary-active)}
       `}</style>
     </span>
   );

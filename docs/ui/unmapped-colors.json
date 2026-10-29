@@ -1,0 +1,2041 @@
+{
+  "thresholdCie76": 12,
+  "replacements": 1337,
+  "unmappedCount": 339,
+  "colors": [
+    {
+      "file": "frontend/app/admin/audit-logs/page.tsx",
+      "line": 105,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/audit-logs/page.tsx",
+      "line": 107,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/knowledge-base/page.tsx",
+      "line": 97,
+      "value": "#123f68",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/knowledge-base/page.tsx",
+      "line": 108,
+      "value": "#b45309",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/knowledge-base/page.tsx",
+      "line": 114,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/knowledge-base/page.tsx",
+      "line": 117,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/knowledge-base/page.tsx",
+      "line": 120,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/knowledge-base/page.tsx",
+      "line": 121,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-calendar/page.tsx",
+      "line": 78,
+      "value": "#123f68",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-calendar/page.tsx",
+      "line": 88,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-calendar/page.tsx",
+      "line": 90,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-calendar/page.tsx",
+      "line": 93,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-calendar/page.tsx",
+      "line": 94,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-scheduler/page.tsx",
+      "line": 235,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-scheduler/page.tsx",
+      "line": 237,
+      "value": "#93c5fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-scheduler/page.tsx",
+      "line": 237,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-scheduler/page.tsx",
+      "line": 239,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-scheduler/page.tsx",
+      "line": 267,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-scheduler/page.tsx",
+      "line": 267,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/literature-scheduler/page.tsx",
+      "line": 267,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/page.tsx",
+      "line": 170,
+      "value": "#93c5fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/page.tsx",
+      "line": 172,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/page.tsx",
+      "line": 183,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/performance/page.tsx",
+      "line": 212,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/performance/page.tsx",
+      "line": 214,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/performance/page.tsx",
+      "line": 220,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/performance/page.tsx",
+      "line": 285,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/performance/page.tsx",
+      "line": 289,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/performance/page.tsx",
+      "line": 293,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/products/page.tsx",
+      "line": 45,
+      "value": "#bae6fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/products/page.tsx",
+      "line": 47,
+      "value": "#075985",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 359,
+      "value": "#123f68",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 426,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 519,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 524,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 529,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 535,
+      "value": "#6d28d9",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 545,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 602,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 607,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 619,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 639,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 659,
+      "value": "#fed7aa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/super-user-console/page.tsx",
+      "line": 661,
+      "value": "#9a3412",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/system-settings/page.tsx",
+      "line": 86,
+      "value": "#123f68",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/system-settings/page.tsx",
+      "line": 97,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/system-settings/page.tsx",
+      "line": 100,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/system-settings/page.tsx",
+      "line": 103,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/system-settings/page.tsx",
+      "line": 104,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/users-roles/page.tsx",
+      "line": 412,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/users-roles/page.tsx",
+      "line": 416,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/users-roles/page.tsx",
+      "line": 427,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/users-roles/page.tsx",
+      "line": 466,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/users-roles/page.tsx",
+      "line": 479,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/users-roles/page.tsx",
+      "line": 510,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/validation-lab/page.tsx",
+      "line": 256,
+      "value": "#f59e0b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/validation-lab/page.tsx",
+      "line": 256,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/validation-lab/page.tsx",
+      "line": 259,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/validation-lab/page.tsx",
+      "line": 262,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/validation-lab/page.tsx",
+      "line": 265,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/validation-lab/page.tsx",
+      "line": 280,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/admin/validation-lab/page.tsx",
+      "line": 280,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/api/internal/uat/bootstrap-a6b7d7a81846d1a0/route.ts",
+      "line": 28,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/api/internal/uat/bootstrap-a6b7d7a81846d1a0/route.ts",
+      "line": 30,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/api/internal/uat/bootstrap-a6b7d7a81846d1a0/route.ts",
+      "line": 30,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/[caseId]/case-workspace.module.css",
+      "line": 9,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/[caseId]/case-workspace.module.css",
+      "line": 9,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/[caseId]/case-workspace.module.css",
+      "line": 14,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/[caseId]/case-workspace.module.css",
+      "line": 25,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/[caseId]/case-workspace.module.css",
+      "line": 34,
+      "value": "#fed7aa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/[caseId]/case-workspace.module.css",
+      "line": 35,
+      "value": "#7c2d12",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/[caseId]/case-workspace.module.css",
+      "line": 39,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/[caseId]/case-workspace.module.css",
+      "line": 39,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/cases.module.css",
+      "line": 11,
+      "value": "#18517f",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/cases.module.css",
+      "line": 14,
+      "value": "#21653d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/cases.module.css",
+      "line": 15,
+      "value": "#a62f24",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/cases.module.css",
+      "line": 15,
+      "value": "#efcbc6",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/cases.module.css",
+      "line": 16,
+      "value": "#80621b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/cases.module.css",
+      "line": 19,
+      "value": "#4379b1",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/cases/cases.module.css",
+      "line": 23,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/coi/page.tsx",
+      "line": 18,
+      "value": "#1761a0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 44,
+      "value": "#bae6fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 83,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 97,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 123,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 130,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 151,
+      "value": "#b7dfbd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 155,
+      "value": "#f4d27a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 217,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 234,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 236,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 300,
+      "value": "#f9a825",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 318,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 330,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 433,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 442,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 499,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 515,
+      "value": "#f4d27a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 523,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 531,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 540,
+      "value": "#78350f",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 555,
+      "value": "#f3b4b4",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 574,
+      "value": "#b7791f",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 702,
+      "value": "#0f5fa8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 756,
+      "value": "#0f5fa8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 794,
+      "value": "#0f5fa8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 804,
+      "value": "#0a4d8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/globals.css",
+      "line": 822,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 57,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 59,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 113,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 155,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 204,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 215,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 247,
+      "value": "#bbf7d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 260,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 275,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/disposition/disposition.module.css",
+      "line": 285,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/duplicate-review/duplicate-review.module.css",
+      "line": 63,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/duplicate-review/duplicate-review.module.css",
+      "line": 65,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/duplicate-review/duplicate-review.module.css",
+      "line": 150,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/duplicate-review/duplicate-review.module.css",
+      "line": 253,
+      "value": "#60a5fa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 63,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 65,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 69,
+      "value": "#9a3412",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 71,
+      "value": "#fed7aa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 135,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 140,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 145,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 245,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 257,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/[intakeId]/triage/triage.module.css",
+      "line": 268,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 49,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 61,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 263,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 264,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 271,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 273,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 345,
+      "value": "#9a3412",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 385,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 430,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 439,
+      "value": "#60a5fa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 441,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 472,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 486,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 491,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 496,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 501,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/intake/intake.module.css",
+      "line": 558,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/login/page.module.css",
+      "line": 9,
+      "value": "#1e466f",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/login/page.module.css",
+      "line": 9,
+      "value": "#1e466f",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/login/page.module.css",
+      "line": 10,
+      "value": "#1e466f",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/login/page.module.css",
+      "line": 13,
+      "value": "#b42318",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/login/page.module.css",
+      "line": 14,
+      "value": "#4379b1",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/page.tsx",
+      "line": 161,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/page.tsx",
+      "line": 163,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/page.tsx",
+      "line": 171,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/reports/page.tsx",
+      "line": 125,
+      "value": "#93c5fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/reports/page.tsx",
+      "line": 127,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/reports/page.tsx",
+      "line": 136,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 543,
+      "value": "#614900",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 914,
+      "value": "#5d4700",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 922,
+      "value": "#bae6fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 922,
+      "value": "#075985",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 929,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 932,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 933,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 934,
+      "value": "#9a3412",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 938,
+      "value": "#7dd3fc",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 944,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 944,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 944,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 944,
+      "value": "#fde68a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 944,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 946,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 948,
+      "value": "#fed7aa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 948,
+      "value": "#9a3412",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 971,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/review/page.tsx",
+      "line": 971,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 704,
+      "value": "#5d4700",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 831,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 879,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 884,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 894,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 903,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 1033,
+      "value": "#fde68a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 1038,
+      "value": "#bbf7d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 1043,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/screening/page.tsx",
+      "line": 1048,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/submissions/SubmissionWorkspace.module.css",
+      "line": 1,
+      "value": "#f1c27d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/submissions/SubmissionWorkspace.module.css",
+      "line": 1,
+      "value": "#c77800",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/submissions/SubmissionWorkspace.module.css",
+      "line": 1,
+      "value": "#5d3900",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/submissions/SubmissionWorkspace.module.css",
+      "line": 1,
+      "value": "#164e63",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/submissions/SubmissionWorkspace.module.css",
+      "line": 1,
+      "value": "#164e63",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/submissions/SubmissionWorkspace.module.css",
+      "line": 1,
+      "value": "#173a5e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/submissions/SubmissionWorkspace.module.css",
+      "line": 1,
+      "value": "#164e63",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 607,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 644,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 663,
+      "value": "#bbf7d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 664,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 670,
+      "value": "#16a34a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 699,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 709,
+      "value": "#bae6fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 718,
+      "value": "#0c4a6e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 778,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 788,
+      "value": "#075985",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 793,
+      "value": "#155e75",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 794,
+      "value": "#cffafe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 798,
+      "value": "#6b21a8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 803,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 916,
+      "value": "#bbf7d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/[packageId]/page.tsx",
+      "line": 921,
+      "value": "#16a34a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/page.tsx",
+      "line": 247,
+      "value": "#bae6fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/page.tsx",
+      "line": 258,
+      "value": "#0369a1",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/page.tsx",
+      "line": 266,
+      "value": "#0c4a6e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/page.tsx",
+      "line": 272,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 38,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 71,
+      "value": "#16a34a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 290,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 294,
+      "value": "#047857",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 296,
+      "value": "#a7f3d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 302,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 306,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 312,
+      "value": "#b45309",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 314,
+      "value": "#fde68a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/app/workflow/workflow.module.css",
+      "line": 320,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/InvestorDemoHeader.tsx",
+      "line": 95,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/Navigation.module.css",
+      "line": 26,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/Navigation.module.css",
+      "line": 28,
+      "value": "#124978",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/Navigation.module.css",
+      "line": 28,
+      "value": "#124978",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/Navigation.module.css",
+      "line": 30,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/Navigation.module.css",
+      "line": 33,
+      "value": "#b42318",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/Navigation.module.css",
+      "line": 34,
+      "value": "#60a5fa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 115,
+      "value": "#5c4600",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 443,
+      "value": "#7dd3fc",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 476,
+      "value": "#bae6fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 477,
+      "value": "#075985",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 496,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 614,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 621,
+      "value": "#38bdf8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 633,
+      "value": "#fde68a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/ScreeningWorkspace.tsx",
+      "line": 635,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/SessionTimeoutGuard.tsx",
+      "line": 191,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 887,
+      "value": "#7dd3fc",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 959,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 981,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 1001,
+      "value": "#93c5fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 1003,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 1039,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 1136,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 1159,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 1167,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/admin/TenantConfigurationConsole.tsx",
+      "line": 1179,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 48,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 71,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 108,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 151,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 156,
+      "value": "#047857",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 157,
+      "value": "#a7f3d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 162,
+      "value": "#b45309",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 163,
+      "value": "#fde68a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 169,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/audit/audit.module.css",
+      "line": 189,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/intake/IntakeOperationalQueue.tsx",
+      "line": 160,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/intake/IntakeOperationalQueue.tsx",
+      "line": 161,
+      "value": "#174a7c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/legacy-hits/LegacyHitsPage.tsx",
+      "line": 977,
+      "value": "#0e6027",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/legacy-hits/LegacyHitsPage.tsx",
+      "line": 979,
+      "value": "#684e00",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/legacy-hits/LegacyHitsPage.tsx",
+      "line": 980,
+      "value": "#00539a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/legacy-hits/LegacyHitsPage.tsx",
+      "line": 982,
+      "value": "#0e6027",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/legacy-hits/LegacyHitsPage.tsx",
+      "line": 983,
+      "value": "#a2191f",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/legacy-hits/LegacyHitsPage.tsx",
+      "line": 984,
+      "value": "#8a3800",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/legacy-hits/LegacyHitsPage.tsx",
+      "line": 1061,
+      "value": "#ff832b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/legacy-hits/LegacyHitsPage.tsx",
+      "line": 1070,
+      "value": "#a2191f",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 744,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 782,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 932,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 938,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 949,
+      "value": "#93c5fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 951,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 970,
+      "value": "#fecaca",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 971,
+      "value": "#991b1b",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 1026,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/literature/AdHocSearchWorkspace.tsx",
+      "line": 1073,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/nexus-hits-v2/hits-workspace.css",
+      "line": 12,
+      "value": "#7cb2ec",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/nexus-hits-v2/hits-workspace.css",
+      "line": 17,
+      "value": "#23425d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/nexus-hits-v2/hits-workspace.css",
+      "line": 42,
+      "value": "#aa3021",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/nexus-hits-v2/hits-workspace.css",
+      "line": 71,
+      "value": "#a8a8a8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/versioning/versioning.module.css",
+      "line": 12,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/versioning/versioning.module.css",
+      "line": 26,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/versioning/versioning.module.css",
+      "line": 37,
+      "value": "#c2410c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/versioning/versioning.module.css",
+      "line": 38,
+      "value": "#fed7aa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/versioning/versioning.module.css",
+      "line": 119,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/versioning/versioning.module.css",
+      "line": 135,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/versioning/versioning.module.css",
+      "line": 162,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowDashboard.tsx",
+      "line": 175,
+      "value": "#123f68",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowDashboard.tsx",
+      "line": 259,
+      "value": "#b45309",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowDashboard.tsx",
+      "line": 263,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowDashboard.tsx",
+      "line": 324,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowMetrics.tsx",
+      "line": 103,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowMetrics.tsx",
+      "line": 112,
+      "value": "#bbf7d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowMetrics.tsx",
+      "line": 121,
+      "value": "#fde68a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowMetrics.tsx",
+      "line": 130,
+      "value": "#bae6fd",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowPagination.tsx",
+      "line": 146,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowPagination.tsx",
+      "line": 148,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowPagination.tsx",
+      "line": 163,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 180,
+      "value": "#1e3a8a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 207,
+      "value": "#94a3b8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 215,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 226,
+      "value": "#075985",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 231,
+      "value": "#155e75",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 232,
+      "value": "#cffafe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 238,
+      "value": "#6b21a8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 243,
+      "value": "#0f766e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 248,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowTable.tsx",
+      "line": 263,
+      "value": "#38bdf8",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowToolbar.tsx",
+      "line": 165,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/WorkflowToolbar.tsx",
+      "line": 180,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 17,
+      "value": "#bfdbfe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 22,
+      "value": "#047857",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 23,
+      "value": "#a7f3d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 28,
+      "value": "#c2410c",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 29,
+      "value": "#fed7aa",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 34,
+      "value": "#6d28d9",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 35,
+      "value": "#ddd6fe",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 40,
+      "value": "#a16207",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 41,
+      "value": "#fde68a",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 46,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 47,
+      "value": "#bbf7d0",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 80,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/components/workflow/workflow.module.css",
+      "line": 105,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 162,
+      "value": "#123f68",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 235,
+      "value": "#b45309",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 272,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 291,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 307,
+      "value": "#185a9d",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 323,
+      "value": "#166534",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 328,
+      "value": "#92400e",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 333,
+      "value": "#075985",
+      "reason": "CIE76 > 12"
+    },
+    {
+      "file": "frontend/lib/session.tsx",
+      "line": 352,
+      "value": "#475569",
+      "reason": "CIE76 > 12"
+    }
+  ]
+}

@@ -20,8 +20,8 @@ export default function LiteratureSearchPage() {
         .app-shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
-          background: #eef2f7;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 

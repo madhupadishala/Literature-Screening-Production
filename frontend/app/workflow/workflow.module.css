@@ -3,8 +3,8 @@
   padding: 32px;
   background:
     radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 34%),
-    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
-  color: #0f172a;
+    linear-gradient(180deg, var(--nx-surface) 0%, var(--nx-surface) 100%);
+  color: var(--nx-text);
 }
 
 .hero {
@@ -20,7 +20,7 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #2563eb;
+  color: var(--nx-primary);
   text-transform: uppercase;
 }
 
@@ -29,7 +29,7 @@
   font-size: 38px;
   line-height: 1.1;
   letter-spacing: -0.04em;
-  color: #0b1220;
+  color: var(--nx-text);
 }
 
 .description {
@@ -53,7 +53,7 @@
   display: block;
   font-size: 12px;
   font-weight: 700;
-  color: #64748b;
+  color: var(--nx-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -62,7 +62,7 @@
   display: block;
   margin-top: 8px;
   font-size: 30px;
-  color: #0f172a;
+  color: var(--nx-text);
 }
 
 .heroCard small {
@@ -92,7 +92,7 @@
 .metricDanger span {
   display: block;
   margin-bottom: 10px;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
@@ -103,16 +103,16 @@
 .metricDanger strong {
   display: block;
   font-size: 30px;
-  color: #0f172a;
+  color: var(--nx-text);
 }
 
 .metricDanger {
   border-color: rgba(239, 68, 68, 0.28);
-  background: linear-gradient(180deg, #fff 0%, #fff5f5 100%);
+  background: linear-gradient(180deg, var(--nx-surface) 0%, var(--nx-danger-subtle) 100%);
 }
 
 .metricDanger strong {
-  color: #b91c1c;
+  color: var(--nx-danger);
 }
 
 .toolbar {
@@ -147,13 +147,13 @@
 
 .tab {
   background: rgba(255, 255, 255, 0.78);
-  color: #334155;
+  color: var(--nx-text);
 }
 
 .activeTab {
-  background: #0f172a;
-  color: #ffffff;
-  border-color: #0f172a;
+  background: var(--nx-text);
+  color: var(--nx-surface);
+  border-color: var(--nx-text);
 }
 
 .tab:hover,
@@ -167,13 +167,13 @@
   border-radius: 16px;
   padding: 13px 15px;
   background: rgba(255, 255, 255, 0.92);
-  color: #0f172a;
+  color: var(--nx-text);
   outline: none;
   font-size: 14px;
 }
 
 .search:focus {
-  border-color: #2563eb;
+  border-color: var(--nx-primary);
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
@@ -196,13 +196,13 @@
 .tableHeader h2 {
   margin: 0;
   font-size: 18px;
-  color: #0f172a;
+  color: var(--nx-text);
 }
 
 .tableHeader span {
   font-size: 13px;
   font-weight: 800;
-  color: #64748b;
+  color: var(--nx-text-muted);
 }
 
 .tableWrap {
@@ -222,17 +222,17 @@
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #64748b;
-  background: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
+  color: var(--nx-text-muted);
+  background: var(--nx-surface);
+  border-bottom: 1px solid var(--nx-border);
 }
 
 .table td {
   padding: 16px;
   vertical-align: top;
   font-size: 13px;
-  color: #334155;
-  border-bottom: 1px solid #eef2f7;
+  color: var(--nx-text);
+  border-bottom: 1px solid var(--nx-surface);
 }
 
 .table tr:last-child td {
@@ -244,27 +244,27 @@
   max-width: 420px;
   margin-bottom: 6px;
   font-size: 13px;
-  color: #0f172a;
+  color: var(--nx-text);
   line-height: 1.45;
 }
 
 .table td small {
   display: block;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-weight: 700;
 }
 
 .table td em {
   display: block;
   margin-top: 8px;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-style: normal;
   line-height: 1.4;
 }
 
 .idCell {
   font-weight: 900;
-  color: #1d4ed8 !important;
+  color: var(--nx-primary) !important;
   white-space: nowrap;
 }
 
@@ -285,38 +285,38 @@
 }
 
 .stageBadge {
-  color: #1d4ed8;
-  background: #eff6ff;
+  color: var(--nx-primary);
+  background: var(--nx-surface);
   border: 1px solid #bfdbfe;
 }
 
 .statusBadge {
   color: #047857;
-  background: #ecfdf5;
+  background: var(--nx-surface);
   border: 1px solid #a7f3d0;
 }
 
 .statusDanger {
-  color: #b91c1c;
-  background: #fef2f2;
+  color: var(--nx-danger);
+  background: var(--nx-danger-subtle);
   border: 1px solid #fecaca;
 }
 
 .priorityNormal {
   color: #475569;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--nx-surface);
+  border: 1px solid var(--nx-border);
 }
 
 .priorityHigh {
   color: #b45309;
-  background: #fffbeb;
+  background: var(--nx-surface);
   border: 1px solid #fde68a;
 }
 
 .priorityCritical {
-  color: #b91c1c;
-  background: #fef2f2;
+  color: var(--nx-danger);
+  background: var(--nx-danger-subtle);
   border: 1px solid #fecaca;
 }
 
@@ -330,9 +330,9 @@
   width: fit-content;
   border-radius: 999px;
   padding: 6px 9px;
-  color: #334155;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
+  color: var(--nx-text);
+  background: var(--nx-surface);
+  border: 1px solid var(--nx-border);
   font-size: 11px;
   font-weight: 800;
 }
@@ -340,7 +340,7 @@
 .emptyState {
   padding: 42px;
   text-align: center;
-  color: #64748b;
+  color: var(--nx-text-muted);
   font-weight: 700;
 }
 

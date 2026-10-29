@@ -40,7 +40,7 @@ export default function LiteratureAdminPage() {
         .admin-card{padding:18px;border:1px solid var(--nx-color-border);border-radius:8px;background:var(--nx-color-surface);color:var(--nx-color-text);text-decoration:none}
         .admin-card span{display:block;font-size:9px;font-weight:900;letter-spacing:.08em;color:var(--nx-color-interactive)}
         .admin-card strong{display:block;margin-top:8px;font-size:15px}
-        .admin-card p{margin:6px 0 0;color:#64748b;font-size:11px;line-height:1.55}
+        .admin-card p{margin:6px 0 0;color:var(--nx-text-muted);font-size:11px;line-height:1.55}
         .admin-card:hover{border-color:var(--nx-color-interactive)}
         @media(max-width:700px){.admin-grid{grid-template-columns:1fr}}
       `}</style>

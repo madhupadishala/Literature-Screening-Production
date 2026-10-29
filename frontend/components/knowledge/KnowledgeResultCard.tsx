@@ -12,11 +12,11 @@ export default function KnowledgeResultCard({ result }: KnowledgeResultCardProps
   return (
     <article
       style={{
-        border: "1px solid #d7dde5",
+        border: "1px solid var(--nx-border)",
         padding: 16,
         borderRadius: 8,
         marginBottom: 12,
-        background: "#ffffff",
+        background: "var(--nx-surface)",
       }}
     >
       <h4 style={{ marginTop: 0 }}>{citation.title}</h4>

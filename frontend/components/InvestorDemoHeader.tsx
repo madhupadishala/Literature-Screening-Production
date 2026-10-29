@@ -34,9 +34,9 @@ export default function InvestorDemoHeader({
           align-items: stretch;
           margin-bottom: 14px;
           overflow: hidden;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 4px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
@@ -46,11 +46,11 @@ export default function InvestorDemoHeader({
           flex: 1;
           align-content: center;
           padding: 15px 20px;
-          border-left: 5px solid #185abd;
+          border-left: 5px solid var(--nx-primary);
         }
 
         .eyebrow {
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 0.075em;
@@ -59,7 +59,7 @@ export default function InvestorDemoHeader({
 
         h1 {
           margin: 4px 0 2px;
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: clamp(19px, 2.3vw, 27px);
           line-height: 1.2;
           letter-spacing: -0.025em;
@@ -68,7 +68,7 @@ export default function InvestorDemoHeader({
         p {
           margin: 0;
           max-width: 940px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 10px;
           line-height: 1.55;
         }
@@ -78,12 +78,12 @@ export default function InvestorDemoHeader({
           min-width: 205px;
           align-content: center;
           padding: 14px 18px;
-          border-left: 1px solid #dbe4ef;
-          background: #f8fafc;
+          border-left: 1px solid var(--nx-border);
+          background: var(--nx-surface);
         }
 
         .page-status span {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
           font-weight: 900;
           letter-spacing: 0.06em;
@@ -103,7 +103,7 @@ export default function InvestorDemoHeader({
 
           .page-status {
             min-width: 0;
-            border-top: 1px solid #dbe4ef;
+            border-top: 1px solid var(--nx-border);
             border-left: 0;
           }
         }

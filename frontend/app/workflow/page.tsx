@@ -231,9 +231,9 @@ export default function WorkflowPage() {
         .app-shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
+          color: var(--nx-text);
           background:
-            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%), #f4f7fb;
+            radial-gradient(circle at 3% 0%, rgba(56, 189, 248, 0.08), transparent 23%), var(--nx-surface);
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 
@@ -246,7 +246,7 @@ export default function WorkflowPage() {
           padding: 14px 17px;
           border: 1px solid #bae6fd;
           border-radius: 16px;
-          background: #f0f9ff;
+          background: var(--nx-surface);
         }
 
         .scope-strip div {
@@ -275,9 +275,9 @@ export default function WorkflowPage() {
 
         .panel {
           overflow: hidden;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 21px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 12px 34px rgba(15, 23, 42, 0.06);
         }
 
@@ -287,11 +287,11 @@ export default function WorkflowPage() {
           align-items: center;
           gap: 20px;
           padding: 23px 24px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
         }
 
         .section-kicker {
-          color: #1d4ed8;
+          color: var(--nx-primary);
           font-size: 10px;
           font-weight: 900;
           letter-spacing: 0.07em;
@@ -306,7 +306,7 @@ export default function WorkflowPage() {
 
         .panel-header p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 12px;
         }
 
@@ -314,8 +314,8 @@ export default function WorkflowPage() {
           border: 0;
           border-radius: 11px;
           padding: 10px 14px;
-          color: #ffffff;
-          background: #1d4ed8;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
           font: inherit;
           font-size: 11px;
           font-weight: 900;
@@ -331,8 +331,8 @@ export default function WorkflowPage() {
           padding: 14px 18px;
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 14px;
-          color: #ffffff;
-          background: #0f172a;
+          color: var(--nx-surface);
+          background: var(--nx-text);
           box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
           font-size: 12px;
           font-weight: 700;

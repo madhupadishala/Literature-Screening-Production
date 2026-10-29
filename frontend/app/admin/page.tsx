@@ -107,8 +107,8 @@ export default function AdminPage() {
         .app-shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
-          background: #eef2f7;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-family: "Poppins", Arial, Helvetica, sans-serif;
         }
 
@@ -123,22 +123,22 @@ export default function AdminPage() {
           min-height: 178px;
           align-content: start;
           padding: 16px;
-          border: 1px solid #b8c4d3;
+          border: 1px solid var(--nx-border);
           border-radius: 4px;
-          color: #0f172a;
-          background: #ffffff;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           text-align: left;
           cursor: pointer;
           box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
         }
 
         .module-grid button:hover {
-          border-color: #185abd;
+          border-color: var(--nx-primary);
           box-shadow: 0 5px 18px rgba(24, 90, 189, 0.12);
         }
 
         .module-grid span {
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 7px;
           font-weight: 900;
           letter-spacing: 0.06em;
@@ -152,7 +152,7 @@ export default function AdminPage() {
 
         p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
           line-height: 1.55;
         }
@@ -160,7 +160,7 @@ export default function AdminPage() {
         .module-grid strong {
           align-self: end;
           margin-top: 18px;
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 9px;
         }
 
@@ -170,7 +170,7 @@ export default function AdminPage() {
           border: 1px solid #93c5fd;
           border-radius: 4px;
           color: #1e3a8a;
-          background: #eff6ff;
+          background: var(--nx-surface);
         }
 
         .boundary strong {

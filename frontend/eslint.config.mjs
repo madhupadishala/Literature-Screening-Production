@@ -65,6 +65,18 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  // TEMPORARY EXCEPTION — https://github.com/madhupadishala/Literature-Screening-Production/issues/109
+  // Expires 2026-11-30. Preserve regulated lease semantics until tested migration.
+  {
+    files: [
+      "hooks/useRecordLock.ts",
+      "components/nexus-hits-v2/HitsWorkspace.tsx",
+      "components/nexus-hits-v2/hooks/useHits.ts",
+    ],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
   globalIgnores([
     ".next/**",
     "out/**",

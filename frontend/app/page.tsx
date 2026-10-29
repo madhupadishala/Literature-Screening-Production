@@ -108,14 +108,14 @@ export default function HomePage() {
           gap: 16px;
           margin-bottom: 14px;
           padding: 14px 16px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 6px;
-          background: #fff;
+          background: var(--nx-surface);
           box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
         }
         .quick-actions span {
           display: block;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 8px;
           font-weight: 900;
           text-transform: uppercase;
@@ -137,17 +137,17 @@ export default function HomePage() {
           border: 0;
           border-radius: 6px;
           padding: 9px 12px;
-          color: #fff;
-          background: #185abd;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
           font: inherit;
           font-size: 9px;
           font-weight: 900;
           cursor: pointer;
         }
         button.secondary {
-          border: 1px solid #cbd5e1;
-          color: #334155;
-          background: #fff;
+          border: 1px solid var(--nx-border);
+          color: var(--nx-text);
+          background: var(--nx-surface);
         }
         button:disabled {
           opacity: 0.55;
@@ -161,7 +161,7 @@ export default function HomePage() {
           border: 1px solid #fecaca;
           border-radius: 6px;
           color: #991b1b;
-          background: #fef2f2;
+          background: var(--nx-danger-subtle);
           font-size: 10px;
         }
         .error span {

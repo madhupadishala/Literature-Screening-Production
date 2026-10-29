@@ -172,8 +172,8 @@ export default function WorkflowDashboard({
         }
 
         .dashboard-hero {
-          background: linear-gradient(135deg, #071b34, #123f68);
-          color: #ffffff;
+          background: linear-gradient(135deg, var(--nx-text), #123f68);
+          color: var(--nx-surface);
           border-radius: 22px;
           padding: 28px;
           display: flex;
@@ -183,7 +183,7 @@ export default function WorkflowDashboard({
         }
 
         .dashboard-hero span {
-          color: #cfe7ff;
+          color: var(--nx-border);
           font-size: 13px;
           font-weight: 800;
           text-transform: uppercase;
@@ -197,7 +197,7 @@ export default function WorkflowDashboard({
 
         .dashboard-hero p {
           margin: 0;
-          color: #dbeafe;
+          color: var(--nx-border);
           max-width: 720px;
           line-height: 1.6;
         }
@@ -219,7 +219,7 @@ export default function WorkflowDashboard({
         }
 
         .hero-score span {
-          color: #dbeafe;
+          color: var(--nx-border);
         }
 
         .kpi-grid {
@@ -229,8 +229,8 @@ export default function WorkflowDashboard({
         }
 
         .kpi-card {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
+          background: var(--nx-surface);
+          border: 1px solid var(--nx-border);
           border-radius: 18px;
           padding: 18px;
           box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
@@ -238,7 +238,7 @@ export default function WorkflowDashboard({
 
         .kpi-card span {
           display: block;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 12px;
           margin-bottom: 10px;
           font-weight: 800;
@@ -248,11 +248,11 @@ export default function WorkflowDashboard({
 
         .kpi-card strong {
           font-size: 28px;
-          color: #0f172a;
+          color: var(--nx-text);
         }
 
         .kpi-card.success strong {
-          color: #15803d;
+          color: var(--nx-success);
         }
 
         .kpi-card.warning strong {
@@ -270,8 +270,8 @@ export default function WorkflowDashboard({
         }
 
         .dashboard-panel {
-          background: #ffffff;
-          border: 1px solid #dbe4ef;
+          background: var(--nx-surface);
+          border: 1px solid var(--nx-border);
           border-radius: 20px;
           box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
           overflow: hidden;
@@ -279,7 +279,7 @@ export default function WorkflowDashboard({
 
         .panel-title {
           padding: 20px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
         }
 
         .panel-title h3 {
@@ -289,7 +289,7 @@ export default function WorkflowDashboard({
 
         .panel-title p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 13px;
         }
 
@@ -302,8 +302,8 @@ export default function WorkflowDashboard({
         .package-row,
         .activity-row {
           border: none;
-          border-bottom: 1px solid #e2e8f0;
-          background: #ffffff;
+          border-bottom: 1px solid var(--nx-border);
+          background: var(--nx-surface);
           padding: 16px 20px;
           text-align: left;
           cursor: pointer;
@@ -315,7 +315,7 @@ export default function WorkflowDashboard({
 
         .package-row:hover,
         .activity-row:hover {
-          background: #f8fbff;
+          background: var(--nx-surface);
         }
 
         .package-row strong,
@@ -329,7 +329,7 @@ export default function WorkflowDashboard({
         .package-row span,
         .activity-row span {
           display: block;
-          color: #334155;
+          color: var(--nx-text);
           font-size: 13px;
           line-height: 1.4;
         }
@@ -342,19 +342,19 @@ export default function WorkflowDashboard({
         }
 
         small {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 12px;
           white-space: nowrap;
         }
 
         .empty-state {
           padding: 28px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-weight: 700;
         }
 
         .empty-state.success {
-          color: #15803d;
+          color: var(--nx-success);
         }
 
         @media (max-width: 1300px) {

@@ -1,0 +1,161 @@
+.control {
+  min-height: var(--nx-control-h-compact);
+  border: 1px solid var(--nx-color-border-strong);
+  border-radius: var(--nx-radius-2);
+  background: var(--nx-color-surface);
+  color: var(--nx-color-text);
+  padding: var(--nx-space-2) var(--nx-space-3);
+  font: inherit;
+  font-size: var(--nx-font-size-3);
+}
+.control:focus-visible,
+.button:focus-visible,
+.tab:focus-visible,
+.sectionSummary:focus-visible {
+  outline: var(--nx-focus-width) solid var(--nx-color-focus);
+  outline-offset: var(--nx-focus-offset);
+}
+.control:disabled,
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.button {
+  min-height: var(--nx-control-h-compact);
+  display: inline-flex;
+  gap: var(--nx-space-2);
+  align-items: center;
+  justify-content: center;
+  padding: var(--nx-space-2) var(--nx-space-4);
+  border: 1px solid var(--nx-color-interactive);
+  border-radius: var(--nx-radius-2);
+  background: var(--nx-color-interactive);
+  color: var(--nx-color-text-inverse);
+  font-size: var(--nx-font-size-3);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--nx-motion-fast) var(--nx-motion-ease);
+}
+.button:hover:not(:disabled) {
+  background: var(--nx-color-interactive-hover);
+}
+.secondary {
+  color: var(--nx-color-interactive);
+  background: var(--nx-color-surface);
+}
+.secondary:hover:not(:disabled) {
+  color: var(--nx-color-text);
+  background: var(--nx-color-interactive-subtle);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 0 var(--nx-space-2);
+  border-radius: var(--nx-radius-1);
+  font-size: var(--nx-font-size-2);
+  font-weight: 600;
+  background: var(--nx-color-neutral-bg);
+  color: var(--nx-color-text);
+}
+.success {
+  background: var(--nx-color-positive-bg);
+  color: var(--nx-color-positive);
+}
+.warning {
+  background: var(--nx-color-warning-bg);
+  color: var(--nx-color-warning);
+}
+.danger {
+  background: var(--nx-color-critical-bg);
+  color: var(--nx-color-critical);
+}
+.info {
+  background: var(--nx-color-info-bg);
+  color: var(--nx-color-info);
+}
+.section {
+  margin: 0;
+  border: 1px solid var(--nx-color-border);
+  border-radius: var(--nx-radius-2);
+  background: var(--nx-color-surface);
+}
+.sectionSummary {
+  cursor: pointer;
+  padding: var(--nx-space-3);
+  font-size: var(--nx-font-size-3);
+  font-weight: 600;
+}
+.sectionBody {
+  padding: var(--nx-space-3);
+  border-top: 1px solid var(--nx-color-border);
+}
+.tabs {
+  display: flex;
+  gap: var(--nx-space-1);
+  border-bottom: 1px solid var(--nx-color-border);
+}
+.tab {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: var(--nx-space-3);
+  background: transparent;
+  color: var(--nx-color-text-secondary);
+  cursor: pointer;
+}
+.tab[aria-selected="true"] {
+  border-color: var(--nx-color-interactive);
+  color: var(--nx-color-interactive);
+}
+.badge {
+  display: inline-flex;
+  padding: var(--nx-space-2);
+  font-size: var(--nx-font-size-2);
+  background: var(--nx-color-neutral-bg);
+  color: var(--nx-color-text);
+}
+.success {
+  background: var(--nx-color-positive-bg);
+  color: var(--nx-color-positive);
+}
+.warning {
+  background: var(--nx-color-warning-bg);
+  color: var(--nx-color-warning);
+}
+.danger {
+  background: var(--nx-color-critical-bg);
+  color: var(--nx-color-critical);
+}
+.info {
+  background: var(--nx-color-info-bg);
+  color: var(--nx-color-info);
+}
+.section {
+  border: 1px solid var(--nx-color-border);
+  background: var(--nx-color-surface);
+}
+.sectionSummary {
+  padding: var(--nx-space-3);
+  cursor: pointer;
+  font-weight: 600;
+}
+.sectionBody {
+  padding: var(--nx-space-3);
+  border-top: 1px solid var(--nx-color-border);
+}
+.tabs {
+  display: flex;
+  gap: var(--nx-space-2);
+  border-bottom: 1px solid var(--nx-color-border);
+}
+.tab {
+  padding: var(--nx-space-3);
+  background: transparent;
+  border: 0;
+  color: var(--nx-color-text-secondary);
+  cursor: pointer;
+}
+.tab[aria-selected="true"] {
+  border-bottom: 2px solid var(--nx-color-interactive);
+  color: var(--nx-color-interactive);
+}

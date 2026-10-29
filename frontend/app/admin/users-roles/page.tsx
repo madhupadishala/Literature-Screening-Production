@@ -307,8 +307,8 @@ export default function UsersRolesPage() {
         .app-shell {
           min-height: 100vh;
           padding: 24px;
-          color: #0f172a;
-          background: #eef2f7;
+          color: var(--nx-text);
+          background: var(--nx-surface);
           font-family: "Poppins", Arial, sans-serif;
         }
         .metrics {
@@ -319,9 +319,9 @@ export default function UsersRolesPage() {
         }
         .panel {
           overflow: hidden;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 6px;
-          background: #fff;
+          background: var(--nx-surface);
           box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
         }
         .panel-header {
@@ -330,11 +330,11 @@ export default function UsersRolesPage() {
           gap: 20px;
           align-items: center;
           padding: 20px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
         }
         .panel-header span,
         header span {
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 9px;
           font-weight: 900;
           text-transform: uppercase;
@@ -346,15 +346,15 @@ export default function UsersRolesPage() {
         }
         p {
           margin: 0;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 10px;
         }
         button {
           border: 0;
           border-radius: 6px;
           padding: 10px 13px;
-          color: #fff;
-          background: #185abd;
+          color: var(--nx-surface);
+          background: var(--nx-primary);
           font: inherit;
           font-size: 10px;
           font-weight: 900;
@@ -365,9 +365,9 @@ export default function UsersRolesPage() {
           cursor: not-allowed;
         }
         .secondary {
-          border: 1px solid #cbd5e1;
-          color: #334155;
-          background: #fff;
+          border: 1px solid var(--nx-border);
+          color: var(--nx-text);
+          background: var(--nx-surface);
         }
         .table-wrap {
           overflow-x: auto;
@@ -380,13 +380,13 @@ export default function UsersRolesPage() {
         th,
         td {
           padding: 13px 15px;
-          border-bottom: 1px solid #e8eef5;
+          border-bottom: 1px solid var(--nx-border);
           text-align: left;
           font-size: 10px;
         }
         th {
-          color: #64748b;
-          background: #f8fafc;
+          color: var(--nx-text-muted);
+          background: var(--nx-surface);
           font-size: 8px;
           text-transform: uppercase;
           letter-spacing: 0.06em;
@@ -397,7 +397,7 @@ export default function UsersRolesPage() {
         }
         td small {
           margin-top: 4px;
-          color: #64748b;
+          color: var(--nx-text-muted);
         }
         .active,
         .disabled {
@@ -410,15 +410,15 @@ export default function UsersRolesPage() {
         }
         .active {
           color: #166534;
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
         }
         .disabled {
           color: #991b1b;
-          background: #fee2e2;
+          background: var(--nx-danger-subtle);
         }
         .empty {
           padding: 32px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           text-align: center;
         }
         .message {
@@ -426,8 +426,8 @@ export default function UsersRolesPage() {
           padding: 12px 14px;
           border: 1px solid #bfdbfe;
           border-radius: 6px;
-          color: #1e40af;
-          background: #eff6ff;
+          color: var(--nx-primary-active);
+          background: var(--nx-surface);
           font-size: 11px;
           font-weight: 700;
         }
@@ -445,7 +445,7 @@ export default function UsersRolesPage() {
           max-height: 92vh;
           overflow-y: auto;
           border-radius: 8px;
-          background: #fff;
+          background: var(--nx-surface);
           box-shadow: 0 28px 80px rgba(15, 23, 42, 0.3);
         }
         .editor header,
@@ -455,11 +455,11 @@ export default function UsersRolesPage() {
           align-items: center;
           gap: 12px;
           padding: 18px 20px;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid var(--nx-border);
         }
         .editor footer {
           justify-content: flex-end;
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid var(--nx-border);
           border-bottom: 0;
         }
         .close {
@@ -487,9 +487,9 @@ export default function UsersRolesPage() {
           width: 100%;
           box-sizing: border-box;
           padding: 10px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 6px;
-          background: #fff;
+          background: var(--nx-surface);
           font: inherit;
           font-size: 11px;
         }
@@ -503,7 +503,7 @@ export default function UsersRolesPage() {
         }
         fieldset {
           padding: 14px;
-          border: 1px solid #dbe4ef;
+          border: 1px solid var(--nx-border);
           border-radius: 6px;
         }
         legend {
@@ -522,7 +522,7 @@ export default function UsersRolesPage() {
           align-items: center;
           gap: 7px;
           padding: 7px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 5px;
           font-size: 8px;
           text-transform: none;
@@ -562,13 +562,13 @@ function Metric({ label, value }: { label: string; value: number }) {
       <style jsx>{`
         .metric {
           padding: 15px;
-          border: 1px solid #cbd5e1;
+          border: 1px solid var(--nx-border);
           border-radius: 6px;
-          background: #fff;
+          background: var(--nx-surface);
         }
         span {
           display: block;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 9px;
           font-weight: 800;
           text-transform: uppercase;
@@ -576,7 +576,7 @@ function Metric({ label, value }: { label: string; value: number }) {
         strong {
           display: block;
           margin-top: 8px;
-          color: #185abd;
+          color: var(--nx-primary);
           font-size: 22px;
         }
       `}</style>

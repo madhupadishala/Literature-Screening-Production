@@ -1,0 +1,5 @@
+.root { display: flex; min-height: var(--nx-control-h-default); margin: 0 0 var(--nx-space-4); overflow-x: auto; border: 1px solid var(--nx-color-border); border-radius: var(--nx-radius-2); background: var(--nx-color-surface); }
+.link { display: grid; min-width: 112px; place-items: center; padding: 0 var(--nx-space-4); border-right: 1px solid var(--nx-color-border); color: var(--nx-color-text-secondary); font-size: var(--nx-font-size-2); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.link:hover { background: var(--nx-color-surface-subtle); color: var(--nx-color-text); }
+.link[aria-current="page"] { color: var(--nx-color-text-inverse); background: var(--nx-color-interactive); }
+.link:focus-visible { outline: var(--nx-focus-width) solid var(--nx-color-focus); outline-offset: calc(-1 * var(--nx-focus-offset)); }

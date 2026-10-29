@@ -93,17 +93,17 @@ export default function WorkflowPagination({
           align-items: center;
           gap: 16px;
           padding: 16px 20px;
-          background: #ffffff;
-          border-top: 1px solid #e2e8f0;
+          background: var(--nx-surface);
+          border-top: 1px solid var(--nx-border);
         }
 
         .pagination-info {
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 13px;
         }
 
         .pagination-info strong {
-          color: #0f172a;
+          color: var(--nx-text);
         }
 
         .pagination-controls {
@@ -117,25 +117,25 @@ export default function WorkflowPagination({
           display: flex;
           align-items: center;
           gap: 8px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 12px;
           font-weight: 800;
           text-transform: uppercase;
         }
 
         select {
-          border: 1px solid #cbd5e1;
-          background: #f8fafc;
+          border: 1px solid var(--nx-border);
+          background: var(--nx-surface);
           border-radius: 10px;
           padding: 8px 10px;
-          color: #0f172a;
+          color: var(--nx-text);
           outline: none;
         }
 
         button {
-          border: 1px solid #cbd5e1;
-          background: #ffffff;
-          color: #334155;
+          border: 1px solid var(--nx-border);
+          background: var(--nx-surface);
+          color: var(--nx-text);
           border-radius: 10px;
           padding: 8px 12px;
           font-weight: 800;
@@ -144,7 +144,7 @@ export default function WorkflowPagination({
 
         button.active {
           background: #185a9d;
-          color: #ffffff;
+          color: var(--nx-surface);
           border-color: #185a9d;
         }
 

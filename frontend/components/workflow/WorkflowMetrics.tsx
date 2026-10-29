@@ -59,9 +59,9 @@ export default function WorkflowMetrics({
           overflow: hidden;
           min-height: 104px;
           padding: 16px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--nx-border);
           border-radius: 17px;
-          background: #ffffff;
+          background: var(--nx-surface);
           box-shadow: 0 8px 24px rgba(15, 23, 42, 0.045);
         }
 
@@ -73,7 +73,7 @@ export default function WorkflowMetrics({
           width: 82px;
           height: 82px;
           border-radius: 999px;
-          background: #f1f5f9;
+          background: var(--nx-surface);
         }
 
         .metric-card span {
@@ -81,7 +81,7 @@ export default function WorkflowMetrics({
           z-index: 1;
           display: block;
           min-height: 32px;
-          color: #64748b;
+          color: var(--nx-text-muted);
           font-size: 11px;
           line-height: 1.35;
           font-weight: 800;
@@ -94,45 +94,45 @@ export default function WorkflowMetrics({
           z-index: 1;
           display: block;
           margin-top: 8px;
-          color: #0f172a;
+          color: var(--nx-text);
           font-size: 27px;
           line-height: 1;
         }
 
         .metric-card.primary {
           border-color: #bfdbfe;
-          background: #f8fbff;
+          background: var(--nx-surface);
         }
 
         .metric-card.primary::after {
-          background: #dbeafe;
+          background: var(--nx-border);
         }
 
         .metric-card.success {
           border-color: #bbf7d0;
-          background: #f7fff9;
+          background: var(--nx-surface);
         }
 
         .metric-card.success::after {
-          background: #dcfce7;
+          background: var(--nx-success-subtle);
         }
 
         .metric-card.warning {
           border-color: #fde68a;
-          background: #fffdf5;
+          background: var(--nx-surface);
         }
 
         .metric-card.warning::after {
-          background: #fef3c7;
+          background: var(--nx-warning-subtle);
         }
 
         .metric-card.cyan {
           border-color: #bae6fd;
-          background: #f5fcff;
+          background: var(--nx-surface);
         }
 
         .metric-card.cyan::after {
-          background: #e0f2fe;
+          background: var(--nx-border);
         }
 
         @media (max-width: 1380px) {

@@ -1,0 +1,59 @@
+name: NEXUS color codemod
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/nexus-unified-ui-primitives-20261028
+    paths:
+      - "frontend/scripts/codemod-colors.mjs"
+      - ".github/workflows/ui-codemod.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nexus-color-codemod
+  cancel-in-progress: false
+
+jobs:
+  codemod:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Rewrite mapped colors
+        run: node scripts/codemod-colors.mjs
+      - name: Report UI debt
+        run: node scripts/count-ui-debt.mjs .
+      - name: TypeScript
+        run: npx tsc --noEmit
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build
+      - name: Push one audited codemod commit
+        working-directory: .
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontend docs/ui/unmapped-colors.json
+          if git diff --cached --quiet; then
+            echo "No codemod changes."
+            exit 0
+          fi
+          git commit -m "refactor(ui): token codemod"
+          git push origin HEAD:feat/nexus-unified-ui-primitives-20261028
