@@ -65,9 +65,8 @@ const eslintConfig = defineConfig([
       ],
     },
   },
-  // Baseline exception: both legacy files contained synchronous effect state
-  // transitions at df4a49f. Leave the runtime lease/assignment contract
-  // unchanged; remove this narrow exception during the dedicated hook refactor.
+  // TEMPORARY EXCEPTION — https://github.com/madhupadishala/Literature-Screening-Production/issues/109
+  // Expires 2026-11-30. Preserve regulated lease semantics until tested migration.
   {
     files: [
       "hooks/useRecordLock.ts",
