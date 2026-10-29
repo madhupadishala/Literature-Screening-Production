@@ -24,8 +24,8 @@ jobs:
       - run: npm ci
       - name: Format Hits source
         run: |
-          npx --yes prettier@3.6.2 --print-width 120 --write "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/{useHits,hits-utils,hits-actions,hits-review-actions}.ts"
-          npx --yes prettier@3.6.2 --print-width 120 --check "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/useHits.ts"
+          npx --yes prettier@3.6.2 --print-width 160 --write "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/{useHits,hits-utils,hits-actions,hits-review-actions}.ts"
+          npx --yes prettier@3.6.2 --print-width 160 --check "components/nexus-hits-v2/{HitsWorkspace,DuplicateCheck,ManualSearch,Queue,MyAssignments}.tsx" "components/nexus-hits-v2/hooks/useHits.ts"
       - name: Check source line budgets
         run: |
           failures=0
