@@ -1,7 +1,8 @@
 "use client";
 import {useEffect,useMemo,useState} from "react";
 import {useRecordLock} from "@/hooks/useRecordLock";
-import {fetchLiveHits,downloadHitsCsv,saveHitsReview,selfAssignHit} from "./hits-utils";
+import {fetchLiveHits,downloadHitsCsv,saveHitsReview} from "./hits-utils";
+import {createChooseAction} from "./hits-actions";
 export type Hit={id:string;database:string;doi:string;pmid:string;title:string;language:string;primary:string;secondary:string;country:string;seriousness:string;product:string;events:string;articleType:string;fullText:boolean;safety:boolean;evidence:string;listedness:string;relatedness:string;susar:string;date:string;packageId?:string;hitsResultId?:string;reviewVersion?:number};
 export type SearchHit={hit:Hit;decision:"Unreviewed"|"Yes"|"No"|"Re-review";match:string;source:"duplicate"|"manual"};
 const previewFixtures:Hit[]=[];
@@ -45,20 +46,7 @@ const [filters,setFilters]=useState(draftFilters);
 const filtered=useMemo(()=>queue.filter(x=>(!filters.product||searchable(x,filters.product))&&(!filters.database||x.database===filters.database)&&(!filters.seriousness||x.seriousness===filters.seriousness)&&(!filters.country||x.country===filters.country)&&(!filters.listedness||x.listedness===filters.listedness)&&(!filters.relatedness||x.relatedness===filters.relatedness)&&(!filters.susar||x.susar===filters.susar)&&(!filters.from||x.date>=filters.from)&&(!filters.to||x.date<=filters.to)),[queue,filters]);
 const showActions=(id:string)=>{setSelection(null);setMenuRecord(id);};
 const openQueueRecord=(id:string,mode:"readonly"|"review")=>{setMenuRecord(null);setViewMode(mode);setSelection({kind:"queue",id});setReviewNotes("");};
-const chooseAction=async(action:"open"|"readonly"|"assign"|"review"|"accept")=>{
- if(!menuRecord)return;
- const hit=queue.find(x=>x.id===menuRecord);if(!hit)return;
- if(action==="readonly"||action==="open"){openQueueRecord(hit.id,"readonly");return;}
- if(!hit.packageId){setMenuRecord(null);setNotice("This is a synthetic preview record; no live ownership or review can be recorded.");return;}
- if(action==="review"&&!assigned.includes(hit.id)){setMenuRecord(null);setNotice("Accept the assignment or choose Accept and Review before editing.");return;}
- if(action==="assign"||action==="accept"){
-  try{await selfAssignHit(hit.packageId);
-  setAssigned(a=>a.includes(hit.id)?a:[...a,hit.id]);
-  }catch(e){setMenuRecord(null);setNotice(e instanceof Error?e.message:"Self-assignment failed");return;}
- }
- if(action==="assign"){setMenuRecord(null);setNotice("Record assigned to your worklist.");return;}
- if(action==="review"||action==="accept"){openQueueRecord(hit.id,"review");}
-};
+const chooseAction=createChooseAction({menuRecord,queue,assigned,setAssigned,setMenuRecord,setNotice,openQueueRecord});
 const clearFilters=()=>{const empty={product:"",database:"",seriousness:"",country:"",listedness:"",relatedness:"",susar:"",from:"",to:""};setDraftFilters(empty);setFilters(empty);setApplied(false);};
 const exportQueue=()=>{if(fileFormat!=="csv"){setNotice("Only CSV export is available.");return;}downloadHitsCsv(filtered);};
 return {open,setOpen,query,setQuery,db,setDb,rows,setRows,queue,setQueue,loadError,previewEnabled,liveLoaded,viewMode,setViewMode,completed,rereview,menuRecord,setMenuRecord,savingReview,selection,setSelection,reviewNotes,setReviewNotes,addTarget,setAddTarget,reason,setReason,notice,setNotice,worklistView,setWorklistView,audit,applied,setApplied,fileFormat,setFileFormat,assigned,setAssigned,draftFilters,setDraftFilters,filters,setFilters,filtered,activeQueueRecord,recordLock,submitHitsReview,toggle,run,row,selected,decide,add,showActions,openQueueRecord,chooseAction,clearFilters,exportQueue};
