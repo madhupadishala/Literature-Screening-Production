@@ -7,7 +7,6 @@ permissions:
 
 jobs:
   update-next:
-    if: github.ref_name == 'fix/nexus-frontend-dependency-security-20261102'
     runs-on: ubuntu-latest
     steps:
       - name: Fail closed on incorrect branch
