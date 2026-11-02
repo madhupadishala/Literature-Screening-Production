@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
@@ -54,6 +55,59 @@ jobs:
           echo "FAILURES: $fails" >> "$GITHUB_STEP_SUMMARY"
           # Intentionally do not stop: preserve independent results and artifacts.
           exit 0
+      - name: TypeScript, lint and Next build independently
+        working-directory: frontend
+        shell: bash
+        run: |
+          set +e
+          printf '| Check | Result | Exit code |\\n|---|---|---|\\n' > quality-results.md
+          for check in tsc lint build; do
+            case "$check" in
+              tsc) command=(npx tsc --noEmit) ;;
+              lint) command=(npm run lint) ;;
+              build) command=(npm run build) ;;
+            esac
+            echo "::group::$check"
+            "${command[@]}" > "quality-$check.log" 2>&1
+            result=$?
+            tail -n 65 "quality-$check.log"
+            echo "::endgroup::"
+            if [ "$result" -eq 0 ]; then status=PASS; else status=FAIL; fi
+            printf '| %s | %s | %s |\\n' "$check" "$status" "$result" >> quality-results.md
+          done
+          cat quality-results.md >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+      - name: Exact-string source search and Git history
+        working-directory: frontend
+        shell: bash
+        run: |
+          set +e
+          cat > /tmp/restored-assertion-strings.txt <<'TERMS'
+          OperationalMetricStrip
+          AI output is assistive
+          human decision remains authoritative
+          Decision authority
+          authorized human reviewer
+          medical review workspace
+          seriousness
+          listedness / expectedness
+          causality
+          evidence-first medical review
+          TERMS
+          : > assertion-source-history.txt
+          while IFS= read -r term; do
+            printf '\\n=== EXACT STRING: %s ===\\n' "$term" >> assertion-source-history.txt
+            matches=$(grep -RFn --include='*.ts' --include='*.tsx' --include='*.jsx' --include='*.js' -- "$term" app components 2>/dev/null || true)
+            if [ -z "$matches" ]; then echo "NONE" >> assertion-source-history.txt; else printf '%s\\n' "$matches" >> assertion-source-history.txt; fi
+            echo "-- git log -S (all history, four requested areas) --" >> assertion-source-history.txt
+            git log --all -S "$term" --format='%h %ad %s' --date=short -- app/hits app/screening app/review components/nexus-hits-v2 >> assertion-source-history.txt 2>&1
+            echo "-- last historical matching commit and change summary --" >> assertion-source-history.txt
+            git log --all --format='%H' -S "$term" -- app/hits app/screening app/review components/nexus-hits-v2 | head -n 1 | while read -r sha; do
+              if [ -n "$sha" ]; then git show --format='%h %s' --stat "$sha" -- app/hits app/screening app/review components/nexus-hits-v2; fi
+            done >> assertion-source-history.txt 2>&1
+          done < /tmp/restored-assertion-strings.txt
+          cat assertion-source-history.txt
+          exit 0
       - name: Upload verification inventory
         if: always()
         uses: actions/upload-artifact@v4
@@ -62,6 +116,9 @@ jobs:
           path: |
             frontend/verify-results.md
             frontend/verify-logs/
+            frontend/quality-results.md
+            frontend/quality-*.log
+            frontend/assertion-source-history.txt
           if-no-files-found: warn
           retention-days: 14
 
