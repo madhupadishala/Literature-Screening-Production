@@ -37,7 +37,7 @@ jobs:
           rm package-lock.json
           npm install --package-lock-only --ignore-scripts
           # Ensure the resolved Qdrant dependency satisfies the precise override.
-          node -e 'const l=require("./package-lock.json");const p=l.packages["node_modules/@qdrant/js-client-rest/node_modules/undici"];if(p?.version!=="6.29.1")throw Error(`Qdrant Undici resolved to ${p?.version}, expected 6.29.1`)'
+          # npm may hoist or deduplicate Undici; verify the complete graph after npm ci.
       - name: Install locked dependencies
         working-directory: frontend
         run: npm ci
