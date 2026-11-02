@@ -62,13 +62,16 @@ assert.ok(guard.includes("context.sessionId !== identity.sessionId"), "Cross-ses
 assert.ok(guard.includes("resolveTenantForIdentity"), "Tenant membership must be re-read after context selection.");
 assert.ok(guard.includes("evaluateWorkspaceModuleAccess"), "Workspace/module authority must be re-read.");
 
-const legacyPrincipal = read("lib/rbac/request-principal.ts");
-assert.ok(legacyPrincipal.includes('process.env.NODE_ENV !== "production"'));
-assert.ok(legacyPrincipal.includes("allowTrustedIdentityHeaders"));
-assert.ok(
-  legacyPrincipal.includes("tenantKey && email && allowTrustedIdentityHeaders()"),
-  "Trusted identity headers must be explicitly gated to non-production.",
-);
+const principal = read("lib/rbac/request-principal.ts");
+// Production principal resolution must use the authenticated identity session
+// and a validated, session-bound context; legacy trusted-header fallback is forbidden.
+assert.ok(principal.includes("requireIdentitySession(request)"));
+assert.ok(principal.includes("validateNexusContextToken(raw)"));
+assert.ok(principal.includes("context.sessionId !== identity.sessionId"));
+assert.ok(principal.includes("resolveTenantForIdentity"));
+assert.ok(principal.includes("evaluateWorkspaceModuleAccess"));
+assert.ok(!principal.includes("allowTrustedIdentityHeaders"));
+assert.ok(!principal.includes('request.headers.get("x-tenant-key")'));
 
 const session = read("lib/auth/identity-session-service.ts");
 assert.ok(session.includes('createHash("sha256")'));
