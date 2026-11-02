@@ -1,0 +1,66 @@
+name: Diagnostic - all frontend verify scripts
+on:
+  push:
+    branches:
+      - fix/nexus-frontend-dependency-security-20261102
+    paths:
+      - .github/workflows/verify-all-diagnostic.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verify-inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install locked dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Independently execute all verify-*.ts scripts
+        working-directory: frontend
+        shell: bash
+        run: |
+          set -uo pipefail
+          shopt -s nullglob
+          scripts=(scripts/verify-*.ts)
+          test "${#scripts[@]}" -gt 0 || exit 1
+          printf '| Script | Status |\n|---|---|\n' | tee verify-results.md
+          mkdir -p verify-logs
+          fails=0
+          for script in "${scripts[@]}"; do
+            filename="${script##*/}"
+            if node --import tsx "$script" >"verify-logs/${filename}.log" 2>&1; then
+              printf '| %s | PASS |\n' "$script" | tee -a verify-results.md
+            else
+              fails=$((fails+1))
+              printf '| %s | FAIL |\n' "$script" | tee -a verify-results.md
+              echo "::group::FAIL: $script"
+              tail -n 65 "verify-logs/${filename}.log"
+              echo "::endgroup::"
+            fi
+          done
+          echo "SUMMARY: ${#scripts[@]} scripts; $fails failed"
+          cat verify-results.md >> "$GITHUB_STEP_SUMMARY"
+          echo "FAILURES: $fails" >> "$GITHUB_STEP_SUMMARY"
+          # Intentionally do not stop: preserve independent results and artifacts.
+          exit 0
+      - name: Upload verification inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-verify-inventory-${{ github.sha }}
+          path: |
+            frontend/verify-results.md
+            frontend/verify-logs/
+          if-no-files-found: warn
+          retention-days: 14
