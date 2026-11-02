@@ -19,9 +19,14 @@ for (const page of [
 }
 
 const hits = read("app/hits/page.tsx");
-assert.ok(hits.includes("OperationalMetricStrip"));
-assert.ok(hits.includes("AI output is assistive"));
-assert.ok(hits.includes("human decision remains authoritative"));
+const hitsWorkspace = read("components/nexus-hits-v2/HitsWorkspace.tsx");
+assert.ok(hits.includes("HitsWorkspace"));
+assert.ok(hitsWorkspace.includes("useHits"));
+assert.ok(hitsWorkspace.includes("DuplicateCheck"));
+assert.ok(hitsWorkspace.includes("ManualSearch"));
+assert.ok(hitsWorkspace.includes("Queue"));
+assert.ok(hitsWorkspace.includes("EvidencePanel"));
+assert.ok(hitsWorkspace.includes("submitHitsReview"));
 
 const screening = read("app/screening/page.tsx");
 assert.ok(screening.includes("OperationalScreenHeader"));
