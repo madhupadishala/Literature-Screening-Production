@@ -168,12 +168,12 @@ const navigation = readFileSync(
   path.join(process.cwd(), "components/Navigation.tsx"),
   "utf8",
 );
-assert.equal(
-  navigation.includes(
-    '{ label: "Case Processing", path: "/cases", moduleKey: "CASE_PROCESSING" }',
-  ),
-  true,
+const moduleRegistry = readFileSync(
+  path.join(process.cwd(), "lib/nexus/ui-module-registry.ts"),
+  "utf8",
 );
+assert.equal(navigation.includes("UI_MODULE_REGISTRY[moduleKey].label"), true);
+assert.equal(moduleRegistry.includes('CASE_PROCESSING: { label: "Case Processing", path: "/cases"'), true);
 
 const disposition = readFileSync(
   path.join(process.cwd(), "lib/safety/disposition/disposition-service.ts"),

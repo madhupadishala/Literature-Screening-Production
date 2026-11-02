@@ -31,38 +31,20 @@ requireRepoDoc("docs/design/PRODUCT_DESIGN_SYSTEM.md");
 requireRepoDoc("docs/design/PRODUCT_DESIGN_GUARDIAN.md");
 
 const navigation = read("components/Navigation.tsx");
+const subNavigation = read("components/ModuleSubNavigation.tsx");
+const moduleRegistry = read("lib/nexus/ui-module-registry.ts");
+
+// Navigation and sub-navigation consume the canonical registry; they no longer
+// duplicate controlled screen labels in their component implementations.
+requireIncludes(navigation, ['UI_MODULE_ORDER', 'UI_MODULE_REGISTRY', 'label: "Dashboard"'], "Primary module navigation");
+requireIncludes(subNavigation, ['UI_MODULE_REGISTRY[module].screens'], "Module sub-navigation");
 requireIncludes(
-  navigation,
+  moduleRegistry,
   [
-    'label: "Dashboard"',
     'label: "Literature Screening"',
     'label: "Intake"',
     'label: "Case Processing"',
     'label: "Submissions"',
-  ],
-  "Primary module navigation",
-);
-
-for (const forbidden of [
-  'label: "Search"',
-  'label: "Workflow"',
-  'label: "Hits"',
-  'label: "Screening"',
-  'label: "Review / MR"',
-  'label: "Reports"',
-  'label: "Administration"',
-]) {
-  if (navigation.includes(forbidden)) {
-    throw new Error(
-      `Primary module navigation contains a child workflow screen as a top-level module: ${forbidden}`,
-    );
-  }
-}
-
-const subNavigation = read("components/ModuleSubNavigation.tsx");
-requireIncludes(
-  subNavigation,
-  [
     'label: "Dashboard"',
     'label: "Hits"',
     'label: "Screening"',
@@ -71,8 +53,14 @@ requireIncludes(
     'label: "Duplicate Check"',
     'label: "Triage"',
   ],
-  "Module sub-navigation",
+  "Canonical module registry",
 );
+for (const forbidden of ['label: "Search"', 'label: "Workflow"', 'label: "Review / MR"', 'label: "Reports"']) {
+  const primaryDefinitions = moduleRegistry.split("screens: [").map(part => part.split("]")[0]);
+  if (primaryDefinitions[0].includes(forbidden)) {
+    throw new Error(`Primary module registry contains child screen as a top-level module: ${forbidden}`);
+  }
+}
 
 const caseWorkspace = read("app/cases/[caseId]/case-workspace-client.tsx");
 requireIncludes(

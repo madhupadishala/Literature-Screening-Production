@@ -1,0 +1,54 @@
+name: Frontend dependency security baseline
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fix/nexus-frontend-dependency-security-20261102
+
+permissions:
+  contents: read
+
+jobs:
+  security-baseline:
+    name: Capture npm audit and dependency tree
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout exact branch commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Capture full npm audit JSON
+        shell: bash
+        run: |
+          npm audit --json > npm-audit.json
+          result=$?
+          echo "npm audit exit code: $result"
+          exit 0
+      - name: Capture complete dependency tree
+        shell: bash
+        run: |
+          npm ls next undici zod --all > dependency-tree.txt 2>&1
+          result=$?
+          echo "npm ls exit code: $result"
+          exit 0
+      - name: Upload security baseline artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-baseline-${{ github.sha }}
+          path: |
+            frontend/npm-audit.json
+            frontend/dependency-tree.txt
+          if-no-files-found: warn
+          retention-days: 30
