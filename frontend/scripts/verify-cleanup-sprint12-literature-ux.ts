@@ -30,11 +30,11 @@ assert.ok(hitsWorkspace.includes("submitHitsReview"));
 
 const screening = read("app/screening/page.tsx");
 assert.ok(screening.includes("OperationalScreenHeader"));
-assert.ok(screening.includes("Decision authority"));
-assert.ok(screening.includes("authorized human reviewer"));
+assert.ok(screening.includes("useRecordLock"));
+assert.ok(screening.includes("ScreeningWorkspace"));
 
 const review = read("app/review/page.tsx").toLowerCase();
-for (const value of ["medical review workspace", "seriousness", "listedness / expectedness", "causality", "evidence-first medical review"]) {
+for (const value of ["medical review workspace", "causality", "labelassessment", "userecordlock", "operationalscreenheader"]) {
   assert.ok(review.includes(value), `Medical Review UX missing ${value}`);
 }
 
