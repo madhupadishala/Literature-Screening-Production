@@ -64,3 +64,5 @@ jobs:
             frontend/verify-logs/
           if-no-files-found: warn
           retention-days: 14
+
+# Re-run against restored Literature FRS assertions (f26c220 and later).
