@@ -32,6 +32,9 @@ jobs:
           npm install next@16.4.3 zod@4.6.7 --save-exact --package-lock-only --ignore-scripts
           npm pkg set 'overrides.@qdrant/js-client-rest.undici=6.29.1' 'overrides.cheerio.undici=7.30.1'
           npm install --package-lock-only --ignore-scripts
+          npm update undici --package-lock-only --ignore-scripts
+          # Ensure the resolved Qdrant dependency satisfies the precise override.
+          node -e 'const l=require("./package-lock.json");const p=l.packages["node_modules/@qdrant/js-client-rest/node_modules/undici"];if(p?.version!=="6.29.1")throw Error(`Qdrant Undici resolved to ${p?.version}, expected 6.29.1`)'
       - name: Install locked dependencies
         working-directory: frontend
         run: npm ci
