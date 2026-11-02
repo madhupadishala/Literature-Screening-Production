@@ -1,0 +1,75 @@
+name: Dependency remediation (controlled)
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-next:
+    if: github.ref_name == 'fix/nexus-frontend-dependency-security-20261102'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail closed on incorrect branch
+        shell: bash
+        run: |
+          if [ "$GITHUB_REF_NAME" != "fix/nexus-frontend-dependency-security-20261102" ]; then
+            echo "::error::This workflow is restricted to the security fix branch"
+            exit 1
+          fi
+      - name: Checkout branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: fix/nexus-frontend-dependency-security-20261102
+          persist-credentials: true
+      - name: Configure Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Regenerate manifest and lockfile with npm only
+        working-directory: frontend
+        run: npm install next@16.4.1 --save-exact --package-lock-only --ignore-scripts
+      - name: Install locked dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Audit patched dependency graph
+        id: audit
+        working-directory: frontend
+        shell: bash
+        run: |
+          set +e
+          npm audit --json > npm-audit-after-next.json
+          result=$?
+          echo "exit_code=$result" >> "$GITHUB_OUTPUT"
+          echo "npm audit returned $result; artifact upload and commit follow"
+          exit 0
+      - name: Upload npm audit JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-after-next-${{ github.sha }}
+          path: frontend/npm-audit-after-next.json
+          if-no-files-found: warn
+      - name: Commit npm-generated package manifest and lockfile
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- frontend/package.json frontend/package-lock.json
+          if git diff --cached --quiet; then
+            echo "No changes from npm lockfile regeneration"
+          else
+            git commit -m "fix(deps): patch Next.js to 16.4.1 with npm-generated lockfile"
+            git push origin HEAD:refs/heads/fix/nexus-frontend-dependency-security-20261102
+          fi
+      - name: Enforce unchanged security threshold
+        if: always()
+        shell: bash
+        run: |
+          test "${{ steps.audit.outputs.exit_code }}" = "0" || {
+            echo "::error::npm audit reported vulnerabilities at the configured threshold; Next.js is patched but other dependencies still require remediation"
+            exit 1
+          }
