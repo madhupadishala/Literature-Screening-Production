@@ -726,7 +726,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
               placeholder="Human-reviewed case narrative…"
               disabled={isFinal}
             />
-            <EvidencePanel ai={<p>Deterministic system drafts are assistive only and must be reviewed against source evidence.</p>} human={<p>Only authorized human PROCESSOR narrative versions are saved into the regulated case history.</p>} />
+            <EvidencePanel suggestion="Deterministic system draft is assistive only." source="Governed structured case facts; verify against original evidence." decision="Only an authorized human PROCESSOR version is authoritative." finalized={isFinal} />
             {!narrativeExpanded ? <DataCards records={workspace.narratives} empty="No narrative versions." /> : null}
           </div>
         ) : null}
