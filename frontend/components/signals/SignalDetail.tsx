@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useWorkspaceContext } from "@/components/context/WorkspaceContext";
+import { roleHasPermission, PERMISSIONS } from "@/lib/rbac/permissions";
 import { Tabs } from "@/components/ui/Tabs";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -26,6 +27,8 @@ export default function SignalDetail({id}:{id:string}) {
   const {state}=useWorkspaceContext();const context=state.context;
   const scope=context?[context.tenantId,context.workspaceId,context.environment,context.moduleKey].join(":"):"";
   const authorized=Boolean(context?.enabledModules.includes("SIGNAL_MANAGEMENT"));
+  const canAssess=Boolean(context&&roleHasPermission(context.roleKey,PERMISSIONS.SIGNAL_ASSESS));
+  const canApprove=Boolean(context&&roleHasPermission(context.roleKey,PERMISSIONS.SIGNAL_APPROVE));
   const controller=useRef<AbortController|null>(null);
   const [data,setData]=useState<Signal|null>(null);
   const [loading,setLoading]=useState(true);
@@ -55,7 +58,7 @@ export default function SignalDetail({id}:{id:string}) {
   const dirty=Boolean(outcome||rationale||nextStatus||evidence!=="{}");
   useEffect(()=>{if(!dirty)return;const handler=(event:BeforeUnloadEvent)=>{event.preventDefault();event.returnValue="";};window.addEventListener("beforeunload",handler);return()=>window.removeEventListener("beforeunload",handler);},[dirty]);
   async function submit(event:React.FormEvent<HTMLFormElement>){
-    event.preventDefault();if(busy||!authorized||!data)return;
+    event.preventDefault();if(busy||!authorized||!data||!canAssess||(nextStatus&&["CONFIRMED","CLOSED"].includes(nextStatus)&&!canApprove))return;
     if(!outcome.trim()||rationale.trim().length<10){setMessage("Provide an outcome and source-supported rationale of at least 10 characters.");return;}
     let parsed:unknown;
     try{parsed=JSON.parse(evidence);if(!parsed||Array.isArray(parsed)||typeof parsed!=="object")throw new Error("Evidence must be an object.");}
@@ -99,7 +102,7 @@ export default function SignalDetail({id}:{id:string}) {
         <label>Assessment outcome<Input required value={outcome} onChange={e=>setOutcome(e.target.value)}/></label>
         <label className={styles.span}>Clinical rationale<textarea required minLength={10} value={rationale} onChange={e=>setRationale(e.target.value)}/></label>
         <label className={styles.span}>Evidence JSON<textarea value={evidence} onChange={e=>setEvidence(e.target.value)}/></label>
-        <div className={styles.span}><Button disabled={busy||status==="CLOSED"} loading={busy} type="submit">Record governed assessment</Button></div>
+        <div className={styles.span}><Button disabled={busy||status==="CLOSED"||!canAssess||(Boolean(nextStatus)&&["CONFIRMED","CLOSED"].includes(nextStatus)&&!canApprove)} loading={busy} type="submit">Record governed assessment</Button></div>
         {status==="CLOSED"?<p className={styles.muted}>Closed signal: further workflow transitions are unavailable.</p>:null}
       </form>},
       {id:"timeline",label:"Decision history",content:<div className={styles.panel}>{assessments.length?assessments.map((item,i)=><Card key={String(item.id??i)}>
