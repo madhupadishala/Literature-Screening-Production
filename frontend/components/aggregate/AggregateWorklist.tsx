@@ -12,6 +12,7 @@ import {Select} from "@/components/ui/Select";
 import {Badge} from "@/components/ui/Badge";
 import {Notice} from "@/components/ui/Notice";
 import {validAggregatePeriod} from "@/lib/nexus/wave3-client-contract";
+import AggregatePeriodCalendar from "@/components/aggregate/AggregatePeriodCalendar";
 import styles from "@/components/enterprise/GovernedWorkspace.module.css";
 
 type Report={id:string;report_key:string;report_type:string;product_key:string|null;period_start:string;period_end:string;status:string;updated_at:string};
@@ -27,6 +28,7 @@ export default function AggregateWorklist(){
  const active=useRef<AbortController|null>(null);
  const [rows,setRows]=useState<Report[]>([]);const [loading,setLoading]=useState(true);const [error,setError]=useState("");
  const [query,setQuery]=useState("");const [status,setStatus]=useState("");const [kind,setKind]=useState("");
+ const [calendarOpen,setCalendarOpen]=useState(false);
  const [open,setOpen]=useState(false);const [draft,setDraft]=useState<Draft>(empty);const [busy,setBusy]=useState(false);const [feedback,setFeedback]=useState("");
  const load=useCallback(async()=>{
    active.current?.abort();setRows([]);setError("");
@@ -74,6 +76,7 @@ export default function AggregateWorklist(){
   {!enabled?<Notice tone="error">Aggregate Reporting is not enabled in the selected workspace.</Notice>:null}
   {feedback?<Notice>{feedback}</Notice>:null}
   <DataGrid rows={visible} columns={columns} rowKey={r=>r.id} loading={loading} error={error||undefined} onRetry={()=>void load()} emptyMessage="No aggregate reports match these filters in the scoped response."/>
+  {calendarOpen?<AggregatePeriodCalendar reports={rows}/>:null}
   <p className={styles.muted}>Limited to 500 reports by the current API. Only PSUR/PBRER, DSUR, PADER, line listing and custom record types are supported by this service.</p>
   {open&&canCreate?<form className={styles.form} onSubmit={e=>void create(e)}>
     <label>Report key<Input required value={draft.reportKey} onChange={e=>setDraft(p=>({...p,reportKey:e.target.value}))}/></label>
