@@ -70,7 +70,7 @@ export default function AggregateWorklist(){
     <Select aria-label="Report type filter" value={kind} options={opts(types,"All types")} onChange={e=>setKind(e.target.value)}/>
     <Select aria-label="Report status filter" value={status} options={opts(statuses,"All statuses")} onChange={e=>setStatus(e.target.value)}/>
     <Button variant="secondary" onClick={()=>void load()} disabled={loading}>Refresh</Button>
-    {canCreate?<Button onClick={()=>setOpen(v=>!v)}>{open?"Close form":"Create aggregate"}</Button>:null}
+    {canCreate?<Button onClick={()=>{if(open&&dirty&&!window.confirm("Discard unsaved aggregate report registration?"))return;setOpen(v=>!v);}}>{open?"Close form":"Create aggregate"}</Button>:null}
    </div>
   </div>
   {!enabled?<Notice tone="error">Aggregate Reporting is not enabled in the selected workspace.</Notice>:null}
