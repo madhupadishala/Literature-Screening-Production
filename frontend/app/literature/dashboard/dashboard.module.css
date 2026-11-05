@@ -1,0 +1,59 @@
+.workflowGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--nx-space-3);
+  margin-bottom: var(--nx-space-3);
+}
+
+.workflowLink {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--nx-radius-2);
+}
+
+.workflowLink:hover {
+  border-color: var(--nx-color-interactive);
+}
+
+.workflowLink:focus-visible {
+  outline: var(--nx-focus-width) solid var(--nx-color-focus);
+  outline-offset: var(--nx-focus-offset);
+}
+
+.kicker {
+  display: block;
+  color: var(--nx-color-text-secondary);
+  font-size: var(--nx-font-size-2);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.heading {
+  display: block;
+  margin-top: var(--nx-space-2);
+  color: var(--nx-color-text);
+  font-size: var(--nx-font-size-4);
+  font-weight: 600;
+}
+
+.description {
+  margin: var(--nx-space-2) 0 0;
+  color: var(--nx-color-text-secondary);
+  font-size: var(--nx-font-size-3);
+  line-height: 1.5;
+}
+
+.assessment {
+  margin-top: var(--nx-space-3);
+}
+
+@media (max-width: 1024px) {
+  .workflowGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .workflowGrid { grid-template-columns: minmax(0, 1fr); }
+}
