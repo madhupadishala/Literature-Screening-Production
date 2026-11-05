@@ -1,12 +1,26 @@
 import Link from "next/link";
 import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
+import { Card } from "@/components/ui/Card";
+import styles from "./dashboard.module.css";
 
 const WORKFLOW = [
-  { label: "Hits", href: "/hits", description: "Review retrieved literature, duplicates, product matches and AI relevance suggestions." },
-  { label: "Screening", href: "/screening", description: "Perform human literature relevance and patient-safety screening decisions." },
-  { label: "Medical Review", href: "/review", description: "Complete medical review, listedness/expectedness and causality assessment." },
-];
+  {
+    label: "Hits",
+    href: "/hits",
+    description: "Review retrieved literature, duplicates, product matches and AI relevance suggestions.",
+  },
+  {
+    label: "Screening",
+    href: "/screening",
+    description: "Perform human literature relevance and patient-safety screening decisions.",
+  },
+  {
+    label: "Medical Review",
+    href: "/review",
+    description: "Complete medical review, listedness/expectedness and causality assessment.",
+  },
+] as const;
 
 export default function LiteratureDashboardPage() {
   return (
@@ -17,29 +31,25 @@ export default function LiteratureDashboardPage() {
         description="Operational entry point for the literature safety workflow and user workload."
         status="Controlled workspace"
       />
-      <section className="grid">
+      <nav className={styles.workflowGrid} aria-label="Literature workflow">
         {WORKFLOW.map((item) => (
-          <Link key={item.href} href={item.href} className="card">
-            <span>PV WORKFLOW</span>
-            <strong>{item.label}</strong>
-            <p>{item.description}</p>
-          </Link>
+          <Card key={item.href}>
+            <Link href={item.href} className={styles.workflowLink}>
+              <span className={styles.kicker}>PV workflow</span>
+              <strong className={styles.heading}>{item.label}</strong>
+              <p className={styles.description}>{item.description}</p>
+            </Link>
+          </Card>
         ))}
-      </section>
-      <section className="assessment">
-        <span>SHARED SAFETY ASSESSMENT</span>
-        <strong>Seriousness · Listedness / Expectedness · Causality</strong>
-        <p>These assessments use the common governed safety-assessment layer and are surfaced contextually in Screening, Medical Review, Intake and Case Processing.</p>
-      </section>
-      <style>{`
-        .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:14px}
-        .card,.assessment{border:1px solid var(--nx-border);border-radius:8px;background:var(--nx-surface);padding:20px;text-decoration:none;color:inherit}
-        .card span,.assessment span{font-size:8px;font-weight:900;letter-spacing:.08em;color:var(--nx-primary)}
-        .card strong,.assessment strong{display:block;margin-top:8px;font-size:18px}
-        .card p,.assessment p{margin:8px 0 0;color:var(--nx-text-muted);font-size:11px;line-height:1.6}
-        .card:hover{border-color:var(--nx-primary)}
-        @media(max-width:800px){.grid{grid-template-columns:1fr}}
-      `}</style>
+      </nav>
+      <Card className={styles.assessment} aria-label="Shared safety assessment">
+        <span className={styles.kicker}>Shared safety assessment</span>
+        <strong className={styles.heading}>Seriousness · Listedness / Expectedness · Causality</strong>
+        <p className={styles.description}>
+          These assessments use the common governed safety-assessment layer and are surfaced
+          contextually in Screening, Medical Review, Intake and Case Processing.
+        </p>
+      </Card>
     </ApplicationShell>
   );
 }

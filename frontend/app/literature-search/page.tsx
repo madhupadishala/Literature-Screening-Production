@@ -1,13 +1,10 @@
-import Navigation from "@/components/Navigation";
-import ModuleSubNavigation from "@/components/ModuleSubNavigation";
+import ApplicationShell from "@/components/enterprise/ApplicationShell";
 import InvestorDemoHeader from "@/components/InvestorDemoHeader";
 import AdHocSearchWorkspace from "@/components/literature/AdHocSearchWorkspace";
 
 export default function LiteratureSearchPage() {
   return (
-    <main className="app-shell">
-      <Navigation />
-      <ModuleSubNavigation module="LITERATURE" />
+    <ApplicationShell module="LITERATURE">
       <InvestorDemoHeader
         eyebrow="RBAC-CONTROLLED SEARCH UTILITY"
         title="Enterprise Literature Search"
@@ -15,22 +12,6 @@ export default function LiteratureSearchPage() {
         status="Execution purpose must be explicit"
       />
       <AdHocSearchWorkspace />
-
-      <style>{`
-        .app-shell {
-          min-height: 100vh;
-          padding: 24px;
-          color: var(--nx-text);
-          background: var(--nx-surface);
-          font-family: "Poppins", Arial, Helvetica, sans-serif;
-        }
-
-        @media (max-width: 700px) {
-          .app-shell {
-            padding: 12px;
-          }
-        }
-      `}</style>
-    </main>
+    </ApplicationShell>
   );
 }
