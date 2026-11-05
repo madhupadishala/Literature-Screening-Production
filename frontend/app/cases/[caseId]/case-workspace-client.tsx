@@ -92,6 +92,8 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   });
 
   const [narrativeText, setNarrativeText] = useState("");
+  const savedEditors = useRef<Record<string, string>>({});
+  const savedNarrative = useRef("");
   const [reviewComment, setReviewComment] = useState(
     "Reviewer completed the governed case review action.",
   );
@@ -110,7 +112,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   const hydrate = useCallback((data: Workspace) => {
     setWorkspace(data);
     const payload = data.draft.payload as Record<string, unknown>;
-    setEditors({
+    const initialEditors = {
       General: json(payload.identification),
       Reporter: json(payload.reporters),
       Patient: json(payload.patient),
@@ -119,22 +121,20 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
       "Medical History": json(payload.medicalHistory),
       Labs: json(payload.tests),
       Additional: json(payload.additionalInformation),
-    });
+    };
+    savedEditors.current = initialEditors;
+    setEditors(initialEditors);
 
     const latestHumanNarrative = data.narratives.find((item) =>
       ["PROCESSOR", "QC", "MEDICAL_REVIEW", "FINAL"].includes(
         display(item.narrativeStage ?? item.narrative_stage, ""),
       ),
     );
-    setNarrativeText(
-      latestHumanNarrative
-        ? display(
-            latestHumanNarrative.narrativeText ??
-              latestHumanNarrative.narrative_text,
-            "",
-          )
-        : "",
-    );
+    const initialNarrative = latestHumanNarrative
+      ? display(latestHumanNarrative.narrativeText ?? latestHumanNarrative.narrative_text, "")
+      : "";
+    savedNarrative.current = initialNarrative;
+    setNarrativeText(initialNarrative);
 
     const products = Array.isArray(payload.products)
       ? (payload.products as Array<Record<string, unknown>>)
@@ -217,6 +217,25 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   const isFinal = ["FINAL", "FINALIZED", "CLOSED", "SUBMITTED"].includes(
     currentStatus,
   );
+
+  const dirty = Boolean(workspace) && !isFinal && (
+    Object.keys(editors).some((key) => editors[key] !== savedEditors.current[key]) ||
+    narrativeText !== savedNarrative.current
+  );
+
+  useEffect(() => {
+    if (!dirty) return;
+    const warnOnUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warnOnUnload);
+    return () => window.removeEventListener("beforeunload", warnOnUnload);
+  }, [dirty]);
+
+  function confirmDiscard() {
+    return !dirty || window.confirm("You have unsaved changes to this case draft or narrative. Discard them?");
+  }
 
   const openQueries = useMemo(
     () =>
@@ -559,8 +578,8 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
         status={isFinal ? "Finalized / read-only" : "Controlled case draft"}
         actions={
           <div className={styles.heroActions}>
-            <Link href="/cases">Case Worklist</Link>
-            <button type="button" onClick={() => void load()}>Refresh</button>
+            <Link href="/cases" onClick={(event) => { if (!confirmDiscard()) event.preventDefault(); }}>Case Worklist</Link>
+            <button type="button" onClick={() => { if (confirmDiscard()) void load(); }}>Refresh</button>
             {!isFinal ? (
               <button type="button" onClick={() => void assignToMe()} disabled={busy !== ""}>
                 Assign to me
@@ -570,6 +589,11 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
         }
       />
 
+      {dirty ? (
+        <div role="status" className={styles.message}>
+          Unsaved case edits or narrative changes. Save the appropriate governed revision before leaving this workspace.
+        </div>
+      ) : null}
       {message ? <div className={styles.message}>{message}</div> : null}
 
       <OperationalMetricStrip
