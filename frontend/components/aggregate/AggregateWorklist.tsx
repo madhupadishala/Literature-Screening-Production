@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {useCallback,useEffect,useMemo,useRef,useState} from "react";
 import {useWorkspaceContext} from "@/components/context/WorkspaceContext";
+import {roleHasPermission,PERMISSIONS} from "@/lib/rbac/permissions";
 import {DataGrid,type Column} from "@/components/ui/DataGrid";
 import {Button} from "@/components/ui/Button";
 import {Input} from "@/components/ui/Input";
@@ -20,6 +21,7 @@ export default function AggregateWorklist(){
  const {state}=useWorkspaceContext();const ctx=state.context;
  const scope=ctx?[ctx.tenantId,ctx.workspaceId,ctx.environment,ctx.moduleKey].join(":"):"";
  const enabled=Boolean(ctx?.enabledModules.includes("AGGREGATE_REPORTING"));
+ const canCreate=enabled&&Boolean(ctx&&roleHasPermission(ctx.roleKey,PERMISSIONS.AGGREGATE_CREATE));
  const active=useRef<AbortController|null>(null);
  const [rows,setRows]=useState<Report[]>([]);const [loading,setLoading]=useState(true);const [error,setError]=useState("");
  const [query,setQuery]=useState("");const [status,setStatus]=useState("");const [kind,setKind]=useState("");
@@ -64,14 +66,14 @@ export default function AggregateWorklist(){
     <Select aria-label="Report type filter" value={kind} options={opts(types,"All types")} onChange={e=>setKind(e.target.value)}/>
     <Select aria-label="Report status filter" value={status} options={opts(statuses,"All statuses")} onChange={e=>setStatus(e.target.value)}/>
     <Button variant="secondary" onClick={()=>void load()} disabled={loading}>Refresh</Button>
-    {enabled?<Button onClick={()=>setOpen(v=>!v)}>{open?"Close form":"Create aggregate"}</Button>:null}
+    {canCreate?<Button onClick={()=>setOpen(v=>!v)}>{open?"Close form":"Create aggregate"}</Button>:null}
    </div>
   </div>
   {!enabled?<Notice tone="error">Aggregate Reporting is not enabled in the selected workspace.</Notice>:null}
   {feedback?<Notice>{feedback}</Notice>:null}
   <DataGrid rows={visible} columns={columns} rowKey={r=>r.id} loading={loading} error={error||undefined} onRetry={()=>void load()} emptyMessage="No aggregate reports match these filters in the scoped response."/>
   <p className={styles.muted}>Limited to 500 reports by the current API. Only PSUR/PBRER, DSUR, PADER, line listing and custom record types are supported by this service.</p>
-  {open&&enabled?<form className={styles.form} onSubmit={e=>void create(e)}>
+  {open&&canCreate?<form className={styles.form} onSubmit={e=>void create(e)}>
     <label>Report key<Input required value={draft.reportKey} onChange={e=>setDraft(p=>({...p,reportKey:e.target.value}))}/></label>
     <label>Report type<Select value={draft.reportType} onChange={e=>setDraft(p=>({...p,reportType:e.target.value}))} options={types.map(v=>({value:v,label:v.replaceAll("_"," ")}))}/></label>
     <label>Product key<Input value={draft.productKey} onChange={e=>setDraft(p=>({...p,productKey:e.target.value}))}/></label>
