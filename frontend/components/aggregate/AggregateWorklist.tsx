@@ -10,6 +10,7 @@ import {Input} from "@/components/ui/Input";
 import {Select} from "@/components/ui/Select";
 import {Badge} from "@/components/ui/Badge";
 import {Notice} from "@/components/ui/Notice";
+import {validAggregatePeriod} from "@/lib/nexus/wave3-client-contract";
 import styles from "@/components/enterprise/GovernedWorkspace.module.css";
 
 type Report={id:string;report_key:string;report_type:string;product_key:string|null;period_start:string;period_end:string;status:string;updated_at:string};
@@ -43,7 +44,7 @@ export default function AggregateWorklist(){
  useEffect(()=>{if(!dirty||!open)return;const h=(e:BeforeUnloadEvent)=>{e.preventDefault();e.returnValue="";};window.addEventListener("beforeunload",h);return()=>window.removeEventListener("beforeunload",h);},[dirty,open]);
  async function create(e:React.FormEvent<HTMLFormElement>){
    e.preventDefault();if(busy||!enabled)return;
-   if(!draft.reportKey.trim()||!draft.periodStart||!draft.periodEnd||draft.periodEnd<draft.periodStart||draft.reason.trim().length<10){setFeedback("Report key, chronological period and reason of at least ten characters are required.");return;}
+   if(!draft.reportKey.trim()||!validAggregatePeriod(draft.periodStart,draft.periodEnd)||draft.reason.trim().length<10){setFeedback("Report key, chronological period and reason of at least ten characters are required.");return;}
    setBusy(true);setFeedback("");
    try{const res=await fetch("/api/aggregate-reports",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...draft,productKey:draft.productKey.trim()||undefined})});
     const payload=await res.json();if(!res.ok||!payload.success)throw new Error(payload.error||"Report registration failed.");
