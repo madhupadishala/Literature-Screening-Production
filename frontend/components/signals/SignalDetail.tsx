@@ -11,16 +11,11 @@ import { Select } from "@/components/ui/Select";
 import { Notice } from "@/components/ui/Notice";
 import { EvidencePanel } from "@/components/ui/EvidencePanel";
 import { Badge } from "@/components/ui/Badge";
+import { allowedSignalTransitions, isSignalApprovalTransition } from "@/lib/nexus/wave3-client-contract";
 import styles from "@/components/enterprise/GovernedWorkspace.module.css";
 
 type Signal = Record<string, unknown> & {assessments?: Array<Record<string, unknown>>};
 type Assessment = "VALIDATION"|"PRIORITIZATION"|"EVALUATION"|"RECOMMENDATION"|"CLOSURE";
-const transitions: Record<string,string[]> = {
-  DETECTED:["VALIDATED","REFUTED"],
-  VALIDATED:["UNDER_EVALUATION","REFUTED"],
-  UNDER_EVALUATION:["CONFIRMED","REFUTED"],
-  CONFIRMED:["CLOSED"],REFUTED:["CLOSED"],CLOSED:[]
-};
 const asText=(x:unknown)=>x===null||x===undefined?"—":typeof x==="string"||typeof x==="number"?String(x):"—";
 const meaningful=(x:unknown)=>typeof x==="string"&&x.trim()?x:"—";
 export default function SignalDetail({id}:{id:string}) {
@@ -54,11 +49,11 @@ export default function SignalDetail({id}:{id:string}) {
   },[id,scope,authorized]);
   useEffect(()=>{const timer=window.setTimeout(()=>void load(),0);return()=>{clearTimeout(timer);controller.current?.abort();};},[load]);
   const status=asText(data?.status);
-  const allowed=transitions[status]??[];
+  const allowed=allowedSignalTransitions(status);
   const dirty=Boolean(outcome||rationale||nextStatus||evidence!=="{}");
   useEffect(()=>{if(!dirty)return;const handler=(event:BeforeUnloadEvent)=>{event.preventDefault();event.returnValue="";};window.addEventListener("beforeunload",handler);return()=>window.removeEventListener("beforeunload",handler);},[dirty]);
   async function submit(event:React.FormEvent<HTMLFormElement>){
-    event.preventDefault();if(busy||!authorized||!data||!canAssess||(nextStatus&&["CONFIRMED","CLOSED"].includes(nextStatus)&&!canApprove))return;
+    event.preventDefault();if(busy||!authorized||!data||!canAssess||(nextStatus&&isSignalApprovalTransition(nextStatus)&&!canApprove))return;
     if(!outcome.trim()||rationale.trim().length<10){setMessage("Provide an outcome and source-supported rationale of at least 10 characters.");return;}
     let parsed:unknown;
     try{parsed=JSON.parse(evidence);if(!parsed||Array.isArray(parsed)||typeof parsed!=="object")throw new Error("Evidence must be an object.");}
@@ -102,7 +97,7 @@ export default function SignalDetail({id}:{id:string}) {
         <label>Assessment outcome<Input required value={outcome} onChange={e=>setOutcome(e.target.value)}/></label>
         <label className={styles.span}>Clinical rationale<textarea required minLength={10} value={rationale} onChange={e=>setRationale(e.target.value)}/></label>
         <label className={styles.span}>Evidence JSON<textarea value={evidence} onChange={e=>setEvidence(e.target.value)}/></label>
-        <div className={styles.span}><Button disabled={busy||status==="CLOSED"||!canAssess||(Boolean(nextStatus)&&["CONFIRMED","CLOSED"].includes(nextStatus)&&!canApprove)} loading={busy} type="submit">Record governed assessment</Button></div>
+        <div className={styles.span}><Button disabled={busy||status==="CLOSED"||!canAssess||(Boolean(nextStatus)&&isSignalApprovalTransition(nextStatus)&&!canApprove)} loading={busy} type="submit">Record governed assessment</Button></div>
         {status==="CLOSED"?<p className={styles.muted}>Closed signal: further workflow transitions are unavailable.</p>:null}
       </form>},
       {id:"timeline",label:"Decision history",content:<div className={styles.panel}>{assessments.length?assessments.map((item,i)=><Card key={String(item.id??i)}>
