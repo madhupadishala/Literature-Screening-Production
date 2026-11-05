@@ -92,7 +92,7 @@ export default function SignalWorklist() {
         <Select aria-label="Detection method filter" value={method} onChange={e=>setMethod(e.target.value)} options={options(methods,"All methods")}/>
         <Select aria-label="Priority filter" value={priority} onChange={e=>setPriority(e.target.value)} options={options(["LOW","NORMAL","HIGH","CRITICAL"],"All priorities")}/>
         <Button type="button" variant="secondary" onClick={()=>void load()} disabled={loading}>Refresh</Button>
-        {canCreate?<Button type="button" onClick={()=>setFormOpen(v=>!v)}>{formOpen?"Close form":"Register signal"}</Button>:null}
+        {canCreate?<Button type="button" onClick={()=>{if(formOpen&&dirty&&!window.confirm("Discard unsaved signal registration?"))return;setFormOpen(v=>!v);}}>{formOpen?"Close form":"Register signal"}</Button>:null}
       </div>
     </div>
     {message?<Notice tone={message.includes("failed")?"error":"info"}>{message}</Notice>:null}
