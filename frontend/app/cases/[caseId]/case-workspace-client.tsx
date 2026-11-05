@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import CaseFollowUpTracker from "@/components/cases/CaseFollowUpTracker";
+import { EvidencePanel } from "@/components/ui/EvidencePanel";
 import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalState from "@/components/enterprise/OperationalState";
@@ -92,6 +94,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   });
 
   const [narrativeText, setNarrativeText] = useState("");
+  const [narrativeExpanded, setNarrativeExpanded] = useState(false);
   const [savedEditors, setSavedEditors] = useState<Record<string, string>>({});
   const [savedNarrative, setSavedNarrative] = useState("");
   const [reviewComment, setReviewComment] = useState(
@@ -703,8 +706,11 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
         ) : null}
 
         {tab === "Narrative" ? (
-          <div className={styles.stack}>
+          <div className={narrativeExpanded ? styles.narrativeExpanded : styles.stack}>
             <div className={styles.actionRow}>
+              <button type="button" aria-pressed={narrativeExpanded} onClick={() => setNarrativeExpanded((value) => !value)}>
+                {narrativeExpanded ? "Exit full-screen editor" : "Expand narrative editor"}
+              </button>
               <button type="button" onClick={() => void narrative("GENERATE")} disabled={busy !== "" || isFinal}>
                 Generate deterministic draft
               </button>
@@ -714,12 +720,14 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
             </div>
             <textarea
               className={styles.narrative}
+              aria-label="Human-reviewed safety case narrative"
               value={narrativeText}
               onChange={(e) => setNarrativeText(e.target.value)}
               placeholder="Human-reviewed case narrative…"
               disabled={isFinal}
             />
-            <DataCards records={workspace.narratives} empty="No narrative versions." />
+            <EvidencePanel ai={<p>Deterministic system drafts are assistive only and must be reviewed against source evidence.</p>} human={<p>Only authorized human PROCESSOR narrative versions are saved into the regulated case history.</p>} />
+            {!narrativeExpanded ? <DataCards records={workspace.narratives} empty="No narrative versions." /> : null}
           </div>
         ) : null}
 
@@ -939,8 +947,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
             <DataCards records={workspace.auditEvents} empty="No case audit events found." />
             <h3>Immutable Case Versions</h3>
             <DataCards records={workspace.caseVersions} empty="No finalized case versions yet." />
-            <h3>Follow-up Links</h3>
-            <DataCards records={workspace.followUps} empty="No follow-up Intake linked." />
+            <CaseFollowUpTracker rows={workspace.followUps} />
           </div>
         ) : null}
       </section>
