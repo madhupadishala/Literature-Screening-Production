@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {createHmac} from 'node:crypto';
+import {createHmac, randomBytes} from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -9,7 +9,7 @@ import {createNativeBridge} from '../lib/server/native-agent-uds-bridge.mjs';
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'nexus-native-'));
 const socketPath=path.join(temp,'native.sock');
 const ids=['AG08','AG12','AG17','AG20','AG26'];
-const signingSecret='private-synthetic-ipc-signing-key-32-bytes';
+const signingSecret=randomBytes(32).toString('hex');
 function canonical(value){
  if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';
  if(value&&typeof value==='object')return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}';
