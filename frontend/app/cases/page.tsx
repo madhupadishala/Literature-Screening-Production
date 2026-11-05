@@ -132,18 +132,9 @@ export default function CasesPage() {
           <h2>Safety cases</h2>
           <div className={styles.filters}>
             <Input aria-label="Search cases" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search cases…" />
-            <Select aria-label="Filter by status" value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option value="">All statuses</option>
-              {statuses.map((v) => <option key={v} value={v}>{v.replaceAll("_", " ")}</option>)}
-            </Select>
-            <Select aria-label="Filter by seriousness" value={seriousness} onChange={(e) => setSeriousness(e.target.value)}>
-              <option value="">All seriousness</option>
-              {seriousnessOptions.map((v) => <option key={v} value={v}>{v.replaceAll("_", " ")}</option>)}
-            </Select>
-            <Select aria-label="Filter by assignee" value={assignee} onChange={(e) => setAssignee(e.target.value)}>
-              <option value="">All assignees</option>
-              {assignees.map((v) => <option key={v} value={v}>{v}</option>)}
-            </Select>
+            <Select aria-label="Filter by status" value={status} onChange={(e) => setStatus(e.target.value)} options={[{ value: "", label: "All statuses" }, ...statuses.map((v) => ({ value: v, label: v.replaceAll("_", " ") }))]} />
+            <Select aria-label="Filter by seriousness" value={seriousness} onChange={(e) => setSeriousness(e.target.value)} options={[{ value: "", label: "All seriousness" }, ...seriousnessOptions.map((v) => ({ value: v, label: v.replaceAll("_", " ") }))]} />
+            <Select aria-label="Filter by assignee" value={assignee} onChange={(e) => setAssignee(e.target.value)} options={[{ value: "", label: "All assignees" }, ...assignees.map((v) => ({ value: v, label: v }))]} />
           </div>
         </div>
         <DataGrid rows={filtered} columns={columns} rowKey={(r) => r.caseId} loading={loading}
