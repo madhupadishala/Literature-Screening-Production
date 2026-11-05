@@ -92,8 +92,8 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   });
 
   const [narrativeText, setNarrativeText] = useState("");
-  const savedEditors = useRef<Record<string, string>>({});
-  const savedNarrative = useRef("");
+  const [savedEditors, setSavedEditors] = useState<Record<string, string>>({});
+  const [savedNarrative, setSavedNarrative] = useState("");
   const [reviewComment, setReviewComment] = useState(
     "Reviewer completed the governed case review action.",
   );
@@ -122,7 +122,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
       Labs: json(payload.tests),
       Additional: json(payload.additionalInformation),
     };
-    savedEditors.current = initialEditors;
+    setSavedEditors(initialEditors);
     setEditors(initialEditors);
 
     const latestHumanNarrative = data.narratives.find((item) =>
@@ -133,7 +133,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
     const initialNarrative = latestHumanNarrative
       ? display(latestHumanNarrative.narrativeText ?? latestHumanNarrative.narrative_text, "")
       : "";
-    savedNarrative.current = initialNarrative;
+    setSavedNarrative(initialNarrative);
     setNarrativeText(initialNarrative);
 
     const products = Array.isArray(payload.products)
@@ -219,8 +219,8 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   );
 
   const dirty = Boolean(workspace) && !isFinal && (
-    Object.keys(editors).some((key) => editors[key] !== savedEditors.current[key]) ||
-    narrativeText !== savedNarrative.current
+    Object.keys(editors).some((key) => editors[key] !== savedEditors[key]) ||
+    narrativeText !== savedNarrative
   );
 
   useEffect(() => {
