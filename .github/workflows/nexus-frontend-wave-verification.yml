@@ -60,11 +60,43 @@ jobs:
         id: browser_install
         continue-on-error: true
         run: npx playwright install --with-deps chromium
-      - name: Browser regression
-        id: browser
+      - name: Build isolated browser fixtures
+        id: fixtures
         if: steps.browser_install.outcome == 'success'
         continue-on-error: true
-        run: npx playwright test
+        run: |
+          mkdir -p .ui-state-harness .hits-test-harness
+          npx --yes esbuild@0.25.11 tests/ui/ui-states-harness.tsx \
+            --bundle --platform=browser --format=iife --jsx=automatic \
+            --loader:.module.css=local-css \
+            --outdir=.ui-state-harness --entry-names=bundle
+          printf '<!doctype html><html><head><link rel="stylesheet" href="/bundle.css"></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>' > .ui-state-harness/index.html
+          npx --yes esbuild@0.25.11 tests/ui/hits-harness.tsx \
+            --bundle --platform=browser --format=iife --jsx=automatic \
+            --loader:.module.css=local-css --alias:@=. \
+            --define:process.env.NODE_ENV='"development"' \
+            --define:process.env.NEXT_PUBLIC_NEXUS_HITS_FIXTURES='"false"' \
+            --outdir=.hits-test-harness --entry-names=bundle
+          printf '<!doctype html><html><head><link rel="stylesheet" href="/bundle.css"></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>' > .hits-test-harness/index.html
+      - name: Browser regression
+        id: browser
+        if: steps.browser_install.outcome == 'success' && steps.fixtures.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node scripts/serve-ui-states.mjs >/tmp/ui-state-harness.log 2>&1 &
+          node scripts/serve-hits-harness.mjs >/tmp/hits-harness.log 2>&1 &
+          for port in 3107 3108; do
+            ready=0
+            for attempt in $(seq 1 40); do
+              if curl -sf "http://127.0.0.1:$port/" >/dev/null; then ready=1; break; fi
+              sleep 1
+            done
+            if [ "$ready" -ne 1 ]; then
+              cat /tmp/ui-state-harness.log /tmp/hits-harness.log
+              exit 1
+            fi
+          done
+          npx playwright test tests/ui/ui-states.spec.ts tests/ui/hits-api.spec.ts
       - name: Gate summary
         if: always()
         shell: bash
@@ -78,7 +110,8 @@ jobs:
             echo "| Build | ${{ steps.build.outcome }} |"
             echo "| Unit/integration | ${{ steps.unit.outcome }} |"
             echo "| Browser install | ${{ steps.browser_install.outcome }} |"
-            echo "| Playwright | ${{ steps.browser.outcome }} |"
+            echo "| Browser fixtures | ${{ steps.fixtures.outcome }} |"
+            echo "| Playwright harness regression | ${{ steps.browser.outcome }} |"
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Fail if any required gate failed
         if: always()
@@ -88,9 +121,10 @@ jobs:
           BUILD: ${{ steps.build.outcome }}
           UNIT: ${{ steps.unit.outcome }}
           INSTALL: ${{ steps.browser_install.outcome }}
+          FIXTURES: ${{ steps.fixtures.outcome }}
           BROWSER: ${{ steps.browser.outcome }}
         run: |
-          for status in "$TSC" "$LINT" "$BUILD" "$UNIT" "$INSTALL" "$BROWSER"; do
+          for status in "$TSC" "$LINT" "$BUILD" "$UNIT" "$INSTALL" "$FIXTURES" "$BROWSER"; do
             if [ "$status" != "success" ]; then
               echo "Unqualified gate: $status"
               exit 1
