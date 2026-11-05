@@ -10,12 +10,13 @@ import {Tabs} from "@/components/ui/Tabs";
 import {Card} from "@/components/ui/Card";
 import {Notice} from "@/components/ui/Notice";
 import {EvidencePanel} from "@/components/ui/EvidencePanel";
+import {availablePvDocumentTransitions,isPvDocumentApproval} from "@/lib/nexus/pv-document-client-contract";
 import styles from "@/components/enterprise/GovernedWorkspace.module.css";
 
 type Json=Record<string,unknown>;
 const dict=(v:unknown):Json=>v&&typeof v==="object"&&!Array.isArray(v)?v as Json:{};
 const describe=(v:unknown)=>typeof v==="string"||typeof v==="number"?String(v):"—";
-const legal:Record<string,string[]>={DRAFT:["DRAFT","REVIEWED"],IN_REVIEW:["REVIEWED","APPROVED"],APPROVED:["EFFECTIVE","RETIRED"],EFFECTIVE:["RETIRED"],RETIRED:[]};
+
 export default function PvDocumentDetail({id}:{id:string}){
  const {state}=useWorkspaceContext();const c=state.context;
  const scope=c?[c.tenantId,c.workspaceId,c.environment,c.moduleKey].join(":"):"";
@@ -44,13 +45,13 @@ export default function PvDocumentDetail({id}:{id:string}){
  useEffect(()=>{const t=window.setTimeout(()=>void load(),0);return()=>{clearTimeout(t);active.current?.abort();};},[load]);
  const history=useMemo(()=>Array.isArray(data?.versions)?data.versions.map(dict):[],[data]);
  const status=describe(data?.lifecycle_status);
- const allowed=legal[status]??[];
+ const allowed=availablePvDocumentTransitions(status);
  const readonly=status==="RETIRED";
  const dirty=content!==saved||reason.trim()!==""||linkedSources!==savedSources;
  useEffect(()=>{if(!dirty)return;const h=(e:BeforeUnloadEvent)=>{e.preventDefault();e.returnValue="";};window.addEventListener("beforeunload",h);return()=>window.removeEventListener("beforeunload",h);},[dirty]);
  async function save(e:React.FormEvent<HTMLFormElement>){
   e.preventDefault();if(busy||readonly||!enabled)return;
-  const elevated=["APPROVED","EFFECTIVE","RETIRED"].includes(versionStatus);
+  const elevated=isPvDocumentApproval(versionStatus);
   if((elevated&&!canApprove)||(!elevated&&!canReview)){setFeedback("The selected transition is not authorized for this role.");return;}
   if(reason.trim().length<10){setFeedback("Change reason must contain at least ten characters.");return;}
   let parsed:unknown,linked:unknown;
@@ -82,7 +83,7 @@ export default function PvDocumentDetail({id}:{id:string}){
      <label>Effective from<Input type="date" disabled={readonly} value={effectiveFrom} onChange={e=>setEffectiveFrom(e.target.value)}/></label>
      <label>Effective until<Input type="date" disabled={readonly} min={effectiveFrom||undefined} value={effectiveUntil} onChange={e=>setEffectiveUntil(e.target.value)}/></label>
      <label className={styles.span}>Version reason<textarea minLength={10} required disabled={readonly} value={reason} onChange={e=>setReason(e.target.value)}/></label>
-     <div className={styles.span}><Button type="submit" disabled={readonly||!allowed.length||(versionStatus?["APPROVED","EFFECTIVE","RETIRED"].includes(versionStatus)?!canApprove:!canReview:true)} loading={busy}>Save governed version</Button></div>
+     <div className={styles.span}><Button type="submit" disabled={readonly||!allowed.length||(versionStatus?isPvDocumentApproval(versionStatus)?!canApprove:!canReview:true)} loading={busy}>Save governed version</Button></div>
     </form>
    </div>},
    {id:"history",label:"Immutable versions",content:<div className={styles.panel}>{history.length?history.map((v,i)=><Card key={String(v.id??i)}>
