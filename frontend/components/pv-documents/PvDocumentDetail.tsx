@@ -24,7 +24,7 @@ export default function PvDocumentDetail({id}:{id:string}){
  const canApprove=Boolean(enabled&&c&&roleHasPermission(c.roleKey,PERMISSIONS.PV_DOCUMENT_APPROVE));
  const active=useRef<AbortController|null>(null);
  const [data,setData]=useState<Json|null>(null),[loading,setLoading]=useState(true),[error,setError]=useState("");
- const [content,setContent]=useState("{}"),[saved,setSaved]=useState("{}"),[linkedSources,setLinkedSources]=useState("[]");
+ const [content,setContent]=useState("{}"),[saved,setSaved]=useState("{}"),[linkedSources,setLinkedSources]=useState("[]"),[savedSources,setSavedSources]=useState("[]");
  const [versionStatus,setVersionStatus]=useState("DRAFT"),[reason,setReason]=useState("");
  const [effectiveFrom,setEffectiveFrom]=useState(""),[effectiveUntil,setEffectiveUntil]=useState("");
  const [busy,setBusy]=useState(false),[feedback,setFeedback]=useState("");
@@ -37,7 +37,7 @@ export default function PvDocumentDetail({id}:{id:string}){
    const doc=dict(body.data);setData(doc);
    const v=Array.isArray(doc.versions)?doc.versions.map(dict):[];
    const last=v.at(-1);const text=JSON.stringify(dict(last?.content),null,2);setContent(text);setSaved(text);
-   setLinkedSources(JSON.stringify(Array.isArray(last?.linked_sources)?last.linked_sources:[],null,2));
+   const sources=JSON.stringify(Array.isArray(last?.linked_sources)?last.linked_sources:[],null,2);setLinkedSources(sources);setSavedSources(sources);
   }catch(e){if(!ctrl.signal.aborted)setError(e instanceof Error?e.message:"PV document unavailable.");}
   finally{if(!ctrl.signal.aborted)setLoading(false);}
  },[id,scope,enabled]);
@@ -46,7 +46,7 @@ export default function PvDocumentDetail({id}:{id:string}){
  const status=describe(data?.lifecycle_status);
  const allowed=legal[status]??[];
  const readonly=status==="RETIRED";
- const dirty=content!==saved||reason.trim()!==""||linkedSources!=="[]";
+ const dirty=content!==saved||reason.trim()!==""||linkedSources!==savedSources;
  useEffect(()=>{if(!dirty)return;const h=(e:BeforeUnloadEvent)=>{e.preventDefault();e.returnValue="";};window.addEventListener("beforeunload",h);return()=>window.removeEventListener("beforeunload",h);},[dirty]);
  async function save(e:React.FormEvent<HTMLFormElement>){
   e.preventDefault();if(busy||readonly||!enabled)return;
