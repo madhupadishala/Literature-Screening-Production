@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useWorkspaceContext } from "@/components/context/WorkspaceContext";
+import { roleHasPermission, PERMISSIONS } from "@/lib/rbac/permissions";
 import { DataGrid, type Column } from "@/components/ui/DataGrid";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -26,6 +27,7 @@ export default function SignalWorklist() {
   const c=state.context;
   const scope=c?[c.tenantId,c.workspaceId,c.environment,c.moduleKey].join(":"):"";
   const enabled=Boolean(c?.enabledModules.includes("SIGNAL_MANAGEMENT"));
+  const canCreate=enabled&&Boolean(c&&roleHasPermission(c.roleKey,PERMISSIONS.SIGNAL_CREATE));
   const [rows,setRows]=useState<Signal[]>([]);
   const [loading,setLoading]=useState(true);
   const [error,setError]=useState("");
@@ -89,14 +91,14 @@ export default function SignalWorklist() {
         <Select aria-label="Detection method filter" value={method} onChange={e=>setMethod(e.target.value)} options={options(methods,"All methods")}/>
         <Select aria-label="Priority filter" value={priority} onChange={e=>setPriority(e.target.value)} options={options(["LOW","NORMAL","HIGH","CRITICAL"],"All priorities")}/>
         <Button type="button" variant="secondary" onClick={()=>void load()} disabled={loading}>Refresh</Button>
-        {enabled?<Button type="button" onClick={()=>setFormOpen(v=>!v)}>{formOpen?"Close form":"Register signal"}</Button>:null}
+        {canCreate?<Button type="button" onClick={()=>setFormOpen(v=>!v)}>{formOpen?"Close form":"Register signal"}</Button>:null}
       </div>
     </div>
     {message?<Notice tone={message.includes("failed")?"error":"info"}>{message}</Notice>:null}
     {!enabled?<Notice tone="error">Signal Management entitlement is not available in the selected workspace.</Notice>:null}
     <DataGrid rows={filtered} columns={cols} rowKey={r=>r.id} loading={loading} error={error||undefined} onRetry={()=>void load()} emptyMessage="No signal records in the retrieved tenant/client scope match the filters."/>
     <p className={styles.muted}>Source-authorized list, maximum 500 records. Filters apply to the returned worklist; method-specific statistical detection is not available in this API.</p>
-    {formOpen&&enabled?<form className={styles.form} onSubmit={e=>void create(e)}>
+    {formOpen&&canCreate?<form className={styles.form} onSubmit={e=>void create(e)}>
       {([["signalKey","Signal key"],["productKey","Product key"],["eventTerm","Event term"],["detectionMethod","Detection method"]] as const).map(([key,label])=><label key={key}>{label}<Input required value={draft[key]} onChange={e=>setDraft(p=>({...p,[key]:e.target.value}))}/></label>)}
       <label>Source type<Select options={sources.map(v=>({value:v,label:v.replaceAll("_"," ")}))} value={draft.sourceType} onChange={e=>setDraft(p=>({...p,sourceType:e.target.value}))}/></label>
       <label>Priority<Select options={["LOW","NORMAL","HIGH","CRITICAL"].map(v=>({value:v,label:v}))} value={draft.priority} onChange={e=>setDraft(p=>({...p,priority:e.target.value}))}/></label>
