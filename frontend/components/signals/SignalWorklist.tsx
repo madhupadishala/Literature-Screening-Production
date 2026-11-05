@@ -36,6 +36,8 @@ export default function SignalWorklist() {
   const [status,setStatus]=useState("");
   const [method,setMethod]=useState("");
   const [priority,setPriority]=useState("");
+  const [fromDate,setFromDate]=useState("");
+  const [toDate,setToDate]=useState("");
   const [formOpen,setFormOpen]=useState(false);
   const [draft,setDraft]=useState<Draft>(initialDraft);
   const [busy,setBusy]=useState(false);
@@ -57,8 +59,9 @@ export default function SignalWorklist() {
   const methods=useMemo(()=>[...new Set(rows.map(r=>r.detection_method).filter(Boolean))].sort(),[rows]);
   const filtered=useMemo(()=>rows.filter(r=>
     (!status||r.status===status)&&(!method||r.detection_method===method)&&(!priority||r.priority===priority)&&
+    (!fromDate||r.detected_at.slice(0,10)>=fromDate)&&(!toDate||r.detected_at.slice(0,10)<=toDate)&&
     (!query||[r.signal_key,r.product_key,r.event_term,r.source_type,r.source_reference||""].some(v=>v.toLowerCase().includes(query.toLowerCase().trim())))
-  ),[rows,status,method,priority,query]);
+  ),[rows,status,method,priority,query,fromDate,toDate]);
   const dirty=Object.entries(draft).some(([key,value])=>value!==initialDraft[key as keyof Draft]);
   useEffect(()=>{if(!formOpen||!dirty)return;const h=(e:BeforeUnloadEvent)=>{e.preventDefault();e.returnValue="";};window.addEventListener("beforeunload",h);return()=>window.removeEventListener("beforeunload",h);},[formOpen,dirty]);
   async function create(e:React.FormEvent<HTMLFormElement>){
@@ -91,6 +94,8 @@ export default function SignalWorklist() {
         <Select aria-label="Status filter" value={status} onChange={e=>setStatus(e.target.value)} options={options(["DETECTED","VALIDATED","UNDER_EVALUATION","CONFIRMED","REFUTED","CLOSED"],"All statuses")}/>
         <Select aria-label="Detection method filter" value={method} onChange={e=>setMethod(e.target.value)} options={options(methods,"All methods")}/>
         <Select aria-label="Priority filter" value={priority} onChange={e=>setPriority(e.target.value)} options={options(["LOW","NORMAL","HIGH","CRITICAL"],"All priorities")}/>
+        <Input type="date" aria-label="Detected from" value={fromDate} onChange={e=>setFromDate(e.target.value)}/>
+        <Input type="date" aria-label="Detected through" min={fromDate||undefined} value={toDate} onChange={e=>setToDate(e.target.value)}/>
         <Button type="button" variant="secondary" onClick={()=>void load()} disabled={loading}>Refresh</Button>
         {canCreate?<Button type="button" onClick={()=>{if(formOpen&&dirty&&!window.confirm("Discard unsaved signal registration?"))return;setFormOpen(v=>!v);}}>{formOpen?"Close form":"Register signal"}</Button>:null}
       </div>
