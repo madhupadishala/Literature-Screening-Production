@@ -2,6 +2,7 @@
 import Link from "next/link";
 import {useCallback,useEffect,useMemo,useRef,useState} from "react";
 import {useWorkspaceContext} from "@/components/context/WorkspaceContext";
+import {roleHasPermission,PERMISSIONS} from "@/lib/rbac/permissions";
 import {Tabs} from "@/components/ui/Tabs";
 import {Card} from "@/components/ui/Card";
 import {Button} from "@/components/ui/Button";
@@ -21,6 +22,8 @@ export default function AggregateDetail({id}:{id:string}){
  const {state}=useWorkspaceContext();const ctx=state.context;
  const scope=ctx?[ctx.tenantId,ctx.workspaceId,ctx.environment,ctx.moduleKey].join(":"):"";
  const enabled=Boolean(ctx?.enabledModules.includes("AGGREGATE_REPORTING"));
+ const canReview=Boolean(ctx&&roleHasPermission(ctx.roleKey,PERMISSIONS.AGGREGATE_REVIEW));
+ const canApprove=Boolean(ctx&&roleHasPermission(ctx.roleKey,PERMISSIONS.AGGREGATE_APPROVE));
  const active=useRef<AbortController|null>(null);
  const [data,setData]=useState<Json|null>(null);const [loading,setLoading]=useState(true);const [error,setError]=useState("");
  const [content,setContent]=useState<Record<Section,string>>(initialContent);
@@ -51,7 +54,7 @@ export default function AggregateDetail({id}:{id:string}){
  useEffect(()=>{if(!dirty)return;const onLeave=(e:BeforeUnloadEvent)=>{e.preventDefault();e.returnValue="";};window.addEventListener("beforeunload",onLeave);return()=>window.removeEventListener("beforeunload",onLeave);},[dirty]);
  const finalized=data?.status==="FINALIZED";
  async function save(e:React.FormEvent<HTMLFormElement>){
-   e.preventDefault();if(busy||finalized||!enabled)return;
+   e.preventDefault();if(busy||finalized||!enabled||!canReview||(status==="APPROVED"||status==="FINALIZED")&&!canApprove)return;
    if(reason.trim().length<10){setMessage("Change reason must have at least ten characters.");return;}
    setBusy(true);setMessage("");
    try{
@@ -82,7 +85,7 @@ export default function AggregateDetail({id}:{id:string}){
        </label>)}
        <label>Review state<Select disabled={finalized} value={status} onChange={e=>setStatus(e.target.value)} options={["DRAFT","REVIEWED","APPROVED","FINALIZED"].map(v=>({value:v,label:v}))}/></label>
        <label className={styles.span}>Version reason<textarea disabled={finalized} required minLength={10} value={reason} onChange={e=>setReason(e.target.value)}/></label>
-       {!finalized?<div className={styles.span}><Button type="submit" loading={busy}>{status==="FINALIZED"?"Finalize governed version":"Save new governed version"}</Button></div>:<p className={styles.muted}>Finalized record is immutable.</p>}
+       {!finalized?<div className={styles.span}><Button type="submit" loading={busy} disabled={!canReview||(status==="APPROVED"||status==="FINALIZED")&&!canApprove}>{status==="FINALIZED"?"Finalize governed version":"Save new governed version"}</Button></div>:<p className={styles.muted}>Finalized record is immutable.</p>}
      </form>
    </div>},
    {id:"evidence",label:"Frozen source evidence",content:<div className={styles.panel}>
