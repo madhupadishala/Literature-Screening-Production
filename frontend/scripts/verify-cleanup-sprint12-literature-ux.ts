@@ -19,9 +19,12 @@ for (const page of [
 }
 
 const hits = read("app/hits/page.tsx");
-assert.ok(hits.includes("OperationalMetricStrip"));
-assert.ok(hits.includes("AI output is assistive"));
-assert.ok(hits.includes("human decision remains authoritative"));
+assert.ok(hits.includes('className="nh-metrics"'));
+assert.ok(hits.includes("PREVIEW FIXTURES — NOT LIVE SEARCH"));
+assert.ok(hits.includes("No AI determination made in this workspace"));
+assert.ok(hits.includes("Approve Hits"));
+assert.ok(hits.includes("Flag for review"));
+assert.ok(hits.includes("Dismiss"));
 
 const screening = read("app/screening/page.tsx");
 assert.ok(screening.includes("OperationalScreenHeader"));
