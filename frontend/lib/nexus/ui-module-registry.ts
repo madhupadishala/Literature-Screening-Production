@@ -1,4 +1,4 @@
-export type UiModuleKey = "LITERATURE" | "INTAKE" | "CASE_PROCESSING" | "SUBMISSIONS" | "SIGNAL_MANAGEMENT" | "AGGREGATE_REPORTING";
+export type UiModuleKey = "LITERATURE" | "INTAKE" | "CASE_PROCESSING" | "SUBMISSIONS" | "SIGNAL_MANAGEMENT" | "AGGREGATE_REPORTING" | "PV_DOCUMENTATION";
 export type UiModuleItem = { label: string; path: string; activePrefixes?: readonly string[] };
 export type UiModuleDefinition = { label: string; path: string; activePrefixes: readonly string[]; screens: readonly UiModuleItem[] };
 export const UI_MODULE_REGISTRY: Record<UiModuleKey, UiModuleDefinition> = {
@@ -27,8 +27,9 @@ export const UI_MODULE_REGISTRY: Record<UiModuleKey, UiModuleDefinition> = {
   AGGREGATE_REPORTING: { label: "Aggregate Reporting", path: "/aggregate-reports", activePrefixes: ["/aggregate-reports"], screens: [
     { label: "Aggregate Reports", path: "/aggregate-reports" },
   ] },
+  PV_DOCUMENTATION: { label: "PV Documents", path: "/pv-documents", activePrefixes: ["/pv-documents"], screens: [{ label: "Documents", path: "/pv-documents" }] },
 };
-export const UI_MODULE_ORDER: readonly UiModuleKey[] = ["LITERATURE", "INTAKE", "CASE_PROCESSING", "SUBMISSIONS", "SIGNAL_MANAGEMENT", "AGGREGATE_REPORTING"];
+export const UI_MODULE_ORDER: readonly UiModuleKey[] = ["LITERATURE", "INTAKE", "CASE_PROCESSING", "SUBMISSIONS", "SIGNAL_MANAGEMENT", "AGGREGATE_REPORTING", "PV_DOCUMENTATION"];
 export function matchesUiPath(pathname: string, prefix: string): boolean {
   return pathname === prefix || pathname.startsWith(prefix + "/");
 }
