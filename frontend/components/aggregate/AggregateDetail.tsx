@@ -94,6 +94,7 @@ export default function AggregateDetail({id}:{id:string}){
      <Card><strong>Source SHA-256</strong><p>{String(data.source_sha256??"Not provided")}</p></Card>
    </div>},
    {id:"history",label:"Versions and approvals",content:<div className={styles.panel}>
+     {versions.length>1?<Card><strong>Latest version comparison</strong>{sections.map(key=>{const oldVersion=record(versions.at(-2)?.content);const newVersion=record(versions.at(-1)?.content);return <details key={key}><summary>{label(key)} · {String(oldVersion[key]??"")===String(newVersion[key]??"")?"Unchanged":"Changed"}</summary><div className={styles.grid}><div><strong>Previous</strong><pre className={styles.pre}>{String(oldVersion[key]??"")}</pre></div><div><strong>Latest</strong><pre className={styles.pre}>{String(newVersion[key]??"")}</pre></div></div></details>})}</Card>:null}
      {versions.length?versions.map((v,i)=><Card key={String(v.id??i)}>
        <strong>Version {String(v.version??i+1)} · {String(v.status??"—")}</strong>
        <p>{String(v.change_reason??"No reason recorded")}</p>
