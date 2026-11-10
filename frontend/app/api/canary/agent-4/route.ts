@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
  * GET /api/canary/agent-4
  * Returns health status of agent-4 canary for monitoring/alerting
  */
-export async function GET(request: NextRequest): Promise<Response> {
+export async function GET(_request: NextRequest): Promise<Response> {
   try {
     const canary = getGlobalCanary();
     const health = canary.getHealth();
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest): Promise<Response> {
  * POST /api/canary/agent-4
  * Triggers a manual canary run (for testing)
  */
-export async function POST(request: NextRequest): Promise<Response> {
+export async function POST(_request: NextRequest): Promise<Response> {
   try {
     const canary = getGlobalCanary();
     const results = await canary.runOnce();

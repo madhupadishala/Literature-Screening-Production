@@ -2,7 +2,9 @@ import type { HTMLAttributes, ReactNode } from "react";
 
 import styles from "./data-primitives.module.css";
 
-export interface CardProps extends HTMLAttributes<HTMLElement> {}
+export interface CardProps extends HTMLAttributes<HTMLElement> {
+  /** Card component - extends HTML attributes */
+}
 
 export function Card({ className, children, ...props }: CardProps) {
   return (
