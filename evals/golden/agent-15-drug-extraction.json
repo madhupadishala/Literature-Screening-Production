@@ -1,0 +1,122 @@
+{
+  "agent_id": "agent-15-drug-extraction",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent15-001",
+      "name": "Extract Suspect Drug with Dose and Route",
+      "description": "Narrative mentions a suspect drug with explicit dose and route",
+      "priority": "critical",
+      "tags": ["positive-control", "suspect-drug", "dose", "route"],
+      "input": {
+        "caseId": "CASE-001",
+        "narrative": "Patient was started on DrugX 100mg oral daily for hypertension. After 2 weeks, developed severe hepatotoxicity. DrugX was discontinued.",
+        "existingProducts": []
+      },
+      "expected_output": {
+        "drugs": [
+          {
+            "name": "DrugX",
+            "role": "SUSPECT",
+            "dose": "100mg",
+            "route": "oral",
+            "frequency": "daily"
+          }
+        ],
+        "classification": {
+          "suspect_count": 1,
+          "concomitant_count": 0,
+          "interacting_count": 0
+        }
+      }
+    },
+    {
+      "id": "agent15-002",
+      "name": "Multiple Drugs - Suspect and Concomitant",
+      "description": "Narrative with suspect drug and concomitant medications",
+      "priority": "critical",
+      "tags": ["suspect", "concomitant", "multiple-drugs"],
+      "input": {
+        "caseId": "CASE-002",
+        "narrative": "Patient taking DrugX 50mg twice daily (suspect) and DrugY 10mg daily (concomitant for diabetes). Developed rash after DrugX initiation.",
+        "existingProducts": []
+      },
+      "expected_output": {
+        "drugs": [
+          { "name": "DrugX", "role": "SUSPECT", "dose": "50mg", "frequency": "twice daily" },
+          { "name": "DrugY", "role": "CONCOMITANT", "dose": "10mg", "frequency": "daily" }
+        ],
+        "classification": {
+          "suspect_count": 1,
+          "concomitant_count": 1,
+          "interacting_count": 0
+        }
+      }
+    },
+    {
+      "id": "agent15-003",
+      "name": "Drug with Interaction",
+      "description": "Narrative mentions interacting drug",
+      "priority": "high",
+      "tags": ["interacting", "drug-interaction"],
+      "input": {
+        "caseId": "CASE-003",
+        "narrative": "Patient on DrugA (suspect) and DrugB (interacting). Drug interaction between DrugA and DrugB suspected as cause of elevated INR.",
+        "existingProducts": []
+      },
+      "expected_output": {
+        "drugs": [
+          { "name": "DrugA", "role": "SUSPECT" },
+          { "name": "DrugB", "role": "INTERACTING" }
+        ],
+        "classification": {
+          "suspect_count": 1,
+          "concomitant_count": 0,
+          "interacting_count": 1
+        }
+      }
+    },
+    {
+      "id": "agent15-004",
+      "name": "Action Taken - Drug Withdrawn",
+      "description": "Narrative mentions drug withdrawn due to adverse event",
+      "priority": "high",
+      "tags": ["action-taken", "withdrawn"],
+      "input": {
+        "caseId": "CASE-004",
+        "narrative": "Patient developed severe hepatotoxicity on DrugX 200mg daily. DrugX was withdrawn and patient recovered.",
+        "existingProducts": []
+      },
+      "expected_output": {
+        "drugs": [
+          { "name": "DrugX", "role": "SUSPECT", "dose": "200mg", "action_taken": "WITHDRAWN" }
+        ],
+        "classification": {
+          "suspect_count": 1,
+          "concomitant_count": 0,
+          "interacting_count": 0
+        }
+      }
+    },
+    {
+      "id": "agent15-005",
+      "name": "No Drug Names Found",
+      "description": "Narrative without identifiable drug names",
+      "priority": "medium",
+      "tags": ["negative-control", "no-drugs"],
+      "input": {
+        "caseId": "CASE-005",
+        "narrative": "Patient experienced nausea and vomiting after starting treatment. No specific medication names mentioned.",
+        "existingProducts": []
+      },
+      "expected_output": {
+        "drugs": [],
+        "classification": {
+          "suspect_count": 0,
+          "concomitant_count": 0,
+          "interacting_count": 0
+        }
+      }
+    }
+  ]
+}

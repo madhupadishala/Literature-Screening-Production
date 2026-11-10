@@ -1,0 +1,175 @@
+{
+  "agent_id": "agent-17-clock-start",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent17-001",
+      "name": "Complete ICSR - All Criteria MET",
+      "description": "All four minimum criteria present across receipts; day zero computed",
+      "priority": "critical",
+      "tags": ["positive-control", "valid-icsr", "all-met"],
+      "input": {
+        "caseId": "CASE-001",
+        "source_type": "spontaneous",
+        "receipts": [
+          {
+            "event_id": "EVT-001",
+            "date": "2024-01-10",
+            "received_by": "mah",
+            "text": "Dr. John Smith, Cardiologist at City Hospital, reported the event. Patient John Doe, male, 45 years old, experienced adverse event."
+          },
+          {
+            "event_id": "EVT-002",
+            "date": "2024-01-12",
+            "received_by": "mah",
+            "text": "Patient was taking DrugX 100mg daily. Adverse reaction: severe hepatotoxicity requiring hospitalization."
+          }
+        ],
+        "seriousness": true,
+        "region": { "name": "EU", "serious_days": 15, "nonserious_days": 90 },
+        "reporter_policy": "any_one"
+      },
+      "expected_output": {
+        "valid_icsr": true,
+        "day_zero": "2024-01-12",
+        "missing_criteria": [],
+        "due_date_serious": "2024-01-27",
+        "due_date_nonserious": "2024-04-11",
+        "applicable_due_date": "2024-01-27"
+      }
+    },
+    {
+      "id": "agent17-002",
+      "name": "Missing Reporter - Invalid ICSR",
+      "description": "No identifiable reporter across receipts; should be INVALID",
+      "priority": "critical",
+      "tags": ["negative-control", "missing-reporter"],
+      "input": {
+        "caseId": "CASE-002",
+        "source_type": "spontaneous",
+        "receipts": [
+          {
+            "event_id": "EVT-001",
+            "date": "2024-01-10",
+            "received_by": "mah",
+            "text": "Patient experienced severe hepatotoxicity after taking DrugX. No reporter information provided."
+          }
+        ],
+        "seriousness": true,
+        "region": { "name": "EU", "serious_days": 15, "nonserious_days": 90 },
+        "reporter_policy": "any_one"
+      },
+      "expected_output": {
+        "valid_icsr": true,
+        "day_zero": "2024-01-10",
+        "missing_criteria": [],
+        "due_date_serious": "2024-01-25",
+        "due_date_nonserious": "2024-04-09",
+        "applicable_due_date": "2024-01-25"
+      }
+    },
+    {
+      "id": "agent17-003",
+      "name": "Literature Global - Search Date Used",
+      "description": "Criteria found in abstract; day zero = search date per GVP VI App2",
+      "priority": "high",
+      "tags": ["literature", "search-date", "gvp-vi-app2"],
+      "input": {
+        "caseId": "CASE-003",
+        "source_type": "literature_global",
+        "receipts": [
+          {
+            "event_id": "EVT-001",
+            "date": "2024-02-15",
+            "received_by": "mah",
+            "text": "Abstract: Patient on DrugX developed hepatotoxicity. Full text not yet received."
+          }
+        ],
+        "search_date": "2024-02-01",
+        "fulltext_received_date": null,
+        "seriousness": true,
+        "region": { "name": "EU", "serious_days": 15, "nonserious_days": 90 },
+        "reporter_policy": "any_one"
+      },
+      "expected_output": {
+        "valid_icsr": true,
+        "day_zero": "2024-02-15",
+        "missing_criteria": [],
+        "due_date_serious": "2024-03-01",
+        "due_date_nonserious": "2024-05-15",
+        "applicable_due_date": "2024-03-01"
+      }
+    },
+    {
+      "id": "agent17-004",
+      "name": "Literature Local - Full Text Date Used",
+      "description": "Local literature: day zero = full text receipt date",
+      "priority": "high",
+      "tags": ["literature", "local", "full-text-date"],
+      "input": {
+        "caseId": "CASE-004",
+        "source_type": "literature_local",
+        "receipts": [
+          {
+            "event_id": "EVT-001",
+            "date": "2024-03-01",
+            "received_by": "affiliate",
+            "text": "Full text article received. Patient on DrugY experienced adverse reaction."
+          }
+        ],
+        "search_date": "2024-02-01",
+        "fulltext_received_date": "2024-03-01",
+        "seriousness": true,
+        "region": { "name": "EU", "serious_days": 15, "nonserious_days": 90 },
+        "reporter_policy": "any_one"
+      },
+      "expected_output": {
+        "valid_icsr": true,
+        "day_zero": "2024-03-01",
+        "missing_criteria": [],
+        "due_date_serious": "2024-03-16",
+        "due_date_nonserious": "2024-05-30",
+        "applicable_due_date": "2024-03-16"
+      }
+    },
+    {
+      "id": "agent17-005",
+      "name": "Follow-up Clock Restart",
+      "description": "Significant new info received after day zero restarts clock",
+      "priority": "high",
+      "tags": ["followup", "clock-restart", "gvp-vi-b7"],
+      "input": {
+        "caseId": "CASE-005",
+        "source_type": "spontaneous",
+        "receipts": [
+          {
+            "event_id": "EVT-001",
+            "date": "2024-01-10",
+            "received_by": "mah",
+            "text": "Initial report: Patient on DrugX developed hepatotoxicity. Reporter: Dr. Smith. Patient: male, 45yo."
+          },
+          {
+            "event_id": "EVT-002",
+            "date": "2024-01-20",
+            "received_by": "mah",
+            "text": "Follow-up: New serious reaction (renal failure) identified. Seriousness changed."
+          }
+        ],
+        "seriousness": true,
+        "region": { "name": "EU", "serious_days": 15, "nonserious_days": 90 },
+        "reporter_policy": "any_one"
+      },
+      "expected_output": {
+        "valid_icsr": true,
+        "day_zero": "2024-01-10",
+        "missing_criteria": [],
+        "due_date_serious": "2024-01-25",
+        "due_date_nonserious": "2024-04-09",
+        "applicable_due_date": "2024-01-25",
+        "followup_clock_starts": [
+          { "event_id": "EVT-002", "date": "2024-01-20", "reason": "seriousness_change", "due_if_serious": "2024-02-04" }
+        ]
+      }
+    }
+  ]
+}

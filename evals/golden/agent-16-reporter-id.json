@@ -1,0 +1,131 @@
+{
+  "agent_id": "agent-16-reporter-id",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent16-001",
+      "name": "HCP Reporter with Full Details",
+      "description": "Physician reporter with qualification, organization, and contact info",
+      "priority": "critical",
+      "tags": ["positive-control", "hcp-reporter", "full-details"],
+      "input": {
+        "caseId": "CASE-001",
+        "narrative": "Dr. John Smith, MD, Cardiologist at City Hospital, 123 Main St, New York, NY 10001, USA. Phone: +1-555-123-4567. Email: jsmith@cityhospital.com. Reported adverse event for patient.",
+        "existingReporters": []
+      },
+      "expected_output": {
+        "reporters": [
+          {
+            "given_name": "John",
+            "family_name": "Smith",
+            "initials": "M.D.",
+            "organisation": "City Hospital",
+            "street": "123 Main St",
+            "city": "New York",
+            "state": "NY",
+            "postcode": "10001",
+            "country_iso2": "US",
+            "telephone": "1-555-123-4567",
+            "email": "jsmith@cityhospital.com",
+            "qualification_code": 1,
+            "qualification_text": "MD",
+            "primary_source_for_regulatory_purposes": true
+          }
+        ],
+        "reporter_identifiable": true,
+        "contains_personal_data": true
+      }
+    },
+    {
+      "id": "agent16-002",
+      "name": "Consumer Reporter (Patient's Mother)",
+      "description": "Non-HCP reporter identified as patient's mother",
+      "priority": "critical",
+      "tags": ["consumer-reporter", "family-member"],
+      "input": {
+        "caseId": "CASE-002",
+        "narrative": "Patient's mother, Mary Johnson, reported the event. Contact: mary.johnson@email.com. No medical qualification.",
+        "existingReporters": []
+      },
+      "expected_output": {
+        "reporters": [
+          {
+            "given_name": "Mary",
+            "family_name": "Johnson",
+            "qualification_code": 5,
+            "qualification_text": "Patient",
+            "primary_source_for_regulatory_purposes": true
+          }
+        ],
+        "reporter_identifiable": true,
+        "contains_personal_data": true
+      }
+    },
+    {
+      "id": "agent16-003",
+      "name": "Pharmacist Reporter",
+      "description": "Pharmacist with organization and country code",
+      "priority": "high",
+      "tags": ["pharmacist", "hcp"],
+      "input": {
+        "caseId": "CASE-003",
+        "narrative": "Reported by pharmacist Robert Wilson, RPh, at HealthPlus Pharmacy, London, UK. Country code: GB.",
+        "existingReporters": []
+      },
+      "expected_output": {
+        "reporters": [
+          {
+            "given_name": "Robert",
+            "family_name": "Wilson",
+            "qualification_code": 2,
+            "qualification_text": "pharmacist",
+            "organisation": "HealthPlus Pharmacy",
+            "country_iso2": "GB",
+            "primary_source_for_regulatory_purposes": true
+          }
+        ],
+        "reporter_identifiable": true,
+        "contains_personal_data": true
+      }
+    },
+    {
+      "id": "agent16-004",
+      "name": "Multiple Reporters - HCP Primary",
+      "description": "Multiple reporters including HCP and consumer; HCP should be primary",
+      "priority": "high",
+      "tags": ["multiple-reporters", "primary-selection"],
+      "input": {
+        "caseId": "CASE-004",
+        "narrative": "Initial report from patient's spouse Jane Doe (consumer). Follow-up information provided by Dr. Emily Brown, Neurologist at Medical Center, Chicago, IL, USA.",
+        "existingReporters": []
+      },
+      "expected_output": {
+        "reporters": [
+          { "given_name": "Jane", "family_name": "Doe", "qualification_code": 5, "qualification_text": "patient", "primary_source_for_regulatory_purposes": false },
+          { "given_name": "Emily", "family_name": "Brown", "qualification_code": 1, "qualification_text": "Neurologist", "organisation": "Medical Center", "city": "Medical Center", "country_iso2": "US", "primary_source_for_regulatory_purposes": true }
+        ],
+        "reporter_identifiable": true,
+        "contains_personal_data": true
+      }
+    },
+    {
+      "id": "agent16-005",
+      "name": "No Identifiable Reporter",
+      "description": "Report with no identifiable reporter information",
+      "priority": "medium",
+      "tags": ["negative-control", "no-reporter"],
+      "input": {
+        "caseId": "CASE-005",
+        "narrative": "Adverse event reported through anonymous hotline. No reporter details available.",
+        "existingReporters": []
+      },
+      "expected_output": {
+        "reporters": [
+          { "qualification_code": 5, "qualification_text": "Consumer/Non-HCP (default)", "primary_source_for_regulatory_purposes": true }
+        ],
+        "reporter_identifiable": false,
+        "contains_personal_data": true
+      }
+    }
+  ]
+}

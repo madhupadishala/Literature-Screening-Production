@@ -1,0 +1,304 @@
+{
+  "agent_id": "agent-14-intake-triage",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent14-001",
+      "name": "Complete Valid ICSR - All Criteria MET",
+      "description": "Full intake with identifiable patient, reporter, suspect product, and adverse event",
+      "priority": "critical",
+      "tags": ["positive-control", "valid-icsr", "all-met"],
+      "input": {
+        "intakeRecordId": "INTAKE-001",
+        "tenantId": "eval-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_reference": "PAT-001",
+              "sex": "Male",
+              "age_value": 45,
+              "age_unit": "year",
+              "weight_kg": 80
+            }
+          ],
+          "reporters": [
+            {
+              "qualification": "Physician",
+              "organization": "City Hospital",
+              "country_code": "US",
+              "reporter_payload": {
+                "name": "Dr. John Smith",
+                "email": "jsmith@cityhospital.com"
+              }
+            }
+          ],
+          "products": [
+            {
+              "role_characterization": "SUSPECT",
+              "reported_name": "DrugX",
+              "active_substance": "SubstanceX"
+            }
+          ],
+          "events": [
+            {
+              "reported_term": "Hepatotoxicity",
+              "seriousness": true,
+              "seriousness_criteria": {
+                "HOSPITALIZATION_OR_PROLONGATION": true
+              }
+            }
+          ],
+          "sourcePayload": {},
+          "intakePayload": {}
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MET" },
+            { "key": "ADVERSE_EVENT", "status": "MET" }
+          ],
+          "validityRecommendation": "VALID",
+          "seriousnessRecommendation": "SERIOUS",
+          "detectedSpecialSituations": [],
+          "followUpRecommended": false,
+          "priorityRecommendation": "URGENT"
+        },
+        "humanDecisionRequired": false
+      }
+    },
+    {
+      "id": "agent14-002",
+      "name": "Missing Patient - Unresolvable",
+      "description": "No identifiable patient information in intake",
+      "priority": "critical",
+      "tags": ["negative-control", "missing-patient"],
+      "input": {
+        "intakeRecordId": "INTAKE-002",
+        "tenantId": "eval-tenant",
+        "entities": {
+          "patients": [],
+          "reporters": [
+            {
+              "qualification": "Physician",
+              "organization": "City Hospital",
+              "country_code": "US"
+            }
+          ],
+          "products": [
+            {
+              "role_characterization": "SUSPECT",
+              "reported_name": "DrugX"
+            }
+          ],
+          "events": [
+            {
+              "reported_term": "Nausea",
+              "seriousness": false
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MISSING" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MET" },
+            { "key": "ADVERSE_EVENT", "status": "MET" }
+          ],
+          "validityRecommendation": "UNRESOLVED",
+          "seriousnessRecommendation": "NON_SERIOUS",
+          "detectedSpecialSituations": [],
+          "followUpRecommended": true,
+          "followUpReasons": ["No patient record contains sufficient identifying characteristics."],
+          "priorityRecommendation": "HIGH"
+        },
+        "humanDecisionRequired": true
+      }
+    },
+    {
+      "id": "agent14-003",
+      "name": "Serious Case with Special Situations",
+      "description": "Case with pregnancy and elderly patient special situations",
+      "priority": "high",
+      "tags": ["special-situations", "pregnancy", "elderly", "serious"],
+      "input": {
+        "intakeRecordId": "INTAKE-003",
+        "tenantId": "eval-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_reference": "PAT-003",
+              "sex": "Female",
+              "age_value": 72,
+              "age_unit": "year",
+              "pregnancy_status": "PREGNANT"
+            }
+          ],
+          "reporters": [
+            {
+              "qualification": "Consumer",
+              "country_code": "GB"
+            }
+          ],
+          "products": [
+            {
+              "role_characterization": "SUSPECT",
+              "reported_name": "DrugY"
+            }
+          ],
+          "events": [
+            {
+              "reported_term": "Congenital anomaly",
+              "seriousness": true,
+              "seriousness_criteria": {
+                "CONGENITAL_ANOMALY_OR_BIRTH_DEFECT": true
+              }
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MET" },
+            { "key": "ADVERSE_EVENT", "status": "MET" }
+          ],
+          "validityRecommendation": "VALID",
+          "seriousnessRecommendation": "SERIOUS",
+          "detectedSpecialSituations": ["PREGNANCY", "ELDERLY"],
+          "followUpRecommended": false,
+          "priorityRecommendation": "URGENT"
+        },
+        "humanDecisionRequired": false
+      }
+    },
+    {
+      "id": "agent14-004",
+      "name": "Medication Error Special Situation",
+      "description": "Case with medication error and overdose special situations",
+      "priority": "high",
+      "tags": ["medication-error", "overdose", "special-situations"],
+      "input": {
+        "intakeRecordId": "INTAKE-004",
+        "tenantId": "eval-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_reference": "PAT-004",
+              "sex": "Male",
+              "age_value": 5,
+              "age_unit": "year"
+            }
+          ],
+          "reporters": [
+            {
+              "qualification": "Mother",
+              "country_code": "US"
+            }
+          ],
+          "products": [
+            {
+              "role_characterization": "SUSPECT",
+              "reported_name": "DrugZ"
+            }
+          ],
+          "events": [
+            {
+              "reported_term": "Accidental overdose",
+              "seriousness": true,
+              "seriousness_criteria": {
+                "LIFE_THREATENING": true
+              }
+            }
+          ],
+          "sourcePayload": {},
+          "intakePayload": {
+            "narrative": "Child accidentally ingested 10 tablets of DrugZ (medication error). Overdose confirmed."
+          }
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MET" },
+            { "key": "ADVERSE_EVENT", "status": "MET" }
+          ],
+          "validityRecommendation": "VALID",
+          "seriousnessRecommendation": "SERIOUS",
+          "detectedSpecialSituations": ["PEDIATRIC", "OVERDOSE", "MEDICATION_ERROR"],
+          "followUpRecommended": false,
+          "priorityRecommendation": "URGENT"
+        },
+        "humanDecisionRequired": false
+      }
+    },
+    {
+      "id": "agent14-005",
+      "name": "No Suspect Product - Unresolvable",
+      "description": "Intake with concomitant products only, no suspect product identified",
+      "priority": "critical",
+      "tags": ["negative-control", "missing-suspect-product"],
+      "input": {
+        "intakeRecordId": "INTAKE-005",
+        "tenantId": "eval-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_reference": "PAT-005",
+              "sex": "Female",
+              "age_value": 60,
+              "age_unit": "year"
+            }
+          ],
+          "reporters": [
+            {
+              "qualification": "Pharmacist",
+              "country_code": "DE"
+            }
+          ],
+          "products": [
+            {
+              "role_characterization": "CONCOMITANT",
+              "reported_name": "DrugA"
+            },
+            {
+              "role_characterization": "CONCOMITANT",
+              "reported_name": "DrugB"
+            }
+          ],
+          "events": [
+            {
+              "reported_term": "Headache",
+              "seriousness": false
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MISSING" },
+            { "key": "ADVERSE_EVENT", "status": "MET" }
+          ],
+          "validityRecommendation": "UNRESOLVED",
+          "seriousnessRecommendation": "NON_SERIOUS",
+          "detectedSpecialSituations": [],
+          "followUpRecommended": true,
+          "followUpReasons": ["No suspect/interacting medicinal product is currently recorded."],
+          "priorityRecommendation": "HIGH"
+        },
+        "humanDecisionRequired": true
+      }
+    }
+  ]
+}

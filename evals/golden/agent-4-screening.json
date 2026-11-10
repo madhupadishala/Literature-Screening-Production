@@ -1,0 +1,222 @@
+{
+  "agent_id": "agent-4-screening",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent4-001",
+      "name": "Negative Control - In-vitro Study",
+      "description": "In-vitro study with no company product should be excluded",
+      "priority": "critical",
+      "tags": ["negative-control", "exclusion", "in-vitro"],
+      "input": {
+        "article": {
+          "pmid": "TEST-NEG-001",
+          "title": "In vitro binding affinity of DrugX to receptor Y",
+          "abstract": "We studied the binding of DrugX to receptor Y in vitro using cell lines. No human subjects involved.",
+          "journal": "Journal of Pharmacology",
+          "publication_date": "2024-01-15",
+          "language": "en",
+          "publication_types": ["In Vitro"],
+          "chemicals": ["DrugX"]
+        },
+        "matched_products": [
+          { "product_id": "PROD-001", "brand_name": "DrugX", "active_substances": ["SubstanceX"] }
+        ]
+      },
+      "expected_output": {
+        "product_gate_result": { "decision": "PRODUCT_MATCH", "confidence": { "min": 0.9 } },
+        "screening_result": { "decision": "EXCLUDE_NON_CLINICAL", "confidence": { "min": 0.9 }, "exclusion_criteria": ["IN_VITRO_STUDY"] },
+        "human_review_status": "NOT_REQUIRED"
+      }
+    },
+    {
+      "id": "agent4-002",
+      "name": "Negative Control - Animal Study Only",
+      "description": "Animal study without human data should be excluded",
+      "priority": "critical",
+      "tags": ["negative-control", "exclusion", "animal"],
+      "input": {
+        "article": {
+          "pmid": "TEST-NEG-002",
+          "title": "Pharmacokinetics of DrugX in rats",
+          "abstract": "We evaluated the PK profile of DrugX in Sprague-Dawley rats. No human data.",
+          "journal": "Drug Metabolism Journal",
+          "publication_date": "2024-02-01",
+          "language": "en",
+          "publication_types": ["Animal Study"],
+          "chemicals": ["DrugX"]
+        },
+        "matched_products": [
+          { "product_id": "PROD-001", "brand_name": "DrugX", "active_substances": ["SubstanceX"] }
+        ]
+      },
+      "expected_output": {
+        "product_gate_result": { "decision": "PRODUCT_MATCH" },
+        "screening_result": { "decision": "EXCLUDE_NON_CLINICAL", "exclusion_criteria": ["ANIMAL_STUDY_ONLY"] },
+        "human_review_status": "NOT_REQUIRED"
+      }
+    },
+    {
+      "id": "agent4-003",
+      "name": "Positive Control - Company Drug + Serious AE",
+      "description": "Company drug with serious adverse event should trigger human review",
+      "priority": "critical",
+      "tags": ["positive-control", "serious-ae", "human-review"],
+      "input": {
+        "article": {
+          "pmid": "TEST-POS-001",
+          "title": "Severe hepatotoxicity requiring hospitalization after DrugX therapy",
+          "abstract": "A 45-year-old male developed severe hepatotoxicity 3 weeks after starting DrugX 100mg daily. Patient was hospitalized for 7 days. Liver enzymes peaked at ALT 1200 U/L. DrugX was discontinued and patient recovered.",
+          "journal": "Liver International",
+          "publication_date": "2024-03-01",
+          "language": "en",
+          "publication_types": ["Case Report", "Clinical Study"],
+          "chemicals": ["DrugX"]
+        },
+        "matched_products": [
+          { "product_id": "PROD-001", "brand_name": "DrugX", "active_substances": ["SubstanceX"] }
+        ]
+      },
+      "expected_output": {
+        "product_gate_result": { "decision": "PRODUCT_MATCH" },
+        "screening_result": { "decision": "INCLUDE", "confidence": { "min": 0.8 }, "seriousness_flag": true, "special_situations": ["HOSPITALIZATION"] },
+        "human_review_status": "AWAITING_HUMAN_REVIEW"
+      }
+    },
+    {
+      "id": "agent4-004",
+      "name": "Positive Control - Medication Error",
+      "description": "Medication error with company drug should be included",
+      "priority": "critical",
+      "tags": ["positive-control", "medication-error"],
+      "input": {
+        "article": {
+          "pmid": "TEST-POS-002",
+          "title": "Accidental overdose of DrugX in pediatric patient",
+          "abstract": "A 2-year-old child accidentally ingested 500mg of DrugX (10x prescribed dose). Patient presented with drowsiness and was observed in ER for 6 hours.",
+          "journal": "Pediatric Emergency Care",
+          "publication_date": "2024-03-15",
+          "language": "en",
+          "publication_types": ["Case Report"],
+          "chemicals": ["DrugX"]
+        },
+        "matched_products": [
+          { "product_id": "PROD-001", "brand_name": "DrugX", "active_substances": ["SubstanceX"] }
+        ]
+      },
+      "expected_output": {
+        "product_gate_result": { "decision": "PRODUCT_MATCH" },
+        "screening_result": { "decision": "INCLUDE", "special_situations": ["MEDICATION_ERROR", "OVERDOSE", "PEDIATRIC"] },
+        "human_review_status": "AWAITING_HUMAN_REVIEW"
+      }
+    },
+    {
+      "id": "agent4-005",
+      "name": "Unrelated Compound - Human Study",
+      "description": "Human study with unrelated compound should be excluded at product gate",
+      "priority": "critical",
+      "tags": ["negative-control", "irrelevant-product"],
+      "input": {
+        "article": {
+          "pmid": "TEST-NEG-003",
+          "title": "Cardiac safety of DrugY in heart failure patients",
+          "abstract": "Randomized trial of DrugY vs placebo in 500 heart failure patients. No DrugX exposure.",
+          "journal": "Cardiology Journal",
+          "publication_date": "2024-04-01",
+          "language": "en",
+          "publication_types": ["Clinical Trial"],
+          "chemicals": ["DrugY"]
+        },
+        "matched_products": [
+          { "product_id": "PROD-001", "brand_name": "DrugX", "active_substances": ["SubstanceX"] }
+        ]
+      },
+      "expected_output": {
+        "product_gate_result": { "decision": "IRRELEVANT_NON_PRODUCT" },
+        "screening_result": { "decision": "EXCLUDE_NON_PRODUCT" },
+        "human_review_status": "NOT_REQUIRED"
+      }
+    },
+    {
+      "id": "agent4-006",
+      "name": "Non-English Article with Translation",
+      "description": "Non-English article should be translated and screened",
+      "priority": "high",
+      "tags": ["translation", "non-english"],
+      "input": {
+        "article": {
+          "pmid": "TEST-TRANS-001",
+          "title": "Efectos adversos graves del DrugX en pacientes ancianos",
+          "abstract": "Estudio de caso de un paciente de 80 años que desarrolló hepatotoxicidad severa tras tratamiento con DrugX. Requiere hospitalización.",
+          "journal": "Revista Española de Farmacología",
+          "publication_date": "2024-05-01",
+          "language": "es",
+          "publication_types": ["Case Report"],
+          "chemicals": ["DrugX"]
+        },
+        "matched_products": [
+          { "product_id": "PROD-001", "brand_name": "DrugX", "active_substances": ["SubstanceX"] }
+        ]
+      },
+      "expected_output": {
+        "product_gate_result": { "decision": "PRODUCT_MATCH" },
+        "screening_result": { "decision": "INCLUDE", "special_situations": ["HOSPITALIZATION", "ELDERLY"] },
+        "human_review_status": "AWAITING_HUMAN_REVIEW"
+      }
+    },
+    {
+      "id": "agent4-007",
+      "name": "Literature Review - Should Be Excluded",
+      "description": "Systematic review/meta-analysis should be excluded",
+      "priority": "high",
+      "tags": ["exclusion", "review-article"],
+      "input": {
+        "article": {
+          "pmid": "TEST-NEG-004",
+          "title": "Systematic review of DrugX safety profile in clinical trials",
+          "abstract": "We conducted a systematic review of 50 clinical trials evaluating DrugX safety. No new primary data.",
+          "journal": "Drug Safety",
+          "publication_date": "2024-06-01",
+          "language": "en",
+          "publication_types": ["Systematic Review", "Meta-Analysis"],
+          "chemicals": ["DrugX"]
+        },
+        "matched_products": [
+          { "product_id": "PROD-001", "brand_name": "DrugX", "active_substances": ["SubstanceX"] }
+        ]
+      },
+      "expected_output": {
+        "product_gate_result": { "decision": "PRODUCT_MATCH" },
+        "screening_result": { "decision": "EXCLUDE_NON_CLINICAL", "exclusion_criteria": ["SYSTEMATIC_REVIEW", "META_ANALYSIS"] },
+        "human_review_status": "NOT_REQUIRED"
+      }
+    },
+    {
+      "id": "agent4-008",
+      "name": "Healthy Volunteer Phase 1 Study",
+      "description": "Phase 1 healthy volunteer study should be excluded",
+      "priority": "high",
+      "tags": ["exclusion", "phase-1", "healthy-volunteer"],
+      "input": {
+        "article": {
+          "pmid": "TEST-NEG-005",
+          "title": "Phase 1 pharmacokinetics of DrugX in healthy volunteers",
+          "abstract": "Single ascending dose study of DrugX in 30 healthy male volunteers. Safety and PK assessed.",
+          "journal": "Clinical Pharmacology Journal",
+          "publication_date": "2024-07-01",
+          "language": "en",
+          "publication_types": ["Phase 1 Clinical Trial"],
+          "chemicals": ["DrugX"]
+        },
+        "matched_products": [
+          { "product_id": "PROD-001", "brand_name": "DrugX", "active_substances": ["SubstanceX"] }
+        ]
+      },
+      "expected_output": {
+        "product_gate_result": { "decision": "PRODUCT_MATCH" },
+        "screening_result": { "decision": "EXCLUDE_NON_CLINICAL", "exclusion_criteria": ["HEALTHY_VOLUNTEER", "PHASE_1"] },
+        "human_review_status": "NOT_REQUIRED"
+      }
+    }
+  ]
+}

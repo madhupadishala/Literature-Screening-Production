@@ -1,0 +1,295 @@
+{
+  "agent_id": "agent-2-icsr-duplicates",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent2-001",
+      "name": "Exact PMID Match",
+      "description": "Two records with same PMID should match with exact score",
+      "priority": "critical",
+      "tags": ["exact-match", "pmid"],
+      "input": {
+        "candidate": {
+          "pmid": "12345678",
+          "title": "Hepatotoxicity with DrugX",
+          "authors": ["Smith J", "Doe A"],
+          "journal": "Liver Journal",
+          "year": 2024,
+          "abstract": "Patient developed liver injury after DrugX administration",
+          "source": "pubmed",
+          "sourceId": "pubmed-12345678"
+        },
+        "existingRecords": [
+          {
+            "id": "embase-12345678",
+            "pmid": "12345678",
+            "title": "Hepatotoxicity with DrugX - Duplicate",
+            "authors": ["Smith J", "Doe A"],
+            "journal": "Liver Journal",
+            "year": 2024,
+            "abstract": "Patient developed liver injury after DrugX administration",
+            "source": "europepmc",
+            "sourceId": "embase-12345678"
+          },
+          {
+            "id": "local-001",
+            "pmid": "87654321",
+            "title": "Different Study",
+            "authors": ["Brown K"],
+            "year": 2023,
+            "source": "internal",
+            "sourceId": "local-001"
+          }
+        ],
+        "threshold": 0.7
+      },
+      "expected_output": {
+        "duplicates": [
+          {
+            "record": {
+              "id": "embase-12345678",
+              "pmid": "12345678",
+              "source": "europepmc",
+              "sourceId": "embase-12345678"
+            },
+            "score": 1.0,
+            "matchType": "exact",
+            "matchedFields": ["pmid"]
+          }
+        ],
+        "totalChecked": 2,
+        "processingTimeMs": { "min": 0 }
+      }
+    },
+    {
+      "id": "agent2-002",
+      "name": "Exact DOI Match (Case Insensitive)",
+      "description": "Two records with same DOI (different case) should match with exact score",
+      "priority": "critical",
+      "tags": ["exact-match", "doi"],
+      "input": {
+        "candidate": {
+          "doi": "10.1000/DRUGX.2024.001",
+          "title": "DrugX Safety Profile",
+          "authors": ["Jones K"],
+          "year": 2024,
+          "abstract": "Review of DrugX adverse events",
+          "source": "pubmed",
+          "sourceId": "pubmed-999"
+        },
+        "existingRecords": [
+          {
+            "id": "local-001",
+            "doi": "10.1000/drugx.2024.001",
+            "title": "DrugX Safety Profile",
+            "authors": ["Jones K"],
+            "year": 2024,
+            "abstract": "Review of DrugX adverse events",
+            "source": "internal",
+            "sourceId": "local-001"
+          },
+          {
+            "id": "crossref-002",
+            "doi": "10.1000/DIFFERENT.2024.002",
+            "title": "Different Paper",
+            "authors": ["White L"],
+            "year": 2024,
+            "source": "crossref",
+            "sourceId": "crossref-002"
+          }
+        ],
+        "threshold": 0.7
+      },
+      "expected_output": {
+        "duplicates": [
+          {
+            "record": {
+              "id": "local-001",
+              "doi": "10.1000/drugx.2024.001",
+              "source": "internal",
+              "sourceId": "local-001"
+            },
+            "score": 1.0,
+            "matchType": "exact",
+            "matchedFields": ["doi"]
+          }
+        ],
+        "totalChecked": 2,
+        "processingTimeMs": { "min": 0 }
+      }
+    },
+    {
+      "id": "agent2-003",
+      "name": "High Title Similarity (Jaccard ≥ 0.85)",
+      "description": "Records with highly similar titles should match with high confidence",
+      "priority": "high",
+      "tags": ["fuzzy-match", "title-similarity"],
+      "input": {
+        "candidate": {
+          "title": "Hepatotoxicity Associated with DrugX Treatment",
+          "authors": ["Smith J", "Brown T"],
+          "year": 2024,
+          "abstract": "A 45-year-old patient developed severe hepatotoxicity after 3 weeks of DrugX therapy",
+          "source": "pubmed",
+          "sourceId": "pubmed-111"
+        },
+        "existingRecords": [
+          {
+            "id": "embase-222",
+            "title": "Hepatotoxicity Associated with DrugX Treatment",
+            "authors": ["Smith J", "Brown T"],
+            "year": 2024,
+            "abstract": "A 45-year-old patient developed severe hepatotoxicity after three weeks of DrugX therapy",
+            "source": "europepmc",
+            "sourceId": "embase-222"
+          },
+          {
+            "id": "local-003",
+            "title": "Completely Different Title About Cardiology",
+            "authors": ["White L"],
+            "year": 2024,
+            "source": "internal",
+            "sourceId": "local-003"
+          }
+        ],
+        "threshold": 0.7
+      },
+      "expected_output": {
+        "duplicates": [
+          {
+            "record": {
+              "id": "embase-222",
+              "title": "Hepatotoxicity Associated with DrugX Treatment",
+              "source": "europepmc",
+              "sourceId": "embase-222"
+            },
+            "score": { "min": 0.85 },
+            "matchType": "high",
+            "matchedFields": ["title"]
+          }
+        ],
+        "totalChecked": 2,
+        "processingTimeMs": { "min": 0 }
+      }
+    },
+    {
+      "id": "agent2-004",
+      "name": "Medium Author-Year Match (Author + Year + Title ≥ 0.7)",
+      "description": "Same author last name, same year, similar title (0.7-0.85) should match with medium confidence",
+      "priority": "high",
+      "tags": ["fuzzy-match", "author-year"],
+      "input": {
+        "candidate": {
+          "title": "Cardiotoxicity of DrugX in Clinical Practice Settings",
+          "authors": ["Johnson M", "Williams R"],
+          "year": 2023,
+          "abstract": "Review of cardiac adverse events with DrugX",
+          "source": "pubmed",
+          "sourceId": "pubmed-333"
+        },
+        "existingRecords": [
+          {
+            "id": "embase-444",
+            "title": "Cardiotoxicity of DrugX in Clinical Practice",
+            "authors": ["Johnson M", "Davis K"],
+            "year": 2023,
+            "abstract": "Clinical experience with DrugX cardiotoxicity",
+            "source": "europepmc",
+            "sourceId": "embase-444"
+          },
+          {
+            "id": "local-004",
+            "title": "Cardiotoxicity of DrugX in Clinical Practice",
+            "authors": ["Smith J"],
+            "year": 2023,
+            "source": "internal",
+            "sourceId": "local-004"
+          },
+          {
+            "id": "local-005",
+            "title": "Cardiotoxicity of DrugX in Clinical Practice",
+            "authors": ["Johnson M"],
+            "year": 2022,
+            "source": "internal",
+            "sourceId": "local-005"
+          }
+        ],
+        "threshold": 0.7
+      },
+      "expected_output": {
+        "duplicates": [
+          {
+            "record": {
+              "id": "embase-444",
+              "title": "Cardiotoxicity of DrugX in Clinical Practice",
+              "source": "europepmc",
+              "sourceId": "embase-444"
+            },
+            "score": 0.85,
+            "matchType": "medium",
+            "matchedFields": ["author_last_name", "year", "title"]
+          }
+        ],
+        "totalChecked": 3,
+        "processingTimeMs": { "min": 0 }
+      }
+    },
+    {
+      "id": "agent2-005",
+      "name": "Medium Chemical Overlap (Jaccard ≥ 0.6)",
+      "description": "Records sharing chemical substances should match with medium confidence",
+      "priority": "medium",
+      "tags": ["chemical-overlap"],
+      "input": {
+        "candidate": {
+          "title": "DrugX and Liver Injury",
+          "authors": ["Author A"],
+          "year": 2024,
+          "abstract": "Study of DrugX hepatotoxicity",
+          "source": "pubmed",
+          "sourceId": "pubmed-555",
+          "chemicals": ["DrugX", "MetaboliteY"]
+        },
+        "existingRecords": [
+          {
+            "id": "local-002",
+            "title": "MetaboliteY Role in DrugX Toxicity",
+            "authors": ["Author B"],
+            "year": 2024,
+            "abstract": "Mechanism of MetaboliteY in DrugX-induced injury",
+            "source": "internal",
+            "sourceId": "local-002",
+            "chemicals": ["DrugX", "MetaboliteY", "CompoundZ"]
+          },
+          {
+            "id": "local-003",
+            "title": "Unrelated Drug Study",
+            "authors": ["Author C"],
+            "year": 2024,
+            "source": "internal",
+            "sourceId": "local-003",
+            "chemicals": ["DrugA", "DrugB"]
+          }
+        ],
+        "threshold": 0.7
+      },
+      "expected_output": {
+        "duplicates": [
+          {
+            "record": {
+              "id": "local-002",
+              "title": "MetaboliteY Role in DrugX Toxicity",
+              "source": "internal",
+              "sourceId": "local-002"
+            },
+            "score": { "min": 0.48 },
+            "matchType": "medium",
+            "matchedFields": ["chemicals"]
+          }
+        ],
+        "totalChecked": 2,
+        "processingTimeMs": { "min": 0 }
+      }
+    }
+  ]
+}

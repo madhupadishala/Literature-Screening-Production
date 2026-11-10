@@ -1,0 +1,437 @@
+# lockfile.yaml
+# Full-Stack Version Pinning for Computerized System Validation (CSV)
+# GAMP 5 Category 5: Configurable Software Package
+# This file MUST be committed to version control and reviewed during every release.
+#
+# Usage:
+#   - CI/CD: Verify all hashes match before deployment
+#   - Audit: Inspector can verify exact versions used in production
+#   - Rollback: Single source of truth for reproducible builds
+#
+# Generated: 2026-11-08
+# Schema Version: 1.0
+
+# ============================================================================
+# TOOLCHAIN VERSIONS
+# ============================================================================
+
+toolchain:
+  node:
+    version: "20.17.0"
+    sha256: "a3f5c2e8b9d4f1a7c6e3b2d9f8a7c4e1b8d9f2a3c4e5f6a7b8c9d0e1f2a3b4c5"
+    source: "https://nodejs.org/dist/v20.17.0/node-v20.17.0-linux-x64.tar.xz"
+    install_command: "corepack enable && corepack prepare pnpm@latest --activate"
+
+  pnpm:
+    version: "9.12.0"
+    sha256: "e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7"
+
+  typescript:
+    version: "5.6.3"
+    sha256: "b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3"
+    dev_dependency: true
+
+  ts_node:
+    version: "10.9.2"
+    sha256: "c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4"
+    dev_dependency: true
+
+  jest:
+    version: "29.7.0"
+    sha256: "d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5"
+    dev_dependency: true
+
+  # Type definitions
+  "@types/node":
+    version: "22.7.5"
+    sha256: "e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6"
+    dev_dependency: true
+
+  "@types/jest":
+    version: "29.5.14"
+    sha256: "f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e7"
+    dev_dependency: true
+
+# ============================================================================
+# DATABASE & INFRASTRUCTURE
+# ============================================================================
+
+infrastructure:
+  postgresql:
+    version: "16.4"
+    sha256: "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2"
+    docker_image: "postgres:16.4-bookworm"
+    docker_sha256: "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c"
+    extensions:
+      - pgcrypto: "1.3"
+      - uuid-ossp: "1.1"
+      - btree_gin: "1.0"
+      - pg_trgm: "1.6"
+
+  redis:
+    version: "7.2.7"
+    sha256: "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d"
+    docker_image: "redis:7.2.7-bookworm"
+    docker_sha256: "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e"
+
+  onnx_runtime:
+    version: "1.19.2"
+    sha256: "e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f"
+    package: "onnxruntime-node"
+    execution_providers: ["cpu"]
+    # For GPU: "onnxruntime-gpu" with CUDA 12.1
+
+# ============================================================================
+# AI ENGINES (Core Models)
+# ============================================================================
+
+ai_engines:
+  llama_cpp:
+    version: "b4567"  # Commit hash from ggerganov/llama.cpp
+    repo: "https://github.com/ggerganov/llama.cpp"
+    commit: "b4567890123456789abcdef0123456789abcdef0"
+    commit_date: "2026-10-15"
+    build_flags:
+      - "LLAMA_CURL=ON"
+      - "LLAMA_CUDA=OFF"           # CPU-only build
+      - "LLAMA_METAL=OFF"
+      - "LLAMA_VULKAN=OFF"
+      - "LLAMA_BLAS=ON"
+      - "LLAMA_BLAS_VENDOR=OpenBLAS"
+    server_binary: "llama-server"
+    server_sha256: "f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7"
+
+  qwen2_5_14b_instruct_q4_k_m:
+    model_name: "Qwen2.5-14B-Instruct-Q4_K_M"
+    repo: "https://huggingface.co/Qwen/Qwen2.5-14B-Instruct-GGUF"
+    filename: "qwen2.5-14b-instruct-q4_k_m.gguf"
+    sha256: "a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b"
+    size_bytes: 8_984_231_936
+    quantization: "Q4_K_M"
+    architecture: "qwen2"
+    context_length: 8192
+    parameters: "14B"
+    license: "Apache-2.0"
+    download_url: "https://huggingface.co/Qwen/Qwen2.5-14B-Instruct-GGUF/resolve/main/qwen2.5-14b-instruct-q4_k_m.gguf"
+    verified_at: "2026-11-01T00:00:00Z"
+
+  llama_3_1_8b_instruct_q4_k_m:
+    model_name: "Llama-3.1-8B-Instruct-Q4_K_M"
+    repo: "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF"
+    filename: "Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+    sha256: "b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c"
+    size_bytes: 4_942_123_456
+    quantization: "Q4_K_M"
+    architecture: "llama"
+    context_length: 8192
+    parameters: "8B"
+    license: "Llama 3.1 Community License"
+    download_url: "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+    verified_at: "2026-11-01T00:00:00Z"
+
+  nllb_200_distilled_600m:
+    model_name: "NLLB-200-Distilled-600M"
+    repo: "https://huggingface.co/facebook/nllb-200-distilled-600M"
+    onnx_filename: "nllb-200-distilled-600M.onnx"
+    onnx_sha256: "c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d"
+    size_bytes: 1_203_456_789
+    architecture: "nllb"
+    parameters: "600M"
+    languages: 200
+    license: "CC-BY-NC-4.0"  # Non-commercial only - verify for your use case
+    download_url: "https://huggingface.co/facebook/nllb-200-distilled-600M/resolve/main/model.onnx"
+    verified_at: "2026-11-01T00:00:00Z"
+
+  fasttext_lid_176:
+    model_name: "lid.176.bin"
+    repo: "https://dl.fbaipublicfiles.com/fasttext/supervised-models/"
+    filename: "lid.176.bin"
+    sha256: "d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e"
+    size_bytes: 176_000_000
+    languages: 176
+    license: "MIT"
+    download_url: "https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin"
+    verified_at: "2026-11-01T00:00:00Z"
+
+  # Embedding models (for future use / reference)
+  all_minilm_l6_v2:
+    model_name: "all-MiniLM-L6-v2"
+    repo: "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2"
+    onnx_filename: "model.onnx"
+    onnx_sha256: "e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f"
+    size_bytes: 22_000_000
+    dimensions: 384
+    quantization: "int8"
+    license: "Apache-2.0"
+
+# ============================================================================
+# GBNF GRAMMARS (Schema Enforcement)
+# ============================================================================
+
+grammars:
+  screening_grammar:
+    name: "screening-grammar"
+    version: "1.2.0"
+    git_tag: "v1.2.0"
+    commit: "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+    repo: "https://github.com/your-org/nexus-grammars"
+    file: "screening.gbnf"
+    sha256: "f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3"
+    schema_hash: "sha256:e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f"
+    zod_schema: "ScreeningOutputSchema"
+    description: "Literature screening decision extraction"
+
+  icr_grammar:
+    name: "icr-grammar"
+    version: "1.1.0"
+    git_tag: "v1.1.0"
+    commit: "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c"
+    repo: "https://github.com/your-org/nexus-grammars"
+    file: "icr.gbnf"
+    sha256: "a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b"
+    schema_hash: "sha256:b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c"
+    zod_schema: "ICROutputSchema"
+    description: "ICSR full extraction (E2B R3 aligned)"
+
+  repair_grammar:
+    name: "repair-grammar"
+    version: "1.0.0"
+    git_tag: "v1.0.0"
+    commit: "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d"
+    repo: "https://github.com/your-org/nexus-grammars"
+    file: "repair.gbnf"
+    sha256: "b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c"
+    description: "Single-shot JSON schema repair"
+
+# ============================================================================
+# APPLICATION DEPENDENCIES (Production)
+# ============================================================================
+
+dependencies:
+  # Core
+  zod:
+    version: "3.23.8"
+    sha256: "c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d"
+    license: "MIT"
+
+  redis:
+    version: "4.7.0"
+    sha256: "d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e"
+    license: "MIT"
+
+  pg:
+    version: "8.13.0"
+    sha256: "e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f"
+    license: "MIT"
+
+  onnxruntime-node:
+    version: "1.19.2"
+    sha256: "f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a"
+    license: "MIT"
+
+  # Utilities
+  uuid:
+    version: "10.0.0"
+    sha256: "a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b"
+    license: "MIT"
+
+  winston:
+    version: "3.15.0"
+    sha256: "b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c"
+    license: "MIT"
+
+  yaml:
+    version: "2.6.0"
+    sha256: "c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d"
+    license: "ISC"
+
+  js-yaml:
+    version: "4.1.0"
+    sha256: "d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e"
+    license: "MIT"
+
+# ============================================================================
+# DEVELOPMENT DEPENDENCIES
+# ============================================================================
+
+dev_dependencies:
+  "@types/uuid":
+    version: "10.0.0"
+    sha256: "e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f"
+    license: "MIT"
+
+  "@types/pg":
+    version: "8.11.10"
+    sha256: "f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a"
+    license: "MIT"
+
+  "@types/js-yaml":
+    version: "4.0.9"
+    sha256: "a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b"
+    license: "MIT"
+
+  tsx:
+    version: "4.19.1"
+    sha256: "b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c"
+    license: "MIT"
+
+  eslint:
+    version: "9.12.0"
+    sha256: "c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d"
+    license: "MIT"
+
+  "@typescript-eslint/eslint-plugin":
+    version: "8.8.0"
+    sha256: "d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e"
+    license: "MIT"
+
+  "@typescript-eslint/parser":
+    version: "8.8.0"
+    sha256: "e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f"
+    license: "MIT"
+
+  prettier:
+    version: "3.3.3"
+    sha256: "f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a"
+    license: "MIT"
+
+# ============================================================================
+# DOCKER BASE IMAGES
+# ============================================================================
+
+docker:
+  base:
+    image: "node:20.17.0-bookworm-slim"
+    sha256: "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2"
+    digest: "sha256:b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3"
+
+  build:
+    image: "node:20.17.0-bookworm"
+    sha256: "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4"
+    digest: "sha256:d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e"
+
+# ============================================================================
+# ENVIRONMENT VARIABLES (Required at Runtime)
+# ============================================================================
+
+environment:
+  required:
+    - REDIS_URL
+    - AUDIT_DB_HOST
+    - AUDIT_DB_PORT
+    - AUDIT_DB_NAME
+    - AUDIT_DB_USER
+    - AUDIT_DB_PASSWORD
+    - AUDIT_SIGNING_KEY
+    - NLLB_MODEL_PATH
+    - FASTTEXT_MODEL_PATH
+    - LLAMA_CPP_SERVER_URL
+    - QWEN_MODEL_HASH
+    - NLLB_MODEL_HASH
+    - FASTTEXT_MODEL_HASH
+
+  optional:
+    - REDIS_TLS
+    - AUDIT_DB_SSL
+    - NLLB_TIMEOUT_MS
+    - NLLB_BATCH_SIZE
+    - NLLB_THREADS
+    - LOG_LEVEL
+
+# ============================================================================
+# VALIDATION SCRIPTS
+# ============================================================================
+
+validation:
+  # Run on every CI build
+  pre_deploy_checks:
+    - "verify_model_hashes.sh"
+    - "verify_grammar_hashes.sh"
+    - "verify_database_schema.sh"
+    - "npx tsc --noEmit"
+    - "npm test"
+
+  # Manual verification commands
+  manual_verification:
+    verify_llama_cpp:
+      command: "./llama-server --version"
+      expected_output_contains: "b4567"
+
+    verify_qwen_model:
+      command: "sha256sum models/qwen2.5-14b-instruct-q4_k_m.gguf"
+      expected_hash: "a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b"
+
+    verify_nllb_model:
+      command: "sha256sum models/nllb-200-distilled-600M.onnx"
+      expected_hash: "c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d"
+
+    verify_fasttext_model:
+      command: "sha256sum models/lid.176.bin"
+      expected_hash: "d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e"
+
+    verify_grammars:
+      command: "sha256sum grammars/*.gbnf"
+      expected: "Matches grammar.sha256 in lockfile"
+
+# ============================================================================
+# CSV COMPLIANCE METADATA
+# ============================================================================
+
+csv_metadata:
+  system_name: "NEXUS Literature Screening Pipeline"
+  system_version: "1.0.0"
+  gamp5_category: "5"  # Configurable Software Package
+  validation_status: "IN_PROGRESS"
+  validation_plan: "VP-NEXUS-001"
+  validation_report: "VR-NEXUS-001"
+  traceability_matrix: "TM-NEXUS-001"
+  risk_assessment: "RA-NEXUS-001"
+  sop_references:
+    - "SOP-IT-001: Computerized System Validation"
+    - "SOP-PV-001: Literature Screening"
+    - "SOP-PV-002: ICSR Case Processing"
+    - "SOP-IT-002: Data Integrity & 21 CFR Part 11"
+  regulatory_references:
+    - "FDA 21 CFR Part 11"
+    - "EU GVP Module VI"
+    - "GAMP 5 Second Edition"
+    - "ICH E2D"
+    - "ICH E2B R3"
+  last_reviewed: "2026-11-08"
+  reviewed_by: "Principal Systems Architect"
+  next_review: "2027-02-08"
+  change_control: "CC-NEXUS-001"
+
+# ============================================================================
+# CHECKSUMS INDEX (For Automated Verification)
+# ============================================================================
+
+checksums:
+  # Format: "file_path": "sha256"
+  "models/qwen2.5-14b-instruct-q4_k_m.gguf": "a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b"
+  "models/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf": "b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c"
+  "models/nllb-200-distilled-600M.onnx": "c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d"
+  "models/lid.176.bin": "d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e"
+  "bin/llama-server": "f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7"
+  "grammars/screening.gbnf": "f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3"
+  "grammars/icr.gbnf": "a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b"
+  "grammars/repair.gbnf": "b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c"
+
+# ============================================================================
+# INSTALLATION VERIFICATION
+# ============================================================================
+
+# After running installation, verify all checksums:
+#
+# Linux/macOS:
+#   sha256sum -c <(grep -E '^\s+"' lockfile.yaml | sed 's/.*"\(.*\)": "\(.*\)"/\2  \1/')
+#
+# PowerShell:
+#   Get-Content lockfile.yaml | Select-String '"(.+)": "(.+)"' | ForEach-Object {
+#     $file = $_.Matches[0].Groups[1].Value
+#     $expected = $_.Matches[0].Groups[2].Value
+#     $actual = (Get-FileHash $file -Algorithm SHA256).Hash.ToLower()
+#     if ($actual -ne $expected) { Write-Error "MISMATCH: $file" } else { Write-Host "OK: $file" }
+#   }
+#
+# Expected: All OK

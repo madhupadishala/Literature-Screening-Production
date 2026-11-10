@@ -1,0 +1,195 @@
+{
+  "agent_id": "agent-7-rechallenge",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent7-001",
+      "name": "Positive Rechallenge - Event Recurred",
+      "description": "Event recurred after drug re-administration",
+      "priority": "critical",
+      "tags": ["positive", "recurrence"],
+      "input": {
+        "case_id": "RECH-001",
+        "drug_exposure": {
+          "drug_name": "DrugX",
+          "dose": "100mg",
+          "route": "ORAL",
+          "therapy_start": "2024-01-01",
+          "therapy_end": "2024-01-20",
+          "rechallenge_dose": "100mg",
+          "rechallenge_route": "ORAL",
+          "rechallenge_start": "2024-02-01",
+          "rechallenge_end": "2024-02-10"
+        },
+        "adverse_event": {
+          "meddra_llt": "Hepatotoxicity",
+          "onset_date": "2024-01-15"
+        },
+        "rechallenge_info": {
+          "rechallenge_done": true,
+          "event_recurred": true,
+          "recurrence_event_same": true,
+          "time_to_recurrence_days": 5
+        },
+        "dechallenge_result": "POSITIVE"
+      },
+      "expected_output": {
+        "assessment": {
+          "rechallenge_result": "POSITIVE",
+          "confidence": { "min": 0.8 },
+          "time_to_recurrence_days": 5,
+          "same_event": true,
+          "dose_comparison": "SAME",
+          "supporting_evidence": { "contains": "recurred after drug re-administration" }
+        }
+      }
+    },
+    {
+      "id": "agent7-002",
+      "name": "Negative Rechallenge - No Recurrence",
+      "description": "Event did not recur after drug re-administration",
+      "priority": "critical",
+      "tags": ["negative", "no-recurrence"],
+      "input": {
+        "case_id": "RECH-002",
+        "drug_exposure": {
+          "drug_name": "DrugY",
+          "dose": "50mg",
+          "route": "ORAL",
+          "therapy_start": "2024-03-01",
+          "therapy_end": "2024-03-15",
+          "rechallenge_dose": "50mg",
+          "rechallenge_route": "ORAL",
+          "rechallenge_start": "2024-04-01",
+          "rechallenge_end": "2024-04-15"
+        },
+        "adverse_event": {
+          "meddra_llt": "Rash",
+          "onset_date": "2024-03-10"
+        },
+        "rechallenge_info": {
+          "rechallenge_done": true,
+          "event_recurred": false
+        },
+        "dechallenge_result": "POSITIVE"
+      },
+      "expected_output": {
+        "assessment": {
+          "rechallenge_result": "NEGATIVE",
+          "confidence": { "min": 0.8 },
+          "same_event": false,
+          "supporting_evidence": { "contains": "did not recur" }
+        }
+      }
+    },
+    {
+      "id": "agent7-003",
+      "name": "Unknown - No Rechallenge Attempted",
+      "description": "No rechallenge was performed",
+      "priority": "high",
+      "tags": ["unknown", "not-attempted"],
+      "input": {
+        "case_id": "RECH-003",
+        "drug_exposure": {
+          "drug_name": "DrugZ",
+          "dose": "200mg",
+          "route": "ORAL",
+          "therapy_start": "2024-05-01",
+          "therapy_end": "2024-05-20",
+          "action_taken": "DRUG_WITHDRAWN"
+        },
+        "adverse_event": {
+          "meddra_llt": "Nausea",
+          "onset_date": "2024-05-15"
+        },
+        "rechallenge_info": {
+          "rechallenge_done": false
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "rechallenge_result": "UNKNOWN",
+          "confidence": { "min": 0.9 },
+          "supporting_evidence": { "contains": "not attempted" },
+          "rechallenge_circumstances": { "contains": "No rechallenge documented" }
+        }
+      }
+    },
+    {
+      "id": "agent7-004",
+      "name": "Higher Dose Rechallenge - Event Recurred",
+      "description": "Rechallenge with higher dose, event recurred",
+      "priority": "high",
+      "tags": ["higher-dose", "recurrence"],
+      "input": {
+        "case_id": "RECH-004",
+        "drug_exposure": {
+          "drug_name": "DrugA",
+          "dose": "50mg",
+          "route": "ORAL",
+          "therapy_start": "2024-06-01",
+          "therapy_end": "2024-06-10",
+          "rechallenge_dose": "100mg",
+          "rechallenge_route": "ORAL",
+          "rechallenge_start": "2024-07-01",
+          "rechallenge_end": "2024-07-05"
+        },
+        "adverse_event": {
+          "meddra_llt": "Headache",
+          "onset_date": "2024-06-05"
+        },
+        "rechallenge_info": {
+          "rechallenge_done": true,
+          "event_recurred": true,
+          "recurrence_event_same": true,
+          "time_to_recurrence_days": 2
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "rechallenge_result": "POSITIVE",
+          "dose_comparison": "HIGHER",
+          "same_event": true
+        }
+      }
+    },
+    {
+      "id": "agent7-005",
+      "name": "Different Event on Rechallenge",
+      "description": "Different event occurred on rechallenge",
+      "priority": "medium",
+      "tags": ["different-event"],
+      "input": {
+        "case_id": "RECH-005",
+        "drug_exposure": {
+          "drug_name": "DrugB",
+          "dose": "100mg",
+          "route": "ORAL",
+          "therapy_start": "2024-08-01",
+          "therapy_end": "2024-08-10",
+          "rechallenge_dose": "100mg",
+          "rechallenge_route": "ORAL",
+          "rechallenge_start": "2024-09-01",
+          "rechallenge_end": "2024-09-05"
+        },
+        "adverse_event": {
+          "meddra_llt": "Rash",
+          "onset_date": "2024-08-05"
+        },
+        "rechallenge_info": {
+          "rechallenge_done": true,
+          "event_recurred": true,
+          "recurrence_event_same": false,
+          "time_to_recurrence_days": 3
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "rechallenge_result": "POSITIVE",
+          "same_event": false,
+          "supporting_evidence": { "contains": "Different event" }
+        }
+      }
+    }
+  ]
+}

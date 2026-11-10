@@ -1,0 +1,382 @@
+{
+  "agent_id": "agent-1-literature-duplicates",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent1-001",
+      "name": "Exact PMID Match",
+      "description": "Two records with same PMID should be clustered together",
+      "priority": "critical",
+      "tags": ["exact-match", "pmid"],
+      "input": {
+        "records": [
+          {
+            "pmid": "12345678",
+            "doi": "10.1000/test1",
+            "title": "Hepatotoxicity with DrugX",
+            "abstract": "Patient developed liver injury after DrugX administration",
+            "authors": ["Smith J", "Doe A"],
+            "journal": "Liver Journal",
+            "publication_date": "2024-01-15",
+            "publication_year": 2024,
+            "chemicals": ["DrugX"],
+            "source": "PUBMED",
+            "source_id": "pubmed-12345678"
+          },
+          {
+            "pmid": "12345678",
+            "doi": "10.1000/test2",
+            "title": "Hepatotoxicity with DrugX - Duplicate",
+            "abstract": "Patient developed liver injury after DrugX administration",
+            "authors": ["Smith J", "Doe A"],
+            "journal": "Liver Journal",
+            "publication_date": "2024-01-15",
+            "publication_year": 2024,
+            "chemicals": ["DrugX"],
+            "source": "EMBASE",
+            "source_id": "embase-12345678"
+          }
+        ],
+        "similarity_threshold": 0.85,
+        "enable_fuzzy_matching": true
+      },
+      "expected_output": {
+        "clusters": [
+          {
+            "cluster_id": "pubmed-12345678",
+            "records": [
+              {
+                "pmid": "12345678",
+                "source": "PUBMED",
+                "source_id": "pubmed-12345678"
+              },
+              {
+                "pmid": "12345678",
+                "source": "EMBASE",
+                "source_id": "embase-12345678"
+              }
+            ],
+            "canonical_record": {
+              "pmid": "12345678",
+              "source": "PUBMED"
+            },
+            "cluster_size": 2,
+            "cluster_confidence": 1.0
+          }
+        ],
+        "total_records": 2,
+        "duplicate_count": 1,
+        "unique_count": 1,
+        "processing_stats": {
+          "exact_pmid_matches": 1,
+          "exact_doi_matches": 0,
+          "title_similarity_matches": 0,
+          "author_year_fuzzy_matches": 0,
+          "chemical_overlap_matches": 0
+        }
+      }
+    },
+    {
+      "id": "agent1-002",
+      "name": "Exact DOI Match",
+      "description": "Two records with same DOI (different case) should be clustered",
+      "priority": "critical",
+      "tags": ["exact-match", "doi"],
+      "input": {
+        "records": [
+          {
+            "doi": "10.1000/DRUGX.2024.001",
+            "title": "DrugX Safety Profile",
+            "abstract": "Review of DrugX adverse events",
+            "authors": ["Jones K"],
+            "source": "PUBMED",
+            "source_id": "pubmed-999"
+          },
+          {
+            "doi": "10.1000/drugx.2024.001",
+            "title": "DrugX Safety Profile",
+            "abstract": "Review of DrugX adverse events",
+            "authors": ["Jones K"],
+            "source": "LOCAL",
+            "source_id": "local-001"
+          }
+        ],
+        "similarity_threshold": 0.85,
+        "enable_fuzzy_matching": true
+      },
+      "expected_output": {
+        "clusters": [
+          {
+            "cluster_id": "pubmed-999",
+            "records": [
+              { "doi": "10.1000/DRUGX.2024.001", "source": "PUBMED", "source_id": "pubmed-999" },
+              { "doi": "10.1000/drugx.2024.001", "source": "LOCAL", "source_id": "local-001" }
+            ],
+            "cluster_size": 2,
+            "cluster_confidence": 1.0
+          }
+        ],
+        "total_records": 2,
+        "duplicate_count": 1,
+        "unique_count": 1,
+        "processing_stats": {
+          "exact_pmid_matches": 0,
+          "exact_doi_matches": 1,
+          "title_similarity_matches": 0,
+          "author_year_fuzzy_matches": 0,
+          "chemical_overlap_matches": 0
+        }
+      }
+    },
+    {
+      "id": "agent1-003",
+      "name": "Title Similarity (SimHash)",
+      "description": "Records with highly similar titles/abstracts should be detected via SimHash",
+      "priority": "high",
+      "tags": ["fuzzy-match", "simhash"],
+      "input": {
+        "records": [
+          {
+            "title": "Hepatotoxicity Associated with DrugX Treatment",
+            "abstract": "A 45-year-old patient developed severe hepatotoxicity after 3 weeks of DrugX therapy",
+            "authors": ["Smith J", "Brown T"],
+            "publication_year": 2024,
+            "source": "PUBMED",
+            "source_id": "pubmed-111"
+          },
+          {
+            "title": "DrugX-Induced Hepatotoxicity: A Case Report",
+            "abstract": "A 45-year-old patient developed severe hepatotoxicity after three weeks of DrugX therapy",
+            "authors": ["Smith J", "Brown T"],
+            "publication_year": 2024,
+            "source": "EMBASE",
+            "source_id": "embase-222"
+          }
+        ],
+        "similarity_threshold": 0.85,
+        "enable_fuzzy_matching": true
+      },
+      "expected_output": {
+        "clusters": [
+          {
+            "cluster_id": "pubmed-111",
+            "records": [
+              { "source": "PUBMED", "source_id": "pubmed-111" },
+              { "source": "EMBASE", "source_id": "embase-222" }
+            ],
+            "cluster_size": 2,
+            "cluster_confidence": { "min": 0.85 }
+          }
+        ],
+        "total_records": 2,
+        "duplicate_count": 1,
+        "unique_count": 1,
+        "processing_stats": {
+          "exact_pmid_matches": 0,
+          "exact_doi_matches": 0,
+          "title_similarity_matches": 1,
+          "author_year_fuzzy_matches": 0,
+          "chemical_overlap_matches": 0
+        }
+      }
+    },
+    {
+      "id": "agent1-004",
+      "name": "Author-Year Fuzzy Match",
+      "description": "Same first author last name, same year, similar title",
+      "priority": "high",
+      "tags": ["fuzzy-match", "author-year"],
+      "input": {
+        "records": [
+          {
+            "title": "Cardiotoxicity of DrugX in Clinical Practice",
+            "abstract": "Review of cardiac adverse events with DrugX",
+            "authors": ["Johnson M", "Williams R"],
+            "publication_year": 2023,
+            "source": "PUBMED",
+            "source_id": "pubmed-333"
+          },
+          {
+            "title": "Cardiac Toxicity of DrugX: Clinical Experience",
+            "abstract": "Clinical experience with DrugX cardiotoxicity",
+            "authors": ["Johnson M", "Davis K"],
+            "publication_year": 2023,
+            "source": "EMBASE",
+            "source_id": "embase-444"
+          }
+        ],
+        "similarity_threshold": 0.85,
+        "enable_fuzzy_matching": true
+      },
+      "expected_output": {
+        "clusters": [
+          {
+            "cluster_id": "pubmed-333",
+            "records": [
+              { "source": "PUBMED", "source_id": "pubmed-333" },
+              { "source": "EMBASE", "source_id": "embase-444" }
+            ],
+            "cluster_size": 2,
+            "cluster_confidence": { "min": 0.7 }
+          }
+        ],
+        "total_records": 2,
+        "duplicate_count": 1,
+        "unique_count": 1,
+        "processing_stats": {
+          "title_similarity_matches": 1
+        }
+      }
+    },
+    {
+      "id": "agent1-005",
+      "name": "Chemical Overlap Match",
+      "description": "Records sharing same chemical substances should be clustered",
+      "priority": "medium",
+      "tags": ["chemical-overlap"],
+      "input": {
+        "records": [
+          {
+            "title": "DrugX and Liver Injury",
+            "abstract": "Study of DrugX hepatotoxicity",
+            "chemicals": ["DrugX", "MetaboliteY"],
+            "source": "PUBMED",
+            "source_id": "pubmed-555"
+          },
+          {
+            "title": "MetaboliteY Role in DrugX Toxicity",
+            "abstract": "Mechanism of MetaboliteY in DrugX-induced injury",
+            "chemicals": ["DrugX", "MetaboliteY", "CompoundZ"],
+            "source": "LOCAL",
+            "source_id": "local-002"
+          }
+        ],
+        "similarity_threshold": 0.6,
+        "enable_fuzzy_matching": true
+      },
+      "expected_output": {
+        "clusters": [
+          {
+            "cluster_id": "pubmed-555",
+            "records": [
+              { "source": "PUBMED", "source_id": "pubmed-555" },
+              { "source": "LOCAL", "source_id": "local-002" }
+            ],
+            "cluster_size": 2,
+            "cluster_confidence": { "min": 0.7 }
+          }
+        ],
+        "total_records": 2,
+        "duplicate_count": 1,
+        "unique_count": 1,
+        "processing_stats": {
+          "chemical_overlap_matches": 1
+        }
+      }
+    },
+    {
+      "id": "agent1-006",
+      "name": "No Duplicates - Unique Records",
+      "description": "Completely different records should remain as separate clusters",
+      "priority": "critical",
+      "tags": ["negative-test", "unique"],
+      "input": {
+        "records": [
+          {
+            "pmid": "11111111",
+            "title": "DrugX Hepatotoxicity Study",
+            "chemicals": ["DrugX"],
+            "source": "PUBMED",
+            "source_id": "pubmed-11111111"
+          },
+          {
+            "pmid": "22222222",
+            "title": "DrugY Cardiotoxicity Review",
+            "chemicals": ["DrugY"],
+            "source": "EMBASE",
+            "source_id": "embase-22222222"
+          },
+          {
+            "pmid": "33333333",
+            "title": "DrugZ Nephrotoxicity Case",
+            "chemicals": ["DrugZ"],
+            "source": "LOCAL",
+            "source_id": "local-003"
+          }
+        ],
+        "similarity_threshold": 0.85,
+        "enable_fuzzy_matching": true
+      },
+      "expected_output": {
+        "clusters": [
+          { "cluster_id": "pubmed-11111111", "cluster_size": 1 },
+          { "cluster_id": "embase-22222222", "cluster_size": 1 },
+          { "cluster_id": "local-003", "cluster_size": 1 }
+        ],
+        "total_records": 3,
+        "duplicate_count": 0,
+        "unique_count": 3,
+        "processing_stats": {
+          "exact_pmid_matches": 0,
+          "exact_doi_matches": 0,
+          "title_similarity_matches": 0,
+          "author_year_fuzzy_matches": 0,
+          "chemical_overlap_matches": 0
+        }
+      }
+    },
+    {
+      "id": "agent1-007",
+      "name": "Empty Input",
+      "description": "Empty records array should return empty result",
+      "priority": "high",
+      "tags": ["edge-case", "empty"],
+      "input": {
+        "records": [],
+        "similarity_threshold": 0.85,
+        "enable_fuzzy_matching": true
+      },
+      "expected_output": {
+        "clusters": [],
+        "total_records": 0,
+        "duplicate_count": 0,
+        "unique_count": 0,
+        "processing_stats": {
+          "exact_pmid_matches": 0,
+          "exact_doi_matches": 0,
+          "title_similarity_matches": 0,
+          "author_year_fuzzy_matches": 0,
+          "chemical_overlap_matches": 0
+        }
+      }
+    },
+    {
+      "id": "agent1-008",
+      "name": "Large Batch - 100 Records",
+      "description": "Performance test with 100 records - some duplicates, some unique",
+      "priority": "medium",
+      "tags": ["performance", "large-batch"],
+      "input": {
+        "records": [
+          {"pmid": "10000001", "title": "Study on DrugA", "abstract": "Abstract 1", "authors": ["Author A"], "publication_year": 2024, "source": "PUBMED", "source_id": "pubmed-10000001", "chemicals": ["DrugA"]},
+          {"pmid": "10000001", "title": "Study on DrugA - Duplicate", "abstract": "Abstract 1", "authors": ["Author A"], "publication_year": 2024, "source": "EMBASE", "source_id": "embase-10000001", "chemicals": ["DrugA"]},
+          {"doi": "10.1000/test1", "title": "DrugX Safety Profile", "abstract": "Review of DrugX", "authors": ["Jones K"], "source": "PUBMED", "source_id": "pubmed-999", "chemicals": ["DrugX"]},
+          {"doi": "10.1000/drugx.2024.001", "title": "DrugX Safety Profile", "abstract": "Review of DrugX", "authors": ["Jones K"], "source": "LOCAL", "source_id": "local-001", "chemicals": ["DrugX"]},
+          {"title": "Hepatotoxicity Associated with DrugX", "abstract": "A 45-year-old patient developed severe hepatotoxicity after 3 weeks of DrugX therapy", "authors": ["Smith J", "Brown T"], "publication_year": 2024, "source": "PUBMED", "source_id": "pubmed-111", "chemicals": ["DrugX"]},
+          {"title": "DrugX-Induced Hepatotoxicity: A Case Report", "abstract": "A 45-year-old patient developed severe hepatotoxicity after three weeks of DrugX therapy", "authors": ["Smith J", "Brown T"], "publication_year": 2024, "source": "EMBASE", "source_id": "embase-222", "chemicals": ["DrugX"]}
+        ],
+        "similarity_threshold": 0.85,
+        "enable_fuzzy_matching": true,
+        "generate_batch_size": 100
+      },
+      "expected_output": {
+        "total_records": 6,
+        "duplicate_count": { "min": 2 },
+        "unique_count": { "max": 4 },
+        "processing_stats": {
+          "processing_time_ms": { "max": 5000 }
+        }
+      }
+    }
+  ]
+}

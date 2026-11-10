@@ -1,0 +1,29 @@
+import { createMedicalHistoryAgent } from './lib/agents/agent-8-medical-history';
+import { createLocalOnlyRouter } from './lib/infrastructure/hybrid-inference-router';
+import { AuditLedgerService } from './lib/audit/audit-ledger-service';
+import { ZDRStore } from './lib/infrastructure/redis-zdr-store';
+
+async function main() {
+  const router = createLocalOnlyRouter();
+  const auditLedger = new AuditLedgerService({ host: 'localhost', port: 5432, database: 'nexus', user: 'postgres', password: 'postgres' });
+  const zdrStore = new ZDRStore({ url: 'redis://localhost:6379' });
+
+  const agent = createMedicalHistoryAgent({ tenant_id: 'eval-tenant', inference_router: router, audit_ledger: auditLedger, zdr_store: zdrStore });
+
+  // Test surgical history case
+  const input = {
+    correlation_id: 'test',
+    trace_context: { trace_id: 'test', span_id: 'test', tenant_id: 'eval-tenant' },
+    payload: {
+      caseId: "MED-002",
+      narrative: "Patient underwent cholecystectomy in 2015 for gallstones. Also had appendectomy in childhood. No other surgeries.",
+      structured_fields: { age: "50Y", sex: "FEMALE" }
+    }
+  };
+
+  const result = await agent.execute(input);
+  console.log('Surgeries found:', result.output?.medical_history?.surgeries?.length || 0);
+  console.log('Surgeries:', JSON.stringify(result.output?.medical_history?.surgeries, null, 2));
+}
+
+main().catch(console.error);

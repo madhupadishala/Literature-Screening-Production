@@ -1,0 +1,180 @@
+{
+  "agent_id": "agent-5-action-taken",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent5-001",
+      "name": "Drug Withdrawn - Serious Event",
+      "description": "Serious event with drug withdrawal - should be guideline appropriate",
+      "priority": "critical",
+      "tags": ["drug-withdrawn", "serious", "guideline-appropriate"],
+      "input": {
+        "case_id": "ACT-001",
+        "drug_exposure": {
+          "drug_name": "DrugX",
+          "active_substance": "SubstanceX",
+          "dose": "100mg",
+          "route": "ORAL",
+          "frequency": "ONCE DAILY",
+          "therapy_start": "2024-01-01",
+          "therapy_end": "2024-01-20",
+          "action_taken": "DRUG_WITHDRAWN"
+        },
+        "adverse_event": {
+          "meddra_llt": "Hepatotoxicity",
+          "onset_date": "2024-01-15",
+          "outcome": "RECOVERED",
+          "seriousness": "SERIOUS",
+          "seriousness_criteria": ["HOSPITALIZATION"]
+        },
+        "dechallenge_result": "POSITIVE",
+        "rechallenge_result": "UNKNOWN",
+        "clinical_guidelines": [
+          { "drug_class": "Hepatotoxic drugs", "recommended_action": "DRUG_WITHDRAWN", "evidence_level": "B" }
+        ]
+      },
+      "expected_output": {
+        "assessment": {
+          "action_taken": "DRUG_WITHDRAWN",
+          "confidence": { "min": 0.8 },
+          "appropriate_per_guidelines": true,
+          "guideline_reference": { "contains": "Hepatotoxic drugs" },
+          "dechallenge_correlation": "CONSISTENT",
+          "supporting_evidence": { "length_min": 1 }
+        }
+      }
+    },
+    {
+      "id": "agent5-002",
+      "name": "Dose Reduced - Non-Serious Event",
+      "description": "Non-serious event with dose reduction - may be appropriate",
+      "priority": "high",
+      "tags": ["dose-reduced", "non-serious"],
+      "input": {
+        "case_id": "ACT-002",
+        "drug_exposure": {
+          "drug_name": "DrugY",
+          "active_substance": "SubstanceY",
+          "dose": "50mg",
+          "route": "ORAL",
+          "frequency": "ONCE DAILY",
+          "therapy_start": "2024-02-01",
+          "therapy_end": "2024-02-15",
+          "action_taken": "DOSE_REDUCED"
+        },
+        "adverse_event": {
+          "meddra_llt": "Nausea",
+          "onset_date": "2024-02-10",
+          "outcome": "RECOVERED",
+          "seriousness": "NON_SERIOUS"
+        },
+        "dechallenge_result": "POSITIVE",
+        "clinical_guidelines": [
+          { "drug_class": "Antiemetics", "recommended_action": "DOSE_REDUCED", "evidence_level": "C" }
+        ]
+      },
+      "expected_output": {
+        "assessment": {
+          "action_taken": "DOSE_REDUCED",
+          "appropriate_per_guidelines": true,
+          "dechallenge_correlation": "CONSISTENT"
+        }
+      }
+    },
+    {
+      "id": "agent5-003",
+      "name": "Dose Unchanged - Serious Event (Inappropriate)",
+      "description": "Serious event with no action taken - should be flagged as inappropriate",
+      "priority": "critical",
+      "tags": ["dose-unchanged", "serious", "inappropriate"],
+      "input": {
+        "case_id": "ACT-003",
+        "drug_exposure": {
+          "drug_name": "DrugZ",
+          "active_substance": "SubstanceZ",
+          "dose": "200mg",
+          "route": "ORAL",
+          "frequency": "TWICE DAILY",
+          "therapy_start": "2024-03-01",
+          "action_taken": "DOSE_UNCHANGED"
+        },
+        "adverse_event": {
+          "meddra_llt": "Anaphylaxis",
+          "onset_date": "2024-03-10",
+          "outcome": "RECOVERED_WITH_SEQUELAE",
+          "seriousness": "SERIOUS",
+          "seriousness_criteria": ["LIFE_THREATENING", "HOSPITALIZATION"]
+        },
+        "dechallenge_result": "NEGATIVE"
+      },
+      "expected_output": {
+        "assessment": {
+          "action_taken": "DOSE_UNCHANGED",
+          "appropriate_per_guidelines": false,
+          "dechallenge_correlation": "INCONSISTENT",
+          "supporting_evidence": { "contains": "Serious event" }
+        }
+      }
+    },
+    {
+      "id": "agent5-004",
+      "name": "Unknown Action Taken",
+      "description": "Action taken not documented - should return UNKNOWN with low confidence",
+      "priority": "high",
+      "tags": ["unknown", "missing-data"],
+      "input": {
+        "case_id": "ACT-004",
+        "drug_exposure": {
+          "drug_name": "DrugA",
+          "dose": "100mg",
+          "route": "ORAL",
+          "therapy_start": "2024-04-01"
+        },
+        "adverse_event": {
+          "meddra_llt": "Headache",
+          "onset_date": "2024-04-10",
+          "outcome": "RECOVERED",
+          "seriousness": "NON_SERIOUS"
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "action_taken": "UNKNOWN",
+          "confidence": { "max": 0.6 },
+          "time_to_action_days": null
+        }
+      }
+    },
+    {
+      "id": "agent5-005",
+      "name": "Rechallenge Positive with Dose Unchanged",
+      "description": "Positive rechallenge with dose unchanged - consistent",
+      "priority": "high",
+      "tags": ["rechallenge", "dose-unchanged"],
+      "input": {
+        "case_id": "ACT-005",
+        "drug_exposure": {
+          "drug_name": "DrugB",
+          "dose": "50mg",
+          "route": "ORAL",
+          "therapy_start": "2024-05-01",
+          "therapy_end": "2024-05-10",
+          "action_taken": "DOSE_UNCHANGED",
+          "rechallenge": "YES"
+        },
+        "adverse_event": {
+          "meddra_llt": "Rash",
+          "onset_date": "2024-05-05",
+          "outcome": "RECOVERED"
+        },
+        "rechallenge_result": "POSITIVE"
+      },
+      "expected_output": {
+        "assessment": {
+          "action_taken": "DOSE_UNCHANGED",
+          "rechallenge_correlation": "CONSISTENT"
+        }
+      }
+    }
+  ]
+}

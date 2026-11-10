@@ -1,0 +1,388 @@
+{
+  "agent_id": "agent-9-causality",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent9-001",
+      "name": "Certain Causality - Clear temporal relationship + positive dechallenge/rechallenge",
+      "description": "Classic case with all Bradford Hill criteria met - should be Certain",
+      "priority": "critical",
+      "tags": ["certain", "bradford-hill", "dechallenge-positive", "rechallenge-positive"],
+      "input": {
+        "case_id": "CAUS-001",
+        "narrative": "A 45-year-old male patient started DrugX 100mg daily on 2024-01-01 for hypertension. On 2024-01-20, he developed severe hepatotoxicity with ALT 1500 U/L and was hospitalized. DrugX was discontinued on 2024-01-21. Liver enzymes normalized by 2024-02-05. Patient was rechallenged with DrugX 50mg on 2024-03-01 and hepatotoxicity recurred within 5 days with ALT 1200 U/L. No alternative causes identified.",
+        "drugs": [
+          {
+            "name": "DrugX",
+            "active_substance": "SubstanceX",
+            "dose": "100mg",
+            "route": "ORAL",
+            "frequency": "ONCE DAILY",
+            "therapy_start": "2024-01-01",
+            "therapy_end": "2024-01-21",
+            "action_taken": "DRUG_WITHDRAWN",
+            "rechallenge": "YES",
+            "dechallenge": "POSITIVE",
+            "role": "suspect"
+          }
+        ],
+        "events": [
+          {
+            "meddra_llt": "Hepatotoxicity",
+            "meddra_pt": "Drug-induced liver injury",
+            "verbatim_text": "Severe hepatotoxicity with ALT 1500 U/L",
+            "onset_date": "2024-01-20",
+            "end_date": "2024-02-05",
+            "outcome": "RECOVERED",
+            "seriousness": "SERIOUS",
+            "seriousness_criteria": ["HOSPITALIZATION"]
+          }
+        ],
+        "reporter_causality": [
+          {
+            "drug": "DrugX",
+            "event": "Hepatotoxicity",
+            "related": true,
+            "rationale": "Positive dechallenge and rechallenge confirm causality"
+          }
+        ],
+        "follow_up_exhausted": true,
+        "jurisdiction": "US",
+        "client_id": "test-tenant",
+        "as_of": "2024-06-01",
+        "causality_method": "BRADFORD-HILL"
+      },
+      "expected_output": {
+        "pairs": [
+          {
+            "case_id": "CAUS-001",
+            "drug": "DrugX",
+            "event": "Hepatotoxicity",
+            "category": "Certain",
+            "method_detail": { "contains": "Positive dechallenge and rechallenge" },
+            "fired_rules": { "contains": "temporal_relationship" },
+            "factors": {
+              "rechallenge": { "value": "yes", "state": "structured" },
+              "dechallenge_interpretability": { "value": "positive" }
+            },
+            "route": "auto",
+            "confidence": "high"
+          }
+        ],
+        "route": "auto"
+      }
+    },
+    {
+      "id": "agent9-002",
+      "name": "Probable Causality - Strong temporal + positive dechallenge, no rechallenge",
+      "description": "Good temporal relationship and positive dechallenge but no rechallenge attempted",
+      "priority": "critical",
+      "tags": ["probable", "dechallenge-positive", "no-rechallenge"],
+      "input": {
+        "case_id": "CAUS-002",
+        "narrative": "A 60-year-old female started DrugY 50mg daily on 2024-02-01 for depression. On 2024-02-15, she developed severe rash requiring hospitalization. DrugY was stopped on 2024-02-16. Rash resolved completely by 2024-02-25. No rechallenge attempted. No other medications changed.",
+        "drugs": [
+          {
+            "name": "DrugY",
+            "active_substance": "SubstanceY",
+            "dose": "50mg",
+            "route": "ORAL",
+            "frequency": "ONCE DAILY",
+            "therapy_start": "2024-02-01",
+            "therapy_end": "2024-02-16",
+            "action_taken": "DRUG_WITHDRAWN",
+            "rechallenge": "NO",
+            "dechallenge": "POSITIVE",
+            "role": "suspect"
+          }
+        ],
+        "events": [
+          {
+            "meddra_llt": "Rash",
+            "meddra_pt": "Rash",
+            "verbatim_text": "Severe generalized rash",
+            "onset_date": "2024-02-15",
+            "end_date": "2024-02-25",
+            "outcome": "RECOVERED",
+            "seriousness": "SERIOUS",
+            "seriousness_criteria": ["HOSPITALIZATION"]
+          }
+        ],
+        "reporter_causality": [
+          {
+            "drug": "DrugY",
+            "event": "Rash",
+            "related": true
+          }
+        ],
+        "follow_up_exhausted": true,
+        "jurisdiction": "EU",
+        "client_id": "test-tenant",
+        "as_of": "2024-06-01",
+        "causality_method": "BRADFORD-HILL"
+      },
+      "expected_output": {
+        "pairs": [
+          {
+            "case_id": "CAUS-002",
+            "drug": "DrugY",
+            "event": "Rash",
+            "category": "Probable/Likely",
+            "method_detail": { "contains": "Positive dechallenge" },
+            "fired_rules": { "contains": "temporal_relationship" },
+            "factors": {
+              "rechallenge": { "value": "unknown", "state": "unknown" },
+              "dechallenge_interpretability": { "value": "positive" }
+            },
+            "route": "auto",
+            "confidence": "high"
+          }
+        ],
+        "route": "auto"
+      }
+    },
+    {
+      "id": "agent9-003",
+      "name": "Possible Causality - Temporal relationship only",
+      "description": "Temporal relationship exists but no dechallenge/rechallenge data and alternative causes possible",
+      "priority": "high",
+      "tags": ["possible", "temporal-only", "alternative-causes"],
+      "input": {
+        "case_id": "CAUS-003",
+        "narrative": "A 35-year-old male started DrugZ 200mg daily on 2024-03-01 for migraine. On 2024-03-10, he developed nausea. DrugZ continued. Nausea persisted. Patient also started new antibiotic on 2024-03-05. No dechallenge or rechallenge data.",
+        "drugs": [
+          {
+            "name": "DrugZ",
+            "active_substance": "SubstanceZ",
+            "dose": "200mg",
+            "route": "ORAL",
+            "frequency": "ONCE DAILY",
+            "therapy_start": "2024-03-01",
+            "action_taken": "DOSE_UNCHANGED",
+            "rechallenge": "UNKNOWN",
+            "dechallenge": "UNASSESSABLE",
+            "role": "suspect"
+          }
+        ],
+        "events": [
+          {
+            "meddra_llt": "Nausea",
+            "meddra_pt": "Nausea",
+            "verbatim_text": "Persistent nausea after DrugZ initiation",
+            "onset_date": "2024-03-10",
+            "outcome": "NOT_RECOVERED",
+            "seriousness": "NON_SERIOUS"
+          }
+        ],
+        "reporter_causality": [
+          {
+            "drug": "DrugZ",
+            "event": "Nausea",
+            "related": true
+          }
+        ],
+        "follow_up_exhausted": false,
+        "jurisdiction": "US",
+        "client_id": "test-tenant",
+        "as_of": "2024-06-01",
+        "causality_method": "BRADFORD-HILL"
+      },
+      "expected_output": {
+        "pairs": [
+          {
+            "case_id": "CAUS-003",
+            "drug": "DrugZ",
+            "event": "Nausea",
+            "category": "Possible",
+            "method_detail": { "contains": "Temporal relationship" },
+            "fired_rules": { "contains": "temporal_relationship" },
+            "review_reasons": { "contains": "alternative_causes_present" },
+            "route": "hitl",
+            "confidence": "medium"
+          }
+        ],
+        "route": "hitl",
+        "review_reasons": { "contains": "alternative_causes_present" }
+      }
+    },
+    {
+      "id": "agent9-004",
+      "name": "Unlikely Causality - Event before drug start",
+      "description": "Event onset precedes drug exposure - temporally impossible",
+      "priority": "critical",
+      "tags": ["unlikely", "temporal-before"],
+      "input": {
+        "case_id": "CAUS-004",
+        "narrative": "A 50-year-old female experienced severe headache on 2024-04-01. She started DrugA 100mg daily on 2024-04-10 for hypertension. Headache persisted. Event clearly preceded drug exposure.",
+        "drugs": [
+          {
+            "name": "DrugA",
+            "active_substance": "SubstanceA",
+            "dose": "100mg",
+            "route": "ORAL",
+            "frequency": "ONCE DAILY",
+            "therapy_start": "2024-04-10",
+            "action_taken": "DOSE_UNCHANGED",
+            "rechallenge": "NO",
+            "dechallenge": "NEGATIVE",
+            "role": "suspect"
+          }
+        ],
+        "events": [
+          {
+            "meddra_llt": "Headache",
+            "meddra_pt": "Headache",
+            "verbatim_text": "Severe headache starting 2024-04-01",
+            "onset_date": "2024-04-01",
+            "end_date": "2024-04-20",
+            "outcome": "RECOVERED",
+            "seriousness": "NON_SERIOUS"
+          }
+        ],
+        "reporter_causality": [
+          {
+            "drug": "DrugA",
+            "event": "Headache",
+            "related": false
+          }
+        ],
+        "follow_up_exhausted": true,
+        "jurisdiction": "US",
+        "client_id": "test-tenant",
+        "as_of": "2024-06-01",
+        "causality_method": "BRADFORD-HILL"
+      },
+      "expected_output": {
+        "pairs": [
+          {
+            "case_id": "CAUS-004",
+            "drug": "DrugA",
+            "event": "Headache",
+            "category": "Unlikely",
+            "method_detail": { "contains": "Event preceded drug exposure" },
+            "fired_rules": [],
+            "factors": {
+              "temporal_relationship": { "value": "no" }
+            },
+            "route": "hitl",
+            "confidence": "high"
+          }
+        ],
+        "route": "hitl"
+      }
+    },
+    {
+      "id": "agent9-005",
+      "name": "Unassessable - Insufficient information",
+      "description": "Critical data missing - no onset date, no therapy dates",
+      "priority": "high",
+      "tags": ["unassessable", "insufficient-data"],
+      "input": {
+        "case_id": "CAUS-005",
+        "narrative": "Patient experienced some adverse event while on DrugB. Details unclear. No dates provided. Minimal information available.",
+        "drugs": [
+          {
+            "name": "DrugB",
+            "role": "suspect"
+          }
+        ],
+        "events": [
+          {
+            "meddra_llt": "Adverse event",
+            "verbatim_text": "Some adverse event occurred"
+          }
+        ],
+        "reporter_causality": [],
+        "follow_up_exhausted": false,
+        "jurisdiction": "US",
+        "client_id": "test-tenant",
+        "as_of": "2024-06-01",
+        "causality_method": "BRADFORD-HILL"
+      },
+      "expected_output": {
+        "pairs": [
+          {
+            "case_id": "CAUS-005",
+            "drug": "DrugB",
+            "event": "Adverse event",
+            "category": "Unassessable",
+            "method_detail": { "contains": "Insufficient information" },
+            "fired_rules": [],
+            "missing_data": { "contains": "therapy_start_date" },
+            "route": "hitl",
+            "confidence": "low"
+          }
+        ],
+        "route": "hitl",
+        "review_reasons": { "contains": "no_events" }
+      }
+    },
+    {
+      "id": "agent9-006",
+      "name": "Conditional/Unclassified - Conflicting reporter causality",
+      "description": "Reporter says related but data suggests otherwise - needs human review",
+      "priority": "high",
+      "tags": ["conditional", "reporter-disagreement", "conflict"],
+      "input": {
+        "case_id": "CAUS-006",
+        "narrative": "Patient started DrugC on 2024-05-01. Developed rash on 2024-05-15. Reporter attributes rash to DrugC but patient also started new laundry detergent on 2024-05-10. Rash resolved after stopping detergent, not DrugC. DrugC continued.",
+        "drugs": [
+          {
+            "name": "DrugC",
+            "active_substance": "SubstanceC",
+            "dose": "100mg",
+            "route": "ORAL",
+            "frequency": "ONCE DAILY",
+            "therapy_start": "2024-05-01",
+            "therapy_end": "2024-05-25",
+            "action_taken": "DRUG_WITHDRAWN",
+            "rechallenge": "NO",
+            "dechallenge": "NEGATIVE",
+            "role": "suspect"
+          }
+        ],
+        "events": [
+          {
+            "meddra_llt": "Rash",
+            "meddra_pt": "Rash",
+            "verbatim_text": "Contact dermatitis from new detergent",
+            "onset_date": "2024-05-15",
+            "end_date": "2024-05-25",
+            "outcome": "RECOVERED",
+            "seriousness": "NON_SERIOUS"
+          }
+        ],
+        "reporter_causality": [
+          {
+            "drug": "DrugC",
+            "event": "Rash",
+            "related": true,
+            "rationale": "Temporal association with DrugC"
+          }
+        ],
+        "follow_up_exhausted": true,
+        "jurisdiction": "EU",
+        "client_id": "test-tenant",
+        "as_of": "2024-06-01",
+        "causality_method": "BRADFORD-HILL"
+      },
+      "expected_output": {
+        "pairs": [
+          {
+            "case_id": "CAUS-006",
+            "drug": "DrugC",
+            "event": "Rash",
+            "category": "Conditional/Unclassified",
+            "method_detail": { "contains": "Reporter disagreement" },
+            "fired_rules": [],
+            "reporter_disagreement": true,
+            "route": "hitl",
+            "confidence": "low"
+          }
+        ],
+        "route": "hitl",
+        "review_reasons": { "contains": "reporter_disagreement_requires_rationale" }
+      }
+    }
+  ]
+}

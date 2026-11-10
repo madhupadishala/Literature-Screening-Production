@@ -1,0 +1,85 @@
+# ============================================================================
+# NEXUS Agent Pool Helm Chart
+# ============================================================================
+# Deploys all agent pools with HPA, monitoring, and network policies
+# ============================================================================
+
+apiVersion: v2
+name: agent-pool
+description: NEXUS Pharmacovigilance Agent Pool Deployment
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+home: https://github.com/nexus/agent-pool
+sources:
+  - https://github.com/nexus/agent-pool
+maintainers:
+  - name: NEXUS Platform Team
+    email: platform@nexus.example.com
+keywords:
+  - pharmacovigilance
+  - agent
+  - kubernetes
+  - helm
+  - fda-21cfr11
+  - gvp
+annotations:
+  "artifacthub.io/category": "monitoring"
+  "artifacthub.io/license": "Proprietary"
+  "artifacthub.io/prerelease": "false"
+
+# Dependencies
+dependencies:
+  - name: redis
+    version: "18.x.x"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: redis.enabled
+  - name: postgresql
+    version: "12.x.x"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: postgresql.enabled
+  - name: prometheus
+    version: "15.x.x"
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: prometheus.enabled
+  - name: grafana
+    version: "6.x.x"
+    repository: "https://grafana.github.io/helm-charts"
+    condition: grafana.enabled
+
+# Chart configuration
+# These values can be overridden with --set or -f
+# See values.yaml for full configuration
+
+# Installation notes
+#
+# Quick start:
+#   helm install agent-pool ./k8s/helm/agent-pool \
+#     --namespace nexus-agents --create-namespace \
+#     --set global.imageRegistry=your-registry \
+#     --set redis.enabled=true --set postgresql.enabled=true
+#
+# Production deployment:
+#   helm install agent-pool ./k8s/helm/agent-pool \
+#     --namespace nexus-agents --create-namespace \
+#     -f values-prod.yaml \
+#     --set image.tag=v1.0.0 \
+#     --set redis.auth.password=<secret> \
+#     --set postgresql.auth.password=<secret>
+
+# Values that can be overridden:
+# - global.namespace
+# - global.imageRegistry
+# - global.imagePullSecrets
+# - image.tag
+# - resources.requests/limits
+# - agentPool.agents.<agent-id>.*
+# - hpa.enabled/minReplicas/maxReplicas
+# - service.type/ports
+# - probes.liveness/readiness/startup
+# - monitoring.serviceMonitor.enabled
+# - networkPolicy.enabled
+# - security settings
+# - affinity/anti-affinity
+# - tolerations/nodeSelector
+# - annotations
