@@ -1,12 +1,8 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes } from "react";
 
 import styles from "./data-primitives.module.css";
 
-export interface CardProps extends HTMLAttributes<HTMLElement> {
-  /** Card component - extends HTML attributes */
-}
-
-export function Card({ className, children, ...props }: CardProps) {
+export function Card({ className, children, ...props }: HTMLAttributes<HTMLElement>) {
   return (
     <section {...props} className={[styles.card, className].filter(Boolean).join(" ")}>
       {children}

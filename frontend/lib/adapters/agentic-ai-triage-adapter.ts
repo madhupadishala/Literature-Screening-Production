@@ -215,7 +215,7 @@ export class AgenticAITriageAdapter implements TriageIntakeService {
           medicalHistory: r.extracted_data.patient.medical_history,
         } : undefined,
         reporter: r.extracted_data.reporter ? {
-          type: r.extracted_data.reporter.type as any,
+          type: r.extracted_data.reporter.type as "healthcare_professional" | "consumer" | "regulatory" | "literature" | "other",
           qualification: r.extracted_data.reporter.qualification,
           country: r.extracted_data.reporter.country,
           contactInfo: r.extracted_data.reporter.contact_info,
@@ -237,7 +237,7 @@ export class AgenticAITriageAdapter implements TriageIntakeService {
           meddraVersion: e.meddra_version,
           seriousness: e.seriousness as "serious" | "non-serious",
           onsetDate: e.onset_date,
-          outcome: e.outcome as any,
+          outcome: e.outcome as "recovered" | "recovering" | "not_recovered" | "fatal" | "unknown",
         })),
         seriousness: r.extracted_data.seriousness ? {
           isSerious: r.extracted_data.seriousness.is_serious,
