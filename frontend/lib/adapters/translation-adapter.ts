@@ -24,7 +24,6 @@ export type {
 import { medicalTranslationService } from "@/lib/literature/translation/medical-translation-service";
 import { languageDetector } from "@/lib/literature/translation/language-detector";
 import type { SupportedLanguage as FrontendSupportedLanguage } from "@/lib/literature/translation/translation-types";
-import type { SupportedLanguage as MedicalSupportedLanguage } from "@/lib/literature/translation/translation-types";
 
 /**
  * Translation Adapter
@@ -36,9 +35,9 @@ import type { SupportedLanguage as MedicalSupportedLanguage } from "@/lib/litera
  */
 
 // Map frontend SupportedLanguage to contract SupportedLanguage
-// The contract's SupportedLanguage doesn't include "unknown"
 const CONTRACT_SUPPORTED_LANGUAGES: SupportedLanguage[] = [
-  "en", "ja", "ko", "zh", "es", "pt", "fr", "de", "ru"
+  "en", "es", "fr", "de", "it", "pt", "nl", "pl",
+  "zh", "ja", "ko", "ru", "ar", "hi", "tr", "sv"
 ];
 
 // Frontend includes "unknown" but contract doesn't
@@ -56,19 +55,24 @@ function toContractLanguage(lang: FrontendSupportedLanguage): SupportedLanguage 
   return "en";
 }
 
+function toFrontendLanguage(lang: SupportedLanguage): FrontendSupportedLanguage {
+  if (FRONTEND_SUPPORTED_LANGUAGES.includes(lang as FrontendSupportedLanguage)) {
+    return lang as FrontendSupportedLanguage;
+  }
+  return "en";
+}
+
 export class FrontendTranslationAdapter implements TranslationService {
   async translate(input: TranslationInput): Promise<TranslationResult> {
     const startTime = Date.now();
 
     try {
       // Map the input to the medical translation service request
-      // The medical service expects sourceLanguage?: SupportedLanguage (optional)
-      // The medical service uses its own SupportedLanguage type
       const request = {
         tenantId: "default", // Would come from context
         sourceText: input.text,
-        sourceLanguage: input.sourceLanguage === "auto" ? undefined : toContractLanguage(input.sourceLanguage as FrontendSupportedLanguage),
-        targetLanguage: toContractLanguage(input.targetLanguage as FrontendSupportedLanguage),
+        sourceLanguage: input.sourceLanguage === "auto" ? undefined : toFrontendLanguage(input.sourceLanguage),
+        targetLanguage: toFrontendLanguage(input.targetLanguage),
         preserveTerms: input.domain ? [input.domain] : undefined,
       };
 
@@ -117,13 +121,13 @@ export class FrontendTranslationAdapter implements TranslationService {
   }
 
   async getSupportedLanguages(): Promise<SupportedLanguage[]> {
-    // Return only contract-supported languages (exclude "unknown")
-    return ["en", "ja", "ko", "zh", "es", "pt", "fr", "de", "ru"];
+    // Return contract-supported languages
+    return CONTRACT_SUPPORTED_LANGUAGES;
   }
 
   isLanguagePairSupported(source: SupportedLanguage, target: SupportedLanguage): boolean {
-    return ["en", "ja", "ko", "zh", "es", "pt", "fr", "de", "ru"].includes(source) &&
-           ["en", "ja", "ko", "zh", "es", "pt", "fr", "de", "ru"].includes(target) &&
+    return CONTRACT_SUPPORTED_LANGUAGES.includes(source) &&
+           CONTRACT_SUPPORTED_LANGUAGES.includes(target) &&
            source !== target;
   }
 }
