@@ -60,8 +60,8 @@ def create_approved_event_runtime(*, provider, dictionary=None, ocr=None, schema
     No implicit public LLM fallback or default unlicensed MedDRA dictionary.
     """
     from importlib import import_module
-    ns = ("Agentic_AI.AG02_Adverse_Event_MedDRA.src.branches."
-          "feat__event-extraction-agent.backend.agents.event_runtime")
+    ns = ("Agentic_AI.AG02_Adverse_Event_MedDRA.src.canonical."
+          "backend.agents.event_runtime")
     Engine = import_module(ns + ".engine").EventEngine
     if provider is None or not all(callable(getattr(provider, name, None)) for name in ("extract", "verify")):
         raise TypeError("AG02 requires an approved extractor/verifier")
