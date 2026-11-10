@@ -6,8 +6,8 @@ import unittest
 from unittest.mock import patch
 from Agentic_AI.shared.execution.native_event_engine import create_event_runtime, create_approved_event_runtime
 
-NS=("Agentic_AI.AG02_Adverse_Event_MedDRA.src.branches."
-    "feat__event-extraction-agent.backend.agents.event_runtime")
+NS=("Agentic_AI.AG02_Adverse_Event_MedDRA.src.canonical."
+    "backend.agents.event_runtime")
 class FakeRequest:
     @classmethod
     def model_validate(cls, raw): return raw

@@ -9,8 +9,8 @@ from concurrent.futures import ThreadPoolExecutor
 
 def create_event_runtime(engine):
     from importlib import import_module
-    namespace = ("Agentic_AI.AG02_Adverse_Event_MedDRA.src.branches."
-                 "feat__event-extraction-agent.backend.agents.event_runtime")
+    namespace = ("Agentic_AI.AG02_Adverse_Event_MedDRA.src.canonical."
+                 "backend.agents.event_runtime")
     EventEngine = import_module(namespace + ".engine").EventEngine
     Request = import_module(namespace + ".models").Request
     if not isinstance(engine, EventEngine):

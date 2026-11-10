@@ -1,11 +1,14 @@
 import type { SelectHTMLAttributes } from "react";
 import s from "./primitives.module.css";
+
 export type SelectOption = { value: string; label: string };
-type Props = SelectHTMLAttributes<HTMLSelectElement> & {
+
+export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: readonly SelectOption[];
   finalized?: boolean;
-};
-export function Select({ options, finalized, disabled, className, ...props }: Props) {
+}
+
+export function Select({ options, finalized, disabled, className, ...props }: SelectProps) {
   return (
     <select
       {...props}
