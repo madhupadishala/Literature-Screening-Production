@@ -1,0 +1,451 @@
+# ============================================================================
+# NEXUS Prometheus Alerting Rules
+# ============================================================================
+# Alerting rules for agent pools, infrastructure, and business metrics
+# ============================================================================
+
+groups:
+  # ------------------------------------------------------------------------
+  # AGENT POOL HEALTH & AVAILABILITY
+  # ------------------------------------------------------------------------
+  - name: nexus-agent-pool-health
+    interval: 30s
+    rules:
+      # Agent pool down
+      - alert: AgentPoolDown
+        expr: up{job="agent-pool"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Agent pool {{ $labels.agent_id }} is down"
+          description: "Agent pool {{ $labels.agent_id }} in namespace {{ $labels.namespace }} has been down for more than 1 minute."
+          runbook_url: "https://wiki.nexus.example.com/runbooks/agent-pool-down"
+
+      # Agent pool high error rate
+      - alert: AgentPoolHighErrorRate
+        expr: |
+          sum(rate(agent_requests_failed_total{job="agent-pool"}[5m])) by (agent_id)
+          /
+          sum(rate(agent_requests_total{job="agent-pool"}[5m])) by (agent_id)
+          > 0.05
+        for: 2m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "High error rate for agent {{ $labels.agent_id }}"
+          description: "Agent {{ $labels.agent_id }} has error rate > 5% over the last 5 minutes."
+          runbook_url: "https://wiki.nexus.example.com/runbooks/high-error-rate"
+
+      # Agent pool high latency (P99)
+      - alert: AgentPoolHighLatency
+        expr: |
+          histogram_quantile(0.99,
+            sum(rate(agent_request_latency_seconds_bucket{job="agent-pool"}[5m])) by (le, agent_id)
+          ) > 30
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "High P99 latency for agent {{ $labels.agent_id }}"
+          description: "Agent {{ $labels.agent_id }} P99 latency is {{ $value | printf \"%.2f\" }}s (threshold: 30s)."
+          runbook_url: "https://wiki.nexus.example.com/runbooks/high-latency"
+
+      # Agent pool queue backlog
+      - alert: AgentPoolQueueBacklog
+        expr: agent_queue_depth{job="agent-pool"} > 100
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Queue backlog for agent {{ $labels.agent_id }}"
+          description: "Agent {{ $labels.agent_id }} has {{ $value }} items in queue (threshold: 100)."
+          runbook_url: "https://wiki.nexus.example.com/runbooks/queue-backlog"
+
+      # Agent pool replica count mismatch
+      - alert: AgentPoolReplicaMismatch
+        expr: |
+          kube_deployment_status_replicas{deployment=~"agent-.*",namespace="nexus-agents"}
+          !=
+          kube_deployment_status_replicas_available{deployment=~"agent-.*",namespace="nexus-agents"}
+        for: 2m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Agent pool replica mismatch for {{ $labels.deployment }}"
+          description: "Deployment {{ $labels.deployment }} has desired replicas != available replicas."
+          runbook_url: "https://wiki.nexus.example.com/runbooks/replica-mismatch"
+
+      # Agent pool scaling events
+      - alert: AgentPoolScalingEvent
+        expr: |
+          changes(kube_deployment_status_replicas{deployment=~"agent-.*",namespace="nexus-agents"}[5m]) != 0
+        for: 0m
+        labels:
+          severity: info
+          team: platform
+        annotations:
+          summary: "Agent pool scaling event for {{ $labels.deployment }}"
+          description: "Deployment {{ $labels.deployment }} scaled. Current replicas: {{ $value }}."
+
+  # ------------------------------------------------------------------------
+  # INFRASTRUCTURE HEALTH
+  # ------------------------------------------------------------------------
+  - name: nexus-infrastructure
+    interval: 30s
+    rules:
+      # Redis down
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Redis instance {{ $labels.instance }} is down"
+          description: "Redis instance {{ $labels.instance }} has been down for more than 30 seconds."
+
+      # Redis high memory usage
+      - alert: RedisHighMemoryUsage
+        expr: |
+          (redis_memory_used_bytes / redis_memory_max_bytes) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Redis memory usage high on {{ $labels.instance }}"
+          description: "Redis memory usage is {{ $value | printf \"%.1f\" }}% (threshold: 85%)."
+
+      # Redis high latency
+      - alert: RedisHighLatency
+        expr: |
+          histogram_quantile(0.99,
+            sum(rate(redis_command_duration_seconds_bucket[5m])) by (le, instance)
+          ) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Redis high latency on {{ $labels.instance }}"
+          description: "Redis P99 latency is {{ $value | printf \"%.3f\" }}s on {{ $labels.instance }}."
+
+      # PostgreSQL down
+      - alert: PostgresDown
+        expr: up{job="postgresql"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "PostgreSQL instance {{ $labels.instance }} is down"
+          description: "PostgreSQL instance {{ $labels.instance }} has been down for more than 30 seconds."
+
+      # PostgreSQL high connections
+      - alert: PostgresHighConnections
+        expr: |
+          (pg_stat_database_numbackends / pg_settings_max_connections) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "PostgreSQL high connection usage on {{ $labels.instance }}"
+          description: "PostgreSQL connection usage is {{ $value | printf \"%.1f\" }}% (threshold: 80%)."
+
+      # PostgreSQL replication lag
+      - alert: PostgresReplicationLag
+        expr: |
+          pg_replication_lag_seconds > 30
+        for: 2m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "PostgreSQL replication lag on {{ $labels.instance }}"
+          description: "Replication lag is {{ $value | printf \"%.0f\" }}s (threshold: 30s)."
+
+      # Disk space critical
+      - alert: DiskSpaceCritical
+        expr: |
+          (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 < 10
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Disk space critical on {{ $labels.instance }}"
+          description: "Disk space is {{ $value | printf \"%.1f\" }}% free (threshold: 10%)."
+
+      # CPU saturation
+      - alert: CPUSaturation
+        expr: |
+          100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "CPU saturation on {{ $labels.instance }}"
+          description: "CPU usage is {{ $value | printf \"%.1f\" }}% (threshold: 90%)."
+
+      # Memory saturation
+      - alert: MemorySaturation
+        expr: |
+          (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Memory saturation on {{ $labels.instance }}"
+          description: "Memory usage is {{ $value | printf \"%.1f\" }}% (threshold: 90%)."
+
+  # ------------------------------------------------------------------------
+  # BUSINESS / PHARMACOVIGILANCE METRICS
+  # ------------------------------------------------------------------------
+  - name: nexus-business-metrics
+    interval: 60s
+    rules:
+      # High signal detection rate (unusual spike)
+      - alert: HighSignalDetectionRate
+        expr: |
+          sum(rate(agent_signal_detected_total{job="agent-pool",decision="SIGNAL_DETECTED"}[1h])) by (agent_id)
+          /
+          sum(rate(agent_requests_total{job="agent-pool"}[1h])) by (agent_id)
+          > 0.1
+        for: 15m
+        labels:
+          severity: warning
+          team: safety
+        annotations:
+          summary: "High signal detection rate for {{ $labels.agent_id }}"
+          description: "Signal detection rate is {{ $value | printf \"%.2f\" }}% (threshold: 10%). May indicate data quality issue or real safety signal."
+
+      # Zero signal detection (potential pipeline issue)
+      - alert: ZeroSignalDetection
+        expr: |
+          sum(rate(agent_signal_detected_total{job="agent-pool",decision="SIGNAL_DETECTED"}[4h])) by (agent_id) == 0
+        for: 4h
+        labels:
+          severity: warning
+          team: safety
+        annotations:
+          summary: "Zero signal detections for {{ $labels.agent_id }}"
+          description: "No signals detected for 4 hours. May indicate pipeline issue or data gap."
+
+      # High human review backlog
+      - alert: HighHITLBacklog
+        expr: |
+          hitl_review_pending{job="agent-pool"} > 50
+        for: 15m
+        labels:
+          severity: warning
+          team: safety
+        annotations:
+          summary: "High HITL review backlog for {{ $labels.agent_id }}"
+          description: "{{ $value }} reviews pending for agent {{ $labels.agent_id }} (threshold: 50)."
+
+      # Overdue HITL reviews
+      - alert: OverdueHITLReviews
+        expr: |
+          hitl_review_overdue{job="agent-pool"} > 5
+        for: 30m
+        labels:
+          severity: critical
+          team: safety
+        annotations:
+          summary: "Overdue HITL reviews for {{ $labels.agent_id }}"
+          description: "{{ $value }} HITL reviews are overdue for agent {{ $labels.agent_id }}."
+
+      # High DLQ growth rate
+      - alert: DLQGrowthRate
+        expr: |
+          rate(dead_letter_queue_total{job="agent-pool"}[1h]) > 10
+        for: 30m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "DLQ growing rapidly for {{ $labels.agent_id }}"
+          description: "DLQ growing at {{ $value | printf \"%.1f\" }} entries/hour (threshold: 10/h)."
+
+      # Unresolved DLQ entries aging
+      - alert: DLQAging
+        expr: |
+          dead_letter_queue_age_seconds{job="agent-pool"} > 86400
+        for: 1h
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "DLQ entry aging for {{ $labels.agent_id }}"
+          description: "DLQ entry {{ $labels.dlq_id }} has been unresolved for {{ $value | printf \"%.0f\" }}s."
+
+      # Submission failure rate
+      - alert: SubmissionFailureRate
+        expr: |
+          sum(rate(submissions_failed_total{job="agent-pool"}[1h])) by (destination)
+          /
+          sum(rate(submissions_total{job="agent-pool"}[1h])) by (destination)
+          > 0.05
+        for: 15m
+        labels:
+          severity: warning
+          team: regulatory
+        annotations:
+          summary: "High submission failure rate to {{ $labels.destination }}"
+          description: "Submission failure rate to {{ $labels.destination }} is {{ $value | printf \"%.2f\" }}% (threshold: 5%)."
+
+      # Low throughput (potential pipeline stall)
+      - alert: LowThroughput
+        expr: |
+          sum(rate(agent_requests_total{job="agent-pool"}[15m])) by (agent_id) < 1
+        for: 30m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Low throughput for agent {{ $labels.agent_id }}"
+          description: "Agent {{ $labels.agent_id }} processing < 1 request/minute. May indicate pipeline stall."
+
+      # High serious AE processing
+      - alert: HighSeriousAEProcessing
+        expr: |
+          sum(rate(agent_serious_ae_processed_total{job="agent-pool"}[1h])) by (agent_id)
+          /
+          sum(rate(agent_requests_total{job="agent-pool"}[1h])) by (agent_id)
+          > 0.3
+        for: 15m
+        labels:
+          severity: info
+          team: safety
+        annotations:
+          summary: "High serious AE processing rate for {{ $labels.agent_id }}"
+          description: "Serious AE processing rate is {{ $value | printf \"%.2f\" }}% (threshold: 30%). May indicate safety signal or data quality issue."
+
+  # ------------------------------------------------------------------------
+  # DEPLOYMENT & RELEASE
+  # ------------------------------------------------------------------------
+  - name: nexus-deployment
+    interval: 60s
+    rules:
+      # Deployment failed
+      - alert: DeploymentFailed
+        expr: |
+          kube_deployment_status_condition{condition="Progressing",status="False"} == 1
+        for: 5m
+        labels:
+          severity: critical
+          team: platform
+        annotations:
+          summary: "Deployment {{ $labels.deployment }} failed to progress"
+          description: "Deployment {{ $labels.deployment }} in {{ $labels.namespace }} has been failing to progress for 5 minutes."
+
+      # Deployment stuck
+      - alert: DeploymentStuck
+        expr: |
+          kube_deployment_status_condition{condition="Progressing",status="Unknown"} == 1
+        for: 10m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Deployment {{ $labels.deployment }} stuck"
+          description: "Deployment {{ $labels.deployment }} in {{ $labels.namespace }} has unknown progress status."
+
+      # Rollback detected
+      - alert: DeploymentRollback
+        expr: |
+          kube_deployment_status_replicas{namespace="nexus-agents"} < kube_deployment_spec_replicas{namespace="nexus-agents"}
+        for: 5m
+        labels:
+          severity: warning
+          team: platform
+        annotations:
+          summary: "Possible rollback for {{ $labels.deployment }}"
+          description: "Deployment {{ $labels.deployment }} has fewer replicas than desired."
+
+  # ------------------------------------------------------------------------
+  # CANCER / TOXICITY MONITORING (SPECIALIZED)
+  # ------------------------------------------------------------------------
+  - name: nexus-safety-specialized
+    interval: 300s
+    rules:
+      # Hepatotoxicity signal cluster
+      - alert: HepatotoxicitySignalCluster
+        expr: |
+          sum by (active_substance) (rate(agent_signal_detected_total{job="agent-pool",meddra_soc="Hepatobiliary disorders"}[24h])) > 3
+        for: 1h
+        labels:
+          severity: critical
+          team: safety
+        annotations:
+          summary: "Hepatotoxicity signal cluster for {{ $labels.active_substance }}"
+          description: "{{ $value }} hepatotoxicity signals detected for {{ $labels.active_substance }} in 24h (threshold: 3)."
+
+      # Cardiotoxicity signal cluster
+      - alert: CardiotoxicitySignalCluster
+        expr: |
+          sum by (active_substance) (rate(agent_signal_detected_total{job="agent-pool",meddra_soc="Cardiac disorders"}[24h])) > 3
+        for: 1h
+        labels:
+          severity: critical
+          team: safety
+        annotations:
+          summary: "Cardiotoxicity signal cluster for {{ $labels.active_substance }}"
+          description: "{{ $value }} cardiotoxicity signals detected for {{ $labels.active_substance }} in 24h (threshold: 3)."
+
+      # Neurotoxicity signal cluster
+      - alert: NeurotoxicitySignalCluster
+        expr: |
+          sum by (active_substance) (rate(agent_signal_detected_total{job="agent-pool",meddra_soc="Nervous system disorders"}[24h])) > 3
+        for: 1h
+        labels:
+          severity: critical
+          team: safety
+        annotations:
+          summary: "Neurotoxicity signal cluster for {{ $labels.active_substance }}"
+          description: "{{ $value }} neurotoxicity signals detected for {{ $labels.active_substance }} in 24h (threshold: 3)."
+
+      # New safety signal for withdrawn drug
+      - alert: SignalForWithdrawnDrug
+        expr: |
+          sum(rate(agent_signal_detected_total{job="agent-pool",drug_status="WITHDRAWN"}[1h])) > 0
+        for: 0m
+        labels:
+          severity: critical
+          team: safety
+        annotations:
+          summary: "Safety signal detected for withdrawn drug"
+          description: "A safety signal was detected for a drug that has been withdrawn from market. Immediate review required."
+
+      # Pediatric safety signal
+      - alert: PediatricSafetySignal
+        expr: |
+          sum(rate(agent_signal_detected_total{job="agent-pool",age_group=~"PEDIATRIC|NEONATE|INFANT|CHILD|ADOLESCENT"}[24h])) > 2
+        for: 1h
+        labels:
+          severity: critical
+          team: safety
+        annotations:
+          summary: "Pediatric safety signal cluster"
+          description: "{{ $value }} pediatric safety signals detected in 24h (threshold: 2)."
+
+      # Pregnancy/lactation safety signal
+      - alert: PregnancyLactationSignal
+        expr: |
+          sum(rate(agent_signal_detected_total{job="agent-pool",special_situation=~"PREGNANCY|LACTATION"}[24h])) > 1
+        for: 1h
+        labels:
+          severity: critical
+          team: safety
+        annotations:
+          summary: "Pregnancy/lactation safety signal"
+          description: "{{ $value }} safety signals in pregnancy/lactation detected in 24h (threshold: 1)."

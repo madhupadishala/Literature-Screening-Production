@@ -1,0 +1,160 @@
+{
+  "agent_id": "agent-6-dechallenge",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent6-001",
+      "name": "Positive Dechallenge - Explicit Improvement",
+      "description": "Explicit documentation of improvement after drug stop",
+      "priority": "critical",
+      "tags": ["positive", "explicit", "recovered"],
+      "input": {
+        "case_id": "DECH-001",
+        "drug_exposure": {
+          "drug_name": "DrugX",
+          "therapy_start": "2024-01-01",
+          "therapy_end": "2024-01-20",
+          "action_taken": "DRUG_WITHDRAWN"
+        },
+        "adverse_event": {
+          "meddra_llt": "Hepatotoxicity",
+          "onset_date": "2024-01-15",
+          "end_date": "2024-01-30",
+          "outcome": "RECOVERED"
+        },
+        "dechallenge_info": {
+          "improvement_after_stop": true,
+          "time_to_improvement_days": 10,
+          "completeness_of_resolution": "COMPLETE"
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "dechallenge_result": "POSITIVE",
+          "confidence": { "min": 0.8 },
+          "time_to_improvement_days": 10,
+          "completeness_of_resolution": "COMPLETE",
+          "temporal_relationship": "CONSISTENT",
+          "supporting_evidence": { "contains": "improvement after drug discontinuation" }
+        }
+      }
+    },
+    {
+      "id": "agent6-002",
+      "name": "Negative Dechallenge - No Improvement",
+      "description": "Event did not improve after drug discontinuation",
+      "priority": "critical",
+      "tags": ["negative", "no-improvement"],
+      "input": {
+        "case_id": "DECH-002",
+        "drug_exposure": {
+          "drug_name": "DrugY",
+          "therapy_start": "2024-02-01",
+          "therapy_end": "2024-02-15",
+          "action_taken": "DRUG_WITHDRAWN"
+        },
+        "adverse_event": {
+          "meddra_llt": "Peripheral Neuropathy",
+          "onset_date": "2024-02-10",
+          "outcome": "NOT_RECOVERED"
+        },
+        "dechallenge_info": {
+          "improvement_after_stop": false
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "dechallenge_result": "NEGATIVE",
+          "confidence": { "min": 0.8 },
+          "completeness_of_resolution": "NONE",
+          "supporting_evidence": { "contains": "no improvement" }
+        }
+      }
+    },
+    {
+      "id": "agent6-003",
+      "name": "Unassessable - Insufficient Information",
+      "description": "No dechallenge info and outcome unknown",
+      "priority": "high",
+      "tags": ["unassessable", "insufficient-data"],
+      "input": {
+        "case_id": "DECH-003",
+        "drug_exposure": {
+          "drug_name": "DrugZ",
+          "therapy_start": "2024-03-01",
+          "action_taken": "DOSE_UNCHANGED"
+        },
+        "adverse_event": {
+          "meddra_llt": "Headache",
+          "onset_date": "2024-03-10",
+          "outcome": "UNKNOWN"
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "dechallenge_result": "UNASSESSABLE",
+          "confidence": { "max": 0.6 },
+          "temporal_relationship": "UNKNOWN",
+          "supporting_evidence": { "contains": "Insufficient" }
+        }
+      }
+    },
+    {
+      "id": "agent6-004",
+      "name": "Inferred Positive from RECOVERED Outcome",
+      "description": "Outcome RECOVERED should infer positive dechallenge",
+      "priority": "high",
+      "tags": ["inferred", "recovered-outcome"],
+      "input": {
+        "case_id": "DECH-004",
+        "drug_exposure": {
+          "drug_name": "DrugA",
+          "therapy_start": "2024-04-01",
+          "therapy_end": "2024-04-20",
+          "action_taken": "DRUG_WITHDRAWN"
+        },
+        "adverse_event": {
+          "meddra_llt": "Rash",
+          "onset_date": "2024-04-15",
+          "end_date": "2024-04-25",
+          "outcome": "RECOVERED"
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "dechallenge_result": "POSITIVE",
+          "confidence": { "min": 0.7 },
+          "completeness_of_resolution": "COMPLETE",
+          "temporal_relationship": "CONSISTENT"
+        }
+      }
+    },
+    {
+      "id": "agent6-005",
+      "name": "Temporal Inconsistency - Event Resolved Before Drug Stop",
+      "description": "Event end date before therapy end date - temporally inconsistent",
+      "priority": "critical",
+      "tags": ["temporal", "inconsistent"],
+      "input": {
+        "case_id": "DECH-005",
+        "drug_exposure": {
+          "drug_name": "DrugB",
+          "therapy_start": "2024-05-01",
+          "therapy_end": "2024-05-20"
+        },
+        "adverse_event": {
+          "meddra_llt": "Nausea",
+          "onset_date": "2024-05-05",
+          "end_date": "2024-05-10",
+          "outcome": "RECOVERED"
+        }
+      },
+      "expected_output": {
+        "assessment": {
+          "temporal_relationship": "INCONSISTENT",
+          "supporting_evidence": { "contains": "before drug stop" }
+        }
+      }
+    }
+  ]
+}

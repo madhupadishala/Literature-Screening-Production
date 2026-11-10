@@ -1,0 +1,168 @@
+{
+  "agent_id": "agent-3-followup-generator",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent3-001",
+      "name": "Missing Critical Patient Fields",
+      "description": "Case missing patient initials, sex, age - should generate critical follow-up questions",
+      "priority": "critical",
+      "tags": ["patient", "critical-fields"],
+      "input": {
+        "case_id": "FUP-001",
+        "case_data": {
+          "patient": { "initials": null, "sex": null, "age": null, "age_group": null },
+          "drug_exposures": [{ "drug_name": "DrugX", "active_substance": "SubstanceX", "dose": "100mg", "route": "ORAL", "frequency": "ONCE DAILY", "therapy_start": "2024-01-01" }],
+          "adverse_events": [{ "meddra_llt": "Hepatotoxicity", "verbatim_text": "Liver injury", "onset_date": "2024-01-15", "outcome": "RECOVERED", "seriousness": "SERIOUS" }],
+          "receipt_date": "2024-01-20",
+          "report_type": "INITIAL",
+          "serious": true,
+          "reporter": { "qualification": "PHYSICIAN", "country": "US" }
+        },
+        "case_version": 1,
+        "regulatory_deadline_days": 15,
+        "sender_type": "MAH"
+      },
+      "expected_output": {
+        "follow_up_request": {
+          "case_id": "FUP-001",
+          "case_version": 1,
+          "missing_fields": [
+            { "field_path": "patient.initials", "priority": "critical", "question_text": "Please provide the patient's initials (e.g., \"J.D.\")." },
+            { "field_path": "patient.sex", "priority": "critical", "question_text": "Please specify the patient's sex (MALE/FEMALE/UNKNOWN)." },
+            { "field_path": "patient.age", "priority": "critical", "question_text": "Please provide the patient's age at time of event (e.g., \"45Y\", \"6M\", \"30D\")." }
+          ],
+          "summary": { "contains": "critical field" }
+        },
+        "missing_field_count": { "min": 3 },
+        "critical_missing": { "min": 3 },
+        "compliance_score": { "max": 80 }
+      }
+    },
+    {
+      "id": "agent3-002",
+      "name": "Missing Drug Information",
+      "description": "Case missing dose, route, frequency, therapy dates",
+      "priority": "critical",
+      "tags": ["drug", "critical-fields"],
+      "input": {
+        "case_id": "FUP-002",
+        "case_data": {
+          "patient": { "initials": "JD", "sex": "MALE", "age": "45Y" },
+          "drug_exposures": [{ "drug_name": "DrugX", "active_substance": "SubstanceX", "dose": null, "route": null, "frequency": null, "therapy_start": null, "therapy_end": null, "action_taken": null }],
+          "adverse_events": [{ "meddra_llt": "Rash", "verbatim_text": "Skin rash", "onset_date": "2024-01-15", "outcome": "RECOVERED", "seriousness": "NON_SERIOUS" }],
+          "receipt_date": "2024-01-20",
+          "report_type": "INITIAL",
+          "serious": false,
+          "reporter": { "qualification": "PHARMACIST", "country": "US" }
+        },
+        "case_version": 1,
+        "regulatory_deadline_days": 15,
+        "sender_type": "MAH"
+      },
+      "expected_output": {
+        "follow_up_request": {
+          "missing_fields": [
+            { "field_path": "drug_exposures[0].dose", "priority": "critical" },
+            { "field_path": "drug_exposures[0].route", "priority": "critical" },
+            { "field_path": "drug_exposures[0].frequency", "priority": "critical" },
+            { "field_path": "drug_exposures[0].therapy_start", "priority": "critical" },
+            { "field_path": "drug_exposures[0].action_taken", "priority": "critical" }
+          ]
+        },
+        "critical_missing": { "min": 5 }
+      }
+    },
+    {
+      "id": "agent3-003",
+      "name": "Missing Event Information",
+      "description": "Case missing event onset date, outcome, seriousness",
+      "priority": "critical",
+      "tags": ["event", "critical-fields"],
+      "input": {
+        "case_id": "FUP-003",
+        "case_data": {
+          "patient": { "initials": "AB", "sex": "FEMALE", "age": "30Y" },
+          "drug_exposures": [{ "drug_name": "DrugY", "active_substance": "SubstanceY", "dose": "50mg", "route": "ORAL", "frequency": "ONCE DAILY", "therapy_start": "2024-01-01", "action_taken": "DOSE_UNCHANGED" }],
+          "adverse_events": [{ "meddra_llt": "Headache", "verbatim_text": "Headache", "onset_date": null, "outcome": null, "seriousness": null }],
+          "receipt_date": "2024-01-20",
+          "report_type": "INITIAL",
+          "serious": false,
+          "reporter": { "qualification": "CONSUMER", "country": "US" }
+        },
+        "case_version": 1,
+        "regulatory_deadline_days": 15,
+        "sender_type": "MAH"
+      },
+      "expected_output": {
+        "follow_up_request": {
+          "missing_fields": [
+            { "field_path": "adverse_events[0].onset_date", "priority": "critical" },
+            { "field_path": "adverse_events[0].outcome", "priority": "critical" },
+            { "field_path": "adverse_events[0].seriousness", "priority": "critical" }
+          ]
+        },
+        "critical_missing": { "min": 3 }
+      }
+    },
+    {
+      "id": "agent3-004",
+      "name": "Complete Case - No Missing Fields",
+      "description": "Fully populated case should have high compliance score",
+      "priority": "high",
+      "tags": ["complete", "compliance"],
+      "input": {
+        "case_id": "FUP-004",
+        "case_data": {
+          "patient": { "initials": "CD", "sex": "MALE", "age": "50Y", "age_group": "ADULT", "weight": "70kg", "medical_history": ["Hypertension"] },
+          "drug_exposures": [{ "drug_name": "DrugZ", "active_substance": "SubstanceZ", "dose": "200mg", "route": "ORAL", "frequency": "TWICE DAILY", "therapy_start": "2024-01-01", "therapy_end": "2024-01-20", "indication": "Pain", "action_taken": "DRUG_WITHDRAWN", "rechallenge": "NO", "dechallenge": "POSITIVE" }],
+          "adverse_events": [{ "meddra_llt": "Nausea", "meddra_pt": "Nausea", "verbatim_text": "Nausea and vomiting", "onset_date": "2024-01-15", "end_date": "2024-01-25", "outcome": "RECOVERED", "seriousness": "NON_SERIOUS", "causality": "PROBABLE" }],
+          "receipt_date": "2024-01-20",
+          "report_type": "INITIAL",
+          "serious": false,
+          "seriousness_criteria": [],
+          "reporter": { "qualification": "PHYSICIAN", "country": "US" },
+          "case_safety_report_id": "SAFETY-001"
+        },
+        "case_version": 1,
+        "regulatory_deadline_days": 15,
+        "sender_type": "MAH"
+      },
+      "expected_output": {
+        "compliance_score": { "min": 95 },
+        "missing_field_count": 0,
+        "critical_missing": 0,
+        "follow_up_request": { "missing_fields": [] }
+      }
+    },
+    {
+      "id": "agent3-005",
+      "name": "7-Day Regulatory Deadline",
+      "description": "Serious case should have 7-day deadline",
+      "priority": "critical",
+      "tags": ["deadline", "7-day", "serious"],
+      "input": {
+        "case_id": "FUP-005",
+        "case_data": {
+          "patient": { "initials": "EF", "sex": "FEMALE", "age": "25Y" },
+          "drug_exposures": [{ "drug_name": "DrugA", "active_substance": "SubstanceA", "dose": "10mg", "route": "ORAL", "frequency": "ONCE DAILY", "therapy_start": "2024-01-01", "action_taken": "DOSE_UNCHANGED" }],
+          "adverse_events": [{ "meddra_llt": "Anaphylaxis", "verbatim_text": "Severe allergic reaction", "onset_date": "2024-01-15", "outcome": "RECOVERED", "seriousness": "SERIOUS", "seriousness_criteria": ["LIFE_THREATENING", "HOSPITALIZATION"] }],
+          "receipt_date": "2024-01-20",
+          "report_type": "INITIAL",
+          "serious": true,
+          "seriousness_criteria": ["LIFE_THREATENING", "HOSPITALIZATION"],
+          "reporter": { "qualification": "PHYSICIAN", "country": "US" }
+        },
+        "case_version": 1,
+        "regulatory_deadline_days": 7,
+        "sender_type": "MAH"
+      },
+      "expected_output": {
+        "follow_up_request": {
+          "regulatory_deadline": "7_DAYS",
+          "response_deadline": { "not_null": true }
+        }
+      }
+    }
+  ]
+}

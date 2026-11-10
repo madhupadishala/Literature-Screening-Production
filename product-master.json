@@ -1,0 +1,131 @@
+{
+  "tenant_id": "test-tenant",
+  "version": "1.0.0",
+  "products": [
+    {
+      "product_id": "PROD-001",
+      "brand_names": [
+        "DrugX",
+        "DrugX-Forte",
+        "X-Relief"
+      ],
+      "active_substances": [
+        {
+          "inn": "substance-x",
+          "aliases": [
+            "Chemical-X",
+            "SubX",
+            "Substance X"
+          ],
+          "cas_number": "12345-67-8",
+          "unii": "ABC123DEF",
+          "mesh_terms": [
+            "Chemical X",
+            "Substance X"
+          ],
+          "pharmacologic_class": "DMARD",
+          "therapeutic_area": "rheumatology"
+        }
+      ],
+      "mesh_terms": [
+        "Anti-Inflammatory Agents",
+        "Arthritis, Rheumatoid"
+      ],
+      "atc_codes": [
+        "L04AX03"
+      ],
+      "routes": [
+        "oral"
+      ],
+      "strengths": [
+        "100mg",
+        "200mg"
+      ]
+    },
+    {
+      "product_id": "PROD-002",
+      "brand_names": [
+        "DrugY",
+        "DrugY-Pediatric",
+        "Y-Syrup"
+      ],
+      "active_substances": [
+        {
+          "inn": "substance-y",
+          "aliases": [
+            "Chemical-Y",
+            "SubY",
+            "Substance Y"
+          ],
+          "cas_number": "87654-32-1",
+          "unii": "XYZ987UVW",
+          "mesh_terms": [
+            "Chemical Y",
+            "Substance Y"
+          ],
+          "pharmacologic_class": "analgesic",
+          "therapeutic_area": "pain management"
+        }
+      ],
+      "mesh_terms": [
+        "Analgesics",
+        "Pain"
+      ],
+      "atc_codes": [
+        "N02BE01"
+      ],
+      "routes": [
+        "intravenous",
+        "oral"
+      ],
+      "strengths": [
+        "100mg",
+        "10mg/mL",
+        "50mg"
+      ]
+    },
+    {
+      "product_id": "PROD-003",
+      "brand_names": [
+        "DrugZ",
+        "Z-IV",
+        "Z-Inject"
+      ],
+      "active_substances": [
+        {
+          "inn": "substance-z",
+          "aliases": [
+            "Chemical-Z",
+            "SubZ",
+            "Substance Z"
+          ],
+          "cas_number": "11111-22-2",
+          "unii": "ZZZ111AAA",
+          "mesh_terms": [
+            "Chemical Z",
+            "Substance Z"
+          ],
+          "pharmacologic_class": "biologic",
+          "therapeutic_area": "immunology"
+        }
+      ],
+      "mesh_terms": [
+        "Anaphylaxis",
+        "Hypersensitivity"
+      ],
+      "atc_codes": [
+        "L04AA01"
+      ],
+      "routes": [
+        "intravenous",
+        "subcutaneous"
+      ],
+      "strengths": [
+        "100mg",
+        "50mg"
+      ]
+    }
+  ],
+  "updated_at": "2026-11-08T00:00:00.000Z",
+  "checksum": "c079c60291de1f062b7f4a02da831885211479ed1fbba859f4f4349af814776a"
+}

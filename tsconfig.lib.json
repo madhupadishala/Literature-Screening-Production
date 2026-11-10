@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["lib/*"]
+    },
+    "types": ["node"]
+  },
+  "include": [
+    "lib/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "frontend",
+    "backend",
+    "apps",
+    "components",
+    "assets",
+    "models",
+    "providers",
+    "services",
+    "knowledge",
+    "engines",
+    "evidence_store",
+    "docs",
+    "tests",
+    "scripts",
+    "config",
+    "nexus_platform",
+    "agent_consolidation"
+  ]
+}

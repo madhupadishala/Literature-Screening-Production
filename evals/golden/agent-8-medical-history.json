@@ -1,0 +1,157 @@
+{
+  "agent_id": "agent-8-medical-history",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent8-001",
+      "name": "Extract Chronic Conditions",
+      "description": "Narrative with multiple chronic conditions should extract them with MedDRA codes",
+      "priority": "critical",
+      "tags": ["conditions", "chronic", "meddra"],
+      "input": {
+        "case_id": "MED-001",
+        "narrative": "Patient has a history of hypertension and type 2 diabetes mellitus for 10 years. Also has atrial fibrillation diagnosed 2 years ago. Currently on metformin, lisinopril, and warfarin.",
+        "patient_section": "65-year-old male with history of HTN, DM2, AFib",
+        "structured_fields": { "age": "65Y", "sex": "MALE", "weight": "80kg" }
+      },
+      "expected_output": {
+        "medical_history": {
+          "conditions": [
+            { "meddra_llt": "Hypertension", "meddra_pt": "Hypertension", "meddra_soc": "Vascular disorders", "status": "CHRONIC" },
+            { "meddra_llt": "Diabetes mellitus", "meddra_pt": "Diabetes mellitus", "meddra_soc": "Metabolism and nutrition disorders", "status": "CHRONIC" },
+            { "meddra_llt": "Atrial fibrillation", "meddra_pt": "Atrial fibrillation", "meddra_soc": "Cardiac disorders", "status": "CHRONIC" }
+          ],
+          "concomitant_medications": [
+            { "drug_name": "Metformin", "active_substance": "Metformin" },
+            { "drug_name": "Lisinopril", "active_substance": "Lisinopril" },
+            { "drug_name": "Warfarin", "active_substance": "Warfarin" }
+          ],
+          "extraction_confidence": { "min": 0.7 }
+        }
+      }
+    },
+    {
+      "id": "agent8-002",
+      "name": "Extract Surgical History",
+      "description": "Narrative mentioning surgeries should extract them",
+      "priority": "high",
+      "tags": ["surgeries", "procedures"],
+      "input": {
+        "case_id": "MED-002",
+        "narrative": "Patient underwent cholecystectomy in 2015 for gallstones. Also had appendectomy in childhood. No other surgeries.",
+        "structured_fields": { "age": "50Y", "sex": "FEMALE" }
+      },
+      "expected_output": {
+        "medical_history": {
+          "surgeries": [
+            { "procedure": "Cholecystectomy", "verbatim_text": { "contains": "cholecystectomy" } },
+            { "procedure": "Appendectomy", "verbatim_text": { "contains": "appendectomy" } }
+          ]
+        }
+      }
+    },
+    {
+      "id": "agent8-003",
+      "name": "Extract Allergies",
+      "description": "Explicit allergy statements should be captured",
+      "priority": "high",
+      "tags": ["allergies", "hypersensitivity"],
+      "input": {
+        "case_id": "MED-003",
+        "narrative": "Patient reports allergy to penicillin (rash as a child). Also allergic to sulfa drugs - developed hives after Bactrim.",
+        "structured_fields": { "age": "35Y", "sex": "MALE" }
+      },
+      "expected_output": {
+        "medical_history": {
+          "allergies": [
+            { "allergen": "Penicillin", "verbatim_text": { "contains": "penicillin" } },
+            { "allergen": "Sulfonamide", "verbatim_text": { "contains": "sulfa" } }
+          ]
+        }
+      }
+    },
+    {
+      "id": "agent8-004",
+      "name": "Extract Social History",
+      "description": "Smoking, alcohol, occupation should be extracted",
+      "priority": "medium",
+      "tags": ["social", "smoking", "alcohol", "occupation"],
+      "input": {
+        "case_id": "MED-004",
+        "narrative": "Patient is a former smoker with 20 pack-year history, quit 5 years ago. Occasional alcohol use. Works as a construction worker.",
+        "structured_fields": { "age": "55Y", "sex": "MALE" }
+      },
+      "expected_output": {
+        "medical_history": {
+          "social_history": {
+            "smoking": "FORMER",
+            "smoking_pack_years": 20,
+            "alcohol": "OCCASIONAL",
+            "occupation": { "contains": "construction" }
+          }
+        }
+      }
+    },
+    {
+      "id": "agent8-005",
+      "name": "Extract Family History",
+      "description": "Family history mentions should be captured",
+      "priority": "medium",
+      "tags": ["family-history"],
+      "input": {
+        "case_id": "MED-005",
+        "narrative": "Family history: mother had breast cancer at age 52. Father had myocardial infarction at 60. No other significant family history.",
+        "structured_fields": { "age": "40Y", "sex": "FEMALE" }
+      },
+      "expected_output": {
+        "medical_history": {
+          "family_history": [
+            { "condition": { "contains": "breast cancer" }, "relationship": "mother" },
+            { "condition": { "contains": "myocardial infarction" }, "relationship": "father" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "agent8-006",
+      "name": "Complex Multi-System Narrative",
+      "description": "Full narrative with conditions, surgeries, allergies, meds, social, family",
+      "priority": "critical",
+      "tags": ["complex", "multi-system", "integration"],
+      "input": {
+        "case_id": "MED-006",
+        "narrative": "68-year-old male with history of coronary artery disease (MI in 2018), hypertension, and hyperlipidemia. Underwent CABG in 2018. Allergic to aspirin (GI bleeding). Currently on atorvastatin, metoprolol, and omeprazole. Former smoker, 30 pack-years. Father died of MI at age 62. Presents with hepatotoxicity after starting DrugX.",
+        "patient_section": "68M with CAD s/p CABG 2018, HTN, HLD, ASA allergy",
+        "structured_fields": { "age": "68Y", "sex": "MALE", "weight": "75kg" }
+      },
+      "expected_output": {
+        "medical_history": {
+          "conditions": [
+            { "meddra_llt": "Myocardial infarction", "meddra_pt": "Myocardial infarction", "status": "RESOLVED" },
+            { "meddra_llt": "Hypertension", "status": "CHRONIC" },
+            { "meddra_llt": "Hyperlipidaemia", "status": "CHRONIC" }
+          ],
+          "surgeries": [
+            { "procedure": "Coronary artery bypass graft", "verbatim_text": { "contains": "CABG" } }
+          ],
+          "allergies": [
+            { "allergen": "Aspirin", "verbatim_text": { "contains": "aspirin" } }
+          ],
+          "concomitant_medications": [
+            { "drug_name": "Atorvastatin", "active_substance": "Atorvastatin" },
+            { "drug_name": "Metoprolol", "active_substance": "Metoprolol" },
+            { "drug_name": "Omeprazole", "active_substance": "Omeprazole" }
+          ],
+          "social_history": {
+            "smoking": "FORMER",
+            "smoking_pack_years": 30
+          },
+          "family_history": [
+            { "condition": { "contains": "myocardial infarction" }, "relationship": "father" }
+          ],
+          "extraction_confidence": { "min": 0.8 }
+        }
+      }
+    }
+  ]
+}

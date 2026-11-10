@@ -1,0 +1,546 @@
+{
+  "dashboard": {
+    "title": "NEXUS Agent Pool Dashboard",
+    "uid": "nexus-agent-pool",
+    "tags": ["nexus", "pharmacovigilance", "agents", "production"],
+    "timezone": "utc",
+    "refresh": "30s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Agent Pool Overview",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(up{job=\"agent-pool\"}) by (agent_id)",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "mappings": [
+              {"type": "value", "options": {"1": {"text": "UP", "color": "green"}, "0": {"text": "DOWN", "color": "red"}}}
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "red", "value": null},
+                {"color": "green", "value": 1}
+              ]
+            },
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Total Requests Rate (req/s)",
+        "type": "graph",
+        "gridPos": {"x": 6, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(agent_requests_total{job=\"agent-pool\"}[1m])) by (agent_id)",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "lineWidth": 2
+      },
+      {
+        "id": 3,
+        "title": "Error Rate by Agent (%)",
+        "type": "graph",
+        "gridPos": {"x": 18, "y": 0, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(agent_requests_failed_total{job=\"agent-pool\"}[5m])) by (agent_id) / sum(rate(agent_requests_total{job=\"agent-pool\"}[5m])) by (agent_id) * 100",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "thresholds": [
+          {"value": 5, "colorMode": "critical", "op": "gt", "label": "Warning > 5%"}
+        ]
+      },
+      {
+        "id": 4,
+        "title": "P99 Latency by Agent (seconds)",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.99, sum(rate(agent_request_latency_seconds_bucket{job=\"agent-pool\"}[5m])) by (le, agent_id))",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "thresholds": [
+          {"value": 30, "colorMode": "critical", "op": "gt", "label": "SLA Breach > 30s"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "P50/P95/P99 Latency Distribution",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, sum(rate(agent_request_latency_seconds_bucket{job=\"agent-pool\"}[5m])) by (le))",
+            "legendFormat": "P50",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(agent_request_latency_seconds_bucket{job=\"agent-pool\"}[5m])) by (le))",
+            "legendFormat": "P95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, sum(rate(agent_request_latency_seconds_bucket{job=\"agent-pool\"}[5m])) by (le))",
+            "legendFormat": "P99",
+            "refId": "C"
+          }
+        ],
+        "lines": true,
+        "fill": 0,
+        "lineWidth": 2
+      },
+      {
+        "id": 6,
+        "title": "Error Rate by Tier",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(agent_requests_failed_total{job=\"agent-pool\"}[5m])) by (execution_tier) / sum(rate(agent_requests_total{job=\"agent-pool\"}[5m])) by (execution_tier) * 100",
+            "legendFormat": "{{execution_tier}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1
+      },
+      {
+        "id": 7,
+        "title": "Execution Tier Distribution",
+        "type": "piechart",
+        "gridPos": {"x": 12, "y": 16, "w": 6, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(agent_requests_total{job=\"agent-pool\"}[5m])) by (execution_tier)",
+            "legendFormat": "{{execution_tier}}",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Circuit Breaker Status",
+        "type": "stat",
+        "gridPos": {"x": 18, "y": 8, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(agent_circuit_breaker_state{job=\"agent-pool\",state=\"OPEN\"}) by (agent_id)",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "mappings": [
+              {"type": "value", "options": {"0": {"text": "CLOSED", "color": "green"}, "1": {"text": "OPEN", "color": "red"}, "0.5": {"text": "HALF_OPEN", "color": "yellow"}}}
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 0.5},
+                {"color": "red", "value": 1}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 9,
+        "title": "Queue Depth by Agent",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 24, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "agent_queue_depth{job=\"agent-pool\"}",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1
+      },
+      {
+        "id": 10,
+        "title": "Throughput by Agent (req/min)",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 24, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(agent_requests_total{job=\"agent-pool\"}[1m])) by (agent_id) * 60",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1
+      },
+      {
+        "id": 11,
+        "title": "DLQ Size by Agent",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 32, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "dead_letter_queue_size{job=\"agent-pool\"}",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 10},
+                {"color": "red", "value": 50}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 12,
+        "title": "DLQ by Stage",
+        "type": "bargauge",
+        "gridPos": {"x": 6, "y": 32, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(dead_letter_queue_total{job=\"agent-pool\"}) by (stage, agent_id)",
+            "legendFormat": "{{agent_id}} - {{stage}}",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "HITL Review Queue",
+        "type": "stat",
+        "gridPos": {"x": 18, "y": 24, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "hitl_review_pending{job=\"agent-pool\"}",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 10},
+                {"color": "red", "value": 50}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 14,
+        "title": "HITL Review SLA Compliance",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 40, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "hitl_review_completed_sla{job=\"agent-pool\"} / hitl_review_completed_total{job=\"agent-pool\"} * 100",
+            "legendFormat": "SLA Compliance %",
+            "refId": "A"
+          },
+          {
+            "expr": "hitl_review_overdue{job=\"agent-pool\"} / hitl_review_pending{job=\"agent-pool\"} * 100",
+            "legendFormat": "Overdue %",
+            "refId": "B"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "thresholds": [
+          {"value": 95, "colorMode": "ok", "op": "lt", "label": "SLA Target > 95%"}
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Signal Detection Rate by Agent",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 40, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(agent_signal_detected_total{job=\"agent-pool\",decision=\"SIGNAL_DETECTED\"}[1h])) by (agent_id) / sum(rate(agent_requests_total{job=\"agent-pool\"}[1h])) by (agent_id) * 100",
+            "legendFormat": "{{agent_id}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1
+      },
+      {
+        "id": 16,
+        "title": "Submission Success Rate by Destination",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 48, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(submissions_acknowledged_total{job=\"agent-pool\"}[1h])) by (destination) / sum(rate(submissions_total{job=\"agent-pool\"}[1h])) by (destination) * 100",
+            "legendFormat": "{{destination}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1
+      },
+      {
+        "id": 17,
+        "title": "Resource Utilization - CPU",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 48, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"agent-.*\"}[5m])) by (pod)",
+            "legendFormat": "{{pod}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1
+      },
+      {
+        "id": 18,
+        "title": "Resource Utilization - Memory",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 56, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "container_memory_usage_bytes{pod=~\"agent-.*\"} / container_spec_memory_limit_bytes{pod=~\"agent-.*\"} * 100",
+            "legendFormat": "{{pod}}",
+            "refId": "A"
+          }
+        ],
+        "lines": true,
+        "fill": 1,
+        "thresholds": [
+          {"value": 85, "colorMode": "critical", "op": "gt", "label": "Memory > 85%"}
+        ]
+      },
+      {
+        "id": 19,
+        "title": "Redis Metrics",
+        "type": "row",
+        "gridPos": {"x": 0, "y": 64, "w": 24, "h": 2},
+        "panels": [
+          {
+            "id": 20,
+            "title": "Redis Memory Usage",
+            "type": "graph",
+            "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+            "targets": [
+              {
+                "expr": "redis_memory_used_bytes / redis_memory_max_bytes * 100",
+                "legendFormat": "Memory %",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [{"value": 85, "colorMode": "critical", "op": "gt"}]
+          },
+          {
+            "id": 21,
+            "title": "Redis Latency P99",
+            "type": "graph",
+            "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.99, sum(rate(redis_command_duration_seconds_bucket[5m])) by (le, instance))",
+                "legendFormat": "P99 Latency",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [{"value": 0.1, "colorMode": "critical", "op": "gt"}]
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "title": "PostgreSQL Metrics",
+        "type": "row",
+        "gridPos": {"x": 0, "y": 66, "w": 24, "h": 2},
+        "panels": [
+          {
+            "id": 23,
+            "title": "PostgreSQL Connections",
+            "type": "graph",
+            "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+            "targets": [
+              {
+                "expr": "pg_stat_database_numbackends / pg_settings_max_connections * 100",
+                "legendFormat": "Connections %",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [{"value": 80, "colorMode": "critical", "op": "gt"}]
+          },
+          {
+            "id": 24,
+            "title": "PostgreSQL Replication Lag",
+            "type": "graph",
+            "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+            "targets": [
+              {
+                "expr": "pg_replication_lag_seconds",
+                "legendFormat": "Replication Lag (s)",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [{"value": 30, "colorMode": "critical", "op": "gt"}]
+          }
+        ]
+      },
+      {
+        "id": 25,
+        "title": "Business KPIs Summary",
+        "type": "table",
+        "gridPos": {"x": 0, "y": 68, "w": 24, "h": 10},
+        "targets": [
+          {
+            "expr": "sum(rate(agent_requests_total{job=\"agent-pool\"}[5m])) by (agent_id)",
+            "legendFormat": "{{agent_id}} - Requests/s",
+            "refId": "A",
+            "format": "table"
+          },
+          {
+            "expr": "sum(rate(agent_requests_failed_total{job=\"agent-pool\"}[5m])) by (agent_id) / sum(rate(agent_requests_total{job=\"agent-pool\"}[5m])) by (agent_id) * 100",
+            "legendFormat": "{{agent_id}} - Error %",
+            "refId": "B",
+            "format": "table"
+          },
+          {
+            "expr": "histogram_quantile(0.99, sum(rate(agent_request_latency_seconds_bucket{job=\"agent-pool\"}[5m])) by (le, agent_id))",
+            "legendFormat": "{{agent_id}} - P99 Latency",
+            "refId": "C",
+            "format": "table"
+          },
+          {
+            "expr": "dead_letter_queue_size{job=\"agent-pool\"}",
+            "legendFormat": "{{agent_id}} - DLQ Size",
+            "refId": "D",
+            "format": "table"
+          },
+          {
+            "expr": "hitl_review_pending{job=\"agent-pool\"}",
+            "legendFormat": "{{agent_id}} - HITL Pending",
+            "refId": "E",
+            "format": "table"
+          },
+          {
+            "expr": "sum(rate(agent_signal_detected_total{job=\"agent-pool\",decision=\"SIGNAL_DETECTED\"}[1h])) by (agent_id) / sum(rate(agent_requests_total{job=\"agent-pool\"}[1h])) by (agent_id) * 100",
+            "legendFormat": "{{agent_id}} - Signal %",
+            "refId": "F",
+            "format": "table"
+          }
+        ],
+        "options": {
+          "showHeader": true,
+          "sortBy": []
+        }
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "agent_id",
+          "type": "query",
+          "query": "label_values(agent_requests_total, agent_id)",
+          "refresh": 1,
+          "includeAll": true,
+          "multi": true,
+          "current": {"text": "All", "value": ["$__all"]}
+        },
+        {
+          "name": "execution_tier",
+          "type": "query",
+          "query": "label_values(agent_requests_total, execution_tier)",
+          "refresh": 1,
+          "includeAll": true,
+          "multi": true
+        },
+        {
+          "name": "tenant",
+          "type": "query",
+          "query": "label_values(agent_requests_total, tenant_id)",
+          "refresh": 1,
+          "includeAll": true
+        }
+      ],
+      "annotations": {
+        "list": [
+          {
+            "name": "Deployments",
+            "datasource": "Prometheus",
+            "expr": "kube_deployment_status_condition{condition=\"Available\",status=\"True\"}",
+            "iconColor": "blue",
+            "enable": true
+          },
+          {
+            "name": "Alerts",
+            "datasource": "Prometheus",
+            "expr": "ALERTS{alertstate=\"firing\"}",
+            "iconColor": "red",
+            "enable": true
+          }
+        ]
+      },
+      "links": [
+        {
+          "name": "Runbook",
+          "url": "https://wiki.nexus.example.com/runbooks",
+          "type": "link"
+        },
+        {
+          "name": "GitHub Actions",
+          "url": "https://github.com/nexus/agent-pool/actions",
+          "type": "link"
+        },
+        {
+          "name": "Kubernetes",
+          "url": "https://kubernetes.nexus.example.com",
+          "type": "link"
+        }
+      ]
+    },
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "30s"
+  }
+}

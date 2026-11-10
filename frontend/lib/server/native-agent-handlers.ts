@@ -5,8 +5,8 @@
 import { runCOI, type Segment } from '../ai/coi/coi-agent';
 import { evaluateTriageSnapshot } from '../safety/triage/triage-evaluator';
 import { deterministicNarrativeDraft } from '../safety/case-processing/case-assist';
-import { assessListedness } from '../../../Agentic_AI/AG12_Listedness_Expectedness/src/branches/consolidate__nexus-shared-agents/platform/shared-agents/candidates/listedness/listedness-engine';
-import { assessPvSafety } from '../../../Agentic_AI/AG17_Safety_Information_Detection/src/branches/feat__pv-safety-assessment-engine-v1/frontend/lib/pv-safety-assessment/assessment-engine';
+import { assessListedness } from '../../../Agentic_AI/AG12_Listedness_Expectedness/src/canonical/platform/shared-agents/candidates/listedness/listedness-engine';
+import { assessPvSafety } from '../../../Agentic_AI/AG17_Safety_Information_Detection/src/canonical/frontend/lib/pv-safety-assessment/assessment-engine';
 import type { AIProvider } from '../ai/ai-types';
 
 type JsonObject = Record<string, unknown>;

@@ -10,4 +10,44 @@ export function Card({ className, children, ...props }: HTMLAttributes<HTMLEleme
   );
 }
 
+export function CardHeader({ className, children, ...props }: HTMLAttributes<HTMLElement>) {
+  return (
+    <header {...props} className={[styles.cardHeader, className].filter(Boolean).join(" ")}>
+      {children}
+    </header>
+  );
+}
+
+export function CardTitle({ className, children, ...props }: HTMLAttributes<HTMLHeadingElement>) {
+  return (
+    <h3 {...props} className={[styles.cardTitle, className].filter(Boolean).join(" ")}>
+      {children}
+    </h3>
+  );
+}
+
+export function CardDescription({ className, children, ...props }: HTMLAttributes<HTMLParagraphElement>) {
+  return (
+    <p {...props} className={[styles.cardDescription, className].filter(Boolean).join(" ")}>
+      {children}
+    </p>
+  );
+}
+
+export function CardContent({ className, children, ...props }: HTMLAttributes<HTMLElement>) {
+  return (
+    <div {...props} className={[styles.cardContent, className].filter(Boolean).join(" ")}>
+      {children}
+    </div>
+  );
+}
+
+export function CardFooter({ className, children, ...props }: HTMLAttributes<HTMLElement>) {
+  return (
+    <footer {...props} className={[styles.cardFooter, className].filter(Boolean).join(" ")}>
+      {children}
+    </footer>
+  );
+}
+
 export default Card;

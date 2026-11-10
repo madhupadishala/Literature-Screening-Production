@@ -1,7 +1,11 @@
 import { forwardRef, type InputHTMLAttributes } from "react";
 import s from "./primitives.module.css";
-type Props = InputHTMLAttributes<HTMLInputElement> & { finalized?: boolean };
-export const Input = forwardRef<HTMLInputElement, Props>(function Input(
+
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  finalized?: boolean;
+}
+
+export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   { finalized, readOnly, className, ...props },
   ref,
 ) {

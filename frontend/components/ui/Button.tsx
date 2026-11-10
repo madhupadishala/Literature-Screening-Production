@@ -1,10 +1,12 @@
 import type { ButtonHTMLAttributes } from "react";
 import s from "./primitives.module.css";
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
   loading?: boolean;
   finalized?: boolean;
-};
+}
+
 export function Button({
   variant = "primary",
   loading = false,
@@ -13,7 +15,7 @@ export function Button({
   children,
   className,
   ...props
-}: Props) {
+}: ButtonProps) {
   return (
     <button
       {...props}

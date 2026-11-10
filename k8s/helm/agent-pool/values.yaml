@@ -1,0 +1,373 @@
+# ============================================================================
+# NEXUS Agent Pool Helm Values
+# ============================================================================
+# Configuration for deploying agent pools with Helm
+# ============================================================================
+
+# Global settings
+global:
+  namespace: nexus-agents
+  imageRegistry: "nexus"
+  imagePullSecrets: ["nexus-registry-secret"]
+  logLevel: "info"
+  timezone: "UTC"
+
+# Image configuration
+image:
+  repository: nexus/agent-pool
+  tag: "v1.0.0"
+  pullPolicy: Always
+
+# Service account
+serviceAccount:
+  create: true
+  name: agent-pool-sa
+
+# Resource defaults
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "2000m"
+    memory: "4Gi"
+
+# Agent pool configuration (merged with agent-specific configs)
+agentPool:
+  # Default pool settings
+  default:
+    minReplicas: 2
+    maxReplicas: 10
+    targetCpuUtilization: 70
+    healthCheckIntervalMs: 10000
+    unhealthyThreshold: 3
+    replacementTimeoutMs: 30000
+    checkpointIntervalSpans: 5
+    resumeFromCheckpoint: true
+    startupTimeoutMs: 30000
+    maxConcurrent: 10
+
+  # Agent-specific overrides
+  agents:
+    agent-1-literature-duplicates:
+      minReplicas: 2
+      maxReplicas: 5
+      targetCpuUtilization: 70
+      maxConcurrent: 10
+      # Agent-specific env vars
+      extraEnv:
+        SIMHASH_BITS: "64"
+        MINHASH_NUM_HASHES: "128"
+
+    agent-2-icsr-duplicates:
+      minReplicas: 2
+      maxReplicas: 5
+      targetCpuUtilization: 70
+      maxConcurrent: 5
+
+    agent-3-followup-generator:
+      minReplicas: 2
+      maxReplicas: 10
+      targetCpuUtilization: 60
+      maxConcurrent: 20
+      extraEnv:
+        E2B_R3_COMPLIANCE: "true"
+
+    agent-4-screening:
+      minReplicas: 3
+      maxReplicas: 15
+      targetCpuUtilization: 75
+      maxConcurrent: 5
+      extraEnv:
+        ENABLE_TRANSLATION: "true"
+        AG10_INTEGRATION: "true"
+        AG17_INTEGRATION: "true"
+        AG08_INTEGRATION: "true"
+
+    agent-5-action-taken:
+      minReplicas: 2
+      maxReplicas: 10
+      targetCpuUtilization: 60
+      maxConcurrent: 20
+      extraEnv:
+        GUIDELINE_ENGINE: "true"
+
+    agent-6-dechallenge:
+      minReplicas: 2
+      maxReplicas: 10
+      targetCpuUtilization: 60
+      maxConcurrent: 20
+      extraEnv:
+        ICH_E2D_COMPLIANCE: "true"
+
+    agent-7-rechallenge:
+      minReplicas: 2
+      maxReplicas: 10
+      targetCpuUtilization: 60
+      maxConcurrent: 20
+      extraEnv:
+        ICH_E2D_COMPLIANCE: "true"
+
+    agent-8-medical-history:
+      minReplicas: 2
+      maxReplicas: 10
+      targetCpuUtilization: 65
+      maxConcurrent: 10
+      extraEnv:
+        MEDDRA_VERSION: "26.0"
+        EXTRACTION_CONFIDENCE_THRESHOLD: "0.7"
+
+    agent-9-causality:
+      minReplicas: 2
+      maxReplicas: 5
+      targetCpuUtilization: 70
+      maxConcurrent: 3
+      extraEnv:
+        BRADFORD_HILL_WEIGHTS_VERSION: "v1.0"
+        CAUSALITY_THRESHOLDS_VERSION: "v1.0"
+
+# HPA Configuration
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Pods
+      pods:
+        metric:
+          name: agent_queue_depth
+        target:
+          type: AverageValue
+          averageValue: "10"
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 30
+        - type: Pods
+          value: 2
+          periodSeconds: 30
+      selectPolicy: Max
+
+# Service configuration
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+    - name: grpc
+      port: 9090
+      targetPort: 9090
+      protocol: TCP
+    - name: metrics
+      port: 9091
+      targetPort: 9091
+      protocol: TCP
+
+# Probes
+probes:
+  liveness:
+    httpGet:
+      path: /health
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    httpGet:
+      path: /ready
+      port: 8080
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+  startup:
+    httpGet:
+      path: /health
+      port: 8080
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 30
+
+# PodDisruptionBudget
+pdb:
+  enabled: true
+  minAvailable: 1
+
+# Network Policy
+networkPolicy:
+  enabled: true
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: nexus-system
+        - podSelector:
+            matchLabels:
+              app: nexus
+              component: api-gateway
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 9090
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: nexus-data
+      ports:
+        - protocol: TCP
+          port: 6379
+        - protocol: TCP
+          port: 5432
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: nexus-audit
+      ports:
+        - protocol: TCP
+          port: 8080
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              name: nexus-inference
+      ports:
+        - protocol: TCP
+          port: 8080
+
+# Monitoring
+monitoring:
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+    path: /metrics
+  prometheusRules:
+    enabled: true
+    rules:
+      - alert: AgentPoolDown
+        expr: up{job="agent-pool"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Agent pool {{ $labels.agent_id }} is down"
+      - alert: AgentPoolHighErrorRate
+        expr: |
+          rate(agent_requests_failed_total[5m]) / rate(agent_requests_total[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate for agent {{ $labels.agent_id }}"
+      - alert: AgentPoolHighLatency
+        expr: histogram_quantile(0.99, rate(agent_request_latency_seconds_bucket[5m])) > 30
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High P99 latency for agent {{ $labels.agent_id }}"
+      - alert: AgentPoolQueueBacklog
+        expr: agent_queue_depth > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Queue backlog for agent {{ $labels.agent_id }}"
+
+# Security
+security:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+  seccompProfile:
+    type: RuntimeDefault
+
+# Volume mounts
+volumes:
+  - name: config
+    configMap:
+      name: agent-pool-config
+  - name: tmp
+    emptyDir: {}
+  - name: model-cache
+    emptyDir:
+      sizeLimit: 2Gi
+
+# Environment variables (common to all agents)
+env:
+  - name: REDIS_URL
+    value: "redis://redis-master:6379"
+  - name: POSTGRES_URL
+    value: "postgres://postgres:5432/nexus_audit"
+  - name: AUDIT_LEDGER_URL
+    value: "http://audit-ledger:8080"
+  - name: MAX_RETRIES
+    value: "3"
+  - name: TIMEOUT_MS
+    value: "30000"
+  - name: DETERMINISTIC_SEED
+    value: "42"
+  - name: LOG_LEVEL
+    value: "info"
+
+# Affinity and anti-affinity
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: agent-id
+                operator: In
+                values:
+                  - agent-1-literature-duplicates
+                  - agent-2-icsr-duplicates
+                  - agent-3-followup-generator
+                  - agent-4-screening
+                  - agent-5-action-taken
+                  - agent-6-dechallenge
+                  - agent-7-rechallenge
+                  - agent-8-medical-history
+                  - agent-9-causality
+          topologyKey: kubernetes.io/hostname
+
+# Tolerations
+tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "nexus-agents"
+    effect: "NoSchedule"
+
+# Node selector
+nodeSelector:
+  workload-type: "nexus-agent"
+
+# Annotations
+annotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9090"
+  prometheus.io/path: "/metrics"
