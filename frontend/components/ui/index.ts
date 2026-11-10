@@ -14,14 +14,14 @@ export { tokens, type Tokens } from "@/lib/design/tokens";
 // Import components locally for use in registry
 import { Button, type ButtonProps } from "./Button";
 import { Input, type InputProps } from "./Input";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, type CardProps } from "./Card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./Card";
 import { Select, type SelectProps, type SelectOption } from "./Select";
 import { Badge, StatusBadge, type BadgeProps } from "./Badge";
 
 // Re-export components and types
 export { Button, type ButtonProps } from "./Button";
 export { Input, type InputProps } from "./Input";
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, type CardProps } from "./Card";
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./Card";
 export { Select, type SelectProps, type SelectOption } from "./Select";
 export { Badge, StatusBadge, type BadgeProps } from "./Badge";
 
