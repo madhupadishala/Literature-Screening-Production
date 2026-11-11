@@ -1,5 +1,3 @@
-import { evidencePackageGenerator } from "@/lib/evidence/evidence-package-generator";
-
 import { articleFetchClient } from "./article-fetch-client";
 
 import type {
@@ -11,7 +9,6 @@ import type {
 export interface ArticleFetchWorkflowResponse
   extends ArticleFetchResponse {
   tenantId: string;
-  evidencePackageId?: string;
   workflowStage: "ARTICLE_FETCH_COMPLETED";
 }
 
@@ -24,91 +21,11 @@ class ArticleFetchService {
     const response =
       await articleFetchClient.fetchArticle(request);
 
-    let evidencePackageId: string | undefined;
-
-    try {
-      const metadata = response.metadata;
-
-      const evidencePackage =
-        evidencePackageGenerator.build({
-          tenantId: request.tenantId,
-
-          articleId: metadata.pmid,
-
-          article: {
-            title: metadata.title,
-            abstract: metadata.abstract,
-            journal: metadata.journal,
-            pmid: metadata.pmid,
-            doi: metadata.doi,
-            publicationDate: metadata.publicationDate,
-            authors: metadata.authors ?? [],
-            country: metadata.country,
-            hasFullText: metadata.fullTextAvailable,
-          },
-
-          ragContext: {
-            tenantId: request.tenantId,
-
-            query: `PMID:${request.pmid}`,
-
-            summary:
-              "No RAG context generated during Article Fetch.",
-
-            chunks: [],
-
-            sourceBreakdown: {},
-
-            warnings: [
-              "RAG retrieval has not yet been executed.",
-            ],
-
-            generatedAt:
-              new Date().toISOString(),
-          },
-
-          aiExecution: {
-            agentName:
-              "Article Fetch Engine",
-
-            agentVersion: "1.0.0",
-
-            modelName: "N/A",
-
-            modelVersion: "N/A",
-
-            promptVersion: "N/A",
-
-            confidence: 1,
-
-            executedAt:
-              new Date().toISOString(),
-          },
-
-          aiResult: null,
-
-          generatedBy:
-            "ClinixAI Literature Search Engine",
-        });
-
-      evidencePackageId =
-        evidencePackage.metadata.packageId;
-    } catch (error) {
-      console.error(
-        "Evidence Package generation failed",
-        error,
-      );
-    }
-
     const workflowResponse: ArticleFetchWorkflowResponse =
       {
         tenantId: request.tenantId,
         ...response,
-
-        evidencePackageId,
-
-        workflowStage:
-          "ARTICLE_FETCH_COMPLETED",
+        workflowStage: "ARTICLE_FETCH_COMPLETED",
       };
 
     this.history.unshift(workflowResponse);

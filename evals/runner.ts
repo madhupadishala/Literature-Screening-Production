@@ -34,7 +34,7 @@ import * as path from 'path';
 // AGENT FACTORY FOR EVALUATION
 // ============================================================================
 
-function createEvalAgents(runnerConfig: RunnerConfig) {
+async function createEvalAgents(runnerConfig: RunnerConfig) {
   // Create shared infrastructure
   const router = runnerConfig.useRealLLM
     ? createProductionRouter({
@@ -73,6 +73,12 @@ function createEvalAgents(runnerConfig: RunnerConfig) {
       audit_ledger: auditLedger,
       zdr_store: zdrStore,
     }),
+    'agent-3-patient-identification': (await import('../lib/agents/agent-3-patient-identification')).createPatientIdentificationAgent({
+      tenant_id: 'eval-tenant',
+      inference_router: router,
+      audit_ledger: auditLedger,
+      zdr_store: zdrStore,
+    }),
     'agent-4-screening': createScreeningAgent({
       tenant_id: 'eval-tenant',
       inference_router: router,
@@ -103,6 +109,12 @@ function createEvalAgents(runnerConfig: RunnerConfig) {
       audit_ledger: auditLedger,
       zdr_store: zdrStore,
     }),
+    'agent-8-country-incident': (await import('../lib/agents/agent-8-country-incident')).createCountryIncidentAgent({
+      tenant_id: 'eval-tenant',
+      inference_router: router,
+      audit_ledger: auditLedger,
+      zdr_store: zdrStore,
+    }),
     'agent-9-causality': createCausalityAgent({
       tenant_id: 'eval-tenant',
       inference_router: router,
@@ -128,6 +140,12 @@ function createEvalAgents(runnerConfig: RunnerConfig) {
       zdr_store: zdrStore,
     }),
     'agent-17-clock-start': createClockStartAgent({
+      tenant_id: 'eval-tenant',
+      inference_router: router,
+      audit_ledger: auditLedger,
+      zdr_store: zdrStore,
+    }),
+    'agent-25-icsr-validity': (await import('../lib/agents/agent-25-icsr-validity')).createIcsrValidityAgent({
       tenant_id: 'eval-tenant',
       inference_router: router,
       audit_ledger: auditLedger,
@@ -257,7 +275,7 @@ function loadGoldenCases(agentId: string): any[] {
 // ============================================================================
 
 async function runEvaluation(agentId: string, runnerConfig: RunnerConfig): Promise<any> {
-  const agents = createEvalAgents(runnerConfig);
+  const agents = await createEvalAgents(runnerConfig);
   const agent = agents[agentId];
 
   if (!agent) {
@@ -536,16 +554,19 @@ async function main() {
         'agent-1-literature-duplicates',
         'agent-2-icsr-duplicates',
         'agent-3-followup-generator',
+        'agent-3-patient-identification',
         'agent-4-screening',
         'agent-5-action-taken',
         'agent-6-dechallenge',
         'agent-7-rechallenge',
         'agent-8-medical-history',
+        'agent-8-country-incident',
         'agent-9-causality',
         'agent-14-intake-triage',
         'agent-15-drug-extraction',
         'agent-16-reporter-id',
         'agent-17-clock-start',
+        'agent-25-icsr-validity',
       ];
 
   console.log('🚀 Nexus Evaluation Runner');

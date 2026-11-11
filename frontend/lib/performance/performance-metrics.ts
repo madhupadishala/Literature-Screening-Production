@@ -3,6 +3,7 @@ export type PerformanceOperation =
   | "article_processing"
   | "duplicate_check"
   | "screening"
+  | "screening_rerun"
   | "batch"
   | "cache";
 
