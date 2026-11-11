@@ -1,0 +1,190 @@
+{
+  "agent_id": "agent-3-patient-identification",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent3-001",
+      "name": "Complete Patient Identification",
+      "description": "Patient record with all critical fields populated",
+      "priority": "critical",
+      "tags": ["patient", "complete"],
+      "input": {
+        "intakeRecordId": "REC-001",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_initials": "JD",
+              "sex": "MALE",
+              "age_value": 45,
+              "age_unit": "YEAR",
+              "age_group": "ADULT",
+              "date_of_birth": "1979-05-15",
+              "weight_kg": 80,
+              "weight_unit": "KG",
+              "height_cm": 180,
+              "height_unit": "CM",
+              "medical_history": "Hypertension, Type 2 Diabetes"
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "assessments": [
+            { "field": "PATIENT_INITIALS", "status": "COMPLETE", "value": "JD" },
+            { "field": "SEX", "status": "COMPLETE", "value": "MALE" },
+            { "field": "AGE", "status": "COMPLETE", "value": "45 YEAR" },
+            { "field": "AGE_GROUP", "status": "COMPLETE", "value": "ADULT" },
+            { "field": "DATE_OF_BIRTH", "status": "COMPLETE", "value": "1979-05-15" },
+            { "field": "WEIGHT", "status": "COMPLETE", "value": "80 KG" },
+            { "field": "HEIGHT", "status": "COMPLETE", "value": "180 CM" },
+            { "field": "MEDICAL_HISTORY", "status": "COMPLETE", "value": "Hypertension, Type 2 Diabetes" }
+          ],
+          "completenessScore": 100,
+          "criticalFieldsPresent": 8,
+          "totalCriticalFields": 8,
+          "overallStatus": "COMPLETE",
+          "followUpRequired": false,
+          "followUpReasons": []
+        }
+      }
+    },
+    {
+      "id": "agent3-002",
+      "name": "Partial Patient - Missing Age and Weight",
+      "description": "Patient record missing age and weight fields",
+      "priority": "high",
+      "tags": ["patient", "partial", "missing-fields"],
+      "input": {
+        "intakeRecordId": "REC-002",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_initials": "AB",
+              "sex": "FEMALE",
+              "age_group": "ADULT",
+              "date_of_birth": "1985-03-20",
+              "height_cm": 165,
+              "height_unit": "CM",
+              "medical_history": "Asthma"
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "assessments": [
+            { "field": "PATIENT_INITIALS", "status": "COMPLETE", "value": "AB" },
+            { "field": "SEX", "status": "COMPLETE", "value": "FEMALE" },
+            { "field": "AGE", "status": "MISSING" },
+            { "field": "AGE_GROUP", "status": "COMPLETE", "value": "ADULT" },
+            { "field": "DATE_OF_BIRTH", "status": "COMPLETE", "value": "1985-03-20" },
+            { "field": "WEIGHT", "status": "MISSING" },
+            { "field": "HEIGHT", "status": "COMPLETE", "value": "165 CM" },
+            { "field": "MEDICAL_HISTORY", "status": "COMPLETE", "value": "Asthma" }
+          ],
+          "completenessScore": 75,
+          "criticalFieldsPresent": 6,
+          "totalCriticalFields": 8,
+          "overallStatus": "PARTIAL",
+          "followUpRequired": true,
+          "followUpReasons": [
+            "Patient age is missing or incomplete.",
+            "Patient weight is missing."
+          ]
+        }
+      }
+    },
+    {
+      "id": "agent3-003",
+      "name": "No Patient Record",
+      "description": "Intake data with no patient records",
+      "priority": "critical",
+      "tags": ["patient", "missing", "critical"],
+      "input": {
+        "intakeRecordId": "REC-003",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": []
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "assessments": [
+            { "field": "PATIENT_INITIALS", "status": "MISSING" },
+            { "field": "SEX", "status": "MISSING" },
+            { "field": "AGE", "status": "MISSING" },
+            { "field": "AGE_GROUP", "status": "MISSING" },
+            { "field": "DATE_OF_BIRTH", "status": "MISSING" },
+            { "field": "WEIGHT", "status": "MISSING" },
+            { "field": "HEIGHT", "status": "MISSING" },
+            { "field": "MEDICAL_HISTORY", "status": "MISSING" }
+          ],
+          "completenessScore": 0,
+          "criticalFieldsPresent": 0,
+          "totalCriticalFields": 8,
+          "overallStatus": "MISSING",
+          "followUpRequired": true,
+          "followUpReasons": [
+            "No patient record found in intake data.",
+            "No patient record found in intake data.",
+            "No patient record found in intake data.",
+            "No patient record found in intake data.",
+            "No patient record found in intake data.",
+            "No patient record found in intake data.",
+            "No patient record found in intake data.",
+            "No patient record found in intake data."
+          ]
+        }
+      }
+    },
+    {
+      "id": "agent3-004",
+      "name": "Patient with Minimal Data - Only Initials and Sex",
+      "description": "Patient record with only initials and sex provided",
+      "priority": "high",
+      "tags": ["patient", "minimal"],
+      "input": {
+        "intakeRecordId": "REC-004",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_initials": "XY",
+              "sex": "UNKNOWN"
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "assessments": [
+            { "field": "PATIENT_INITIALS", "status": "COMPLETE", "value": "XY" },
+            { "field": "SEX", "status": "COMPLETE", "value": "UNKNOWN" },
+            { "field": "AGE", "status": "MISSING" },
+            { "field": "AGE_GROUP", "status": "MISSING" },
+            { "field": "DATE_OF_BIRTH", "status": "MISSING" },
+            { "field": "WEIGHT", "status": "MISSING" },
+            { "field": "HEIGHT", "status": "MISSING" },
+            { "field": "MEDICAL_HISTORY", "status": "MISSING" }
+          ],
+          "completenessScore": 25,
+          "criticalFieldsPresent": 2,
+          "totalCriticalFields": 8,
+          "overallStatus": "PARTIAL",
+          "followUpRequired": true,
+          "followUpReasons": [
+            "Patient age is missing or incomplete.",
+            "Patient age group is missing.",
+            "Date of birth is missing.",
+            "Patient weight is missing.",
+            "Patient height is missing.",
+            "Medical history is missing."
+          ]
+        }
+      }
+    }
+  ]
+}

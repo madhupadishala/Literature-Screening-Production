@@ -1,0 +1,257 @@
+{
+  "agent_id": "agent-25-icsr-validity",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent25-001",
+      "name": "Fully Valid ICSR - All Criteria MET",
+      "description": "Complete ICSR with all minimum criteria satisfied",
+      "priority": "critical",
+      "tags": ["valid", "complete", "submission-ready"],
+      "input": {
+        "intakeRecordId": "REC-001",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_initials": "JD",
+              "sex": "MALE",
+              "age_value": 45,
+              "age_unit": "YEAR",
+              "patient_initials": "JD"
+            }
+          ],
+          "reporters": [
+            {
+              "qualification": "PHYSICIAN",
+              "country_code": "US",
+              "reporter_payload": { "name": "Dr. Smith" }
+            }
+          ],
+          "products": [
+            {
+              "role_characterization": "SUSPECT",
+              "reported_name": "DrugX"
+            }
+          ],
+          "events": [
+            {
+              "reported_term": "Nausea",
+              "seriousness": true,
+              "seriousness_criteria": { "HOSPITALIZATION": true }
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MET" },
+            { "key": "ADVERSE_EVENT", "status": "MET" },
+            { "key": "VALID_REPORTER_QUALIFICATION", "status": "MET" },
+            { "key": "VALID_COUNTRY", "status": "MET" },
+            { "key": "VALID_EVENT_TERM", "status": "MET" }
+          ],
+          "overallStatus": "VALID",
+          "metCount": 7,
+          "totalCount": 7,
+          "blockingIssues": [],
+          "submissionReady": true
+        }
+      }
+    },
+    {
+      "id": "agent25-002",
+      "name": "Missing Patient - INVALID",
+      "description": "ICSR with no identifiable patient",
+      "priority": "critical",
+      "tags": ["invalid", "missing-patient"],
+      "input": {
+        "intakeRecordId": "REC-002",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [],
+          "reporters": [
+            {
+              "qualification": "PHYSICIAN",
+              "country_code": "US"
+            }
+          ],
+          "products": [
+            {
+              "role_characterization": "SUSPECT",
+              "reported_name": "DrugX"
+            }
+          ],
+          "events": [
+            {
+              "reported_term": "Nausea"
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "NOT_MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MET" },
+            { "key": "ADVERSE_EVENT", "status": "MET" }
+          ],
+          "overallStatus": "INVALID",
+          "blockingIssues": {
+            "contains": "IDENTIFIABLE_PATIENT"
+          },
+          "submissionReady": false
+        }
+      }
+    },
+    {
+      "id": "agent25-003",
+      "name": "Missing Reporter - INVALID",
+      "description": "ICSR with no identifiable reporter",
+      "priority": "critical",
+      "tags": ["invalid", "missing-reporter"],
+      "input": {
+        "intakeRecordId": "REC-003",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_initials": "JD",
+              "sex": "MALE",
+              "age_value": 45,
+              "age_unit": "YEAR"
+            }
+          ],
+          "reporters": [],
+          "products": [
+            {
+              "role_characterization": "SUSPECT",
+              "reported_name": "DrugX"
+            }
+          ],
+          "events": [
+            {
+              "reported_term": "Nausea"
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "NOT_MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MET" },
+            { "key": "ADVERSE_EVENT", "status": "MET" }
+          ],
+          "overallStatus": "INVALID",
+          "blockingIssues": {
+            "contains": "IDENTIFIABLE_REPORTER"
+          },
+          "submissionReady": false
+        }
+      }
+    },
+    {
+      "id": "agent25-004",
+      "name": "Missing Suspect Product - INVALID",
+      "description": "ICSR with no suspect product recorded",
+      "priority": "critical",
+      "tags": ["invalid", "missing-product"],
+      "input": {
+        "intakeRecordId": "REC-004",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_initials": "JD",
+              "sex": "MALE",
+              "age_value": 45,
+              "age_unit": "YEAR"
+            }
+          ],
+          "reporters": [
+            {
+              "qualification": "PHYSICIAN",
+              "country_code": "US"
+            }
+          ],
+          "products": [],
+          "events": [
+            {
+              "reported_term": "Nausea"
+            }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "NOT_MET" },
+            { "key": "ADVERSE_EVENT", "status": "MET" }
+          ],
+          "overallStatus": "INVALID",
+          "blockingIssues": {
+            "contains": "SUSPECT_PRODUCT"
+          },
+          "submissionReady": false
+        }
+      }
+    },
+    {
+      "id": "agent25-005",
+      "name": "Missing Adverse Event - INVALID",
+      "description": "ICSR with no adverse event recorded",
+      "priority": "critical",
+      "tags": ["invalid", "missing-event"],
+      "input": {
+        "intakeRecordId": "REC-005",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [
+            {
+              "patient_initials": "JD",
+              "sex": "MALE",
+              "age_value": 45,
+              "age_unit": "YEAR"
+            }
+          ],
+          "reporters": [
+            {
+              "qualification": "PHYSICIAN",
+              "country_code": "US"
+            }
+          ],
+          "products": [
+            {
+              "role_characterization": "SUSPECT",
+              "reported_name": "DrugX"
+            }
+          ],
+          "events": []
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "criteria": [
+            { "key": "IDENTIFIABLE_PATIENT", "status": "MET" },
+            { "key": "IDENTIFIABLE_REPORTER", "status": "MET" },
+            { "key": "SUSPECT_PRODUCT", "status": "MET" },
+            { "key": "ADVERSE_EVENT", "status": "NOT_MET" }
+          ],
+          "overallStatus": "INVALID",
+          "blockingIssues": {
+            "contains": "ADVERSE_EVENT"
+          },
+          "submissionReady": false
+        }
+      }
+    }
+  ]
+}

@@ -2,6 +2,8 @@ import { duplicateService } from "@/lib/literature/duplicates/duplicate-service"
 import { persistWorkflowArticle, findExistingArticlesByIdentity } from "@/lib/literature/persistence/workflow-persistence-service";
 import { pubMedService } from "@/lib/literature/pubmed/pubmed-service";
 import { screeningService } from "@/lib/literature/screening/screening-service";
+import { articleFetchService } from "@/lib/literature/article-fetch/article-fetch-service";
+import { generateIntakeInput } from "@/lib/literature/intake-input/intake-input-service";
 import { runAsyncBatch } from "@/lib/performance/async-batch-runner";
 import {
   getPerformanceSummary,
@@ -12,6 +14,7 @@ import { getRuntimePerformanceSettings } from "@/lib/performance/runtime-perform
 import { TTLCache } from "@/lib/performance/ttl-cache";
 
 import type { ArticleFetchWorkflowResponse } from "@/lib/literature/article-fetch/article-fetch-service";
+import type { RequestPrincipal } from "@/lib/rbac/request-principal";
 
 import type {
   LiteratureWorkflowArticle,
@@ -19,6 +22,16 @@ import type {
   LiteratureWorkflowResponse,
   LiteratureWorkflowStatus,
 } from "./literature-workflow-types";
+
+interface PubMedArticle {
+  pmid: string;
+  title: string;
+  abstract?: string;
+  doi?: string;
+  journal?: string;
+  publicationDate?: string;
+  authors?: string[];
+}
 
 function isRecord(
   value: unknown,
@@ -285,16 +298,66 @@ class LiteratureWorkflowService {
             },
           });
 
-          const fetchResult = findFetchedArticle(
-            search.fetchedArticles,
-            article.pmid,
-          );
+          // Article fetch / OCR / Translation for INCLUDE/REVIEW articles
+          let fetchResult: ArticleFetchWorkflowResponse | undefined;
+          let enhancedAbstract = article.abstract ?? "";
+
+          if (screeningResult.decision === "INCLUDE" || screeningResult.decision === "REVIEW") {
+            try {
+              const fetchResponse = await articleFetchService.fetch({
+                tenantId: normalizedRequest.tenantId,
+                pmid: article.pmid,
+              });
+              fetchResult = fetchResponse;
+
+              // If full text fetched, use it for enhanced screening
+              if (fetchResponse.fullText && fetchResponse.fullText.length > (article.abstract?.length ?? 0)) {
+                enhancedAbstract = fetchResponse.fullText;
+              }
+
+              // Translation if non-English abstract/full text
+              if (fetchResponse.metadata.language && fetchResponse.metadata.language !== "en") {
+                // Translation would happen here - placeholder for translation service
+                // const translated = await translationService.translate({ text: enhancedAbstract, targetLang: "en" });
+                // enhancedAbstract = translated.text;
+              }
+            } catch (error) {
+              console.error(`[literature-workflow-service] Article fetch failed for ${article.pmid}:`, error);
+            }
+          } else {
+            fetchResult = findFetchedArticle(search.fetchedArticles, article.pmid);
+          }
+
+          // Re-screen with enhanced content if we fetched full text
+          let finalScreeningResult = screeningResult;
+          if (enhancedAbstract !== (article.abstract ?? "") && enhancedAbstract.length > (article.abstract?.length ?? 0)) {
+            const reScreenStartedAt = Date.now();
+            finalScreeningResult = await screeningService.screenArticle({
+              tenantId: normalizedRequest.tenantId,
+              article: {
+                pmid: article.pmid,
+                title: article.title,
+                abstract: enhancedAbstract,
+                authors: normalizeStringArray(article.authors),
+                doi: article.doi,
+                journal: article.journal,
+              },
+            });
+            recordPerformanceMetric({
+              operation: "screening_rerun",
+              success: true,
+              durationMs: Date.now() - reScreenStartedAt,
+              tenantId: normalizedRequest.tenantId,
+              itemCount: 1,
+              metadata: { pmid: article.pmid, decision: finalScreeningResult.decision },
+            });
+          }
 
           const workflowArticle: LiteratureWorkflowArticle = {
             searchResult: article,
             fetchResult,
             duplicateResult,
-            screeningResult,
+            screeningResult: finalScreeningResult,
           };
 
           persistWorkflowArticle({
@@ -346,6 +409,40 @@ class LiteratureWorkflowService {
             left.index - right.index,
         )
         .map((result) => result.value);
+
+      // Generate intake input for INCLUDE articles
+      const includeArticles = articles.filter(
+        (a) => a.screeningResult?.decision === "INCLUDE",
+      );
+
+      for (const article of includeArticles) {
+        const searchResult = article.searchResult as PubMedArticle;
+        try {
+          await generateIntakeInput({
+            principal: {
+              tenantId: normalizedRequest.tenantId,
+              tenantKey: normalizedRequest.tenantId,
+              workspaceId: normalizedRequest.workspaceId,
+              environment: normalizedRequest.environment,
+              userId: "system",
+              displayName: "System",
+              email: "system@clinixai.local",
+              roleKey: "MODULE_OPERATOR",
+              customPermissions: [],
+              hasPermission: () => true,
+            } as RequestPrincipal,
+            request: {
+              packageId: searchResult.pmid,
+              reason: `Automated intake generation for INCLUDE screening decision on ${searchResult.pmid}`,
+            },
+          });
+        } catch (error) {
+          console.error(
+            `[literature-workflow-service] Intake generation failed for ${searchResult.pmid}:`,
+            error,
+          );
+        }
+      }
 
       const completedAt = new Date().toISOString();
 

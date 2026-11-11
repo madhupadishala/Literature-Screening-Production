@@ -58,6 +58,8 @@ export interface ArticleFetchResponse {
 
   evidenceManifest?: EvidenceManifest;
 
+  fullText?: string;
+
   fetchedAt: string;
 
   workflowStage:

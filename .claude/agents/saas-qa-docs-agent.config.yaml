@@ -1,0 +1,153 @@
+# SaaS QA Docs Agent Configuration
+
+scan:
+  paths:
+    - "Agentic_AI/**/*.py"
+    - "Agentic_AI/**/*.ts"
+    - "Agentic_AI/**/*.tsx"
+    - "lib/**/*.ts"
+    - "*.json"
+    - "*.yaml"
+    - "*.yml"
+  exclude:
+    - "**/node_modules/**"
+    - "**/.git/**"
+    - "**/dist/**"
+    - "**/build/**"
+    - "**/__pycache__/**"
+    - "**/*.test.*"
+    - "**/*.spec.*"
+
+docs_root: "docs"
+templates_root: ".agents/skills/saas-qa-docs/templates"
+
+regulatory_profiles:
+  - "21_cfr_part_11"
+  - "eu_annex_11"
+  - "gamp5"
+  - "gdpr"
+  - "hipaa"
+  - "ich_e2b_r3"
+  - "meddra_licensing"
+
+traceability:
+  required_chain: ["URS", "FRS", "TRS", "Test"]
+  matrix_file: "docs/traceability/matrix.csv"
+
+pr:
+  base_branch: "main"
+  labels: ["documentation", "compliance", "auto-generated"]
+  reviewers: ["qa-lead", "regulatory-affairs", "tech-lead"]
+  draft: false
+
+# Feature detection patterns - maps code patterns to required docs
+feature_patterns:
+  ai_classification:
+    patterns:
+      - "classify*"
+      - "*classifier*"
+      - "predict*"
+      - "inference"
+    required_docs: ["validation", "audit-trail", "dpia", "change-control", "validation-master"]
+
+  data_extraction:
+    patterns:
+      - "extract*"
+      - "entity*"
+      - "ner"
+      - "span*"
+    required_docs: ["validation", "audit-trail", "dpia", "validation-master"]
+
+  medical_coding:
+    patterns:
+      - "meddra"
+      - "whodrug"
+      - "icd"
+      - "code*"
+      - "mapper"
+    required_docs: ["validation", "vendor-assessment", "change-control", "dictionary-management", "validation-master"]
+
+  case_management:
+    patterns:
+      - "case*"
+      - "icsr"
+      - "e2b"
+      - "submission"
+      - "workflow"
+    required_docs: ["validation", "audit-trail", "sop", "dpia", "validation-master", "release-notes-enhanced"]
+
+  literature_ingestion:
+    patterns:
+      - "pubmed"
+      - "embase"
+      - "ingest*"
+      - "import*"
+      - "source*"
+    required_docs: ["validation", "audit-trail", "vendor-assessment", "integration-guide", "validation-master"]
+
+  user_management:
+    patterns:
+      - "auth*"
+      - "user*"
+      - "role*"
+      - "permission*"
+      - "rbac"
+    required_docs: ["validation", "audit-trail", "change-control", "admin-guide-safety", "validation-master"]
+
+  admin_configuration:
+    patterns:
+      - "admin*"
+      - "config*"
+      - "setting*"
+      - "rule*"
+      - "workflow*"
+    required_docs: ["admin-guide-safety", "admin-guide-service", "sop", "change-control"]
+
+  integration:
+    patterns:
+      - "gateway*"
+      - "e2b*"
+      - "edc*"
+      - "ctms*"
+      - "argus*"
+      - "veeva*"
+      - "medidata*"
+      - "fda*"
+      - "ema*"
+    required_docs: ["integration-guide", "validation-master", "vendor-assessment"]
+
+  dictionary_management:
+    patterns:
+      - "dictionary*"
+      - "meddra*"
+      - "whodrug*"
+      - "icd*"
+      - "smq*"
+    required_docs: ["dictionary-management", "validation-master", "change-control", "vendor-assessment"]
+
+# Document freshness thresholds (days)
+freshness:
+  urs: 30
+  frs: 30
+  trs: 30
+  validation: 90
+  dpia: 180
+  sop: 180
+  change_control: 7
+  audit_trail: 90
+  user_guide_module: 60
+  user_guide_nexus: 180
+
+# User guide generation triggers
+user_guides:
+  module_triggers:
+    - "screening"
+    - "extraction"
+    - "coding"
+    - "cases"
+    - "quality"
+    - "audit"
+    - "admin"
+    - "ingestion"
+  platform_guide_trigger: "nexus"
+  auto_generate_on_release: true

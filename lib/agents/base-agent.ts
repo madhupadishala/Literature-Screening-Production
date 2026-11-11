@@ -30,20 +30,27 @@ export type AgentId =
   | 'agent-1-literature-duplicates'
   | 'agent-2-icsr-duplicates'
   | 'agent-3-followup-generator'
+  | 'agent-3-patient-identification'
   | 'agent-4-screening'
   | 'agent-5-action-taken'
   | 'agent-6-dechallenge'
   | 'agent-7-rechallenge'
   | 'agent-8-medical-history'
+  | 'agent-8-country-incident'
   | 'agent-9-causality'
   | 'agent-10-listedness'
   | 'agent-11-country-incident'
+  | 'agent-11-seriousness'
+  | 'agent-12-listedness-expectedness'
   | 'agent-12-safety-detection'
+  | 'agent-13-causality'
   | 'agent-13-narrative-gen'
   | 'agent-14-intake-triage'
+  | 'agent-14-intake-triage-legacy'
   | 'agent-15-drug-extraction'
   | 'agent-16-reporter-id'
-  | 'agent-17-clock-start';
+  | 'agent-17-clock-start'
+  | 'agent-25-icsr-validity';
 
 /**
  * Standardized message envelope for inter-agent communication
@@ -712,8 +719,17 @@ export interface AgentFactoryConfig {
  * Create agent instance by ID
  */
 export function createAgent(config: AgentFactoryConfig): BaseAgent {
-  // This will be implemented with specific agent classes
-  throw new Error(`Agent factory not yet implemented for ${config.agent_id}`);
+  // Lazy-load to avoid circular dependencies
+  switch (config.agent_id) {
+    case 'agent-3-patient-identification':
+      return require('./agent-3-patient-identification').createPatientIdentificationAgent(config);
+    case 'agent-8-country-incident':
+      return require('./agent-8-country-incident').createCountryIncidentAgent(config);
+    case 'agent-25-icsr-validity':
+      return require('./agent-25-icsr-validity').createIcsrValidityAgent(config);
+    default:
+      throw new Error(`Agent factory not yet implemented for ${config.agent_id}`);
+  }
 }
 
 export { BaseAgent as default };

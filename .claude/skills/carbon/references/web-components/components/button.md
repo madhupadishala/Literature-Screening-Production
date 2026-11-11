@@ -1,0 +1,573 @@
+> Source: https://github.com/carbon-design-system/carbon/blob/main/packages/web-components/src/components/button/button.mdx
+
+# Button
+
+[Source code](https://github.com/carbon-design-system/carbon/tree/main/packages/web-components/src/components/button)
+&nbsp;|&nbsp;
+[Usage guidelines](https://www.carbondesignsystem.com/components/button/usage)
+&nbsp;|&nbsp;
+[Accessibility](https://www.carbondesignsystem.com/components/button/accessibility)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Radius](#radius)
+  - [Flatten a region](#flatten-a-region)
+  - [Per-corner](#per-corner)
+  - [Nested regions](#nested-regions)
+- [Secondary Button](#secondary)
+- [Tertiary Button](#tertiary)
+- [Ghost Button](#ghost)
+- [Danger Button](#danger-button)
+- [Icon-only Button](#icon-only-button)
+- [Set of Buttons](#set-of-buttons)
+- [Skeleton state](#skeleton-state)
+- [Component API](#component-api)
+  - [Button `href`](#button-href)
+  - [Button `kind`](#button-kind)
+  - [Button `size`](#button-size)
+  - [Button `tooltip-alignment`](#button-tooltip-alignment)
+  - [Button `tooltip-position`](#button-tooltip-position)
+  - [Button Set `stacked`](#button-set-stacked)
+- [CDN](#cdn)
+- [References](#references)
+- [Feedback](#feedback)
+
+## Overview
+
+Buttons are clickable elements that are used to trigger actions. They
+communicate calls to action to the user and allow users to interact with pages
+in a variety of ways. `Button` labels express what action will occur when the
+user interacts with it.
+
+## Radius
+
+Buttons in v12 default to `$border-radius-max` (fully rounded). Radius is not a
+component attribute. Any ancestor can set CSS custom properties, which inherit
+into descendant buttons through the shadow boundary.
+
+| Custom property          | Corner      |
+| ------------------------ | ----------- |
+| `--cds-button-radius`    | All corners |
+| `--cds-button-radius-ss` | Start-start |
+| `--cds-button-radius-se` | Start-end   |
+| `--cds-button-radius-es` | End-start   |
+| `--cds-button-radius-ee` | End-end     |
+
+If a per-corner property is set, it wins over `--cds-button-radius` for that
+corner. Carbon uses this so a default button can stay fully rounded while a
+button in another component uses a different token:
+
+```jsx
+<p>
+<details>
+<summary>Where Carbon sets button radius</summary>
+
+| Context                               | Token                     |
+| ------------------------------------- | ------------------------- |
+| Default button                        | `$border-radius-max`      |
+| Data table toolbar                    | `$border-radius-00`       |
+| Pagination                            | `$border-radius-00`       |
+| Pagination nav                        | `$border-radius-00`       |
+| Modal footer                          | `$border-radius-00`       |
+| Modal close                           | `$border-radius-00`       |
+| Dialog footer                         | `$border-radius-00`       |
+| Dialog close                          | `$border-radius-00`       |
+| Button set                            | `$border-radius-00`       |
+| Action set                            | `$border-radius-00`       |
+| Breadcrumb overflow menu              | `$border-radius-00`       |
+| Side panel                            | `$border-radius-00`       |
+| Code snippet                          | `$border-radius-00`       |
+| Coachmark                             | `$border-radius-00`       |
+| Edit in place                         | `$border-radius-00`       |
+| Header                                | `$border-radius-00`       |
+| Actionable notification               | `$border-radius-00`       |
+| Card                                  | `$border-radius-00`       |
+| Contained list                        | `$border-radius-00`       |
+| Combo button (joined sides)           | `$border-radius-00`       |
+| Combo button (outer corners)          | `$border-radius-max`      |
+| AI Label footer actions               | `$border-radius-00`       |
+| AI Label last footer action (end-end) | `$border-radius-08 - 1px` |
+
+</details>
+</p>
+```
+
+The `ss`, `se`, `es`, and `ee` suffixes are logical corners (start-start,
+start-end, end-start, end-end). They follow writing direction, so a joined
+control stays joined in RTL without extra rules.
+
+| Token                | CSS value  |
+| -------------------- | ---------- |
+| `$border-radius-00`  | `0`        |
+| `$border-radius-02`  | `0.125rem` |
+| `$border-radius-04`  | `0.25rem`  |
+| `$border-radius-08`  | `0.5rem`   |
+| `$border-radius-16`  | `1rem`     |
+| `$border-radius-24`  | `1.5rem`   |
+| `$border-radius-max` | `999999px` |
+
+Use `$border-radius-00` to make a button flush:
+
+```html
+<div style="--cds-button-radius: 0">
+  <!-- $border-radius-00 -->
+  <cds-button>Flush</cds-button>
+</div>
+```
+
+```scss
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/border-radius';
+
+.my-flush-button {
+  @include button.radius(border-radius.$border-radius-00);
+}
+```
+
+### Flatten a region
+
+Set `--cds-button-radius` on any ancestor. Every descendant button inherits it
+through the shadow boundary. There is no radius attribute.
+
+```css
+.my-toolbar {
+  --cds-button-radius: 0;
+}
+
+.my-icon-button {
+  --cds-button-radius: 0.25rem; /* $border-radius-04 */
+}
+```
+
+```html
+<div style="--cds-button-radius: 0">
+  <cds-button>Save</cds-button>
+</div>
+
+<div style="--cds-button-radius: 0.25rem">
+  <cds-button tooltip-text="Add">
+    <svg
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      slot="icon"
+      width="16"
+      height="16"
+      viewBox="0 0 32 32"
+      aria-hidden="true">
+      <path
+        d="M17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+    </svg>
+  </cds-button>
+</div>
+```
+
+Component authors can set the same properties from Sass. Prefer tokens over raw
+lengths:
+
+```scss
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/border-radius';
+
+.my-toolbar {
+  @include button.radius(border-radius.$border-radius-00);
+}
+
+.my-icon-button {
+  @include button.radius(border-radius.$border-radius-04);
+}
+```
+
+### Per-corner
+
+Per-corner properties win over `--cds-button-radius` for that corner. Use a
+rounded base and square only the joined side. Combo Button uses this pattern:
+
+```css
+.my-split-primary {
+  --cds-button-radius: 999999px; /* $border-radius-max */
+  --cds-button-radius-se: 0;
+  --cds-button-radius-ee: 0;
+}
+
+.my-split-trigger {
+  --cds-button-radius: 999999px;
+  --cds-button-radius-ss: 0;
+  --cds-button-radius-es: 0;
+}
+```
+
+```scss
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/border-radius';
+
+.my-split-primary {
+  @include button.radius(
+    border-radius.$border-radius-max,
+    $se: border-radius.$border-radius-00,
+    $ee: border-radius.$border-radius-00
+  );
+}
+
+.my-split-trigger {
+  @include button.radius(
+    border-radius.$border-radius-max,
+    $ss: border-radius.$border-radius-00,
+    $es: border-radius.$border-radius-00
+  );
+}
+```
+
+You can also omit the base and set only the corners that differ. Carbon's AI
+Label footer squares every action, then rounds the last action's end-end corner
+so it follows the container:
+
+```scss
+.my-dialog-footer {
+  @include button.radius(border-radius.$border-radius-00);
+}
+
+.my-dialog-footer > :last-child {
+  @include button.radius($ee: calc(#{border-radius.$border-radius-08} - 1px));
+}
+```
+
+### Nested regions
+
+A nested container can opt a subset of buttons back to a different radius.
+Setting the base property is enough when the ancestor did not set per-corner
+properties:
+
+```css
+.my-page {
+  --cds-button-radius: 0;
+}
+
+.my-page .my-hero {
+  --cds-button-radius: 999999px;
+}
+```
+
+```scss
+.my-page {
+  @include button.radius(border-radius.$border-radius-00);
+}
+
+.my-page .my-hero {
+  @include button.radius(border-radius.$border-radius-max);
+}
+```
+
+Per-corner properties inherit independently. If an ancestor sets
+`--cds-button-radius-ee`, a descendant that only sets `--cds-button-radius`
+still uses the inherited end-end value. Set that per-corner property on the
+descendant when you need to change that corner.
+
+Opt in during v11 with the `enable-v12-release` Sass flag. The custom properties
+work without the flag; the flag changes the default fallback from `0` to
+`$border-radius-max` and applies Carbon's context overrides.
+
+## Danger Button
+
+The danger button has three different styles: primary, tertiary, and ghost.
+Determining which danger button style to use will depend on the level of
+emphasis you want to give to the danger action. Destructive actions that are
+considered a required or primary step in a workflow should use the primary
+danger button style. However, if a destructive action is just one of several
+actions a user could choose from, then a lower emphasis style like the danger
+tertiary button or the danger ghost button may be more appropriate.
+
+```jsx
+<Unstyled
+  style={{
+    padding: '1rem',
+    background: 'var(--cds-background)',
+    flexWrap: 'wrap',
+    display: 'flex',
+    gap: '1rem',
+  }}>
+  <cds-button kind="danger">Danger</cds-button>
+  <cds-button kind="danger-tertiary">Danger tertiary</cds-button>
+  <cds-button kind="danger-ghost">Danger ghost</cds-button>
+</Unstyled>
+```
+
+## Icon-only Button
+
+Icon buttons allow users to take actions, and make choices, with a single tap.
+Icon buttons can take the form of Primary, Secondary, Tertiary, and Ghost but
+most commonly will be styled as primary or ghost buttons. Icon only buttons do
+not support Danger, Danger tertiary, or Danger ghost.
+
+## Set of Buttons
+
+You can wrap two `button` elements in a `button-set` when an action required by
+the user has more than one option. Always use a negative action button
+(secondary) paired with a positive action button (primary) in that order.
+Negative action buttons will be on the left. Positive action buttons should be
+on the right. When these two types buttons are paired in the correct order, they
+will automatically space themselves apart.
+
+## Skeleton state
+
+You can use the `ButtonSkeleton` component to render a skeleton variant of a
+button. This is useful to display on initial page load to indicate to users that
+content is being loaded.
+
+## Component API
+
+_The full props/attributes table is generated from the component source. See the **Source code** link at the top of this page, or the live API table in [Storybook](https://web-components.carbondesignsystem.com)._
+
+Additional attributes passed into `button` will be forwarded along to the
+underlying button element.
+
+### Button `href`
+
+This attribute allows you to specify an address to navigate to on click. This
+will change the underlying `Button` element to be rendered as an `a` anchor
+element.
+
+```html
+<cds-button href="https://www.carbondesignsystem.com">Navigate</cds-button>
+```
+
+### Button `kind`
+
+Carbon has seven types of buttons, `primary`, `secondary`, `tertiary`, `ghost`,
+`danger`, `danger-tertiary`, and `danger-ghost`. If no `kind` is specified, a
+`primary` button will be rendered. For more information on when to use each
+variant, check out the
+[design documentation](https://www.carbondesignsystem.com/components/button/usage#overview)
+
+```html
+<cds-button>Primary</cds-button>
+<cds-button kind="secondary">Secondary</cds-button>
+<cds-button kind="tertiary">Tertiary </cds-button>
+<cds-button kind="danger">Danger</cds-button>
+<cds-button kind="danger-tertiary">Danger tertiary</cds-button>
+<cds-button kind="danger-ghost">Danger Ghost</cds-button>
+<cds-button kind="ghost">Ghost</cds-button>
+```
+
+### Button `size`
+
+This attribute specifies at which size the `button` should be rendered. Valid
+values are `xs`, `sm`, `md`, `lg`, `xl`, and `2xl`. If no size is specified, it
+renders as `lg`.
+
+```html
+<cds-button>Button</cds-button>
+<cds-button size="sm">Button</cds-button>
+<cds-button size="md">Button</cds-button>
+<cds-button size="xl">Button</cds-button>
+<cds-button size="2xl">Button</cds-button>
+```
+
+### Icon Button `cds-badge-indicator`
+
+The badge indicator is shown by adding a `cds-badge-indicator` child to the icon
+button. Setting count displays a number. adding the child without `count` shows
+a red dot.
+
+```jsx
+<Unstyled
+  style={{
+    padding: '1rem',
+    background: 'var(--cds-background)',
+    flexWrap: 'wrap',
+    display: 'flex',
+    gap: '1rem',
+  }}>
+  <cds-button kind="ghost" size="lg" tooltip-text="Icon Description">
+    <svg
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      slot="icon"
+      width="16"
+      height="16"
+      viewBox="0 0 32 32"
+      aria-hidden="true">
+      <path d="M17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+    </svg>
+    <cds-badge-indicator count="5"></cds-badge-indicator>
+  </cds-button>
+  <cds-button kind="ghost" size="lg" tooltip-text="Icon Description">
+    <svg
+      focusable="false"
+      preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      slot="icon"
+      width="16"
+      height="16"
+      viewBox="0 0 32 32"
+      aria-hidden="true">
+      <path d="M17 15 17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+    </svg>
+    <cds-badge-indicator></cds-badge-indicator>
+  </cds-button>
+</Unstyled>
+```
+
+### Icon Button `tooltip-alignment`
+
+The `tooltip-alignment` attribute is used to change where the tooltip text and
+caret is rendered in relation to the `button`. Accepted options are `start`,
+`center`, and `end`. The default alignment is `center`.
+
+```html
+<cds-button tooltip-text="Add to selection" tooltip-alignment="start">
+  <svg
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    width="16"
+    height="16"
+    viewBox="0 0 32 32"
+    slot="icon">
+    <path
+      d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+  </svg>
+</cds-button>
+<cds-button tooltip-text="Add to selection">
+  <svg
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    width="16"
+    height="16"
+    viewBox="0 0 32 32"
+    slot="icon">
+    <path
+      d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+  </svg>
+</cds-button>
+<cds-button tooltip-text="Add to selection" tooltip-alignment="end">
+  <svg
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    width="16"
+    height="16"
+    viewBox="0 0 32 32"
+    slot="icon">
+    <path
+      d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+  </svg>
+</cds-button>
+```
+
+### Icon Button `tooltip-position`
+
+When using an icon-only button, you may be in a situation where you need to
+change where the tooltip is positioned on the screen. `tooltip-position` takes
+in a position and will render the tooltip accordingly. Accepted options are
+`top`, `bottom`, `left`, and `right`. The default is position is `top`.
+
+```html
+<cds-button tooltip-text="Add" kind="primary" tooltip-position="top">
+  <svg
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    width="16"
+    height="16"
+    viewBox="0 0 32 32"
+    slot="icon">
+    <path
+      d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+  </svg>
+</cds-button>
+<cds-button tooltip-text="Add" kind="primary" tooltip-position="right">
+  <svg
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    width="16"
+    height="16"
+    viewBox="0 0 32 32"
+    slot="icon">
+    <path
+      d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+  </svg>
+</cds-button>
+<cds-button tooltip-text="Add" kind="primary" tooltip-position="bottom">
+  <svg
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    width="16"
+    height="16"
+    viewBox="0 0 32 32"
+    slot="icon">
+    <path
+      d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+  </svg>
+</cds-button>
+<cds-button tooltip-text="Add" kind="primary" tooltip-position="left">
+  <svg
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    width="16"
+    height="16"
+    viewBox="0 0 32 32"
+    slot="icon">
+    <path
+      d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path>
+  </svg>
+</cds-button>
+```
+
+### Button Set `stacked`
+
+By using the `stacked` attribute with the `button-set` component, you can
+arrange your two `button` elements vertically
+
+```html
+<cds-button-set stacked>
+  <cds-button kind="secondary">Secondary button</cds-button>
+  <cds-button kind="primary">Primary button</cds-button>
+</cds-button-set>
+```
+
+## CDN
+
+This component is also available via CDN.
+
+```html
+// SPECIFIC VERSION (available starting v2.0.0)
+<script type="module" src="https://1.www.s81c.com/common/carbon/web-components/version/v2.67.0/button.min.js"></script>
+```
+
+## References
+
+[MDN: ARIA button role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role)
+
+[W3: Role attribute](https://www.w3.org/WAI/PF/HTML/wiki/RoleAttribute)
+
+[W3: ARIA button role example](https://www.w3.org/TR/2016/WD-wai-aria-practices-1.1-20160317/examples/button/button.html)
+
+## Feedback
+
+Help us improve this component by providing feedback, asking questions on Slack,
+or updating this file on
+[GitHub](https://github.com/carbon-design-system/carbon/edit/main/packages/web-components/src/components/button/button.mdx)

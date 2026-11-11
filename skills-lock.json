@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "carbon": {
+      "source": "iamursky/carbon-skill",
+      "sourceType": "github",
+      "skillPath": "skills/carbon/SKILL.md",
+      "computedHash": "692256b1b10ef8ed073422324aca54fa6e6efb40811f99a2021eff7cc7bd1e58"
+    }
+  }
+}

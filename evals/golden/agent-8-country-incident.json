@@ -1,0 +1,124 @@
+{
+  "agent_id": "agent-8-country-incident",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "agent8-001",
+      "name": "Clear Country of Occurrence in Event",
+      "description": "Event contains country_of_occurrence field",
+      "priority": "critical",
+      "tags": ["country", "event", "clear"],
+      "input": {
+        "intakeRecordId": "REC-001",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [{ "patient_initials": "JD", "sex": "MALE" }],
+          "reporters": [{ "qualification": "PHYSICIAN", "country_code": "US" }],
+          "events": [
+            { "reported_term": "Nausea", "country_of_occurrence": "US" }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "countryOfOccurrence": { "status": "VALID", "countryCode": "US", "regulatoryAuthority": "FDA" },
+          "reporterCountry": { "status": "VALID", "countryCode": "US" },
+          "primaryCountry": { "status": "VALID", "countryCode": "US", "regulatoryAuthority": "FDA" },
+          "regulatoryAuthority": "FDA",
+          "jurisdiction": "FDA",
+          "crossBorder": false,
+          "followUpRequired": false
+        }
+      }
+    },
+    {
+      "id": "agent8-002",
+      "name": "Cross-Border Case - Event in US, Reporter in Canada",
+      "description": "Event occurred in US but reporter is from Canada",
+      "priority": "critical",
+      "tags": ["country", "cross-border"],
+      "input": {
+        "intakeRecordId": "REC-002",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [{ "patient_initials": "AB", "sex": "FEMALE" }],
+          "reporters": [{ "qualification": "PHARMACIST", "country_code": "CA" }],
+          "events": [
+            { "reported_term": "Rash", "country_of_occurrence": "US" }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "countryOfOccurrence": { "status": "VALID", "countryCode": "US", "regulatoryAuthority": "FDA" },
+          "reporterCountry": { "status": "VALID", "countryCode": "CA", "regulatoryAuthority": "HC" },
+          "primaryCountry": { "status": "VALID", "countryCode": "US", "regulatoryAuthority": "FDA" },
+          "regulatoryAuthority": "FDA",
+          "jurisdiction": "FDA",
+          "crossBorder": true,
+          "followUpRequired": true,
+          "followUpReasons": {
+            "contains": "Cross-border case detected"
+          }
+        }
+      }
+    },
+    {
+      "id": "agent8-003",
+      "name": "Reporter Country Only - No Event Country",
+      "description": "Event lacks country, falls back to reporter country",
+      "priority": "high",
+      "tags": ["country", "fallback"],
+      "input": {
+        "intakeRecordId": "REC-003",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [{ "patient_initials": "CD", "sex": "MALE" }],
+          "reporters": [{ "qualification": "PHYSICIAN", "country_code": "GB" }],
+          "events": [
+            { "reported_term": "Headache" }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "countryOfOccurrence": { "status": "MISSING" },
+          "reporterCountry": { "status": "VALID", "countryCode": "GB", "regulatoryAuthority": "MHRA" },
+          "primaryCountry": { "status": "VALID", "countryCode": "GB", "regulatoryAuthority": "MHRA" },
+          "regulatoryAuthority": "MHRA",
+          "jurisdiction": "EMA",
+          "crossBorder": false,
+          "followUpRequired": true,
+          "followUpReasons": {
+            "contains": "Country of occurrence is missing"
+          }
+        }
+      }
+    },
+    {
+      "id": "agent8-004",
+      "name": "ISO Alpha-3 Code Conversion",
+      "description": "Country provided as ISO alpha-3 (USA) should convert to alpha-2 (US)",
+      "priority": "high",
+      "tags": ["country", "conversion"],
+      "input": {
+        "intakeRecordId": "REC-004",
+        "tenantId": "test-tenant",
+        "entities": {
+          "patients": [{ "patient_initials": "EF", "sex": "FEMALE" }],
+          "reporters": [{ "qualification": "CONSUMER", "country_code": "USA" }],
+          "events": [
+            { "reported_term": "Dizziness" }
+          ]
+        }
+      },
+      "expected_output": {
+        "systemSnapshot": {
+          "reporterCountry": { "status": "VALID", "countryCode": "US" },
+          "primaryCountry": { "status": "VALID", "countryCode": "US" },
+          "jurisdiction": "FDA"
+        }
+      }
+    }
+  ]
+}

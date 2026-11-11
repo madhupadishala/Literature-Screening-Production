@@ -31,7 +31,8 @@ const CONDITION_PATTERNS = [
   { pattern: /\b(diabetes mellitus|type 2 diabetes|type 1 diabetes|diabetes|dm2|dm|t1dm|t2dm)\b/gi, llt: 'Diabetes mellitus', pt: 'Diabetes mellitus', soc: 'Metabolism and nutrition disorders' },
   { pattern: /\b(atrial fibrillation|afib|af\b)\b/gi, llt: 'Atrial fibrillation', pt: 'Atrial fibrillation', soc: 'Cardiac disorders' },
   { pattern: /\b(hypertension|high blood pressure|htn)\b/gi, llt: 'Hypertension', pt: 'Hypertension', soc: 'Vascular disorders' },
-  { pattern: /\b(coronary artery disease|cad|ischemic heart disease|myocardial infarction|mi)\b/gi, llt: 'Myocardial infarction', pt: 'Myocardial infarction', soc: 'Cardiac disorders' },
+  { pattern: /\b(coronary artery disease|cad|ischemic heart disease)\b/gi, llt: 'Coronary artery disease', pt: 'Coronary artery disease', soc: 'Cardiac disorders' },
+  { pattern: /\b(myocardial infarction|mi\b)\b/gi, llt: 'Myocardial infarction', pt: 'Myocardial infarction', soc: 'Cardiac disorders' },
   { pattern: /\b(atrial fibrillation|afib|af)\b/gi, llt: 'Atrial fibrillation', pt: 'Atrial fibrillation', soc: 'Cardiac disorders' },
   { pattern: /\b(heart failure|chf|congestive heart failure)\b/gi, llt: 'Cardiac failure', pt: 'Cardiac failure', soc: 'Cardiac disorders' },
   { pattern: /\b(stroke|cerebrovascular accident|cva|transient ischemic attack|tia)\b/gi, llt: 'Cerebrovascular accident', pt: 'Cerebrovascular accident', soc: 'Nervous system disorders' },
@@ -53,14 +54,6 @@ const CONDITION_PATTERNS = [
   { pattern: /\b(hyperlipidemia|dyslipidemia)\b/gi, llt: 'Hyperlipidaemia', pt: 'Hyperlipidaemia', soc: 'Metabolism and nutrition disorders' },
   { pattern: /\b(hypothyroidism|hyperthyroidism)\b/gi, llt: 'Thyroid disorder', pt: 'Thyroid disorder', soc: 'Endocrine disorders' },
   { pattern: /\b(chronic obstructive pulmonary disease|chronic bronchitis|emphysema)\b/gi, llt: 'Chronic obstructive pulmonary disease', pt: 'Chronic obstructive pulmonary disease', soc: 'Respiratory, thoracic and mediastinal disorders' },
-  { pattern: /\b(chronic heart failure|heart failure)\b/gi, llt: 'Cardiac failure', pt: 'Cardiac failure', soc: 'Cardiac disorders' },
-  { pattern: /\b(peripheral vascular disease|pvd)\b/gi, llt: 'Peripheral vascular disease', pt: 'Peripheral vascular disease', soc: 'Vascular disorders' },
-  { pattern: /\b(venous thromboembolism|vte|deep vein thrombosis|dvt|pulmonary embolism|pe)\b/gi, llt: 'Venous thromboembolism', pt: 'Venous thromboembolism', soc: 'Vascular disorders' },
-  { pattern: /\b(chronic obstructive pulmonary disease|copd)\b/gi, llt: 'Chronic obstructive pulmonary disease', pt: 'Chronic obstructive pulmonary disease', soc: 'Respiratory, thoracic and mediastinal disorders' },
-  { pattern: /\b(chronic heart failure|heart failure)\b/gi, llt: 'Cardiac failure', pt: 'Cardiac failure', soc: 'Cardiac disorders' },
-  { pattern: /\b(peripheral vascular disease|pvd)\b/gi, llt: 'Peripheral vascular disease', pt: 'Peripheral vascular disease', soc: 'Vascular disorders' },
-  { pattern: /\b(venous thromboembolism|vte|deep vein thrombosis|dvt|pulmonary embolism|pe)\b/gi, llt: 'Venous thromboembolism', pt: 'Venous thromboembolism', soc: 'Vascular disorders' },
-  { pattern: /\b(chronic obstructive pulmonary disease|copd)\b/gi, llt: 'Chronic obstructive pulmonary disease', pt: 'Chronic obstructive pulmonary disease', soc: 'Respiratory, thoracic and mediastinal disorders' },
   { pattern: /\b(chronic heart failure|heart failure)\b/gi, llt: 'Cardiac failure', pt: 'Cardiac failure', soc: 'Cardiac disorders' },
   { pattern: /\b(peripheral vascular disease|pvd)\b/gi, llt: 'Peripheral vascular disease', pt: 'Peripheral vascular disease', soc: 'Vascular disorders' },
   { pattern: /\b(venous thromboembolism|vte|deep vein thrombosis|dvt|pulmonary embolism|pe)\b/gi, llt: 'Venous thromboembolism', pt: 'Venous thromboembolism', soc: 'Vascular disorders' },
@@ -306,7 +299,9 @@ export class MedicalHistoryAgent extends BaseAgent {
     patientSection?: string,
     structuredFields?: any
   ): any {
-    const textToAnalyze = `${patientSection || ''}\n${narrative}`.toLowerCase();
+    // Use original text (not lowercased) for position-based context extraction
+    // All regex patterns use 'i' flag for case-insensitive matching
+    const textToAnalyze = `${patientSection || ''}\n${narrative}`;
 
     // Extract conditions
     const conditions = this.extractConditions(textToAnalyze, narrative);
@@ -317,8 +312,8 @@ export class MedicalHistoryAgent extends BaseAgent {
     // Extract allergies
     const allergies = this.extractAllergies(textToAnalyze, narrative);
 
-    // Extract concomitant medications
-    const medications = this.extractMedications(textToAnalyze, narrative);
+    // Extract concomitant medications (pass allergies to filter out allergic drugs)
+    const medications = this.extractMedications(textToAnalyze, narrative, allergies);
 
     // Extract social history
     const socialHistory = this.extractSocialHistory(textToAnalyze, narrative, structuredFields);
@@ -339,11 +334,53 @@ export class MedicalHistoryAgent extends BaseAgent {
   private extractConditions(text: string, originalText: string): any[] {
     const conditions: any[] = [];
 
+    // Define synonym/alias mapping for fuzzy matching
+    const conditionSynonyms: Record<string, string[]> = {
+      'Hypertension': ['high blood pressure', 'htn', 'elevated blood pressure'],
+      'Diabetes mellitus': ['diabetes', 'dm', 'type 2 diabetes', 'type 1 diabetes', 't1dm', 't2dm', 'diabetes type 2', 'diabetes type 1'],
+      'Atrial fibrillation': ['afib', 'af', 'a-fib'],
+      'Myocardial infarction': ['mi', 'heart attack', 'coronary artery disease', 'cad', 'ischemic heart disease'],
+      'Cardiac failure': ['heart failure', 'chf', 'congestive heart failure', 'chronic heart failure'],
+      'Cerebrovascular accident': ['stroke', 'cva', 'cerebrovascular accident', 'brain attack'],
+      'Transient ischemic attack': ['tia', 'mini stroke'],
+      'Chronic kidney disease': ['ckd', 'renal failure', 'renal insufficiency', 'chronic renal failure'],
+      'Hepatic failure': ['liver failure', 'cirrhosis', 'hepatitis', 'liver disease'],
+      'Chronic obstructive pulmonary disease': ['copd', 'chronic bronchitis', 'emphysema', 'chronic obstructive lung disease'],
+      'Hyperlipidaemia': ['high cholesterol', 'hyperlipidemia', 'dyslipidemia', 'hld', 'elevated lipids'],
+      'Hypothyroidism': ['underactive thyroid', 'low thyroid'],
+      'Hyperthyroidism': ['overactive thyroid', 'high thyroid', 'thyrotoxicosis'],
+      'Gastroesophageal reflux disease': ['gerd', 'acid reflux', 'reflux', 'heartburn'],
+      'Peptic ulcer': ['stomach ulcer', 'gastric ulcer', 'duodenal ulcer'],
+      'Irritable bowel syndrome': ['ibs', 'spastic colon'],
+      'Osteoarthritis': ['degenerative joint disease', 'djd', 'wear and tear arthritis'],
+      'Rheumatoid arthritis': ['ra', 'rheumatoid disease'],
+      'Obesity': ['morbid obesity', 'severe obesity'],
+      'Depression': ['major depressive disorder', 'clinical depression'],
+      'Anxiety': ['generalized anxiety disorder', 'gad'],
+      'Epilepsy': ['seizure disorder', 'seizures', 'epileptic'],
+      'Migraine': ['chronic migraine', 'migraine headaches'],
+      'Venous thromboembolism': ['vte', 'deep vein thrombosis', 'dvt', 'pulmonary embolism', 'pe', 'blood clot'],
+      'Peripheral vascular disease': ['pvd', 'peripheral artery disease', 'pad'],
+    };
+
+    // First pass: exact pattern matching
     for (const pattern of CONDITION_PATTERNS) {
       let match;
       while ((match = pattern.pattern.exec(text)) !== null) {
-        // Find context in original text
         const context = this.getContext(originalText, match.index, 100);
+
+        // Determine status: RESOLVED for MI if context suggests past event
+        let status = 'CHRONIC';
+        if (pattern.llt === 'Myocardial infarction' || match[0].toLowerCase().includes('mi')) {
+          // Check context for "in 2018", "history of", "resolved" etc.
+          const contextLower = context.toLowerCase();
+          if (contextLower.includes('in 2') || contextLower.includes('history of') ||
+              contextLower.includes('resolved') || contextLower.includes('past') ||
+              contextLower.includes('previous') || contextLower.includes('s/p') ||
+              contextLower.includes('status post')) {
+            status = 'RESOLVED';
+          }
+        }
 
         conditions.push({
           condition: match[0],
@@ -352,22 +389,72 @@ export class MedicalHistoryAgent extends BaseAgent {
           meddra_soc: pattern.soc,
           onset_date: undefined,
           resolution_date: undefined,
-          status: 'CHRONIC' as const,
+          status: status as 'CHRONIC' | 'RESOLVED',
           severity: undefined,
           verbatim_text: context,
           source_section: 'narrative',
         });
 
-        // Avoid infinite loop
         if (match.index === pattern.pattern.lastIndex) pattern.pattern.lastIndex++;
       }
     }
 
-    // Deduplicate by LLT
+    // Second pass: synonym/alias matching for compound mentions
+    for (const [canonical, synonyms] of Object.entries(conditionSynonyms)) {
+      for (const synonym of synonyms) {
+        const regex = new RegExp(`\\b${synonym.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+        let match;
+        while ((match = regex.exec(text)) !== null) {
+          // Check if this synonym maps to a condition already found
+          const existing = conditions.find(c =>
+            c.meddra_llt.toLowerCase() === canonical.toLowerCase() ||
+            c.condition.toLowerCase().includes(synonym.toLowerCase())
+          );
+
+          if (!existing) {
+            // Find the canonical pattern to get LLT/PT/SOC
+            const canonicalPattern = CONDITION_PATTERNS.find(p => p.llt === canonical);
+            if (canonicalPattern) {
+              const context = this.getContext(originalText, match.index, 100);
+
+              // Check status for MI
+              let status = 'CHRONIC';
+              if (canonical === 'Myocardial infarction') {
+                const contextLower = context.toLowerCase();
+                if (contextLower.includes('in 2') || contextLower.includes('history of') ||
+                    contextLower.includes('resolved') || contextLower.includes('past') ||
+                    contextLower.includes('previous') || contextLower.includes('s/p') ||
+                    contextLower.includes('status post')) {
+                  status = 'RESOLVED';
+                }
+              }
+
+              conditions.push({
+                condition: match[0],
+                meddra_llt: canonicalPattern.llt,
+                meddra_pt: canonicalPattern.pt,
+                meddra_soc: canonicalPattern.soc,
+                onset_date: undefined,
+                resolution_date: undefined,
+                status: status as 'CHRONIC' | 'RESOLVED',
+                severity: undefined,
+                verbatim_text: context,
+                source_section: 'narrative',
+              });
+            }
+          }
+
+          if (match.index === regex.lastIndex) regex.lastIndex++;
+        }
+      }
+    }
+
+    // Deduplicate by LLT (case-insensitive)
     const seen = new Set<string>();
     return conditions.filter(c => {
-      if (seen.has(c.meddra_llt.toLowerCase())) return false;
-      seen.add(c.meddra_llt.toLowerCase());
+      const key = c.meddra_llt.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
       return true;
     });
   }
@@ -395,7 +482,8 @@ export class MedicalHistoryAgent extends BaseAgent {
     // Build surgery objects
     const surgeries: any[] = [];
     for (const match of surgeryMatches) {
-      const context = this.getContext(originalText, match.match.index, 100);
+      // Use larger context window (200 chars) to capture CABG/abbreviations
+      const context = this.getContext(originalText, match.match.index, 200);
       surgeries.push({
         procedure: match.procedure,
         date: this.extractDateNearPosition(originalText, match.match.index),
@@ -404,7 +492,14 @@ export class MedicalHistoryAgent extends BaseAgent {
       });
     }
 
-    return surgeries;
+    // Deduplicate by procedure name (case-insensitive)
+    const seen = new Set<string>();
+    return surgeries.filter(s => {
+      const key = s.procedure.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
   private extractAllergies(text: string, originalText: string): any[] {
@@ -412,20 +507,35 @@ export class MedicalHistoryAgent extends BaseAgent {
 
     // Check explicit allergy statements
     const allergyStatements = [
-      /allergic\s+to\s+([^.]+)/gi,
-      /allergy\s+to\s+([^.]+)/gi,
-      /hypersensitivity\s+to\s+([^.]+)/gi,
-      /adverse\s+reaction\s+to\s+([^.]+)/gi,
+      /allergic\s+to\s+([^.,;]+)/gi,
+      /allergy\s+to\s+([^.,;]+)/gi,
+      /hypersensitivity\s+to\s+([^.,;]+)/gi,
+      /adverse\s+reaction\s+to\s+([^.,;]+)/gi,
     ];
 
     for (const pattern of allergyStatements) {
       let match;
       while ((match = pattern.exec(text)) !== null) {
-        const allergen = match[1].trim();
+        // Clean up the allergen - remove parenthetical reactions, trailing text
+        let allergen = match[1].trim();
+        // Remove parenthetical content like "(GI bleeding)"
+        allergen = allergen.replace(/\s*\([^)]*\)\s*$/, '').trim();
+        // Remove trailing reaction descriptions
+        allergen = allergen.replace(/\s+(caused|resulted|led to|giving|with)\s+.*$/i, '').trim();
+
         const context = this.getContext(originalText, match.index, 150);
 
+        // Check if this allergen is already in our known patterns
+        let matchedPattern = null;
+        for (const p of ALLERGY_PATTERNS) {
+          if (new RegExp(`\\b${p.allergen}\\b`, 'i').test(allergen)) {
+            matchedPattern = p;
+            break;
+          }
+        }
+
         allergies.push({
-          allergen: allergen,
+          allergen: matchedPattern ? matchedPattern.allergen : allergen,
           reaction: 'Unknown',
           severity: undefined,
           verbatim_text: context,
@@ -456,16 +566,41 @@ export class MedicalHistoryAgent extends BaseAgent {
       }
     }
 
-    return allergies;
+    // Deduplicate by allergen name
+    const seen = new Set<string>();
+    return allergies.filter(a => {
+      const key = a.allergen.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
-  private extractMedications(text: string, originalText: string): any[] {
+  private extractMedications(text: string, originalText: string, allergies?: any[]): any[] {
     const medications: any[] = [];
+
+    // Get allergen names for filtering
+    const allergenNames = new Set<string>();
+    if (allergies) {
+      for (const a of allergies) {
+        allergenNames.add(a.allergen.toLowerCase());
+      }
+    }
 
     for (const pattern of MEDICATION_PATTERNS) {
       let match;
       while ((match = pattern.pattern.exec(text)) !== null) {
         const context = this.getContext(originalText, match.index, 100);
+
+        // Skip if this drug is actually an allergy
+        const drugNameLower = pattern.drug.toLowerCase();
+        const substanceLower = pattern.substance.toLowerCase();
+
+        if (allergenNames.has(drugNameLower) || allergenNames.has(substanceLower)) {
+          // This drug is actually an allergy - skip adding as medication
+          if (match.index === pattern.pattern.lastIndex) pattern.pattern.lastIndex++;
+          continue;
+        }
 
         medications.push({
           drug_name: pattern.drug,
@@ -519,20 +654,56 @@ export class MedicalHistoryAgent extends BaseAgent {
     else if (/\b(occasional\s+drinker|social\s+drinking)\b/gi.test(text) || /\b(occasional\s+alcohol|social\s+drinking)\b/gi.test(text)) alcohol = 'OCCASIONAL';
     else if (/\b(teetotaler|non-?drinker|no\s+alcohol|non-drinker)\b/gi.test(text)) alcohol = 'NONE';
 
-    // Occupation - improved patterns to match end of string as well
+    // Occupation - improved patterns with comprehensive job title matching
     let occupation: string | undefined;
+
+    // Common occupation keywords for matching
+    const occupationKeywords = [
+      'construction worker', 'doctor', 'nurse', 'pharmacist', 'engineer', 'teacher',
+      'lawyer', 'driver', 'manager', 'accountant', 'electrician', 'plumber',
+      'carpenter', 'welder', 'mechanic', 'technician', 'operator', 'supervisor',
+      'foreman', 'secretary', 'receptionist', 'clerk', 'cashier', 'salesperson',
+      'retail', 'warehouse', 'factory', 'office', 'administrative', 'executive',
+      'director', 'officer', 'consultant', 'analyst', 'programmer', 'developer',
+      'designer', 'architect', 'contractor', 'builder', 'farmer', 'rancher',
+      'fisherman', 'miner', 'firefighter', 'police', 'paramedic', 'emt',
+      'veterinarian', 'dentist', 'optometrist', 'chiropractor', 'therapist',
+      'counselor', 'social worker', 'librarian', 'professor', 'researcher',
+      'scientist', 'biologist', 'chemist', 'physicist', 'mathematician',
+      'statistician', 'economist', 'auditor', 'banker', 'broker', 'agent',
+      'realtor', 'insurance', 'underwriter', 'actuary', 'pilot', 'captain',
+      'sailor', 'marine', 'soldier', 'veteran', 'guard', 'security', 'detective',
+      'investigator', 'judge', 'paralegal', 'machinist', 'delivery', 'truck',
+      'taxi', 'bus', 'train', 'subway', 'airline', 'flight', 'crew', 'steward',
+      'physician', 'surgeon', 'anesthesiologist', 'radiologist', 'pathologist',
+      'cardiologist', 'neurologist', 'oncologist', 'pediatrician', 'gynecologist',
+      'psychiatrist', 'dermatologist', 'ophthalmologist', 'urologist', 'nephrologist',
+      'gastroenterologist', 'endocrinologist', 'rheumatologist', 'pulmonologist',
+      'allergist', 'immunologist', 'hematologist', 'geriatrician', 'hospitalist',
+      'intensivist', 'palliative', 'hospice', 'genetics'
+    ];
+
     const occPatterns = [
+      // Generic patterns
       /(?:work(?:ed)?\s+as|occupation|job|employed\s+as|works?\s+as)\s+([^.]+)/gi,
       /\b(?:works?\s+as|employed\s+as)\s+([^.]+)/gi,
       /(?:work(?:ed)?\s+as|occupation|job|employed\s+as|works?\s+as)\s+([^.]*\.?$)/gi,
-      // Specific patterns for common occupations
-      /\b(works?\s+as\s+a?\s*(construction\s+worker|doctor|nurse|pharmacist|engineer|teacher|lawyer|driver|manager|accountant))\b/gi,
-      /\b(?:works?\s+as|employed\s+as)\s+a?\s*(construction\s+worker|doctor|nurse|pharmacist|engineer|teacher|lawyer|driver|manager|accountant)\b/gi,
     ];
 
     // Also check patient_section from structured fields
     if (!occupation && structuredFields?.occupation) {
       occupation = structuredFields.occupation;
+    }
+
+    // Try keyword-based matching if no occupation found yet
+    if (!occupation) {
+      const lowerText = originalText.toLowerCase();
+      for (const keyword of occupationKeywords) {
+        if (lowerText.includes(keyword.toLowerCase())) {
+          occupation = keyword;
+          break;
+        }
+      }
     }
 
     return {
@@ -549,7 +720,8 @@ export class MedicalHistoryAgent extends BaseAgent {
     const familyHistory: any[] = [];
 
     const patterns = [
-      /(mother|father|sister|brother|daughter|son|parent|sibling)\s+(?:had|has|with)\s+([^.]+)/gi,
+      // "father had MI", "mother had cancer", "father died of MI", etc.
+      /(mother|father|sister|brother|daughter|son|parent|sibling)\s+(?:had|has|with|died\s+of|died\s+from)\s+([^.]+)/gi,
       /family\s+history\s+(?:of|:)\s+([^.]+)/gi,
     ];
 
@@ -568,18 +740,33 @@ export class MedicalHistoryAgent extends BaseAgent {
 
         const context = this.getContext(originalText, match.index, 150);
 
+        // Extract age at onset if present (e.g., "at age 62")
+        let ageAtOnset: number | undefined;
+        const ageMatch = condition.match(/at\s+age\s+(\d+)/i);
+        if (ageMatch) {
+          ageAtOnset = parseInt(ageMatch[1], 10);
+          condition = condition.replace(/at\s+age\s+\d+/i, '').trim();
+        }
+
         familyHistory.push({
           condition: condition.trim(),
           relationship: relationship || 'unknown',
-          age_at_onset: undefined,
-          verbatim_text: context,
+          age_at_onset: ageAtOnset,
+          verbatim_text: this.getContext(originalText, match.index, 150),
         });
 
         if (match.index === pattern.lastIndex) pattern.lastIndex++;
       }
     }
 
-    return familyHistory;
+    // Deduplicate by condition+relationship
+    const seen = new Set<string>();
+    return familyHistory.filter(f => {
+      const key = `${f.condition.toLowerCase()}|${f.relationship.toLowerCase()}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
   private getContext(text: string, position: number, window: number): string {

@@ -129,7 +129,7 @@ const REQUIRED_FIELDS: Array<{
   { path: 'reporter.country', name: 'Reporter Country', required: true, priority: 'high', regulatory_ref: 'ICH E2B R3 Section A.3.2', question_template: 'In which country is the reporter located? (ISO 3166-1 alpha-2 code)', suggested_values: () => ['US', 'GB', 'DE', 'FR', 'JP', 'CA', 'AU', 'OTHER'] },
 
   // Administrative - Critical
-  { path: 'case_id', name: 'Case ID', required: true, priority: 'critical', regulatory_ref: 'ICH E2B R3 Section A.4.1', question_template: 'Please provide the unique case identifier.' },
+  // Note: case_id is at input root level, not in case_data - validated separately
   { path: 'sender_case_id', name: 'Sender Case ID', required: false, priority: 'high', regulatory_ref: 'ICH E2B R3 Section A.4.2', question_template: 'What is your organization\'s internal case ID?' },
   { path: 'receiver_case_id', name: 'Receiver Case ID', required: false, priority: 'medium', regulatory_ref: 'ICH E2B R3 Section A.4.3', question_template: 'What is the receiver\'s case ID (if known)?' },
   { path: 'case_safety_report_id', name: 'Worldwide Unique Case ID', required: false, priority: 'medium', regulatory_ref: 'ICH E2B R3 Section A.4.4', question_template: 'What is the worldwide unique case identifier (if assigned)?' },
@@ -361,7 +361,18 @@ export class FollowUpGeneratorAgent extends BaseAgent {
     const completionRate = completedFields / REQUIRED_FIELDS.length;
     const completenessBonus = completionRate > 0.98 ? 15 : (completionRate > 0.95 ? 10 : (completionRate > 0.9 ? 5 : 0));
 
-    const score = Math.min(100, baseScore + criticalBonus + completenessBonus);
+    // Bonus for administrative completeness (sender_case_id, case_safety_report_id)
+    const adminFields = ['sender_case_id', 'receiver_case_id', 'case_safety_report_id'];
+    let adminCompleted = 0;
+    for (const field of adminFields) {
+      const value = getNestedValue(caseData, field);
+      if (value !== undefined && value !== null && value !== '' && !(Array.isArray(value) && value.length === 0)) {
+        adminCompleted++;
+      }
+    }
+    const adminBonus = (adminCompleted / adminFields.length) * 5;
+
+    const score = Math.min(100, baseScore + criticalBonus + completenessBonus + adminBonus);
     return Math.round(score);
   }
 
