@@ -45,13 +45,12 @@ const previewBootstrap = readFileSync(
   "utf8",
 );
 
-assert.ok(
-  databaseRuntime.includes('"preview/wave4"'),
-  "Wave 4 preview must resolve to the governed UAT database target.",
-);
-assert.ok(
-  previewBootstrap.includes('"preview/wave4"'),
-  "Wave 4 preview must be admitted by the governed UAT bootstrap guard.",
-);
+assert.ok(databaseRuntime.includes("process.env.DATABASE_URL?.trim()"));
+assert.ok(databaseRuntime.includes("return databaseUrl;"));
+assert.ok(previewBootstrap.includes('"preview/wave4"'));
+assert.ok(previewBootstrap.includes('const TARGET_PROJECT_ID = "old-mountain-48148190"'));
+assert.ok(previewBootstrap.includes('const TARGET_BRANCH_ID = "br-square-breeze-b3yxypxx"'));
+assert.ok(previewBootstrap.includes('const TARGET_DATABASE = "literature_screening_prod"'));
+assert.ok(previewBootstrap.includes("assertTarget(fingerprint)"));
 
 console.log("Wave 4 preview UAT routing verification passed.");

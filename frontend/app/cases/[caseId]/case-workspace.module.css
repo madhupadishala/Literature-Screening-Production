@@ -40,3 +40,24 @@
 .assist{display:grid;grid-template-columns:260px 1fr;gap:14px;margin-top:12px;padding:16px;border-radius:16px}
 @media(max-width:1000px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.formGrid{grid-template-columns:1fr 1fr}.assist{grid-template-columns:1fr}.hero,.saveBar{grid-template-columns:1fr;display:grid}.heroActions{justify-content:flex-start}}
 @media(max-width:650px){.summary,.formGrid,.checks{grid-template-columns:1fr}}
+
+.narrativeExpanded {
+  position: fixed;
+  inset: var(--nx-space-3);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nx-space-3);
+  padding: var(--nx-space-3);
+  background: var(--nx-color-surface);
+  color: var(--nx-color-text);
+  border: 1px solid var(--nx-color-border);
+  box-shadow: var(--nx-shadow-overlay);
+  overflow: auto;
+}
+.narrativeExpanded .narrative {
+  flex: 1 1 auto;
+  min-height: 50vh;
+  font-size: var(--nx-font-size-3);
+  line-height: 1.6;
+}

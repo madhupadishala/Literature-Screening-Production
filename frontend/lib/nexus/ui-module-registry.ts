@@ -1,8 +1,8 @@
-export type UiModuleKey = "LITERATURE" | "INTAKE" | "CASE_PROCESSING" | "SUBMISSIONS";
+export type UiModuleKey = "LITERATURE" | "INTAKE" | "CASE_PROCESSING" | "SUBMISSIONS" | "SIGNAL_MANAGEMENT" | "AGGREGATE_REPORTING" | "PV_DOCUMENTATION";
 export type UiModuleItem = { label: string; path: string; activePrefixes?: readonly string[] };
 export type UiModuleDefinition = { label: string; path: string; activePrefixes: readonly string[]; screens: readonly UiModuleItem[] };
 export const UI_MODULE_REGISTRY: Record<UiModuleKey, UiModuleDefinition> = {
-  LITERATURE: { label: "Literature Screening", path: "/literature/dashboard", activePrefixes: ["/literature", "/literature-search", "/workflow", "/hits", "/screening", "/review", "/reports"], screens: [
+  LITERATURE: { label: "Literature Screening", path: "/literature/dashboard", activePrefixes: ["/literature", "/literature-search", "/workflow", "/hits", "/screening", "/review"], screens: [
     { label: "Dashboard", path: "/literature/dashboard" },
     { label: "Hits", path: "/hits" },
     { label: "Screening", path: "/screening" },
@@ -21,8 +21,15 @@ export const UI_MODULE_REGISTRY: Record<UiModuleKey, UiModuleDefinition> = {
   SUBMISSIONS: { label: "Submissions", path: "/submissions", activePrefixes: ["/submissions"], screens: [
     { label: "Submissions", path: "/submissions" },
   ] },
+  SIGNAL_MANAGEMENT: { label: "Signal Management", path: "/signals", activePrefixes: ["/signals"], screens: [
+    { label: "Signals", path: "/signals" },
+  ] },
+  AGGREGATE_REPORTING: { label: "Aggregate Reporting", path: "/aggregate-reports", activePrefixes: ["/aggregate-reports"], screens: [
+    { label: "Aggregate Reports", path: "/aggregate-reports" },
+  ] },
+  PV_DOCUMENTATION: { label: "PV Documents", path: "/pv-documents", activePrefixes: ["/pv-documents"], screens: [{ label: "Documents", path: "/pv-documents" }] },
 };
-export const UI_MODULE_ORDER: readonly UiModuleKey[] = ["LITERATURE", "INTAKE", "CASE_PROCESSING", "SUBMISSIONS"];
+export const UI_MODULE_ORDER: readonly UiModuleKey[] = ["LITERATURE", "INTAKE", "CASE_PROCESSING", "SUBMISSIONS", "SIGNAL_MANAGEMENT", "AGGREGATE_REPORTING", "PV_DOCUMENTATION"];
 export function matchesUiPath(pathname: string, prefix: string): boolean {
   return pathname === prefix || pathname.startsWith(prefix + "/");
 }

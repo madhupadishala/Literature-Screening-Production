@@ -209,11 +209,14 @@ for (const route of [
   assert.equal(source.includes("PERMISSIONS.CASE_EXPORT") || source.includes("PERMISSIONS.CASE_VIEW"), true);
 }
 
-const navigation = readFileSync(
-  path.join(process.cwd(), "components/Navigation.tsx"),
+const moduleRegistry = readFileSync(
+  path.join(process.cwd(), "lib/nexus/ui-module-registry.ts"),
   "utf8",
 );
-assert.equal(navigation.includes('moduleKey: "CASE_PROCESSING"'), true);
+assert.equal(
+  moduleRegistry.includes('CASE_PROCESSING: { label: "Case Processing", path: "/cases"'),
+  true,
+);
 
 const workspace = readFileSync(
   path.join(process.cwd(), "app/cases/[caseId]/case-workspace-client.tsx"),

@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-
 import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
 import OperationalState from "@/components/enterprise/OperationalState";
+import { Button } from "@/components/ui/Button";
+import { DataTable, type Column } from "@/components/ui/DataTable";
+import { Input } from "@/components/ui/Input";
+import styles from "./IntakeOperationalQueue.module.css";
 
 type QueueKind = "DUPLICATE" | "TRIAGE" | "MEDICAL_REVIEW";
-
 type IntakeRecord = {
   intakeRecordId: string;
   intakeKey: string;
@@ -32,8 +34,9 @@ const LABELS: Record<QueueKind, { stage: string; action: string }> = {
 };
 
 function display(value: string | number | null | undefined, fallback = "—") {
-  if (value === null || value === undefined || value === "") return fallback;
-  return String(value).replaceAll("_", " ");
+  return value === null || value === undefined || value === ""
+    ? fallback
+    : String(value).replaceAll("_", " ");
 }
 
 function stageStatus(record: IntakeRecord, queue: QueueKind) {
@@ -43,8 +46,8 @@ function stageStatus(record: IntakeRecord, queue: QueueKind) {
 }
 
 function recordHref(record: IntakeRecord, queue: QueueKind) {
-  if (queue === "DUPLICATE") return `/intake/${record.intakeRecordId}/duplicate-review`;
-  return `/intake/${record.intakeRecordId}/triage`;
+  if (queue === "DUPLICATE") return `/intake/${encodeURIComponent(record.intakeRecordId)}/duplicate-review`;
+  return `/intake/${encodeURIComponent(record.intakeRecordId)}/triage`;
 }
 
 export default function IntakeOperationalQueue({ queue }: { queue: QueueKind }) {
@@ -53,25 +56,37 @@ export default function IntakeOperationalQueue({ queue }: { queue: QueueKind }) 
   const [message, setMessage] = useState("");
   const [query, setQuery] = useState("");
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (signal?: AbortSignal) => {
     setLoading(true);
     setMessage("");
     try {
-      const response = await fetch("/api/safety/intake?limit=500", { cache: "no-store" });
+      const response = await fetch("/api/safety/intake?limit=500", {
+        cache: "no-store",
+        signal,
+      });
       const payload = await response.json();
-      if (!response.ok || !payload?.success) throw new Error(payload?.error || "Unable to load Intake operational queue.");
-      setRecords(Array.isArray(payload.data?.records) ? payload.data.records : []);
+      if (!response.ok || !payload?.success) {
+        throw new Error(payload?.error || "Unable to load Intake operational queue.");
+      }
+      if (!signal?.aborted) {
+        setRecords(Array.isArray(payload.data?.records) ? payload.data.records : []);
+      }
     } catch (error) {
+      if (signal?.aborted) return;
       setMessage(error instanceof Error ? error.message : "Unable to load Intake operational queue.");
       setRecords([]);
     } finally {
-      setLoading(false);
+      if (!signal?.aborted) setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => void load(), 0);
-    return () => window.clearTimeout(timer);
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => void load(controller.signal), 0);
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
   }, [load]);
 
   const visible = useMemo(() => {
@@ -79,88 +94,78 @@ export default function IntakeOperationalQueue({ queue }: { queue: QueueKind }) 
     if (!needle) return records;
     return records.filter((record) =>
       [
-        record.intakeKey,
-        record.sourceType,
-        record.sourceSystem,
-        record.intakeChannel,
-        record.priority,
-        record.countryCode || "",
-        record.sourceReviewStatus,
-        record.validityStatus,
-        record.duplicateReviewStatus,
-        record.triageStatus,
-        record.triageOutcome || "",
-        record.seriousnessStatus,
+        record.intakeKey, record.sourceType, record.sourceSystem,
+        record.intakeChannel, record.priority, record.countryCode || "",
+        record.sourceReviewStatus, record.validityStatus,
+        record.duplicateReviewStatus, record.triageStatus,
+        record.triageOutcome || "", record.seriousnessStatus,
         record.dispositionStatus,
       ].join(" ").toLowerCase().includes(needle),
     );
   }, [query, records]);
 
-  const verified = records.filter((record) => record.sourceReviewStatus === "VERIFIED").length;
-  const actioned = records.filter((record) => stageStatus(record, queue) !== "NOT_STARTED").length;
-  const attention = records.filter((record) => {
-    const value = stageStatus(record, queue).toUpperCase();
-    return value.includes("PENDING") || value.includes("REVIEW") || value.includes("RETURN") || value.includes("FAILED");
+  const columns = useMemo<Column<IntakeRecord>[]>(() => [
+    { key: "intake", header: "Intake", render: (r) => <><strong>{display(r.intakeKey)}</strong><small className={styles.secondary}>{display(r.intakeChannel)}</small></> },
+    { key: "source", header: "Source", render: (r) => <><strong>{display(r.sourceType)}</strong><small className={styles.secondary}>{display(r.sourceSystem)}</small></> },
+    { key: "priority", header: "Priority", render: (r) => display(r.priority) },
+    { key: "validity", header: "Validity", render: (r) => display(r.validityStatus) },
+    { key: "seriousness", header: "Seriousness", render: (r) => display(r.seriousnessStatus) },
+    { key: "duplicate", header: "Duplicate", render: (r) => display(r.duplicateReviewStatus) },
+    { key: "triage", header: "Triage", render: (r) => display(r.triageStatus) },
+    { key: "stage", header: LABELS[queue].stage, render: (r) => <span className={styles.stage}>{display(stageStatus(r, queue))}</span> },
+    { key: "disposition", header: "Disposition", render: (r) => display(r.dispositionStatus) },
+    { key: "action", header: "Action", render: (r) => <Link className={styles.action} href={recordHref(r, queue)}>{LABELS[queue].action}</Link> },
+  ], [queue]);
+
+  const verified = records.filter((r) => r.sourceReviewStatus === "VERIFIED").length;
+  const actioned = records.filter((r) => stageStatus(r, queue) !== "NOT_STARTED").length;
+  const attention = records.filter((r) => {
+    const status = stageStatus(r, queue).toUpperCase();
+    return ["PENDING", "REVIEW", "RETURN", "FAILED"].some((flag) => status.includes(flag));
   }).length;
 
   return (
     <>
-      <OperationalMetricStrip
-        metrics={[
-          { label: "Visible Intake records", value: records.length },
-          { label: "Source verified", value: verified, tone: "positive" },
-          { label: `${LABELS[queue].stage} actioned`, value: actioned },
-          { label: "Needs attention", value: attention, tone: attention ? "attention" : "neutral" },
-        ]}
-      />
+      <OperationalMetricStrip metrics={[
+        { label: "Visible Intake records", value: records.length },
+        { label: "Source verified", value: verified, tone: "positive" },
+        { label: `${LABELS[queue].stage} actioned`, value: actioned },
+        { label: "Needs attention", value: attention, tone: attention ? "attention" : "neutral" },
+      ]} />
       <OperationalState
         kind="info"
         title="Server-side workflow authority"
-        message="This queue is an operational view only. It does not infer eligibility or bypass state transitions; record actions remain authorized and validated by the existing governed Intake APIs."
+        message="This queue is an operational view only. Record actions remain authorized and validated by the existing governed Intake APIs."
         compact
       />
-      <section className="queue-panel">
-        <header>
+      <section className={styles.panel} aria-label={LABELS[queue].stage}>
+        <header className={styles.header}>
           <div>
-            <span>OPERATIONAL WORKLIST</span>
-            <h2>{LABELS[queue].stage}</h2>
-            <p>Dense status view with direct access to the governed record workspace.</p>
+            <span className={styles.kicker}>Operational worklist</span>
+            <h2 className={styles.title}>{LABELS[queue].stage}</h2>
           </div>
-          <div className="queue-actions">
-            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search Intake ID, source, status…" aria-label={`Search ${LABELS[queue].stage} queue`} />
-            <button type="button" onClick={() => void load()} disabled={loading}>{loading ? "Refreshing…" : "Refresh"}</button>
+          <div className={styles.actions}>
+            <Input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search Intake ID, source, status…"
+              aria-label={`Search ${LABELS[queue].stage} queue`}
+            />
+            <Button variant="secondary" type="button" onClick={() => void load()} disabled={loading}>
+              {loading ? "Refreshing…" : "Refresh"}
+            </Button>
           </div>
         </header>
-        {message ? <OperationalState kind="error" title="Queue could not be loaded" message={message} compact /> : null}
-        {!message && loading ? <OperationalState kind="loading" title="Loading Intake records" message="Existing governed state is unchanged while the queue refreshes." compact /> : null}
-        {!message && !loading && visible.length === 0 ? <OperationalState kind="empty" title="No Intake records match this view" message="Adjust the search filter. No records have been removed or reclassified." compact /> : null}
-        <div className="queue-table-wrap">
-          <table>
-            <thead><tr><th>Intake</th><th>Source</th><th>Priority</th><th>Validity</th><th>Seriousness</th><th>Duplicate</th><th>Triage</th><th>{LABELS[queue].stage}</th><th>Disposition</th><th>Action</th></tr></thead>
-            <tbody>
-              {visible.map((record) => (
-                <tr key={record.intakeRecordId}>
-                  <td><strong>{display(record.intakeKey)}</strong><small>{display(record.intakeChannel)}</small></td>
-                  <td><strong>{display(record.sourceType)}</strong><small>{display(record.sourceSystem)}</small></td>
-                  <td>{display(record.priority)}</td><td>{display(record.validityStatus)}</td><td>{display(record.seriousnessStatus)}</td>
-                  <td>{display(record.duplicateReviewStatus)}</td><td>{display(record.triageStatus)}</td>
-                  <td><span className="stage-status">{display(stageStatus(record, queue))}</span></td>
-                  <td>{display(record.dispositionStatus)}</td><td><Link href={recordHref(record, queue)}>{LABELS[queue].action}</Link></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          rows={visible}
+          columns={columns}
+          rowKey={(r) => r.intakeRecordId}
+          loading={loading}
+          error={message || undefined}
+          onRetry={() => void load()}
+          emptyMessage="Adjust the search filter. No records have been removed or reclassified."
+        />
       </section>
-      <style jsx>{`
-        .queue-panel{margin-top:14px;border:1px solid var(--nx-color-border);border-radius:8px;background:var(--nx-color-surface);overflow:hidden}
-        header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:16px;border-bottom:1px solid var(--nx-color-border)}
-        header span{font-size:9px;font-weight:900;letter-spacing:.08em;color:var(--nx-color-interactive)} h2{margin:4px 0 0;font-size:18px} p{margin:4px 0 0;color:var(--nx-text-muted);font-size:11px}
-        .queue-actions{display:flex;gap:8px}.queue-actions input{min-width:280px;height:36px;border:1px solid var(--nx-color-border);border-radius:6px;padding:0 10px}.queue-actions button{height:36px;border:1px solid var(--nx-color-border);border-radius:6px;background:var(--nx-surface);padding:0 12px;font-weight:800;cursor:pointer}
-        .queue-table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:11px}th{padding:10px 12px;text-align:left;background:var(--nx-surface);color:#475569;font-size:9px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--nx-color-border);white-space:nowrap}
-        td{padding:11px 12px;border-bottom:1px solid var(--nx-surface);vertical-align:top;white-space:nowrap}td strong,td small{display:block}td small{margin-top:3px;color:var(--nx-text-muted)}td a{color:var(--nx-color-interactive);font-weight:900;text-decoration:none}.stage-status{display:inline-flex;padding:4px 7px;border-radius:999px;background:var(--nx-surface);color:#174a7c;font-weight:800}
-        @media(max-width:800px){header{align-items:stretch;flex-direction:column}.queue-actions{flex-direction:column}.queue-actions input{min-width:0;width:100%}}
-      `}</style>
     </>
   );
 }

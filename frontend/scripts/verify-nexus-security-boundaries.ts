@@ -62,13 +62,18 @@ assert.ok(guard.includes("context.sessionId !== identity.sessionId"), "Cross-ses
 assert.ok(guard.includes("resolveTenantForIdentity"), "Tenant membership must be re-read after context selection.");
 assert.ok(guard.includes("evaluateWorkspaceModuleAccess"), "Workspace/module authority must be re-read.");
 
-const legacyPrincipal = read("lib/rbac/request-principal.ts");
-assert.ok(legacyPrincipal.includes('process.env.NODE_ENV !== "production"'));
-assert.ok(legacyPrincipal.includes("allowTrustedIdentityHeaders"));
-assert.ok(
-  legacyPrincipal.includes("tenantKey && email && allowTrustedIdentityHeaders()"),
-  "Trusted identity headers must be explicitly gated to non-production.",
-);
+const requestPrincipal = read("lib/rbac/request-principal.ts");
+assert.ok(requestPrincipal.includes("requireIdentitySession(request)"));
+assert.ok(requestPrincipal.includes("validateNexusContextToken(raw)"));
+assert.ok(requestPrincipal.includes("resolveTenantForIdentity"));
+assert.ok(requestPrincipal.includes("evaluateWorkspaceModuleAccess"));
+assert.ok(!requestPrincipal.includes("allowTrustedIdentityHeaders"));
+assert.ok(!requestPrincipal.includes("x-tenant-id"));
+
+const identityPrincipal = read("lib/auth/identity-principal.ts");
+assert.ok(identityPrincipal.includes("resolveIdentitySession(raw)"));
+assert.ok(identityPrincipal.includes("m.membership_status = 'active'"));
+assert.ok(identityPrincipal.includes("t.status = 'active'"));
 
 const session = read("lib/auth/identity-session-service.ts");
 assert.ok(session.includes('createHash("sha256")'));

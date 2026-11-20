@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import ApplicationShell from "@/components/enterprise/ApplicationShell";
+import CaseFollowUpTracker from "@/components/cases/CaseFollowUpTracker";
+import { EvidencePanel } from "@/components/ui/EvidencePanel";
 import OperationalMetricStrip from "@/components/enterprise/OperationalMetricStrip";
 import OperationalScreenHeader from "@/components/enterprise/OperationalScreenHeader";
 import OperationalState from "@/components/enterprise/OperationalState";
@@ -92,6 +94,9 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   });
 
   const [narrativeText, setNarrativeText] = useState("");
+  const [narrativeExpanded, setNarrativeExpanded] = useState(false);
+  const [savedEditors, setSavedEditors] = useState<Record<string, string>>({});
+  const [savedNarrative, setSavedNarrative] = useState("");
   const [reviewComment, setReviewComment] = useState(
     "Reviewer completed the governed case review action.",
   );
@@ -110,7 +115,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   const hydrate = useCallback((data: Workspace) => {
     setWorkspace(data);
     const payload = data.draft.payload as Record<string, unknown>;
-    setEditors({
+    const initialEditors = {
       General: json(payload.identification),
       Reporter: json(payload.reporters),
       Patient: json(payload.patient),
@@ -119,22 +124,20 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
       "Medical History": json(payload.medicalHistory),
       Labs: json(payload.tests),
       Additional: json(payload.additionalInformation),
-    });
+    };
+    setSavedEditors(initialEditors);
+    setEditors(initialEditors);
 
     const latestHumanNarrative = data.narratives.find((item) =>
       ["PROCESSOR", "QC", "MEDICAL_REVIEW", "FINAL"].includes(
         display(item.narrativeStage ?? item.narrative_stage, ""),
       ),
     );
-    setNarrativeText(
-      latestHumanNarrative
-        ? display(
-            latestHumanNarrative.narrativeText ??
-              latestHumanNarrative.narrative_text,
-            "",
-          )
-        : "",
-    );
+    const initialNarrative = latestHumanNarrative
+      ? display(latestHumanNarrative.narrativeText ?? latestHumanNarrative.narrative_text, "")
+      : "";
+    setSavedNarrative(initialNarrative);
+    setNarrativeText(initialNarrative);
 
     const products = Array.isArray(payload.products)
       ? (payload.products as Array<Record<string, unknown>>)
@@ -217,6 +220,25 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
   const isFinal = ["FINAL", "FINALIZED", "CLOSED", "SUBMITTED"].includes(
     currentStatus,
   );
+
+  const dirty = Boolean(workspace) && !isFinal && (
+    Object.keys(editors).some((key) => editors[key] !== savedEditors[key]) ||
+    narrativeText !== savedNarrative
+  );
+
+  useEffect(() => {
+    if (!dirty) return;
+    const warnOnUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warnOnUnload);
+    return () => window.removeEventListener("beforeunload", warnOnUnload);
+  }, [dirty]);
+
+  function confirmDiscard() {
+    return !dirty || window.confirm("You have unsaved changes to this case draft or narrative. Discard them?");
+  }
 
   const openQueries = useMemo(
     () =>
@@ -559,8 +581,8 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
         status={isFinal ? "Finalized / read-only" : "Controlled case draft"}
         actions={
           <div className={styles.heroActions}>
-            <Link href="/cases">Case Worklist</Link>
-            <button type="button" onClick={() => void load()}>Refresh</button>
+            <Link href="/cases" onClick={(event) => { if (!confirmDiscard()) event.preventDefault(); }}>Case Worklist</Link>
+            <button type="button" onClick={() => { if (confirmDiscard()) void load(); }}>Refresh</button>
             {!isFinal ? (
               <button type="button" onClick={() => void assignToMe()} disabled={busy !== ""}>
                 Assign to me
@@ -570,6 +592,11 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
         }
       />
 
+      {dirty ? (
+        <div role="status" className={styles.message}>
+          Unsaved case edits or narrative changes. Save the appropriate governed revision before leaving this workspace.
+        </div>
+      ) : null}
       {message ? <div className={styles.message}>{message}</div> : null}
 
       <OperationalMetricStrip
@@ -679,8 +706,11 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
         ) : null}
 
         {tab === "Narrative" ? (
-          <div className={styles.stack}>
+          <div className={narrativeExpanded ? styles.narrativeExpanded : styles.stack}>
             <div className={styles.actionRow}>
+              <button type="button" aria-pressed={narrativeExpanded} onClick={() => setNarrativeExpanded((value) => !value)}>
+                {narrativeExpanded ? "Exit full-screen editor" : "Expand narrative editor"}
+              </button>
               <button type="button" onClick={() => void narrative("GENERATE")} disabled={busy !== "" || isFinal}>
                 Generate deterministic draft
               </button>
@@ -690,12 +720,14 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
             </div>
             <textarea
               className={styles.narrative}
+              aria-label="Human-reviewed safety case narrative"
               value={narrativeText}
               onChange={(e) => setNarrativeText(e.target.value)}
               placeholder="Human-reviewed case narrative…"
               disabled={isFinal}
             />
-            <DataCards records={workspace.narratives} empty="No narrative versions." />
+            <EvidencePanel suggestion="Deterministic system draft is assistive only." source="Governed structured case facts; verify against original evidence." decision="Only an authorized human PROCESSOR version is authoritative." finalized={isFinal} />
+            {!narrativeExpanded ? <DataCards records={workspace.narratives} empty="No narrative versions." /> : null}
           </div>
         ) : null}
 
@@ -915,8 +947,7 @@ export default function CaseWorkspaceClient({ caseId }: { caseId: string }) {
             <DataCards records={workspace.auditEvents} empty="No case audit events found." />
             <h3>Immutable Case Versions</h3>
             <DataCards records={workspace.caseVersions} empty="No finalized case versions yet." />
-            <h3>Follow-up Links</h3>
-            <DataCards records={workspace.followUps} empty="No follow-up Intake linked." />
+            <CaseFollowUpTracker rows={workspace.followUps} />
           </div>
         ) : null}
       </section>
