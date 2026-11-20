@@ -43,7 +43,8 @@ assert.ok(state.includes('role={kind === "error" ? "alert" : "status"}'));
 assert.ok(state.includes('aria-live={kind === "error" ? "assertive" : "polite"}'));
 
 const navigation = read("components/Navigation.tsx");
-assert.ok(navigation.includes('className="skip-link"'));
+assert.ok(navigation.includes('href="#main-content"'));
+assert.ok(navigation.includes('styles["skip-link"]'));
 assert.ok(navigation.includes("useRouter"));
 assert.ok(!navigation.includes("window.location.assign("));
 
