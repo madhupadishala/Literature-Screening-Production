@@ -1,0 +1,322 @@
+{
+  "schema_version": "1.0.0",
+  "approval_status": "DRAFT",
+  "mandatory_source": "NEXUS_SHARED_KNOWLEDGE_BASE",
+  "rules": "Coverage entries are unapproved requirements, not executable clinical rule IDs.",
+  "agent_packs": [
+    {
+      "agent": "literature_duplicate",
+      "required_pack": "PV-DUP-LIT",
+      "required_domains": [
+        {
+          "domain": "bibliographic_identity",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "publication_relationship",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "patient_case_overlap",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "conflicting_demographics",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "source_priority",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        }
+      ],
+      "release_gate": "BLOCK_AUTONOMOUS_CLINICAL_USE"
+    },
+    {
+      "agent": "icsr_duplicate",
+      "required_pack": "PV-DUP-ICSR",
+      "required_domains": [
+        {
+          "domain": "worldwide_case_id",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "candidate_matching",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "conflict_rules",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "duplicate_master_case",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "followup_vs_duplicate",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        }
+      ],
+      "release_gate": "BLOCK_AUTONOMOUS_CLINICAL_USE"
+    },
+    {
+      "agent": "followup_questionnaire",
+      "required_pack": "PV-FOLLOWUP",
+      "required_domains": [
+        {
+          "domain": "minimum_case_data",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "missing_fields",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "medically_significant_followup",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "question_priority",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "question_wording",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "privacy",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        }
+      ],
+      "release_gate": "BLOCK_AUTONOMOUS_CLINICAL_USE"
+    },
+    {
+      "agent": "literature_inclusion_exclusion",
+      "required_pack": "PV-LIT-SCREEN",
+      "required_domains": [
+        {
+          "domain": "safety_relevance",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "case_vs_aggregate",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "product_scope",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "source_coverage",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "exclusion_reason_policy",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "manual_review",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        }
+      ],
+      "release_gate": "BLOCK_AUTONOMOUS_CLINICAL_USE"
+    },
+    {
+      "agent": "action_taken",
+      "required_pack": "PV-ACTION",
+      "required_domains": [
+        {
+          "domain": "action_type",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "reason_for_change",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "G.k.8_mapping",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "product_event_link",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "chronology",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        }
+      ],
+      "release_gate": "BLOCK_AUTONOMOUS_CLINICAL_USE"
+    },
+    {
+      "agent": "dechallenge",
+      "required_pack": "PV-DECHALLENGE",
+      "required_domains": [
+        {
+          "domain": "withdrawal_evidence",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "clinical_outcome",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "temporal_association",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "competing_interventions",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "ambiguous_outcome",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        }
+      ],
+      "release_gate": "BLOCK_AUTONOMOUS_CLINICAL_USE"
+    },
+    {
+      "agent": "rechallenge",
+      "required_pack": "PV-RECHALLENGE",
+      "required_domains": [
+        {
+          "domain": "readministration",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "recurrence_evidence",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "nonrecurrence",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "conflicting_reports",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "alternative_explanation",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        }
+      ],
+      "release_gate": "BLOCK_AUTONOMOUS_CLINICAL_USE"
+    },
+    {
+      "agent": "medical_history_cap",
+      "required_pack": "PV-HISTORY",
+      "required_domains": [
+        {
+          "domain": "patient_history",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "family_history",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "indication_separation",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "historical_current",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "negation",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        },
+        {
+          "domain": "CAP_data_dictionary",
+          "approved_rule_ids": [],
+          "status": "GAP_UNAPPROVED",
+          "validation_case_ids": []
+        }
+      ],
+      "release_gate": "BLOCK_AUTONOMOUS_CLINICAL_USE"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "pack_id": "PV-CROSS-CUTTING",
+  "version": "0.1.0-draft",
+  "approval_state": "DRAFT",
+  "usage": "DEVELOPMENT_ONLY",
+  "rules": [
+    {
+      "id": "CROSS-001",
+      "title": "Provenance",
+      "statement": "Any verified clinical extraction must link to exact source evidence; unsupported content remains inferred or unresolved.",
+      "classification": "PROPOSED_INTERNAL_SAFETY_CONTROL",
+      "approval_state": "DRAFT",
+      "release_blocker_until_approved": true,
+      "validation_case_id": "test_cross_001"
+    },
+    {
+      "id": "CROSS-002",
+      "title": "Patient attribution",
+      "statement": "Never assign another patient's or family member's report to the index patient.",
+      "classification": "PROPOSED_INTERNAL_SAFETY_CONTROL",
+      "approval_state": "DRAFT",
+      "release_blocker_until_approved": true,
+      "validation_case_id": "test_cross_002"
+    },
+    {
+      "id": "CROSS-003",
+      "title": "Drug-event relationship",
+      "statement": "Co-occurrence is not evidence of causality; keep reported suspect status separate from algorithmic conclusion.",
+      "classification": "PROPOSED_INTERNAL_SAFETY_CONTROL",
+      "approval_state": "DRAFT",
+      "release_blocker_until_approved": true,
+      "validation_case_id": "test_cross_003"
+    },
+    {
+      "id": "CROSS-004",
+      "title": "Document completeness",
+      "statement": "Missing full text, missing OCR pages and parse failures cannot silently produce clinical negatives.",
+      "classification": "PROPOSED_INTERNAL_SAFETY_CONTROL",
+      "approval_state": "DRAFT",
+      "release_blocker_until_approved": true,
+      "validation_case_id": "test_cross_004"
+    },
+    {
+      "id": "CROSS-005",
+      "title": "Knowledge applicability",
+      "statement": "Only approved rules matching tenant, client, jurisdiction, product and effective date may drive clinical decisions.",
+      "classification": "PROPOSED_INTERNAL_SAFETY_CONTROL",
+      "approval_state": "DRAFT",
+      "release_blocker_until_approved": true,
+      "validation_case_id": "test_cross_005"
+    },
+    {
+      "id": "CROSS-006",
+      "title": "Version pinning",
+      "statement": "All cooperating agents in one assessment must use one pinned, auditable knowledge snapshot.",
+      "classification": "PROPOSED_INTERNAL_SAFETY_CONTROL",
+      "approval_state": "DRAFT",
+      "release_blocker_until_approved": true,
+      "validation_case_id": "test_cross_006"
+    },
+    {
+      "id": "CROSS-007",
+      "title": "Term normalization",
+      "statement": "Keep verbatim product/event/medical history terminology alongside licensed normalized terms, preserving uncertainty.",
+      "classification": "PROPOSED_INTERNAL_SAFETY_CONTROL",
+      "approval_state": "DRAFT",
+      "release_blocker_until_approved": true,
+      "validation_case_id": "test_cross_007"
+    },
+    {
+      "id": "CROSS-008",
+      "title": "Safe abstention",
+      "statement": "Missing mandatory knowledge, contradictory evidence or tool failure means review required rather than unsupported certainty.",
+      "classification": "PROPOSED_INTERNAL_SAFETY_CONTROL",
+      "approval_state": "DRAFT",
+      "release_blocker_until_approved": true,
+      "validation_case_id": "test_cross_008"
+    }
+  ]
+}

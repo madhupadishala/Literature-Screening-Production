@@ -1,0 +1,592 @@
+{
+  "schema_version": "1.0.0",
+  "created_on": "2026-10-09",
+  "approval_state": "DRAFT_REQUIRES_PV_QA_APPROVAL",
+  "usage": "DEVELOPMENT_AND_HUMAN_REVIEW_ONLY",
+  "sources": {
+    "EMA_VI": {
+      "authority": "EMA",
+      "document": "GVP Module VI Rev 2",
+      "url": "https://www.ema.europa.eu/en/human-regulatory-overview/post-authorisation/pharmacovigilance-post-authorisation/good-pharmacovigilance-practices-gvp",
+      "version": "Rev 2",
+      "effective_date": "2017-11-22",
+      "citation_scope": "Module VI; exact clause review pending"
+    },
+    "EMA_DUP": {
+      "authority": "EMA",
+      "document": "GVP Module VI Addendum I",
+      "url": "https://www.ema.europa.eu/en/documents/regulatory-procedural-guideline/guideline-good-pharmacovigilance-practices-gvp-module-vi-addendum-i-duplicate-management-suspected-adverse-reaction-reports_en.pdf",
+      "version": "2017 adopted",
+      "effective_date": "2017-11-22",
+      "citation_scope": "Duplicate management; exact clause review pending"
+    },
+    "ICH_E2B": {
+      "authority": "ICH",
+      "document": "E2B(R3) ICSR Implementation Guide",
+      "url": "https://www.ich.org/page/efficacy-guidelines",
+      "version": "R3; regional package verification pending",
+      "effective_date": null,
+      "citation_scope": "E2B(R3) ICSR mapping; specific regional code list review pending"
+    },
+    "ICH_E2D": {
+      "authority": "ICH",
+      "document": "E2D(R1) post-approval safety data management",
+      "url": "https://www.ich.org/page/efficacy-guidelines",
+      "version": "R1; region-specific adoption pending",
+      "effective_date": null,
+      "citation_scope": "follow-up and case management; exact clause review pending"
+    }
+  },
+  "knowledge_packs": [
+    {
+      "pack_id": "PV-DUP-LIT",
+      "version": "0.1.0-draft",
+      "jurisdiction": "global principles; region applicability requires verification",
+      "approval_state": "DRAFT",
+      "rules": [
+        {
+          "id": "LIT-001",
+          "title": "Bibliographic identity",
+          "domain": "bibliographic",
+          "statement": "Exact normalized DOI/PMID correspondence is a bibliographic-match signal, not proof that two patient ICSRs are the same.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_VI",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_lit_001"
+          ]
+        },
+        {
+          "id": "LIT-002",
+          "title": "Case overlap",
+          "domain": "patient_overlap",
+          "statement": "Assess overlap of patient, drug, event, timelines and publication relationships separately from bibliographic identity.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_DUP",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_lit_002"
+          ]
+        },
+        {
+          "id": "LIT-003",
+          "title": "Conflicts",
+          "domain": "patient_overlap",
+          "statement": "Conflicting patient details must be surfaced even when publication identifiers match; do not auto-merge case identities.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_DUP",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_lit_003"
+          ]
+        },
+        {
+          "id": "LIT-004",
+          "title": "Source relationships",
+          "domain": "source_relationship",
+          "statement": "Distinguish preprint, conference abstract, full publication, correction, review and independent case report.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_VI",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_lit_004"
+          ]
+        }
+      ]
+    },
+    {
+      "pack_id": "PV-DUP-ICSR",
+      "version": "0.1.0-draft",
+      "jurisdiction": "global principles; region applicability requires verification",
+      "approval_state": "DRAFT",
+      "rules": [
+        {
+          "id": "DUP-001",
+          "title": "Candidate matching",
+          "domain": "candidate_matching",
+          "statement": "Compare case identifiers, patient, product, event and chronology to retrieve and rank duplicate candidates.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_DUP",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_dup_001"
+          ]
+        },
+        {
+          "id": "DUP-002",
+          "title": "Contradiction review",
+          "domain": "critical_conflict",
+          "statement": "Conflicting evidence affecting patient identity requires human review before merging.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_DUP",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_dup_002"
+          ]
+        },
+        {
+          "id": "DUP-003",
+          "title": "Follow-up significance",
+          "domain": "followup_classification",
+          "statement": "Changed version number or date alone does not prove clinically significant new follow-up; compare field-level additions and corrections.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2D",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_dup_003"
+          ]
+        },
+        {
+          "id": "DUP-004",
+          "title": "Reversibility",
+          "domain": "audit",
+          "statement": "Preserve original reports, provenance, reversible relationship decisions and audit history.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_DUP",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_dup_004"
+          ]
+        }
+      ]
+    },
+    {
+      "pack_id": "PV-FOLLOWUP",
+      "version": "0.1.0-draft",
+      "jurisdiction": "global principles; region applicability requires verification",
+      "approval_state": "DRAFT",
+      "rules": [
+        {
+          "id": "FUP-001",
+          "title": "Missing information",
+          "domain": "gap_analysis",
+          "statement": "Generate questions for actual case gaps; do not fabricate absent information or repeat answered questions.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2D",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_fup_001"
+          ]
+        },
+        {
+          "id": "FUP-002",
+          "title": "Medical priority",
+          "domain": "priority",
+          "statement": "Prioritize case validity, seriousness and clinically material missing chronology or outcome details.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2D",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_fup_002"
+          ]
+        },
+        {
+          "id": "FUP-003",
+          "title": "Neutral wording",
+          "domain": "question_wording",
+          "statement": "Use neutral, specific questions; never suggest that a reporter must confirm a suspected causal association.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2D",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_fup_003"
+          ]
+        },
+        {
+          "id": "FUP-004",
+          "title": "Follow-up audit",
+          "domain": "audit",
+          "statement": "Preserve question versions, previous attempts, answers and reviewer authorization for outbound requests.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_VI",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_fup_004"
+          ]
+        }
+      ]
+    },
+    {
+      "pack_id": "PV-LIT-SCREEN",
+      "version": "0.1.0-draft",
+      "jurisdiction": "global principles; region applicability requires verification",
+      "approval_state": "DRAFT",
+      "rules": [
+        {
+          "id": "SCR-001",
+          "title": "Relevance dimensions",
+          "domain": "relevance",
+          "statement": "Assess ICSR potential, aggregate safety, product relevance, reportability and duplication as separate dimensions.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_VI",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_scr_001"
+          ]
+        },
+        {
+          "id": "SCR-002",
+          "title": "Incomplete full text",
+          "domain": "source_coverage",
+          "statement": "Title/abstract limitations must be explicit; absence of evidence is not evidence of no safety signal.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_VI",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_scr_002"
+          ]
+        },
+        {
+          "id": "SCR-003",
+          "title": "Exclusion guard",
+          "domain": "exclusion",
+          "statement": "Do not finalize irreversible exclusion when mandatory client screening criteria or source coverage are missing.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_VI",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_scr_003"
+          ]
+        },
+        {
+          "id": "SCR-004",
+          "title": "Reason codes",
+          "domain": "audit",
+          "statement": "Preserve clear, attributable inclusion/exclusion/review rationale with source spans.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "EMA_VI",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_scr_004"
+          ]
+        }
+      ]
+    },
+    {
+      "pack_id": "PV-ACTION",
+      "version": "0.1.0-draft",
+      "jurisdiction": "global principles; region applicability requires verification",
+      "approval_state": "DRAFT",
+      "rules": [
+        {
+          "id": "ACT-001",
+          "title": "Drug-event linkage",
+          "domain": "attribution",
+          "statement": "Associate action with an individual medicinal product and the reported event; avoid cross-drug attribution.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_act_001"
+          ]
+        },
+        {
+          "id": "ACT-002",
+          "title": "Withdrawal reason",
+          "domain": "causal_context",
+          "statement": "Discontinuation after an event is not sufficient proof it occurred because of the event.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_act_002"
+          ]
+        },
+        {
+          "id": "ACT-003",
+          "title": "Action timeline",
+          "domain": "chronology",
+          "statement": "Keep raw reported wording, action chronology and normalized action separate.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_act_003"
+          ]
+        },
+        {
+          "id": "ACT-004",
+          "title": "E2B mapping hold",
+          "domain": "mapping",
+          "statement": "Do not emit regulatory E2B values until the active region-specific controlled code list and field mapping are verified.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_act_004"
+          ]
+        }
+      ]
+    },
+    {
+      "pack_id": "PV-DECHALLENGE",
+      "version": "0.1.0-draft",
+      "jurisdiction": "global principles; region applicability requires verification",
+      "approval_state": "DRAFT",
+      "rules": [
+        {
+          "id": "DECH-001",
+          "title": "Exposure timeline",
+          "domain": "temporal",
+          "statement": "Assess event course only after the relevant drug was withdrawn or dose-reduced with supporting chronology.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_dech_001"
+          ]
+        },
+        {
+          "id": "DECH-002",
+          "title": "Other treatments",
+          "domain": "confounding",
+          "statement": "Check competing therapies and interventions, including plasmapheresis, concomitant drug withdrawal or antidote therapy.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_dech_002"
+          ]
+        },
+        {
+          "id": "DECH-003",
+          "title": "No automatic positive",
+          "domain": "classification",
+          "statement": "Event improvement after cessation alone does not prove a drug-specific positive dechallenge when confounded.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_dech_003"
+          ]
+        },
+        {
+          "id": "DECH-004",
+          "title": "Unknown course",
+          "domain": "abstention",
+          "statement": "Missing chronology, conflicting outcomes or unresolved confounders must return unresolved or review.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_dech_004"
+          ]
+        }
+      ]
+    },
+    {
+      "pack_id": "PV-RECHALLENGE",
+      "version": "0.1.0-draft",
+      "jurisdiction": "global principles; region applicability requires verification",
+      "approval_state": "DRAFT",
+      "rules": [
+        {
+          "id": "RECH-001",
+          "title": "Reexposure",
+          "domain": "exposure",
+          "statement": "Require documented re-administration or re-exposure of the relevant product before evaluating recurrence.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_rech_001"
+          ]
+        },
+        {
+          "id": "RECH-002",
+          "title": "Recurrence linkage",
+          "domain": "recurrence",
+          "statement": "Relate recurrence or nonrecurrence to the same event/patient/product and timeline.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_rech_002"
+          ]
+        },
+        {
+          "id": "RECH-003",
+          "title": "Evidence contradiction",
+          "domain": "conflict",
+          "statement": "When a source simultaneously supports recurrence and nonrecurrence without reconciliation, require review.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_rech_003"
+          ]
+        },
+        {
+          "id": "RECH-004",
+          "title": "Do not solicit rechallenge",
+          "domain": "safety",
+          "statement": "Never suggest intentional clinical rechallenge solely to resolve PV data gaps.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2D",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_rech_004"
+          ]
+        }
+      ]
+    },
+    {
+      "pack_id": "PV-HISTORY",
+      "version": "0.1.0-draft",
+      "jurisdiction": "global principles; region applicability requires verification",
+      "approval_state": "DRAFT",
+      "rules": [
+        {
+          "id": "HIST-001",
+          "title": "Attribution",
+          "domain": "patient",
+          "statement": "Distinguish patient medical history from family history and unrelated individuals.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_hist_001"
+          ]
+        },
+        {
+          "id": "HIST-002",
+          "title": "Temporal status",
+          "domain": "chronology",
+          "statement": "Differentiate historical conditions, active comorbidities and past resolved reactions.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_hist_002"
+          ]
+        },
+        {
+          "id": "HIST-003",
+          "title": "Role separation",
+          "domain": "classification",
+          "statement": "Separate historical illnesses from indication, active AE, and suspected medication history.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_hist_003"
+          ]
+        },
+        {
+          "id": "HIST-004",
+          "title": "CAP undefined",
+          "domain": "cap_dictionary",
+          "statement": "Block CAP-specific automated coding until the approved Nexus CAP data dictionary is supplied.",
+          "classification": "PROPOSED_INTERNAL_OPERATIONAL_CONTROL_NOT_VERBATIM_REGULATORY_TEXT",
+          "source_key": "ICH_E2B",
+          "source_section": "EXACT_SECTION_NOT_YET_VERIFIED",
+          "effective_from": null,
+          "approval_state": "DRAFT",
+          "release_blocker_until_approved": true,
+          "tests_required": [
+            "kb_hist_004"
+          ]
+        }
+      ]
+    }
+  ],
+  "mandatory_policy": {
+    "missing_required_rule": "UNRESOLVED_HUMAN_REVIEW_REQUIRED",
+    "conflicting_rules": "UNRESOLVED_HUMAN_REVIEW_REQUIRED",
+    "unapproved_rule": "NOT_ELIGIBLE_FOR_AUTONOMOUS_DECISION",
+    "cross_tenant_data": "DENY"
+  }
+}
